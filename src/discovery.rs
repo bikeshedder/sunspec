@@ -1,6 +1,5 @@
 use std::{io, marker::PhantomData};
 
-use itertools::Itertools;
 use thiserror::Error;
 use tokio_modbus::{
     client::{Context, Reader},
@@ -62,7 +61,7 @@ pub async fn discover_models(context: &mut Context) -> Result<Models, DiscoverEr
     addr += 2;
 
     let mut models = Models::default();
-    let mut unknown_models: Vec<u16> = vec![];
+    let mut unknown_models: Vec<String> = vec![];
 
     loop {
         let [model_id, len] = *context.read_holding_registers(addr, 2).await? else {
@@ -73,7 +72,7 @@ pub async fn discover_models(context: &mut Context) -> Result<Models, DiscoverEr
         }
         addr = addr.checked_add(2).ok_or(DiscoverError::AddressOverflow)?;
         if !models.set_addr(model_id, addr, len) {
-            unknown_models.push(model_id);
+            unknown_models.push(model_id.to_string());
         }
         addr = addr
             .checked_add(len)
@@ -83,7 +82,7 @@ pub async fn discover_models(context: &mut Context) -> Result<Models, DiscoverEr
     if !unknown_models.is_empty() {
         debug!(
             "Ignoring unknown models: {}",
-            unknown_models.iter().map(|id| id.to_string()).join(", ")
+            unknown_models.join(", ")
         );
     }
 
