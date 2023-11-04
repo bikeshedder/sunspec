@@ -20,10 +20,10 @@
     unused_results
 )]
 
-pub use discovery::{discover_models, DiscoverError, ModelAddr};
-pub use model::{read_model, Model, ReadModelError};
+pub use discovery::{DiscoveryError, DiscoveryResult, ModelAddr, UnknownModel, SUNS_IDENTIFIER};
+pub use model::{Model, ReadModelError};
 pub use models::Models;
-pub use point::{read_point, write_point, PointDef, ReadPointError, WritePointError};
+pub use point::{PointDef, ReadPointError, WritePointError};
 pub use value::{DecodeError, Value};
 
 mod discovery;
@@ -31,5 +31,7 @@ mod model;
 /// This module contains all the genererated SunSpec models.
 pub mod models;
 mod point;
+#[cfg(feature = "tokio-modbus")]
+pub mod tokio_modbus;
 mod utils;
 mod value;

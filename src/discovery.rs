@@ -1,27 +1,23 @@
 use std::{io, marker::PhantomData};
 
 use thiserror::Error;
-use tokio_modbus::{
-    client::{Context, Reader},
-    Address,
-};
-use tracing::debug;
 
-use crate::{model::Model, models::Models, value::FixedSize};
+use crate::model::Model;
+use crate::models::Models;
 
-async fn read_fixed_size<T: FixedSize>(context: &mut Context, addr: Address) -> io::Result<T> {
-    let words = context.read_holding_registers(addr, T::SIZE).await?;
-    Ok(T::decode(&words).unwrap())
-}
-
-const SUNS_IDENTIFIER: u32 = 0x53756e53; // SunS
+/// "SunS" identifier used when performing the
+/// model discovery.
+pub const SUNS_IDENTIFIER: u32 = 0x53756e53; // SunS
 
 /// This structure is used to store the address of
 /// models after a successful model discovery.
 #[derive(Debug)]
 pub struct ModelAddr<M: Model> {
-    pub(crate) addr: u16,
-    pub(crate) len: u16,
+    /// The discovered address of this model.
+    pub addr: u16,
+    /// The discovered length of this model. A length of
+    /// 0 indicates that the model is unsupported.
+    pub len: u16,
     model: PhantomData<M>,
 }
 
@@ -42,56 +38,30 @@ impl<M: Model> Default for ModelAddr<M> {
     }
 }
 
-/// This function implements the "Device Information Model Discovery"
-/// as explained in [SunSpec Device Information Specification V1.1](https://sunspec.org/wp-content/uploads/2022/05/SunSpec-Device-Information-Model-Specificiation-V1-1-final.pdf)
-pub async fn discover_models(context: &mut Context) -> Result<Models, DiscoverError> {
-    // Read addresses 0, 40000 and 50000 looking for the SunS identifier
-    let mut info_model_addr: Option<u16> = None;
-    for addr in [0, 40000, 50000] {
-        let identifier = read_fixed_size::<u32>(context, addr).await?;
-        if identifier == SUNS_IDENTIFIER {
-            info_model_addr = Some(addr);
-            break;
-        }
-    }
-    let Some(mut addr) = info_model_addr else {
-        return Err(DiscoverError::SunsIdentifierNotFound);
-    };
+/// For every discovered but unknown model to this library
+/// this structure is returned.
+#[derive(Debug)]
+pub struct UnknownModel {
+    /// ID of the discovered model
+    pub id: u16,
+    /// Address of the discovered model
+    pub addr: u16,
+    /// Length of the discovered model
+    pub len: u16,
+}
 
-    addr += 2;
-
-    let mut models = Models::default();
-    let mut unknown_models: Vec<String> = vec![];
-
-    loop {
-        let [model_id, len] = *context.read_holding_registers(addr, 2).await? else {
-            unreachable!();
-        };
-        if model_id == 0xFFFF {
-            break;
-        }
-        addr = addr.checked_add(2).ok_or(DiscoverError::AddressOverflow)?;
-        if !models.set_addr(model_id, addr, len) {
-            unknown_models.push(model_id.to_string());
-        }
-        addr = addr
-            .checked_add(len)
-            .ok_or(DiscoverError::AddressOverflow)?;
-    }
-
-    if !unknown_models.is_empty() {
-        debug!(
-            "Ignoring unknown models: {}",
-            unknown_models.join(", ")
-        );
-    }
-
-    Ok(models)
+/// The result of a SunSpec model discovery.
+#[derive(Debug)]
+pub struct DiscoveryResult {
+    /// The addresses of the discovered models.
+    pub models: Models,
+    /// Unknown models with their addresses and lengths.
+    pub unknown_models: Vec<UnknownModel<>>,
 }
 
 /// This error is returned when an error occurs during model discovery.
 #[derive(Debug, Error)]
-pub enum DiscoverError {
+pub enum DiscoveryError {
     /// I/O error occured. Please note that all errors returned by `tokio-modbus`
     /// are stored inside this I/O error.
     #[error("I/O Error")]

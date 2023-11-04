@@ -6,7 +6,7 @@
 This [Rust](https://www.rust-lang.org) crate contains code for accessing [SunSpec](https://en.wikipedia.org/wiki/SunSpec) compliant devices
 in a safe and convenient way.
 
-## Features
+## Highlights
 
 - [x] Pure Rust library
 - [x] No unsafe code
@@ -22,18 +22,24 @@ in a safe and convenient way.
 - [x] Fully documented. Even the generated models.
 - [ ] Repeating models
 
+## Features
+
+| Feature | Description | Extra dependencies | Default |
+| ------- | ----------- | ------------------ | ------- |
+| `tokio` | Enable `tokio_modbus` support | `tokio-modbus` | yes |
+
 ## Examples
 
 The `examples` directory in the code repository contains the unabridged code.
 
 ### Example code for accessing data from a three phase inverter using the model 103
 
-```rust
+```rust,ignore
 use std::{error::Error, net::SocketAddr, time::Duration};
 
 use clap::Parser;
 use itertools::Itertools;
-use sunspec::{discover_models, models::Model103, read_model, read_point, ReadPointError};
+use sunspec::tokio_modbus::{discover_models, read_model};
 use tokio::time::sleep;
 use tokio_modbus::{client::tcp::connect_slave, Slave};
 
@@ -48,7 +54,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let args = Args::parse();
     let mut ctx = connect_slave(args.addr, Slave(args.device_id)).await?;
 
-    let models = discover_models(&mut ctx).await?;
+    let models = discover_models(&mut ctx).await?.models;
     let m1 = read_model(&mut ctx, &models.m1).await?;
 
     println!("Manufacturer: {}", m1.mn);
@@ -65,19 +71,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .join(", ")
     );
 
-    let m103 = read_model(&mut ctx, &models.m103).await?;
-
     loop {
-        // Read a single point rather than the complete model
-        let m103_w = read_point(&mut ctx, &models.m103, &Model103::W)
-            .await?
-            .ok_or(ReadPointError::MissingMandatoryValue)?;
-        let w = m103_w as f32 * 10f32.powi(m103.w_sf.into());
-        println!("{:.1}W", w);
+        let m103 = read_model(&mut ctx, &models.m103).await?;
+        let w = m103.w as f32 * 10f32.powf(m103.w_sf.into());
+        let wh = m103.wh as f32 * 10f32.powf(m103.wh_sf.into());
+        println!("{:12.3} kWh {:9.3} kW", wh / 1000.0, w / 1000.0,);
         sleep(Duration::from_secs(1)).await;
     }
 }
-
 ```
 
 ## FAQ

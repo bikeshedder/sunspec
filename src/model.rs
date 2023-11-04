@@ -1,9 +1,7 @@
 use std::io;
 
 use thiserror::Error;
-use tokio_modbus::{client::Context, prelude::Reader};
 
-use crate::discovery::ModelAddr;
 use crate::point::ReadPointError;
 
 /// Every model implements this trait which contains methods
@@ -15,15 +13,6 @@ pub trait Model: Sized {
     const LENGTH: u16;
     /// Parse model points from a given u16 slice
     fn from_data(data: &[u16]) -> Result<Self, ReadModelError>;
-}
-
-/// Read model data from modbus
-pub async fn read_model<M: Model>(
-    ctx: &mut Context,
-    addr: &ModelAddr<M>,
-) -> Result<M, ReadModelError> {
-    let data = ctx.read_holding_registers(addr.addr, addr.len).await?;
-    M::from_data(&data)
 }
 
 /// This error is returned if there was an error loading the

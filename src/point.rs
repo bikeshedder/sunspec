@@ -1,13 +1,8 @@
 use std::{io, marker::PhantomData};
 
 use thiserror::Error;
-use tokio_modbus::{
-    client::Context,
-    prelude::{Reader, Writer},
-};
 
 use crate::{
-    discovery::ModelAddr,
     model::Model,
     utils::get_slice,
     value::{DecodeError, Value},
@@ -46,36 +41,6 @@ impl<M: Model, T: Value> PointDef<M, T> {
         .ok_or(ReadPointError::OutOfBounds)?;
         Ok(Some(T::decode(slice)?))
     }
-}
-
-/// Read data for a single point. Please note that
-/// `read_model` is more efficient when loading multiple
-/// points from a single model.
-pub async fn read_point<M: Model, T: Value>(
-    ctx: &mut Context,
-    model_addr: &ModelAddr<M>,
-    point_def: &PointDef<M, T>,
-) -> Result<Option<T>, ReadPointError> {
-    let data = ctx
-        .read_holding_registers(model_addr.addr + point_def.offset, point_def.length)
-        .await?;
-    Ok(Some(Value::decode(&data)?))
-}
-
-/// Write data for a single point
-pub async fn write_point<M: Model, T: Value>(
-    ctx: &mut Context,
-    model_addr: &ModelAddr<M>,
-    point_def: &PointDef<M, T>,
-    value: T,
-) -> Result<(), WritePointError> {
-    let data = value.encode();
-    if data.len() > point_def.length as usize {
-        return Err(WritePointError::ValueTooLarge);
-    }
-    ctx.write_multiple_registers(model_addr.addr + point_def.offset, &data)
-        .await?;
-    Ok(())
 }
 
 /// This error is returned if there was an error while
