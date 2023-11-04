@@ -20,6 +20,7 @@ in a safe and convenient way.
 - [x] Fully typed models generated from the SMDX files contained in the
       [SunSpec models repository](https://github.com/sunspec/models/)
 - [x] Fully documented. Even the generated models.
+- [x] Reading of complete models in a single request.
 - [ ] Repeating models
 
 ## Features
