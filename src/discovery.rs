@@ -22,7 +22,8 @@ pub struct ModelAddr<M: Model> {
 }
 
 impl<M: Model> ModelAddr<M> {
-    pub(crate) fn set_addr(&mut self, addr: u16, len: u16) {
+    /// Set the address of a discovered model
+    pub fn set_addr(&mut self, addr: u16, len: u16) {
         self.addr = addr;
         self.len = len;
     }
@@ -56,7 +57,7 @@ pub struct DiscoveryResult {
     /// The addresses of the discovered models.
     pub models: Models,
     /// Unknown models with their addresses and lengths.
-    pub unknown_models: Vec<UnknownModel<>>,
+    pub unknown_models: Vec<UnknownModel>,
 }
 
 /// This error is returned when an error occurs during model discovery.

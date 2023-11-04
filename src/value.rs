@@ -18,7 +18,8 @@ pub trait Value: Sized {
 
 /// This trait marks points with a fixed size. All non-string
 /// values are actually fixed size.
-pub(crate) trait FixedSize: Value {
+pub trait FixedSize: Value {
+    /// The size of this value
     const SIZE: u16;
 }
 

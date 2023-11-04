@@ -24,7 +24,7 @@ pub use discovery::{DiscoveryError, DiscoveryResult, ModelAddr, UnknownModel, SU
 pub use model::{Model, ReadModelError};
 pub use models::Models;
 pub use point::{PointDef, ReadPointError, WritePointError};
-pub use value::{DecodeError, Value};
+pub use value::{DecodeError, FixedSize, Value};
 
 mod discovery;
 mod model;
