@@ -18,16 +18,15 @@ pub enum GenModelError {
     MissingLength { model: String, point: String },
 }
 
-pub fn gen_code(model_groups: &[ModelGroup]) -> Result<String, GenModelError> {
+pub fn gen_models_struct(model_groups: &[ModelGroup]) -> Result<String, GenModelError> {
     let mut scope = Scope::new();
-    gen_models_struct(&mut scope, model_groups)?;
     for model_group in model_groups {
-        gen_model_struct(&mut scope, model_group)?;
+        let model_id = model_group.model.id;
+        scope.raw(&format!("mod model{};", model_id));
+        scope
+            .import(&format!("model{model_id}"), &format!("Model{model_id}"))
+            .vis("pub");
     }
-    Ok(scope.to_string())
-}
-
-fn gen_models_struct(scope: &mut Scope, model_groups: &[ModelGroup]) -> Result<(), GenModelError> {
     let models = scope
         .new_struct("Models")
         .vis("pub")
@@ -87,7 +86,7 @@ fn gen_models_struct(scope: &mut Scope, model_groups: &[ModelGroup]) -> Result<(
     fn_set_addr.line("    _ => { return false; }");
     fn_set_addr.line("}");
     fn_set_addr.line("true");
-    Ok(())
+    Ok(scope.to_string())
 }
 
 // See https://doc.rust-lang.org/reference/keywords.html
@@ -113,7 +112,8 @@ fn safe_identifier(s: String) -> String {
     }
 }
 
-fn gen_model_struct(scope: &mut Scope, model_group: &ModelGroup) -> Result<(), GenModelError> {
+pub fn gen_model_struct(model_group: &ModelGroup) -> Result<String, GenModelError> {
+    let mut scope = Scope::new();
     let model_id = model_group.model.id;
     let model_name = format!("Model{}", model_id);
     let model_len = model_group.model.len.unwrap();
@@ -209,7 +209,7 @@ fn gen_model_struct(scope: &mut Scope, model_group: &ModelGroup) -> Result<(), G
         ));
     }
     fn_from_data.line("})");
-    Ok(())
+    Ok(scope.to_string())
 }
 
 fn rust_type(ty: PointType) -> &'static str {
