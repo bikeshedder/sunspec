@@ -116,7 +116,6 @@ impl Model122 {
 
 impl crate::Model for Model122 {
     const ID: u16 = 122;
-    const LENGTH: u16 = 44;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             pvconn: Self::PVCONN

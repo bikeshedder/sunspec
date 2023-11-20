@@ -56,13 +56,12 @@ impl Model16 {
     pub const GW: crate::PointDef<Self, String> = crate::PointDef::new(22, 8, true);
     pub const DNS1: crate::PointDef<Self, String> = crate::PointDef::new(30, 8, true);
     pub const DNS2: crate::PointDef<Self, String> = crate::PointDef::new(38, 8, true);
-    pub const MAC: crate::PointDef<Self, String> = crate::PointDef::new(46, 3, false);
+    pub const MAC: crate::PointDef<Self, String> = crate::PointDef::new(46, 4, false);
     pub const LNKCTL: crate::PointDef<Self, u16> = crate::PointDef::new(50, 1, true);
 }
 
 impl crate::Model for Model16 {
     const ID: u16 = 16;
-    const LENGTH: u16 = 52;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             nam: Self::NAM.from_data(data)?,

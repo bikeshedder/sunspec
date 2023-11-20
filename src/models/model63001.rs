@@ -175,7 +175,6 @@ impl Model63001 {
 
 impl crate::Model for Model63001 {
     const ID: u16 = 63001;
-    const LENGTH: u16 = 152;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             sunssf_1: Self::SUNSSF_1.from_data(data)?,

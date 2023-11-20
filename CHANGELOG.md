@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added 7xx models which were only part of the JSON files.
+
+### Changed
+
+- Generate models from JSON instead of SMDX.
+
+### Removed
+
+- Removed the obsolete `LENGTH` field from all models. This
+  field will come back once repeating groups are supported.
+
 ## [0.1.0] - 2023-11-04
 
 ### Added

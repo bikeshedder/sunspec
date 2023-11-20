@@ -28,7 +28,6 @@ impl Model308 {
 
 impl crate::Model for Model308 {
     const ID: u16 = 308;
-    const LENGTH: u16 = 4;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             ghi: Self::GHI.from_data(data)?,

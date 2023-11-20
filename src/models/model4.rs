@@ -219,7 +219,6 @@ impl Model4 {
 
 impl crate::Model for Model4 {
     const ID: u16 = 4;
-    const LENGTH: u16 = 61;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             rqseq: Self::RQSEQ

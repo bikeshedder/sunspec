@@ -11,6 +11,6 @@ update_models:
 	(cd models && git checkout master && git pull)
 
 gen_models:
-	rm src/models/*.rs
-	(cd sunspec-gen && cargo run ../models/smdx ../src/models)
+	rm -f src/models/*.rs
+	(cd sunspec-gen && cargo run ../models/json ../src/models)
 	cargo fmt -- src/models/*.rs

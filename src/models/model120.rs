@@ -149,7 +149,6 @@ impl Model120 {
 
 impl crate::Model for Model120 {
     const ID: u16 = 120;
-    const LENGTH: u16 = 26;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             dertyp: Self::DERTYP

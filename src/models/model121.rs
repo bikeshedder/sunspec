@@ -172,7 +172,6 @@ impl Model121 {
 
 impl crate::Model for Model121 {
     const ID: u16 = 121;
-    const LENGTH: u16 = 30;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             wmax: Self::WMAX

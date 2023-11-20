@@ -10,10 +10,9 @@ pub fn read_dir(json_dir: &str) -> Result<Vec<Model>, Box<dyn std::error::Error>
     for entry in dir {
         let entry = entry?;
         let path = entry.path();
-        println!("{path:?}");
         let file_name = path.file_name().unwrap().to_string_lossy();
         if !(file_name.starts_with("model_") && file_name.ends_with(".json")) {
-            continue
+            continue;
         }
         let file = fs::File::open(path)?;
         let rdr = io::BufReader::new(&file);
@@ -29,18 +28,13 @@ pub fn read_dir(json_dir: &str) -> Result<Vec<Model>, Box<dyn std::error::Error>
 pub struct Model {
     pub id: u16, // TODO minimum 1
     pub group: Group,
-    pub label: Option<String>,
-    pub desc: Option<String>,
-    pub detail: Option<String>,
-    pub notes: Option<String>,
-    pub comments: Option<Vec<String>>,
+    #[serde(flatten)]
+    pub doc: Documentation,
 }
 
 impl Model {
     pub fn size(&self) -> u32 {
-        self.group.points.iter()
-            .map(|p| p.size())
-            .sum()
+        self.group.points.iter().map(|p| p.size).sum()
     }
 }
 
@@ -59,12 +53,8 @@ pub struct Group {
     pub points: Vec<Point>,
     #[serde(default)]
     pub groups: Vec<Group>,
-    pub label: Option<String>,
-    pub desc: Option<String>,
-    pub detail: Option<String>,
-    pub notes: Option<String>,
-    #[serde(default)]
-    pub comments: Vec<String>,
+    #[serde(flatten)]
+    pub doc: Documentation,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -97,23 +87,13 @@ pub struct Point {
     pub mandatory: PointMandatory,
     #[serde(default)]
     pub r#static: PointStatic,
-    pub label: Option<String>,
-    pub desc: Option<String>,
-    pub detail: Option<String>,
-    pub notes: Option<String>,
-    #[serde(default)]
-    pub comments: Vec<String>,
+    #[serde(flatten)]
+    pub doc: Documentation,
     #[serde(default)]
     pub symbols: Vec<Symbol>,
 }
 
-impl Point {
-    fn size(&self) -> u32 {
-        self.size
-    }
-}
-
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub enum PointType {
     Int16,
@@ -189,14 +169,14 @@ pub enum Sf {
     String(String),
 }
 
-#[derive(Debug, Deserialize, Serialize, Default)]
+#[derive(Debug, Deserialize, Serialize, Default, Eq, PartialEq)]
 pub enum PointAccess {
     #[default]
     R,
     RW,
 }
 
-#[derive(Debug, Deserialize, Serialize, Default)]
+#[derive(Debug, Deserialize, Serialize, Default, Eq, PartialEq)]
 pub enum PointMandatory {
     M,
     #[default]
@@ -215,10 +195,45 @@ pub enum PointStatic {
 pub struct Symbol {
     pub name: String,
     pub value: serde_json::Value,
+    #[serde(flatten)]
+    pub doc: Documentation,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Documentation {
     pub label: Option<String>,
     pub desc: Option<String>,
-    pub detail: Option<String>,
     pub notes: Option<String>,
+    pub detail: Option<String>,
     #[serde(default)]
     pub comments: Vec<String>,
+}
+
+impl Documentation {
+    pub fn to_doc_string(&self) -> String {
+        let comments = (!self.comments.is_empty()).then_some(self.comments.join(", "));
+        let parts = [
+            ("", &self.label),
+            ("", &self.desc),
+            ("Notes: ", &self.notes),
+            ("Detail: ", &self.detail),
+            ("Comments: ", &comments),
+        ];
+        let parts = parts
+            .iter()
+            .filter_map(|(label, text)| {
+                text.as_ref().and_then(|text| {
+                    let text = text.trim();
+                    if text.is_empty() {
+                        None
+                    } else {
+                        Some((label, text))
+                    }
+                })
+            })
+            .map(|(label, text)| format!("{}{}", label, text))
+            .collect::<Vec<_>>();
+        parts.join("\n\n")
+    }
 }

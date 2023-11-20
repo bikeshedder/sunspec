@@ -39,7 +39,7 @@ impl Model11 {
     pub const SPD: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const CFGST: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const ST: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const MAC: crate::PointDef<Self, String> = crate::PointDef::new(3, 3, false);
+    pub const MAC: crate::PointDef<Self, String> = crate::PointDef::new(3, 4, false);
     pub const NAM: crate::PointDef<Self, String> = crate::PointDef::new(7, 4, true);
     pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, true);
     pub const FRCSPD: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, true);
@@ -47,7 +47,6 @@ impl Model11 {
 
 impl crate::Model for Model11 {
     const ID: u16 = 11;
-    const LENGTH: u16 = 13;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             spd: Self::SPD

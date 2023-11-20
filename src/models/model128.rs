@@ -79,7 +79,6 @@ impl Model128 {
 
 impl crate::Model for Model128 {
     const ID: u16 = 128;
-    const LENGTH: u16 = 14;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             argramod: Self::ARGRAMOD

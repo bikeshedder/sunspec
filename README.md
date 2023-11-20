@@ -17,17 +17,18 @@ in a safe and convenient way.
 - [x] Supports Modbus TCP and RTU (via `tokio-modbus`).
 - [x] Implements "Device Information Model Discovery" as
       defined in the SunSpec specification.
-- [x] Fully typed models generated from the SMDX files contained in the
+- [x] Fully typed models generated from the JSON files contained in the
       [SunSpec models repository](https://github.com/sunspec/models/)
 - [x] Fully documented. Even the generated models.
 - [x] Reading of complete models in a single request.
-- [ ] Repeating models
+
+Nested and repeating groups are not supported, yet.
 
 ## Features
 
-| Feature | Description | Extra dependencies | Default |
-| ------- | ----------- | ------------------ | ------- |
-| `tokio` | Enable `tokio_modbus` support | `tokio-modbus` | yes |
+| Feature | Description                   | Extra dependencies | Default |
+| ------- | ----------------------------- | ------------------ | ------- |
+| `tokio` | Enable `tokio_modbus` support | `tokio-modbus`     | yes     |
 
 ## Examples
 

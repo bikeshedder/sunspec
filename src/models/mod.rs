@@ -79,6 +79,21 @@ pub use model64110::Model64110;
 pub use model64111::Model64111;
 pub use model64112::Model64112;
 pub use model7::Model7;
+pub use model701::Model701;
+pub use model702::Model702;
+pub use model703::Model703;
+pub use model704::Model704;
+pub use model705::Model705;
+pub use model706::Model706;
+pub use model707::Model707;
+pub use model708::Model708;
+pub use model709::Model709;
+pub use model710::Model710;
+pub use model711::Model711;
+pub use model712::Model712;
+pub use model713::Model713;
+pub use model714::Model714;
+pub use model715::Model715;
 pub use model8::Model8;
 pub use model801::Model801;
 pub use model802::Model802;
@@ -240,6 +255,36 @@ mod model501;
 mod model502;
 
 mod model601;
+
+mod model701;
+
+mod model702;
+
+mod model703;
+
+mod model704;
+
+mod model705;
+
+mod model706;
+
+mod model707;
+
+mod model708;
+
+mod model709;
+
+mod model710;
+
+mod model711;
+
+mod model712;
+
+mod model713;
+
+mod model714;
+
+mod model715;
 
 mod model801;
 
@@ -428,6 +473,36 @@ pub struct Models {
     pub m502: crate::ModelAddr<Model502>,
     /// Tracker Controller DRAFT 2
     pub m601: crate::ModelAddr<Model601>,
+    /// DER AC Measurement
+    pub m701: crate::ModelAddr<Model701>,
+    /// DER Capacity
+    pub m702: crate::ModelAddr<Model702>,
+    /// Enter Service
+    pub m703: crate::ModelAddr<Model703>,
+    /// DER AC Controls
+    pub m704: crate::ModelAddr<Model704>,
+    /// DER Volt-Var
+    pub m705: crate::ModelAddr<Model705>,
+    /// DER Volt-Watt
+    pub m706: crate::ModelAddr<Model706>,
+    /// DER Trip LV
+    pub m707: crate::ModelAddr<Model707>,
+    /// DER Trip HV
+    pub m708: crate::ModelAddr<Model708>,
+    /// DER Trip LF
+    pub m709: crate::ModelAddr<Model709>,
+    /// DER Trip HF
+    pub m710: crate::ModelAddr<Model710>,
+    /// DER Frequency Droop
+    pub m711: crate::ModelAddr<Model711>,
+    /// DER Watt-Var
+    pub m712: crate::ModelAddr<Model712>,
+    /// DER Storage Capacity
+    pub m713: crate::ModelAddr<Model713>,
+    /// DER DC Measurement
+    pub m714: crate::ModelAddr<Model714>,
+    /// DERCtl
+    pub m715: crate::ModelAddr<Model715>,
     /// Energy Storage Base Model (DEPRECATED)
     pub m801: crate::ModelAddr<Model801>,
     /// Battery Base Model
@@ -467,7 +542,7 @@ pub struct Models {
 impl Models {
     /// Returns a list of all supported model ids
     pub fn supported_model_ids(&self) -> Vec<u16> {
-        let mut v = Vec::with_capacity(92);
+        let mut v = Vec::with_capacity(107);
         if self.m1.addr != 0 {
             v.push(1);
         }
@@ -693,6 +768,51 @@ impl Models {
         if self.m601.addr != 0 {
             v.push(601);
         }
+        if self.m701.addr != 0 {
+            v.push(701);
+        }
+        if self.m702.addr != 0 {
+            v.push(702);
+        }
+        if self.m703.addr != 0 {
+            v.push(703);
+        }
+        if self.m704.addr != 0 {
+            v.push(704);
+        }
+        if self.m705.addr != 0 {
+            v.push(705);
+        }
+        if self.m706.addr != 0 {
+            v.push(706);
+        }
+        if self.m707.addr != 0 {
+            v.push(707);
+        }
+        if self.m708.addr != 0 {
+            v.push(708);
+        }
+        if self.m709.addr != 0 {
+            v.push(709);
+        }
+        if self.m710.addr != 0 {
+            v.push(710);
+        }
+        if self.m711.addr != 0 {
+            v.push(711);
+        }
+        if self.m712.addr != 0 {
+            v.push(712);
+        }
+        if self.m713.addr != 0 {
+            v.push(713);
+        }
+        if self.m714.addr != 0 {
+            v.push(714);
+        }
+        if self.m715.addr != 0 {
+            v.push(715);
+        }
         if self.m801.addr != 0 {
             v.push(801);
         }
@@ -827,6 +947,21 @@ impl Models {
             501 => self.m501.set_addr(addr, len),
             502 => self.m502.set_addr(addr, len),
             601 => self.m601.set_addr(addr, len),
+            701 => self.m701.set_addr(addr, len),
+            702 => self.m702.set_addr(addr, len),
+            703 => self.m703.set_addr(addr, len),
+            704 => self.m704.set_addr(addr, len),
+            705 => self.m705.set_addr(addr, len),
+            706 => self.m706.set_addr(addr, len),
+            707 => self.m707.set_addr(addr, len),
+            708 => self.m708.set_addr(addr, len),
+            709 => self.m709.set_addr(addr, len),
+            710 => self.m710.set_addr(addr, len),
+            711 => self.m711.set_addr(addr, len),
+            712 => self.m712.set_addr(addr, len),
+            713 => self.m713.set_addr(addr, len),
+            714 => self.m714.set_addr(addr, len),
+            715 => self.m715.set_addr(addr, len),
             801 => self.m801.set_addr(addr, len),
             802 => self.m802.set_addr(addr, len),
             803 => self.m803.set_addr(addr, len),

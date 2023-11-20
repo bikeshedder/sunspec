@@ -148,7 +148,6 @@ impl Model805 {
 
 impl crate::Model for Model805 {
     const ID: u16 = 805;
-    const LENGTH: u16 = 46;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             stridx: Self::STRIDX

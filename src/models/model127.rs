@@ -59,7 +59,6 @@ impl Model127 {
 
 impl crate::Model for Model127 {
     const ID: u16 = 127;
-    const LENGTH: u16 = 10;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             wgra: Self::WGRA

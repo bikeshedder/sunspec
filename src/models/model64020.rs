@@ -105,8 +105,8 @@ impl Model64020 {
     pub const AUX2TMP: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
     pub const AUX3TMP: crate::PointDef<Self, i16> = crate::PointDef::new(3, 1, false);
     pub const AUX4TMP: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
-    pub const PROBETMP: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
-    pub const MAINTMP: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
+    pub const PROBETMP: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
+    pub const MAINTMP: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
     pub const SENSORV_SF: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
     pub const SENSORA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
     pub const SENSORHZ_SF: crate::PointDef<Self, i16> = crate::PointDef::new(9, 1, false);
@@ -134,7 +134,6 @@ impl Model64020 {
 
 impl crate::Model for Model64020 {
     const ID: u16 = 64020;
-    const LENGTH: u16 = 46;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             aux0tmp: Self::AUX0TMP.from_data(data)?,

@@ -13,7 +13,6 @@ impl Model809 {
 
 impl crate::Model for Model809 {
     const ID: u16 = 809;
-    const LENGTH: u16 = 2;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             stacktbd: Self::STACKTBD

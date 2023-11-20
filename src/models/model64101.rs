@@ -31,7 +31,6 @@ impl Model64101 {
 
 impl crate::Model for Model64101 {
     const ID: u16 = 64101;
-    const LENGTH: u16 = 7;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             eltek_country_code: Self::ELTEK_COUNTRY_CODE.from_data(data)?,

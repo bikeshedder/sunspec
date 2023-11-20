@@ -37,7 +37,6 @@ impl Model18 {
 
 impl crate::Model for Model18 {
     const ID: u16 = 18;
-    const LENGTH: u16 = 22;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             nam: Self::NAM.from_data(data)?,

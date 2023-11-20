@@ -17,7 +17,6 @@ impl Model801 {
 
 impl crate::Model for Model801 {
     const ID: u16 = 801;
-    const LENGTH: u16 = 1;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             deprecated: Self::DEPRECATED

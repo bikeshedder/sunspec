@@ -35,7 +35,7 @@ pub struct Model802 {
     pub socrsvmax: Option<u16>,
     /// Min Reserve Percent
     ///
-    /// Setpoint for maximum reserve for storage as a percentage of the nominal maximum storage.
+    /// Setpoint for minimum reserve for storage as a percentage of the nominal maximum storage.
     pub socrsvmin: Option<u16>,
     /// State of Charge
     ///
@@ -308,7 +308,6 @@ impl Model802 {
 
 impl crate::Model for Model802 {
     const ID: u16 = 802;
-    const LENGTH: u16 = 62;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             ahrtg: Self::AHRTG

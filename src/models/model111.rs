@@ -169,7 +169,6 @@ impl Model111 {
 
 impl crate::Model for Model111 {
     const ID: u16 = 111;
-    const LENGTH: u16 = 60;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             a: Self::A

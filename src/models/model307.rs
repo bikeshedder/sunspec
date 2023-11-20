@@ -21,7 +21,7 @@ pub struct Model307 {
     pub snw: Option<i16>,
     /// Precipitation Type
     ///
-    ///  Precipitation Type (WMO 4680 SYNOP code reference)
+    /// Precipitation Type (WMO 4680 SYNOP code reference)
     pub ppt: Option<i16>,
     /// Electric Field
     pub elecfld: Option<i16>,
@@ -49,7 +49,6 @@ impl Model307 {
 
 impl crate::Model for Model307 {
     const ID: u16 = 307;
-    const LENGTH: u16 = 11;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             tmpamb: Self::TMPAMB.from_data(data)?,
