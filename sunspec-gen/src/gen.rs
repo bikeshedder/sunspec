@@ -217,9 +217,9 @@ fn rust_type(ty: PointType) -> &'static str {
         PointType::Float64 => "f64",
         PointType::String => "String",
         PointType::Sf => "i16", // FIXME is this type correct?
-        PointType::Pad => "u16",
-        PointType::Ipaddr => "u32",
-        PointType::Ipv6addr => "u128",
+        PointType::Pad => unimplemented!(),
+        PointType::Ipaddr => "std::net::Ipv4Addr",
+        PointType::Ipv6addr => "std::net::Ipv6Addr",
         PointType::Eui48 => "String",
         PointType::Sunssf => "i16",
         PointType::Count => "u16",

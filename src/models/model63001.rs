@@ -82,9 +82,9 @@ pub struct Model63001 {
     #[allow(missing_docs)]
     pub bitfield32_u: Option<u32>,
     #[allow(missing_docs)]
-    pub ipaddr: Option<u32>,
+    pub ipaddr: Option<std::net::Ipv4Addr>,
     #[allow(missing_docs)]
-    pub ipaddr_u: Option<u32>,
+    pub ipaddr_u: Option<std::net::Ipv4Addr>,
     #[allow(missing_docs)]
     pub int64: Option<i64>,
     #[allow(missing_docs)]
@@ -94,9 +94,9 @@ pub struct Model63001 {
     #[allow(missing_docs)]
     pub acc64_u: Option<u64>,
     #[allow(missing_docs)]
-    pub ipv6addr: Option<u128>,
+    pub ipv6addr: Option<std::net::Ipv6Addr>,
     #[allow(missing_docs)]
-    pub ipv6addr_u: Option<u128>,
+    pub ipv6addr_u: Option<std::net::Ipv6Addr>,
     #[allow(missing_docs)]
     pub float32: Option<f32>,
     #[allow(missing_docs)]
@@ -156,14 +156,17 @@ impl Model63001 {
     pub const ENUM32_U: crate::PointDef<Self, u32> = crate::PointDef::new(52, 2, false);
     pub const BITFIELD32: crate::PointDef<Self, u32> = crate::PointDef::new(54, 2, false);
     pub const BITFIELD32_U: crate::PointDef<Self, u32> = crate::PointDef::new(56, 2, false);
-    pub const IPADDR: crate::PointDef<Self, u32> = crate::PointDef::new(58, 2, true);
-    pub const IPADDR_U: crate::PointDef<Self, u32> = crate::PointDef::new(60, 2, false);
+    pub const IPADDR: crate::PointDef<Self, std::net::Ipv4Addr> = crate::PointDef::new(58, 2, true);
+    pub const IPADDR_U: crate::PointDef<Self, std::net::Ipv4Addr> =
+        crate::PointDef::new(60, 2, false);
     pub const INT64: crate::PointDef<Self, i64> = crate::PointDef::new(62, 4, true);
     pub const INT64_U: crate::PointDef<Self, i64> = crate::PointDef::new(66, 4, false);
     pub const ACC64: crate::PointDef<Self, u64> = crate::PointDef::new(70, 4, false);
     pub const ACC64_U: crate::PointDef<Self, u64> = crate::PointDef::new(74, 4, false);
-    pub const IPV6ADDR: crate::PointDef<Self, u128> = crate::PointDef::new(78, 8, false);
-    pub const IPV6ADDR_U: crate::PointDef<Self, u128> = crate::PointDef::new(86, 8, false);
+    pub const IPV6ADDR: crate::PointDef<Self, std::net::Ipv6Addr> =
+        crate::PointDef::new(78, 8, false);
+    pub const IPV6ADDR_U: crate::PointDef<Self, std::net::Ipv6Addr> =
+        crate::PointDef::new(86, 8, false);
     pub const FLOAT32: crate::PointDef<Self, f32> = crate::PointDef::new(94, 2, true);
     pub const FLOAT32_U: crate::PointDef<Self, f32> = crate::PointDef::new(96, 2, false);
     pub const STRING: crate::PointDef<Self, String> = crate::PointDef::new(98, 16, true);

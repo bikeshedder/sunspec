@@ -1,4 +1,7 @@
-use std::string::FromUtf8Error;
+use std::{
+    net::{Ipv4Addr, Ipv6Addr},
+    string::FromUtf8Error,
+};
 
 use thiserror::Error;
 
@@ -203,6 +206,17 @@ impl FixedSize for f64 {
     const SIZE: u16 = 4;
 }
 
+fn encode_bytes(octets: &[u8]) -> Box<[u16]> {
+    octets
+        .chunks(2)
+        .map(|chunk| match *chunk {
+            [b1, b0] => (b1 as u16) << 8 | (b0 as u16),
+            [b1] => (b1 as u16) << 8,
+            _ => unreachable!(),
+        })
+        .collect()
+}
+
 impl Value for String {
     fn decode(data: &[u16]) -> Result<Self, DecodeError> {
         let bytes = data
@@ -213,15 +227,45 @@ impl Value for String {
         Ok(String::from_utf8(bytes)?)
     }
     fn encode(self) -> Box<[u16]> {
-        self.as_bytes()
-            .chunks(2)
-            .map(|chunk| match *chunk {
-                [b1, b0] => (b1 as u16) << 8 | (b0 as u16),
-                [b1] => (b1 as u16) << 8,
-                _ => unreachable!(),
-            })
-            .collect()
+        encode_bytes(self.as_bytes())
     }
+}
+
+impl Value for Ipv4Addr {
+    fn decode(data: &[u16]) -> Result<Self, DecodeError> {
+        let &[w1, w0] = data else {
+            return Err(DecodeError::OutOfBounds);
+        };
+        Ok(Ipv4Addr::new(
+            (w1 >> 8) as u8,
+            w1 as u8,
+            (w0 >> 8) as u8,
+            w0 as u8,
+        ))
+    }
+    fn encode(self) -> Box<[u16]> {
+        encode_bytes(&self.octets())
+    }
+}
+
+impl FixedSize for Ipv4Addr {
+    const SIZE: u16 = 2;
+}
+
+impl Value for Ipv6Addr {
+    fn decode(data: &[u16]) -> Result<Self, DecodeError> {
+        let &[a, b, c, d, e, f, g, h] = data else {
+            return Err(DecodeError::OutOfBounds);
+        };
+        Ok(Ipv6Addr::new(a, b, c, d, e, f, g, h))
+    }
+    fn encode(self) -> Box<[u16]> {
+        encode_bytes(&self.octets())
+    }
+}
+
+impl FixedSize for Ipv6Addr {
+    const SIZE: u16 = 8;
 }
 
 /// This error is returned if there was an error decoding

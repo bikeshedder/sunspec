@@ -16,15 +16,15 @@ pub struct Model64110 {
     /// Enable DHCP
     pub enabledhcp: u16,
     /// TCPIP Address
-    pub tcpip_address: u32,
+    pub tcpip_address: std::net::Ipv4Addr,
     /// TCPIP Gateway
-    pub gateway_address: u32,
+    pub gateway_address: std::net::Ipv4Addr,
     /// TCPIP Netmask
-    pub tcpip_netmask: u32,
+    pub tcpip_netmask: std::net::Ipv4Addr,
     /// TCPIP DNS1
-    pub dns1_address: u32,
+    pub dns1_address: std::net::Ipv4Addr,
     /// TCPIP DNS2
-    pub dns2_address: u32,
+    pub dns2_address: std::net::Ipv4Addr,
     /// ModBus Port
     pub modbus_port: u16,
     /// SMTP Server Name
@@ -107,11 +107,16 @@ impl Model64110 {
     pub const MAC_ADDRESS: crate::PointDef<Self, String> = crate::PointDef::new(4, 7, false);
     pub const WRITEPASSWORD: crate::PointDef<Self, String> = crate::PointDef::new(11, 8, false);
     pub const ENABLEDHCP: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
-    pub const TCPIP_ADDRESS: crate::PointDef<Self, u32> = crate::PointDef::new(20, 2, false);
-    pub const GATEWAY_ADDRESS: crate::PointDef<Self, u32> = crate::PointDef::new(22, 2, false);
-    pub const TCPIP_NETMASK: crate::PointDef<Self, u32> = crate::PointDef::new(24, 2, false);
-    pub const DNS1_ADDRESS: crate::PointDef<Self, u32> = crate::PointDef::new(26, 2, false);
-    pub const DNS2_ADDRESS: crate::PointDef<Self, u32> = crate::PointDef::new(28, 2, false);
+    pub const TCPIP_ADDRESS: crate::PointDef<Self, std::net::Ipv4Addr> =
+        crate::PointDef::new(20, 2, false);
+    pub const GATEWAY_ADDRESS: crate::PointDef<Self, std::net::Ipv4Addr> =
+        crate::PointDef::new(22, 2, false);
+    pub const TCPIP_NETMASK: crate::PointDef<Self, std::net::Ipv4Addr> =
+        crate::PointDef::new(24, 2, false);
+    pub const DNS1_ADDRESS: crate::PointDef<Self, std::net::Ipv4Addr> =
+        crate::PointDef::new(26, 2, false);
+    pub const DNS2_ADDRESS: crate::PointDef<Self, std::net::Ipv4Addr> =
+        crate::PointDef::new(28, 2, false);
     pub const MODBUS_PORT: crate::PointDef<Self, u16> = crate::PointDef::new(30, 1, false);
     pub const SMTP_SERVER_NM: crate::PointDef<Self, String> = crate::PointDef::new(31, 20, false);
     pub const SMTP_ACCOUNT_NM: crate::PointDef<Self, String> = crate::PointDef::new(51, 16, false);
