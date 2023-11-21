@@ -39,25 +39,19 @@ impl Model11 {
     pub const SPD: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const CFGST: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const ST: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const MAC: crate::PointDef<Self, String> = crate::PointDef::new(3, 4, false);
-    pub const NAM: crate::PointDef<Self, String> = crate::PointDef::new(7, 4, true);
-    pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, true);
-    pub const FRCSPD: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, true);
+    pub const MAC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(3, 4, false);
+    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(7, 4, true);
+    pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, true);
+    pub const FRCSPD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, true);
 }
 
 impl crate::Model for Model11 {
     const ID: u16 = 11;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            spd: Self::SPD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cfgst: Self::CFGST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            st: Self::ST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            spd: Self::SPD.from_data(data)?,
+            cfgst: Self::CFGST.from_data(data)?,
+            st: Self::ST.from_data(data)?,
             mac: Self::MAC.from_data(data)?,
             nam: Self::NAM.from_data(data)?,
             ctl: Self::CTL.from_data(data)?,

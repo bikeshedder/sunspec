@@ -15,9 +15,7 @@ impl crate::Model for Model808 {
     const ID: u16 = 808;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            moduletbd: Self::MODULETBD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            moduletbd: Self::MODULETBD.from_data(data)?,
         })
     }
 }

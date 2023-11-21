@@ -34,27 +34,21 @@ pub struct Model1 {
 impl Model1 {
     pub const MN: crate::PointDef<Self, String> = crate::PointDef::new(0, 16, false);
     pub const MD: crate::PointDef<Self, String> = crate::PointDef::new(16, 16, false);
-    pub const OPT: crate::PointDef<Self, String> = crate::PointDef::new(32, 8, false);
-    pub const VR: crate::PointDef<Self, String> = crate::PointDef::new(40, 8, false);
+    pub const OPT: crate::PointDef<Self, Option<String>> = crate::PointDef::new(32, 8, false);
+    pub const VR: crate::PointDef<Self, Option<String>> = crate::PointDef::new(40, 8, false);
     pub const SN: crate::PointDef<Self, String> = crate::PointDef::new(48, 16, false);
-    pub const DA: crate::PointDef<Self, u16> = crate::PointDef::new(64, 1, true);
+    pub const DA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(64, 1, true);
 }
 
 impl crate::Model for Model1 {
     const ID: u16 = 1;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            mn: Self::MN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            md: Self::MD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            mn: Self::MN.from_data(data)?,
+            md: Self::MD.from_data(data)?,
             opt: Self::OPT.from_data(data)?,
             vr: Self::VR.from_data(data)?,
-            sn: Self::SN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            sn: Self::SN.from_data(data)?,
             da: Self::DA.from_data(data)?,
         })
     }

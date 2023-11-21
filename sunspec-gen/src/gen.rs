@@ -137,11 +137,7 @@ pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
         }
         let field = model_struct
             .new_field(safe_identifier(point.name.to_lowercase()), {
-                if point.mandatory == PointMandatory::M {
-                    String::from(rust_type(point.r#type))
-                } else {
-                    format!("Option<{}>", rust_type(point.r#type))
-                }
+                rust_type(point.r#type, point.mandatory == PointMandatory::M)
             })
             .vis("pub");
         let field_doc = point.doc.to_doc_string();
@@ -159,7 +155,10 @@ pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
         if point.r#type != PointType::Pad {
             model_impl.associate_const(
                 &point.name.to_uppercase(),
-                &format!("crate::PointDef<Self, {}>", rust_type(point.r#type)),
+                &format!(
+                    "crate::PointDef<Self, {}>",
+                    rust_type(point.r#type, point.mandatory == PointMandatory::M)
+                ),
                 &format!(
                     "crate::PointDef::new({}, {}, {})",
                     offset, point.size, writable
@@ -182,22 +181,17 @@ pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
             continue;
         }
         fn_from_data.line(format!(
-            "    {}: Self::{}.from_data(data)?{},",
+            "    {}: Self::{}.from_data(data)?,",
             safe_identifier(point.name.to_lowercase()),
             safe_identifier(point.name.to_uppercase()),
-            if point.mandatory == PointMandatory::M {
-                ".ok_or(crate::ReadPointError::MissingMandatoryValue)?"
-            } else {
-                ""
-            }
         ));
     }
     fn_from_data.line("})");
     Ok(scope.to_string())
 }
 
-fn rust_type(ty: PointType) -> &'static str {
-    match ty {
+fn rust_type(ty: PointType, mandatory: bool) -> String {
+    let rty = match ty {
         PointType::Int16 => "i16",
         PointType::Int32 => "i32",
         PointType::Int64 => "i64",
@@ -223,6 +217,11 @@ fn rust_type(ty: PointType) -> &'static str {
         PointType::Eui48 => "String",
         PointType::Sunssf => "i16",
         PointType::Count => "u16",
+    };
+    if mandatory {
+        String::from(rty)
+    } else {
+        format!("Option<{rty}>")
     }
 }
 

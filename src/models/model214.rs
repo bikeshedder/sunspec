@@ -188,63 +188,77 @@ impl Model214 {
     pub const APHA: crate::PointDef<Self, f32> = crate::PointDef::new(2, 2, false);
     pub const APHB: crate::PointDef<Self, f32> = crate::PointDef::new(4, 2, false);
     pub const APHC: crate::PointDef<Self, f32> = crate::PointDef::new(6, 2, false);
-    pub const PHV: crate::PointDef<Self, f32> = crate::PointDef::new(8, 2, false);
-    pub const PHVPHA: crate::PointDef<Self, f32> = crate::PointDef::new(10, 2, false);
-    pub const PHVPHB: crate::PointDef<Self, f32> = crate::PointDef::new(12, 2, false);
-    pub const PHVPHC: crate::PointDef<Self, f32> = crate::PointDef::new(14, 2, false);
+    pub const PHV: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(8, 2, false);
+    pub const PHVPHA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(10, 2, false);
+    pub const PHVPHB: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(12, 2, false);
+    pub const PHVPHC: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(14, 2, false);
     pub const PPV: crate::PointDef<Self, f32> = crate::PointDef::new(16, 2, false);
     pub const PPVPHAB: crate::PointDef<Self, f32> = crate::PointDef::new(18, 2, false);
     pub const PPVPHBC: crate::PointDef<Self, f32> = crate::PointDef::new(20, 2, false);
     pub const PPVPHCA: crate::PointDef<Self, f32> = crate::PointDef::new(22, 2, false);
     pub const HZ: crate::PointDef<Self, f32> = crate::PointDef::new(24, 2, false);
     pub const W: crate::PointDef<Self, f32> = crate::PointDef::new(26, 2, false);
-    pub const WPHA: crate::PointDef<Self, f32> = crate::PointDef::new(28, 2, false);
-    pub const WPHB: crate::PointDef<Self, f32> = crate::PointDef::new(30, 2, false);
-    pub const WPHC: crate::PointDef<Self, f32> = crate::PointDef::new(32, 2, false);
-    pub const VA: crate::PointDef<Self, f32> = crate::PointDef::new(34, 2, false);
-    pub const VAPHA: crate::PointDef<Self, f32> = crate::PointDef::new(36, 2, false);
-    pub const VAPHB: crate::PointDef<Self, f32> = crate::PointDef::new(38, 2, false);
-    pub const VAPHC: crate::PointDef<Self, f32> = crate::PointDef::new(40, 2, false);
-    pub const VAR: crate::PointDef<Self, f32> = crate::PointDef::new(42, 2, false);
-    pub const VARPHA: crate::PointDef<Self, f32> = crate::PointDef::new(44, 2, false);
-    pub const VARPHB: crate::PointDef<Self, f32> = crate::PointDef::new(46, 2, false);
-    pub const VARPHC: crate::PointDef<Self, f32> = crate::PointDef::new(48, 2, false);
-    pub const PF: crate::PointDef<Self, f32> = crate::PointDef::new(50, 2, false);
-    pub const PFPHA: crate::PointDef<Self, f32> = crate::PointDef::new(52, 2, false);
-    pub const PFPHB: crate::PointDef<Self, f32> = crate::PointDef::new(54, 2, false);
-    pub const PFPHC: crate::PointDef<Self, f32> = crate::PointDef::new(56, 2, false);
+    pub const WPHA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(28, 2, false);
+    pub const WPHB: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(30, 2, false);
+    pub const WPHC: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(32, 2, false);
+    pub const VA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(34, 2, false);
+    pub const VAPHA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(36, 2, false);
+    pub const VAPHB: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(38, 2, false);
+    pub const VAPHC: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(40, 2, false);
+    pub const VAR: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(42, 2, false);
+    pub const VARPHA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(44, 2, false);
+    pub const VARPHB: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(46, 2, false);
+    pub const VARPHC: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(48, 2, false);
+    pub const PF: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(50, 2, false);
+    pub const PFPHA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(52, 2, false);
+    pub const PFPHB: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(54, 2, false);
+    pub const PFPHC: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(56, 2, false);
     pub const TOTWHEXP: crate::PointDef<Self, f32> = crate::PointDef::new(58, 2, false);
-    pub const TOTWHEXPPHA: crate::PointDef<Self, f32> = crate::PointDef::new(60, 2, false);
-    pub const TOTWHEXPPHB: crate::PointDef<Self, f32> = crate::PointDef::new(62, 2, false);
-    pub const TOTWHEXPPHC: crate::PointDef<Self, f32> = crate::PointDef::new(64, 2, false);
+    pub const TOTWHEXPPHA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(60, 2, false);
+    pub const TOTWHEXPPHB: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(62, 2, false);
+    pub const TOTWHEXPPHC: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(64, 2, false);
     pub const TOTWHIMP: crate::PointDef<Self, f32> = crate::PointDef::new(66, 2, false);
-    pub const TOTWHIMPPHA: crate::PointDef<Self, f32> = crate::PointDef::new(68, 2, false);
-    pub const TOTWHIMPPHB: crate::PointDef<Self, f32> = crate::PointDef::new(70, 2, false);
-    pub const TOTWHIMPPHC: crate::PointDef<Self, f32> = crate::PointDef::new(72, 2, false);
-    pub const TOTVAHEXP: crate::PointDef<Self, f32> = crate::PointDef::new(74, 2, false);
-    pub const TOTVAHEXPPHA: crate::PointDef<Self, f32> = crate::PointDef::new(76, 2, false);
-    pub const TOTVAHEXPPHB: crate::PointDef<Self, f32> = crate::PointDef::new(78, 2, false);
-    pub const TOTVAHEXPPHC: crate::PointDef<Self, f32> = crate::PointDef::new(80, 2, false);
-    pub const TOTVAHIMP: crate::PointDef<Self, f32> = crate::PointDef::new(82, 2, false);
-    pub const TOTVAHIMPPHA: crate::PointDef<Self, f32> = crate::PointDef::new(84, 2, false);
-    pub const TOTVAHIMPPHB: crate::PointDef<Self, f32> = crate::PointDef::new(86, 2, false);
-    pub const TOTVAHIMPPHC: crate::PointDef<Self, f32> = crate::PointDef::new(88, 2, false);
-    pub const TOTVARHIMPQ1: crate::PointDef<Self, f32> = crate::PointDef::new(90, 2, false);
-    pub const TOTVARHIMPQ1PHA: crate::PointDef<Self, f32> = crate::PointDef::new(92, 2, false);
-    pub const TOTVARHIMPQ1PHB: crate::PointDef<Self, f32> = crate::PointDef::new(94, 2, false);
-    pub const TOTVARHIMPQ1PHC: crate::PointDef<Self, f32> = crate::PointDef::new(96, 2, false);
-    pub const TOTVARHIMPQ2: crate::PointDef<Self, f32> = crate::PointDef::new(98, 2, false);
-    pub const TOTVARHIMPQ2PHA: crate::PointDef<Self, f32> = crate::PointDef::new(100, 2, false);
-    pub const TOTVARHIMPQ2PHB: crate::PointDef<Self, f32> = crate::PointDef::new(102, 2, false);
-    pub const TOTVARHIMPQ2PHC: crate::PointDef<Self, f32> = crate::PointDef::new(104, 2, false);
-    pub const TOTVARHEXPQ3: crate::PointDef<Self, f32> = crate::PointDef::new(106, 2, false);
-    pub const TOTVARHEXPQ3PHA: crate::PointDef<Self, f32> = crate::PointDef::new(108, 2, false);
-    pub const TOTVARHEXPQ3PHB: crate::PointDef<Self, f32> = crate::PointDef::new(110, 2, false);
-    pub const TOTVARHEXPQ3PHC: crate::PointDef<Self, f32> = crate::PointDef::new(112, 2, false);
-    pub const TOTVARHEXPQ4: crate::PointDef<Self, f32> = crate::PointDef::new(114, 2, false);
-    pub const TOTVARHEXPQ4PHA: crate::PointDef<Self, f32> = crate::PointDef::new(116, 2, false);
-    pub const TOTVARHEXPQ4PHB: crate::PointDef<Self, f32> = crate::PointDef::new(118, 2, false);
-    pub const TOTVARHEXPQ4PHC: crate::PointDef<Self, f32> = crate::PointDef::new(120, 2, false);
+    pub const TOTWHIMPPHA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(68, 2, false);
+    pub const TOTWHIMPPHB: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(70, 2, false);
+    pub const TOTWHIMPPHC: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(72, 2, false);
+    pub const TOTVAHEXP: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(74, 2, false);
+    pub const TOTVAHEXPPHA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(76, 2, false);
+    pub const TOTVAHEXPPHB: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(78, 2, false);
+    pub const TOTVAHEXPPHC: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(80, 2, false);
+    pub const TOTVAHIMP: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(82, 2, false);
+    pub const TOTVAHIMPPHA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(84, 2, false);
+    pub const TOTVAHIMPPHB: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(86, 2, false);
+    pub const TOTVAHIMPPHC: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(88, 2, false);
+    pub const TOTVARHIMPQ1: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(90, 2, false);
+    pub const TOTVARHIMPQ1PHA: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(92, 2, false);
+    pub const TOTVARHIMPQ1PHB: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(94, 2, false);
+    pub const TOTVARHIMPQ1PHC: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(96, 2, false);
+    pub const TOTVARHIMPQ2: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(98, 2, false);
+    pub const TOTVARHIMPQ2PHA: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(100, 2, false);
+    pub const TOTVARHIMPQ2PHB: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(102, 2, false);
+    pub const TOTVARHIMPQ2PHC: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(104, 2, false);
+    pub const TOTVARHEXPQ3: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(106, 2, false);
+    pub const TOTVARHEXPQ3PHA: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(108, 2, false);
+    pub const TOTVARHEXPQ3PHB: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(110, 2, false);
+    pub const TOTVARHEXPQ3PHC: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(112, 2, false);
+    pub const TOTVARHEXPQ4: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(114, 2, false);
+    pub const TOTVARHEXPQ4PHA: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(116, 2, false);
+    pub const TOTVARHEXPQ4PHB: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(118, 2, false);
+    pub const TOTVARHEXPQ4PHC: crate::PointDef<Self, Option<f32>> =
+        crate::PointDef::new(120, 2, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(122, 2, false);
 }
 
@@ -252,40 +266,20 @@ impl crate::Model for Model214 {
     const ID: u16 = 214;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            a: Self::A
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            apha: Self::APHA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            aphb: Self::APHB
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            aphc: Self::APHC
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            a: Self::A.from_data(data)?,
+            apha: Self::APHA.from_data(data)?,
+            aphb: Self::APHB.from_data(data)?,
+            aphc: Self::APHC.from_data(data)?,
             phv: Self::PHV.from_data(data)?,
             phvpha: Self::PHVPHA.from_data(data)?,
             phvphb: Self::PHVPHB.from_data(data)?,
             phvphc: Self::PHVPHC.from_data(data)?,
-            ppv: Self::PPV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ppvphab: Self::PPVPHAB
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ppvphbc: Self::PPVPHBC
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ppvphca: Self::PPVPHCA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            hz: Self::HZ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            w: Self::W
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            ppv: Self::PPV.from_data(data)?,
+            ppvphab: Self::PPVPHAB.from_data(data)?,
+            ppvphbc: Self::PPVPHBC.from_data(data)?,
+            ppvphca: Self::PPVPHCA.from_data(data)?,
+            hz: Self::HZ.from_data(data)?,
+            w: Self::W.from_data(data)?,
             wpha: Self::WPHA.from_data(data)?,
             wphb: Self::WPHB.from_data(data)?,
             wphc: Self::WPHC.from_data(data)?,
@@ -301,15 +295,11 @@ impl crate::Model for Model214 {
             pfpha: Self::PFPHA.from_data(data)?,
             pfphb: Self::PFPHB.from_data(data)?,
             pfphc: Self::PFPHC.from_data(data)?,
-            totwhexp: Self::TOTWHEXP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            totwhexp: Self::TOTWHEXP.from_data(data)?,
             totwhexppha: Self::TOTWHEXPPHA.from_data(data)?,
             totwhexpphb: Self::TOTWHEXPPHB.from_data(data)?,
             totwhexpphc: Self::TOTWHEXPPHC.from_data(data)?,
-            totwhimp: Self::TOTWHIMP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            totwhimp: Self::TOTWHIMP.from_data(data)?,
             totwhimppha: Self::TOTWHIMPPHA.from_data(data)?,
             totwhimpphb: Self::TOTWHIMPPHB.from_data(data)?,
             totwhimpphc: Self::TOTWHIMPPHC.from_data(data)?,
@@ -337,9 +327,7 @@ impl crate::Model for Model214 {
             totvarhexpq4pha: Self::TOTVARHEXPQ4PHA.from_data(data)?,
             totvarhexpq4phb: Self::TOTVARHEXPQ4PHB.from_data(data)?,
             totvarhexpq4phc: Self::TOTVARHEXPQ4PHC.from_data(data)?,
-            evt: Self::EVT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            evt: Self::EVT.from_data(data)?,
         })
     }
 }

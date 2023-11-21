@@ -36,13 +36,13 @@ pub struct Model713 {
 #[allow(missing_docs)]
 
 impl Model713 {
-    pub const WHRTG: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const WHAVAIL: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
-    pub const SOC: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const SOH: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const STA: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const WH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
-    pub const PCT_SF: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
+    pub const WHRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
+    pub const WHAVAIL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
+    pub const SOC: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
+    pub const SOH: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
+    pub const STA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
+    pub const WH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(5, 1, false);
+    pub const PCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
 }
 
 impl crate::Model for Model713 {

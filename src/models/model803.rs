@@ -119,49 +119,41 @@ impl Model803 {
     pub const NSTR: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const NSTRCON: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const MODTMPMAX: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
-    pub const MODTMPMAXSTR: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const MODTMPMAXMOD: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
+    pub const MODTMPMAXSTR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
+    pub const MODTMPMAXMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
     pub const MODTMPMIN: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
-    pub const MODTMPMINSTR: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
-    pub const MODTMPMINMOD: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
-    pub const MODTMPAVG: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
-    pub const STRVMAX: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const STRVMAXSTR: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
-    pub const STRVMIN: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
-    pub const STRVMINSTR: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, false);
-    pub const STRVAVG: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, false);
-    pub const STRAMAX: crate::PointDef<Self, i16> = crate::PointDef::new(14, 1, false);
-    pub const STRAMAXSTR: crate::PointDef<Self, u16> = crate::PointDef::new(15, 1, false);
-    pub const STRAMIN: crate::PointDef<Self, i16> = crate::PointDef::new(16, 1, false);
-    pub const STRAMINSTR: crate::PointDef<Self, u16> = crate::PointDef::new(17, 1, false);
-    pub const STRAAVG: crate::PointDef<Self, i16> = crate::PointDef::new(18, 1, false);
-    pub const NCELLBAL: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
+    pub const MODTMPMINSTR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
+    pub const MODTMPMINMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
+    pub const MODTMPAVG: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(8, 1, false);
+    pub const STRVMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, false);
+    pub const STRVMAXSTR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, false);
+    pub const STRVMIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, false);
+    pub const STRVMINSTR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, false);
+    pub const STRVAVG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(13, 1, false);
+    pub const STRAMAX: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(14, 1, false);
+    pub const STRAMAXSTR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(15, 1, false);
+    pub const STRAMIN: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(16, 1, false);
+    pub const STRAMINSTR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, false);
+    pub const STRAAVG: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(18, 1, false);
+    pub const NCELLBAL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(19, 1, false);
     pub const CELLV_SF: crate::PointDef<Self, i16> = crate::PointDef::new(20, 1, false);
     pub const MODTMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(21, 1, false);
     pub const A_SF: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
-    pub const SOH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(23, 1, false);
+    pub const SOH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
     pub const SOC_SF: crate::PointDef<Self, i16> = crate::PointDef::new(24, 1, false);
-    pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(25, 1, false);
+    pub const V_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(25, 1, false);
 }
 
 impl crate::Model for Model803 {
     const ID: u16 = 803;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            nstr: Self::NSTR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            nstrcon: Self::NSTRCON
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            modtmpmax: Self::MODTMPMAX
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            nstr: Self::NSTR.from_data(data)?,
+            nstrcon: Self::NSTRCON.from_data(data)?,
+            modtmpmax: Self::MODTMPMAX.from_data(data)?,
             modtmpmaxstr: Self::MODTMPMAXSTR.from_data(data)?,
             modtmpmaxmod: Self::MODTMPMAXMOD.from_data(data)?,
-            modtmpmin: Self::MODTMPMIN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            modtmpmin: Self::MODTMPMIN.from_data(data)?,
             modtmpminstr: Self::MODTMPMINSTR.from_data(data)?,
             modtmpminmod: Self::MODTMPMINMOD.from_data(data)?,
             modtmpavg: Self::MODTMPAVG.from_data(data)?,
@@ -176,19 +168,11 @@ impl crate::Model for Model803 {
             straminstr: Self::STRAMINSTR.from_data(data)?,
             straavg: Self::STRAAVG.from_data(data)?,
             ncellbal: Self::NCELLBAL.from_data(data)?,
-            cellv_sf: Self::CELLV_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            modtmp_sf: Self::MODTMP_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            a_sf: Self::A_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            cellv_sf: Self::CELLV_SF.from_data(data)?,
+            modtmp_sf: Self::MODTMP_SF.from_data(data)?,
+            a_sf: Self::A_SF.from_data(data)?,
             soh_sf: Self::SOH_SF.from_data(data)?,
-            soc_sf: Self::SOC_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            soc_sf: Self::SOC_SF.from_data(data)?,
             v_sf: Self::V_SF.from_data(data)?,
         })
     }

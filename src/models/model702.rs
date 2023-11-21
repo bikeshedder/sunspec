@@ -210,55 +210,61 @@ pub struct Model702 {
 #[allow(missing_docs)]
 
 impl Model702 {
-    pub const WMAXRTG: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const WOVREXTRTG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
-    pub const WOVREXTRTGPF: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const WUNDEXTRTG: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const WUNDEXTRTGPF: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const VAMAXRTG: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
-    pub const VARMAXINJRTG: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
-    pub const VARMAXABSRTG: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
-    pub const WCHARTEMAXRTG: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
-    pub const WDISCHARTEMAXRTG: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const VACHARTEMAXRTG: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
-    pub const VADISCHARTEMAXRTG: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
-    pub const VNOMRTG: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, false);
-    pub const VMAXRTG: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, false);
-    pub const VMINRTG: crate::PointDef<Self, u16> = crate::PointDef::new(14, 1, false);
-    pub const AMAXRTG: crate::PointDef<Self, u16> = crate::PointDef::new(15, 1, false);
-    pub const PFOVREXTRTG: crate::PointDef<Self, u16> = crate::PointDef::new(16, 1, false);
-    pub const PFUNDEXTRTG: crate::PointDef<Self, u16> = crate::PointDef::new(17, 1, false);
-    pub const REACTSUSCEPTRTG: crate::PointDef<Self, u16> = crate::PointDef::new(18, 1, false);
-    pub const NOROPCATRTG: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
-    pub const ABNOPCATRTG: crate::PointDef<Self, u16> = crate::PointDef::new(20, 1, false);
-    pub const CTRLMODES: crate::PointDef<Self, u32> = crate::PointDef::new(21, 2, false);
-    pub const INTISLANDCATRTG: crate::PointDef<Self, u16> = crate::PointDef::new(23, 1, false);
-    pub const WMAX: crate::PointDef<Self, u16> = crate::PointDef::new(24, 1, true);
-    pub const WMAXOVREXT: crate::PointDef<Self, u16> = crate::PointDef::new(25, 1, true);
-    pub const WOVREXTPF: crate::PointDef<Self, u16> = crate::PointDef::new(26, 1, true);
-    pub const WMAXUNDEXT: crate::PointDef<Self, u16> = crate::PointDef::new(27, 1, true);
-    pub const WUNDEXTPF: crate::PointDef<Self, u16> = crate::PointDef::new(28, 1, true);
-    pub const VAMAX: crate::PointDef<Self, u16> = crate::PointDef::new(29, 1, true);
-    pub const VARMAXINJ: crate::PointDef<Self, u16> = crate::PointDef::new(30, 1, true);
-    pub const VARMAXABS: crate::PointDef<Self, u16> = crate::PointDef::new(31, 1, true);
-    pub const WCHARTEMAX: crate::PointDef<Self, u16> = crate::PointDef::new(32, 1, true);
-    pub const WDISCHARTEMAX: crate::PointDef<Self, u16> = crate::PointDef::new(33, 1, true);
-    pub const VACHARTEMAX: crate::PointDef<Self, u16> = crate::PointDef::new(34, 1, true);
-    pub const VADISCHARTEMAX: crate::PointDef<Self, u16> = crate::PointDef::new(35, 1, true);
-    pub const VNOM: crate::PointDef<Self, u16> = crate::PointDef::new(36, 1, true);
-    pub const VMAX: crate::PointDef<Self, u16> = crate::PointDef::new(37, 1, true);
-    pub const VMIN: crate::PointDef<Self, u16> = crate::PointDef::new(38, 1, true);
-    pub const AMAX: crate::PointDef<Self, u16> = crate::PointDef::new(39, 1, true);
-    pub const PFOVREXT: crate::PointDef<Self, u16> = crate::PointDef::new(40, 1, true);
-    pub const PFUNDEXT: crate::PointDef<Self, u16> = crate::PointDef::new(41, 1, true);
-    pub const INTISLANDCAT: crate::PointDef<Self, u16> = crate::PointDef::new(42, 1, true);
-    pub const W_SF: crate::PointDef<Self, i16> = crate::PointDef::new(43, 1, false);
-    pub const PF_SF: crate::PointDef<Self, i16> = crate::PointDef::new(44, 1, false);
-    pub const VA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(45, 1, false);
-    pub const VAR_SF: crate::PointDef<Self, i16> = crate::PointDef::new(46, 1, false);
-    pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(47, 1, false);
-    pub const A_SF: crate::PointDef<Self, i16> = crate::PointDef::new(48, 1, false);
-    pub const S_SF: crate::PointDef<Self, i16> = crate::PointDef::new(49, 1, false);
+    pub const WMAXRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
+    pub const WOVREXTRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
+    pub const WOVREXTRTGPF: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
+    pub const WUNDEXTRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
+    pub const WUNDEXTRTGPF: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
+    pub const VAMAXRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
+    pub const VARMAXINJRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
+    pub const VARMAXABSRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
+    pub const WCHARTEMAXRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, false);
+    pub const WDISCHARTEMAXRTG: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(9, 1, false);
+    pub const VACHARTEMAXRTG: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(10, 1, false);
+    pub const VADISCHARTEMAXRTG: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(11, 1, false);
+    pub const VNOMRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, false);
+    pub const VMAXRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(13, 1, false);
+    pub const VMINRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(14, 1, false);
+    pub const AMAXRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(15, 1, false);
+    pub const PFOVREXTRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(16, 1, false);
+    pub const PFUNDEXTRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, false);
+    pub const REACTSUSCEPTRTG: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(18, 1, false);
+    pub const NOROPCATRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(19, 1, false);
+    pub const ABNOPCATRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(20, 1, false);
+    pub const CTRLMODES: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(21, 2, false);
+    pub const INTISLANDCATRTG: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(23, 1, false);
+    pub const WMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(24, 1, true);
+    pub const WMAXOVREXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(25, 1, true);
+    pub const WOVREXTPF: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(26, 1, true);
+    pub const WMAXUNDEXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(27, 1, true);
+    pub const WUNDEXTPF: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(28, 1, true);
+    pub const VAMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(29, 1, true);
+    pub const VARMAXINJ: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(30, 1, true);
+    pub const VARMAXABS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(31, 1, true);
+    pub const WCHARTEMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(32, 1, true);
+    pub const WDISCHARTEMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(33, 1, true);
+    pub const VACHARTEMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(34, 1, true);
+    pub const VADISCHARTEMAX: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(35, 1, true);
+    pub const VNOM: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(36, 1, true);
+    pub const VMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(37, 1, true);
+    pub const VMIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(38, 1, true);
+    pub const AMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(39, 1, true);
+    pub const PFOVREXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(40, 1, true);
+    pub const PFUNDEXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(41, 1, true);
+    pub const INTISLANDCAT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(42, 1, true);
+    pub const W_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(43, 1, false);
+    pub const PF_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(44, 1, false);
+    pub const VA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(45, 1, false);
+    pub const VAR_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(46, 1, false);
+    pub const V_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(47, 1, false);
+    pub const A_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(48, 1, false);
+    pub const S_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(49, 1, false);
 }
 
 impl crate::Model for Model702 {

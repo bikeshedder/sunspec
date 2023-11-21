@@ -51,31 +51,21 @@ impl Model127 {
     pub const HZSTOP: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, true);
     pub const HYSENA: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
     pub const MODENA: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
-    pub const HZSTOPWGRA: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
-    pub const WGRA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
-    pub const HZSTRSTOP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
-    pub const RMPINCDEC_SF: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
+    pub const HZSTOPWGRA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
+    pub const WGRA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
+    pub const HZSTRSTOP_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(7, 1, false);
+    pub const RMPINCDEC_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(8, 1, false);
 }
 
 impl crate::Model for Model127 {
     const ID: u16 = 127;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            wgra: Self::WGRA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            hzstr: Self::HZSTR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            hzstop: Self::HZSTOP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            hysena: Self::HYSENA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            modena: Self::MODENA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            wgra: Self::WGRA.from_data(data)?,
+            hzstr: Self::HZSTR.from_data(data)?,
+            hzstop: Self::HZSTOP.from_data(data)?,
+            hysena: Self::HYSENA.from_data(data)?,
+            modena: Self::MODENA.from_data(data)?,
             hzstopwgra: Self::HZSTOPWGRA.from_data(data)?,
             wgra_sf: Self::WGRA_SF.from_data(data)?,
             hzstrstop_sf: Self::HZSTRSTOP_SF.from_data(data)?,

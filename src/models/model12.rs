@@ -68,7 +68,7 @@ pub struct Model12 {
 #[allow(missing_docs)]
 
 impl Model12 {
-    pub const NAM: crate::PointDef<Self, String> = crate::PointDef::new(0, 4, true);
+    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const CFGST: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
     pub const CHGST: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
     pub const CAP: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
@@ -76,13 +76,13 @@ impl Model12 {
     pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, true);
     pub const ADDR: crate::PointDef<Self, String> = crate::PointDef::new(9, 8, true);
     pub const MSK: crate::PointDef<Self, String> = crate::PointDef::new(17, 8, true);
-    pub const GW: crate::PointDef<Self, String> = crate::PointDef::new(25, 8, true);
-    pub const DNS1: crate::PointDef<Self, String> = crate::PointDef::new(33, 8, true);
-    pub const DNS2: crate::PointDef<Self, String> = crate::PointDef::new(41, 8, true);
-    pub const NTP1: crate::PointDef<Self, String> = crate::PointDef::new(49, 12, true);
-    pub const NTP2: crate::PointDef<Self, String> = crate::PointDef::new(61, 12, true);
-    pub const DOMNAM: crate::PointDef<Self, String> = crate::PointDef::new(73, 12, true);
-    pub const HOSTNAM: crate::PointDef<Self, String> = crate::PointDef::new(85, 12, true);
+    pub const GW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(25, 8, true);
+    pub const DNS1: crate::PointDef<Self, Option<String>> = crate::PointDef::new(33, 8, true);
+    pub const DNS2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(41, 8, true);
+    pub const NTP1: crate::PointDef<Self, Option<String>> = crate::PointDef::new(49, 12, true);
+    pub const NTP2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(61, 12, true);
+    pub const DOMNAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(73, 12, true);
+    pub const HOSTNAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(85, 12, true);
 }
 
 impl crate::Model for Model12 {
@@ -90,27 +90,13 @@ impl crate::Model for Model12 {
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             nam: Self::NAM.from_data(data)?,
-            cfgst: Self::CFGST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            chgst: Self::CHGST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cap: Self::CAP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cfg: Self::CFG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ctl: Self::CTL
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            addr: Self::ADDR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            msk: Self::MSK
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            cfgst: Self::CFGST.from_data(data)?,
+            chgst: Self::CHGST.from_data(data)?,
+            cap: Self::CAP.from_data(data)?,
+            cfg: Self::CFG.from_data(data)?,
+            ctl: Self::CTL.from_data(data)?,
+            addr: Self::ADDR.from_data(data)?,
+            msk: Self::MSK.from_data(data)?,
             gw: Self::GW.from_data(data)?,
             dns1: Self::DNS1.from_data(data)?,
             dns2: Self::DNS2.from_data(data)?,

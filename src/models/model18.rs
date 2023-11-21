@@ -28,11 +28,11 @@ pub struct Model18 {
 #[allow(missing_docs)]
 
 impl Model18 {
-    pub const NAM: crate::PointDef<Self, String> = crate::PointDef::new(0, 4, true);
-    pub const IMEI: crate::PointDef<Self, u32> = crate::PointDef::new(4, 2, true);
-    pub const APN: crate::PointDef<Self, String> = crate::PointDef::new(6, 4, true);
-    pub const NUM: crate::PointDef<Self, String> = crate::PointDef::new(10, 6, true);
-    pub const PIN: crate::PointDef<Self, String> = crate::PointDef::new(16, 6, true);
+    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
+    pub const IMEI: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, true);
+    pub const APN: crate::PointDef<Self, Option<String>> = crate::PointDef::new(6, 4, true);
+    pub const NUM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(10, 6, true);
+    pub const PIN: crate::PointDef<Self, Option<String>> = crate::PointDef::new(16, 6, true);
 }
 
 impl crate::Model for Model18 {

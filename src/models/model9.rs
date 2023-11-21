@@ -327,279 +327,97 @@ impl crate::Model for Model9 {
     const ID: u16 = 9;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            certuid: Self::CERTUID
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            certrole: Self::CERTROLE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            fmt: Self::FMT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            typ: Self::TYP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            totln: Self::TOTLN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frgln: Self::FRGLN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg1: Self::FRG1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg2: Self::FRG2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg3: Self::FRG3
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg4: Self::FRG4
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg5: Self::FRG5
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg6: Self::FRG6
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg7: Self::FRG7
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg8: Self::FRG8
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg9: Self::FRG9
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg10: Self::FRG10
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg11: Self::FRG11
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg12: Self::FRG12
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg13: Self::FRG13
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg14: Self::FRG14
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg15: Self::FRG15
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg16: Self::FRG16
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg17: Self::FRG17
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg18: Self::FRG18
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg19: Self::FRG19
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg20: Self::FRG20
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg21: Self::FRG21
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg22: Self::FRG22
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg23: Self::FRG23
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg24: Self::FRG24
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg25: Self::FRG25
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg26: Self::FRG26
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg27: Self::FRG27
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg28: Self::FRG28
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg29: Self::FRG29
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg30: Self::FRG30
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg31: Self::FRG31
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg32: Self::FRG32
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg33: Self::FRG33
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg34: Self::FRG34
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg35: Self::FRG35
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg36: Self::FRG36
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg37: Self::FRG37
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg38: Self::FRG38
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg39: Self::FRG39
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg40: Self::FRG40
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg41: Self::FRG41
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg42: Self::FRG42
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg43: Self::FRG43
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg44: Self::FRG44
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg45: Self::FRG45
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg46: Self::FRG46
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg47: Self::FRG47
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg48: Self::FRG48
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg49: Self::FRG49
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg50: Self::FRG50
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg51: Self::FRG51
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg52: Self::FRG52
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg53: Self::FRG53
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg54: Self::FRG54
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg55: Self::FRG55
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg56: Self::FRG56
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg57: Self::FRG57
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg58: Self::FRG58
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg59: Self::FRG59
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg60: Self::FRG60
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg61: Self::FRG61
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg62: Self::FRG62
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg63: Self::FRG63
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg64: Self::FRG64
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg65: Self::FRG65
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg66: Self::FRG66
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg67: Self::FRG67
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg68: Self::FRG68
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg69: Self::FRG69
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg70: Self::FRG70
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg71: Self::FRG71
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg72: Self::FRG72
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg73: Self::FRG73
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg74: Self::FRG74
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg75: Self::FRG75
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg78: Self::FRG78
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg79: Self::FRG79
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            frg80: Self::FRG80
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ts: Self::TS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ms: Self::MS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            seq: Self::SEQ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            uid: Self::UID
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            role: Self::ROLE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            alg: Self::ALG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            n: Self::N
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            certuid: Self::CERTUID.from_data(data)?,
+            certrole: Self::CERTROLE.from_data(data)?,
+            fmt: Self::FMT.from_data(data)?,
+            typ: Self::TYP.from_data(data)?,
+            totln: Self::TOTLN.from_data(data)?,
+            frgln: Self::FRGLN.from_data(data)?,
+            frg1: Self::FRG1.from_data(data)?,
+            frg2: Self::FRG2.from_data(data)?,
+            frg3: Self::FRG3.from_data(data)?,
+            frg4: Self::FRG4.from_data(data)?,
+            frg5: Self::FRG5.from_data(data)?,
+            frg6: Self::FRG6.from_data(data)?,
+            frg7: Self::FRG7.from_data(data)?,
+            frg8: Self::FRG8.from_data(data)?,
+            frg9: Self::FRG9.from_data(data)?,
+            frg10: Self::FRG10.from_data(data)?,
+            frg11: Self::FRG11.from_data(data)?,
+            frg12: Self::FRG12.from_data(data)?,
+            frg13: Self::FRG13.from_data(data)?,
+            frg14: Self::FRG14.from_data(data)?,
+            frg15: Self::FRG15.from_data(data)?,
+            frg16: Self::FRG16.from_data(data)?,
+            frg17: Self::FRG17.from_data(data)?,
+            frg18: Self::FRG18.from_data(data)?,
+            frg19: Self::FRG19.from_data(data)?,
+            frg20: Self::FRG20.from_data(data)?,
+            frg21: Self::FRG21.from_data(data)?,
+            frg22: Self::FRG22.from_data(data)?,
+            frg23: Self::FRG23.from_data(data)?,
+            frg24: Self::FRG24.from_data(data)?,
+            frg25: Self::FRG25.from_data(data)?,
+            frg26: Self::FRG26.from_data(data)?,
+            frg27: Self::FRG27.from_data(data)?,
+            frg28: Self::FRG28.from_data(data)?,
+            frg29: Self::FRG29.from_data(data)?,
+            frg30: Self::FRG30.from_data(data)?,
+            frg31: Self::FRG31.from_data(data)?,
+            frg32: Self::FRG32.from_data(data)?,
+            frg33: Self::FRG33.from_data(data)?,
+            frg34: Self::FRG34.from_data(data)?,
+            frg35: Self::FRG35.from_data(data)?,
+            frg36: Self::FRG36.from_data(data)?,
+            frg37: Self::FRG37.from_data(data)?,
+            frg38: Self::FRG38.from_data(data)?,
+            frg39: Self::FRG39.from_data(data)?,
+            frg40: Self::FRG40.from_data(data)?,
+            frg41: Self::FRG41.from_data(data)?,
+            frg42: Self::FRG42.from_data(data)?,
+            frg43: Self::FRG43.from_data(data)?,
+            frg44: Self::FRG44.from_data(data)?,
+            frg45: Self::FRG45.from_data(data)?,
+            frg46: Self::FRG46.from_data(data)?,
+            frg47: Self::FRG47.from_data(data)?,
+            frg48: Self::FRG48.from_data(data)?,
+            frg49: Self::FRG49.from_data(data)?,
+            frg50: Self::FRG50.from_data(data)?,
+            frg51: Self::FRG51.from_data(data)?,
+            frg52: Self::FRG52.from_data(data)?,
+            frg53: Self::FRG53.from_data(data)?,
+            frg54: Self::FRG54.from_data(data)?,
+            frg55: Self::FRG55.from_data(data)?,
+            frg56: Self::FRG56.from_data(data)?,
+            frg57: Self::FRG57.from_data(data)?,
+            frg58: Self::FRG58.from_data(data)?,
+            frg59: Self::FRG59.from_data(data)?,
+            frg60: Self::FRG60.from_data(data)?,
+            frg61: Self::FRG61.from_data(data)?,
+            frg62: Self::FRG62.from_data(data)?,
+            frg63: Self::FRG63.from_data(data)?,
+            frg64: Self::FRG64.from_data(data)?,
+            frg65: Self::FRG65.from_data(data)?,
+            frg66: Self::FRG66.from_data(data)?,
+            frg67: Self::FRG67.from_data(data)?,
+            frg68: Self::FRG68.from_data(data)?,
+            frg69: Self::FRG69.from_data(data)?,
+            frg70: Self::FRG70.from_data(data)?,
+            frg71: Self::FRG71.from_data(data)?,
+            frg72: Self::FRG72.from_data(data)?,
+            frg73: Self::FRG73.from_data(data)?,
+            frg74: Self::FRG74.from_data(data)?,
+            frg75: Self::FRG75.from_data(data)?,
+            frg78: Self::FRG78.from_data(data)?,
+            frg79: Self::FRG79.from_data(data)?,
+            frg80: Self::FRG80.from_data(data)?,
+            ts: Self::TS.from_data(data)?,
+            ms: Self::MS.from_data(data)?,
+            seq: Self::SEQ.from_data(data)?,
+            uid: Self::UID.from_data(data)?,
+            role: Self::ROLE.from_data(data)?,
+            alg: Self::ALG.from_data(data)?,
+            n: Self::N.from_data(data)?,
         })
     }
 }

@@ -30,11 +30,11 @@ pub struct Model715 {
 #[allow(missing_docs)]
 
 impl Model715 {
-    pub const LOCREMCTL: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const DERHB: crate::PointDef<Self, u32> = crate::PointDef::new(1, 2, false);
-    pub const CONTROLLERHB: crate::PointDef<Self, u32> = crate::PointDef::new(3, 2, true);
-    pub const ALARMRESET: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
-    pub const OPCTL: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
+    pub const LOCREMCTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
+    pub const DERHB: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(1, 2, false);
+    pub const CONTROLLERHB: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(3, 2, true);
+    pub const ALARMRESET: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
+    pub const OPCTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
 }
 
 impl crate::Model for Model715 {

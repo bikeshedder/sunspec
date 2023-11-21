@@ -32,12 +32,12 @@ pub struct Model305 {
 #[allow(missing_docs)]
 
 impl Model305 {
-    pub const TM: crate::PointDef<Self, String> = crate::PointDef::new(0, 6, false);
-    pub const DATE: crate::PointDef<Self, String> = crate::PointDef::new(6, 4, false);
-    pub const LOC: crate::PointDef<Self, String> = crate::PointDef::new(10, 20, false);
-    pub const LAT: crate::PointDef<Self, i32> = crate::PointDef::new(30, 2, false);
-    pub const LONG: crate::PointDef<Self, i32> = crate::PointDef::new(32, 2, false);
-    pub const ALT: crate::PointDef<Self, i32> = crate::PointDef::new(34, 2, false);
+    pub const TM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 6, false);
+    pub const DATE: crate::PointDef<Self, Option<String>> = crate::PointDef::new(6, 4, false);
+    pub const LOC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(10, 20, false);
+    pub const LAT: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(30, 2, false);
+    pub const LONG: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(32, 2, false);
+    pub const ALT: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(34, 2, false);
 }
 
 impl crate::Model for Model305 {

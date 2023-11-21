@@ -52,17 +52,17 @@ pub struct Model703 {
 #[allow(missing_docs)]
 
 impl Model703 {
-    pub const ES: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const ESVHI: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const ESVLO: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
-    pub const ESHZHI: crate::PointDef<Self, u32> = crate::PointDef::new(3, 2, true);
-    pub const ESHZLO: crate::PointDef<Self, u32> = crate::PointDef::new(5, 2, true);
-    pub const ESDLYTMS: crate::PointDef<Self, u32> = crate::PointDef::new(7, 2, true);
-    pub const ESRNDTMS: crate::PointDef<Self, u32> = crate::PointDef::new(9, 2, true);
-    pub const ESRMPTMS: crate::PointDef<Self, u32> = crate::PointDef::new(11, 2, true);
-    pub const ESDLYREMTMS: crate::PointDef<Self, u32> = crate::PointDef::new(13, 2, false);
-    pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(15, 1, false);
-    pub const HZ_SF: crate::PointDef<Self, i16> = crate::PointDef::new(16, 1, false);
+    pub const ES: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
+    pub const ESVHI: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
+    pub const ESVLO: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, true);
+    pub const ESHZHI: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(3, 2, true);
+    pub const ESHZLO: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(5, 2, true);
+    pub const ESDLYTMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, true);
+    pub const ESRNDTMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(9, 2, true);
+    pub const ESRMPTMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(11, 2, true);
+    pub const ESDLYREMTMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(13, 2, false);
+    pub const V_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(15, 1, false);
+    pub const HZ_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(16, 1, false);
 }
 
 impl crate::Model for Model703 {

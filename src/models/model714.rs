@@ -54,17 +54,17 @@ pub struct Model714 {
 #[allow(missing_docs)]
 
 impl Model714 {
-    pub const PRTALRMS: crate::PointDef<Self, u32> = crate::PointDef::new(0, 2, false);
-    pub const NPRT: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const DCA: crate::PointDef<Self, i16> = crate::PointDef::new(3, 1, false);
-    pub const DCW: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
-    pub const DCWHINJ: crate::PointDef<Self, u64> = crate::PointDef::new(5, 4, false);
-    pub const DCWHABS: crate::PointDef<Self, u64> = crate::PointDef::new(9, 4, false);
-    pub const DCA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(13, 1, false);
-    pub const DCV_SF: crate::PointDef<Self, i16> = crate::PointDef::new(14, 1, false);
-    pub const DCW_SF: crate::PointDef<Self, i16> = crate::PointDef::new(15, 1, false);
-    pub const DCWH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(16, 1, false);
-    pub const TMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(17, 1, false);
+    pub const PRTALRMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(0, 2, false);
+    pub const NPRT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
+    pub const DCA: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
+    pub const DCW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(4, 1, false);
+    pub const DCWHINJ: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(5, 4, false);
+    pub const DCWHABS: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(9, 4, false);
+    pub const DCA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(13, 1, false);
+    pub const DCV_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(14, 1, false);
+    pub const DCW_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(15, 1, false);
+    pub const DCWH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(16, 1, false);
+    pub const TMP_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(17, 1, false);
 }
 
 impl crate::Model for Model714 {

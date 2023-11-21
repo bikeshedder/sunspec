@@ -86,27 +86,27 @@ pub struct Model502 {
 #[allow(missing_docs)]
 
 impl Model502 {
-    pub const A_SF: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
-    pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, false);
-    pub const W_SF: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
-    pub const WH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(3, 1, false);
+    pub const A_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
+    pub const V_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
+    pub const W_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
+    pub const WH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
     pub const STAT: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const STATVEND: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
+    pub const STATVEND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(6, 2, false);
-    pub const EVTVEND: crate::PointDef<Self, u32> = crate::PointDef::new(8, 2, false);
-    pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, true);
-    pub const CTLVEND: crate::PointDef<Self, u32> = crate::PointDef::new(11, 2, true);
-    pub const CTLVAL: crate::PointDef<Self, i32> = crate::PointDef::new(13, 2, true);
-    pub const TMS: crate::PointDef<Self, u32> = crate::PointDef::new(15, 2, false);
-    pub const OUTA: crate::PointDef<Self, i16> = crate::PointDef::new(17, 1, false);
-    pub const OUTV: crate::PointDef<Self, i16> = crate::PointDef::new(18, 1, false);
-    pub const OUTWH: crate::PointDef<Self, u32> = crate::PointDef::new(19, 2, false);
-    pub const OUTPW: crate::PointDef<Self, i16> = crate::PointDef::new(21, 1, false);
-    pub const TMP: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
-    pub const INA: crate::PointDef<Self, i16> = crate::PointDef::new(23, 1, false);
-    pub const INV: crate::PointDef<Self, i16> = crate::PointDef::new(24, 1, false);
-    pub const INWH: crate::PointDef<Self, u32> = crate::PointDef::new(25, 2, false);
-    pub const INW: crate::PointDef<Self, i16> = crate::PointDef::new(27, 1, false);
+    pub const EVTVEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(8, 2, false);
+    pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, true);
+    pub const CTLVEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(11, 2, true);
+    pub const CTLVAL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(13, 2, true);
+    pub const TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(15, 2, false);
+    pub const OUTA: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(17, 1, false);
+    pub const OUTV: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(18, 1, false);
+    pub const OUTWH: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(19, 2, false);
+    pub const OUTPW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(21, 1, false);
+    pub const TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(22, 1, false);
+    pub const INA: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
+    pub const INV: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(24, 1, false);
+    pub const INWH: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(25, 2, false);
+    pub const INW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(27, 1, false);
 }
 
 impl crate::Model for Model502 {
@@ -117,13 +117,9 @@ impl crate::Model for Model502 {
             v_sf: Self::V_SF.from_data(data)?,
             w_sf: Self::W_SF.from_data(data)?,
             wh_sf: Self::WH_SF.from_data(data)?,
-            stat: Self::STAT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            stat: Self::STAT.from_data(data)?,
             statvend: Self::STATVEND.from_data(data)?,
-            evt: Self::EVT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            evt: Self::EVT.from_data(data)?,
             evtvend: Self::EVTVEND.from_data(data)?,
             ctl: Self::CTL.from_data(data)?,
             ctlvend: Self::CTLVEND.from_data(data)?,

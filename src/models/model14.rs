@@ -40,14 +40,14 @@ pub struct Model14 {
 #[allow(missing_docs)]
 
 impl Model14 {
-    pub const NAM: crate::PointDef<Self, String> = crate::PointDef::new(0, 4, true);
+    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const CAP: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
     pub const CFG: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
     pub const TYP: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
     pub const ADDR: crate::PointDef<Self, String> = crate::PointDef::new(7, 20, true);
     pub const PORT: crate::PointDef<Self, u16> = crate::PointDef::new(27, 1, true);
-    pub const USER: crate::PointDef<Self, String> = crate::PointDef::new(28, 12, true);
-    pub const PW: crate::PointDef<Self, String> = crate::PointDef::new(40, 12, true);
+    pub const USER: crate::PointDef<Self, Option<String>> = crate::PointDef::new(28, 12, true);
+    pub const PW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(40, 12, true);
 }
 
 impl crate::Model for Model14 {
@@ -55,21 +55,11 @@ impl crate::Model for Model14 {
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             nam: Self::NAM.from_data(data)?,
-            cap: Self::CAP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cfg: Self::CFG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            typ: Self::TYP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            addr: Self::ADDR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            port: Self::PORT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            cap: Self::CAP.from_data(data)?,
+            cfg: Self::CFG.from_data(data)?,
+            typ: Self::TYP.from_data(data)?,
+            addr: Self::ADDR.from_data(data)?,
+            port: Self::PORT.from_data(data)?,
             user: Self::USER.from_data(data)?,
             pw: Self::PW.from_data(data)?,
         })

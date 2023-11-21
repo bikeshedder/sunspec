@@ -162,147 +162,53 @@ impl crate::Model for Model64110 {
     const ID: u16 = 64110;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            majorfwrev: Self::MAJORFWREV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            midfwrev: Self::MIDFWREV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            minorfwrev: Self::MINORFWREV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            encrypkey: Self::ENCRYPKEY
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            mac_address: Self::MAC_ADDRESS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            writepassword: Self::WRITEPASSWORD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            enabledhcp: Self::ENABLEDHCP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            tcpip_address: Self::TCPIP_ADDRESS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            gateway_address: Self::GATEWAY_ADDRESS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            tcpip_netmask: Self::TCPIP_NETMASK
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            dns1_address: Self::DNS1_ADDRESS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            dns2_address: Self::DNS2_ADDRESS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            modbus_port: Self::MODBUS_PORT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            smtp_server_nm: Self::SMTP_SERVER_NM
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            smtp_account_nm: Self::SMTP_ACCOUNT_NM
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            smtp_enable_ssl: Self::SMTP_ENABLE_SSL
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            smtp_password: Self::SMTP_PASSWORD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            smtp_user_nm: Self::SMTP_USER_NM
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            stat_email_int: Self::STAT_EMAIL_INT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            stat_start_hr: Self::STAT_START_HR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            stat_email_sub: Self::STAT_EMAIL_SUB
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            stat_email_addr1: Self::STAT_EMAIL_ADDR1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            stat_email_addr2: Self::STAT_EMAIL_ADDR2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            alarm_email_en: Self::ALARM_EMAIL_EN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            alarm_email_sub: Self::ALARM_EMAIL_SUB
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            alarm_email_addr1: Self::ALARM_EMAIL_ADDR1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            alarm_email_addr2: Self::ALARM_EMAIL_ADDR2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ftp_password: Self::FTP_PASSWORD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            telnet_password: Self::TELNET_PASSWORD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            log_write_int: Self::LOG_WRITE_INT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            log_retain: Self::LOG_RETAIN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            log_mode: Self::LOG_MODE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ntp_server_nm: Self::NTP_SERVER_NM
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ntp_enable: Self::NTP_ENABLE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            timezone: Self::TIMEZONE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            date_year: Self::DATE_YEAR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            date_month: Self::DATE_MONTH
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            date_day: Self::DATE_DAY
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            time_hour: Self::TIME_HOUR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            time_minute: Self::TIME_MINUTE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            time_second: Self::TIME_SECOND
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            battery_temp: Self::BATTERY_TEMP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ambient_temp: Self::AMBIENT_TEMP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            temp_sf: Self::TEMP_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            axs_error: Self::AXS_ERROR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            axs_status: Self::AXS_STATUS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            axs_spare: Self::AXS_SPARE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            majorfwrev: Self::MAJORFWREV.from_data(data)?,
+            midfwrev: Self::MIDFWREV.from_data(data)?,
+            minorfwrev: Self::MINORFWREV.from_data(data)?,
+            encrypkey: Self::ENCRYPKEY.from_data(data)?,
+            mac_address: Self::MAC_ADDRESS.from_data(data)?,
+            writepassword: Self::WRITEPASSWORD.from_data(data)?,
+            enabledhcp: Self::ENABLEDHCP.from_data(data)?,
+            tcpip_address: Self::TCPIP_ADDRESS.from_data(data)?,
+            gateway_address: Self::GATEWAY_ADDRESS.from_data(data)?,
+            tcpip_netmask: Self::TCPIP_NETMASK.from_data(data)?,
+            dns1_address: Self::DNS1_ADDRESS.from_data(data)?,
+            dns2_address: Self::DNS2_ADDRESS.from_data(data)?,
+            modbus_port: Self::MODBUS_PORT.from_data(data)?,
+            smtp_server_nm: Self::SMTP_SERVER_NM.from_data(data)?,
+            smtp_account_nm: Self::SMTP_ACCOUNT_NM.from_data(data)?,
+            smtp_enable_ssl: Self::SMTP_ENABLE_SSL.from_data(data)?,
+            smtp_password: Self::SMTP_PASSWORD.from_data(data)?,
+            smtp_user_nm: Self::SMTP_USER_NM.from_data(data)?,
+            stat_email_int: Self::STAT_EMAIL_INT.from_data(data)?,
+            stat_start_hr: Self::STAT_START_HR.from_data(data)?,
+            stat_email_sub: Self::STAT_EMAIL_SUB.from_data(data)?,
+            stat_email_addr1: Self::STAT_EMAIL_ADDR1.from_data(data)?,
+            stat_email_addr2: Self::STAT_EMAIL_ADDR2.from_data(data)?,
+            alarm_email_en: Self::ALARM_EMAIL_EN.from_data(data)?,
+            alarm_email_sub: Self::ALARM_EMAIL_SUB.from_data(data)?,
+            alarm_email_addr1: Self::ALARM_EMAIL_ADDR1.from_data(data)?,
+            alarm_email_addr2: Self::ALARM_EMAIL_ADDR2.from_data(data)?,
+            ftp_password: Self::FTP_PASSWORD.from_data(data)?,
+            telnet_password: Self::TELNET_PASSWORD.from_data(data)?,
+            log_write_int: Self::LOG_WRITE_INT.from_data(data)?,
+            log_retain: Self::LOG_RETAIN.from_data(data)?,
+            log_mode: Self::LOG_MODE.from_data(data)?,
+            ntp_server_nm: Self::NTP_SERVER_NM.from_data(data)?,
+            ntp_enable: Self::NTP_ENABLE.from_data(data)?,
+            timezone: Self::TIMEZONE.from_data(data)?,
+            date_year: Self::DATE_YEAR.from_data(data)?,
+            date_month: Self::DATE_MONTH.from_data(data)?,
+            date_day: Self::DATE_DAY.from_data(data)?,
+            time_hour: Self::TIME_HOUR.from_data(data)?,
+            time_minute: Self::TIME_MINUTE.from_data(data)?,
+            time_second: Self::TIME_SECOND.from_data(data)?,
+            battery_temp: Self::BATTERY_TEMP.from_data(data)?,
+            ambient_temp: Self::AMBIENT_TEMP.from_data(data)?,
+            temp_sf: Self::TEMP_SF.from_data(data)?,
+            axs_error: Self::AXS_ERROR.from_data(data)?,
+            axs_status: Self::AXS_STATUS.from_data(data)?,
+            axs_spare: Self::AXS_SPARE.from_data(data)?,
         })
     }
 }

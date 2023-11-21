@@ -49,40 +49,30 @@ pub struct Model401 {
 
 impl Model401 {
     pub const DCA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
-    pub const DCAHR_SF: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, false);
-    pub const DCV_SF: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
+    pub const DCAHR_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
+    pub const DCV_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
     pub const DCAMAX: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(5, 2, false);
-    pub const EVTVND: crate::PointDef<Self, u32> = crate::PointDef::new(7, 2, false);
+    pub const EVTVND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, false);
     pub const DCA: crate::PointDef<Self, i16> = crate::PointDef::new(9, 1, false);
-    pub const DCAHR: crate::PointDef<Self, u32> = crate::PointDef::new(10, 2, false);
-    pub const DCV: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, false);
-    pub const TMP: crate::PointDef<Self, i16> = crate::PointDef::new(13, 1, false);
+    pub const DCAHR: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(10, 2, false);
+    pub const DCV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, false);
+    pub const TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(13, 1, false);
 }
 
 impl crate::Model for Model401 {
     const ID: u16 = 401;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            dca_sf: Self::DCA_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            dca_sf: Self::DCA_SF.from_data(data)?,
             dcahr_sf: Self::DCAHR_SF.from_data(data)?,
             dcv_sf: Self::DCV_SF.from_data(data)?,
-            dcamax: Self::DCAMAX
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            n: Self::N
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            evt: Self::EVT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            dcamax: Self::DCAMAX.from_data(data)?,
+            n: Self::N.from_data(data)?,
+            evt: Self::EVT.from_data(data)?,
             evtvnd: Self::EVTVND.from_data(data)?,
-            dca: Self::DCA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            dca: Self::DCA.from_data(data)?,
             dcahr: Self::DCAHR.from_data(data)?,
             dcv: Self::DCV.from_data(data)?,
             tmp: Self::TMP.from_data(data)?,

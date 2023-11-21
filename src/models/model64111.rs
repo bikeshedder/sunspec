@@ -81,75 +81,29 @@ impl crate::Model for Model64111 {
     const ID: u16 = 64111;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            port: Self::PORT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            v_sf: Self::V_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            a_sf: Self::A_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            p_sf: Self::P_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ah_sf: Self::AH_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            kwh_sf: Self::KWH_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            battv: Self::BATTV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            arrayv: Self::ARRAYV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            outputa: Self::OUTPUTA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            inputa: Self::INPUTA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            chargerst: Self::CHARGERST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            outputw: Self::OUTPUTW
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            todayminbatv: Self::TODAYMINBATV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            todaymaxbatv: Self::TODAYMAXBATV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            vocv: Self::VOCV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            todaymaxvoc: Self::TODAYMAXVOC
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            todaykwhoutput: Self::TODAYKWHOUTPUT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            todayahoutput: Self::TODAYAHOUTPUT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            lifetimekwhout: Self::LIFETIMEKWHOUT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            lifetimeahout: Self::LIFETIMEAHOUT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            lifetimemaxout: Self::LIFETIMEMAXOUT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            lifetimemaxbatt: Self::LIFETIMEMAXBATT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            lifetimemaxvoc: Self::LIFETIMEMAXVOC
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            port: Self::PORT.from_data(data)?,
+            v_sf: Self::V_SF.from_data(data)?,
+            a_sf: Self::A_SF.from_data(data)?,
+            p_sf: Self::P_SF.from_data(data)?,
+            ah_sf: Self::AH_SF.from_data(data)?,
+            kwh_sf: Self::KWH_SF.from_data(data)?,
+            battv: Self::BATTV.from_data(data)?,
+            arrayv: Self::ARRAYV.from_data(data)?,
+            outputa: Self::OUTPUTA.from_data(data)?,
+            inputa: Self::INPUTA.from_data(data)?,
+            chargerst: Self::CHARGERST.from_data(data)?,
+            outputw: Self::OUTPUTW.from_data(data)?,
+            todayminbatv: Self::TODAYMINBATV.from_data(data)?,
+            todaymaxbatv: Self::TODAYMAXBATV.from_data(data)?,
+            vocv: Self::VOCV.from_data(data)?,
+            todaymaxvoc: Self::TODAYMAXVOC.from_data(data)?,
+            todaykwhoutput: Self::TODAYKWHOUTPUT.from_data(data)?,
+            todayahoutput: Self::TODAYAHOUTPUT.from_data(data)?,
+            lifetimekwhout: Self::LIFETIMEKWHOUT.from_data(data)?,
+            lifetimeahout: Self::LIFETIMEAHOUT.from_data(data)?,
+            lifetimemaxout: Self::LIFETIMEMAXOUT.from_data(data)?,
+            lifetimemaxbatt: Self::LIFETIMEMAXBATT.from_data(data)?,
+            lifetimemaxvoc: Self::LIFETIMEMAXVOC.from_data(data)?,
         })
     }
 }

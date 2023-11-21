@@ -21,17 +21,15 @@ pub struct Model10 {
 
 impl Model10 {
     pub const ST: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const TYP: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
+    pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
+    pub const TYP: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
 }
 
 impl crate::Model for Model10 {
     const ID: u16 = 10;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            st: Self::ST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            st: Self::ST.from_data(data)?,
             ctl: Self::CTL.from_data(data)?,
             typ: Self::TYP.from_data(data)?,
         })

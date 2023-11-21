@@ -108,44 +108,39 @@ impl Model124 {
     pub const WCHAGRA: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
     pub const WDISCHAGRA: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
     pub const STORCTL_MOD: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
-    pub const VACHAMAX: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
-    pub const MINRSVPCT: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
-    pub const CHASTATE: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
-    pub const STORAVAL: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
-    pub const INBATV: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
-    pub const CHAST: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const OUTWRTE: crate::PointDef<Self, i16> = crate::PointDef::new(10, 1, true);
-    pub const INWRTE: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, true);
-    pub const INOUTWRTE_WINTMS: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, true);
-    pub const INOUTWRTE_RVRTTMS: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, true);
-    pub const INOUTWRTE_RMPTMS: crate::PointDef<Self, u16> = crate::PointDef::new(14, 1, true);
-    pub const CHAGRISET: crate::PointDef<Self, u16> = crate::PointDef::new(15, 1, true);
+    pub const VACHAMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
+    pub const MINRSVPCT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
+    pub const CHASTATE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
+    pub const STORAVAL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
+    pub const INBATV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, false);
+    pub const CHAST: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, false);
+    pub const OUTWRTE: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(10, 1, true);
+    pub const INWRTE: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(11, 1, true);
+    pub const INOUTWRTE_WINTMS: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(12, 1, true);
+    pub const INOUTWRTE_RVRTTMS: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(13, 1, true);
+    pub const INOUTWRTE_RMPTMS: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(14, 1, true);
+    pub const CHAGRISET: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(15, 1, true);
     pub const WCHAMAX_SF: crate::PointDef<Self, i16> = crate::PointDef::new(16, 1, false);
     pub const WCHADISCHAGRA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(17, 1, false);
-    pub const VACHAMAX_SF: crate::PointDef<Self, i16> = crate::PointDef::new(18, 1, false);
-    pub const MINRSVPCT_SF: crate::PointDef<Self, i16> = crate::PointDef::new(19, 1, false);
-    pub const CHASTATE_SF: crate::PointDef<Self, i16> = crate::PointDef::new(20, 1, false);
-    pub const STORAVAL_SF: crate::PointDef<Self, i16> = crate::PointDef::new(21, 1, false);
-    pub const INBATV_SF: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
-    pub const INOUTWRTE_SF: crate::PointDef<Self, i16> = crate::PointDef::new(23, 1, false);
+    pub const VACHAMAX_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(18, 1, false);
+    pub const MINRSVPCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(19, 1, false);
+    pub const CHASTATE_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(20, 1, false);
+    pub const STORAVAL_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(21, 1, false);
+    pub const INBATV_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(22, 1, false);
+    pub const INOUTWRTE_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
 }
 
 impl crate::Model for Model124 {
     const ID: u16 = 124;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            wchamax: Self::WCHAMAX
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            wchagra: Self::WCHAGRA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            wdischagra: Self::WDISCHAGRA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            storctl_mod: Self::STORCTL_MOD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            wchamax: Self::WCHAMAX.from_data(data)?,
+            wchagra: Self::WCHAGRA.from_data(data)?,
+            wdischagra: Self::WDISCHAGRA.from_data(data)?,
+            storctl_mod: Self::STORCTL_MOD.from_data(data)?,
             vachamax: Self::VACHAMAX.from_data(data)?,
             minrsvpct: Self::MINRSVPCT.from_data(data)?,
             chastate: Self::CHASTATE.from_data(data)?,
@@ -158,12 +153,8 @@ impl crate::Model for Model124 {
             inoutwrte_rvrttms: Self::INOUTWRTE_RVRTTMS.from_data(data)?,
             inoutwrte_rmptms: Self::INOUTWRTE_RMPTMS.from_data(data)?,
             chagriset: Self::CHAGRISET.from_data(data)?,
-            wchamax_sf: Self::WCHAMAX_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            wchadischagra_sf: Self::WCHADISCHAGRA_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            wchamax_sf: Self::WCHAMAX_SF.from_data(data)?,
+            wchadischagra_sf: Self::WCHADISCHAGRA_SF.from_data(data)?,
             vachamax_sf: Self::VACHAMAX_SF.from_data(data)?,
             minrsvpct_sf: Self::MINRSVPCT_SF.from_data(data)?,
             chastate_sf: Self::CHASTATE_SF.from_data(data)?,

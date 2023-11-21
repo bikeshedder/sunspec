@@ -303,267 +303,93 @@ impl crate::Model for Model5 {
     const ID: u16 = 5;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            x: Self::X
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off1: Self::OFF1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val1: Self::VAL1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off2: Self::OFF2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val2: Self::VAL2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off3: Self::OFF3
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val3: Self::VAL3
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off4: Self::OFF4
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val4: Self::VAL4
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off5: Self::OFF5
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val5: Self::VAL5
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off6: Self::OFF6
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val6: Self::VAL6
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off7: Self::OFF7
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val7: Self::VAL7
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off8: Self::OFF8
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val8: Self::VAL8
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off9: Self::OFF9
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val9: Self::VAL9
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off10: Self::OFF10
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val10: Self::VAL10
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off11: Self::OFF11
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val11: Self::VAL11
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off12: Self::OFF12
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val12: Self::VAL12
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off13: Self::OFF13
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val13: Self::VAL13
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off14: Self::OFF14
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val14: Self::VAL14
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off15: Self::OFF15
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val15: Self::VAL15
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off16: Self::OFF16
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val16: Self::VAL16
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off17: Self::OFF17
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val17: Self::VAL17
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off18: Self::OFF18
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val18: Self::VAL18
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off19: Self::OFF19
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val19: Self::VAL19
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off20: Self::OFF20
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val20: Self::VAL20
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off21: Self::OFF21
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val21: Self::VAL21
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off22: Self::OFF22
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val22: Self::VAL22
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off23: Self::OFF23
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val23: Self::VAL23
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off24: Self::OFF24
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val24: Self::VAL24
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off25: Self::OFF25
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val25: Self::VAL25
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off26: Self::OFF26
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val26: Self::VAL26
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off27: Self::OFF27
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val27: Self::VAL27
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off28: Self::OFF28
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val28: Self::VAL28
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off29: Self::OFF29
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val29: Self::VAL29
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off30: Self::OFF30
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val30: Self::VAL30
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off31: Self::OFF31
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val31: Self::VAL31
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off32: Self::OFF32
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val32: Self::VAL32
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off33: Self::OFF33
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val33: Self::VAL33
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off34: Self::OFF34
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val34: Self::VAL34
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off35: Self::OFF35
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val35: Self::VAL35
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off36: Self::OFF36
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val36: Self::VAL36
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off37: Self::OFF37
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val37: Self::VAL37
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off38: Self::OFF38
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val38: Self::VAL38
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off39: Self::OFF39
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val39: Self::VAL39
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            off40: Self::OFF40
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            val40: Self::VAL40
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ts: Self::TS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ms: Self::MS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            seq: Self::SEQ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            role: Self::ROLE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            alg: Self::ALG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            n: Self::N
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            x: Self::X.from_data(data)?,
+            off1: Self::OFF1.from_data(data)?,
+            val1: Self::VAL1.from_data(data)?,
+            off2: Self::OFF2.from_data(data)?,
+            val2: Self::VAL2.from_data(data)?,
+            off3: Self::OFF3.from_data(data)?,
+            val3: Self::VAL3.from_data(data)?,
+            off4: Self::OFF4.from_data(data)?,
+            val4: Self::VAL4.from_data(data)?,
+            off5: Self::OFF5.from_data(data)?,
+            val5: Self::VAL5.from_data(data)?,
+            off6: Self::OFF6.from_data(data)?,
+            val6: Self::VAL6.from_data(data)?,
+            off7: Self::OFF7.from_data(data)?,
+            val7: Self::VAL7.from_data(data)?,
+            off8: Self::OFF8.from_data(data)?,
+            val8: Self::VAL8.from_data(data)?,
+            off9: Self::OFF9.from_data(data)?,
+            val9: Self::VAL9.from_data(data)?,
+            off10: Self::OFF10.from_data(data)?,
+            val10: Self::VAL10.from_data(data)?,
+            off11: Self::OFF11.from_data(data)?,
+            val11: Self::VAL11.from_data(data)?,
+            off12: Self::OFF12.from_data(data)?,
+            val12: Self::VAL12.from_data(data)?,
+            off13: Self::OFF13.from_data(data)?,
+            val13: Self::VAL13.from_data(data)?,
+            off14: Self::OFF14.from_data(data)?,
+            val14: Self::VAL14.from_data(data)?,
+            off15: Self::OFF15.from_data(data)?,
+            val15: Self::VAL15.from_data(data)?,
+            off16: Self::OFF16.from_data(data)?,
+            val16: Self::VAL16.from_data(data)?,
+            off17: Self::OFF17.from_data(data)?,
+            val17: Self::VAL17.from_data(data)?,
+            off18: Self::OFF18.from_data(data)?,
+            val18: Self::VAL18.from_data(data)?,
+            off19: Self::OFF19.from_data(data)?,
+            val19: Self::VAL19.from_data(data)?,
+            off20: Self::OFF20.from_data(data)?,
+            val20: Self::VAL20.from_data(data)?,
+            off21: Self::OFF21.from_data(data)?,
+            val21: Self::VAL21.from_data(data)?,
+            off22: Self::OFF22.from_data(data)?,
+            val22: Self::VAL22.from_data(data)?,
+            off23: Self::OFF23.from_data(data)?,
+            val23: Self::VAL23.from_data(data)?,
+            off24: Self::OFF24.from_data(data)?,
+            val24: Self::VAL24.from_data(data)?,
+            off25: Self::OFF25.from_data(data)?,
+            val25: Self::VAL25.from_data(data)?,
+            off26: Self::OFF26.from_data(data)?,
+            val26: Self::VAL26.from_data(data)?,
+            off27: Self::OFF27.from_data(data)?,
+            val27: Self::VAL27.from_data(data)?,
+            off28: Self::OFF28.from_data(data)?,
+            val28: Self::VAL28.from_data(data)?,
+            off29: Self::OFF29.from_data(data)?,
+            val29: Self::VAL29.from_data(data)?,
+            off30: Self::OFF30.from_data(data)?,
+            val30: Self::VAL30.from_data(data)?,
+            off31: Self::OFF31.from_data(data)?,
+            val31: Self::VAL31.from_data(data)?,
+            off32: Self::OFF32.from_data(data)?,
+            val32: Self::VAL32.from_data(data)?,
+            off33: Self::OFF33.from_data(data)?,
+            val33: Self::VAL33.from_data(data)?,
+            off34: Self::OFF34.from_data(data)?,
+            val34: Self::VAL34.from_data(data)?,
+            off35: Self::OFF35.from_data(data)?,
+            val35: Self::VAL35.from_data(data)?,
+            off36: Self::OFF36.from_data(data)?,
+            val36: Self::VAL36.from_data(data)?,
+            off37: Self::OFF37.from_data(data)?,
+            val37: Self::VAL37.from_data(data)?,
+            off38: Self::OFF38.from_data(data)?,
+            val38: Self::VAL38.from_data(data)?,
+            off39: Self::OFF39.from_data(data)?,
+            val39: Self::VAL39.from_data(data)?,
+            off40: Self::OFF40.from_data(data)?,
+            val40: Self::VAL40.from_data(data)?,
+            ts: Self::TS.from_data(data)?,
+            ms: Self::MS.from_data(data)?,
+            seq: Self::SEQ.from_data(data)?,
+            role: Self::ROLE.from_data(data)?,
+            alg: Self::ALG.from_data(data)?,
+            n: Self::N.from_data(data)?,
         })
     }
 }

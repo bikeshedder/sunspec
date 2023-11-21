@@ -52,34 +52,24 @@ impl Model2 {
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const UN: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
     pub const ST: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const STVND: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
+    pub const STVND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(5, 2, false);
-    pub const EVTVND: crate::PointDef<Self, u32> = crate::PointDef::new(7, 2, false);
-    pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const CTLVND: crate::PointDef<Self, u32> = crate::PointDef::new(10, 2, false);
-    pub const CTLVL: crate::PointDef<Self, u32> = crate::PointDef::new(12, 2, false);
+    pub const EVTVND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, false);
+    pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, false);
+    pub const CTLVND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(10, 2, false);
+    pub const CTLVL: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(12, 2, false);
 }
 
 impl crate::Model for Model2 {
     const ID: u16 = 2;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            aid: Self::AID
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            n: Self::N
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            un: Self::UN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            st: Self::ST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            aid: Self::AID.from_data(data)?,
+            n: Self::N.from_data(data)?,
+            un: Self::UN.from_data(data)?,
+            st: Self::ST.from_data(data)?,
             stvnd: Self::STVND.from_data(data)?,
-            evt: Self::EVT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            evt: Self::EVT.from_data(data)?,
             evtvnd: Self::EVTVND.from_data(data)?,
             ctl: Self::CTL.from_data(data)?,
             ctlvnd: Self::CTLVND.from_data(data)?,

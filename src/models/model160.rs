@@ -20,13 +20,13 @@ pub struct Model160 {
 #[allow(missing_docs)]
 
 impl Model160 {
-    pub const DCA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
-    pub const DCV_SF: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, false);
-    pub const DCW_SF: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
-    pub const DCWH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(3, 1, false);
-    pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(4, 2, false);
-    pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
-    pub const TMSPER: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
+    pub const DCA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
+    pub const DCV_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
+    pub const DCW_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
+    pub const DCWH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
+    pub const EVT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, false);
+    pub const N: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
+    pub const TMSPER: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
 }
 
 impl crate::Model for Model160 {

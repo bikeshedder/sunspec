@@ -252,119 +252,91 @@ impl Model802 {
     pub const WHRTG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const WCHARTEMAX: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
     pub const WDISCHARTEMAX: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const DISCHARTE: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const SOCMAX: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
-    pub const SOCMIN: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
-    pub const SOCRSVMAX: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, true);
-    pub const SOCRSVMIN: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, true);
+    pub const DISCHARTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
+    pub const SOCMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
+    pub const SOCMIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
+    pub const SOCRSVMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, true);
+    pub const SOCRSVMIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, true);
     pub const SOC: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const DOD: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
-    pub const SOH: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
-    pub const NCYC: crate::PointDef<Self, u32> = crate::PointDef::new(12, 2, false);
-    pub const CHAST: crate::PointDef<Self, u16> = crate::PointDef::new(14, 1, false);
+    pub const DOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, false);
+    pub const SOH: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, false);
+    pub const NCYC: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(12, 2, false);
+    pub const CHAST: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(14, 1, false);
     pub const LOCREMCTL: crate::PointDef<Self, u16> = crate::PointDef::new(15, 1, false);
-    pub const HB: crate::PointDef<Self, u16> = crate::PointDef::new(16, 1, false);
-    pub const CTRLHB: crate::PointDef<Self, u16> = crate::PointDef::new(17, 1, true);
+    pub const HB: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(16, 1, false);
+    pub const CTRLHB: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, true);
     pub const ALMRST: crate::PointDef<Self, u16> = crate::PointDef::new(18, 1, true);
     pub const TYP: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
     pub const STATE: crate::PointDef<Self, u16> = crate::PointDef::new(20, 1, false);
-    pub const STATEVND: crate::PointDef<Self, u16> = crate::PointDef::new(21, 1, false);
-    pub const WARRDT: crate::PointDef<Self, u32> = crate::PointDef::new(22, 2, false);
+    pub const STATEVND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(21, 1, false);
+    pub const WARRDT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(22, 2, false);
     pub const EVT1: crate::PointDef<Self, u32> = crate::PointDef::new(24, 2, false);
     pub const EVT2: crate::PointDef<Self, u32> = crate::PointDef::new(26, 2, false);
     pub const EVTVND1: crate::PointDef<Self, u32> = crate::PointDef::new(28, 2, false);
     pub const EVTVND2: crate::PointDef<Self, u32> = crate::PointDef::new(30, 2, false);
     pub const V: crate::PointDef<Self, u16> = crate::PointDef::new(32, 1, false);
-    pub const VMAX: crate::PointDef<Self, u16> = crate::PointDef::new(33, 1, false);
-    pub const VMIN: crate::PointDef<Self, u16> = crate::PointDef::new(34, 1, false);
-    pub const CELLVMAX: crate::PointDef<Self, u16> = crate::PointDef::new(35, 1, false);
-    pub const CELLVMAXSTR: crate::PointDef<Self, u16> = crate::PointDef::new(36, 1, false);
-    pub const CELLVMAXMOD: crate::PointDef<Self, u16> = crate::PointDef::new(37, 1, false);
-    pub const CELLVMIN: crate::PointDef<Self, u16> = crate::PointDef::new(38, 1, false);
-    pub const CELLVMINSTR: crate::PointDef<Self, u16> = crate::PointDef::new(39, 1, false);
-    pub const CELLVMINMOD: crate::PointDef<Self, u16> = crate::PointDef::new(40, 1, false);
-    pub const CELLVAVG: crate::PointDef<Self, u16> = crate::PointDef::new(41, 1, false);
+    pub const VMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(33, 1, false);
+    pub const VMIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(34, 1, false);
+    pub const CELLVMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(35, 1, false);
+    pub const CELLVMAXSTR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(36, 1, false);
+    pub const CELLVMAXMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(37, 1, false);
+    pub const CELLVMIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(38, 1, false);
+    pub const CELLVMINSTR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(39, 1, false);
+    pub const CELLVMINMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(40, 1, false);
+    pub const CELLVAVG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(41, 1, false);
     pub const A: crate::PointDef<Self, i16> = crate::PointDef::new(42, 1, false);
-    pub const ACHAMAX: crate::PointDef<Self, u16> = crate::PointDef::new(43, 1, false);
-    pub const ADISCHAMAX: crate::PointDef<Self, u16> = crate::PointDef::new(44, 1, false);
+    pub const ACHAMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(43, 1, false);
+    pub const ADISCHAMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(44, 1, false);
     pub const W: crate::PointDef<Self, i16> = crate::PointDef::new(45, 1, false);
-    pub const REQINVSTATE: crate::PointDef<Self, u16> = crate::PointDef::new(46, 1, false);
-    pub const REQW: crate::PointDef<Self, i16> = crate::PointDef::new(47, 1, false);
+    pub const REQINVSTATE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(46, 1, false);
+    pub const REQW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(47, 1, false);
     pub const SETOP: crate::PointDef<Self, u16> = crate::PointDef::new(48, 1, true);
     pub const SETINVSTATE: crate::PointDef<Self, u16> = crate::PointDef::new(49, 1, true);
     pub const AHRTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(50, 1, false);
     pub const WHRTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(51, 1, false);
     pub const WCHADISCHAMAX_SF: crate::PointDef<Self, i16> = crate::PointDef::new(52, 1, false);
-    pub const DISCHARTE_SF: crate::PointDef<Self, i16> = crate::PointDef::new(53, 1, false);
+    pub const DISCHARTE_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(53, 1, false);
     pub const SOC_SF: crate::PointDef<Self, i16> = crate::PointDef::new(54, 1, false);
-    pub const DOD_SF: crate::PointDef<Self, i16> = crate::PointDef::new(55, 1, false);
-    pub const SOH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(56, 1, false);
+    pub const DOD_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(55, 1, false);
+    pub const SOH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(56, 1, false);
     pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(57, 1, false);
     pub const CELLV_SF: crate::PointDef<Self, i16> = crate::PointDef::new(58, 1, false);
     pub const A_SF: crate::PointDef<Self, i16> = crate::PointDef::new(59, 1, false);
     pub const AMAX_SF: crate::PointDef<Self, i16> = crate::PointDef::new(60, 1, false);
-    pub const W_SF: crate::PointDef<Self, i16> = crate::PointDef::new(61, 1, false);
+    pub const W_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(61, 1, false);
 }
 
 impl crate::Model for Model802 {
     const ID: u16 = 802;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            ahrtg: Self::AHRTG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            whrtg: Self::WHRTG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            wchartemax: Self::WCHARTEMAX
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            wdischartemax: Self::WDISCHARTEMAX
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            ahrtg: Self::AHRTG.from_data(data)?,
+            whrtg: Self::WHRTG.from_data(data)?,
+            wchartemax: Self::WCHARTEMAX.from_data(data)?,
+            wdischartemax: Self::WDISCHARTEMAX.from_data(data)?,
             discharte: Self::DISCHARTE.from_data(data)?,
             socmax: Self::SOCMAX.from_data(data)?,
             socmin: Self::SOCMIN.from_data(data)?,
             socrsvmax: Self::SOCRSVMAX.from_data(data)?,
             socrsvmin: Self::SOCRSVMIN.from_data(data)?,
-            soc: Self::SOC
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            soc: Self::SOC.from_data(data)?,
             dod: Self::DOD.from_data(data)?,
             soh: Self::SOH.from_data(data)?,
             ncyc: Self::NCYC.from_data(data)?,
             chast: Self::CHAST.from_data(data)?,
-            locremctl: Self::LOCREMCTL
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            locremctl: Self::LOCREMCTL.from_data(data)?,
             hb: Self::HB.from_data(data)?,
             ctrlhb: Self::CTRLHB.from_data(data)?,
-            almrst: Self::ALMRST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            typ: Self::TYP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            state: Self::STATE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            almrst: Self::ALMRST.from_data(data)?,
+            typ: Self::TYP.from_data(data)?,
+            state: Self::STATE.from_data(data)?,
             statevnd: Self::STATEVND.from_data(data)?,
             warrdt: Self::WARRDT.from_data(data)?,
-            evt1: Self::EVT1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            evt2: Self::EVT2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            evtvnd1: Self::EVTVND1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            evtvnd2: Self::EVTVND2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            v: Self::V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            evt1: Self::EVT1.from_data(data)?,
+            evt2: Self::EVT2.from_data(data)?,
+            evtvnd1: Self::EVTVND1.from_data(data)?,
+            evtvnd2: Self::EVTVND2.from_data(data)?,
+            v: Self::V.from_data(data)?,
             vmax: Self::VMAX.from_data(data)?,
             vmin: Self::VMIN.from_data(data)?,
             cellvmax: Self::CELLVMAX.from_data(data)?,
@@ -374,49 +346,25 @@ impl crate::Model for Model802 {
             cellvminstr: Self::CELLVMINSTR.from_data(data)?,
             cellvminmod: Self::CELLVMINMOD.from_data(data)?,
             cellvavg: Self::CELLVAVG.from_data(data)?,
-            a: Self::A
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            a: Self::A.from_data(data)?,
             achamax: Self::ACHAMAX.from_data(data)?,
             adischamax: Self::ADISCHAMAX.from_data(data)?,
-            w: Self::W
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            w: Self::W.from_data(data)?,
             reqinvstate: Self::REQINVSTATE.from_data(data)?,
             reqw: Self::REQW.from_data(data)?,
-            setop: Self::SETOP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            setinvstate: Self::SETINVSTATE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ahrtg_sf: Self::AHRTG_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            whrtg_sf: Self::WHRTG_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            wchadischamax_sf: Self::WCHADISCHAMAX_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            setop: Self::SETOP.from_data(data)?,
+            setinvstate: Self::SETINVSTATE.from_data(data)?,
+            ahrtg_sf: Self::AHRTG_SF.from_data(data)?,
+            whrtg_sf: Self::WHRTG_SF.from_data(data)?,
+            wchadischamax_sf: Self::WCHADISCHAMAX_SF.from_data(data)?,
             discharte_sf: Self::DISCHARTE_SF.from_data(data)?,
-            soc_sf: Self::SOC_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            soc_sf: Self::SOC_SF.from_data(data)?,
             dod_sf: Self::DOD_SF.from_data(data)?,
             soh_sf: Self::SOH_SF.from_data(data)?,
-            v_sf: Self::V_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cellv_sf: Self::CELLV_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            a_sf: Self::A_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            amax_sf: Self::AMAX_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            v_sf: Self::V_SF.from_data(data)?,
+            cellv_sf: Self::CELLV_SF.from_data(data)?,
+            a_sf: Self::A_SF.from_data(data)?,
+            amax_sf: Self::AMAX_SF.from_data(data)?,
             w_sf: Self::W_SF.from_data(data)?,
         })
     }

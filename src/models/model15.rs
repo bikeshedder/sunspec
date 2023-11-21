@@ -56,18 +56,18 @@ pub struct Model15 {
 #[allow(missing_docs)]
 
 impl Model15 {
-    pub const CLR: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const INCNT: crate::PointDef<Self, u32> = crate::PointDef::new(1, 2, false);
-    pub const INUCCNT: crate::PointDef<Self, u32> = crate::PointDef::new(3, 2, false);
-    pub const INNUCCNT: crate::PointDef<Self, u32> = crate::PointDef::new(5, 2, false);
-    pub const INDSCCNT: crate::PointDef<Self, u32> = crate::PointDef::new(7, 2, false);
-    pub const INERRCNT: crate::PointDef<Self, u32> = crate::PointDef::new(9, 2, false);
-    pub const INUNKCNT: crate::PointDef<Self, u32> = crate::PointDef::new(11, 2, false);
-    pub const OUTCNT: crate::PointDef<Self, u32> = crate::PointDef::new(13, 2, false);
-    pub const OUTUCCNT: crate::PointDef<Self, u32> = crate::PointDef::new(15, 2, false);
-    pub const OUTNUCCNT: crate::PointDef<Self, u32> = crate::PointDef::new(17, 2, false);
-    pub const OUTDSCCNT: crate::PointDef<Self, u32> = crate::PointDef::new(19, 2, false);
-    pub const OUTERRCNT: crate::PointDef<Self, u32> = crate::PointDef::new(21, 2, false);
+    pub const CLR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
+    pub const INCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(1, 2, false);
+    pub const INUCCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(3, 2, false);
+    pub const INNUCCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(5, 2, false);
+    pub const INDSCCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, false);
+    pub const INERRCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(9, 2, false);
+    pub const INUNKCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(11, 2, false);
+    pub const OUTCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(13, 2, false);
+    pub const OUTUCCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(15, 2, false);
+    pub const OUTNUCCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(17, 2, false);
+    pub const OUTDSCCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(19, 2, false);
+    pub const OUTERRCNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(21, 2, false);
 }
 
 impl crate::Model for Model15 {

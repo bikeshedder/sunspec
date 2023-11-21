@@ -116,64 +116,66 @@ pub struct Model63001 {
 #[allow(missing_docs)]
 
 impl Model63001 {
-    pub const SUNSSF_1: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
-    pub const SUNSSF_2: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, false);
-    pub const SUNSSF_3: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
-    pub const SUNSSF_4: crate::PointDef<Self, i16> = crate::PointDef::new(3, 1, false);
-    pub const INT16_1: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
-    pub const INT16_2: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
-    pub const INT16_3: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
-    pub const INT16_4: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, true);
-    pub const INT16_5: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
-    pub const INT16_U: crate::PointDef<Self, i16> = crate::PointDef::new(9, 1, false);
-    pub const UINT16_1: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
-    pub const UINT16_2: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
-    pub const UINT16_3: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, false);
-    pub const UINT16_4: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, true);
-    pub const UINT16_5: crate::PointDef<Self, u16> = crate::PointDef::new(14, 1, false);
-    pub const UINT16_U: crate::PointDef<Self, u16> = crate::PointDef::new(15, 1, false);
-    pub const ACC16: crate::PointDef<Self, u16> = crate::PointDef::new(16, 1, false);
-    pub const ACC16_U: crate::PointDef<Self, u16> = crate::PointDef::new(17, 1, false);
-    pub const ENUM16: crate::PointDef<Self, u16> = crate::PointDef::new(18, 1, false);
-    pub const ENUM16_U: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
-    pub const BITFIELD16: crate::PointDef<Self, u16> = crate::PointDef::new(20, 1, false);
-    pub const BITFIELD16_U: crate::PointDef<Self, u16> = crate::PointDef::new(21, 1, false);
-    pub const INT32_1: crate::PointDef<Self, i32> = crate::PointDef::new(22, 2, false);
-    pub const INT32_2: crate::PointDef<Self, i32> = crate::PointDef::new(24, 2, false);
-    pub const INT32_3: crate::PointDef<Self, i32> = crate::PointDef::new(26, 2, true);
-    pub const INT32_4: crate::PointDef<Self, i32> = crate::PointDef::new(28, 2, false);
-    pub const INT32_5: crate::PointDef<Self, i32> = crate::PointDef::new(30, 2, false);
-    pub const INT32_U: crate::PointDef<Self, i32> = crate::PointDef::new(32, 2, false);
-    pub const UINT32_1: crate::PointDef<Self, u32> = crate::PointDef::new(34, 2, false);
-    pub const UINT32_2: crate::PointDef<Self, u32> = crate::PointDef::new(36, 2, false);
-    pub const UINT32_3: crate::PointDef<Self, u32> = crate::PointDef::new(38, 2, true);
-    pub const UINT32_4: crate::PointDef<Self, u32> = crate::PointDef::new(40, 2, false);
-    pub const UINT32_5: crate::PointDef<Self, u32> = crate::PointDef::new(42, 2, false);
-    pub const UINT32_U: crate::PointDef<Self, u32> = crate::PointDef::new(44, 2, false);
-    pub const ACC32: crate::PointDef<Self, u32> = crate::PointDef::new(46, 2, false);
-    pub const ACC32_U: crate::PointDef<Self, u32> = crate::PointDef::new(48, 2, false);
-    pub const ENUM32: crate::PointDef<Self, u32> = crate::PointDef::new(50, 2, false);
-    pub const ENUM32_U: crate::PointDef<Self, u32> = crate::PointDef::new(52, 2, false);
-    pub const BITFIELD32: crate::PointDef<Self, u32> = crate::PointDef::new(54, 2, false);
-    pub const BITFIELD32_U: crate::PointDef<Self, u32> = crate::PointDef::new(56, 2, false);
-    pub const IPADDR: crate::PointDef<Self, std::net::Ipv4Addr> = crate::PointDef::new(58, 2, true);
-    pub const IPADDR_U: crate::PointDef<Self, std::net::Ipv4Addr> =
+    pub const SUNSSF_1: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
+    pub const SUNSSF_2: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
+    pub const SUNSSF_3: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
+    pub const SUNSSF_4: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
+    pub const INT16_1: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(4, 1, false);
+    pub const INT16_2: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(5, 1, false);
+    pub const INT16_3: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
+    pub const INT16_4: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(7, 1, true);
+    pub const INT16_5: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(8, 1, false);
+    pub const INT16_U: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(9, 1, false);
+    pub const UINT16_1: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, false);
+    pub const UINT16_2: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, false);
+    pub const UINT16_3: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, false);
+    pub const UINT16_4: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(13, 1, true);
+    pub const UINT16_5: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(14, 1, false);
+    pub const UINT16_U: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(15, 1, false);
+    pub const ACC16: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(16, 1, false);
+    pub const ACC16_U: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, false);
+    pub const ENUM16: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(18, 1, false);
+    pub const ENUM16_U: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(19, 1, false);
+    pub const BITFIELD16: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(20, 1, false);
+    pub const BITFIELD16_U: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(21, 1, false);
+    pub const INT32_1: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(22, 2, false);
+    pub const INT32_2: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(24, 2, false);
+    pub const INT32_3: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(26, 2, true);
+    pub const INT32_4: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(28, 2, false);
+    pub const INT32_5: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(30, 2, false);
+    pub const INT32_U: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(32, 2, false);
+    pub const UINT32_1: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(34, 2, false);
+    pub const UINT32_2: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(36, 2, false);
+    pub const UINT32_3: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(38, 2, true);
+    pub const UINT32_4: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(40, 2, false);
+    pub const UINT32_5: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(42, 2, false);
+    pub const UINT32_U: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(44, 2, false);
+    pub const ACC32: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(46, 2, false);
+    pub const ACC32_U: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(48, 2, false);
+    pub const ENUM32: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(50, 2, false);
+    pub const ENUM32_U: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(52, 2, false);
+    pub const BITFIELD32: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(54, 2, false);
+    pub const BITFIELD32_U: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(56, 2, false);
+    pub const IPADDR: crate::PointDef<Self, Option<std::net::Ipv4Addr>> =
+        crate::PointDef::new(58, 2, true);
+    pub const IPADDR_U: crate::PointDef<Self, Option<std::net::Ipv4Addr>> =
         crate::PointDef::new(60, 2, false);
-    pub const INT64: crate::PointDef<Self, i64> = crate::PointDef::new(62, 4, true);
-    pub const INT64_U: crate::PointDef<Self, i64> = crate::PointDef::new(66, 4, false);
-    pub const ACC64: crate::PointDef<Self, u64> = crate::PointDef::new(70, 4, false);
-    pub const ACC64_U: crate::PointDef<Self, u64> = crate::PointDef::new(74, 4, false);
-    pub const IPV6ADDR: crate::PointDef<Self, std::net::Ipv6Addr> =
+    pub const INT64: crate::PointDef<Self, Option<i64>> = crate::PointDef::new(62, 4, true);
+    pub const INT64_U: crate::PointDef<Self, Option<i64>> = crate::PointDef::new(66, 4, false);
+    pub const ACC64: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(70, 4, false);
+    pub const ACC64_U: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(74, 4, false);
+    pub const IPV6ADDR: crate::PointDef<Self, Option<std::net::Ipv6Addr>> =
         crate::PointDef::new(78, 8, false);
-    pub const IPV6ADDR_U: crate::PointDef<Self, std::net::Ipv6Addr> =
+    pub const IPV6ADDR_U: crate::PointDef<Self, Option<std::net::Ipv6Addr>> =
         crate::PointDef::new(86, 8, false);
-    pub const FLOAT32: crate::PointDef<Self, f32> = crate::PointDef::new(94, 2, true);
-    pub const FLOAT32_U: crate::PointDef<Self, f32> = crate::PointDef::new(96, 2, false);
-    pub const STRING: crate::PointDef<Self, String> = crate::PointDef::new(98, 16, true);
-    pub const STRING_U: crate::PointDef<Self, String> = crate::PointDef::new(114, 16, false);
-    pub const SUNSSF_5: crate::PointDef<Self, i16> = crate::PointDef::new(130, 1, false);
-    pub const SUNSSF_6: crate::PointDef<Self, i16> = crate::PointDef::new(131, 1, false);
-    pub const SUNSSF_7: crate::PointDef<Self, i16> = crate::PointDef::new(132, 1, false);
+    pub const FLOAT32: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(94, 2, true);
+    pub const FLOAT32_U: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(96, 2, false);
+    pub const STRING: crate::PointDef<Self, Option<String>> = crate::PointDef::new(98, 16, true);
+    pub const STRING_U: crate::PointDef<Self, Option<String>> =
+        crate::PointDef::new(114, 16, false);
+    pub const SUNSSF_5: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(130, 1, false);
+    pub const SUNSSF_6: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(131, 1, false);
+    pub const SUNSSF_7: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(132, 1, false);
 }
 
 impl crate::Model for Model63001 {

@@ -136,21 +136,21 @@ impl Model807 {
     pub const NMOD: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const NMODCON: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
     pub const MODVMAX: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const MODVMAXMOD: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
+    pub const MODVMAXMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
     pub const MODVMIN: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
-    pub const MODVMINMOD: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
+    pub const MODVMINMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
     pub const MODVAVG: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
-    pub const CELLVMAX: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
-    pub const CELLVMAXMOD: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const CELLVMAXSTK: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
-    pub const CELLVMIN: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
-    pub const CELLVMINMOD: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, false);
-    pub const CELLVMINSTK: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, false);
-    pub const CELLVAVG: crate::PointDef<Self, u16> = crate::PointDef::new(14, 1, false);
+    pub const CELLVMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, false);
+    pub const CELLVMAXMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, false);
+    pub const CELLVMAXSTK: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, false);
+    pub const CELLVMIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, false);
+    pub const CELLVMINMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, false);
+    pub const CELLVMINSTK: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(13, 1, false);
+    pub const CELLVAVG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(14, 1, false);
     pub const TMPMAX: crate::PointDef<Self, i16> = crate::PointDef::new(15, 1, false);
-    pub const TMPMAXMOD: crate::PointDef<Self, u16> = crate::PointDef::new(16, 1, false);
+    pub const TMPMAXMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(16, 1, false);
     pub const TMPMIN: crate::PointDef<Self, i16> = crate::PointDef::new(17, 1, false);
-    pub const TMPMINMOD: crate::PointDef<Self, u16> = crate::PointDef::new(18, 1, false);
+    pub const TMPMINMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(18, 1, false);
     pub const TMPAVG: crate::PointDef<Self, i16> = crate::PointDef::new(19, 1, false);
     pub const EVT1: crate::PointDef<Self, u32> = crate::PointDef::new(20, 2, false);
     pub const EVT2: crate::PointDef<Self, u32> = crate::PointDef::new(22, 2, false);
@@ -167,26 +167,14 @@ impl crate::Model for Model807 {
     const ID: u16 = 807;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            idx: Self::IDX
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            nmod: Self::NMOD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            nmodcon: Self::NMODCON
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            modvmax: Self::MODVMAX
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            idx: Self::IDX.from_data(data)?,
+            nmod: Self::NMOD.from_data(data)?,
+            nmodcon: Self::NMODCON.from_data(data)?,
+            modvmax: Self::MODVMAX.from_data(data)?,
             modvmaxmod: Self::MODVMAXMOD.from_data(data)?,
-            modvmin: Self::MODVMIN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            modvmin: Self::MODVMIN.from_data(data)?,
             modvminmod: Self::MODVMINMOD.from_data(data)?,
-            modvavg: Self::MODVAVG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            modvavg: Self::MODVAVG.from_data(data)?,
             cellvmax: Self::CELLVMAX.from_data(data)?,
             cellvmaxmod: Self::CELLVMAXMOD.from_data(data)?,
             cellvmaxstk: Self::CELLVMAXSTK.from_data(data)?,
@@ -194,44 +182,20 @@ impl crate::Model for Model807 {
             cellvminmod: Self::CELLVMINMOD.from_data(data)?,
             cellvminstk: Self::CELLVMINSTK.from_data(data)?,
             cellvavg: Self::CELLVAVG.from_data(data)?,
-            tmpmax: Self::TMPMAX
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            tmpmax: Self::TMPMAX.from_data(data)?,
             tmpmaxmod: Self::TMPMAXMOD.from_data(data)?,
-            tmpmin: Self::TMPMIN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            tmpmin: Self::TMPMIN.from_data(data)?,
             tmpminmod: Self::TMPMINMOD.from_data(data)?,
-            tmpavg: Self::TMPAVG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            evt1: Self::EVT1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            evt2: Self::EVT2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            evtvnd1: Self::EVTVND1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            evtvnd2: Self::EVTVND2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            modv_sf: Self::MODV_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cellv_sf: Self::CELLV_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            tmp_sf: Self::TMP_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            soc_sf: Self::SOC_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ocv_sf: Self::OCV_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            tmpavg: Self::TMPAVG.from_data(data)?,
+            evt1: Self::EVT1.from_data(data)?,
+            evt2: Self::EVT2.from_data(data)?,
+            evtvnd1: Self::EVTVND1.from_data(data)?,
+            evtvnd2: Self::EVTVND2.from_data(data)?,
+            modv_sf: Self::MODV_SF.from_data(data)?,
+            cellv_sf: Self::CELLV_SF.from_data(data)?,
+            tmp_sf: Self::TMP_SF.from_data(data)?,
+            soc_sf: Self::SOC_SF.from_data(data)?,
+            ocv_sf: Self::OCV_SF.from_data(data)?,
         })
     }
 }

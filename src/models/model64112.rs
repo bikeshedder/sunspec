@@ -244,198 +244,70 @@ impl crate::Model for Model64112 {
     const ID: u16 = 64112;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            port: Self::PORT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            v_sf: Self::V_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            c_sf: Self::C_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            h_sf: Self::H_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            p_sf: Self::P_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ah_sf: Self::AH_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            kwh_sf: Self::KWH_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_fault: Self::CC_CONFIG_FAULT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_absorb_v: Self::CC_CONFIG_ABSORB_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_absorb_hr: Self::CC_CONFIG_ABSORB_HR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_absorb_end_a: Self::CC_CONFIG_ABSORB_END_A
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_rebulk_v: Self::CC_CONFIG_REBULK_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_float_v: Self::CC_CONFIG_FLOAT_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_max_chg_a: Self::CC_CONFIG_MAX_CHG_A
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_equalize_v: Self::CC_CONFIG_EQUALIZE_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_equalize_hr: Self::CC_CONFIG_EQUALIZE_HR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_auto_equalize: Self::CC_CONFIG_AUTO_EQUALIZE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_mppt_mode: Self::CC_CONFIG_MPPT_MODE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_sweep_width: Self::CC_CONFIG_SWEEP_WIDTH
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_sweep_max: Self::CC_CONFIG_SWEEP_MAX
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_u_pick_duty_cyc: Self::CC_CONFIG_U_PICK_DUTY_CYC
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_grid_tie: Self::CC_CONFIG_GRID_TIE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_temp_comp: Self::CC_CONFIG_TEMP_COMP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_temp_comp_llimt: Self::CC_CONFIG_TEMP_COMP_LLIMT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_temp_comp_hlimt: Self::CC_CONFIG_TEMP_COMP_HLIMT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_auto_restart: Self::CC_CONFIG_AUTO_RESTART
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_wakeup_voc: Self::CC_CONFIG_WAKEUP_VOC
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_snooze_mode_a: Self::CC_CONFIG_SNOOZE_MODE_A
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_wakeup_interval: Self::CC_CONFIG_WAKEUP_INTERVAL
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_mode: Self::CC_CONFIG_AUX_MODE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_control: Self::CC_CONFIG_AUX_CONTROL
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_state: Self::CC_CONFIG_AUX_STATE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_polarity: Self::CC_CONFIG_AUX_POLARITY
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_l_batt_disc: Self::CC_CONFIG_AUX_L_BATT_DISC
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_l_batt_rcon: Self::CC_CONFIG_AUX_L_BATT_RCON
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_l_batt_dly: Self::CC_CONFIG_AUX_L_BATT_DLY
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_vent_fan_v: Self::CC_CONFIG_AUX_VENT_FAN_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_pv_triggerv: Self::CC_CONFIG_AUX_PV_TRIGGERV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_pv_trg_h_tm: Self::CC_CONFIG_AUX_PV_TRG_H_TM
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_nlite_thrsv: Self::CC_CONFIG_AUX_NLITE_THRSV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_nlite_on_tm: Self::CC_CONFIG_AUX_NLITE_ON_TM
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_nlite_on_hist: Self::CC_CONFIG_AUX_NLITE_ON_HIST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_nlite_off_hist: Self::CC_CONFIG_AUX_NLITE_OFF_HIST
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_error_batt_v: Self::CC_CONFIG_AUX_ERROR_BATT_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_divert_h_time: Self::CC_CONFIG_AUX_DIVERT_H_TIME
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_divert_dly_time: Self::CC_CONFIG_AUX_DIVERT_DLY_TIME
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_divert_rel_v: Self::CC_CONFIG_AUX_DIVERT_REL_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_aux_divert_hyst_v: Self::CC_CONFIG_AUX_DIVERT_HYST_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_majorfwrev: Self::CC_CONFIG_MAJORFWREV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_midfwrev: Self::CC_CONFIG_MIDFWREV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_minorfwrev: Self::CC_CONFIG_MINORFWREV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_day_offset: Self::CC_CONFIG_DATALOG_DAY_OFFSET
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_cur_day_off: Self::CC_CONFIG_DATALOG_CUR_DAY_OFF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_daily_ah: Self::CC_CONFIG_DATALOG_DAILY_AH
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_daily_kwh: Self::CC_CONFIG_DATALOG_DAILY_KWH
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_max_out_a: Self::CC_CONFIG_DATALOG_MAX_OUT_A
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_max_out_w: Self::CC_CONFIG_DATALOG_MAX_OUT_W
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_absorb_t: Self::CC_CONFIG_DATALOG_ABSORB_T
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_float_t: Self::CC_CONFIG_DATALOG_FLOAT_T
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_min_batt_v: Self::CC_CONFIG_DATALOG_MIN_BATT_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_max_batt_v: Self::CC_CONFIG_DATALOG_MAX_BATT_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_max_input_v: Self::CC_CONFIG_DATALOG_MAX_INPUT_V
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_clear: Self::CC_CONFIG_DATALOG_CLEAR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            cc_config_datalog_clr_comp: Self::CC_CONFIG_DATALOG_CLR_COMP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            port: Self::PORT.from_data(data)?,
+            v_sf: Self::V_SF.from_data(data)?,
+            c_sf: Self::C_SF.from_data(data)?,
+            h_sf: Self::H_SF.from_data(data)?,
+            p_sf: Self::P_SF.from_data(data)?,
+            ah_sf: Self::AH_SF.from_data(data)?,
+            kwh_sf: Self::KWH_SF.from_data(data)?,
+            cc_config_fault: Self::CC_CONFIG_FAULT.from_data(data)?,
+            cc_config_absorb_v: Self::CC_CONFIG_ABSORB_V.from_data(data)?,
+            cc_config_absorb_hr: Self::CC_CONFIG_ABSORB_HR.from_data(data)?,
+            cc_config_absorb_end_a: Self::CC_CONFIG_ABSORB_END_A.from_data(data)?,
+            cc_config_rebulk_v: Self::CC_CONFIG_REBULK_V.from_data(data)?,
+            cc_config_float_v: Self::CC_CONFIG_FLOAT_V.from_data(data)?,
+            cc_config_max_chg_a: Self::CC_CONFIG_MAX_CHG_A.from_data(data)?,
+            cc_config_equalize_v: Self::CC_CONFIG_EQUALIZE_V.from_data(data)?,
+            cc_config_equalize_hr: Self::CC_CONFIG_EQUALIZE_HR.from_data(data)?,
+            cc_config_auto_equalize: Self::CC_CONFIG_AUTO_EQUALIZE.from_data(data)?,
+            cc_config_mppt_mode: Self::CC_CONFIG_MPPT_MODE.from_data(data)?,
+            cc_config_sweep_width: Self::CC_CONFIG_SWEEP_WIDTH.from_data(data)?,
+            cc_config_sweep_max: Self::CC_CONFIG_SWEEP_MAX.from_data(data)?,
+            cc_config_u_pick_duty_cyc: Self::CC_CONFIG_U_PICK_DUTY_CYC.from_data(data)?,
+            cc_config_grid_tie: Self::CC_CONFIG_GRID_TIE.from_data(data)?,
+            cc_config_temp_comp: Self::CC_CONFIG_TEMP_COMP.from_data(data)?,
+            cc_config_temp_comp_llimt: Self::CC_CONFIG_TEMP_COMP_LLIMT.from_data(data)?,
+            cc_config_temp_comp_hlimt: Self::CC_CONFIG_TEMP_COMP_HLIMT.from_data(data)?,
+            cc_config_auto_restart: Self::CC_CONFIG_AUTO_RESTART.from_data(data)?,
+            cc_config_wakeup_voc: Self::CC_CONFIG_WAKEUP_VOC.from_data(data)?,
+            cc_config_snooze_mode_a: Self::CC_CONFIG_SNOOZE_MODE_A.from_data(data)?,
+            cc_config_wakeup_interval: Self::CC_CONFIG_WAKEUP_INTERVAL.from_data(data)?,
+            cc_config_aux_mode: Self::CC_CONFIG_AUX_MODE.from_data(data)?,
+            cc_config_aux_control: Self::CC_CONFIG_AUX_CONTROL.from_data(data)?,
+            cc_config_aux_state: Self::CC_CONFIG_AUX_STATE.from_data(data)?,
+            cc_config_aux_polarity: Self::CC_CONFIG_AUX_POLARITY.from_data(data)?,
+            cc_config_aux_l_batt_disc: Self::CC_CONFIG_AUX_L_BATT_DISC.from_data(data)?,
+            cc_config_aux_l_batt_rcon: Self::CC_CONFIG_AUX_L_BATT_RCON.from_data(data)?,
+            cc_config_aux_l_batt_dly: Self::CC_CONFIG_AUX_L_BATT_DLY.from_data(data)?,
+            cc_config_aux_vent_fan_v: Self::CC_CONFIG_AUX_VENT_FAN_V.from_data(data)?,
+            cc_config_aux_pv_triggerv: Self::CC_CONFIG_AUX_PV_TRIGGERV.from_data(data)?,
+            cc_config_aux_pv_trg_h_tm: Self::CC_CONFIG_AUX_PV_TRG_H_TM.from_data(data)?,
+            cc_config_aux_nlite_thrsv: Self::CC_CONFIG_AUX_NLITE_THRSV.from_data(data)?,
+            cc_config_aux_nlite_on_tm: Self::CC_CONFIG_AUX_NLITE_ON_TM.from_data(data)?,
+            cc_config_aux_nlite_on_hist: Self::CC_CONFIG_AUX_NLITE_ON_HIST.from_data(data)?,
+            cc_config_aux_nlite_off_hist: Self::CC_CONFIG_AUX_NLITE_OFF_HIST.from_data(data)?,
+            cc_config_aux_error_batt_v: Self::CC_CONFIG_AUX_ERROR_BATT_V.from_data(data)?,
+            cc_config_aux_divert_h_time: Self::CC_CONFIG_AUX_DIVERT_H_TIME.from_data(data)?,
+            cc_config_aux_divert_dly_time: Self::CC_CONFIG_AUX_DIVERT_DLY_TIME.from_data(data)?,
+            cc_config_aux_divert_rel_v: Self::CC_CONFIG_AUX_DIVERT_REL_V.from_data(data)?,
+            cc_config_aux_divert_hyst_v: Self::CC_CONFIG_AUX_DIVERT_HYST_V.from_data(data)?,
+            cc_config_majorfwrev: Self::CC_CONFIG_MAJORFWREV.from_data(data)?,
+            cc_config_midfwrev: Self::CC_CONFIG_MIDFWREV.from_data(data)?,
+            cc_config_minorfwrev: Self::CC_CONFIG_MINORFWREV.from_data(data)?,
+            cc_config_datalog_day_offset: Self::CC_CONFIG_DATALOG_DAY_OFFSET.from_data(data)?,
+            cc_config_datalog_cur_day_off: Self::CC_CONFIG_DATALOG_CUR_DAY_OFF.from_data(data)?,
+            cc_config_datalog_daily_ah: Self::CC_CONFIG_DATALOG_DAILY_AH.from_data(data)?,
+            cc_config_datalog_daily_kwh: Self::CC_CONFIG_DATALOG_DAILY_KWH.from_data(data)?,
+            cc_config_datalog_max_out_a: Self::CC_CONFIG_DATALOG_MAX_OUT_A.from_data(data)?,
+            cc_config_datalog_max_out_w: Self::CC_CONFIG_DATALOG_MAX_OUT_W.from_data(data)?,
+            cc_config_datalog_absorb_t: Self::CC_CONFIG_DATALOG_ABSORB_T.from_data(data)?,
+            cc_config_datalog_float_t: Self::CC_CONFIG_DATALOG_FLOAT_T.from_data(data)?,
+            cc_config_datalog_min_batt_v: Self::CC_CONFIG_DATALOG_MIN_BATT_V.from_data(data)?,
+            cc_config_datalog_max_batt_v: Self::CC_CONFIG_DATALOG_MAX_BATT_V.from_data(data)?,
+            cc_config_datalog_max_input_v: Self::CC_CONFIG_DATALOG_MAX_INPUT_V.from_data(data)?,
+            cc_config_datalog_clear: Self::CC_CONFIG_DATALOG_CLEAR.from_data(data)?,
+            cc_config_datalog_clr_comp: Self::CC_CONFIG_DATALOG_CLR_COMP.from_data(data)?,
         })
     }
 }

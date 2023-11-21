@@ -62,30 +62,14 @@ impl crate::Model for Model7 {
     const ID: u16 = 7;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            rqseq: Self::RQSEQ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            sts: Self::STS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ts: Self::TS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ms: Self::MS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            seq: Self::SEQ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            alm: Self::ALM
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            alg: Self::ALG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            n: Self::N
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            rqseq: Self::RQSEQ.from_data(data)?,
+            sts: Self::STS.from_data(data)?,
+            ts: Self::TS.from_data(data)?,
+            ms: Self::MS.from_data(data)?,
+            seq: Self::SEQ.from_data(data)?,
+            alm: Self::ALM.from_data(data)?,
+            alg: Self::ALG.from_data(data)?,
+            n: Self::N.from_data(data)?,
         })
     }
 }

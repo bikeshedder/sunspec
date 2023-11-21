@@ -66,33 +66,25 @@ impl Model128 {
     pub const ARGRASAG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
     pub const ARGRASWELL: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
     pub const MODENA: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
-    pub const FILTMS: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
-    pub const DBVMIN: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
-    pub const DBVMAX: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
-    pub const BLKZNV: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, true);
-    pub const HYSBLKZNV: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, true);
-    pub const BLKZNTMMS: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, true);
-    pub const HOLDTMMS: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, true);
+    pub const FILTMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
+    pub const DBVMIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
+    pub const DBVMAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
+    pub const BLKZNV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, true);
+    pub const HYSBLKZNV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, true);
+    pub const BLKZNTMMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, true);
+    pub const HOLDTMMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, true);
     pub const ARGRA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
-    pub const VREFPCT_SF: crate::PointDef<Self, i16> = crate::PointDef::new(12, 1, false);
+    pub const VREFPCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(12, 1, false);
 }
 
 impl crate::Model for Model128 {
     const ID: u16 = 128;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            argramod: Self::ARGRAMOD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            argrasag: Self::ARGRASAG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            argraswell: Self::ARGRASWELL
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            modena: Self::MODENA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            argramod: Self::ARGRAMOD.from_data(data)?,
+            argrasag: Self::ARGRASAG.from_data(data)?,
+            argraswell: Self::ARGRASWELL.from_data(data)?,
+            modena: Self::MODENA.from_data(data)?,
             filtms: Self::FILTMS.from_data(data)?,
             dbvmin: Self::DBVMIN.from_data(data)?,
             dbvmax: Self::DBVMAX.from_data(data)?,
@@ -100,9 +92,7 @@ impl crate::Model for Model128 {
             hysblkznv: Self::HYSBLKZNV.from_data(data)?,
             blkzntmms: Self::BLKZNTMMS.from_data(data)?,
             holdtmms: Self::HOLDTMMS.from_data(data)?,
-            argra_sf: Self::ARGRA_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            argra_sf: Self::ARGRA_SF.from_data(data)?,
             vrefpct_sf: Self::VREFPCT_SF.from_data(data)?,
         })
     }

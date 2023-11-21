@@ -120,29 +120,29 @@ pub struct Model220 {
 impl Model220 {
     pub const A: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
     pub const A_SF: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, false);
-    pub const PHV: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
+    pub const PHV: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
     pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(3, 1, false);
     pub const HZ: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
-    pub const HZ_SF: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
+    pub const HZ_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(5, 1, false);
     pub const W: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
     pub const W_SF: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
-    pub const VA: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
-    pub const VA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(9, 1, false);
-    pub const VAR: crate::PointDef<Self, i16> = crate::PointDef::new(10, 1, false);
-    pub const VAR_SF: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
-    pub const PF: crate::PointDef<Self, i16> = crate::PointDef::new(12, 1, false);
-    pub const PF_SF: crate::PointDef<Self, i16> = crate::PointDef::new(13, 1, false);
+    pub const VA: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(8, 1, false);
+    pub const VA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(9, 1, false);
+    pub const VAR: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(10, 1, false);
+    pub const VAR_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(11, 1, false);
+    pub const PF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(12, 1, false);
+    pub const PF_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(13, 1, false);
     pub const TOTWHEXP: crate::PointDef<Self, u32> = crate::PointDef::new(14, 2, false);
     pub const TOTWHIMP: crate::PointDef<Self, u32> = crate::PointDef::new(16, 2, false);
     pub const TOTWH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(18, 1, false);
-    pub const TOTVAHEXP: crate::PointDef<Self, u32> = crate::PointDef::new(19, 2, false);
-    pub const TOTVAHIMP: crate::PointDef<Self, u32> = crate::PointDef::new(21, 2, false);
-    pub const TOTVAH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(23, 1, false);
-    pub const TOTVARHIMPQ1: crate::PointDef<Self, u32> = crate::PointDef::new(24, 2, false);
-    pub const TOTVARHIMPQ2: crate::PointDef<Self, u32> = crate::PointDef::new(26, 2, false);
-    pub const TOTVARHEXPQ3: crate::PointDef<Self, u32> = crate::PointDef::new(28, 2, false);
-    pub const TOTVARHEXPQ4: crate::PointDef<Self, u32> = crate::PointDef::new(30, 2, false);
-    pub const TOTVARH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(32, 1, false);
+    pub const TOTVAHEXP: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(19, 2, false);
+    pub const TOTVAHIMP: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(21, 2, false);
+    pub const TOTVAH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
+    pub const TOTVARHIMPQ1: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(24, 2, false);
+    pub const TOTVARHIMPQ2: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(26, 2, false);
+    pub const TOTVARHEXPQ3: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(28, 2, false);
+    pub const TOTVARHEXPQ4: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(30, 2, false);
+    pub const TOTVARH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(32, 1, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(33, 2, false);
     pub const TS: crate::PointDef<Self, u32> = crate::PointDef::new(36, 2, false);
     pub const MS: crate::PointDef<Self, u16> = crate::PointDef::new(38, 1, false);
@@ -155,41 +155,23 @@ impl crate::Model for Model220 {
     const ID: u16 = 220;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            a: Self::A
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            a_sf: Self::A_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            a: Self::A.from_data(data)?,
+            a_sf: Self::A_SF.from_data(data)?,
             phv: Self::PHV.from_data(data)?,
-            v_sf: Self::V_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            hz: Self::HZ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            v_sf: Self::V_SF.from_data(data)?,
+            hz: Self::HZ.from_data(data)?,
             hz_sf: Self::HZ_SF.from_data(data)?,
-            w: Self::W
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            w_sf: Self::W_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            w: Self::W.from_data(data)?,
+            w_sf: Self::W_SF.from_data(data)?,
             va: Self::VA.from_data(data)?,
             va_sf: Self::VA_SF.from_data(data)?,
             var: Self::VAR.from_data(data)?,
             var_sf: Self::VAR_SF.from_data(data)?,
             pf: Self::PF.from_data(data)?,
             pf_sf: Self::PF_SF.from_data(data)?,
-            totwhexp: Self::TOTWHEXP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            totwhimp: Self::TOTWHIMP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            totwh_sf: Self::TOTWH_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            totwhexp: Self::TOTWHEXP.from_data(data)?,
+            totwhimp: Self::TOTWHIMP.from_data(data)?,
+            totwh_sf: Self::TOTWH_SF.from_data(data)?,
             totvahexp: Self::TOTVAHEXP.from_data(data)?,
             totvahimp: Self::TOTVAHIMP.from_data(data)?,
             totvah_sf: Self::TOTVAH_SF.from_data(data)?,
@@ -198,24 +180,12 @@ impl crate::Model for Model220 {
             totvarhexpq3: Self::TOTVARHEXPQ3.from_data(data)?,
             totvarhexpq4: Self::TOTVARHEXPQ4.from_data(data)?,
             totvarh_sf: Self::TOTVARH_SF.from_data(data)?,
-            evt: Self::EVT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ts: Self::TS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ms: Self::MS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            seq: Self::SEQ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            alg: Self::ALG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            n: Self::N
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            evt: Self::EVT.from_data(data)?,
+            ts: Self::TS.from_data(data)?,
+            ms: Self::MS.from_data(data)?,
+            seq: Self::SEQ.from_data(data)?,
+            alg: Self::ALG.from_data(data)?,
+            n: Self::N.from_data(data)?,
         })
     }
 }

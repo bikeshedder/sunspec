@@ -44,15 +44,15 @@ pub struct Model19 {
 #[allow(missing_docs)]
 
 impl Model19 {
-    pub const NAM: crate::PointDef<Self, String> = crate::PointDef::new(0, 4, true);
+    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const RTE: crate::PointDef<Self, u32> = crate::PointDef::new(4, 2, true);
     pub const BITS: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
     pub const PTY: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, true);
-    pub const DUP: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, true);
-    pub const FLW: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, true);
-    pub const AUTH: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
-    pub const USRNAM: crate::PointDef<Self, String> = crate::PointDef::new(11, 12, false);
-    pub const PW: crate::PointDef<Self, String> = crate::PointDef::new(23, 6, false);
+    pub const DUP: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, true);
+    pub const FLW: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, true);
+    pub const AUTH: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, false);
+    pub const USRNAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(11, 12, false);
+    pub const PW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(23, 6, false);
 }
 
 impl crate::Model for Model19 {
@@ -60,15 +60,9 @@ impl crate::Model for Model19 {
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             nam: Self::NAM.from_data(data)?,
-            rte: Self::RTE
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            bits: Self::BITS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            pty: Self::PTY
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            rte: Self::RTE.from_data(data)?,
+            bits: Self::BITS.from_data(data)?,
+            pty: Self::PTY.from_data(data)?,
             dup: Self::DUP.from_data(data)?,
             flw: Self::FLW.from_data(data)?,
             auth: Self::AUTH.from_data(data)?,

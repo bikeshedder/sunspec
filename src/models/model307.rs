@@ -34,17 +34,17 @@ pub struct Model307 {
 #[allow(missing_docs)]
 
 impl Model307 {
-    pub const TMPAMB: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
-    pub const RH: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, false);
-    pub const PRES: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
-    pub const WNDSPD: crate::PointDef<Self, i16> = crate::PointDef::new(3, 1, false);
-    pub const WNDDIR: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
-    pub const RAIN: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
-    pub const SNW: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
-    pub const PPT: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
-    pub const ELECFLD: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
-    pub const SURWET: crate::PointDef<Self, i16> = crate::PointDef::new(9, 1, false);
-    pub const SOILWET: crate::PointDef<Self, i16> = crate::PointDef::new(10, 1, false);
+    pub const TMPAMB: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
+    pub const RH: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
+    pub const PRES: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
+    pub const WNDSPD: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
+    pub const WNDDIR: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(4, 1, false);
+    pub const RAIN: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(5, 1, false);
+    pub const SNW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
+    pub const PPT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(7, 1, false);
+    pub const ELECFLD: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(8, 1, false);
+    pub const SURWET: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(9, 1, false);
+    pub const SOILWET: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(10, 1, false);
 }
 
 impl crate::Model for Model307 {

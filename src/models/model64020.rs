@@ -100,36 +100,51 @@ pub struct Model64020 {
 #[allow(missing_docs)]
 
 impl Model64020 {
-    pub const AUX0TMP: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
-    pub const AUX1TMP: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, false);
-    pub const AUX2TMP: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
-    pub const AUX3TMP: crate::PointDef<Self, i16> = crate::PointDef::new(3, 1, false);
-    pub const AUX4TMP: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
+    pub const AUX0TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
+    pub const AUX1TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
+    pub const AUX2TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
+    pub const AUX3TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
+    pub const AUX4TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(4, 1, false);
     pub const PROBETMP: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
     pub const MAINTMP: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
     pub const SENSORV_SF: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
     pub const SENSORA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
     pub const SENSORHZ_SF: crate::PointDef<Self, i16> = crate::PointDef::new(9, 1, false);
-    pub const SENSOR1VOLTAGE: crate::PointDef<Self, i16> = crate::PointDef::new(10, 1, false);
-    pub const SENSOR2VOLTAGE: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
-    pub const SENSOR3VOLTAGE: crate::PointDef<Self, i16> = crate::PointDef::new(12, 1, false);
-    pub const SENSOR4VOLTAGE: crate::PointDef<Self, i16> = crate::PointDef::new(13, 1, false);
-    pub const SENSOR5VOLTAGE: crate::PointDef<Self, i16> = crate::PointDef::new(14, 1, false);
-    pub const SENSOR6VOLTAGE: crate::PointDef<Self, i16> = crate::PointDef::new(15, 1, false);
-    pub const SENSOR7VOLTAGE: crate::PointDef<Self, i16> = crate::PointDef::new(16, 1, false);
-    pub const SENSOR1CURRENT: crate::PointDef<Self, i16> = crate::PointDef::new(17, 1, false);
-    pub const SENSOR2CURRENT: crate::PointDef<Self, i16> = crate::PointDef::new(18, 1, false);
-    pub const SENSOR3CURRENT: crate::PointDef<Self, i16> = crate::PointDef::new(19, 1, false);
-    pub const SENSOR4CURRENT: crate::PointDef<Self, i16> = crate::PointDef::new(20, 1, false);
-    pub const SENSOR5CURRENT: crate::PointDef<Self, i16> = crate::PointDef::new(21, 1, false);
-    pub const SENSOR6CURRENT: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
-    pub const SENSOR7CURRENT: crate::PointDef<Self, i16> = crate::PointDef::new(23, 1, false);
-    pub const SENSOR8: crate::PointDef<Self, u16> = crate::PointDef::new(24, 1, false);
-    pub const RELAY1: crate::PointDef<Self, u16> = crate::PointDef::new(25, 1, false);
-    pub const RELAY2: crate::PointDef<Self, u16> = crate::PointDef::new(26, 1, false);
-    pub const RELAY3: crate::PointDef<Self, u16> = crate::PointDef::new(27, 1, false);
-    pub const RESETACCUMULATORS: crate::PointDef<Self, u16> = crate::PointDef::new(28, 1, false);
-    pub const RESET: crate::PointDef<Self, u16> = crate::PointDef::new(29, 1, false);
+    pub const SENSOR1VOLTAGE: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(10, 1, false);
+    pub const SENSOR2VOLTAGE: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(11, 1, false);
+    pub const SENSOR3VOLTAGE: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(12, 1, false);
+    pub const SENSOR4VOLTAGE: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(13, 1, false);
+    pub const SENSOR5VOLTAGE: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(14, 1, false);
+    pub const SENSOR6VOLTAGE: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(15, 1, false);
+    pub const SENSOR7VOLTAGE: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(16, 1, false);
+    pub const SENSOR1CURRENT: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(17, 1, false);
+    pub const SENSOR2CURRENT: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(18, 1, false);
+    pub const SENSOR3CURRENT: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(19, 1, false);
+    pub const SENSOR4CURRENT: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(20, 1, false);
+    pub const SENSOR5CURRENT: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(21, 1, false);
+    pub const SENSOR6CURRENT: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(22, 1, false);
+    pub const SENSOR7CURRENT: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(23, 1, false);
+    pub const SENSOR8: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(24, 1, false);
+    pub const RELAY1: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(25, 1, false);
+    pub const RELAY2: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(26, 1, false);
+    pub const RELAY3: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(27, 1, false);
+    pub const RESETACCUMULATORS: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(28, 1, false);
+    pub const RESET: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(29, 1, false);
 }
 
 impl crate::Model for Model64020 {
@@ -141,21 +156,11 @@ impl crate::Model for Model64020 {
             aux2tmp: Self::AUX2TMP.from_data(data)?,
             aux3tmp: Self::AUX3TMP.from_data(data)?,
             aux4tmp: Self::AUX4TMP.from_data(data)?,
-            probetmp: Self::PROBETMP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            maintmp: Self::MAINTMP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            sensorv_sf: Self::SENSORV_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            sensora_sf: Self::SENSORA_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            sensorhz_sf: Self::SENSORHZ_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            probetmp: Self::PROBETMP.from_data(data)?,
+            maintmp: Self::MAINTMP.from_data(data)?,
+            sensorv_sf: Self::SENSORV_SF.from_data(data)?,
+            sensora_sf: Self::SENSORA_SF.from_data(data)?,
+            sensorhz_sf: Self::SENSORHZ_SF.from_data(data)?,
             sensor1voltage: Self::SENSOR1VOLTAGE.from_data(data)?,
             sensor2voltage: Self::SENSOR2VOLTAGE.from_data(data)?,
             sensor3voltage: Self::SENSOR3VOLTAGE.from_data(data)?,

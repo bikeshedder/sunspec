@@ -49,27 +49,13 @@ impl crate::Model for Model708 {
     const ID: u16 = 708;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            ena: Self::ENA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            adptcrvreq: Self::ADPTCRVREQ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            adptcrvrslt: Self::ADPTCRVRSLT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            npt: Self::NPT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ncrvset: Self::NCRVSET
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            v_sf: Self::V_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            tms_sf: Self::TMS_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            ena: Self::ENA.from_data(data)?,
+            adptcrvreq: Self::ADPTCRVREQ.from_data(data)?,
+            adptcrvrslt: Self::ADPTCRVRSLT.from_data(data)?,
+            npt: Self::NPT.from_data(data)?,
+            ncrvset: Self::NCRVSET.from_data(data)?,
+            v_sf: Self::V_SF.from_data(data)?,
+            tms_sf: Self::TMS_SF.from_data(data)?,
         })
     }
 }

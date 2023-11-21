@@ -19,9 +19,7 @@ impl crate::Model for Model801 {
     const ID: u16 = 801;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            deprecated: Self::DEPRECATED
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            deprecated: Self::DEPRECATED.from_data(data)?,
         })
     }
 }

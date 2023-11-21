@@ -39,11 +39,11 @@ pub struct Model125 {
 
 impl Model125 {
     pub const MODENA: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const SIGTYPE: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
+    pub const SIGTYPE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
     pub const SIG: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, true);
-    pub const WINTMS: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
-    pub const RVTTMS: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
-    pub const RMPTMS: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
+    pub const WINTMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
+    pub const RVTTMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
+    pub const RMPTMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
     pub const SIG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
 }
 
@@ -51,19 +51,13 @@ impl crate::Model for Model125 {
     const ID: u16 = 125;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            modena: Self::MODENA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            modena: Self::MODENA.from_data(data)?,
             sigtype: Self::SIGTYPE.from_data(data)?,
-            sig: Self::SIG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            sig: Self::SIG.from_data(data)?,
             wintms: Self::WINTMS.from_data(data)?,
             rvttms: Self::RVTTMS.from_data(data)?,
             rmptms: Self::RMPTMS.from_data(data)?,
-            sig_sf: Self::SIG_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            sig_sf: Self::SIG_SF.from_data(data)?,
         })
     }
 }

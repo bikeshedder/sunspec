@@ -49,27 +49,13 @@ impl crate::Model for Model709 {
     const ID: u16 = 709;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            ena: Self::ENA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            adptcrvreq: Self::ADPTCRVREQ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            adptcrvrslt: Self::ADPTCRVRSLT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            npt: Self::NPT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ncrvset: Self::NCRVSET
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            hz_sf: Self::HZ_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            tms_sf: Self::TMS_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            ena: Self::ENA.from_data(data)?,
+            adptcrvreq: Self::ADPTCRVREQ.from_data(data)?,
+            adptcrvrslt: Self::ADPTCRVRSLT.from_data(data)?,
+            npt: Self::NPT.from_data(data)?,
+            ncrvset: Self::NCRVSET.from_data(data)?,
+            hz_sf: Self::HZ_SF.from_data(data)?,
+            tms_sf: Self::TMS_SF.from_data(data)?,
         })
     }
 }

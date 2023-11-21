@@ -79,35 +79,31 @@ pub struct Model501 {
 
 impl Model501 {
     pub const STAT: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const STATVEND: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
+    pub const STATVEND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(2, 2, false);
-    pub const EVTVEND: crate::PointDef<Self, u32> = crate::PointDef::new(4, 2, false);
-    pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
-    pub const CTLVEND: crate::PointDef<Self, u32> = crate::PointDef::new(7, 2, true);
-    pub const CTLVAL: crate::PointDef<Self, i32> = crate::PointDef::new(9, 2, true);
-    pub const TMS: crate::PointDef<Self, u32> = crate::PointDef::new(11, 2, false);
-    pub const OUTA: crate::PointDef<Self, f32> = crate::PointDef::new(13, 2, false);
-    pub const OUTV: crate::PointDef<Self, f32> = crate::PointDef::new(15, 2, false);
-    pub const OUTWH: crate::PointDef<Self, f32> = crate::PointDef::new(17, 2, false);
-    pub const OUTW: crate::PointDef<Self, f32> = crate::PointDef::new(19, 2, false);
-    pub const TMP: crate::PointDef<Self, f32> = crate::PointDef::new(21, 2, false);
-    pub const INA: crate::PointDef<Self, f32> = crate::PointDef::new(23, 2, false);
-    pub const INV: crate::PointDef<Self, f32> = crate::PointDef::new(25, 2, false);
-    pub const INWH: crate::PointDef<Self, f32> = crate::PointDef::new(27, 2, false);
-    pub const INW: crate::PointDef<Self, f32> = crate::PointDef::new(29, 2, false);
+    pub const EVTVEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, false);
+    pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
+    pub const CTLVEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, true);
+    pub const CTLVAL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(9, 2, true);
+    pub const TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(11, 2, false);
+    pub const OUTA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(13, 2, false);
+    pub const OUTV: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(15, 2, false);
+    pub const OUTWH: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(17, 2, false);
+    pub const OUTW: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(19, 2, false);
+    pub const TMP: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(21, 2, false);
+    pub const INA: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(23, 2, false);
+    pub const INV: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(25, 2, false);
+    pub const INWH: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(27, 2, false);
+    pub const INW: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(29, 2, false);
 }
 
 impl crate::Model for Model501 {
     const ID: u16 = 501;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            stat: Self::STAT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            stat: Self::STAT.from_data(data)?,
             statvend: Self::STATVEND.from_data(data)?,
-            evt: Self::EVT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            evt: Self::EVT.from_data(data)?,
             evtvend: Self::EVTVEND.from_data(data)?,
             ctl: Self::CTL.from_data(data)?,
             ctlvend: Self::CTLVEND.from_data(data)?,

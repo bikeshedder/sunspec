@@ -95,38 +95,32 @@ impl Model122 {
     pub const PVCONN: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const STORCONN: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const ECPCONN: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const ACTWH: crate::PointDef<Self, u64> = crate::PointDef::new(3, 4, false);
-    pub const ACTVAH: crate::PointDef<Self, u64> = crate::PointDef::new(7, 4, false);
-    pub const ACTVARHQ1: crate::PointDef<Self, u64> = crate::PointDef::new(11, 4, false);
-    pub const ACTVARHQ2: crate::PointDef<Self, u64> = crate::PointDef::new(15, 4, false);
-    pub const ACTVARHQ3: crate::PointDef<Self, u64> = crate::PointDef::new(19, 4, false);
-    pub const ACTVARHQ4: crate::PointDef<Self, u64> = crate::PointDef::new(23, 4, false);
-    pub const VARAVAL: crate::PointDef<Self, i16> = crate::PointDef::new(27, 1, false);
-    pub const VARAVAL_SF: crate::PointDef<Self, i16> = crate::PointDef::new(28, 1, false);
-    pub const WAVAL: crate::PointDef<Self, u16> = crate::PointDef::new(29, 1, false);
-    pub const WAVAL_SF: crate::PointDef<Self, i16> = crate::PointDef::new(30, 1, false);
-    pub const STSETLIMMSK: crate::PointDef<Self, u32> = crate::PointDef::new(31, 2, false);
-    pub const STACTCTL: crate::PointDef<Self, u32> = crate::PointDef::new(33, 2, false);
-    pub const TMSRC: crate::PointDef<Self, String> = crate::PointDef::new(35, 4, false);
-    pub const TMS: crate::PointDef<Self, u32> = crate::PointDef::new(39, 2, false);
-    pub const RTST: crate::PointDef<Self, u16> = crate::PointDef::new(41, 1, false);
-    pub const RIS: crate::PointDef<Self, u16> = crate::PointDef::new(42, 1, false);
-    pub const RIS_SF: crate::PointDef<Self, i16> = crate::PointDef::new(43, 1, false);
+    pub const ACTWH: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(3, 4, false);
+    pub const ACTVAH: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(7, 4, false);
+    pub const ACTVARHQ1: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(11, 4, false);
+    pub const ACTVARHQ2: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(15, 4, false);
+    pub const ACTVARHQ3: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(19, 4, false);
+    pub const ACTVARHQ4: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(23, 4, false);
+    pub const VARAVAL: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(27, 1, false);
+    pub const VARAVAL_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(28, 1, false);
+    pub const WAVAL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(29, 1, false);
+    pub const WAVAL_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(30, 1, false);
+    pub const STSETLIMMSK: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(31, 2, false);
+    pub const STACTCTL: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(33, 2, false);
+    pub const TMSRC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(35, 4, false);
+    pub const TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(39, 2, false);
+    pub const RTST: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(41, 1, false);
+    pub const RIS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(42, 1, false);
+    pub const RIS_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(43, 1, false);
 }
 
 impl crate::Model for Model122 {
     const ID: u16 = 122;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            pvconn: Self::PVCONN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            storconn: Self::STORCONN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ecpconn: Self::ECPCONN
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            pvconn: Self::PVCONN.from_data(data)?,
+            storconn: Self::STORCONN.from_data(data)?,
+            ecpconn: Self::ECPCONN.from_data(data)?,
             actwh: Self::ACTWH.from_data(data)?,
             actvah: Self::ACTVAH.from_data(data)?,
             actvarhq1: Self::ACTVARHQ1.from_data(data)?,

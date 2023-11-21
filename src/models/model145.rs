@@ -40,14 +40,14 @@ pub struct Model145 {
 #[allow(missing_docs)]
 
 impl Model145 {
-    pub const NOMRMPUPRTE: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const NOMRMPDNRTE: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const EMGRMPUPRTE: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
-    pub const EMGRMPDNRTE: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
-    pub const CONNRMPUPRTE: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
-    pub const CONNRMPDNRTE: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
-    pub const AGRA: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
-    pub const RMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
+    pub const NOMRMPUPRTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
+    pub const NOMRMPDNRTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
+    pub const EMGRMPUPRTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, true);
+    pub const EMGRMPDNRTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
+    pub const CONNRMPUPRTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
+    pub const CONNRMPDNRTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
+    pub const AGRA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
+    pub const RMP_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(7, 1, false);
 }
 
 impl crate::Model for Model145 {

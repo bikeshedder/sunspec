@@ -36,18 +36,10 @@ impl crate::Model for Model133 {
     const ID: u16 = 133;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            actschd: Self::ACTSCHD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            modena: Self::MODENA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            nschd: Self::NSCHD
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            npts: Self::NPTS
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            actschd: Self::ACTSCHD.from_data(data)?,
+            modena: Self::MODENA.from_data(data)?,
+            nschd: Self::NSCHD.from_data(data)?,
+            npts: Self::NPTS.from_data(data)?,
         })
     }
 }

@@ -58,15 +58,15 @@ pub struct Model601 {
 #[allow(missing_docs)]
 
 impl Model601 {
-    pub const NAM: crate::PointDef<Self, String> = crate::PointDef::new(0, 8, false);
+    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 8, false);
     pub const TYP: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
-    pub const DTLOC: crate::PointDef<Self, String> = crate::PointDef::new(9, 5, false);
-    pub const TMLOC: crate::PointDef<Self, String> = crate::PointDef::new(14, 3, false);
-    pub const DAY: crate::PointDef<Self, u16> = crate::PointDef::new(17, 1, false);
-    pub const GLBLELCTL: crate::PointDef<Self, i32> = crate::PointDef::new(18, 2, true);
-    pub const GLBLAZCTL: crate::PointDef<Self, i32> = crate::PointDef::new(20, 2, true);
-    pub const GLBLCTL: crate::PointDef<Self, u16> = crate::PointDef::new(22, 1, true);
-    pub const GLBLALM: crate::PointDef<Self, u16> = crate::PointDef::new(23, 1, false);
+    pub const DTLOC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(9, 5, false);
+    pub const TMLOC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(14, 3, false);
+    pub const DAY: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, false);
+    pub const GLBLELCTL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(18, 2, true);
+    pub const GLBLAZCTL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(20, 2, true);
+    pub const GLBLCTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(22, 1, true);
+    pub const GLBLALM: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(23, 1, false);
     pub const DGR_SF: crate::PointDef<Self, i16> = crate::PointDef::new(24, 1, false);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(25, 1, false);
 }
@@ -76,9 +76,7 @@ impl crate::Model for Model601 {
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             nam: Self::NAM.from_data(data)?,
-            typ: Self::TYP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            typ: Self::TYP.from_data(data)?,
             dtloc: Self::DTLOC.from_data(data)?,
             tmloc: Self::TMLOC.from_data(data)?,
             day: Self::DAY.from_data(data)?,
@@ -86,12 +84,8 @@ impl crate::Model for Model601 {
             glblazctl: Self::GLBLAZCTL.from_data(data)?,
             glblctl: Self::GLBLCTL.from_data(data)?,
             glblalm: Self::GLBLALM.from_data(data)?,
-            dgr_sf: Self::DGR_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            n: Self::N
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            dgr_sf: Self::DGR_SF.from_data(data)?,
+            n: Self::N.from_data(data)?,
         })
     }
 }

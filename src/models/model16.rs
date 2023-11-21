@@ -48,16 +48,16 @@ pub struct Model16 {
 #[allow(missing_docs)]
 
 impl Model16 {
-    pub const NAM: crate::PointDef<Self, String> = crate::PointDef::new(0, 4, true);
+    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const CFG: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
     pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
     pub const ADDR: crate::PointDef<Self, String> = crate::PointDef::new(6, 8, true);
     pub const MSK: crate::PointDef<Self, String> = crate::PointDef::new(14, 8, true);
-    pub const GW: crate::PointDef<Self, String> = crate::PointDef::new(22, 8, true);
-    pub const DNS1: crate::PointDef<Self, String> = crate::PointDef::new(30, 8, true);
-    pub const DNS2: crate::PointDef<Self, String> = crate::PointDef::new(38, 8, true);
-    pub const MAC: crate::PointDef<Self, String> = crate::PointDef::new(46, 4, false);
-    pub const LNKCTL: crate::PointDef<Self, u16> = crate::PointDef::new(50, 1, true);
+    pub const GW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(22, 8, true);
+    pub const DNS1: crate::PointDef<Self, Option<String>> = crate::PointDef::new(30, 8, true);
+    pub const DNS2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(38, 8, true);
+    pub const MAC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(46, 4, false);
+    pub const LNKCTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(50, 1, true);
 }
 
 impl crate::Model for Model16 {
@@ -65,18 +65,10 @@ impl crate::Model for Model16 {
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             nam: Self::NAM.from_data(data)?,
-            cfg: Self::CFG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ctl: Self::CTL
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            addr: Self::ADDR
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            msk: Self::MSK
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            cfg: Self::CFG.from_data(data)?,
+            ctl: Self::CTL.from_data(data)?,
+            addr: Self::ADDR.from_data(data)?,
+            msk: Self::MSK.from_data(data)?,
             gw: Self::GW.from_data(data)?,
             dns1: Self::DNS1.from_data(data)?,
             dns2: Self::DNS2.from_data(data)?,

@@ -57,9 +57,9 @@ impl Model706 {
     pub const ADPTCRVRSLT: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
     pub const NPT: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
     pub const NCRV: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const RVRTTMS: crate::PointDef<Self, u32> = crate::PointDef::new(5, 2, true);
-    pub const RVRTREM: crate::PointDef<Self, u32> = crate::PointDef::new(7, 2, false);
-    pub const RVRTCRV: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, true);
+    pub const RVRTTMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(5, 2, true);
+    pub const RVRTREM: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, false);
+    pub const RVRTCRV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, true);
     pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(10, 1, false);
     pub const DEPTREF_SF: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
     pub const RSPTMS_SF: crate::PointDef<Self, i16> = crate::PointDef::new(12, 1, false);
@@ -69,33 +69,17 @@ impl crate::Model for Model706 {
     const ID: u16 = 706;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            ena: Self::ENA
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            adptcrvreq: Self::ADPTCRVREQ
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            adptcrvrslt: Self::ADPTCRVRSLT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            npt: Self::NPT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            ncrv: Self::NCRV
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            ena: Self::ENA.from_data(data)?,
+            adptcrvreq: Self::ADPTCRVREQ.from_data(data)?,
+            adptcrvrslt: Self::ADPTCRVRSLT.from_data(data)?,
+            npt: Self::NPT.from_data(data)?,
+            ncrv: Self::NCRV.from_data(data)?,
             rvrttms: Self::RVRTTMS.from_data(data)?,
             rvrtrem: Self::RVRTREM.from_data(data)?,
             rvrtcrv: Self::RVRTCRV.from_data(data)?,
-            v_sf: Self::V_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            deptref_sf: Self::DEPTREF_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            rsptms_sf: Self::RSPTMS_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            v_sf: Self::V_SF.from_data(data)?,
+            deptref_sf: Self::DEPTREF_SF.from_data(data)?,
+            rsptms_sf: Self::RSPTMS_SF.from_data(data)?,
         })
     }
 }

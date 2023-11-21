@@ -21,9 +21,11 @@ pub trait Value: Sized {
 
 /// This trait marks points with a fixed size. All non-string
 /// values are actually fixed size.
-pub trait FixedSize: Value {
+pub trait FixedSize: Value + PartialEq {
     /// The size of this value
     const SIZE: u16;
+    /// The value when the point is not supported
+    const INVALID: Self;
 }
 
 impl Value for u16 {
@@ -40,6 +42,7 @@ impl Value for u16 {
 
 impl FixedSize for u16 {
     const SIZE: u16 = 1;
+    const INVALID: u16 = u16::MAX;
 }
 
 impl Value for u32 {
@@ -56,6 +59,7 @@ impl Value for u32 {
 
 impl FixedSize for u32 {
     const SIZE: u16 = 2;
+    const INVALID: u32 = u32::MAX;
 }
 
 impl Value for u64 {
@@ -77,6 +81,7 @@ impl Value for u64 {
 
 impl FixedSize for u64 {
     const SIZE: u16 = 4;
+    const INVALID: u64 = u64::MAX;
 }
 
 impl Value for u128 {
@@ -109,6 +114,7 @@ impl Value for u128 {
 
 impl FixedSize for u128 {
     const SIZE: u16 = 8;
+    const INVALID: u128 = u128::MAX;
 }
 
 impl Value for i16 {
@@ -122,6 +128,7 @@ impl Value for i16 {
 
 impl FixedSize for i16 {
     const SIZE: u16 = 1;
+    const INVALID: i16 = i16::MIN;
 }
 
 impl Value for i32 {
@@ -135,6 +142,7 @@ impl Value for i32 {
 
 impl FixedSize for i32 {
     const SIZE: u16 = 2;
+    const INVALID: i32 = i32::MIN;
 }
 
 impl Value for i64 {
@@ -148,6 +156,7 @@ impl Value for i64 {
 
 impl FixedSize for i64 {
     const SIZE: u16 = 4;
+    const INVALID: i64 = i64::MIN;
 }
 
 impl Value for f32 {
@@ -173,6 +182,7 @@ impl Value for f32 {
 
 impl FixedSize for f32 {
     const SIZE: u16 = 2;
+    const INVALID: f32 = f32::NAN;
 }
 
 impl Value for f64 {
@@ -204,6 +214,7 @@ impl Value for f64 {
 
 impl FixedSize for f64 {
     const SIZE: u16 = 4;
+    const INVALID: f64 = f64::NAN;
 }
 
 fn encode_bytes(octets: &[u8]) -> Box<[u16]> {
@@ -250,6 +261,7 @@ impl Value for Ipv4Addr {
 
 impl FixedSize for Ipv4Addr {
     const SIZE: u16 = 2;
+    const INVALID: Ipv4Addr = Ipv4Addr::new(0, 0, 0, 0);
 }
 
 impl Value for Ipv6Addr {
@@ -266,6 +278,42 @@ impl Value for Ipv6Addr {
 
 impl FixedSize for Ipv6Addr {
     const SIZE: u16 = 8;
+    const INVALID: Ipv6Addr = Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 0);
+}
+
+impl Value for Option<String> {
+    fn decode(data: &[u16]) -> Result<Self, DecodeError> {
+        Ok(if data.iter().all(|w| *w == 0) {
+            None
+        } else {
+            Some(String::decode(data)?)
+        })
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            if value.is_empty() {
+                Box::new([0x0080])
+            } else {
+                String::encode(value)
+            }
+        } else {
+            Box::new([0x0000])
+        }
+    }
+}
+
+impl<T: FixedSize> Value for Option<T> {
+    fn decode(data: &[u16]) -> Result<Self, DecodeError> {
+        let value = T::decode(data)?;
+        Ok((value != T::INVALID).then_some(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            T::INVALID.encode()
+        }
+    }
 }
 
 /// This error is returned if there was an error decoding

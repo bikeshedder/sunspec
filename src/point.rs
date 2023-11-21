@@ -33,13 +33,14 @@ impl<M: Model, T: Value> PointDef<M, T> {
         }
     }
     /// Parse value from given data
-    pub fn from_data(&self, data: &[u16]) -> Result<Option<T>, ReadPointError> {
+    pub fn from_data(&self, data: &[u16]) -> Result<T, ReadPointError> {
         let slice = get_slice(
             data,
             self.offset as usize..(self.offset as usize + self.length as usize),
         )
         .ok_or(ReadPointError::OutOfBounds)?;
-        Ok(Some(T::decode(slice)?))
+        let value = T::decode(slice)?;
+        Ok(value)
     }
 }
 

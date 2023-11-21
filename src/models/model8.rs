@@ -24,12 +24,8 @@ impl crate::Model for Model8 {
     const ID: u16 = 8;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            fmt: Self::FMT
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            n: Self::N
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            fmt: Self::FMT.from_data(data)?,
+            n: Self::N.from_data(data)?,
         })
     }
 }

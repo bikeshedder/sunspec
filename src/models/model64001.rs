@@ -76,41 +76,41 @@ pub struct Model64001 {
 #[allow(missing_docs)]
 
 impl Model64001 {
-    pub const CMD: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const HWREV: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
-    pub const RSFWREV: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const OSFWREV: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const PRODREV: crate::PointDef<Self, String> = crate::PointDef::new(4, 2, false);
-    pub const BOOTS: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
-    pub const SWITCH: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
-    pub const SENSORS: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
-    pub const TALKING: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const STATUS: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
-    pub const CONFIG: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
-    pub const LEDBLINK: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, false);
-    pub const LEDON: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, false);
-    pub const RESERVED: crate::PointDef<Self, u16> = crate::PointDef::new(14, 1, false);
-    pub const LOC: crate::PointDef<Self, String> = crate::PointDef::new(15, 16, false);
-    pub const S1ID: crate::PointDef<Self, u16> = crate::PointDef::new(31, 1, false);
-    pub const S1ADDR: crate::PointDef<Self, u16> = crate::PointDef::new(32, 1, false);
-    pub const S1OSVER: crate::PointDef<Self, u16> = crate::PointDef::new(33, 1, false);
-    pub const S1VER: crate::PointDef<Self, String> = crate::PointDef::new(34, 2, false);
-    pub const S1SERIAL: crate::PointDef<Self, String> = crate::PointDef::new(36, 5, false);
-    pub const S2ID: crate::PointDef<Self, u16> = crate::PointDef::new(41, 1, false);
-    pub const S2ADDR: crate::PointDef<Self, u16> = crate::PointDef::new(42, 1, false);
-    pub const S2OSVER: crate::PointDef<Self, u16> = crate::PointDef::new(43, 1, false);
-    pub const S2VER: crate::PointDef<Self, String> = crate::PointDef::new(44, 2, false);
-    pub const S2SERIAL: crate::PointDef<Self, String> = crate::PointDef::new(46, 5, false);
-    pub const S3ID: crate::PointDef<Self, u16> = crate::PointDef::new(51, 1, false);
-    pub const S3ADDR: crate::PointDef<Self, u16> = crate::PointDef::new(52, 1, false);
-    pub const S3OSVER: crate::PointDef<Self, u16> = crate::PointDef::new(53, 1, false);
-    pub const S3VER: crate::PointDef<Self, String> = crate::PointDef::new(54, 2, false);
-    pub const S3SERIAL: crate::PointDef<Self, String> = crate::PointDef::new(56, 5, false);
-    pub const S4ID: crate::PointDef<Self, u16> = crate::PointDef::new(61, 1, false);
-    pub const S4ADDR: crate::PointDef<Self, u16> = crate::PointDef::new(62, 1, false);
-    pub const S4OSVER: crate::PointDef<Self, u16> = crate::PointDef::new(63, 1, false);
-    pub const S4VER: crate::PointDef<Self, String> = crate::PointDef::new(64, 2, false);
-    pub const S4SERIAL: crate::PointDef<Self, String> = crate::PointDef::new(66, 5, false);
+    pub const CMD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
+    pub const HWREV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
+    pub const RSFWREV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
+    pub const OSFWREV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
+    pub const PRODREV: crate::PointDef<Self, Option<String>> = crate::PointDef::new(4, 2, false);
+    pub const BOOTS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
+    pub const SWITCH: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
+    pub const SENSORS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, false);
+    pub const TALKING: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, false);
+    pub const STATUS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, false);
+    pub const CONFIG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, false);
+    pub const LEDBLINK: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, false);
+    pub const LEDON: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(13, 1, false);
+    pub const RESERVED: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(14, 1, false);
+    pub const LOC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(15, 16, false);
+    pub const S1ID: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(31, 1, false);
+    pub const S1ADDR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(32, 1, false);
+    pub const S1OSVER: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(33, 1, false);
+    pub const S1VER: crate::PointDef<Self, Option<String>> = crate::PointDef::new(34, 2, false);
+    pub const S1SERIAL: crate::PointDef<Self, Option<String>> = crate::PointDef::new(36, 5, false);
+    pub const S2ID: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(41, 1, false);
+    pub const S2ADDR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(42, 1, false);
+    pub const S2OSVER: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(43, 1, false);
+    pub const S2VER: crate::PointDef<Self, Option<String>> = crate::PointDef::new(44, 2, false);
+    pub const S2SERIAL: crate::PointDef<Self, Option<String>> = crate::PointDef::new(46, 5, false);
+    pub const S3ID: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(51, 1, false);
+    pub const S3ADDR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(52, 1, false);
+    pub const S3OSVER: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(53, 1, false);
+    pub const S3VER: crate::PointDef<Self, Option<String>> = crate::PointDef::new(54, 2, false);
+    pub const S3SERIAL: crate::PointDef<Self, Option<String>> = crate::PointDef::new(56, 5, false);
+    pub const S4ID: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(61, 1, false);
+    pub const S4ADDR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(62, 1, false);
+    pub const S4OSVER: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(63, 1, false);
+    pub const S4VER: crate::PointDef<Self, Option<String>> = crate::PointDef::new(64, 2, false);
+    pub const S4SERIAL: crate::PointDef<Self, Option<String>> = crate::PointDef::new(66, 5, false);
 }
 
 impl crate::Model for Model64001 {

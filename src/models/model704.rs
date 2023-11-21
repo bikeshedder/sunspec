@@ -194,49 +194,56 @@ pub struct Model704 {
 #[allow(missing_docs)]
 
 impl Model704 {
-    pub const PFWINJENA: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const PFWINJENARVRT: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const PFWINJRVRTTMS: crate::PointDef<Self, u32> = crate::PointDef::new(2, 2, true);
-    pub const PFWINJRVRTREM: crate::PointDef<Self, u32> = crate::PointDef::new(4, 2, false);
-    pub const PFWABSENA: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
-    pub const PFWABSENARVRT: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, true);
-    pub const PFWABSRVRTTMS: crate::PointDef<Self, u32> = crate::PointDef::new(8, 2, true);
-    pub const PFWABSRVRTREM: crate::PointDef<Self, u32> = crate::PointDef::new(10, 2, false);
-    pub const WMAXLIMPCTENA: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, true);
-    pub const WMAXLIMPCT: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, true);
-    pub const WMAXLIMPCTRVRT: crate::PointDef<Self, u16> = crate::PointDef::new(14, 1, true);
-    pub const WMAXLIMPCTENARVRT: crate::PointDef<Self, u16> = crate::PointDef::new(15, 1, true);
-    pub const WMAXLIMPCTRVRTTMS: crate::PointDef<Self, u32> = crate::PointDef::new(16, 2, true);
-    pub const WMAXLIMPCTRVRTREM: crate::PointDef<Self, u32> = crate::PointDef::new(18, 2, false);
-    pub const WSETENA: crate::PointDef<Self, u16> = crate::PointDef::new(20, 1, true);
-    pub const WSETMOD: crate::PointDef<Self, u16> = crate::PointDef::new(21, 1, true);
-    pub const WSET: crate::PointDef<Self, i32> = crate::PointDef::new(22, 2, true);
-    pub const WSETRVRT: crate::PointDef<Self, i32> = crate::PointDef::new(24, 2, true);
-    pub const WSETPCT: crate::PointDef<Self, i16> = crate::PointDef::new(26, 1, true);
-    pub const WSETPCTRVRT: crate::PointDef<Self, i16> = crate::PointDef::new(27, 1, true);
-    pub const WSETENARVRT: crate::PointDef<Self, u16> = crate::PointDef::new(28, 1, true);
-    pub const WSETRVRTTMS: crate::PointDef<Self, u32> = crate::PointDef::new(29, 2, true);
-    pub const WSETRVRTREM: crate::PointDef<Self, u32> = crate::PointDef::new(31, 2, false);
-    pub const VARSETENA: crate::PointDef<Self, u16> = crate::PointDef::new(33, 1, true);
-    pub const VARSETMOD: crate::PointDef<Self, u16> = crate::PointDef::new(34, 1, true);
-    pub const VARSETPRI: crate::PointDef<Self, u16> = crate::PointDef::new(35, 1, true);
-    pub const VARSET: crate::PointDef<Self, i32> = crate::PointDef::new(36, 2, true);
-    pub const VARSETRVRT: crate::PointDef<Self, i32> = crate::PointDef::new(38, 2, true);
-    pub const VARSETPCT: crate::PointDef<Self, i16> = crate::PointDef::new(40, 1, true);
-    pub const VARSETPCTRVRT: crate::PointDef<Self, i16> = crate::PointDef::new(41, 1, true);
-    pub const VARSETENARVRT: crate::PointDef<Self, u16> = crate::PointDef::new(42, 1, true);
-    pub const VARSETRVRTTMS: crate::PointDef<Self, u32> = crate::PointDef::new(43, 2, true);
-    pub const VARSETRVRTREM: crate::PointDef<Self, u32> = crate::PointDef::new(45, 2, false);
-    pub const WRMP: crate::PointDef<Self, u16> = crate::PointDef::new(47, 1, true);
-    pub const WRMPREF: crate::PointDef<Self, u16> = crate::PointDef::new(48, 1, true);
-    pub const VARRMP: crate::PointDef<Self, u16> = crate::PointDef::new(49, 1, true);
-    pub const ANTIISLENA: crate::PointDef<Self, u16> = crate::PointDef::new(50, 1, true);
-    pub const PF_SF: crate::PointDef<Self, i16> = crate::PointDef::new(51, 1, false);
-    pub const WMAXLIMPCT_SF: crate::PointDef<Self, i16> = crate::PointDef::new(52, 1, false);
-    pub const WSET_SF: crate::PointDef<Self, i16> = crate::PointDef::new(53, 1, false);
-    pub const WSETPCT_SF: crate::PointDef<Self, i16> = crate::PointDef::new(54, 1, false);
-    pub const VARSET_SF: crate::PointDef<Self, i16> = crate::PointDef::new(55, 1, false);
-    pub const VARSETPCT_SF: crate::PointDef<Self, i16> = crate::PointDef::new(56, 1, false);
+    pub const PFWINJENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
+    pub const PFWINJENARVRT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
+    pub const PFWINJRVRTTMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(2, 2, true);
+    pub const PFWINJRVRTREM: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, false);
+    pub const PFWABSENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
+    pub const PFWABSENARVRT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, true);
+    pub const PFWABSRVRTTMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(8, 2, true);
+    pub const PFWABSRVRTREM: crate::PointDef<Self, Option<u32>> =
+        crate::PointDef::new(10, 2, false);
+    pub const WMAXLIMPCTENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, true);
+    pub const WMAXLIMPCT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(13, 1, true);
+    pub const WMAXLIMPCTRVRT: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(14, 1, true);
+    pub const WMAXLIMPCTENARVRT: crate::PointDef<Self, Option<u16>> =
+        crate::PointDef::new(15, 1, true);
+    pub const WMAXLIMPCTRVRTTMS: crate::PointDef<Self, Option<u32>> =
+        crate::PointDef::new(16, 2, true);
+    pub const WMAXLIMPCTRVRTREM: crate::PointDef<Self, Option<u32>> =
+        crate::PointDef::new(18, 2, false);
+    pub const WSETENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(20, 1, true);
+    pub const WSETMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(21, 1, true);
+    pub const WSET: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(22, 2, true);
+    pub const WSETRVRT: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(24, 2, true);
+    pub const WSETPCT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(26, 1, true);
+    pub const WSETPCTRVRT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(27, 1, true);
+    pub const WSETENARVRT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(28, 1, true);
+    pub const WSETRVRTTMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(29, 2, true);
+    pub const WSETRVRTREM: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(31, 2, false);
+    pub const VARSETENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(33, 1, true);
+    pub const VARSETMOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(34, 1, true);
+    pub const VARSETPRI: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(35, 1, true);
+    pub const VARSET: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(36, 2, true);
+    pub const VARSETRVRT: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(38, 2, true);
+    pub const VARSETPCT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(40, 1, true);
+    pub const VARSETPCTRVRT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(41, 1, true);
+    pub const VARSETENARVRT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(42, 1, true);
+    pub const VARSETRVRTTMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(43, 2, true);
+    pub const VARSETRVRTREM: crate::PointDef<Self, Option<u32>> =
+        crate::PointDef::new(45, 2, false);
+    pub const WRMP: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(47, 1, true);
+    pub const WRMPREF: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(48, 1, true);
+    pub const VARRMP: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(49, 1, true);
+    pub const ANTIISLENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(50, 1, true);
+    pub const PF_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(51, 1, false);
+    pub const WMAXLIMPCT_SF: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(52, 1, false);
+    pub const WSET_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(53, 1, false);
+    pub const WSETPCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(54, 1, false);
+    pub const VARSET_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(55, 1, false);
+    pub const VARSETPCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(56, 1, false);
 }
 
 impl crate::Model for Model704 {

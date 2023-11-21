@@ -137,71 +137,38 @@ impl Model120 {
     pub const PFRTGQ3: crate::PointDef<Self, i16> = crate::PointDef::new(14, 1, false);
     pub const PFRTGQ4: crate::PointDef<Self, i16> = crate::PointDef::new(15, 1, false);
     pub const PFRTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(16, 1, false);
-    pub const WHRTG: crate::PointDef<Self, u16> = crate::PointDef::new(17, 1, false);
-    pub const WHRTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(18, 1, false);
-    pub const AHRRTG: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
-    pub const AHRRTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(20, 1, false);
-    pub const MAXCHARTE: crate::PointDef<Self, u16> = crate::PointDef::new(21, 1, false);
-    pub const MAXCHARTE_SF: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
-    pub const MAXDISCHARTE: crate::PointDef<Self, u16> = crate::PointDef::new(23, 1, false);
-    pub const MAXDISCHARTE_SF: crate::PointDef<Self, i16> = crate::PointDef::new(24, 1, false);
+    pub const WHRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, false);
+    pub const WHRTG_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(18, 1, false);
+    pub const AHRRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(19, 1, false);
+    pub const AHRRTG_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(20, 1, false);
+    pub const MAXCHARTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(21, 1, false);
+    pub const MAXCHARTE_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(22, 1, false);
+    pub const MAXDISCHARTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(23, 1, false);
+    pub const MAXDISCHARTE_SF: crate::PointDef<Self, Option<i16>> =
+        crate::PointDef::new(24, 1, false);
 }
 
 impl crate::Model for Model120 {
     const ID: u16 = 120;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            dertyp: Self::DERTYP
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            wrtg: Self::WRTG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            wrtg_sf: Self::WRTG_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            vartg: Self::VARTG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            vartg_sf: Self::VARTG_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            varrtgq1: Self::VARRTGQ1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            varrtgq2: Self::VARRTGQ2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            varrtgq3: Self::VARRTGQ3
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            varrtgq4: Self::VARRTGQ4
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            varrtg_sf: Self::VARRTG_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            artg: Self::ARTG
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            artg_sf: Self::ARTG_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            pfrtgq1: Self::PFRTGQ1
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            pfrtgq2: Self::PFRTGQ2
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            pfrtgq3: Self::PFRTGQ3
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            pfrtgq4: Self::PFRTGQ4
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
-            pfrtg_sf: Self::PFRTG_SF
-                .from_data(data)?
-                .ok_or(crate::ReadPointError::MissingMandatoryValue)?,
+            dertyp: Self::DERTYP.from_data(data)?,
+            wrtg: Self::WRTG.from_data(data)?,
+            wrtg_sf: Self::WRTG_SF.from_data(data)?,
+            vartg: Self::VARTG.from_data(data)?,
+            vartg_sf: Self::VARTG_SF.from_data(data)?,
+            varrtgq1: Self::VARRTGQ1.from_data(data)?,
+            varrtgq2: Self::VARRTGQ2.from_data(data)?,
+            varrtgq3: Self::VARRTGQ3.from_data(data)?,
+            varrtgq4: Self::VARRTGQ4.from_data(data)?,
+            varrtg_sf: Self::VARRTG_SF.from_data(data)?,
+            artg: Self::ARTG.from_data(data)?,
+            artg_sf: Self::ARTG_SF.from_data(data)?,
+            pfrtgq1: Self::PFRTGQ1.from_data(data)?,
+            pfrtgq2: Self::PFRTGQ2.from_data(data)?,
+            pfrtgq3: Self::PFRTGQ3.from_data(data)?,
+            pfrtgq4: Self::PFRTGQ4.from_data(data)?,
+            pfrtg_sf: Self::PFRTG_SF.from_data(data)?,
             whrtg: Self::WHRTG.from_data(data)?,
             whrtg_sf: Self::WHRTG_SF.from_data(data)?,
             ahrrtg: Self::AHRRTG.from_data(data)?,
