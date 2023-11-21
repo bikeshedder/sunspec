@@ -63,6 +63,13 @@ pub async fn discover_models(context: &mut Context) -> Result<DiscoveryResult, D
     })
 }
 
+// Modbus defines that a maximum of 125 registers can be read
+// (6.4, Page 16) and 123 registers can be written (6.12, Page 30)
+// to in a single request. See:
+// https://modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf
+const MAX_READ_LENGTH: u16 = 125;
+//const MAX_WRITE_LENGTH: u16 = 123;
+
 /// Read model data from modbus
 ///
 /// Note: Some models are too big to be fetched in a single go.
@@ -70,7 +77,23 @@ pub async fn read_model<M: Model>(
     ctx: &mut Context,
     addr: &ModelAddr<M>,
 ) -> Result<M, ReadModelError> {
-    let data = ctx.read_holding_registers(addr.addr, addr.len).await?;
+    let data = if addr.len <= MAX_READ_LENGTH {
+        ctx.read_holding_registers(addr.addr, addr.len).await?
+    } else {
+        let mut data: Vec<u16> = Vec::with_capacity(addr.len.into());
+        let begin = addr.addr;
+        let start = addr.addr + addr.len;
+        let ranges = (begin..start)
+            .step_by(MAX_READ_LENGTH as usize)
+            .map(|x| x..((x + MAX_READ_LENGTH).min(start)));
+        for range in ranges {
+            let chunk = ctx
+                .read_holding_registers(range.start, range.len().try_into().unwrap())
+                .await?;
+            data.extend(chunk);
+        }
+        data
+    };
     M::from_data(&data)
 }
 
