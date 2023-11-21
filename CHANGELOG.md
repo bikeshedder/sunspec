@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Load models bigger than 125 registers in chunks
+- Change representation of IPv6 addresses to `std::net::Ipv6addr`
+- Change representation of IPv4 addresses to `std::net::Ipv4addr`
+- Load optional points as None if they don't contain a value
+
 ## [0.2.0] - 2023-11-21
 
 ### Added
