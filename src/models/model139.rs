@@ -8,37 +8,37 @@ pub struct Model139 {
     /// ActCrv
     ///
     /// Index of active curve. 0=no active curve.
-    pub actcrv: u16,
+    pub act_crv: u16,
     /// ModEna
     ///
     /// LVRT control mode. Enable active curve.  Bitfield value.
-    pub modena: u16,
+    pub mod_ena: u16,
     /// WinTms
     ///
     /// Time window for LVRT change.
     ///
     /// Notes: Setting is ignored for LVRT controls.
-    pub wintms: Option<u16>,
+    pub win_tms: Option<u16>,
     /// RvrtTms
     ///
     /// Timeout period for LVRT curve selection.
     ///
     /// Notes: Setting is ignored for LVRT controls.
-    pub rvrttms: Option<u16>,
+    pub rvrt_tms: Option<u16>,
     /// RmpTms
     ///
     /// Ramp time for moving from current mode to new mode.
     ///
     /// Notes: Setting is ignored for LVRT controls.
-    pub rmptms: Option<u16>,
+    pub rmp_tms: Option<u16>,
     /// NCrv
     ///
     /// Number of curves supported (recommend 4).
-    pub ncrv: u16,
+    pub n_crv: u16,
     /// NPt
     ///
     /// Number of curve points supported (maximum of 20).
-    pub npt: u16,
+    pub n_pt: u16,
     /// Tms_SF
     ///
     /// Scale factor for duration.
@@ -48,38 +48,38 @@ pub struct Model139 {
     /// Scale factor for percent VRef.
     pub v_sf: i16,
     #[allow(missing_docs)]
-    pub crvtype: u16,
+    pub crv_type: u16,
 }
 
 #[allow(missing_docs)]
 
 impl Model139 {
-    pub const ACTCRV: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const MODENA: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const WINTMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, true);
-    pub const RVRTTMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
-    pub const RMPTMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
-    pub const NCRV: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
-    pub const NPT: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
+    pub const ACT_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
+    pub const MOD_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
+    pub const WIN_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, true);
+    pub const RVRT_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
+    pub const RMP_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
+    pub const N_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
+    pub const N_PT: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
     pub const TMS_SF: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
     pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
-    pub const CRVTYPE: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
+    pub const CRV_TYPE: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
 }
 
 impl crate::Model for Model139 {
     const ID: u16 = 139;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            actcrv: Self::ACTCRV.from_data(data)?,
-            modena: Self::MODENA.from_data(data)?,
-            wintms: Self::WINTMS.from_data(data)?,
-            rvrttms: Self::RVRTTMS.from_data(data)?,
-            rmptms: Self::RMPTMS.from_data(data)?,
-            ncrv: Self::NCRV.from_data(data)?,
-            npt: Self::NPT.from_data(data)?,
+            act_crv: Self::ACT_CRV.from_data(data)?,
+            mod_ena: Self::MOD_ENA.from_data(data)?,
+            win_tms: Self::WIN_TMS.from_data(data)?,
+            rvrt_tms: Self::RVRT_TMS.from_data(data)?,
+            rmp_tms: Self::RMP_TMS.from_data(data)?,
+            n_crv: Self::N_CRV.from_data(data)?,
+            n_pt: Self::N_PT.from_data(data)?,
             tms_sf: Self::TMS_SF.from_data(data)?,
             v_sf: Self::V_SF.from_data(data)?,
-            crvtype: Self::CRVTYPE.from_data(data)?,
+            crv_type: Self::CRV_TYPE.from_data(data)?,
         })
     }
 }

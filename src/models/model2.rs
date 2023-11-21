@@ -22,7 +22,7 @@ pub struct Model2 {
     /// Vendor Status
     ///
     /// Vendor specific status code
-    pub stvnd: Option<u16>,
+    pub st_vnd: Option<u16>,
     /// Event Code
     ///
     /// Bitmask event code
@@ -30,7 +30,7 @@ pub struct Model2 {
     /// Vendor Event Code
     ///
     /// Vendor specific event code
-    pub evtvnd: Option<u32>,
+    pub evt_vnd: Option<u32>,
     /// Control
     ///
     /// Control register for all aggregated devices
@@ -38,11 +38,11 @@ pub struct Model2 {
     /// Vendor Control
     ///
     /// Vendor control register for all aggregated devices
-    pub ctlvnd: Option<u32>,
+    pub ctl_vnd: Option<u32>,
     /// Control Value
     ///
     /// Numerical value used as a parameter to the control
-    pub ctlvl: Option<u32>,
+    pub ctl_vl: Option<u32>,
 }
 
 #[allow(missing_docs)]
@@ -52,12 +52,12 @@ impl Model2 {
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const UN: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
     pub const ST: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const STVND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
+    pub const ST_VND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(5, 2, false);
-    pub const EVTVND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, false);
+    pub const EVT_VND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, false);
     pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, false);
-    pub const CTLVND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(10, 2, false);
-    pub const CTLVL: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(12, 2, false);
+    pub const CTL_VND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(10, 2, false);
+    pub const CTL_VL: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(12, 2, false);
 }
 
 impl crate::Model for Model2 {
@@ -68,12 +68,12 @@ impl crate::Model for Model2 {
             n: Self::N.from_data(data)?,
             un: Self::UN.from_data(data)?,
             st: Self::ST.from_data(data)?,
-            stvnd: Self::STVND.from_data(data)?,
+            st_vnd: Self::ST_VND.from_data(data)?,
             evt: Self::EVT.from_data(data)?,
-            evtvnd: Self::EVTVND.from_data(data)?,
+            evt_vnd: Self::EVT_VND.from_data(data)?,
             ctl: Self::CTL.from_data(data)?,
-            ctlvnd: Self::CTLVND.from_data(data)?,
-            ctlvl: Self::CTLVL.from_data(data)?,
+            ctl_vnd: Self::CTL_VND.from_data(data)?,
+            ctl_vl: Self::CTL_VL.from_data(data)?,
         })
     }
 }

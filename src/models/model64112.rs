@@ -76,11 +76,11 @@ pub struct Model64112 {
     /// AUX Vent Fan
     pub cc_config_aux_vent_fan_v: u16,
     /// AUX PV Trigger
-    pub cc_config_aux_pv_triggerv: u16,
+    pub cc_config_aux_pv_trigger_v: u16,
     /// AUX PV Trigger Hold Time
     pub cc_config_aux_pv_trg_h_tm: u16,
     /// AUX Night Light Threshold
-    pub cc_config_aux_nlite_thrsv: u16,
+    pub cc_config_aux_nlite_thrs_v: u16,
     /// AUX Night Light On Time
     pub cc_config_aux_nlite_on_tm: u16,
     /// AUX Night Light On Hysteresis
@@ -98,37 +98,37 @@ pub struct Model64112 {
     /// AUX Divert Hysteresis
     pub cc_config_aux_divert_hyst_v: u16,
     /// FM CC Major Firmware Number
-    pub cc_config_majorfwrev: u16,
+    pub cc_config_major_fw_rev: u16,
     /// FM CC Mid Firmware Number
-    pub cc_config_midfwrev: u16,
+    pub cc_config_mid_fw_rev: u16,
     /// FM CC Minor Firmware Number
-    pub cc_config_minorfwrev: u16,
+    pub cc_config_minor_fw_rev: u16,
     /// Set Data Log Day Offset
-    pub cc_config_datalog_day_offset: u16,
+    pub cc_config_data_log_day_offset: u16,
     /// Current Data Log Day Offset
-    pub cc_config_datalog_cur_day_off: u16,
+    pub cc_config_data_log_cur_day_off: u16,
     /// Data Log Daily (Ah)
-    pub cc_config_datalog_daily_ah: u16,
+    pub cc_config_data_log_daily_ah: u16,
     /// Data Log Daily (kWh)
-    pub cc_config_datalog_daily_kwh: u16,
+    pub cc_config_data_log_daily_kwh: u16,
     /// Data Log Daily Maximum Output (A)
-    pub cc_config_datalog_max_out_a: u16,
+    pub cc_config_data_log_max_out_a: u16,
     /// Data Log Daily Maximum Output (W)
-    pub cc_config_datalog_max_out_w: u16,
+    pub cc_config_data_log_max_out_w: u16,
     /// Data Log Daily Absorb Time
-    pub cc_config_datalog_absorb_t: u16,
+    pub cc_config_data_log_absorb_t: u16,
     /// Data Log Daily Float Time
-    pub cc_config_datalog_float_t: u16,
+    pub cc_config_data_log_float_t: u16,
     /// Data Log Daily Minimum Battery
-    pub cc_config_datalog_min_batt_v: u16,
+    pub cc_config_data_log_min_batt_v: u16,
     /// Data Log Daily Maximum Battery
-    pub cc_config_datalog_max_batt_v: u16,
+    pub cc_config_data_log_max_batt_v: u16,
     /// Data Log Daily Maximum Input
-    pub cc_config_datalog_max_input_v: u16,
+    pub cc_config_data_log_max_input_v: u16,
     /// Data Log Clear
-    pub cc_config_datalog_clear: u16,
+    pub cc_config_data_log_clear: u16,
     /// Data Log Clear Complement
-    pub cc_config_datalog_clr_comp: u16,
+    pub cc_config_data_log_clr_comp: u16,
 }
 
 #[allow(missing_docs)]
@@ -187,11 +187,11 @@ impl Model64112 {
         crate::PointDef::new(35, 1, false);
     pub const CC_CONFIG_AUX_VENT_FAN_V: crate::PointDef<Self, u16> =
         crate::PointDef::new(36, 1, false);
-    pub const CC_CONFIG_AUX_PV_TRIGGERV: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_AUX_PV_TRIGGER_V: crate::PointDef<Self, u16> =
         crate::PointDef::new(37, 1, false);
     pub const CC_CONFIG_AUX_PV_TRG_H_TM: crate::PointDef<Self, u16> =
         crate::PointDef::new(38, 1, false);
-    pub const CC_CONFIG_AUX_NLITE_THRSV: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_AUX_NLITE_THRS_V: crate::PointDef<Self, u16> =
         crate::PointDef::new(39, 1, false);
     pub const CC_CONFIG_AUX_NLITE_ON_TM: crate::PointDef<Self, u16> =
         crate::PointDef::new(40, 1, false);
@@ -209,34 +209,36 @@ impl Model64112 {
         crate::PointDef::new(46, 1, false);
     pub const CC_CONFIG_AUX_DIVERT_HYST_V: crate::PointDef<Self, u16> =
         crate::PointDef::new(47, 1, false);
-    pub const CC_CONFIG_MAJORFWREV: crate::PointDef<Self, u16> = crate::PointDef::new(48, 1, false);
-    pub const CC_CONFIG_MIDFWREV: crate::PointDef<Self, u16> = crate::PointDef::new(49, 1, false);
-    pub const CC_CONFIG_MINORFWREV: crate::PointDef<Self, u16> = crate::PointDef::new(50, 1, false);
-    pub const CC_CONFIG_DATALOG_DAY_OFFSET: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_MAJOR_FW_REV: crate::PointDef<Self, u16> =
+        crate::PointDef::new(48, 1, false);
+    pub const CC_CONFIG_MID_FW_REV: crate::PointDef<Self, u16> = crate::PointDef::new(49, 1, false);
+    pub const CC_CONFIG_MINOR_FW_REV: crate::PointDef<Self, u16> =
+        crate::PointDef::new(50, 1, false);
+    pub const CC_CONFIG_DATA_LOG_DAY_OFFSET: crate::PointDef<Self, u16> =
         crate::PointDef::new(51, 1, false);
-    pub const CC_CONFIG_DATALOG_CUR_DAY_OFF: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_CUR_DAY_OFF: crate::PointDef<Self, u16> =
         crate::PointDef::new(52, 1, false);
-    pub const CC_CONFIG_DATALOG_DAILY_AH: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_DAILY_AH: crate::PointDef<Self, u16> =
         crate::PointDef::new(53, 1, false);
-    pub const CC_CONFIG_DATALOG_DAILY_KWH: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_DAILY_KWH: crate::PointDef<Self, u16> =
         crate::PointDef::new(54, 1, false);
-    pub const CC_CONFIG_DATALOG_MAX_OUT_A: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_MAX_OUT_A: crate::PointDef<Self, u16> =
         crate::PointDef::new(55, 1, false);
-    pub const CC_CONFIG_DATALOG_MAX_OUT_W: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_MAX_OUT_W: crate::PointDef<Self, u16> =
         crate::PointDef::new(56, 1, false);
-    pub const CC_CONFIG_DATALOG_ABSORB_T: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_ABSORB_T: crate::PointDef<Self, u16> =
         crate::PointDef::new(57, 1, false);
-    pub const CC_CONFIG_DATALOG_FLOAT_T: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_FLOAT_T: crate::PointDef<Self, u16> =
         crate::PointDef::new(58, 1, false);
-    pub const CC_CONFIG_DATALOG_MIN_BATT_V: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_MIN_BATT_V: crate::PointDef<Self, u16> =
         crate::PointDef::new(59, 1, false);
-    pub const CC_CONFIG_DATALOG_MAX_BATT_V: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_MAX_BATT_V: crate::PointDef<Self, u16> =
         crate::PointDef::new(60, 1, false);
-    pub const CC_CONFIG_DATALOG_MAX_INPUT_V: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_MAX_INPUT_V: crate::PointDef<Self, u16> =
         crate::PointDef::new(61, 1, false);
-    pub const CC_CONFIG_DATALOG_CLEAR: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_CLEAR: crate::PointDef<Self, u16> =
         crate::PointDef::new(62, 1, false);
-    pub const CC_CONFIG_DATALOG_CLR_COMP: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_DATA_LOG_CLR_COMP: crate::PointDef<Self, u16> =
         crate::PointDef::new(63, 1, false);
 }
 
@@ -281,9 +283,9 @@ impl crate::Model for Model64112 {
             cc_config_aux_l_batt_rcon: Self::CC_CONFIG_AUX_L_BATT_RCON.from_data(data)?,
             cc_config_aux_l_batt_dly: Self::CC_CONFIG_AUX_L_BATT_DLY.from_data(data)?,
             cc_config_aux_vent_fan_v: Self::CC_CONFIG_AUX_VENT_FAN_V.from_data(data)?,
-            cc_config_aux_pv_triggerv: Self::CC_CONFIG_AUX_PV_TRIGGERV.from_data(data)?,
+            cc_config_aux_pv_trigger_v: Self::CC_CONFIG_AUX_PV_TRIGGER_V.from_data(data)?,
             cc_config_aux_pv_trg_h_tm: Self::CC_CONFIG_AUX_PV_TRG_H_TM.from_data(data)?,
-            cc_config_aux_nlite_thrsv: Self::CC_CONFIG_AUX_NLITE_THRSV.from_data(data)?,
+            cc_config_aux_nlite_thrs_v: Self::CC_CONFIG_AUX_NLITE_THRS_V.from_data(data)?,
             cc_config_aux_nlite_on_tm: Self::CC_CONFIG_AUX_NLITE_ON_TM.from_data(data)?,
             cc_config_aux_nlite_on_hist: Self::CC_CONFIG_AUX_NLITE_ON_HIST.from_data(data)?,
             cc_config_aux_nlite_off_hist: Self::CC_CONFIG_AUX_NLITE_OFF_HIST.from_data(data)?,
@@ -292,22 +294,22 @@ impl crate::Model for Model64112 {
             cc_config_aux_divert_dly_time: Self::CC_CONFIG_AUX_DIVERT_DLY_TIME.from_data(data)?,
             cc_config_aux_divert_rel_v: Self::CC_CONFIG_AUX_DIVERT_REL_V.from_data(data)?,
             cc_config_aux_divert_hyst_v: Self::CC_CONFIG_AUX_DIVERT_HYST_V.from_data(data)?,
-            cc_config_majorfwrev: Self::CC_CONFIG_MAJORFWREV.from_data(data)?,
-            cc_config_midfwrev: Self::CC_CONFIG_MIDFWREV.from_data(data)?,
-            cc_config_minorfwrev: Self::CC_CONFIG_MINORFWREV.from_data(data)?,
-            cc_config_datalog_day_offset: Self::CC_CONFIG_DATALOG_DAY_OFFSET.from_data(data)?,
-            cc_config_datalog_cur_day_off: Self::CC_CONFIG_DATALOG_CUR_DAY_OFF.from_data(data)?,
-            cc_config_datalog_daily_ah: Self::CC_CONFIG_DATALOG_DAILY_AH.from_data(data)?,
-            cc_config_datalog_daily_kwh: Self::CC_CONFIG_DATALOG_DAILY_KWH.from_data(data)?,
-            cc_config_datalog_max_out_a: Self::CC_CONFIG_DATALOG_MAX_OUT_A.from_data(data)?,
-            cc_config_datalog_max_out_w: Self::CC_CONFIG_DATALOG_MAX_OUT_W.from_data(data)?,
-            cc_config_datalog_absorb_t: Self::CC_CONFIG_DATALOG_ABSORB_T.from_data(data)?,
-            cc_config_datalog_float_t: Self::CC_CONFIG_DATALOG_FLOAT_T.from_data(data)?,
-            cc_config_datalog_min_batt_v: Self::CC_CONFIG_DATALOG_MIN_BATT_V.from_data(data)?,
-            cc_config_datalog_max_batt_v: Self::CC_CONFIG_DATALOG_MAX_BATT_V.from_data(data)?,
-            cc_config_datalog_max_input_v: Self::CC_CONFIG_DATALOG_MAX_INPUT_V.from_data(data)?,
-            cc_config_datalog_clear: Self::CC_CONFIG_DATALOG_CLEAR.from_data(data)?,
-            cc_config_datalog_clr_comp: Self::CC_CONFIG_DATALOG_CLR_COMP.from_data(data)?,
+            cc_config_major_fw_rev: Self::CC_CONFIG_MAJOR_FW_REV.from_data(data)?,
+            cc_config_mid_fw_rev: Self::CC_CONFIG_MID_FW_REV.from_data(data)?,
+            cc_config_minor_fw_rev: Self::CC_CONFIG_MINOR_FW_REV.from_data(data)?,
+            cc_config_data_log_day_offset: Self::CC_CONFIG_DATA_LOG_DAY_OFFSET.from_data(data)?,
+            cc_config_data_log_cur_day_off: Self::CC_CONFIG_DATA_LOG_CUR_DAY_OFF.from_data(data)?,
+            cc_config_data_log_daily_ah: Self::CC_CONFIG_DATA_LOG_DAILY_AH.from_data(data)?,
+            cc_config_data_log_daily_kwh: Self::CC_CONFIG_DATA_LOG_DAILY_KWH.from_data(data)?,
+            cc_config_data_log_max_out_a: Self::CC_CONFIG_DATA_LOG_MAX_OUT_A.from_data(data)?,
+            cc_config_data_log_max_out_w: Self::CC_CONFIG_DATA_LOG_MAX_OUT_W.from_data(data)?,
+            cc_config_data_log_absorb_t: Self::CC_CONFIG_DATA_LOG_ABSORB_T.from_data(data)?,
+            cc_config_data_log_float_t: Self::CC_CONFIG_DATA_LOG_FLOAT_T.from_data(data)?,
+            cc_config_data_log_min_batt_v: Self::CC_CONFIG_DATA_LOG_MIN_BATT_V.from_data(data)?,
+            cc_config_data_log_max_batt_v: Self::CC_CONFIG_DATA_LOG_MAX_BATT_V.from_data(data)?,
+            cc_config_data_log_max_input_v: Self::CC_CONFIG_DATA_LOG_MAX_INPUT_V.from_data(data)?,
+            cc_config_data_log_clear: Self::CC_CONFIG_DATA_LOG_CLEAR.from_data(data)?,
+            cc_config_data_log_clr_comp: Self::CC_CONFIG_DATA_LOG_CLR_COMP.from_data(data)?,
         })
     }
 }

@@ -2,19 +2,19 @@
 #[derive(Debug)]
 pub struct Model64110 {
     /// AXS Major Firmware Number
-    pub majorfwrev: u16,
+    pub major_fw_rev: u16,
     /// AXS Mid Firmware Number
-    pub midfwrev: u16,
+    pub mid_fw_rev: u16,
     /// AXS Minor Firmware Number
-    pub minorfwrev: u16,
+    pub minor_fw_rev: u16,
     /// Encryption Key
-    pub encrypkey: u16,
+    pub encryp_key: u16,
     /// MAC Address
     pub mac_address: String,
     /// Write Password
-    pub writepassword: String,
+    pub write_password: String,
     /// Enable DHCP
-    pub enabledhcp: u16,
+    pub enable_dhcp: u16,
     /// TCPIP Address
     pub tcpip_address: std::net::Ipv4Addr,
     /// TCPIP Gateway
@@ -70,7 +70,7 @@ pub struct Model64110 {
     /// Enable Network Time
     pub ntp_enable: u16,
     /// Time Zone
-    pub timezone: i16,
+    pub time_zone: i16,
     /// Year
     pub date_year: u16,
     /// Month
@@ -100,13 +100,13 @@ pub struct Model64110 {
 #[allow(missing_docs)]
 
 impl Model64110 {
-    pub const MAJORFWREV: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const MIDFWREV: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
-    pub const MINORFWREV: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const ENCRYPKEY: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
+    pub const MAJOR_FW_REV: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
+    pub const MID_FW_REV: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
+    pub const MINOR_FW_REV: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
+    pub const ENCRYP_KEY: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
     pub const MAC_ADDRESS: crate::PointDef<Self, String> = crate::PointDef::new(4, 7, false);
-    pub const WRITEPASSWORD: crate::PointDef<Self, String> = crate::PointDef::new(11, 8, false);
-    pub const ENABLEDHCP: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
+    pub const WRITE_PASSWORD: crate::PointDef<Self, String> = crate::PointDef::new(11, 8, false);
+    pub const ENABLE_DHCP: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
     pub const TCPIP_ADDRESS: crate::PointDef<Self, std::net::Ipv4Addr> =
         crate::PointDef::new(20, 2, false);
     pub const GATEWAY_ADDRESS: crate::PointDef<Self, std::net::Ipv4Addr> =
@@ -143,7 +143,7 @@ impl Model64110 {
     pub const LOG_MODE: crate::PointDef<Self, u16> = crate::PointDef::new(247, 1, false);
     pub const NTP_SERVER_NM: crate::PointDef<Self, String> = crate::PointDef::new(248, 20, false);
     pub const NTP_ENABLE: crate::PointDef<Self, u16> = crate::PointDef::new(268, 1, false);
-    pub const TIMEZONE: crate::PointDef<Self, i16> = crate::PointDef::new(269, 1, false);
+    pub const TIME_ZONE: crate::PointDef<Self, i16> = crate::PointDef::new(269, 1, false);
     pub const DATE_YEAR: crate::PointDef<Self, u16> = crate::PointDef::new(270, 1, false);
     pub const DATE_MONTH: crate::PointDef<Self, u16> = crate::PointDef::new(271, 1, false);
     pub const DATE_DAY: crate::PointDef<Self, u16> = crate::PointDef::new(272, 1, false);
@@ -162,13 +162,13 @@ impl crate::Model for Model64110 {
     const ID: u16 = 64110;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            majorfwrev: Self::MAJORFWREV.from_data(data)?,
-            midfwrev: Self::MIDFWREV.from_data(data)?,
-            minorfwrev: Self::MINORFWREV.from_data(data)?,
-            encrypkey: Self::ENCRYPKEY.from_data(data)?,
+            major_fw_rev: Self::MAJOR_FW_REV.from_data(data)?,
+            mid_fw_rev: Self::MID_FW_REV.from_data(data)?,
+            minor_fw_rev: Self::MINOR_FW_REV.from_data(data)?,
+            encryp_key: Self::ENCRYP_KEY.from_data(data)?,
             mac_address: Self::MAC_ADDRESS.from_data(data)?,
-            writepassword: Self::WRITEPASSWORD.from_data(data)?,
-            enabledhcp: Self::ENABLEDHCP.from_data(data)?,
+            write_password: Self::WRITE_PASSWORD.from_data(data)?,
+            enable_dhcp: Self::ENABLE_DHCP.from_data(data)?,
             tcpip_address: Self::TCPIP_ADDRESS.from_data(data)?,
             gateway_address: Self::GATEWAY_ADDRESS.from_data(data)?,
             tcpip_netmask: Self::TCPIP_NETMASK.from_data(data)?,
@@ -196,7 +196,7 @@ impl crate::Model for Model64110 {
             log_mode: Self::LOG_MODE.from_data(data)?,
             ntp_server_nm: Self::NTP_SERVER_NM.from_data(data)?,
             ntp_enable: Self::NTP_ENABLE.from_data(data)?,
-            timezone: Self::TIMEZONE.from_data(data)?,
+            time_zone: Self::TIME_ZONE.from_data(data)?,
             date_year: Self::DATE_YEAR.from_data(data)?,
             date_month: Self::DATE_MONTH.from_data(data)?,
             date_day: Self::DATE_DAY.from_data(data)?,

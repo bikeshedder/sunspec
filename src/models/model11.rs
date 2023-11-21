@@ -10,7 +10,7 @@ pub struct Model11 {
     /// Interface Status Flags
     ///
     /// Bitmask values Interface flags.
-    pub cfgst: u16,
+    pub cfg_st: u16,
     /// Link State
     ///
     /// Enumerated value. State information for this interface
@@ -30,19 +30,19 @@ pub struct Model11 {
     /// Forced Speed
     ///
     /// Forced interface speed in Mb/s when AUTO is disabled
-    pub frcspd: Option<u16>,
+    pub frc_spd: Option<u16>,
 }
 
 #[allow(missing_docs)]
 
 impl Model11 {
     pub const SPD: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const CFGST: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
+    pub const CFG_ST: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const ST: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
     pub const MAC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(3, 4, false);
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(7, 4, true);
     pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, true);
-    pub const FRCSPD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, true);
+    pub const FRC_SPD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, true);
 }
 
 impl crate::Model for Model11 {
@@ -50,12 +50,12 @@ impl crate::Model for Model11 {
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             spd: Self::SPD.from_data(data)?,
-            cfgst: Self::CFGST.from_data(data)?,
+            cfg_st: Self::CFG_ST.from_data(data)?,
             st: Self::ST.from_data(data)?,
             mac: Self::MAC.from_data(data)?,
             nam: Self::NAM.from_data(data)?,
             ctl: Self::CTL.from_data(data)?,
-            frcspd: Self::FRCSPD.from_data(data)?,
+            frc_spd: Self::FRC_SPD.from_data(data)?,
         })
     }
 }

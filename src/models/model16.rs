@@ -42,7 +42,7 @@ pub struct Model16 {
     /// Link Control
     ///
     /// Bitmask value.  Link control flags
-    pub lnkctl: Option<u16>,
+    pub lnk_ctl: Option<u16>,
 }
 
 #[allow(missing_docs)]
@@ -57,7 +57,7 @@ impl Model16 {
     pub const DNS1: crate::PointDef<Self, Option<String>> = crate::PointDef::new(30, 8, true);
     pub const DNS2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(38, 8, true);
     pub const MAC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(46, 4, false);
-    pub const LNKCTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(50, 1, true);
+    pub const LNK_CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(50, 1, true);
 }
 
 impl crate::Model for Model16 {
@@ -73,7 +73,7 @@ impl crate::Model for Model16 {
             dns1: Self::DNS1.from_data(data)?,
             dns2: Self::DNS2.from_data(data)?,
             mac: Self::MAC.from_data(data)?,
-            lnkctl: Self::LNKCTL.from_data(data)?,
+            lnk_ctl: Self::LNK_CTL.from_data(data)?,
         })
     }
 }

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change representation of IPv6 addresses to `std::net::Ipv6addr`
 - Change representation of IPv4 addresses to `std::net::Ipv4addr`
 - Load optional points as None if they don't contain a value
+- Use `heck` to generate better `type` and `field` names
 
 ## [0.2.0] - 2023-11-21
 

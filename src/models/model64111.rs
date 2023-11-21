@@ -14,39 +14,39 @@ pub struct Model64111 {
     #[allow(missing_docs)]
     pub kwh_sf: i16,
     /// Battery Voltage
-    pub battv: u16,
+    pub batt_v: u16,
     /// Array Voltage
-    pub arrayv: u16,
+    pub array_v: u16,
     /// Output Current
-    pub outputa: u16,
+    pub output_a: u16,
     /// Array Current
-    pub inputa: u16,
+    pub input_a: u16,
     /// Operating State
-    pub chargerst: u16,
+    pub charger_st: u16,
     /// Output Wattage
-    pub outputw: u16,
+    pub output_w: u16,
     /// Today's Minimum Battery Voltage
-    pub todayminbatv: u16,
+    pub today_min_bat_v: u16,
     /// Today's Maximum Battery Voltage
-    pub todaymaxbatv: u16,
+    pub today_max_bat_v: u16,
     /// VOC
     pub vocv: u16,
     /// Today's Maximum VOC
-    pub todaymaxvoc: u16,
+    pub today_max_voc: u16,
     /// Today's kWh
-    pub todaykwhoutput: u16,
+    pub todayk_wh_output: u16,
     /// Today's AH
-    pub todayahoutput: u16,
+    pub today_ah_output: u16,
     /// Lifetime kWh
-    pub lifetimekwhout: u16,
+    pub life_time_kwh_out: u16,
     /// Lifetime kAH
-    pub lifetimeahout: u16,
+    pub life_time_ah_out: u16,
     /// Lifetime Maximum Output Wattage
-    pub lifetimemaxout: u16,
+    pub life_time_max_out: u16,
     /// Lifetime Maximum Battery Voltage
-    pub lifetimemaxbatt: u16,
+    pub life_time_max_batt: u16,
     /// Lifetime Maximum VOC Voltage
-    pub lifetimemaxvoc: u16,
+    pub life_time_max_voc: u16,
 }
 
 #[allow(missing_docs)]
@@ -58,23 +58,23 @@ impl Model64111 {
     pub const P_SF: crate::PointDef<Self, i16> = crate::PointDef::new(3, 1, false);
     pub const AH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
     pub const KWH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
-    pub const BATTV: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
-    pub const ARRAYV: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
-    pub const OUTPUTA: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
-    pub const INPUTA: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const CHARGERST: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
-    pub const OUTPUTW: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
-    pub const TODAYMINBATV: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, false);
-    pub const TODAYMAXBATV: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, false);
+    pub const BATT_V: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
+    pub const ARRAY_V: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
+    pub const OUTPUT_A: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
+    pub const INPUT_A: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
+    pub const CHARGER_ST: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
+    pub const OUTPUT_W: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
+    pub const TODAY_MIN_BAT_V: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, false);
+    pub const TODAY_MAX_BAT_V: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, false);
     pub const VOCV: crate::PointDef<Self, u16> = crate::PointDef::new(14, 1, false);
-    pub const TODAYMAXVOC: crate::PointDef<Self, u16> = crate::PointDef::new(15, 1, false);
-    pub const TODAYKWHOUTPUT: crate::PointDef<Self, u16> = crate::PointDef::new(16, 1, false);
-    pub const TODAYAHOUTPUT: crate::PointDef<Self, u16> = crate::PointDef::new(17, 1, false);
-    pub const LIFETIMEKWHOUT: crate::PointDef<Self, u16> = crate::PointDef::new(18, 1, false);
-    pub const LIFETIMEAHOUT: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
-    pub const LIFETIMEMAXOUT: crate::PointDef<Self, u16> = crate::PointDef::new(20, 1, false);
-    pub const LIFETIMEMAXBATT: crate::PointDef<Self, u16> = crate::PointDef::new(21, 1, false);
-    pub const LIFETIMEMAXVOC: crate::PointDef<Self, u16> = crate::PointDef::new(22, 1, false);
+    pub const TODAY_MAX_VOC: crate::PointDef<Self, u16> = crate::PointDef::new(15, 1, false);
+    pub const TODAYK_WH_OUTPUT: crate::PointDef<Self, u16> = crate::PointDef::new(16, 1, false);
+    pub const TODAY_AH_OUTPUT: crate::PointDef<Self, u16> = crate::PointDef::new(17, 1, false);
+    pub const LIFE_TIME_KWH_OUT: crate::PointDef<Self, u16> = crate::PointDef::new(18, 1, false);
+    pub const LIFE_TIME_AH_OUT: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
+    pub const LIFE_TIME_MAX_OUT: crate::PointDef<Self, u16> = crate::PointDef::new(20, 1, false);
+    pub const LIFE_TIME_MAX_BATT: crate::PointDef<Self, u16> = crate::PointDef::new(21, 1, false);
+    pub const LIFE_TIME_MAX_VOC: crate::PointDef<Self, u16> = crate::PointDef::new(22, 1, false);
 }
 
 impl crate::Model for Model64111 {
@@ -87,23 +87,23 @@ impl crate::Model for Model64111 {
             p_sf: Self::P_SF.from_data(data)?,
             ah_sf: Self::AH_SF.from_data(data)?,
             kwh_sf: Self::KWH_SF.from_data(data)?,
-            battv: Self::BATTV.from_data(data)?,
-            arrayv: Self::ARRAYV.from_data(data)?,
-            outputa: Self::OUTPUTA.from_data(data)?,
-            inputa: Self::INPUTA.from_data(data)?,
-            chargerst: Self::CHARGERST.from_data(data)?,
-            outputw: Self::OUTPUTW.from_data(data)?,
-            todayminbatv: Self::TODAYMINBATV.from_data(data)?,
-            todaymaxbatv: Self::TODAYMAXBATV.from_data(data)?,
+            batt_v: Self::BATT_V.from_data(data)?,
+            array_v: Self::ARRAY_V.from_data(data)?,
+            output_a: Self::OUTPUT_A.from_data(data)?,
+            input_a: Self::INPUT_A.from_data(data)?,
+            charger_st: Self::CHARGER_ST.from_data(data)?,
+            output_w: Self::OUTPUT_W.from_data(data)?,
+            today_min_bat_v: Self::TODAY_MIN_BAT_V.from_data(data)?,
+            today_max_bat_v: Self::TODAY_MAX_BAT_V.from_data(data)?,
             vocv: Self::VOCV.from_data(data)?,
-            todaymaxvoc: Self::TODAYMAXVOC.from_data(data)?,
-            todaykwhoutput: Self::TODAYKWHOUTPUT.from_data(data)?,
-            todayahoutput: Self::TODAYAHOUTPUT.from_data(data)?,
-            lifetimekwhout: Self::LIFETIMEKWHOUT.from_data(data)?,
-            lifetimeahout: Self::LIFETIMEAHOUT.from_data(data)?,
-            lifetimemaxout: Self::LIFETIMEMAXOUT.from_data(data)?,
-            lifetimemaxbatt: Self::LIFETIMEMAXBATT.from_data(data)?,
-            lifetimemaxvoc: Self::LIFETIMEMAXVOC.from_data(data)?,
+            today_max_voc: Self::TODAY_MAX_VOC.from_data(data)?,
+            todayk_wh_output: Self::TODAYK_WH_OUTPUT.from_data(data)?,
+            today_ah_output: Self::TODAY_AH_OUTPUT.from_data(data)?,
+            life_time_kwh_out: Self::LIFE_TIME_KWH_OUT.from_data(data)?,
+            life_time_ah_out: Self::LIFE_TIME_AH_OUT.from_data(data)?,
+            life_time_max_out: Self::LIFE_TIME_MAX_OUT.from_data(data)?,
+            life_time_max_batt: Self::LIFE_TIME_MAX_BATT.from_data(data)?,
+            life_time_max_voc: Self::LIFE_TIME_MAX_VOC.from_data(data)?,
         })
     }
 }

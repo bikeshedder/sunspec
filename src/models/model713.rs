@@ -6,19 +6,19 @@ pub struct Model713 {
     /// Energy Rating
     ///
     /// Energy rating of the DER storage.
-    pub whrtg: Option<u16>,
+    pub wh_rtg: Option<u16>,
     /// Energy Available
     ///
     /// Energy available of the DER storage (WHAvail = WHRtg * SoC * SoH)
-    pub whavail: Option<u16>,
+    pub wh_avail: Option<u16>,
     /// State of Charge
     ///
     /// State of charge of the DER storage.
-    pub soc: Option<u16>,
+    pub so_c: Option<u16>,
     /// State of Health
     ///
     /// State of health of the DER storage.
-    pub soh: Option<u16>,
+    pub so_h: Option<u16>,
     /// Status
     ///
     /// Storage status.
@@ -36,10 +36,10 @@ pub struct Model713 {
 #[allow(missing_docs)]
 
 impl Model713 {
-    pub const WHRTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
-    pub const WHAVAIL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
-    pub const SOC: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
-    pub const SOH: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
+    pub const WH_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
+    pub const WH_AVAIL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
+    pub const SO_C: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
+    pub const SO_H: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
     pub const STA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
     pub const WH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(5, 1, false);
     pub const PCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
@@ -49,10 +49,10 @@ impl crate::Model for Model713 {
     const ID: u16 = 713;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            whrtg: Self::WHRTG.from_data(data)?,
-            whavail: Self::WHAVAIL.from_data(data)?,
-            soc: Self::SOC.from_data(data)?,
-            soh: Self::SOH.from_data(data)?,
+            wh_rtg: Self::WH_RTG.from_data(data)?,
+            wh_avail: Self::WH_AVAIL.from_data(data)?,
+            so_c: Self::SO_C.from_data(data)?,
+            so_h: Self::SO_H.from_data(data)?,
             sta: Self::STA.from_data(data)?,
             wh_sf: Self::WH_SF.from_data(data)?,
             pct_sf: Self::PCT_SF.from_data(data)?,

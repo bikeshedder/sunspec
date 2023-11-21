@@ -20,7 +20,7 @@ pub struct Model502 {
     /// Vendor Status
     ///
     /// Module Vendor Status Code
-    pub statvend: Option<u16>,
+    pub stat_vend: Option<u16>,
     /// Events
     ///
     /// Bitmask value.  Module Event Flags
@@ -28,7 +28,7 @@ pub struct Model502 {
     /// Vendor Module Event Flags
     ///
     /// Vendor specific flags
-    pub evtvend: Option<u32>,
+    pub evt_vend: Option<u32>,
     /// Control
     ///
     /// Module Control
@@ -36,11 +36,11 @@ pub struct Model502 {
     /// Vendor Control
     ///
     /// Vendor Module Control
-    pub ctlvend: Option<u32>,
+    pub ctl_vend: Option<u32>,
     /// Control Value
     ///
     /// Module Control Value
-    pub ctlval: Option<i32>,
+    pub ctl_val: Option<i32>,
     /// Timestamp
     ///
     /// Time in seconds since 2000 epoch
@@ -48,19 +48,19 @@ pub struct Model502 {
     /// Output Current
     ///
     /// Output Current
-    pub outa: Option<i16>,
+    pub out_a: Option<i16>,
     /// Output Voltage
     ///
     /// Output Voltage
-    pub outv: Option<i16>,
+    pub out_v: Option<i16>,
     /// Output Energy
     ///
     /// Output Energy
-    pub outwh: Option<u32>,
+    pub out_wh: Option<u32>,
     /// Output Power
     ///
     /// Output Power
-    pub outpw: Option<i16>,
+    pub out_pw: Option<i16>,
     /// Temp
     ///
     /// Module Temperature
@@ -68,19 +68,19 @@ pub struct Model502 {
     /// Input Current
     ///
     /// Input Current
-    pub ina: Option<i16>,
+    pub in_a: Option<i16>,
     /// Input Voltage
     ///
     /// Input Voltage
-    pub inv: Option<i16>,
+    pub in_v: Option<i16>,
     /// Input Energy
     ///
     /// Input Energy
-    pub inwh: Option<u32>,
+    pub in_wh: Option<u32>,
     /// Input Power
     ///
     /// Input Power
-    pub inw: Option<i16>,
+    pub in_w: Option<i16>,
 }
 
 #[allow(missing_docs)]
@@ -91,22 +91,22 @@ impl Model502 {
     pub const W_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
     pub const WH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
     pub const STAT: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const STATVEND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
+    pub const STAT_VEND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(6, 2, false);
-    pub const EVTVEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(8, 2, false);
+    pub const EVT_VEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(8, 2, false);
     pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, true);
-    pub const CTLVEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(11, 2, true);
-    pub const CTLVAL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(13, 2, true);
+    pub const CTL_VEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(11, 2, true);
+    pub const CTL_VAL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(13, 2, true);
     pub const TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(15, 2, false);
-    pub const OUTA: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(17, 1, false);
-    pub const OUTV: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(18, 1, false);
-    pub const OUTWH: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(19, 2, false);
-    pub const OUTPW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(21, 1, false);
+    pub const OUT_A: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(17, 1, false);
+    pub const OUT_V: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(18, 1, false);
+    pub const OUT_WH: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(19, 2, false);
+    pub const OUT_PW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(21, 1, false);
     pub const TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(22, 1, false);
-    pub const INA: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
-    pub const INV: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(24, 1, false);
-    pub const INWH: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(25, 2, false);
-    pub const INW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(27, 1, false);
+    pub const IN_A: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
+    pub const IN_V: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(24, 1, false);
+    pub const IN_WH: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(25, 2, false);
+    pub const IN_W: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(27, 1, false);
 }
 
 impl crate::Model for Model502 {
@@ -118,22 +118,22 @@ impl crate::Model for Model502 {
             w_sf: Self::W_SF.from_data(data)?,
             wh_sf: Self::WH_SF.from_data(data)?,
             stat: Self::STAT.from_data(data)?,
-            statvend: Self::STATVEND.from_data(data)?,
+            stat_vend: Self::STAT_VEND.from_data(data)?,
             evt: Self::EVT.from_data(data)?,
-            evtvend: Self::EVTVEND.from_data(data)?,
+            evt_vend: Self::EVT_VEND.from_data(data)?,
             ctl: Self::CTL.from_data(data)?,
-            ctlvend: Self::CTLVEND.from_data(data)?,
-            ctlval: Self::CTLVAL.from_data(data)?,
+            ctl_vend: Self::CTL_VEND.from_data(data)?,
+            ctl_val: Self::CTL_VAL.from_data(data)?,
             tms: Self::TMS.from_data(data)?,
-            outa: Self::OUTA.from_data(data)?,
-            outv: Self::OUTV.from_data(data)?,
-            outwh: Self::OUTWH.from_data(data)?,
-            outpw: Self::OUTPW.from_data(data)?,
+            out_a: Self::OUT_A.from_data(data)?,
+            out_v: Self::OUT_V.from_data(data)?,
+            out_wh: Self::OUT_WH.from_data(data)?,
+            out_pw: Self::OUT_PW.from_data(data)?,
             tmp: Self::TMP.from_data(data)?,
-            ina: Self::INA.from_data(data)?,
-            inv: Self::INV.from_data(data)?,
-            inwh: Self::INWH.from_data(data)?,
-            inw: Self::INW.from_data(data)?,
+            in_a: Self::IN_A.from_data(data)?,
+            in_v: Self::IN_V.from_data(data)?,
+            in_wh: Self::IN_WH.from_data(data)?,
+            in_w: Self::IN_W.from_data(data)?,
         })
     }
 }

@@ -6,7 +6,7 @@ pub struct Model4 {
     /// Request Sequence
     ///
     /// Sequence number from the request
-    pub rqseq: u16,
+    pub rq_seq: u16,
     /// Status
     ///
     /// Status of last read operation
@@ -156,7 +156,7 @@ pub struct Model4 {
 #[allow(missing_docs)]
 
 impl Model4 {
-    pub const RQSEQ: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
+    pub const RQ_SEQ: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const STS: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const X: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
     pub const VAL1: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
@@ -221,7 +221,7 @@ impl crate::Model for Model4 {
     const ID: u16 = 4;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            rqseq: Self::RQSEQ.from_data(data)?,
+            rq_seq: Self::RQ_SEQ.from_data(data)?,
             sts: Self::STS.from_data(data)?,
             x: Self::X.from_data(data)?,
             val1: Self::VAL1.from_data(data)?,

@@ -10,11 +10,11 @@ pub struct Model13 {
     /// Config Status
     ///
     /// Enumerated value.  Configuration status
-    pub cfgst: u16,
+    pub cfg_st: u16,
     /// Change Status
     ///
     /// Bitmask value.  A configuration change is pending
-    pub chgst: u16,
+    pub chg_st: u16,
     /// Config Capability
     ///
     /// Bitmask value. Identify capable sources of configuration
@@ -58,19 +58,19 @@ pub struct Model13 {
     /// Domain
     ///
     /// Domain name (24 chars max)
-    pub domnam: Option<String>,
+    pub dom_nam: Option<String>,
     /// Host Name
     ///
     /// Host name (24 chars max)
-    pub hostnam: Option<String>,
+    pub host_nam: Option<String>,
 }
 
 #[allow(missing_docs)]
 
 impl Model13 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
-    pub const CFGST: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const CHGST: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
+    pub const CFG_ST: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
+    pub const CHG_ST: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
     pub const CAP: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
     pub const CFG: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, true);
     pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, true);
@@ -81,8 +81,8 @@ impl Model13 {
     pub const DNS2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(89, 20, true);
     pub const NTP1: crate::PointDef<Self, Option<String>> = crate::PointDef::new(109, 20, true);
     pub const NTP2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(129, 20, true);
-    pub const DOMNAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(149, 12, true);
-    pub const HOSTNAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(161, 12, true);
+    pub const DOM_NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(149, 12, true);
+    pub const HOST_NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(161, 12, true);
 }
 
 impl crate::Model for Model13 {
@@ -90,8 +90,8 @@ impl crate::Model for Model13 {
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             nam: Self::NAM.from_data(data)?,
-            cfgst: Self::CFGST.from_data(data)?,
-            chgst: Self::CHGST.from_data(data)?,
+            cfg_st: Self::CFG_ST.from_data(data)?,
+            chg_st: Self::CHG_ST.from_data(data)?,
             cap: Self::CAP.from_data(data)?,
             cfg: Self::CFG.from_data(data)?,
             ctl: Self::CTL.from_data(data)?,
@@ -102,8 +102,8 @@ impl crate::Model for Model13 {
             dns2: Self::DNS2.from_data(data)?,
             ntp1: Self::NTP1.from_data(data)?,
             ntp2: Self::NTP2.from_data(data)?,
-            domnam: Self::DOMNAM.from_data(data)?,
-            hostnam: Self::HOSTNAM.from_data(data)?,
+            dom_nam: Self::DOM_NAM.from_data(data)?,
+            host_nam: Self::HOST_NAM.from_data(data)?,
         })
     }
 }

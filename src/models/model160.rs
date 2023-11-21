@@ -14,7 +14,7 @@ pub struct Model160 {
     /// Number of Modules
     pub n: Option<u16>,
     /// Timestamp Period
-    pub tmsper: Option<u16>,
+    pub tms_per: Option<u16>,
 }
 
 #[allow(missing_docs)]
@@ -26,7 +26,7 @@ impl Model160 {
     pub const DCWH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
     pub const EVT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, false);
     pub const N: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
-    pub const TMSPER: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
+    pub const TMS_PER: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
 }
 
 impl crate::Model for Model160 {
@@ -39,7 +39,7 @@ impl crate::Model for Model160 {
             dcwh_sf: Self::DCWH_SF.from_data(data)?,
             evt: Self::EVT.from_data(data)?,
             n: Self::N.from_data(data)?,
-            tmsper: Self::TMSPER.from_data(data)?,
+            tms_per: Self::TMS_PER.from_data(data)?,
         })
     }
 }

@@ -34,7 +34,7 @@ pub struct Model19 {
     /// Username
     ///
     /// Username for authentication
-    pub usrnam: Option<String>,
+    pub usr_nam: Option<String>,
     /// Password
     ///
     /// Password for authentication
@@ -51,7 +51,7 @@ impl Model19 {
     pub const DUP: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, true);
     pub const FLW: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, true);
     pub const AUTH: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, false);
-    pub const USRNAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(11, 12, false);
+    pub const USR_NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(11, 12, false);
     pub const PW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(23, 6, false);
 }
 
@@ -66,7 +66,7 @@ impl crate::Model for Model19 {
             dup: Self::DUP.from_data(data)?,
             flw: Self::FLW.from_data(data)?,
             auth: Self::AUTH.from_data(data)?,
-            usrnam: Self::USRNAM.from_data(data)?,
+            usr_nam: Self::USR_NAM.from_data(data)?,
             pw: Self::PW.from_data(data)?,
         })
     }

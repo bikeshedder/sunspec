@@ -2,20 +2,20 @@
 #[derive(Debug)]
 pub struct Model806 {
     /// Battery Points To Be Determined
-    pub battbd: u16,
+    pub bat_tbd: u16,
 }
 
 #[allow(missing_docs)]
 
 impl Model806 {
-    pub const BATTBD: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
+    pub const BAT_TBD: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
 }
 
 impl crate::Model for Model806 {
     const ID: u16 = 806;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            battbd: Self::BATTBD.from_data(data)?,
+            bat_tbd: Self::BAT_TBD.from_data(data)?,
         })
     }
 }

@@ -6,11 +6,11 @@ pub struct Model9 {
     /// Cert_UID
     ///
     /// User ID for this certificate
-    pub certuid: u16,
+    pub cert_uid: u16,
     /// Cert_Role
     ///
     /// Role for this certificate
-    pub certrole: u16,
+    pub cert_role: u16,
     /// Format
     ///
     /// Format of this certificate
@@ -24,13 +24,13 @@ pub struct Model9 {
     /// Total Length of the Certificate
     ///
     /// Notes: In registers, zero padded.
-    pub totln: u16,
+    pub tot_ln: u16,
     /// Fragment length
     ///
     /// Length of this fragment
     ///
     /// Notes: Maximum fragment length is 80 registers
-    pub frgln: u16,
+    pub frg_ln: u16,
     /// Frag1
     ///
     /// First word of this fragment
@@ -230,12 +230,12 @@ pub struct Model9 {
 #[allow(missing_docs)]
 
 impl Model9 {
-    pub const CERTUID: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const CERTROLE: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
+    pub const CERT_UID: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
+    pub const CERT_ROLE: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
     pub const FMT: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
     pub const TYP: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
-    pub const TOTLN: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
-    pub const FRGLN: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
+    pub const TOT_LN: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
+    pub const FRG_LN: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
     pub const FRG1: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
     pub const FRG2: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, true);
     pub const FRG3: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, true);
@@ -327,12 +327,12 @@ impl crate::Model for Model9 {
     const ID: u16 = 9;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
-            certuid: Self::CERTUID.from_data(data)?,
-            certrole: Self::CERTROLE.from_data(data)?,
+            cert_uid: Self::CERT_UID.from_data(data)?,
+            cert_role: Self::CERT_ROLE.from_data(data)?,
             fmt: Self::FMT.from_data(data)?,
             typ: Self::TYP.from_data(data)?,
-            totln: Self::TOTLN.from_data(data)?,
-            frgln: Self::FRGLN.from_data(data)?,
+            tot_ln: Self::TOT_LN.from_data(data)?,
+            frg_ln: Self::FRG_LN.from_data(data)?,
             frg1: Self::FRG1.from_data(data)?,
             frg2: Self::FRG2.from_data(data)?,
             frg3: Self::FRG3.from_data(data)?,

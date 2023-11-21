@@ -675,6 +675,7 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "codegen",
+ "heck",
  "itertools",
  "serde",
  "serde-xml-rs",

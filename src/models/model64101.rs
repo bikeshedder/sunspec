@@ -14,7 +14,7 @@ pub struct Model64101 {
     #[allow(missing_docs)]
     pub eltek_rps_q_ref: Option<u16>,
     #[allow(missing_docs)]
-    pub eltek_rps_cosphi_ref: Option<i16>,
+    pub eltek_rps_cos_phi_ref: Option<i16>,
 }
 
 #[allow(missing_docs)]
@@ -32,7 +32,7 @@ impl Model64101 {
         crate::PointDef::new(4, 1, false);
     pub const ELTEK_RPS_Q_REF: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(5, 1, false);
-    pub const ELTEK_RPS_COSPHI_REF: crate::PointDef<Self, Option<i16>> =
+    pub const ELTEK_RPS_COS_PHI_REF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(6, 1, false);
 }
 
@@ -46,7 +46,7 @@ impl crate::Model for Model64101 {
             eltek_apd_power_ref: Self::ELTEK_APD_POWER_REF.from_data(data)?,
             eltek_rps_method: Self::ELTEK_RPS_METHOD.from_data(data)?,
             eltek_rps_q_ref: Self::ELTEK_RPS_Q_REF.from_data(data)?,
-            eltek_rps_cosphi_ref: Self::ELTEK_RPS_COSPHI_REF.from_data(data)?,
+            eltek_rps_cos_phi_ref: Self::ELTEK_RPS_COS_PHI_REF.from_data(data)?,
         })
     }
 }

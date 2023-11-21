@@ -14,45 +14,45 @@ pub struct Model103 {
     /// Phase A Current
     ///
     /// Notes: Connected Phase
-    pub apha: u16,
+    pub aph_a: u16,
     /// Amps PhaseB
     ///
     /// Phase B Current
     ///
     /// Notes: Connected Phase
-    pub aphb: u16,
+    pub aph_b: u16,
     /// Amps PhaseC
     ///
     /// Phase C Current
     ///
     /// Notes: Connected Phase
-    pub aphc: u16,
+    pub aph_c: u16,
     #[allow(missing_docs)]
     pub a_sf: i16,
     /// Phase Voltage AB
     ///
     /// Phase Voltage AB
-    pub ppvphab: Option<u16>,
+    pub pp_vph_ab: Option<u16>,
     /// Phase Voltage BC
     ///
     /// Phase Voltage BC
-    pub ppvphbc: Option<u16>,
+    pub pp_vph_bc: Option<u16>,
     /// Phase Voltage CA
     ///
     /// Phase Voltage CA
-    pub ppvphca: Option<u16>,
+    pub pp_vph_ca: Option<u16>,
     /// Phase Voltage AN
     ///
     /// Phase Voltage AN
-    pub phvpha: u16,
+    pub ph_vph_a: u16,
     /// Phase Voltage BN
     ///
     /// Phase Voltage BN
-    pub phvphb: u16,
+    pub ph_vph_b: u16,
     /// Phase Voltage CN
     ///
     /// Phase Voltage CN
-    pub phvphc: u16,
+    pub ph_vph_c: u16,
     #[allow(missing_docs)]
     pub v_sf: i16,
     /// Watts
@@ -76,9 +76,9 @@ pub struct Model103 {
     /// VAr
     ///
     /// AC Reactive Power
-    pub var: Option<i16>,
+    pub v_ar: Option<i16>,
     #[allow(missing_docs)]
-    pub var_sf: Option<i16>,
+    pub v_ar_sf: Option<i16>,
     /// PF
     ///
     /// AC Power Factor
@@ -112,19 +112,19 @@ pub struct Model103 {
     /// Cabinet Temperature
     ///
     /// Cabinet Temperature
-    pub tmpcab: i16,
+    pub tmp_cab: i16,
     /// Heat Sink Temperature
     ///
     /// Heat Sink Temperature
-    pub tmpsnk: Option<i16>,
+    pub tmp_snk: Option<i16>,
     /// Transformer Temperature
     ///
     /// Transformer Temperature
-    pub tmptrns: Option<i16>,
+    pub tmp_trns: Option<i16>,
     /// Other Temperature
     ///
     /// Other Temperature
-    pub tmpot: Option<i16>,
+    pub tmp_ot: Option<i16>,
     #[allow(missing_docs)]
     pub tmp_sf: i16,
     /// Operating State
@@ -134,7 +134,7 @@ pub struct Model103 {
     /// Vendor Operating State
     ///
     /// Vendor specific operating state code
-    pub stvnd: Option<u16>,
+    pub st_vnd: Option<u16>,
     /// Event1
     ///
     /// Bitmask value. Event fields
@@ -146,35 +146,35 @@ pub struct Model103 {
     /// Vendor Event Bitfield 1
     ///
     /// Vendor defined events
-    pub evtvnd1: Option<u32>,
+    pub evt_vnd1: Option<u32>,
     /// Vendor Event Bitfield 2
     ///
     /// Vendor defined events
-    pub evtvnd2: Option<u32>,
+    pub evt_vnd2: Option<u32>,
     /// Vendor Event Bitfield 3
     ///
     /// Vendor defined events
-    pub evtvnd3: Option<u32>,
+    pub evt_vnd3: Option<u32>,
     /// Vendor Event Bitfield 4
     ///
     /// Vendor defined events
-    pub evtvnd4: Option<u32>,
+    pub evt_vnd4: Option<u32>,
 }
 
 #[allow(missing_docs)]
 
 impl Model103 {
     pub const A: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const APHA: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
-    pub const APHB: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const APHC: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
+    pub const APH_A: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
+    pub const APH_B: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
+    pub const APH_C: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
     pub const A_SF: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
-    pub const PPVPHAB: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
-    pub const PPVPHBC: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
-    pub const PPVPHCA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
-    pub const PHVPHA: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
-    pub const PHVPHB: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const PHVPHC: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
+    pub const PP_VPH_AB: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
+    pub const PP_VPH_BC: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
+    pub const PP_VPH_CA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
+    pub const PH_VPH_A: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
+    pub const PH_VPH_B: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
+    pub const PH_VPH_C: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
     pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
     pub const W: crate::PointDef<Self, i16> = crate::PointDef::new(12, 1, false);
     pub const W_SF: crate::PointDef<Self, i16> = crate::PointDef::new(13, 1, false);
@@ -182,8 +182,8 @@ impl Model103 {
     pub const HZ_SF: crate::PointDef<Self, i16> = crate::PointDef::new(15, 1, false);
     pub const VA: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(16, 1, false);
     pub const VA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(17, 1, false);
-    pub const VAR: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(18, 1, false);
-    pub const VAR_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(19, 1, false);
+    pub const V_AR: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(18, 1, false);
+    pub const V_AR_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(19, 1, false);
     pub const PF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(20, 1, false);
     pub const PF_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(21, 1, false);
     pub const WH: crate::PointDef<Self, u32> = crate::PointDef::new(22, 2, false);
@@ -194,19 +194,19 @@ impl Model103 {
     pub const DCV_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(28, 1, false);
     pub const DCW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(29, 1, false);
     pub const DCW_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(30, 1, false);
-    pub const TMPCAB: crate::PointDef<Self, i16> = crate::PointDef::new(31, 1, false);
-    pub const TMPSNK: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(32, 1, false);
-    pub const TMPTRNS: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(33, 1, false);
-    pub const TMPOT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(34, 1, false);
+    pub const TMP_CAB: crate::PointDef<Self, i16> = crate::PointDef::new(31, 1, false);
+    pub const TMP_SNK: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(32, 1, false);
+    pub const TMP_TRNS: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(33, 1, false);
+    pub const TMP_OT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(34, 1, false);
     pub const TMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(35, 1, false);
     pub const ST: crate::PointDef<Self, u16> = crate::PointDef::new(36, 1, false);
-    pub const STVND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(37, 1, false);
+    pub const ST_VND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(37, 1, false);
     pub const EVT1: crate::PointDef<Self, u32> = crate::PointDef::new(38, 2, false);
     pub const EVT2: crate::PointDef<Self, u32> = crate::PointDef::new(40, 2, false);
-    pub const EVTVND1: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(42, 2, false);
-    pub const EVTVND2: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(44, 2, false);
-    pub const EVTVND3: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(46, 2, false);
-    pub const EVTVND4: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(48, 2, false);
+    pub const EVT_VND1: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(42, 2, false);
+    pub const EVT_VND2: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(44, 2, false);
+    pub const EVT_VND3: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(46, 2, false);
+    pub const EVT_VND4: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(48, 2, false);
 }
 
 impl crate::Model for Model103 {
@@ -214,16 +214,16 @@ impl crate::Model for Model103 {
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {
             a: Self::A.from_data(data)?,
-            apha: Self::APHA.from_data(data)?,
-            aphb: Self::APHB.from_data(data)?,
-            aphc: Self::APHC.from_data(data)?,
+            aph_a: Self::APH_A.from_data(data)?,
+            aph_b: Self::APH_B.from_data(data)?,
+            aph_c: Self::APH_C.from_data(data)?,
             a_sf: Self::A_SF.from_data(data)?,
-            ppvphab: Self::PPVPHAB.from_data(data)?,
-            ppvphbc: Self::PPVPHBC.from_data(data)?,
-            ppvphca: Self::PPVPHCA.from_data(data)?,
-            phvpha: Self::PHVPHA.from_data(data)?,
-            phvphb: Self::PHVPHB.from_data(data)?,
-            phvphc: Self::PHVPHC.from_data(data)?,
+            pp_vph_ab: Self::PP_VPH_AB.from_data(data)?,
+            pp_vph_bc: Self::PP_VPH_BC.from_data(data)?,
+            pp_vph_ca: Self::PP_VPH_CA.from_data(data)?,
+            ph_vph_a: Self::PH_VPH_A.from_data(data)?,
+            ph_vph_b: Self::PH_VPH_B.from_data(data)?,
+            ph_vph_c: Self::PH_VPH_C.from_data(data)?,
             v_sf: Self::V_SF.from_data(data)?,
             w: Self::W.from_data(data)?,
             w_sf: Self::W_SF.from_data(data)?,
@@ -231,8 +231,8 @@ impl crate::Model for Model103 {
             hz_sf: Self::HZ_SF.from_data(data)?,
             va: Self::VA.from_data(data)?,
             va_sf: Self::VA_SF.from_data(data)?,
-            var: Self::VAR.from_data(data)?,
-            var_sf: Self::VAR_SF.from_data(data)?,
+            v_ar: Self::V_AR.from_data(data)?,
+            v_ar_sf: Self::V_AR_SF.from_data(data)?,
             pf: Self::PF.from_data(data)?,
             pf_sf: Self::PF_SF.from_data(data)?,
             wh: Self::WH.from_data(data)?,
@@ -243,19 +243,19 @@ impl crate::Model for Model103 {
             dcv_sf: Self::DCV_SF.from_data(data)?,
             dcw: Self::DCW.from_data(data)?,
             dcw_sf: Self::DCW_SF.from_data(data)?,
-            tmpcab: Self::TMPCAB.from_data(data)?,
-            tmpsnk: Self::TMPSNK.from_data(data)?,
-            tmptrns: Self::TMPTRNS.from_data(data)?,
-            tmpot: Self::TMPOT.from_data(data)?,
+            tmp_cab: Self::TMP_CAB.from_data(data)?,
+            tmp_snk: Self::TMP_SNK.from_data(data)?,
+            tmp_trns: Self::TMP_TRNS.from_data(data)?,
+            tmp_ot: Self::TMP_OT.from_data(data)?,
             tmp_sf: Self::TMP_SF.from_data(data)?,
             st: Self::ST.from_data(data)?,
-            stvnd: Self::STVND.from_data(data)?,
+            st_vnd: Self::ST_VND.from_data(data)?,
             evt1: Self::EVT1.from_data(data)?,
             evt2: Self::EVT2.from_data(data)?,
-            evtvnd1: Self::EVTVND1.from_data(data)?,
-            evtvnd2: Self::EVTVND2.from_data(data)?,
-            evtvnd3: Self::EVTVND3.from_data(data)?,
-            evtvnd4: Self::EVTVND4.from_data(data)?,
+            evt_vnd1: Self::EVT_VND1.from_data(data)?,
+            evt_vnd2: Self::EVT_VND2.from_data(data)?,
+            evt_vnd3: Self::EVT_VND3.from_data(data)?,
+            evt_vnd4: Self::EVT_VND4.from_data(data)?,
         })
     }
 }

@@ -1,4 +1,5 @@
 use codegen::Scope;
+use heck::{ToShoutySnakeCase, ToSnakeCase, ToUpperCamelCase};
 use thiserror::Error;
 
 use crate::json::{Model, Point, PointAccess, PointMandatory, PointType};
@@ -136,8 +137,8 @@ pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
             continue;
         }
         let field = model_struct
-            .new_field(safe_identifier(point.name.to_lowercase()), {
-                rust_type(point.r#type, point.mandatory == PointMandatory::M)
+            .new_field(safe_identifier(point.name.to_snake_case()), {
+                rust_type(point)
             })
             .vis("pub");
         let field_doc = point.doc.to_doc_string();
@@ -154,11 +155,8 @@ pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
         let writable = point.access == PointAccess::RW;
         if point.r#type != PointType::Pad {
             model_impl.associate_const(
-                &point.name.to_uppercase(),
-                &format!(
-                    "crate::PointDef<Self, {}>",
-                    rust_type(point.r#type, point.mandatory == PointMandatory::M)
-                ),
+                &point.name.to_shouty_snake_case(),
+                &format!("crate::PointDef<Self, {}>", rust_type(point)),
                 &format!(
                     "crate::PointDef::new({}, {}, {})",
                     offset, point.size, writable
@@ -182,16 +180,16 @@ pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
         }
         fn_from_data.line(format!(
             "    {}: Self::{}.from_data(data)?,",
-            safe_identifier(point.name.to_lowercase()),
-            safe_identifier(point.name.to_uppercase()),
+            safe_identifier(point.name.to_snake_case()),
+            safe_identifier(point.name.to_shouty_snake_case()),
         ));
     }
     fn_from_data.line("})");
     Ok(scope.to_string())
 }
 
-fn rust_type(ty: PointType, mandatory: bool) -> String {
-    let rty = match ty {
+fn rust_type(point: &Point) -> String {
+    let rty = match point.r#type {
         PointType::Int16 => "i16",
         PointType::Int32 => "i32",
         PointType::Int64 => "i64",
@@ -218,7 +216,7 @@ fn rust_type(ty: PointType, mandatory: bool) -> String {
         PointType::Sunssf => "i16",
         PointType::Count => "u16",
     };
-    if mandatory {
+    if point.mandatory == PointMandatory::M {
         String::from(rty)
     } else {
         format!("Option<{rty}>")
