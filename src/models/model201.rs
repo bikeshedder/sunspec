@@ -206,7 +206,7 @@ pub struct Model201 {
     /// Events
     ///
     /// Meter Event Flags
-    pub evt: u32,
+    pub evt: Evt,
 }
 
 #[allow(missing_docs)]
@@ -312,7 +312,7 @@ impl Model201 {
         crate::PointDef::new(100, 2, false);
     pub const TOT_V_ARH_SF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(102, 1, false);
-    pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(103, 2, false);
+    pub const EVT: crate::PointDef<Self, Evt> = crate::PointDef::new(103, 2, false);
 }
 
 impl crate::Model for Model201 {
@@ -392,5 +392,33 @@ impl crate::Model for Model201 {
             tot_v_arh_sf: Self::TOT_V_ARH_SF.from_data(data)?,
             evt: Self::EVT.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "Events\n\nMeter Event Flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt : u32 { # [doc = ""] const PowerFailure = 4 ; # [doc = ""] const UnderVoltage = 8 ; # [doc = ""] const LowPf = 16 ; # [doc = ""] const OverCurrent = 32 ; # [doc = ""] const OverVoltage = 64 ; # [doc = ""] const MissingSensor = 128 ; # [doc = ""] const Oem01 = 65536 ; # [doc = ""] const Oem02 = 131072 ; # [doc = ""] const Oem03 = 262144 ; # [doc = ""] const Oem04 = 524288 ; # [doc = ""] const Oem05 = 1048576 ; # [doc = ""] const Oem06 = 2097152 ; # [doc = ""] const Oem07 = 4194304 ; # [doc = ""] const Oem08 = 8388608 ; # [doc = ""] const Oem09 = 16777216 ; # [doc = ""] const Oem10 = 33554432 ; # [doc = ""] const Oem11 = 67108864 ; # [doc = ""] const Oem12 = 134217728 ; # [doc = ""] const Oem13 = 268435456 ; # [doc = ""] const Oem14 = 536870912 ; # [doc = ""] const Oem15 = 1073741824 ; } }
+impl crate::Value for Evt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Evt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Evt::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
     }
 }

@@ -12,7 +12,7 @@ pub struct Model14 {
     /// Capabilities
     ///
     /// Bitmask value.  Proxy configuration capabilities
-    pub cap: u16,
+    pub cap: Cap,
     /// Config
     ///
     /// Enumerated value.  Set proxy address type
@@ -20,7 +20,7 @@ pub struct Model14 {
     /// Type
     ///
     /// Enumerate value.  Proxy server type
-    pub typ: u16,
+    pub typ: Typ,
     /// Address
     ///
     /// IPv4 or IPv6 proxy hostname or dotted address (40 chars)
@@ -43,9 +43,9 @@ pub struct Model14 {
 
 impl Model14 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
-    pub const CAP: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
+    pub const CAP: crate::PointDef<Self, Cap> = crate::PointDef::new(4, 1, true);
     pub const CFG: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
-    pub const TYP: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
+    pub const TYP: crate::PointDef<Self, Typ> = crate::PointDef::new(6, 1, true);
     pub const ADDR: crate::PointDef<Self, String> = crate::PointDef::new(7, 20, true);
     pub const PORT: crate::PointDef<Self, u16> = crate::PointDef::new(27, 1, true);
     pub const USER: crate::PointDef<Self, Option<String>> = crate::PointDef::new(28, 12, true);
@@ -65,5 +65,61 @@ impl crate::Model for Model14 {
             user: Self::USER.from_data(data)?,
             pw: Self::PW.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "Capabilities\n\nBitmask value.  Proxy configuration capabilities"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Cap : u16 { # [doc = ""] const NoProxy = 1 ; # [doc = ""] const Ipv4Proxy = 2 ; # [doc = ""] const Ipv6Proxy = 4 ; } }
+impl crate::Value for Cap {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Cap> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Cap::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Type\n\nEnumerate value.  Proxy server type"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Typ : u16 { } }
+impl crate::Value for Typ {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Typ> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Typ::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
     }
 }

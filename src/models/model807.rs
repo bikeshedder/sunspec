@@ -106,19 +106,19 @@ pub struct Model807 {
     /// String Event 1
     ///
     /// Alarms, warnings and status values.  Bit flags.
-    pub evt1: u32,
+    pub evt1: Evt1,
     /// String Event 2
     ///
     /// Alarms, warnings and status values.  Bit flags.
-    pub evt2: u32,
+    pub evt2: Evt2,
     /// Vendor Event Bitfield 1
     ///
     /// Vendor defined events.
-    pub evt_vnd1: u32,
+    pub evt_vnd1: EvtVnd1,
     /// Vendor Event Bitfield 2
     ///
     /// Vendor defined events.
-    pub evt_vnd2: u32,
+    pub evt_vnd2: EvtVnd2,
     #[allow(missing_docs)]
     pub mod_v_sf: i16,
     /// Scale factor for voltage.
@@ -158,10 +158,10 @@ impl Model807 {
     pub const TMP_MIN: crate::PointDef<Self, i16> = crate::PointDef::new(17, 1, false);
     pub const TMP_MIN_MOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(18, 1, false);
     pub const TMP_AVG: crate::PointDef<Self, i16> = crate::PointDef::new(19, 1, false);
-    pub const EVT1: crate::PointDef<Self, u32> = crate::PointDef::new(20, 2, false);
-    pub const EVT2: crate::PointDef<Self, u32> = crate::PointDef::new(22, 2, false);
-    pub const EVT_VND1: crate::PointDef<Self, u32> = crate::PointDef::new(24, 2, false);
-    pub const EVT_VND2: crate::PointDef<Self, u32> = crate::PointDef::new(26, 2, false);
+    pub const EVT1: crate::PointDef<Self, Evt1> = crate::PointDef::new(20, 2, false);
+    pub const EVT2: crate::PointDef<Self, Evt2> = crate::PointDef::new(22, 2, false);
+    pub const EVT_VND1: crate::PointDef<Self, EvtVnd1> = crate::PointDef::new(24, 2, false);
+    pub const EVT_VND2: crate::PointDef<Self, EvtVnd2> = crate::PointDef::new(26, 2, false);
     pub const MOD_V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(28, 1, false);
     pub const CELL_V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(29, 1, false);
     pub const TMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(30, 1, false);
@@ -203,5 +203,117 @@ impl crate::Model for Model807 {
             so_c_sf: Self::SO_C_SF.from_data(data)?,
             ocv_sf: Self::OCV_SF.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "String Event 1\n\nAlarms, warnings and status values.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt1 : u32 { # [doc = ""] const CommunicationError = 1 ; # [doc = ""] const OverTempAlarm = 2 ; # [doc = ""] const OverTempWarning = 4 ; # [doc = ""] const UnderTempAlarm = 8 ; # [doc = ""] const UnderTempWarning = 16 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning = 256 ; # [doc = ""] const OverVoltAlarm = 512 ; # [doc = ""] const OverVoltWarning = 1024 ; # [doc = ""] const UnderVoltAlarm = 2048 ; # [doc = ""] const UnderVoltWarning = 4096 ; # [doc = ""] const UnderSocMinAlarm = 8192 ; # [doc = ""] const UnderSocMinWarning = 16384 ; # [doc = ""] const OverSocMaxAlarm = 32768 ; # [doc = ""] const OverSocMaxWarning = 65536 ; # [doc = ""] const VoltageImbalanceWarning = 131072 ; # [doc = "Notes: Do not implement."] const Reserved1 = 262144 ; # [doc = "Notes: Do not implement."] const Reserved2 = 524288 ; # [doc = ""] const ContactorError = 1048576 ; # [doc = ""] const FanError = 2097152 ; # [doc = ""] const GroundFault = 4194304 ; # [doc = ""] const OpenDoorError = 8388608 ; # [doc = "Notes: Do not implement."] const Reserved3 = 16777216 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning = 67108864 ; # [doc = ""] const FireAlarm = 134217728 ; # [doc = ""] const ConfigurationAlarm = 268435456 ; # [doc = ""] const ConfigurationWarning = 536870912 ; } }
+impl crate::Value for Evt1 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Evt1> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Evt1::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "String Event 2\n\nAlarms, warnings and status values.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt2 : u32 { # [doc = ""] const LeakAlarm = 1 ; # [doc = ""] const PumpAlarm = 2 ; # [doc = ""] const HighPressureAlarm = 4 ; # [doc = ""] const HighPressureWarning = 8 ; # [doc = ""] const LowFlowAlarm = 16 ; # [doc = ""] const LowFlowWarning = 32 ; } }
+impl crate::Value for Evt2 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Evt2> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Evt2::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 1\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd1 : u32 { } }
+impl crate::Value for EvtVnd1 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<EvtVnd1> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(EvtVnd1::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 2\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd2 : u32 { } }
+impl crate::Value for EvtVnd2 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<EvtVnd2> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(EvtVnd2::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
     }
 }

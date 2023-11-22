@@ -46,7 +46,7 @@ pub struct Model601 {
     /// Global tracker alarm conditions
     ///
     /// Notes: Combined tracker alarm conditions.  See individual trackers for alarms
-    pub glbl_alm: Option<u16>,
+    pub glbl_alm: Option<GlblAlm>,
     /// SF
     ///
     /// Scale Factor for targets and position measurements in degrees
@@ -68,7 +68,7 @@ impl Model601 {
     pub const GLBL_EL_CTL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(18, 2, true);
     pub const GLBL_AZ_CTL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(20, 2, true);
     pub const GLBL_CTL: crate::PointDef<Self, Option<GlblCtl>> = crate::PointDef::new(22, 1, true);
-    pub const GLBL_ALM: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(23, 1, false);
+    pub const GLBL_ALM: crate::PointDef<Self, Option<GlblAlm>> = crate::PointDef::new(23, 1, false);
     pub const DGR_SF: crate::PointDef<Self, i16> = crate::PointDef::new(24, 1, false);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(25, 1, false);
 }
@@ -176,6 +176,34 @@ impl crate::Value for Option<GlblCtl> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Global Alarm\n\nGlobal tracker alarm conditions\n\nNotes: Combined tracker alarm conditions.  See individual trackers for alarms"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct GlblAlm : u16 { # [doc = ""] const SetPoint = 1 ; # [doc = ""] const ObsEl = 2 ; # [doc = ""] const ObsAz = 4 ; } }
+impl crate::Value for GlblAlm {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<GlblAlm> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(GlblAlm::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
         }
     }
 }

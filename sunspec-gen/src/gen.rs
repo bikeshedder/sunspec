@@ -191,12 +191,15 @@ pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
     }
     fn_from_data.line("})");
     for point in points {
-        if (point.r#type != PointType::Enum16 && point.r#type != PointType::Enum32)
-            || point.symbols.is_empty()
-        {
-            continue;
+        match point.r#type {
+            PointType::Enum16 | PointType::Enum32 if !point.symbols.is_empty() => {
+                scope.raw(gen_enum(point));
+            }
+            PointType::Bitfield16 | PointType::Bitfield32 | PointType::Bitfield64 => {
+                scope.raw(gen_bitfield(point));
+            }
+            _ => {}
         }
-        scope.raw(gen_enum(point));
     }
     Ok(scope.to_string())
 }
@@ -266,6 +269,65 @@ fn gen_enum(point: &Point) -> String {
     code.to_string()
 }
 
+fn gen_bitfield(point: &Point) -> String {
+    let size = point.r#type.size().unwrap();
+    let repr = format_ident!("u{}", size * 16);
+    let name = format_ident!("{}", point.name.to_upper_camel_case());
+    let invalid = match point.r#type {
+        PointType::Bitfield16 => Literal::u16_suffixed(u16::MAX),
+        PointType::Bitfield32 => Literal::u32_suffixed(u32::MAX),
+        PointType::Bitfield64 => Literal::u64_suffixed(u64::MAX),
+        _ => unimplemented!(),
+    };
+    let doc = point.doc.to_doc_string();
+    let fields = point.symbols.iter().map(|symbol| {
+        let field_name = format_ident!("{}", symbol.name.to_upper_camel_case());
+        let bit = Literal::u64_unsuffixed(1 << symbol.value.as_u64().unwrap());
+        let field_doc = symbol.doc.to_doc_string();
+        quote! {
+            #[doc = #field_doc]
+            const #field_name = #bit;
+        }
+        .into_token_stream()
+    });
+    let code = quote! {
+        bitflags::bitflags! {
+            #[doc = #doc]
+            #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+            pub struct #name: #repr {
+                #(#fields)*
+            }
+        }
+        impl crate::Value for #name {
+            fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+                let value = #repr::decode(data)?;
+                Ok(Self::from_bits_retain(value))
+            }
+            fn encode(self) -> Box<[u16]> {
+                self.bits().encode()
+            }
+        }
+        impl crate::Value for Option<#name> {
+            fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+                let value = #repr::decode(data)?;
+                if value != #invalid {
+                    Ok(Some(#name::from_bits_retain(value)))
+                } else {
+                    Ok(None)
+                }
+            }
+            fn encode(self) -> Box<[u16]> {
+                if let Some(value) = self {
+                    value.encode()
+                } else {
+                    #invalid.encode()
+                }
+            }
+        }
+    };
+    code.to_string()
+}
+
 fn rust_type(point: &Point) -> String {
     let rty: String = match point.r#type {
         PointType::Int16 => "i16".into(),
@@ -278,9 +340,9 @@ fn rust_type(point: &Point) -> String {
         PointType::Acc16 => "u16".into(),
         PointType::Acc32 => "u32".into(),
         PointType::Acc64 => "u64".into(),
-        PointType::Bitfield16 => "u16".into(),
-        PointType::Bitfield32 => "u32".into(),
-        PointType::Bitfield64 => "u64".into(),
+        PointType::Bitfield16 => point.name.to_upper_camel_case(),
+        PointType::Bitfield32 => point.name.to_upper_camel_case(),
+        PointType::Bitfield64 => point.name.to_upper_camel_case(),
         PointType::Enum16 if point.symbols.is_empty() => "u16".into(),
         PointType::Enum16 => point.name.to_upper_camel_case(),
         PointType::Enum32 if point.symbols.is_empty() => "u32".into(),

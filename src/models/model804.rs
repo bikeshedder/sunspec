@@ -16,7 +16,7 @@ pub struct Model804 {
     /// String Status
     ///
     /// Current status of the string.
-    pub st: u32,
+    pub st: St,
     /// Connection Failure Reason
     pub con_fail: Option<ConFail>,
     /// String Cell Balancing Count
@@ -112,25 +112,25 @@ pub struct Model804 {
     /// Contactor Status
     ///
     /// Status of the contactor(s) for the string.
-    pub con_st: Option<u32>,
+    pub con_st: Option<ConSt>,
     /// String Event 1
     ///
     /// Alarms, warnings and status values.  Bit flags.
-    pub evt1: u32,
+    pub evt1: Evt1,
     /// String Event 2
     ///
     /// Alarms, warnings and status values.  Bit flags.
     ///
     /// Notes: Reserved for future use.
-    pub evt2: Option<u32>,
+    pub evt2: Option<Evt2>,
     /// Vendor Event Bitfield 1
     ///
     /// Vendor defined events.
-    pub evt_vnd1: Option<u32>,
+    pub evt_vnd1: Option<EvtVnd1>,
     /// Vendor Event Bitfield 2
     ///
     /// Vendor defined events.
-    pub evt_vnd2: Option<u32>,
+    pub evt_vnd2: Option<EvtVnd2>,
     /// Enable/Disable String
     ///
     /// Enables and disables the string.  Should reset to 0 upon completion.
@@ -162,7 +162,7 @@ pub struct Model804 {
 impl Model804 {
     pub const IDX: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const N_MOD: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
-    pub const ST: crate::PointDef<Self, u32> = crate::PointDef::new(2, 2, false);
+    pub const ST: crate::PointDef<Self, St> = crate::PointDef::new(2, 2, false);
     pub const CON_FAIL: crate::PointDef<Self, Option<ConFail>> = crate::PointDef::new(4, 1, false);
     pub const N_CELL_BAL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
     pub const SO_C: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
@@ -183,11 +183,11 @@ impl Model804 {
     pub const MOD_TMP_MIN: crate::PointDef<Self, i16> = crate::PointDef::new(20, 1, false);
     pub const MOD_TMP_MIN_MOD: crate::PointDef<Self, u16> = crate::PointDef::new(21, 1, false);
     pub const MOD_TMP_AVG: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
-    pub const CON_ST: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(24, 2, false);
-    pub const EVT1: crate::PointDef<Self, u32> = crate::PointDef::new(26, 2, false);
-    pub const EVT2: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(28, 2, false);
-    pub const EVT_VND1: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(30, 2, false);
-    pub const EVT_VND2: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(32, 2, false);
+    pub const CON_ST: crate::PointDef<Self, Option<ConSt>> = crate::PointDef::new(24, 2, false);
+    pub const EVT1: crate::PointDef<Self, Evt1> = crate::PointDef::new(26, 2, false);
+    pub const EVT2: crate::PointDef<Self, Option<Evt2>> = crate::PointDef::new(28, 2, false);
+    pub const EVT_VND1: crate::PointDef<Self, Option<EvtVnd1>> = crate::PointDef::new(30, 2, false);
+    pub const EVT_VND2: crate::PointDef<Self, Option<EvtVnd2>> = crate::PointDef::new(32, 2, false);
     pub const SET_ENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(34, 1, true);
     pub const SET_CON: crate::PointDef<Self, Option<SetCon>> = crate::PointDef::new(35, 1, true);
     pub const SO_C_SF: crate::PointDef<Self, i16> = crate::PointDef::new(36, 1, false);
@@ -242,6 +242,34 @@ impl crate::Model for Model804 {
     }
 }
 
+bitflags::bitflags! { # [doc = "String Status\n\nCurrent status of the string."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct St : u32 { # [doc = ""] const StringEnabled = 1 ; # [doc = "Notes: If string has multiple contactors, indicates that all contactors are closed."] const ContactorStatus = 2 ; } }
+impl crate::Value for St {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<St> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(St::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
 #[doc = "Connection Failure Reason"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
 #[repr(u16)]
@@ -290,6 +318,146 @@ impl crate::Value for Option<ConFail> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Contactor Status\n\nStatus of the contactor(s) for the string."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ConSt : u32 { # [doc = ""] const Contactor0 = 1 ; # [doc = ""] const Contactor1 = 2 ; # [doc = ""] const Contactor2 = 4 ; # [doc = ""] const Contactor3 = 8 ; # [doc = ""] const Contactor4 = 16 ; # [doc = ""] const Contactor5 = 32 ; # [doc = ""] const Contactor6 = 64 ; # [doc = ""] const Contactor7 = 128 ; # [doc = ""] const Contactor8 = 256 ; # [doc = ""] const Contactor9 = 512 ; # [doc = ""] const Contactor10 = 1024 ; # [doc = ""] const Contactor11 = 2048 ; # [doc = ""] const Contactor12 = 4096 ; # [doc = ""] const Contactor13 = 8192 ; # [doc = ""] const Contactor14 = 16384 ; # [doc = ""] const Contactor15 = 32768 ; # [doc = ""] const Contactor16 = 65536 ; # [doc = ""] const Contactor17 = 131072 ; # [doc = ""] const Contactor18 = 262144 ; # [doc = ""] const Contactor19 = 524288 ; # [doc = ""] const Contactor20 = 1048576 ; # [doc = ""] const Contactor21 = 2097152 ; # [doc = ""] const Contactor22 = 4194304 ; # [doc = ""] const Contactor23 = 8388608 ; # [doc = ""] const Contactor24 = 16777216 ; # [doc = ""] const Contactor25 = 33554432 ; # [doc = ""] const Contactor26 = 67108864 ; # [doc = ""] const Contactor27 = 134217728 ; # [doc = ""] const Contactor28 = 268435456 ; # [doc = ""] const Contactor29 = 536870912 ; # [doc = ""] const Contactor30 = 1073741824 ; } }
+impl crate::Value for ConSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<ConSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(ConSt::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "String Event 1\n\nAlarms, warnings and status values.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt1 : u32 { # [doc = ""] const CommunicationError = 1 ; # [doc = ""] const OverTempAlarm = 2 ; # [doc = ""] const OverTempWarning = 4 ; # [doc = ""] const UnderTempAlarm = 8 ; # [doc = ""] const UnderTempWarning = 16 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning = 256 ; # [doc = ""] const OverVoltAlarm = 512 ; # [doc = ""] const OverVoltWarning = 1024 ; # [doc = ""] const UnderVoltAlarm = 2048 ; # [doc = ""] const UnderVoltWarning = 4096 ; # [doc = ""] const UnderSocMinAlarm = 8192 ; # [doc = ""] const UnderSocMinWarning = 16384 ; # [doc = ""] const OverSocMaxAlarm = 32768 ; # [doc = ""] const OverSocMaxWarning = 65536 ; # [doc = ""] const VoltageImbalanceWarning = 131072 ; # [doc = ""] const TemperatureImbalanceAlarm = 262144 ; # [doc = ""] const TemperatureImbalanceWarning = 524288 ; # [doc = ""] const ContactorError = 1048576 ; # [doc = ""] const FanError = 2097152 ; # [doc = ""] const GroundFault = 4194304 ; # [doc = ""] const OpenDoorError = 8388608 ; # [doc = "Notes: Do not implement."] const Reserved1 = 16777216 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning = 67108864 ; # [doc = "Notes: Do not implement."] const Reserved2 = 134217728 ; # [doc = ""] const ConfigurationAlarm = 268435456 ; # [doc = ""] const ConfigurationWarning = 536870912 ; } }
+impl crate::Value for Evt1 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Evt1> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Evt1::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "String Event 2\n\nAlarms, warnings and status values.  Bit flags.\n\nNotes: Reserved for future use."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt2 : u32 { } }
+impl crate::Value for Evt2 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Evt2> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Evt2::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 1\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd1 : u32 { } }
+impl crate::Value for EvtVnd1 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<EvtVnd1> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(EvtVnd1::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 2\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd2 : u32 { } }
+impl crate::Value for EvtVnd2 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<EvtVnd2> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(EvtVnd2::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
         }
     }
 }

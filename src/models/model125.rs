@@ -10,7 +10,7 @@ pub struct Model125 {
     /// ModEna
     ///
     /// Is price-based charge/discharge mode active?
-    pub mod_ena: u16,
+    pub mod_ena: ModEna,
     /// SigType
     ///
     /// Meaning of the pricing signal. When a Price schedule is used, type must match the schedule range variable description.
@@ -40,7 +40,7 @@ pub struct Model125 {
 #[allow(missing_docs)]
 
 impl Model125 {
-    pub const MOD_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
+    pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(0, 1, true);
     pub const SIG_TYPE: crate::PointDef<Self, Option<SigType>> = crate::PointDef::new(1, 1, true);
     pub const SIG: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, true);
     pub const WIN_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
@@ -61,6 +61,34 @@ impl crate::Model for Model125 {
             rmp_tms: Self::RMP_TMS.from_data(data)?,
             sig_sf: Self::SIG_SF.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "ModEna\n\nIs price-based charge/discharge mode active?"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ModEna : u16 { # [doc = ""] const Enable = 1 ; } }
+impl crate::Value for ModEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<ModEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(ModEna::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
     }
 }
 

@@ -16,7 +16,7 @@ pub struct Model16 {
     /// Control
     ///
     /// Bitmask value Configure use of services
-    pub ctl: u16,
+    pub ctl: Ctl,
     /// Address
     ///
     /// IP address
@@ -44,7 +44,7 @@ pub struct Model16 {
     /// Link Control
     ///
     /// Bitmask value.  Link control flags
-    pub lnk_ctl: Option<u16>,
+    pub lnk_ctl: Option<LnkCtl>,
 }
 
 #[allow(missing_docs)]
@@ -52,14 +52,14 @@ pub struct Model16 {
 impl Model16 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const CFG: crate::PointDef<Self, Cfg> = crate::PointDef::new(4, 1, false);
-    pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
+    pub const CTL: crate::PointDef<Self, Ctl> = crate::PointDef::new(5, 1, true);
     pub const ADDR: crate::PointDef<Self, String> = crate::PointDef::new(6, 8, true);
     pub const MSK: crate::PointDef<Self, String> = crate::PointDef::new(14, 8, true);
     pub const GW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(22, 8, true);
     pub const DNS1: crate::PointDef<Self, Option<String>> = crate::PointDef::new(30, 8, true);
     pub const DNS2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(38, 8, true);
     pub const MAC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(46, 4, false);
-    pub const LNK_CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(50, 1, true);
+    pub const LNK_CTL: crate::PointDef<Self, Option<LnkCtl>> = crate::PointDef::new(50, 1, true);
 }
 
 impl crate::Model for Model16 {
@@ -114,6 +114,62 @@ impl crate::Value for Option<Cfg> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Control\n\nBitmask value Configure use of services"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Ctl : u16 { # [doc = ""] const EnableDns = 1 ; # [doc = ""] const EnableNtp = 2 ; } }
+impl crate::Value for Ctl {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Ctl> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Ctl::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Link Control\n\nBitmask value.  Link control flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct LnkCtl : u16 { # [doc = ""] const Autonegotiate = 1 ; # [doc = ""] const FullDuplex = 2 ; # [doc = ""] const Force10mb = 4 ; # [doc = ""] const Force100mb = 8 ; # [doc = ""] const Force1gb = 16 ; } }
+impl crate::Value for LnkCtl {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<LnkCtl> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(LnkCtl::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
         }
     }
 }

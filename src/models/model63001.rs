@@ -44,9 +44,9 @@ pub struct Model63001 {
     #[allow(missing_docs)]
     pub enum16_u: Option<u16>,
     #[allow(missing_docs)]
-    pub bitfield16: Option<u16>,
+    pub bitfield16: Option<Bitfield16>,
     #[allow(missing_docs)]
-    pub bitfield16_u: Option<u16>,
+    pub bitfield16_u: Option<Bitfield16U>,
     #[allow(missing_docs)]
     pub int32_1: Option<i32>,
     #[allow(missing_docs)]
@@ -80,9 +80,9 @@ pub struct Model63001 {
     #[allow(missing_docs)]
     pub enum32_u: Option<u32>,
     #[allow(missing_docs)]
-    pub bitfield32: Option<u32>,
+    pub bitfield32: Option<Bitfield32>,
     #[allow(missing_docs)]
-    pub bitfield32_u: Option<u32>,
+    pub bitfield32_u: Option<Bitfield32U>,
     #[allow(missing_docs)]
     pub ipaddr: Option<std::net::Ipv4Addr>,
     #[allow(missing_docs)]
@@ -138,8 +138,10 @@ impl Model63001 {
     pub const ACC16_U: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, false);
     pub const ENUM16: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(18, 1, false);
     pub const ENUM16_U: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(19, 1, false);
-    pub const BITFIELD16: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(20, 1, false);
-    pub const BITFIELD16_U: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(21, 1, false);
+    pub const BITFIELD16: crate::PointDef<Self, Option<Bitfield16>> =
+        crate::PointDef::new(20, 1, false);
+    pub const BITFIELD16_U: crate::PointDef<Self, Option<Bitfield16U>> =
+        crate::PointDef::new(21, 1, false);
     pub const INT32_1: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(22, 2, false);
     pub const INT32_2: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(24, 2, false);
     pub const INT32_3: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(26, 2, true);
@@ -156,8 +158,10 @@ impl Model63001 {
     pub const ACC32_U: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(48, 2, false);
     pub const ENUM32: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(50, 2, false);
     pub const ENUM32_U: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(52, 2, false);
-    pub const BITFIELD32: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(54, 2, false);
-    pub const BITFIELD32_U: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(56, 2, false);
+    pub const BITFIELD32: crate::PointDef<Self, Option<Bitfield32>> =
+        crate::PointDef::new(54, 2, false);
+    pub const BITFIELD32_U: crate::PointDef<Self, Option<Bitfield32U>> =
+        crate::PointDef::new(56, 2, false);
     pub const IPADDR: crate::PointDef<Self, Option<std::net::Ipv4Addr>> =
         crate::PointDef::new(58, 2, true);
     pub const IPADDR_U: crate::PointDef<Self, Option<std::net::Ipv4Addr>> =
@@ -240,5 +244,117 @@ impl crate::Model for Model63001 {
             sunssf_6: Self::SUNSSF_6.from_data(data)?,
             sunssf_7: Self::SUNSSF_7.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = ""] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Bitfield16 : u16 { } }
+impl crate::Value for Bitfield16 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Bitfield16> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Bitfield16::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = ""] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Bitfield16U : u16 { } }
+impl crate::Value for Bitfield16U {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Bitfield16U> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Bitfield16U::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = ""] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Bitfield32 : u32 { } }
+impl crate::Value for Bitfield32 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Bitfield32> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Bitfield32::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = ""] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Bitfield32U : u32 { } }
+impl crate::Value for Bitfield32U {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Bitfield32U> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Bitfield32U::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
     }
 }

@@ -34,11 +34,11 @@ pub struct Model701 {
     /// Active alarms for the DER.
     ///
     /// Comments: Alarms
-    pub alrm: Option<u32>,
+    pub alrm: Option<Alrm>,
     /// DER Operational Characteristics
     ///
     /// Current operational characteristics of the DER.
-    pub der_mode: Option<u32>,
+    pub der_mode: Option<DerMode>,
     /// Active Power
     ///
     /// Total active power. Active power is positive for DER generation and negative for absorption.
@@ -262,7 +262,7 @@ pub struct Model701 {
     /// Throttle Source Information
     ///
     /// Active throttling source.
-    pub throt_src: Option<u32>,
+    pub throt_src: Option<ThrotSrc>,
     /// Current Scale Factor
     ///
     /// Current scale factor.
@@ -320,8 +320,8 @@ impl Model701 {
     pub const ST: crate::PointDef<Self, Option<St>> = crate::PointDef::new(1, 1, false);
     pub const INV_ST: crate::PointDef<Self, Option<InvSt>> = crate::PointDef::new(2, 1, false);
     pub const CONN_ST: crate::PointDef<Self, Option<ConnSt>> = crate::PointDef::new(3, 1, false);
-    pub const ALRM: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, false);
-    pub const DER_MODE: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(6, 2, false);
+    pub const ALRM: crate::PointDef<Self, Option<Alrm>> = crate::PointDef::new(4, 2, false);
+    pub const DER_MODE: crate::PointDef<Self, Option<DerMode>> = crate::PointDef::new(6, 2, false);
     pub const W: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(8, 1, false);
     pub const VA: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(9, 1, false);
     pub const VAR: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(10, 1, false);
@@ -386,7 +386,8 @@ impl Model701 {
     pub const TOT_VARH_ABS_L3: crate::PointDef<Self, Option<u64>> =
         crate::PointDef::new(104, 4, false);
     pub const THROT_PCT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(108, 1, false);
-    pub const THROT_SRC: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(109, 2, false);
+    pub const THROT_SRC: crate::PointDef<Self, Option<ThrotSrc>> =
+        crate::PointDef::new(109, 2, false);
     pub const A_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(111, 1, false);
     pub const V_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(112, 1, false);
     pub const HZ_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(113, 1, false);
@@ -641,6 +642,90 @@ impl crate::Value for Option<ConnSt> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Alarm Bitfield\n\nActive alarms for the DER.\n\nComments: Alarms"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Alrm : u32 { # [doc = "Ground Fault"] const GroundFault = 1 ; # [doc = "DC Over Voltage"] const DcOverVolt = 2 ; # [doc = "AC Disconnect Open"] const AcDisconnect = 4 ; # [doc = "DC Disconnect Open"] const DcDisconnect = 8 ; # [doc = "Grid Disconnect"] const GridDisconnect = 16 ; # [doc = "Cabinet Open"] const CabinetOpen = 32 ; # [doc = "Manual Shutdown"] const ManualShutdown = 64 ; # [doc = "Over Temperature"] const OverTemp = 128 ; # [doc = "Frequency Above Limit"] const OverFrequency = 256 ; # [doc = "Frequency Under Limit"] const UnderFrequency = 512 ; # [doc = "AC Voltage Above Limit"] const AcOverVolt = 1024 ; # [doc = "AC Voltage Under Limit"] const AcUnderVolt = 2048 ; # [doc = "Blown String Fuse On Input"] const BlownStringFuse = 4096 ; # [doc = "Under Temperature"] const UnderTemp = 8192 ; # [doc = "Generic Memory Or Communication Error (Internal)"] const MemoryLoss = 16384 ; # [doc = "Hardware Test Failure"] const HwTestFailure = 32768 ; # [doc = "Manufacturer Alarm\n\nManufacturer alarm, see ManAlrmInfo field for more information."] const ManufacturerAlrm = 65536 ; } }
+impl crate::Value for Alrm {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Alrm> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Alrm::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "DER Operational Characteristics\n\nCurrent operational characteristics of the DER."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct DerMode : u32 { # [doc = "Grid Following\n\nThe DER is operating as part of a larger grid."] const GridFollowing = 1 ; # [doc = "Grid Forming\n\nThe DER is providing the grid."] const GridForming = 2 ; # [doc = "PV Output Clipped\n\nThe PV output is clipped."] const PvClipped = 4 ; } }
+impl crate::Value for DerMode {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<DerMode> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(DerMode::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Throttle Source Information\n\nActive throttling source."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ThrotSrc : u32 { # [doc = ""] const MaxW = 1 ; # [doc = ""] const FixedW = 2 ; # [doc = ""] const FixedVar = 4 ; # [doc = ""] const FixedPf = 8 ; # [doc = ""] const VoltVar = 16 ; # [doc = ""] const FreqWatt = 32 ; # [doc = ""] const DynReactCurr = 64 ; # [doc = ""] const Lvrt = 128 ; # [doc = ""] const Hvrt = 256 ; # [doc = ""] const WattVar = 512 ; # [doc = ""] const VoltWatt = 1024 ; # [doc = ""] const Scheduled = 2048 ; # [doc = ""] const Lfrt = 4096 ; # [doc = ""] const Hfrt = 8192 ; # [doc = ""] const Derated = 16384 ; } }
+impl crate::Value for ThrotSrc {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<ThrotSrc> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(ThrotSrc::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
         }
     }
 }

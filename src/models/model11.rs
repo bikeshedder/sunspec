@@ -12,7 +12,7 @@ pub struct Model11 {
     /// Interface Status Flags
     ///
     /// Bitmask values Interface flags.
-    pub cfg_st: u16,
+    pub cfg_st: CfgSt,
     /// Link State
     ///
     /// Enumerated value. State information for this interface
@@ -28,7 +28,7 @@ pub struct Model11 {
     /// Control
     ///
     /// Control flags
-    pub ctl: Option<u16>,
+    pub ctl: Option<Ctl>,
     /// Forced Speed
     ///
     /// Forced interface speed in Mb/s when AUTO is disabled
@@ -39,11 +39,11 @@ pub struct Model11 {
 
 impl Model11 {
     pub const SPD: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const CFG_ST: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
+    pub const CFG_ST: crate::PointDef<Self, CfgSt> = crate::PointDef::new(1, 1, false);
     pub const ST: crate::PointDef<Self, St> = crate::PointDef::new(2, 1, false);
     pub const MAC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(3, 4, false);
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(7, 4, true);
-    pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, true);
+    pub const CTL: crate::PointDef<Self, Option<Ctl>> = crate::PointDef::new(11, 1, true);
     pub const FRC_SPD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, true);
 }
 
@@ -59,6 +59,34 @@ impl crate::Model for Model11 {
             ctl: Self::CTL.from_data(data)?,
             frc_spd: Self::FRC_SPD.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "Interface Status Flags\n\nBitmask values Interface flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct CfgSt : u16 { # [doc = ""] const Link = 1 ; # [doc = ""] const FullDuplex = 2 ; # [doc = ""] const AutoNeg1 = 4 ; # [doc = ""] const AutoNeg2 = 8 ; # [doc = ""] const AutoNeg3 = 16 ; # [doc = ""] const ResetRequired = 32 ; # [doc = ""] const HwFault = 64 ; } }
+impl crate::Value for CfgSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<CfgSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(CfgSt::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
     }
 }
 
@@ -100,6 +128,34 @@ impl crate::Value for Option<St> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Control\n\nControl flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Ctl : u16 { # [doc = ""] const Auto = 1 ; # [doc = ""] const FullDuplex = 2 ; } }
+impl crate::Value for Ctl {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Ctl> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Ctl::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
         }
     }
 }

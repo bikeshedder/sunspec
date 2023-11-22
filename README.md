@@ -20,6 +20,7 @@ in a safe and convenient way.
 - [x] Fully typed models generated from the JSON files contained in the
       [SunSpec models repository](https://github.com/sunspec/models/)
 - [x] Fully typed enums
+- [x] Fully typed bitfields
 - [x] Fully documented. Even the generated models.
 - [x] Reading of complete models in a single request.
 

@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Generated types for Enum16 and Enum32 points
+- Generate types for Enum16 and Enum32 points
+- Generate types for Bitfield16, Bitfield32 and Bitfield64 points
 
 ### Changed
 

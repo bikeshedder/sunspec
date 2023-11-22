@@ -22,7 +22,7 @@ pub struct Model124 {
     /// StorCtl_Mod
     ///
     /// Activate hold/discharge/charge storage control mode. Bitfield value.
-    pub stor_ctl_mod: u16,
+    pub stor_ctl_mod: StorCtlMod,
     /// VAChaMax
     ///
     /// Setpoint for maximum charging VA.
@@ -109,7 +109,7 @@ impl Model124 {
     pub const W_CHA_MAX: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const W_CHA_GRA: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
     pub const W_DIS_CHA_GRA: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
-    pub const STOR_CTL_MOD: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
+    pub const STOR_CTL_MOD: crate::PointDef<Self, StorCtlMod> = crate::PointDef::new(3, 1, true);
     pub const VA_CHA_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
     pub const MIN_RSV_PCT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
     pub const CHA_STATE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
@@ -168,6 +168,34 @@ impl crate::Model for Model124 {
             in_bat_v_sf: Self::IN_BAT_V_SF.from_data(data)?,
             in_out_w_rte_sf: Self::IN_OUT_W_RTE_SF.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "StorCtl_Mod\n\nActivate hold/discharge/charge storage control mode. Bitfield value."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct StorCtlMod : u16 { # [doc = ""] const Charge = 1 ; # [doc = ""] const DiScharge = 2 ; } }
+impl crate::Value for StorCtlMod {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<StorCtlMod> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(StorCtlMod::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
     }
 }
 

@@ -18,7 +18,7 @@ pub struct Model64112 {
     #[allow(missing_docs)]
     pub kwh_sf: i16,
     /// Faults
-    pub cc_config_fault: u16,
+    pub cc_config_fault: CcConfigFault,
     /// Absorb
     pub cc_config_absorb_v: u16,
     /// Absorb Time
@@ -143,7 +143,8 @@ impl Model64112 {
     pub const P_SF: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
     pub const AH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
     pub const KWH_SF: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
-    pub const CC_CONFIG_FAULT: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
+    pub const CC_CONFIG_FAULT: crate::PointDef<Self, CcConfigFault> =
+        crate::PointDef::new(7, 1, false);
     pub const CC_CONFIG_ABSORB_V: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
     pub const CC_CONFIG_ABSORB_HR: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
     pub const CC_CONFIG_ABSORB_END_A: crate::PointDef<Self, u16> =
@@ -319,6 +320,34 @@ impl crate::Model for Model64112 {
             cc_config_data_log_clear: Self::CC_CONFIG_DATA_LOG_CLEAR.from_data(data)?,
             cc_config_data_log_clr_comp: Self::CC_CONFIG_DATA_LOG_CLR_COMP.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "Faults"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct CcConfigFault : u16 { } }
+impl crate::Value for CcConfigFault {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<CcConfigFault> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(CcConfigFault::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
     }
 }
 

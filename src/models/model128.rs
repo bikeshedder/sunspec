@@ -22,7 +22,7 @@ pub struct Model128 {
     /// ModEna
     ///
     /// Activate dynamic reactive current model
-    pub mod_ena: u16,
+    pub mod_ena: ModEna,
     /// FilTms
     ///
     /// The time window used to calculate the moving average voltage.
@@ -67,7 +67,7 @@ impl Model128 {
     pub const AR_GRA_MOD: crate::PointDef<Self, ArGraMod> = crate::PointDef::new(0, 1, true);
     pub const AR_GRA_SAG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
     pub const AR_GRA_SWELL: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
-    pub const MOD_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
+    pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(3, 1, true);
     pub const FIL_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
     pub const DB_V_MIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
     pub const DB_V_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
@@ -134,6 +134,34 @@ impl crate::Value for Option<ArGraMod> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "ModEna\n\nActivate dynamic reactive current model"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+impl crate::Value for ModEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<ModEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(ModEna::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
         }
     }
 }

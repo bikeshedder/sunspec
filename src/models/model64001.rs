@@ -16,15 +16,15 @@ pub struct Model64001 {
     /// Boot Count
     pub boots: Option<u16>,
     /// DIP Switches
-    pub switch: Option<u16>,
+    pub switch: Option<Switch>,
     /// Num Detected Sensors
     pub sensors: Option<u16>,
     /// Num Communicating Sensors
     pub talking: Option<u16>,
     /// System Status
-    pub status: Option<u16>,
+    pub status: Option<Status>,
     /// System Configuration
-    pub config: Option<u16>,
+    pub config: Option<Config>,
     /// LED Blink Threshold
     pub le_dblink: Option<u16>,
     /// LED On Threshold
@@ -84,11 +84,11 @@ impl Model64001 {
     pub const OSFW_REV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
     pub const PROD_REV: crate::PointDef<Self, Option<String>> = crate::PointDef::new(4, 2, false);
     pub const BOOTS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
-    pub const SWITCH: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
+    pub const SWITCH: crate::PointDef<Self, Option<Switch>> = crate::PointDef::new(7, 1, false);
     pub const SENSORS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, false);
     pub const TALKING: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, false);
-    pub const STATUS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, false);
-    pub const CONFIG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, false);
+    pub const STATUS: crate::PointDef<Self, Option<Status>> = crate::PointDef::new(10, 1, false);
+    pub const CONFIG: crate::PointDef<Self, Option<Config>> = crate::PointDef::new(11, 1, false);
     pub const LE_DBLINK: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, false);
     pub const LE_DON: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(13, 1, false);
     pub const RESERVED: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(14, 1, false);
@@ -155,5 +155,89 @@ impl crate::Model for Model64001 {
             s4_ver: Self::S4_VER.from_data(data)?,
             s4_serial: Self::S4_SERIAL.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "DIP Switches"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Switch : u16 { } }
+impl crate::Value for Switch {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Switch> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Switch::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "System Status"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Status : u16 { } }
+impl crate::Value for Status {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Status> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Status::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "System Configuration"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Config : u16 { } }
+impl crate::Value for Config {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Config> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Config::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
     }
 }

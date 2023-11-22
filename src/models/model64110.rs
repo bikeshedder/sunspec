@@ -92,9 +92,9 @@ pub struct Model64110 {
     #[allow(missing_docs)]
     pub temp_sf: i16,
     /// AXS Error
-    pub axs_error: u16,
+    pub axs_error: AxsError,
     /// AXS Status
-    pub axs_status: u16,
+    pub axs_status: AxsStatus,
     /// Spare
     pub axs_spare: u16,
 }
@@ -157,8 +157,8 @@ impl Model64110 {
     pub const BATTERY_TEMP: crate::PointDef<Self, i16> = crate::PointDef::new(276, 1, false);
     pub const AMBIENT_TEMP: crate::PointDef<Self, i16> = crate::PointDef::new(277, 1, false);
     pub const TEMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(278, 1, false);
-    pub const AXS_ERROR: crate::PointDef<Self, u16> = crate::PointDef::new(279, 1, false);
-    pub const AXS_STATUS: crate::PointDef<Self, u16> = crate::PointDef::new(280, 1, false);
+    pub const AXS_ERROR: crate::PointDef<Self, AxsError> = crate::PointDef::new(279, 1, false);
+    pub const AXS_STATUS: crate::PointDef<Self, AxsStatus> = crate::PointDef::new(280, 1, false);
     pub const AXS_SPARE: crate::PointDef<Self, u16> = crate::PointDef::new(281, 1, false);
 }
 
@@ -367,6 +367,62 @@ impl crate::Value for Option<NtpEnable> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "AXS Error"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct AxsError : u16 { } }
+impl crate::Value for AxsError {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<AxsError> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(AxsError::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "AXS Status"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct AxsStatus : u16 { } }
+impl crate::Value for AxsStatus {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<AxsStatus> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(AxsStatus::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
         }
     }
 }

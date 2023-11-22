@@ -116,27 +116,27 @@ pub struct Model113 {
     /// Event1
     ///
     /// Bitmask value. Event fields
-    pub evt1: u32,
+    pub evt1: Evt1,
     /// Event Bitfield 2
     ///
     /// Reserved for future use
-    pub evt2: u32,
+    pub evt2: Evt2,
     /// Vendor Event Bitfield 1
     ///
     /// Vendor defined events
-    pub evt_vnd1: Option<u32>,
+    pub evt_vnd1: Option<EvtVnd1>,
     /// Vendor Event Bitfield 2
     ///
     /// Vendor defined events
-    pub evt_vnd2: Option<u32>,
+    pub evt_vnd2: Option<EvtVnd2>,
     /// Vendor Event Bitfield 3
     ///
     /// Vendor defined events
-    pub evt_vnd3: Option<u32>,
+    pub evt_vnd3: Option<EvtVnd3>,
     /// Vendor Event Bitfield 4
     ///
     /// Vendor defined events
-    pub evt_vnd4: Option<u32>,
+    pub evt_vnd4: Option<EvtVnd4>,
 }
 
 #[allow(missing_docs)]
@@ -167,12 +167,12 @@ impl Model113 {
     pub const TMP_OT: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(44, 2, false);
     pub const ST: crate::PointDef<Self, St> = crate::PointDef::new(46, 1, false);
     pub const ST_VND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(47, 1, false);
-    pub const EVT1: crate::PointDef<Self, u32> = crate::PointDef::new(48, 2, false);
-    pub const EVT2: crate::PointDef<Self, u32> = crate::PointDef::new(50, 2, false);
-    pub const EVT_VND1: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(52, 2, false);
-    pub const EVT_VND2: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(54, 2, false);
-    pub const EVT_VND3: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(56, 2, false);
-    pub const EVT_VND4: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(58, 2, false);
+    pub const EVT1: crate::PointDef<Self, Evt1> = crate::PointDef::new(48, 2, false);
+    pub const EVT2: crate::PointDef<Self, Evt2> = crate::PointDef::new(50, 2, false);
+    pub const EVT_VND1: crate::PointDef<Self, Option<EvtVnd1>> = crate::PointDef::new(52, 2, false);
+    pub const EVT_VND2: crate::PointDef<Self, Option<EvtVnd2>> = crate::PointDef::new(54, 2, false);
+    pub const EVT_VND3: crate::PointDef<Self, Option<EvtVnd3>> = crate::PointDef::new(56, 2, false);
+    pub const EVT_VND4: crate::PointDef<Self, Option<EvtVnd4>> = crate::PointDef::new(58, 2, false);
 }
 
 impl crate::Model for Model113 {
@@ -260,6 +260,174 @@ impl crate::Value for Option<St> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Event1\n\nBitmask value. Event fields"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt1 : u32 { # [doc = ""] const GroundFault = 1 ; # [doc = ""] const DcOverVolt = 2 ; # [doc = ""] const AcDisconnect = 4 ; # [doc = ""] const DcDisconnect = 8 ; # [doc = ""] const GridDisconnect = 16 ; # [doc = ""] const CabinetOpen = 32 ; # [doc = ""] const ManualShutdown = 64 ; # [doc = ""] const OverTemp = 128 ; # [doc = ""] const OverFrequency = 256 ; # [doc = ""] const UnderFrequency = 512 ; # [doc = ""] const AcOverVolt = 1024 ; # [doc = ""] const AcUnderVolt = 2048 ; # [doc = ""] const BlownStringFuse = 4096 ; # [doc = ""] const UnderTemp = 8192 ; # [doc = ""] const MemoryLoss = 16384 ; # [doc = ""] const HwTestFailure = 32768 ; } }
+impl crate::Value for Evt1 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Evt1> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Evt1::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Event Bitfield 2\n\nReserved for future use"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt2 : u32 { } }
+impl crate::Value for Evt2 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Evt2> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Evt2::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 1\n\nVendor defined events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd1 : u32 { } }
+impl crate::Value for EvtVnd1 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<EvtVnd1> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(EvtVnd1::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 2\n\nVendor defined events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd2 : u32 { } }
+impl crate::Value for EvtVnd2 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<EvtVnd2> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(EvtVnd2::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 3\n\nVendor defined events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd3 : u32 { } }
+impl crate::Value for EvtVnd3 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<EvtVnd3> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(EvtVnd3::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 4\n\nVendor defined events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd4 : u32 { } }
+impl crate::Value for EvtVnd4 {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<EvtVnd4> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(EvtVnd4::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
         }
     }
 }

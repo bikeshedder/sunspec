@@ -22,11 +22,11 @@ pub struct Model127 {
     /// HysEna
     ///
     /// Enable hysteresis
-    pub hys_ena: u16,
+    pub hys_ena: HysEna,
     /// ModEna
     ///
     /// Is Parameterized Frequency-Watt control active.
-    pub mod_ena: u16,
+    pub mod_ena: ModEna,
     /// HzStopWGra
     ///
     /// The maximum time-based rate of change at which power output returns to normal after having been capped by an over frequency event.
@@ -51,8 +51,8 @@ impl Model127 {
     pub const W_GRA: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const HZ_STR: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, true);
     pub const HZ_STOP: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, true);
-    pub const HYS_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
-    pub const MOD_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
+    pub const HYS_ENA: crate::PointDef<Self, HysEna> = crate::PointDef::new(3, 1, true);
+    pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(4, 1, true);
     pub const HZ_STOP_W_GRA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
     pub const W_GRA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
     pub const HZ_STR_STOP_SF: crate::PointDef<Self, Option<i16>> =
@@ -75,5 +75,61 @@ impl crate::Model for Model127 {
             hz_str_stop_sf: Self::HZ_STR_STOP_SF.from_data(data)?,
             rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "HysEna\n\nEnable hysteresis"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct HysEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+impl crate::Value for HysEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<HysEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(HysEna::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "ModEna\n\nIs Parameterized Frequency-Watt control active."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+impl crate::Value for ModEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<ModEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(ModEna::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
     }
 }

@@ -14,7 +14,7 @@ pub struct Model126 {
     /// ModEna
     ///
     /// Is Volt-VAR control active.
-    pub mod_ena: u16,
+    pub mod_ena: ModEna,
     /// WinTms
     ///
     /// Time window for volt-VAR change.
@@ -51,7 +51,7 @@ pub struct Model126 {
 
 impl Model126 {
     pub const ACT_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const MOD_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
+    pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(1, 1, true);
     pub const WIN_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, true);
     pub const RVRT_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
     pub const RMP_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
@@ -78,5 +78,33 @@ impl crate::Model for Model126 {
             dept_ref_sf: Self::DEPT_REF_SF.from_data(data)?,
             rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "ModEna\n\nIs Volt-VAR control active."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+impl crate::Value for ModEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<ModEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(ModEna::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
     }
 }

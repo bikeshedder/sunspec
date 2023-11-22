@@ -16,11 +16,11 @@ pub struct Model13 {
     /// Change Status
     ///
     /// Bitmask value.  A configuration change is pending
-    pub chg_st: u16,
+    pub chg_st: ChgSt,
     /// Config Capability
     ///
     /// Bitmask value. Identify capable sources of configuration
-    pub cap: u16,
+    pub cap: Cap,
     /// IPv6 Config
     ///
     /// Enumerated value.  Configuration method used.
@@ -72,8 +72,8 @@ pub struct Model13 {
 impl Model13 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const CFG_ST: crate::PointDef<Self, CfgSt> = crate::PointDef::new(4, 1, false);
-    pub const CHG_ST: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
-    pub const CAP: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
+    pub const CHG_ST: crate::PointDef<Self, ChgSt> = crate::PointDef::new(5, 1, false);
+    pub const CAP: crate::PointDef<Self, Cap> = crate::PointDef::new(6, 1, false);
     pub const CFG: crate::PointDef<Self, Cfg> = crate::PointDef::new(7, 1, true);
     pub const CTL: crate::PointDef<Self, Ctl> = crate::PointDef::new(8, 1, true);
     pub const ADDR: crate::PointDef<Self, String> = crate::PointDef::new(9, 20, true);
@@ -146,6 +146,62 @@ impl crate::Value for Option<CfgSt> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Change Status\n\nBitmask value.  A configuration change is pending"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ChgSt : u16 { # [doc = ""] const Pending = 1 ; } }
+impl crate::Value for ChgSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<ChgSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(ChgSt::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Config Capability\n\nBitmask value. Identify capable sources of configuration"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Cap : u16 { # [doc = ""] const Dhcp = 1 ; # [doc = ""] const Bootp = 2 ; # [doc = ""] const Zeroconf = 4 ; # [doc = ""] const Dns = 8 ; # [doc = ""] const CfgSettable = 16 ; # [doc = ""] const HwConfig = 32 ; # [doc = ""] const NtpClient = 64 ; # [doc = ""] const ResetRequired = 128 ; } }
+impl crate::Value for Cap {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Cap> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(Cap::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
         }
     }
 }

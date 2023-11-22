@@ -10,7 +10,7 @@ pub struct Model714 {
     /// Bitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port.
     ///
     /// Comments: DC General
-    pub prt_alrms: Option<u32>,
+    pub prt_alrms: Option<PrtAlrms>,
     /// Number Of Ports
     ///
     /// Number of DC ports.
@@ -56,7 +56,8 @@ pub struct Model714 {
 #[allow(missing_docs)]
 
 impl Model714 {
-    pub const PRT_ALRMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(0, 2, false);
+    pub const PRT_ALRMS: crate::PointDef<Self, Option<PrtAlrms>> =
+        crate::PointDef::new(0, 2, false);
     pub const N_PRT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
     pub const DCA: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
     pub const DCW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(4, 1, false);
@@ -85,5 +86,33 @@ impl crate::Model for Model714 {
             dcwh_sf: Self::DCWH_SF.from_data(data)?,
             tmp_sf: Self::TMP_SF.from_data(data)?,
         })
+    }
+}
+
+bitflags::bitflags! { # [doc = "Port Alarms\n\nBitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port.\n\nComments: DC General"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct PrtAlrms : u32 { } }
+impl crate::Value for PrtAlrms {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<PrtAlrms> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(PrtAlrms::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
     }
 }

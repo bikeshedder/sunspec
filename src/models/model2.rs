@@ -28,11 +28,11 @@ pub struct Model2 {
     /// Event Code
     ///
     /// Bitmask event code
-    pub evt: u32,
+    pub evt: Evt,
     /// Vendor Event Code
     ///
     /// Vendor specific event code
-    pub evt_vnd: Option<u32>,
+    pub evt_vnd: Option<EvtVnd>,
     /// Control
     ///
     /// Control register for all aggregated devices
@@ -55,8 +55,8 @@ impl Model2 {
     pub const UN: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
     pub const ST: crate::PointDef<Self, St> = crate::PointDef::new(3, 1, false);
     pub const ST_VND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
-    pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(5, 2, false);
-    pub const EVT_VND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, false);
+    pub const EVT: crate::PointDef<Self, Evt> = crate::PointDef::new(5, 2, false);
+    pub const EVT_VND: crate::PointDef<Self, Option<EvtVnd>> = crate::PointDef::new(7, 2, false);
     pub const CTL: crate::PointDef<Self, Option<Ctl>> = crate::PointDef::new(9, 1, false);
     pub const CTL_VND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(10, 2, false);
     pub const CTL_VL: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(12, 2, false);
@@ -118,6 +118,62 @@ impl crate::Value for Option<St> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Event Code\n\nBitmask event code"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt : u32 { # [doc = ""] const GroundFault = 1 ; # [doc = ""] const InputOverVoltage = 2 ; # [doc = ""] const Reserved2 = 4 ; # [doc = ""] const DcDisconnect = 8 ; # [doc = ""] const Reserved4 = 16 ; # [doc = ""] const Reserved5 = 32 ; # [doc = ""] const ManualShutdown = 64 ; # [doc = ""] const OverTemperature = 128 ; # [doc = ""] const Reserved8 = 256 ; # [doc = ""] const Reserved9 = 512 ; # [doc = ""] const Reserved10 = 1024 ; # [doc = ""] const Reserved11 = 2048 ; # [doc = ""] const BlownFuse = 4096 ; # [doc = ""] const UnderTemperature = 8192 ; # [doc = ""] const MemoryLoss = 16384 ; # [doc = ""] const ArcDetection = 32768 ; # [doc = ""] const TheftDetection = 65536 ; # [doc = ""] const OutputOverCurrent = 131072 ; # [doc = ""] const OutputOverVoltage = 262144 ; # [doc = ""] const OutputUnderVoltage = 524288 ; # [doc = ""] const TestFailed = 1048576 ; } }
+impl crate::Value for Evt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<Evt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(Evt::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Vendor Event Code\n\nVendor specific event code"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd : u32 { } }
+impl crate::Value for EvtVnd {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<EvtVnd> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(EvtVnd::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
         }
     }
 }

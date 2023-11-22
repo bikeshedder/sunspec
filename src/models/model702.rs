@@ -94,11 +94,11 @@ pub struct Model702 {
     /// Supported Control Modes
     ///
     /// Supported control mode functions.
-    pub ctrl_modes: Option<u32>,
+    pub ctrl_modes: Option<CtrlModes>,
     /// Intentional Island Categories
     ///
     /// Intentional island categories.
-    pub int_island_cat_rtg: Option<u16>,
+    pub int_island_cat_rtg: Option<IntIslandCatRtg>,
     /// Active Power Max Setting
     ///
     /// Maximum active power setting used to adjust maximum active power setting.
@@ -176,7 +176,7 @@ pub struct Model702 {
     /// Intentional Island Categories
     ///
     /// Intentional island categories.
-    pub int_island_cat: Option<u16>,
+    pub int_island_cat: Option<IntIslandCat>,
     /// Active Power Scale Factor
     ///
     /// Active power scale factor.
@@ -246,8 +246,9 @@ impl Model702 {
         crate::PointDef::new(19, 1, false);
     pub const ABN_OP_CAT_RTG: crate::PointDef<Self, Option<AbnOpCatRtg>> =
         crate::PointDef::new(20, 1, false);
-    pub const CTRL_MODES: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(21, 2, false);
-    pub const INT_ISLAND_CAT_RTG: crate::PointDef<Self, Option<u16>> =
+    pub const CTRL_MODES: crate::PointDef<Self, Option<CtrlModes>> =
+        crate::PointDef::new(21, 2, false);
+    pub const INT_ISLAND_CAT_RTG: crate::PointDef<Self, Option<IntIslandCatRtg>> =
         crate::PointDef::new(23, 1, false);
     pub const W_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(24, 1, true);
     pub const W_MAX_OVR_EXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(25, 1, true);
@@ -270,7 +271,7 @@ impl Model702 {
     pub const A_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(39, 1, true);
     pub const PF_OVR_EXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(40, 1, true);
     pub const PF_UND_EXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(41, 1, true);
-    pub const INT_ISLAND_CAT: crate::PointDef<Self, Option<u16>> =
+    pub const INT_ISLAND_CAT: crate::PointDef<Self, Option<IntIslandCat>> =
         crate::PointDef::new(42, 1, true);
     pub const W_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(43, 1, false);
     pub const PF_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(44, 1, false);
@@ -412,6 +413,90 @@ impl crate::Value for Option<AbnOpCatRtg> {
             value.encode()
         } else {
             65535.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Supported Control Modes\n\nSupported control mode functions."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct CtrlModes : u32 { # [doc = "Limit Maximum Active Power"] const MaxW = 1 ; # [doc = "Fixed Active Power"] const FixedW = 2 ; # [doc = "Fixed Reactive Power"] const FixedVar = 4 ; # [doc = "Fixed Power Factor"] const FixedPf = 8 ; # [doc = "Volt-Var Function"] const VoltVar = 16 ; # [doc = "Freq-Watt Function"] const FreqWatt = 32 ; # [doc = "Dynamic Reactive Current Function"] const DynReactCurr = 64 ; # [doc = "Low-Voltage Trip"] const LvTrip = 128 ; # [doc = "High-Voltage Trip"] const HvTrip = 256 ; # [doc = "Watt-Var Function"] const WattVar = 512 ; # [doc = "Volt-Watt Function"] const VoltWatt = 1024 ; # [doc = "Scheduling"] const Scheduled = 2048 ; # [doc = "Low-Frequency Trip"] const LfTrip = 4096 ; # [doc = "High-Frequency Trip"] const HfTrip = 8192 ; } }
+impl crate::Value for CtrlModes {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<CtrlModes> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(CtrlModes::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Intentional Island Categories\n\nIntentional island categories."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct IntIslandCatRtg : u16 { # [doc = "Uncategorized"] const Uncategorized = 1 ; # [doc = "Intentional Island-Capable"] const IntIslCapable = 2 ; # [doc = "Black Start-Capable"] const BlackStartCapable = 4 ; # [doc = "Isochronous-Capable"] const IsochCapable = 8 ; } }
+impl crate::Value for IntIslandCatRtg {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<IntIslandCatRtg> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(IntIslandCatRtg::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+
+bitflags::bitflags! { # [doc = "Intentional Island Categories\n\nIntentional island categories."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct IntIslandCat : u16 { # [doc = "Uncategorized"] const Uncategorized = 1 ; # [doc = "Intentional Island-Capable"] const IntIslCapable = 2 ; # [doc = "Black Start-Capable"] const BlackStartCapable = 4 ; # [doc = "Isochronous-Capable"] const IsochCapable = 8 ; } }
+impl crate::Value for IntIslandCat {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<IntIslandCat> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(IntIslandCat::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
         }
     }
 }
