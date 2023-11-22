@@ -1,3 +1,5 @@
+//! DER AC Controls
+
 /// DER AC Controls
 ///
 /// DER AC controls model.
@@ -8,11 +10,11 @@ pub struct Model704 {
     /// Power factor enable when injecting active power.
     ///
     /// Comments: Set Power Factor (when injecting active power)
-    pub pfw_inj_ena: Option<u16>,
+    pub pfw_inj_ena: Option<PfwInjEna>,
     /// Power Factor Reversion Enable (W Inj)
     ///
     /// Power factor reversion timer when injecting active power enable.
-    pub pfw_inj_ena_rvrt: Option<u16>,
+    pub pfw_inj_ena_rvrt: Option<PfwInjEnaRvrt>,
     /// PF Reversion Time (W Inj)
     ///
     /// Power factor reversion timer when injecting active power.
@@ -26,11 +28,11 @@ pub struct Model704 {
     /// Power factor enable when absorbing active power.
     ///
     /// Comments: Set Power Factor (when absorbing active power)
-    pub pfw_abs_ena: Option<u16>,
+    pub pfw_abs_ena: Option<PfwAbsEna>,
     /// Power Factor Reversion Enable (W Abs)
     ///
     /// Power factor reversion timer when absorbing active power enable.
-    pub pfw_abs_ena_rvrt: Option<u16>,
+    pub pfw_abs_ena_rvrt: Option<PfwAbsEnaRvrt>,
     /// PF Reversion Time (W Abs)
     ///
     /// Power factor reversion timer when absorbing active power.
@@ -44,7 +46,7 @@ pub struct Model704 {
     /// Limit maximum active power percent enable.
     ///
     /// Comments: Limit Maximum Active Power Generation
-    pub w_max_lim_pct_ena: Option<u16>,
+    pub w_max_lim_pct_ena: Option<WMaxLimPctEna>,
     /// Limit Max Power Pct Setpoint
     ///
     /// Limit maximum active power percent value.
@@ -56,7 +58,7 @@ pub struct Model704 {
     /// Reversion Limit Max Power Pct Enable
     ///
     /// Reversion limit maximum active power percent value enable.
-    pub w_max_lim_pct_ena_rvrt: Option<u16>,
+    pub w_max_lim_pct_ena_rvrt: Option<WMaxLimPctEnaRvrt>,
     /// Limit Max Power Pct Reversion Time
     ///
     /// Limit maximum active power percent reversion time.
@@ -70,11 +72,11 @@ pub struct Model704 {
     /// Set active power enable.
     ///
     /// Comments: Set Active Power Level (may be negative for charging)
-    pub w_set_ena: Option<u16>,
+    pub w_set_ena: Option<WSetEna>,
     /// Set Active Power Mode
     ///
     /// Set active power mode.
-    pub w_set_mod: Option<u16>,
+    pub w_set_mod: Option<WSetMod>,
     /// Active Power Setpoint (W)
     ///
     /// Active power setting value in watts.
@@ -94,7 +96,7 @@ pub struct Model704 {
     /// Reversion Active Power Enable
     ///
     /// Reversion active power function enable.
-    pub w_set_ena_rvrt: Option<u16>,
+    pub w_set_ena_rvrt: Option<WSetEnaRvrt>,
     /// Active Power Reversion Time
     ///
     /// Set active power reversion time.
@@ -108,15 +110,15 @@ pub struct Model704 {
     /// Set reactive power enable.
     ///
     /// Comments: Set Reactive Power Level
-    pub var_set_ena: Option<u16>,
+    pub var_set_ena: Option<VarSetEna>,
     /// Set Reactive Power Mode
     ///
     /// Set reactive power mode.
-    pub var_set_mod: Option<u16>,
+    pub var_set_mod: Option<VarSetMod>,
     /// Reactive Power Priority
     ///
     /// Reactive power priority.
-    pub var_set_pri: Option<u16>,
+    pub var_set_pri: Option<VarSetPri>,
     /// Reactive Power Setpoint (Vars)
     ///
     /// Reactive power setting value in vars.
@@ -136,7 +138,7 @@ pub struct Model704 {
     /// Reversion Reactive Power Enable
     ///
     /// Reversion reactive power function enable.
-    pub var_set_ena_rvrt: Option<u16>,
+    pub var_set_ena_rvrt: Option<VarSetEnaRvrt>,
     /// Reactive Power Reversion Time
     ///
     /// Set reactive power reversion time.
@@ -154,7 +156,7 @@ pub struct Model704 {
     /// Normal Ramp Rate Reference
     ///
     /// Ramp rate reference unit for increases in active power or current during normal generation.
-    pub w_rmp_ref: Option<u16>,
+    pub w_rmp_ref: Option<WRmpRef>,
     /// Reactive Power Ramp Rate
     ///
     /// Ramp rate based on max reactive power per second.
@@ -162,7 +164,7 @@ pub struct Model704 {
     /// Anti-Islanding Enable
     ///
     /// Anti-islanding enable.
-    pub anti_isl_ena: Option<u16>,
+    pub anti_isl_ena: Option<AntiIslEna>,
     /// Power Factor Scale Factor
     ///
     /// Power factor scale factor.
@@ -194,62 +196,68 @@ pub struct Model704 {
 #[allow(missing_docs)]
 
 impl Model704 {
-    pub const PFW_INJ_ENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
-    pub const PFW_INJ_ENA_RVRT: crate::PointDef<Self, Option<u16>> =
+    pub const PFW_INJ_ENA: crate::PointDef<Self, Option<PfwInjEna>> =
+        crate::PointDef::new(0, 1, true);
+    pub const PFW_INJ_ENA_RVRT: crate::PointDef<Self, Option<PfwInjEnaRvrt>> =
         crate::PointDef::new(1, 1, true);
     pub const PFW_INJ_RVRT_TMS: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(2, 2, true);
     pub const PFW_INJ_RVRT_REM: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(4, 2, false);
-    pub const PFW_ABS_ENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
-    pub const PFW_ABS_ENA_RVRT: crate::PointDef<Self, Option<u16>> =
+    pub const PFW_ABS_ENA: crate::PointDef<Self, Option<PfwAbsEna>> =
+        crate::PointDef::new(6, 1, true);
+    pub const PFW_ABS_ENA_RVRT: crate::PointDef<Self, Option<PfwAbsEnaRvrt>> =
         crate::PointDef::new(7, 1, true);
     pub const PFW_ABS_RVRT_TMS: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(8, 2, true);
     pub const PFW_ABS_RVRT_REM: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(10, 2, false);
-    pub const W_MAX_LIM_PCT_ENA: crate::PointDef<Self, Option<u16>> =
+    pub const W_MAX_LIM_PCT_ENA: crate::PointDef<Self, Option<WMaxLimPctEna>> =
         crate::PointDef::new(12, 1, true);
     pub const W_MAX_LIM_PCT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(13, 1, true);
     pub const W_MAX_LIM_PCT_RVRT: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(14, 1, true);
-    pub const W_MAX_LIM_PCT_ENA_RVRT: crate::PointDef<Self, Option<u16>> =
+    pub const W_MAX_LIM_PCT_ENA_RVRT: crate::PointDef<Self, Option<WMaxLimPctEnaRvrt>> =
         crate::PointDef::new(15, 1, true);
     pub const W_MAX_LIM_PCT_RVRT_TMS: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(16, 2, true);
     pub const W_MAX_LIM_PCT_RVRT_REM: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(18, 2, false);
-    pub const W_SET_ENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(20, 1, true);
-    pub const W_SET_MOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(21, 1, true);
+    pub const W_SET_ENA: crate::PointDef<Self, Option<WSetEna>> = crate::PointDef::new(20, 1, true);
+    pub const W_SET_MOD: crate::PointDef<Self, Option<WSetMod>> = crate::PointDef::new(21, 1, true);
     pub const W_SET: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(22, 2, true);
     pub const W_SET_RVRT: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(24, 2, true);
     pub const W_SET_PCT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(26, 1, true);
     pub const W_SET_PCT_RVRT: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(27, 1, true);
-    pub const W_SET_ENA_RVRT: crate::PointDef<Self, Option<u16>> =
+    pub const W_SET_ENA_RVRT: crate::PointDef<Self, Option<WSetEnaRvrt>> =
         crate::PointDef::new(28, 1, true);
     pub const W_SET_RVRT_TMS: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(29, 2, true);
     pub const W_SET_RVRT_REM: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(31, 2, false);
-    pub const VAR_SET_ENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(33, 1, true);
-    pub const VAR_SET_MOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(34, 1, true);
-    pub const VAR_SET_PRI: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(35, 1, true);
+    pub const VAR_SET_ENA: crate::PointDef<Self, Option<VarSetEna>> =
+        crate::PointDef::new(33, 1, true);
+    pub const VAR_SET_MOD: crate::PointDef<Self, Option<VarSetMod>> =
+        crate::PointDef::new(34, 1, true);
+    pub const VAR_SET_PRI: crate::PointDef<Self, Option<VarSetPri>> =
+        crate::PointDef::new(35, 1, true);
     pub const VAR_SET: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(36, 2, true);
     pub const VAR_SET_RVRT: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(38, 2, true);
     pub const VAR_SET_PCT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(40, 1, true);
     pub const VAR_SET_PCT_RVRT: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(41, 1, true);
-    pub const VAR_SET_ENA_RVRT: crate::PointDef<Self, Option<u16>> =
+    pub const VAR_SET_ENA_RVRT: crate::PointDef<Self, Option<VarSetEnaRvrt>> =
         crate::PointDef::new(42, 1, true);
     pub const VAR_SET_RVRT_TMS: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(43, 2, true);
     pub const VAR_SET_RVRT_REM: crate::PointDef<Self, Option<u32>> =
         crate::PointDef::new(45, 2, false);
     pub const W_RMP: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(47, 1, true);
-    pub const W_RMP_REF: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(48, 1, true);
+    pub const W_RMP_REF: crate::PointDef<Self, Option<WRmpRef>> = crate::PointDef::new(48, 1, true);
     pub const VAR_RMP: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(49, 1, true);
-    pub const ANTI_ISL_ENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(50, 1, true);
+    pub const ANTI_ISL_ENA: crate::PointDef<Self, Option<AntiIslEna>> =
+        crate::PointDef::new(50, 1, true);
     pub const PF_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(51, 1, false);
     pub const W_MAX_LIM_PCT_SF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(52, 1, false);
@@ -308,5 +316,583 @@ impl crate::Model for Model704 {
             var_set_sf: Self::VAR_SET_SF.from_data(data)?,
             var_set_pct_sf: Self::VAR_SET_PCT_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Power Factor Enable (W Inj) Enable\n\nPower factor enable when injecting active power.\n\nComments: Set Power Factor (when injecting active power)"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum PfwInjEna {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for PfwInjEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<PfwInjEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                PfwInjEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Power Factor Reversion Enable (W Inj)\n\nPower factor reversion timer when injecting active power enable."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum PfwInjEnaRvrt {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for PfwInjEnaRvrt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<PfwInjEnaRvrt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                PfwInjEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Power Factor Enable (W Abs) Enable\n\nPower factor enable when absorbing active power.\n\nComments: Set Power Factor (when absorbing active power)"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum PfwAbsEna {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for PfwAbsEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<PfwAbsEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                PfwAbsEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Power Factor Reversion Enable (W Abs)\n\nPower factor reversion timer when absorbing active power enable."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum PfwAbsEnaRvrt {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for PfwAbsEnaRvrt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<PfwAbsEnaRvrt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                PfwAbsEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Limit Max Power Pct Enable\n\nLimit maximum active power percent enable.\n\nComments: Limit Maximum Active Power Generation"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum WMaxLimPctEna {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for WMaxLimPctEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<WMaxLimPctEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                WMaxLimPctEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Reversion Limit Max Power Pct Enable\n\nReversion limit maximum active power percent value enable."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum WMaxLimPctEnaRvrt {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for WMaxLimPctEnaRvrt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<WMaxLimPctEnaRvrt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                WMaxLimPctEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Set Active Power Enable\n\nSet active power enable.\n\nComments: Set Active Power Level (may be negative for charging)"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum WSetEna {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for WSetEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<WSetEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                WSetEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Set Active Power Mode\n\nSet active power mode."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum WSetMod {
+    #[doc = "Active Power As Max Percent\n\nActive power setting is percentage of maximum active power."]
+    WMaxPct = 0,
+    #[doc = "Active Power As Watts\n\nActive power setting is in watts."]
+    Watts = 1,
+}
+impl crate::Value for WSetMod {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<WSetMod> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                WSetMod::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Reversion Active Power Enable\n\nReversion active power function enable."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum WSetEnaRvrt {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for WSetEnaRvrt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<WSetEnaRvrt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                WSetEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Set Reactive Power Enable\n\nSet reactive power enable.\n\nComments: Set Reactive Power Level"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum VarSetEna {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for VarSetEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<VarSetEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                VarSetEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Set Reactive Power Mode\n\nSet reactive power mode."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum VarSetMod {
+    #[doc = "Reactive Power As Watt Max Pct\n\nReactive power setting is percent of maximum active power."]
+    WMaxPct = 0,
+    #[doc = "Reactive Power As Var Max Pct\n\nReactive power setting is percent of maximum reactive power."]
+    VarMaxPct = 1,
+    #[doc = "Reactive Power As Var Avail Pct\n\nReactive power setting is percent of available reactive  power."]
+    VarAvailPct = 2,
+    #[doc = "Reactive Power As VA Max Pct\n\nReactive power setting is percent of maximum apparent power."]
+    VaMaxPct = 3,
+    #[doc = "Reactive Power As Vars\n\nReactive power is in vars."]
+    Vars = 4,
+}
+impl crate::Value for VarSetMod {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<VarSetMod> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                VarSetMod::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Reactive Power Priority\n\nReactive power priority."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum VarSetPri {
+    #[doc = "Active Power Priority\n\nActive power priority."]
+    Active = 0,
+    #[doc = "Reactive Power Priority\n\nReactive power priority."]
+    Reactive = 1,
+    #[doc = "Vendor Power Priority\n\nPower priority is vendor specific mode."]
+    Vendor = 2,
+}
+impl crate::Value for VarSetPri {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<VarSetPri> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                VarSetPri::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Reversion Reactive Power Enable\n\nReversion reactive power function enable."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum VarSetEnaRvrt {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for VarSetEnaRvrt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<VarSetEnaRvrt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                VarSetEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Normal Ramp Rate Reference\n\nRamp rate reference unit for increases in active power or current during normal generation."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum WRmpRef {
+    #[doc = "Max Current Ramp\n\nRamp based on percent of max current per second."]
+    AMax = 0,
+    #[doc = "Max Active Power Ramp\n\nRamp based on percent of max active power per second."]
+    WMax = 1,
+}
+impl crate::Value for WRmpRef {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<WRmpRef> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                WRmpRef::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Anti-Islanding Enable\n\nAnti-islanding enable."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum AntiIslEna {
+    #[doc = "Disabled\n\nAnti-islanding is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nAnti-islanding is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for AntiIslEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<AntiIslEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                AntiIslEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

@@ -1,3 +1,5 @@
+//! Lithium-Ion String Model
+
 /// Lithium-Ion String Model
 #[derive(Debug)]
 pub struct Model804 {
@@ -16,7 +18,7 @@ pub struct Model804 {
     /// Current status of the string.
     pub st: u32,
     /// Connection Failure Reason
-    pub con_fail: Option<u16>,
+    pub con_fail: Option<ConFail>,
     /// String Cell Balancing Count
     ///
     /// Number of cells currently being balanced in the string.
@@ -138,7 +140,7 @@ pub struct Model804 {
     /// Connects and disconnects the string.
     ///
     /// Notes: Should reset to 0 upon completion.
-    pub set_con: Option<u16>,
+    pub set_con: Option<SetCon>,
     /// Scale factor for string state of charge.
     pub so_c_sf: i16,
     /// Scale factor for string state of health.
@@ -161,7 +163,7 @@ impl Model804 {
     pub const IDX: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const N_MOD: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const ST: crate::PointDef<Self, u32> = crate::PointDef::new(2, 2, false);
-    pub const CON_FAIL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
+    pub const CON_FAIL: crate::PointDef<Self, Option<ConFail>> = crate::PointDef::new(4, 1, false);
     pub const N_CELL_BAL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
     pub const SO_C: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
     pub const DO_D: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
@@ -187,7 +189,7 @@ impl Model804 {
     pub const EVT_VND1: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(30, 2, false);
     pub const EVT_VND2: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(32, 2, false);
     pub const SET_ENA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(34, 1, true);
-    pub const SET_CON: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(35, 1, true);
+    pub const SET_CON: crate::PointDef<Self, Option<SetCon>> = crate::PointDef::new(35, 1, true);
     pub const SO_C_SF: crate::PointDef<Self, i16> = crate::PointDef::new(36, 1, false);
     pub const SO_H_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(37, 1, false);
     pub const DO_D_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(38, 1, false);
@@ -237,5 +239,95 @@ impl crate::Model for Model804 {
             cell_v_sf: Self::CELL_V_SF.from_data(data)?,
             mod_tmp_sf: Self::MOD_TMP_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Connection Failure Reason"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum ConFail {
+    #[doc = ""]
+    NoFailure = 0,
+    #[doc = ""]
+    ButtonPushed = 1,
+    #[doc = ""]
+    StrGroundFault = 2,
+    #[doc = ""]
+    OutsideVoltageRange = 3,
+    #[doc = ""]
+    StringNotEnabled = 4,
+    #[doc = ""]
+    FuseOpen = 5,
+    #[doc = ""]
+    ContactorFailure = 6,
+    #[doc = ""]
+    PrechargeFailure = 7,
+    #[doc = "Notes: See Evt1 for more information."]
+    StringFault = 8,
+}
+impl crate::Value for ConFail {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ConFail> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ConFail::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Connect/Disconnect String\n\nConnects and disconnects the string.\n\nNotes: Should reset to 0 upon completion."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum SetCon {
+    #[doc = ""]
+    ConnectString = 1,
+    #[doc = ""]
+    DisconnectString = 2,
+}
+impl crate::Value for SetCon {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<SetCon> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                SetCon::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

@@ -1,3 +1,5 @@
+//! Flow Battery String Model
+
 /// Flow Battery String Model
 #[derive(Debug)]
 pub struct Model807 {

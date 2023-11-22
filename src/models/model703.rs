@@ -1,3 +1,5 @@
+//! Enter Service
+
 /// Enter Service
 ///
 /// Enter service model.
@@ -6,7 +8,7 @@ pub struct Model703 {
     /// Permit Enter Service
     ///
     /// Permit enter service.
-    pub es: Option<u16>,
+    pub es: Option<Es>,
     /// Enter Service Voltage High
     ///
     /// Enter service voltage high threshold as percent of normal voltage.
@@ -52,7 +54,7 @@ pub struct Model703 {
 #[allow(missing_docs)]
 
 impl Model703 {
-    pub const ES: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
+    pub const ES: crate::PointDef<Self, Option<Es>> = crate::PointDef::new(0, 1, true);
     pub const ESV_HI: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
     pub const ESV_LO: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, true);
     pub const ES_HZ_HI: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(3, 2, true);
@@ -82,5 +84,43 @@ impl crate::Model for Model703 {
             v_sf: Self::V_SF.from_data(data)?,
             hz_sf: Self::HZ_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Permit Enter Service\n\nPermit enter service."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Es {
+    #[doc = ""]
+    Disabled = 0,
+    #[doc = ""]
+    Enabled = 1,
+}
+impl crate::Value for Es {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Es> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Es::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

@@ -1,3 +1,5 @@
+//! Proxy Server
+
 /// Proxy Server
 ///
 /// Include this block to allow for a proxy server

@@ -1,3 +1,5 @@
+//! Inverter (Single Phase)
+
 /// Inverter (Single Phase)
 ///
 /// Include this model for single phase inverter monitoring
@@ -124,7 +126,7 @@ pub struct Model101 {
     /// Operating State
     ///
     /// Enumerated value.  Operating state
-    pub st: u16,
+    pub st: St,
     /// Vendor Operating State
     ///
     /// Vendor specific operating state code
@@ -193,7 +195,7 @@ impl Model101 {
     pub const TMP_TRNS: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(33, 1, false);
     pub const TMP_OT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(34, 1, false);
     pub const TMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(35, 1, false);
-    pub const ST: crate::PointDef<Self, u16> = crate::PointDef::new(36, 1, false);
+    pub const ST: crate::PointDef<Self, St> = crate::PointDef::new(36, 1, false);
     pub const ST_VND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(37, 1, false);
     pub const EVT1: crate::PointDef<Self, u32> = crate::PointDef::new(38, 2, false);
     pub const EVT2: crate::PointDef<Self, u32> = crate::PointDef::new(40, 2, false);
@@ -251,5 +253,55 @@ impl crate::Model for Model101 {
             evt_vnd3: Self::EVT_VND3.from_data(data)?,
             evt_vnd4: Self::EVT_VND4.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Operating State\n\nEnumerated value.  Operating state"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum St {
+    #[doc = ""]
+    Off = 1,
+    #[doc = ""]
+    Sleeping = 2,
+    #[doc = ""]
+    Starting = 3,
+    #[doc = ""]
+    Mppt = 4,
+    #[doc = ""]
+    Throttled = 5,
+    #[doc = ""]
+    ShuttingDown = 6,
+    #[doc = ""]
+    Fault = 7,
+    #[doc = ""]
+    Standby = 8,
+}
+impl crate::Value for St {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<St> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                St::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

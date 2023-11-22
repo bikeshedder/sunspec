@@ -1,3 +1,5 @@
+//! Irradiance Model
+
 /// Irradiance Model
 ///
 /// Include to support various irradiance measurements

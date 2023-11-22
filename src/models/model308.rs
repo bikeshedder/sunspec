@@ -1,3 +1,5 @@
+//! Mini Met Model
+
 /// Mini Met Model
 ///
 /// Include to support a few basic measurements

@@ -1,3 +1,5 @@
+//! Basic Settings
+
 /// Basic Settings
 ///
 /// Inverter Controls Basic Settings
@@ -76,11 +78,11 @@ pub struct Model121 {
     /// VArAct
     ///
     /// VAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization.
-    pub v_ar_act: Option<u16>,
+    pub v_ar_act: Option<VArAct>,
     /// ClcTotVA
     ///
     /// Calculation method for total apparent power. 1=vector 2=arithmetic.
-    pub clc_tot_va: Option<u16>,
+    pub clc_tot_va: Option<ClcTotVa>,
     /// MaxRmpRte
     ///
     /// Setpoint for maximum ramp rate as percentage of nominal maximum ramp rate. This setting will limit the rate that watts delivery to the grid can increase or decrease in response to intermittent PV generation.
@@ -92,7 +94,7 @@ pub struct Model121 {
     /// ConnPh
     ///
     /// Identity of connected phase for single phase inverters. A=1 B=2 C=3.
-    pub conn_ph: Option<u16>,
+    pub conn_ph: Option<ConnPh>,
     /// WMax_SF
     ///
     /// Scale factor for real power.
@@ -153,11 +155,12 @@ impl Model121 {
     pub const PF_MIN_Q2: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(12, 1, true);
     pub const PF_MIN_Q3: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(13, 1, true);
     pub const PF_MIN_Q4: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(14, 1, true);
-    pub const V_AR_ACT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(15, 1, true);
-    pub const CLC_TOT_VA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(16, 1, true);
+    pub const V_AR_ACT: crate::PointDef<Self, Option<VArAct>> = crate::PointDef::new(15, 1, true);
+    pub const CLC_TOT_VA: crate::PointDef<Self, Option<ClcTotVa>> =
+        crate::PointDef::new(16, 1, true);
     pub const MAX_RMP_RTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, true);
     pub const ECP_NOM_HZ: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(18, 1, true);
-    pub const CONN_PH: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(19, 1, true);
+    pub const CONN_PH: crate::PointDef<Self, Option<ConnPh>> = crate::PointDef::new(19, 1, true);
     pub const W_MAX_SF: crate::PointDef<Self, i16> = crate::PointDef::new(20, 1, false);
     pub const V_REF_SF: crate::PointDef<Self, i16> = crate::PointDef::new(21, 1, false);
     pub const V_REF_OFS_SF: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
@@ -207,5 +210,121 @@ impl crate::Model for Model121 {
             max_rmp_rte_sf: Self::MAX_RMP_RTE_SF.from_data(data)?,
             ecp_nom_hz_sf: Self::ECP_NOM_HZ_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "VArAct\n\nVAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum VArAct {
+    #[doc = ""]
+    Switch = 1,
+    #[doc = ""]
+    Maintain = 2,
+}
+impl crate::Value for VArAct {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<VArAct> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                VArAct::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "ClcTotVA\n\nCalculation method for total apparent power. 1=vector 2=arithmetic."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum ClcTotVa {
+    #[doc = ""]
+    Vector = 1,
+    #[doc = ""]
+    Arithmetic = 2,
+}
+impl crate::Value for ClcTotVa {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ClcTotVa> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ClcTotVa::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "ConnPh\n\nIdentity of connected phase for single phase inverters. A=1 B=2 C=3."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum ConnPh {
+    #[doc = ""]
+    A = 1,
+    #[doc = ""]
+    B = 2,
+    #[doc = ""]
+    C = 3,
+}
+impl crate::Value for ConnPh {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ConnPh> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ConnPh::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

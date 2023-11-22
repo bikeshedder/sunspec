@@ -1,3 +1,5 @@
+//! String Combiner (Advanced)
+
 /// String Combiner (Advanced)
 ///
 /// An advanced string combiner including voltage and energy measurements

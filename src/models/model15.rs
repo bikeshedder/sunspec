@@ -1,3 +1,5 @@
+//! Interface Counters Model
+
 /// Interface Counters Model
 ///
 /// Interface counters

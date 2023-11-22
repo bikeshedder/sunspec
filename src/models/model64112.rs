@@ -1,3 +1,5 @@
+//! OutBack FM Charge Controller
+
 /// OutBack FM Charge Controller
 #[derive(Debug)]
 pub struct Model64112 {
@@ -36,23 +38,23 @@ pub struct Model64112 {
     /// Auto Equalize Interval
     pub cc_config_auto_equalize: u16,
     /// MPPT mode
-    pub cc_config_mppt_mode: u16,
+    pub cc_config_mppt_mode: CcConfigMpptMode,
     /// Sweep Width
-    pub cc_config_sweep_width: u16,
+    pub cc_config_sweep_width: CcConfigSweepWidth,
     /// Sweep Maximum
-    pub cc_config_sweep_max: u16,
+    pub cc_config_sweep_max: CcConfigSweepMax,
     /// U-Pick PWM Duty Cycle
     pub cc_config_u_pick_duty_cyc: u16,
     /// Grid Tie Mode
-    pub cc_config_grid_tie: u16,
+    pub cc_config_grid_tie: CcConfigGridTie,
     /// Temp Comp Mode
-    pub cc_config_temp_comp: u16,
+    pub cc_config_temp_comp: CcConfigTempComp,
     /// Temp Comp Lower Limit
     pub cc_config_temp_comp_llimt: u16,
     /// Temp Comp Upper Limit
     pub cc_config_temp_comp_hlimt: u16,
     /// Auto Restart Mode
-    pub cc_config_auto_restart: u16,
+    pub cc_config_auto_restart: CcConfigAutoRestart,
     /// Wakeup VOC Change
     pub cc_config_wakeup_voc: u16,
     /// Snooze Mode
@@ -60,13 +62,13 @@ pub struct Model64112 {
     /// Wakeup Interval
     pub cc_config_wakeup_interval: u16,
     /// AUX Output Mode
-    pub cc_config_aux_mode: u16,
+    pub cc_config_aux_mode: CcConfigAuxMode,
     /// AUX Output Control
-    pub cc_config_aux_control: u16,
+    pub cc_config_aux_control: CcConfigAuxControl,
     /// AUX Output State
-    pub cc_config_aux_state: u16,
+    pub cc_config_aux_state: CcConfigAuxState,
     /// AUX Output Polarity
-    pub cc_config_aux_polarity: u16,
+    pub cc_config_aux_polarity: CcConfigAuxPolarity,
     /// AUX Low Battery Disconnect
     pub cc_config_aux_l_batt_disc: u16,
     /// AUX Low Battery Reconnect
@@ -154,30 +156,36 @@ impl Model64112 {
         crate::PointDef::new(15, 1, false);
     pub const CC_CONFIG_AUTO_EQUALIZE: crate::PointDef<Self, u16> =
         crate::PointDef::new(16, 1, false);
-    pub const CC_CONFIG_MPPT_MODE: crate::PointDef<Self, u16> = crate::PointDef::new(17, 1, false);
-    pub const CC_CONFIG_SWEEP_WIDTH: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_MPPT_MODE: crate::PointDef<Self, CcConfigMpptMode> =
+        crate::PointDef::new(17, 1, false);
+    pub const CC_CONFIG_SWEEP_WIDTH: crate::PointDef<Self, CcConfigSweepWidth> =
         crate::PointDef::new(18, 1, false);
-    pub const CC_CONFIG_SWEEP_MAX: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
+    pub const CC_CONFIG_SWEEP_MAX: crate::PointDef<Self, CcConfigSweepMax> =
+        crate::PointDef::new(19, 1, false);
     pub const CC_CONFIG_U_PICK_DUTY_CYC: crate::PointDef<Self, u16> =
         crate::PointDef::new(20, 1, false);
-    pub const CC_CONFIG_GRID_TIE: crate::PointDef<Self, u16> = crate::PointDef::new(21, 1, false);
-    pub const CC_CONFIG_TEMP_COMP: crate::PointDef<Self, u16> = crate::PointDef::new(22, 1, false);
+    pub const CC_CONFIG_GRID_TIE: crate::PointDef<Self, CcConfigGridTie> =
+        crate::PointDef::new(21, 1, false);
+    pub const CC_CONFIG_TEMP_COMP: crate::PointDef<Self, CcConfigTempComp> =
+        crate::PointDef::new(22, 1, false);
     pub const CC_CONFIG_TEMP_COMP_LLIMT: crate::PointDef<Self, u16> =
         crate::PointDef::new(23, 1, false);
     pub const CC_CONFIG_TEMP_COMP_HLIMT: crate::PointDef<Self, u16> =
         crate::PointDef::new(24, 1, false);
-    pub const CC_CONFIG_AUTO_RESTART: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_AUTO_RESTART: crate::PointDef<Self, CcConfigAutoRestart> =
         crate::PointDef::new(25, 1, false);
     pub const CC_CONFIG_WAKEUP_VOC: crate::PointDef<Self, u16> = crate::PointDef::new(26, 1, false);
     pub const CC_CONFIG_SNOOZE_MODE_A: crate::PointDef<Self, u16> =
         crate::PointDef::new(27, 1, false);
     pub const CC_CONFIG_WAKEUP_INTERVAL: crate::PointDef<Self, u16> =
         crate::PointDef::new(28, 1, false);
-    pub const CC_CONFIG_AUX_MODE: crate::PointDef<Self, u16> = crate::PointDef::new(29, 1, false);
-    pub const CC_CONFIG_AUX_CONTROL: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_AUX_MODE: crate::PointDef<Self, CcConfigAuxMode> =
+        crate::PointDef::new(29, 1, false);
+    pub const CC_CONFIG_AUX_CONTROL: crate::PointDef<Self, CcConfigAuxControl> =
         crate::PointDef::new(30, 1, false);
-    pub const CC_CONFIG_AUX_STATE: crate::PointDef<Self, u16> = crate::PointDef::new(31, 1, false);
-    pub const CC_CONFIG_AUX_POLARITY: crate::PointDef<Self, u16> =
+    pub const CC_CONFIG_AUX_STATE: crate::PointDef<Self, CcConfigAuxState> =
+        crate::PointDef::new(31, 1, false);
+    pub const CC_CONFIG_AUX_POLARITY: crate::PointDef<Self, CcConfigAuxPolarity> =
         crate::PointDef::new(32, 1, false);
     pub const CC_CONFIG_AUX_L_BATT_DISC: crate::PointDef<Self, u16> =
         crate::PointDef::new(33, 1, false);
@@ -311,5 +319,411 @@ impl crate::Model for Model64112 {
             cc_config_data_log_clear: Self::CC_CONFIG_DATA_LOG_CLEAR.from_data(data)?,
             cc_config_data_log_clr_comp: Self::CC_CONFIG_DATA_LOG_CLR_COMP.from_data(data)?,
         })
+    }
+}
+
+#[doc = "MPPT mode"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigMpptMode {
+    #[doc = ""]
+    Auto = 0,
+    #[doc = ""]
+    UPick = 1,
+    #[doc = ""]
+    Wind = 2,
+}
+impl crate::Value for CcConfigMpptMode {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigMpptMode> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigMpptMode::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Sweep Width"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigSweepWidth {
+    #[doc = ""]
+    Half = 0,
+    #[doc = ""]
+    Full = 1,
+}
+impl crate::Value for CcConfigSweepWidth {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigSweepWidth> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigSweepWidth::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Sweep Maximum"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigSweepMax {
+    #[doc = ""]
+    EightyPercent = 0,
+    #[doc = ""]
+    EightyFivePercent = 1,
+    #[doc = ""]
+    NintyPercent = 2,
+    #[doc = ""]
+    NintyNinePercent = 3,
+}
+impl crate::Value for CcConfigSweepMax {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigSweepMax> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigSweepMax::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Grid Tie Mode"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigGridTie {
+    #[doc = ""]
+    Disabled = 0,
+    #[doc = ""]
+    Enabled = 1,
+}
+impl crate::Value for CcConfigGridTie {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigGridTie> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigGridTie::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Temp Comp Mode"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigTempComp {
+    #[doc = ""]
+    Wide = 0,
+    #[doc = ""]
+    Limited = 1,
+}
+impl crate::Value for CcConfigTempComp {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigTempComp> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigTempComp::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Auto Restart Mode"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigAutoRestart {
+    #[doc = ""]
+    Off = 0,
+    #[doc = ""]
+    Every90Minutes = 1,
+    #[doc = ""]
+    Every90MinutesIfAbsorbOrFloat = 2,
+}
+impl crate::Value for CcConfigAutoRestart {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigAutoRestart> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigAutoRestart::from_repr(value)
+                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "AUX Output Mode"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigAuxMode {
+    #[doc = ""]
+    Float = 0,
+    #[doc = ""]
+    DiversionRelay = 1,
+    #[doc = ""]
+    DiversionSolidSt = 2,
+    #[doc = ""]
+    LowBattDisconnect = 3,
+    #[doc = ""]
+    Remote = 4,
+    #[doc = ""]
+    VentFan = 5,
+    #[doc = ""]
+    PvTrigger = 6,
+    #[doc = ""]
+    ErrorOutput = 7,
+    #[doc = ""]
+    NightLight = 8,
+}
+impl crate::Value for CcConfigAuxMode {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigAuxMode> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigAuxMode::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "AUX Output Control"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigAuxControl {
+    #[doc = ""]
+    Off = 0,
+    #[doc = ""]
+    Auto = 1,
+    #[doc = ""]
+    On = 2,
+}
+impl crate::Value for CcConfigAuxControl {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigAuxControl> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigAuxControl::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "AUX Output State"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigAuxState {
+    #[doc = ""]
+    Disabled = 0,
+    #[doc = ""]
+    Enabled = 1,
+}
+impl crate::Value for CcConfigAuxState {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigAuxState> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigAuxState::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "AUX Output Polarity"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CcConfigAuxPolarity {
+    #[doc = ""]
+    Low = 0,
+    #[doc = ""]
+    High = 1,
+}
+impl crate::Value for CcConfigAuxPolarity {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CcConfigAuxPolarity> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CcConfigAuxPolarity::from_repr(value)
+                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

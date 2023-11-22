@@ -1,3 +1,5 @@
+//! Lithium-Ion Battery Bank Model
+
 /// Lithium-Ion Battery Bank Model
 #[derive(Debug)]
 pub struct Model803 {

@@ -1,3 +1,5 @@
+//! Inclinometer Model
+
 /// Inclinometer Model
 ///
 /// Include to support orientation measurements

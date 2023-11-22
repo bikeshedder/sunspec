@@ -1,3 +1,5 @@
+//! Freq-Watt Crv
+
 /// Freq-Watt Crv
 ///
 /// Curve-Based Frequency-Watt

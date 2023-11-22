@@ -1,542 +1,434 @@
-pub use model1::Model1;
-pub use model10::Model10;
-pub use model101::Model101;
-pub use model102::Model102;
-pub use model103::Model103;
-pub use model11::Model11;
-pub use model111::Model111;
-pub use model112::Model112;
-pub use model113::Model113;
-pub use model12::Model12;
-pub use model120::Model120;
-pub use model121::Model121;
-pub use model122::Model122;
-pub use model123::Model123;
-pub use model124::Model124;
-pub use model125::Model125;
-pub use model126::Model126;
-pub use model127::Model127;
-pub use model128::Model128;
-pub use model129::Model129;
-pub use model13::Model13;
-pub use model130::Model130;
-pub use model131::Model131;
-pub use model132::Model132;
-pub use model133::Model133;
-pub use model134::Model134;
-pub use model135::Model135;
-pub use model136::Model136;
-pub use model137::Model137;
-pub use model138::Model138;
-pub use model139::Model139;
-pub use model14::Model14;
-pub use model140::Model140;
-pub use model141::Model141;
-pub use model142::Model142;
-pub use model143::Model143;
-pub use model144::Model144;
-pub use model145::Model145;
-pub use model15::Model15;
-pub use model16::Model16;
-pub use model160::Model160;
-pub use model17::Model17;
-pub use model18::Model18;
-pub use model19::Model19;
-pub use model2::Model2;
-pub use model201::Model201;
-pub use model202::Model202;
-pub use model203::Model203;
-pub use model204::Model204;
-pub use model211::Model211;
-pub use model212::Model212;
-pub use model213::Model213;
-pub use model214::Model214;
-pub use model220::Model220;
-pub use model3::Model3;
-pub use model302::Model302;
-pub use model303::Model303;
-pub use model304::Model304;
-pub use model305::Model305;
-pub use model306::Model306;
-pub use model307::Model307;
-pub use model308::Model308;
-pub use model4::Model4;
-pub use model401::Model401;
-pub use model402::Model402;
-pub use model403::Model403;
-pub use model404::Model404;
-pub use model5::Model5;
-pub use model501::Model501;
-pub use model502::Model502;
-pub use model6::Model6;
-pub use model601::Model601;
-pub use model63001::Model63001;
-pub use model63002::Model63002;
-pub use model64001::Model64001;
-pub use model64020::Model64020;
-pub use model64101::Model64101;
-pub use model64110::Model64110;
-pub use model64111::Model64111;
-pub use model64112::Model64112;
-pub use model7::Model7;
-pub use model701::Model701;
-pub use model702::Model702;
-pub use model703::Model703;
-pub use model704::Model704;
-pub use model705::Model705;
-pub use model706::Model706;
-pub use model707::Model707;
-pub use model708::Model708;
-pub use model709::Model709;
-pub use model710::Model710;
-pub use model711::Model711;
-pub use model712::Model712;
-pub use model713::Model713;
-pub use model714::Model714;
-pub use model715::Model715;
-pub use model8::Model8;
-pub use model801::Model801;
-pub use model802::Model802;
-pub use model803::Model803;
-pub use model804::Model804;
-pub use model805::Model805;
-pub use model806::Model806;
-pub use model807::Model807;
-pub use model808::Model808;
-pub use model809::Model809;
-pub use model9::Model9;
+pub mod model1;
 
-mod model1;
+pub mod model2;
 
-mod model2;
+pub mod model3;
 
-mod model3;
+pub mod model4;
 
-mod model4;
+pub mod model5;
 
-mod model5;
+pub mod model6;
 
-mod model6;
+pub mod model7;
 
-mod model7;
+pub mod model8;
 
-mod model8;
+pub mod model9;
 
-mod model9;
+pub mod model10;
 
-mod model10;
+pub mod model11;
 
-mod model11;
+pub mod model12;
 
-mod model12;
+pub mod model13;
 
-mod model13;
+pub mod model14;
 
-mod model14;
+pub mod model15;
 
-mod model15;
+pub mod model16;
 
-mod model16;
+pub mod model17;
 
-mod model17;
+pub mod model18;
 
-mod model18;
+pub mod model19;
 
-mod model19;
+pub mod model101;
 
-mod model101;
+pub mod model102;
 
-mod model102;
+pub mod model103;
 
-mod model103;
+pub mod model111;
 
-mod model111;
+pub mod model112;
 
-mod model112;
+pub mod model113;
 
-mod model113;
+pub mod model120;
 
-mod model120;
+pub mod model121;
 
-mod model121;
+pub mod model122;
 
-mod model122;
+pub mod model123;
 
-mod model123;
+pub mod model124;
 
-mod model124;
+pub mod model125;
 
-mod model125;
+pub mod model126;
 
-mod model126;
+pub mod model127;
 
-mod model127;
+pub mod model128;
 
-mod model128;
+pub mod model129;
 
-mod model129;
+pub mod model130;
 
-mod model130;
+pub mod model131;
 
-mod model131;
+pub mod model132;
 
-mod model132;
+pub mod model133;
 
-mod model133;
+pub mod model134;
 
-mod model134;
+pub mod model135;
 
-mod model135;
+pub mod model136;
 
-mod model136;
+pub mod model137;
 
-mod model137;
+pub mod model138;
 
-mod model138;
+pub mod model139;
 
-mod model139;
+pub mod model140;
 
-mod model140;
+pub mod model141;
 
-mod model141;
+pub mod model142;
 
-mod model142;
+pub mod model143;
 
-mod model143;
+pub mod model144;
 
-mod model144;
+pub mod model145;
 
-mod model145;
+pub mod model160;
 
-mod model160;
+pub mod model201;
 
-mod model201;
+pub mod model202;
 
-mod model202;
+pub mod model203;
 
-mod model203;
+pub mod model204;
 
-mod model204;
+pub mod model211;
 
-mod model211;
+pub mod model212;
 
-mod model212;
+pub mod model213;
 
-mod model213;
+pub mod model214;
 
-mod model214;
+pub mod model220;
 
-mod model220;
+pub mod model302;
 
-mod model302;
+pub mod model303;
 
-mod model303;
+pub mod model304;
 
-mod model304;
+pub mod model305;
 
-mod model305;
+pub mod model306;
 
-mod model306;
+pub mod model307;
 
-mod model307;
+pub mod model308;
 
-mod model308;
+pub mod model401;
 
-mod model401;
+pub mod model402;
 
-mod model402;
+pub mod model403;
 
-mod model403;
+pub mod model404;
 
-mod model404;
+pub mod model501;
 
-mod model501;
+pub mod model502;
 
-mod model502;
+pub mod model601;
 
-mod model601;
+pub mod model701;
 
-mod model701;
+pub mod model702;
 
-mod model702;
+pub mod model703;
 
-mod model703;
+pub mod model704;
 
-mod model704;
+pub mod model705;
 
-mod model705;
+pub mod model706;
 
-mod model706;
+pub mod model707;
 
-mod model707;
+pub mod model708;
 
-mod model708;
+pub mod model709;
 
-mod model709;
+pub mod model710;
 
-mod model710;
+pub mod model711;
 
-mod model711;
+pub mod model712;
 
-mod model712;
+pub mod model713;
 
-mod model713;
+pub mod model714;
 
-mod model714;
+pub mod model715;
 
-mod model715;
+pub mod model801;
 
-mod model801;
+pub mod model802;
 
-mod model802;
+pub mod model803;
 
-mod model803;
+pub mod model804;
 
-mod model804;
+pub mod model805;
 
-mod model805;
+pub mod model806;
 
-mod model806;
+pub mod model807;
 
-mod model807;
+pub mod model808;
 
-mod model808;
+pub mod model809;
 
-mod model809;
+pub mod model63001;
 
-mod model63001;
+pub mod model63002;
 
-mod model63002;
+pub mod model64001;
 
-mod model64001;
+pub mod model64020;
 
-mod model64020;
+pub mod model64101;
 
-mod model64101;
+pub mod model64110;
 
-mod model64110;
+pub mod model64111;
 
-mod model64111;
-
-mod model64112;
+pub mod model64112;
 
 /// This struct contains the addresses of all discovered models.
 #[derive(Debug, Default)]
 pub struct Models {
     /// Common
-    pub m1: crate::ModelAddr<Model1>,
+    pub m1: crate::ModelAddr<model1::Model1>,
     /// Basic Aggregator
-    pub m2: crate::ModelAddr<Model2>,
+    pub m2: crate::ModelAddr<model2::Model2>,
     /// Secure Dataset Read Request
-    pub m3: crate::ModelAddr<Model3>,
+    pub m3: crate::ModelAddr<model3::Model3>,
     /// Secure Dataset Read Response
-    pub m4: crate::ModelAddr<Model4>,
+    pub m4: crate::ModelAddr<model4::Model4>,
     /// Secure Write Request
-    pub m5: crate::ModelAddr<Model5>,
+    pub m5: crate::ModelAddr<model5::Model5>,
     /// Secure Write Sequential Request
-    pub m6: crate::ModelAddr<Model6>,
+    pub m6: crate::ModelAddr<model6::Model6>,
     /// Secure Write Response Model (DRAFT 1)
-    pub m7: crate::ModelAddr<Model7>,
+    pub m7: crate::ModelAddr<model7::Model7>,
     /// Get Device Security Certificate
-    pub m8: crate::ModelAddr<Model8>,
+    pub m8: crate::ModelAddr<model8::Model8>,
     /// Set Operator Security Certificate
-    pub m9: crate::ModelAddr<Model9>,
+    pub m9: crate::ModelAddr<model9::Model9>,
     /// Communication Interface Header
-    pub m10: crate::ModelAddr<Model10>,
+    pub m10: crate::ModelAddr<model10::Model10>,
     /// Ethernet Link Layer
-    pub m11: crate::ModelAddr<Model11>,
+    pub m11: crate::ModelAddr<model11::Model11>,
     /// IPv4
-    pub m12: crate::ModelAddr<Model12>,
+    pub m12: crate::ModelAddr<model12::Model12>,
     /// IPv6
-    pub m13: crate::ModelAddr<Model13>,
+    pub m13: crate::ModelAddr<model13::Model13>,
     /// Proxy Server
-    pub m14: crate::ModelAddr<Model14>,
+    pub m14: crate::ModelAddr<model14::Model14>,
     /// Interface Counters Model
-    pub m15: crate::ModelAddr<Model15>,
+    pub m15: crate::ModelAddr<model15::Model15>,
     /// Simple IP Network
-    pub m16: crate::ModelAddr<Model16>,
+    pub m16: crate::ModelAddr<model16::Model16>,
     /// Serial Interface
-    pub m17: crate::ModelAddr<Model17>,
+    pub m17: crate::ModelAddr<model17::Model17>,
     /// Cellular Link
-    pub m18: crate::ModelAddr<Model18>,
+    pub m18: crate::ModelAddr<model18::Model18>,
     /// PPP Link
-    pub m19: crate::ModelAddr<Model19>,
+    pub m19: crate::ModelAddr<model19::Model19>,
     /// Inverter (Single Phase)
-    pub m101: crate::ModelAddr<Model101>,
+    pub m101: crate::ModelAddr<model101::Model101>,
     /// Inverter (Split-Phase)
-    pub m102: crate::ModelAddr<Model102>,
+    pub m102: crate::ModelAddr<model102::Model102>,
     /// Inverter (Three Phase)
-    pub m103: crate::ModelAddr<Model103>,
+    pub m103: crate::ModelAddr<model103::Model103>,
     /// Inverter (Single Phase) FLOAT
-    pub m111: crate::ModelAddr<Model111>,
+    pub m111: crate::ModelAddr<model111::Model111>,
     /// Inverter (Split Phase) FLOAT
-    pub m112: crate::ModelAddr<Model112>,
+    pub m112: crate::ModelAddr<model112::Model112>,
     /// Inverter (Three Phase) FLOAT
-    pub m113: crate::ModelAddr<Model113>,
+    pub m113: crate::ModelAddr<model113::Model113>,
     /// Nameplate
-    pub m120: crate::ModelAddr<Model120>,
+    pub m120: crate::ModelAddr<model120::Model120>,
     /// Basic Settings
-    pub m121: crate::ModelAddr<Model121>,
+    pub m121: crate::ModelAddr<model121::Model121>,
     /// Measurements_Status
-    pub m122: crate::ModelAddr<Model122>,
+    pub m122: crate::ModelAddr<model122::Model122>,
     /// Immediate Controls
-    pub m123: crate::ModelAddr<Model123>,
+    pub m123: crate::ModelAddr<model123::Model123>,
     /// Storage
-    pub m124: crate::ModelAddr<Model124>,
+    pub m124: crate::ModelAddr<model124::Model124>,
     /// Pricing
-    pub m125: crate::ModelAddr<Model125>,
+    pub m125: crate::ModelAddr<model125::Model125>,
     /// Static Volt-VAR
-    pub m126: crate::ModelAddr<Model126>,
+    pub m126: crate::ModelAddr<model126::Model126>,
     /// Freq-Watt Param
-    pub m127: crate::ModelAddr<Model127>,
+    pub m127: crate::ModelAddr<model127::Model127>,
     /// Dynamic Reactive Current
-    pub m128: crate::ModelAddr<Model128>,
+    pub m128: crate::ModelAddr<model128::Model128>,
     /// LVRTD
-    pub m129: crate::ModelAddr<Model129>,
+    pub m129: crate::ModelAddr<model129::Model129>,
     /// HVRTD
-    pub m130: crate::ModelAddr<Model130>,
+    pub m130: crate::ModelAddr<model130::Model130>,
     /// Watt-PF
-    pub m131: crate::ModelAddr<Model131>,
+    pub m131: crate::ModelAddr<model131::Model131>,
     /// Volt-Watt
-    pub m132: crate::ModelAddr<Model132>,
+    pub m132: crate::ModelAddr<model132::Model132>,
     /// Basic Scheduling
-    pub m133: crate::ModelAddr<Model133>,
+    pub m133: crate::ModelAddr<model133::Model133>,
     /// Freq-Watt Crv
-    pub m134: crate::ModelAddr<Model134>,
+    pub m134: crate::ModelAddr<model134::Model134>,
     /// LFRT
-    pub m135: crate::ModelAddr<Model135>,
+    pub m135: crate::ModelAddr<model135::Model135>,
     /// HFRT
-    pub m136: crate::ModelAddr<Model136>,
+    pub m136: crate::ModelAddr<model136::Model136>,
     /// LVRTC
-    pub m137: crate::ModelAddr<Model137>,
+    pub m137: crate::ModelAddr<model137::Model137>,
     /// HVRTC
-    pub m138: crate::ModelAddr<Model138>,
+    pub m138: crate::ModelAddr<model138::Model138>,
     /// LVRTX
-    pub m139: crate::ModelAddr<Model139>,
+    pub m139: crate::ModelAddr<model139::Model139>,
     /// HVRTX
-    pub m140: crate::ModelAddr<Model140>,
+    pub m140: crate::ModelAddr<model140::Model140>,
     /// LFRTC
-    pub m141: crate::ModelAddr<Model141>,
+    pub m141: crate::ModelAddr<model141::Model141>,
     /// HFRTC
-    pub m142: crate::ModelAddr<Model142>,
+    pub m142: crate::ModelAddr<model142::Model142>,
     /// LFRTX
-    pub m143: crate::ModelAddr<Model143>,
+    pub m143: crate::ModelAddr<model143::Model143>,
     /// HFRTX
-    pub m144: crate::ModelAddr<Model144>,
+    pub m144: crate::ModelAddr<model144::Model144>,
     /// Extended Settings
-    pub m145: crate::ModelAddr<Model145>,
+    pub m145: crate::ModelAddr<model145::Model145>,
     /// Multiple MPPT Inverter Extension Model
-    pub m160: crate::ModelAddr<Model160>,
+    pub m160: crate::ModelAddr<model160::Model160>,
     /// Meter (Single Phase)single phase (AN or AB) meter
-    pub m201: crate::ModelAddr<Model201>,
+    pub m201: crate::ModelAddr<model201::Model201>,
     /// split single phase (ABN) meter
-    pub m202: crate::ModelAddr<Model202>,
+    pub m202: crate::ModelAddr<model202::Model202>,
     /// wye-connect three phase (abcn) meter
-    pub m203: crate::ModelAddr<Model203>,
+    pub m203: crate::ModelAddr<model203::Model203>,
     /// delta-connect three phase (abc) meter
-    pub m204: crate::ModelAddr<Model204>,
+    pub m204: crate::ModelAddr<model204::Model204>,
     /// single phase (AN or AB) meter
-    pub m211: crate::ModelAddr<Model211>,
+    pub m211: crate::ModelAddr<model211::Model211>,
     /// split single phase (ABN) meter
-    pub m212: crate::ModelAddr<Model212>,
+    pub m212: crate::ModelAddr<model212::Model212>,
     /// wye-connect three phase (abcn) meter
-    pub m213: crate::ModelAddr<Model213>,
+    pub m213: crate::ModelAddr<model213::Model213>,
     /// delta-connect three phase (abc) meter
-    pub m214: crate::ModelAddr<Model214>,
+    pub m214: crate::ModelAddr<model214::Model214>,
     /// Secure AC Meter Selected Readings
-    pub m220: crate::ModelAddr<Model220>,
+    pub m220: crate::ModelAddr<model220::Model220>,
     /// Irradiance Model
-    pub m302: crate::ModelAddr<Model302>,
+    pub m302: crate::ModelAddr<model302::Model302>,
     /// Back of Module Temperature Model
-    pub m303: crate::ModelAddr<Model303>,
+    pub m303: crate::ModelAddr<model303::Model303>,
     /// Inclinometer Model
-    pub m304: crate::ModelAddr<Model304>,
+    pub m304: crate::ModelAddr<model304::Model304>,
     /// GPS
-    pub m305: crate::ModelAddr<Model305>,
+    pub m305: crate::ModelAddr<model305::Model305>,
     /// Reference Point Model
-    pub m306: crate::ModelAddr<Model306>,
+    pub m306: crate::ModelAddr<model306::Model306>,
     /// Base Met
-    pub m307: crate::ModelAddr<Model307>,
+    pub m307: crate::ModelAddr<model307::Model307>,
     /// Mini Met Model
-    pub m308: crate::ModelAddr<Model308>,
+    pub m308: crate::ModelAddr<model308::Model308>,
     /// String Combiner (Current)
-    pub m401: crate::ModelAddr<Model401>,
+    pub m401: crate::ModelAddr<model401::Model401>,
     /// String Combiner (Advanced)
-    pub m402: crate::ModelAddr<Model402>,
+    pub m402: crate::ModelAddr<model402::Model402>,
     /// String Combiner (Current)
-    pub m403: crate::ModelAddr<Model403>,
+    pub m403: crate::ModelAddr<model403::Model403>,
     /// String Combiner (Advanced)
-    pub m404: crate::ModelAddr<Model404>,
+    pub m404: crate::ModelAddr<model404::Model404>,
     /// Solar Module
-    pub m501: crate::ModelAddr<Model501>,
+    pub m501: crate::ModelAddr<model501::Model501>,
     /// Solar Module
-    pub m502: crate::ModelAddr<Model502>,
+    pub m502: crate::ModelAddr<model502::Model502>,
     /// Tracker Controller DRAFT 2
-    pub m601: crate::ModelAddr<Model601>,
+    pub m601: crate::ModelAddr<model601::Model601>,
     /// DER AC Measurement
-    pub m701: crate::ModelAddr<Model701>,
+    pub m701: crate::ModelAddr<model701::Model701>,
     /// DER Capacity
-    pub m702: crate::ModelAddr<Model702>,
+    pub m702: crate::ModelAddr<model702::Model702>,
     /// Enter Service
-    pub m703: crate::ModelAddr<Model703>,
+    pub m703: crate::ModelAddr<model703::Model703>,
     /// DER AC Controls
-    pub m704: crate::ModelAddr<Model704>,
+    pub m704: crate::ModelAddr<model704::Model704>,
     /// DER Volt-Var
-    pub m705: crate::ModelAddr<Model705>,
+    pub m705: crate::ModelAddr<model705::Model705>,
     /// DER Volt-Watt
-    pub m706: crate::ModelAddr<Model706>,
+    pub m706: crate::ModelAddr<model706::Model706>,
     /// DER Trip LV
-    pub m707: crate::ModelAddr<Model707>,
+    pub m707: crate::ModelAddr<model707::Model707>,
     /// DER Trip HV
-    pub m708: crate::ModelAddr<Model708>,
+    pub m708: crate::ModelAddr<model708::Model708>,
     /// DER Trip LF
-    pub m709: crate::ModelAddr<Model709>,
+    pub m709: crate::ModelAddr<model709::Model709>,
     /// DER Trip HF
-    pub m710: crate::ModelAddr<Model710>,
+    pub m710: crate::ModelAddr<model710::Model710>,
     /// DER Frequency Droop
-    pub m711: crate::ModelAddr<Model711>,
+    pub m711: crate::ModelAddr<model711::Model711>,
     /// DER Watt-Var
-    pub m712: crate::ModelAddr<Model712>,
+    pub m712: crate::ModelAddr<model712::Model712>,
     /// DER Storage Capacity
-    pub m713: crate::ModelAddr<Model713>,
+    pub m713: crate::ModelAddr<model713::Model713>,
     /// DER DC Measurement
-    pub m714: crate::ModelAddr<Model714>,
+    pub m714: crate::ModelAddr<model714::Model714>,
     /// DERCtl
-    pub m715: crate::ModelAddr<Model715>,
+    pub m715: crate::ModelAddr<model715::Model715>,
     /// Energy Storage Base Model (DEPRECATED)
-    pub m801: crate::ModelAddr<Model801>,
+    pub m801: crate::ModelAddr<model801::Model801>,
     /// Battery Base Model
-    pub m802: crate::ModelAddr<Model802>,
+    pub m802: crate::ModelAddr<model802::Model802>,
     /// Lithium-Ion Battery Bank Model
-    pub m803: crate::ModelAddr<Model803>,
+    pub m803: crate::ModelAddr<model803::Model803>,
     /// Lithium-Ion String Model
-    pub m804: crate::ModelAddr<Model804>,
+    pub m804: crate::ModelAddr<model804::Model804>,
     /// Lithium-Ion Module Model
-    pub m805: crate::ModelAddr<Model805>,
+    pub m805: crate::ModelAddr<model805::Model805>,
     /// Flow Battery Model
-    pub m806: crate::ModelAddr<Model806>,
+    pub m806: crate::ModelAddr<model806::Model806>,
     /// Flow Battery String Model
-    pub m807: crate::ModelAddr<Model807>,
+    pub m807: crate::ModelAddr<model807::Model807>,
     /// Flow Battery Module Model
-    pub m808: crate::ModelAddr<Model808>,
+    pub m808: crate::ModelAddr<model808::Model808>,
     /// Flow Battery Stack Model
-    pub m809: crate::ModelAddr<Model809>,
+    pub m809: crate::ModelAddr<model809::Model809>,
     /// SunSpec Test Model 1
-    pub m63001: crate::ModelAddr<Model63001>,
+    pub m63001: crate::ModelAddr<model63001::Model63001>,
     /// SunSpec Test Model 2
-    pub m63002: crate::ModelAddr<Model63002>,
+    pub m63002: crate::ModelAddr<model63002::Model63002>,
     /// Veris Status and Configuration
-    pub m64001: crate::ModelAddr<Model64001>,
+    pub m64001: crate::ModelAddr<model64001::Model64001>,
     /// Mersen GreenString
-    pub m64020: crate::ModelAddr<Model64020>,
+    pub m64020: crate::ModelAddr<model64020::Model64020>,
     /// Eltek Inverter Extension
-    pub m64101: crate::ModelAddr<Model64101>,
+    pub m64101: crate::ModelAddr<model64101::Model64101>,
     /// OutBack AXS device
-    pub m64110: crate::ModelAddr<Model64110>,
+    pub m64110: crate::ModelAddr<model64110::Model64110>,
     /// Basic Charge Controller
-    pub m64111: crate::ModelAddr<Model64111>,
+    pub m64111: crate::ModelAddr<model64111::Model64111>,
     /// OutBack FM Charge Controller
-    pub m64112: crate::ModelAddr<Model64112>,
+    pub m64112: crate::ModelAddr<model64112::Model64112>,
 }
 
 impl Models {

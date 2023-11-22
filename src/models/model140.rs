@@ -1,3 +1,5 @@
+//! HVRTX
+
 /// HVRTX
 ///
 /// HVRT extended curve
@@ -48,7 +50,7 @@ pub struct Model140 {
     /// Scale factor for percent VRef.
     pub v_sf: i16,
     #[allow(missing_docs)]
-    pub crv_type: u16,
+    pub crv_type: CrvType,
 }
 
 #[allow(missing_docs)]
@@ -63,7 +65,7 @@ impl Model140 {
     pub const N_PT: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
     pub const TMS_SF: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
     pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
-    pub const CRV_TYPE: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
+    pub const CRV_TYPE: crate::PointDef<Self, CrvType> = crate::PointDef::new(9, 1, false);
 }
 
 impl crate::Model for Model140 {
@@ -81,5 +83,41 @@ impl crate::Model for Model140 {
             v_sf: Self::V_SF.from_data(data)?,
             crv_type: Self::CRV_TYPE.from_data(data)?,
         })
+    }
+}
+
+#[doc = ""]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum CrvType {
+    #[doc = ""]
+    CeaseToEnergize = 1,
+}
+impl crate::Value for CrvType {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CrvType> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CrvType::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

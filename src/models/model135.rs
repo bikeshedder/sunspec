@@ -1,3 +1,5 @@
+//! LFRT
+
 /// LFRT
 ///
 /// Low Frequency Ride-through

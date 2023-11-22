@@ -1,3 +1,5 @@
+//! Basic Charge Controller
+
 /// Basic Charge Controller
 #[derive(Debug)]
 pub struct Model64111 {
@@ -22,7 +24,7 @@ pub struct Model64111 {
     /// Array Current
     pub input_a: u16,
     /// Operating State
-    pub charger_st: u16,
+    pub charger_st: ChargerSt,
     /// Output Wattage
     pub output_w: u16,
     /// Today's Minimum Battery Voltage
@@ -62,7 +64,7 @@ impl Model64111 {
     pub const ARRAY_V: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, false);
     pub const OUTPUT_A: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
     pub const INPUT_A: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const CHARGER_ST: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
+    pub const CHARGER_ST: crate::PointDef<Self, ChargerSt> = crate::PointDef::new(10, 1, false);
     pub const OUTPUT_W: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
     pub const TODAY_MIN_BAT_V: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, false);
     pub const TODAY_MAX_BAT_V: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, false);
@@ -105,5 +107,49 @@ impl crate::Model for Model64111 {
             life_time_max_batt: Self::LIFE_TIME_MAX_BATT.from_data(data)?,
             life_time_max_voc: Self::LIFE_TIME_MAX_VOC.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Operating State"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum ChargerSt {
+    #[doc = ""]
+    Off = 0,
+    #[doc = ""]
+    Float = 1,
+    #[doc = ""]
+    Bulk = 2,
+    #[doc = ""]
+    Absorb = 3,
+    #[doc = ""]
+    Eq = 4,
+}
+impl crate::Value for ChargerSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ChargerSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ChargerSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

@@ -1,3 +1,5 @@
+//! single phase (AN or AB) meter
+
 /// single phase (AN or AB) meter
 ///
 /// Notes: Float

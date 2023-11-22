@@ -1,3 +1,5 @@
+//! Pricing
+
 /// Pricing
 ///
 /// Pricing Signal
@@ -12,7 +14,7 @@ pub struct Model125 {
     /// SigType
     ///
     /// Meaning of the pricing signal. When a Price schedule is used, type must match the schedule range variable description.
-    pub sig_type: Option<u16>,
+    pub sig_type: Option<SigType>,
     /// Sig
     ///
     /// Utility/ESP specific pricing signal. Content depends on pricing signal type. When H/M/L type is specified. Low=0; Med=1; High=2.
@@ -39,7 +41,7 @@ pub struct Model125 {
 
 impl Model125 {
     pub const MOD_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const SIG_TYPE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
+    pub const SIG_TYPE: crate::PointDef<Self, Option<SigType>> = crate::PointDef::new(1, 1, true);
     pub const SIG: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, true);
     pub const WIN_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
     pub const RVT_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
@@ -59,5 +61,49 @@ impl crate::Model for Model125 {
             rmp_tms: Self::RMP_TMS.from_data(data)?,
             sig_sf: Self::SIG_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "SigType\n\nMeaning of the pricing signal. When a Price schedule is used, type must match the schedule range variable description."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum SigType {
+    #[doc = ""]
+    Unknown = 0,
+    #[doc = ""]
+    Absolute = 1,
+    #[doc = ""]
+    Relative = 2,
+    #[doc = ""]
+    Multiplier = 3,
+    #[doc = ""]
+    Level = 4,
+}
+impl crate::Value for SigType {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<SigType> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                SigType::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

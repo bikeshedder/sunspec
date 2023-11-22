@@ -1,3 +1,5 @@
+//! Reference Point Model
+
 /// Reference Point Model
 ///
 /// Include to support a standard reference point

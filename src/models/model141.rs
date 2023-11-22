@@ -1,3 +1,5 @@
+//! LFRTC
+
 /// LFRTC
 ///
 /// LFRT must remain connected

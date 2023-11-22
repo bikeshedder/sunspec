@@ -1,3 +1,5 @@
+//! HVRTC
+
 /// HVRTC
 ///
 /// HVRT must remain connected

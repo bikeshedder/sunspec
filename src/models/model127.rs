@@ -1,3 +1,5 @@
+//! Freq-Watt Param
+
 /// Freq-Watt Param
 ///
 /// Parameterized Frequency-Watt

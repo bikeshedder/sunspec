@@ -1,3 +1,5 @@
+//! Energy Storage Base Model (DEPRECATED)
+
 /// Energy Storage Base Model (DEPRECATED)
 ///
 /// This model has been deprecated.

@@ -1,3 +1,5 @@
+//! Simple IP Network
+
 /// Simple IP Network
 ///
 /// Include this model for a simple IPv4 network stack
@@ -10,7 +12,7 @@ pub struct Model16 {
     /// Config
     ///
     /// Enumerated value.  Force IPv4 configuration method
-    pub cfg: u16,
+    pub cfg: Cfg,
     /// Control
     ///
     /// Bitmask value Configure use of services
@@ -49,7 +51,7 @@ pub struct Model16 {
 
 impl Model16 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
-    pub const CFG: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
+    pub const CFG: crate::PointDef<Self, Cfg> = crate::PointDef::new(4, 1, false);
     pub const CTL: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
     pub const ADDR: crate::PointDef<Self, String> = crate::PointDef::new(6, 8, true);
     pub const MSK: crate::PointDef<Self, String> = crate::PointDef::new(14, 8, true);
@@ -75,5 +77,43 @@ impl crate::Model for Model16 {
             mac: Self::MAC.from_data(data)?,
             lnk_ctl: Self::LNK_CTL.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Config\n\nEnumerated value.  Force IPv4 configuration method"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Cfg {
+    #[doc = ""]
+    Static = 0,
+    #[doc = ""]
+    Dhcp = 1,
+}
+impl crate::Value for Cfg {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Cfg> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Cfg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

@@ -1,3 +1,5 @@
+//! Immediate Controls
+
 /// Immediate Controls
 ///
 /// Immediate Inverter Controls
@@ -16,7 +18,7 @@ pub struct Model123 {
     /// Conn
     ///
     /// Enumerated valued.  Connection control.
-    pub conn: u16,
+    pub conn: Conn,
     /// WMaxLimPct
     ///
     /// Set power output to specified level.
@@ -36,7 +38,7 @@ pub struct Model123 {
     /// WMaxLim_Ena
     ///
     /// Enumerated valued.  Throttle enable/disable control.
-    pub w_max_lim_ena: u16,
+    pub w_max_lim_ena: WMaxLimEna,
     /// OutPFSet
     ///
     /// Set power factor to specific value - cosine of angle.
@@ -56,7 +58,7 @@ pub struct Model123 {
     /// OutPFSet_Ena
     ///
     /// Enumerated valued.  Fixed power factor enable/disable control.
-    pub out_pf_set_ena: u16,
+    pub out_pf_set_ena: OutPfSetEna,
     /// VArWMaxPct
     ///
     /// Reactive power in percent of WMax.
@@ -84,11 +86,11 @@ pub struct Model123 {
     /// VArPct_Mod
     ///
     /// Enumerated value. VAR percent limit mode.
-    pub v_ar_pct_mod: Option<u16>,
+    pub v_ar_pct_mod: Option<VArPctMod>,
     /// VArPct_Ena
     ///
     /// Enumerated valued.  Percent limit VAr enable/disable control.
-    pub v_ar_pct_ena: u16,
+    pub v_ar_pct_ena: VArPctEna,
     /// WMaxLimPct_SF
     ///
     /// Scale factor for power output percent.
@@ -108,7 +110,7 @@ pub struct Model123 {
 impl Model123 {
     pub const CONN_WIN_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
     pub const CONN_RVRT_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
-    pub const CONN: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
+    pub const CONN: crate::PointDef<Self, Conn> = crate::PointDef::new(2, 1, true);
     pub const W_MAX_LIM_PCT: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
     pub const W_MAX_LIM_PCT_WIN_TMS: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(4, 1, true);
@@ -116,7 +118,7 @@ impl Model123 {
         crate::PointDef::new(5, 1, true);
     pub const W_MAX_LIM_PCT_RMP_TMS: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(6, 1, true);
-    pub const W_MAX_LIM_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(7, 1, true);
+    pub const W_MAX_LIM_ENA: crate::PointDef<Self, WMaxLimEna> = crate::PointDef::new(7, 1, true);
     pub const OUT_PF_SET: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, true);
     pub const OUT_PF_SET_WIN_TMS: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(9, 1, true);
@@ -124,7 +126,8 @@ impl Model123 {
         crate::PointDef::new(10, 1, true);
     pub const OUT_PF_SET_RMP_TMS: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(11, 1, true);
-    pub const OUT_PF_SET_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(12, 1, true);
+    pub const OUT_PF_SET_ENA: crate::PointDef<Self, OutPfSetEna> =
+        crate::PointDef::new(12, 1, true);
     pub const V_AR_W_MAX_PCT: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(13, 1, true);
     pub const V_AR_MAX_PCT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(14, 1, true);
@@ -135,8 +138,9 @@ impl Model123 {
         crate::PointDef::new(17, 1, true);
     pub const V_AR_PCT_RMP_TMS: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(18, 1, true);
-    pub const V_AR_PCT_MOD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(19, 1, true);
-    pub const V_AR_PCT_ENA: crate::PointDef<Self, u16> = crate::PointDef::new(20, 1, true);
+    pub const V_AR_PCT_MOD: crate::PointDef<Self, Option<VArPctMod>> =
+        crate::PointDef::new(19, 1, true);
+    pub const V_AR_PCT_ENA: crate::PointDef<Self, VArPctEna> = crate::PointDef::new(20, 1, true);
     pub const W_MAX_LIM_PCT_SF: crate::PointDef<Self, i16> = crate::PointDef::new(21, 1, false);
     pub const OUT_PF_SET_SF: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
     pub const V_AR_PCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
@@ -171,5 +175,199 @@ impl crate::Model for Model123 {
             out_pf_set_sf: Self::OUT_PF_SET_SF.from_data(data)?,
             v_ar_pct_sf: Self::V_AR_PCT_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Conn\n\nEnumerated valued.  Connection control."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Conn {
+    #[doc = ""]
+    Disconnect = 0,
+    #[doc = ""]
+    Connect = 1,
+}
+impl crate::Value for Conn {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Conn> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Conn::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "WMaxLim_Ena\n\nEnumerated valued.  Throttle enable/disable control."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum WMaxLimEna {
+    #[doc = ""]
+    Disabled = 0,
+    #[doc = ""]
+    Enabled = 1,
+}
+impl crate::Value for WMaxLimEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<WMaxLimEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                WMaxLimEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "OutPFSet_Ena\n\nEnumerated valued.  Fixed power factor enable/disable control."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum OutPfSetEna {
+    #[doc = ""]
+    Disabled = 0,
+    #[doc = ""]
+    Enabled = 1,
+}
+impl crate::Value for OutPfSetEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<OutPfSetEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                OutPfSetEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "VArPct_Mod\n\nEnumerated value. VAR percent limit mode."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum VArPctMod {
+    #[doc = ""]
+    None = 0,
+    #[doc = ""]
+    WMax = 1,
+    #[doc = ""]
+    VArMax = 2,
+    #[doc = ""]
+    VArAval = 3,
+}
+impl crate::Value for VArPctMod {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<VArPctMod> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                VArPctMod::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "VArPct_Ena\n\nEnumerated valued.  Percent limit VAr enable/disable control."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum VArPctEna {
+    #[doc = ""]
+    Disabled = 0,
+    #[doc = ""]
+    Enabled = 1,
+}
+impl crate::Value for VArPctEna {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<VArPctEna> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                VArPctEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

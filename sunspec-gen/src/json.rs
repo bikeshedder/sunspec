@@ -124,7 +124,7 @@ pub enum PointType {
 }
 
 impl PointType {
-    pub fn size(&self) -> Option<u32> {
+    pub fn size(&self) -> Option<u16> {
         Some(match self {
             PointType::Int16 => 1,
             PointType::Int32 => 2,

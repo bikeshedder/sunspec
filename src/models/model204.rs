@@ -1,3 +1,5 @@
+//! delta-connect three phase (abc) meter
+
 /// delta-connect three phase (abc) meter
 #[derive(Debug)]
 pub struct Model204 {

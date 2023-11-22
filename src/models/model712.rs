@@ -1,3 +1,5 @@
+//! DER Watt-Var
+
 /// DER Watt-Var
 ///
 /// DER Watt-Var model.
@@ -6,7 +8,7 @@ pub struct Model712 {
     /// DER Watt-Var Module Enable
     ///
     /// DER Watt-Var control enable.
-    pub ena: u16,
+    pub ena: Ena,
     /// Set Active Curve Request
     ///
     /// Set active curve. 0 = No active curve.
@@ -14,7 +16,7 @@ pub struct Model712 {
     /// Set Active Curve Result
     ///
     /// Result of last set active curve operation.
-    pub adpt_crv_rslt: u16,
+    pub adpt_crv_rslt: AdptCrvRslt,
     /// Number Of Points
     ///
     /// Number of curve points supported.
@@ -48,9 +50,9 @@ pub struct Model712 {
 #[allow(missing_docs)]
 
 impl Model712 {
-    pub const ENA: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
+    pub const ENA: crate::PointDef<Self, Ena> = crate::PointDef::new(0, 1, true);
     pub const ADPT_CRV_REQ: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const ADPT_CRV_RSLT: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
+    pub const ADPT_CRV_RSLT: crate::PointDef<Self, AdptCrvRslt> = crate::PointDef::new(2, 1, false);
     pub const N_PT: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
     pub const N_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
     pub const RVRT_TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(5, 2, true);
@@ -75,5 +77,83 @@ impl crate::Model for Model712 {
             w_sf: Self::W_SF.from_data(data)?,
             dept_ref_sf: Self::DEPT_REF_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "DER Watt-Var Module Enable\n\nDER Watt-Var control enable."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Ena {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for Ena {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Ena> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Ena::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Set Active Curve Result\n\nResult of last set active curve operation."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum AdptCrvRslt {
+    #[doc = "Update In Progress\n\nCurve update in progress."]
+    InProgress = 0,
+    #[doc = "Update Complete\n\nCurve update completed successfully."]
+    Completed = 1,
+    #[doc = "Update Failed\n\nCurve update failed."]
+    Failed = 2,
+}
+impl crate::Value for AdptCrvRslt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<AdptCrvRslt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                AdptCrvRslt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

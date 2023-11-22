@@ -1,3 +1,5 @@
+//! split single phase (ABN) meter
+
 /// split single phase (ABN) meter
 #[derive(Debug)]
 pub struct Model202 {

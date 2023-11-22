@@ -1,3 +1,5 @@
+//! Set Operator Security Certificate
+
 /// Set Operator Security Certificate
 ///
 /// Security model for PKI
@@ -14,11 +16,11 @@ pub struct Model9 {
     /// Format
     ///
     /// Format of this certificate
-    pub fmt: u16,
+    pub fmt: Fmt,
     /// Type
     ///
     /// Type of this certificate
-    pub typ: u16,
+    pub typ: Typ,
     /// Total Length
     ///
     /// Total Length of the Certificate
@@ -220,7 +222,7 @@ pub struct Model9 {
     /// Algorithm used to compute the digital signature
     ///
     /// Notes: For future proof
-    pub alg: u16,
+    pub alg: Alg,
     /// N
     ///
     /// Number of registers to follow for the certificate
@@ -232,8 +234,8 @@ pub struct Model9 {
 impl Model9 {
     pub const CERT_UID: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const CERT_ROLE: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const FMT: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
-    pub const TYP: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
+    pub const FMT: crate::PointDef<Self, Fmt> = crate::PointDef::new(2, 1, true);
+    pub const TYP: crate::PointDef<Self, Typ> = crate::PointDef::new(3, 1, true);
     pub const TOT_LN: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, true);
     pub const FRG_LN: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, true);
     pub const FRG1: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
@@ -319,7 +321,7 @@ impl Model9 {
     pub const SEQ: crate::PointDef<Self, u16> = crate::PointDef::new(87, 1, true);
     pub const UID: crate::PointDef<Self, u16> = crate::PointDef::new(88, 1, true);
     pub const ROLE: crate::PointDef<Self, u16> = crate::PointDef::new(89, 1, true);
-    pub const ALG: crate::PointDef<Self, u16> = crate::PointDef::new(90, 1, true);
+    pub const ALG: crate::PointDef<Self, Alg> = crate::PointDef::new(90, 1, true);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(91, 1, true);
 }
 
@@ -419,5 +421,129 @@ impl crate::Model for Model9 {
             alg: Self::ALG.from_data(data)?,
             n: Self::N.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Format\n\nFormat of this certificate"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Fmt {
+    #[doc = ""]
+    None = 0,
+    #[doc = ""]
+    X509Pem = 1,
+    #[doc = ""]
+    X509Der = 2,
+}
+impl crate::Value for Fmt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Fmt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Fmt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Type\n\nType of this certificate"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Typ {
+    #[doc = ""]
+    DevKeyPair = 0,
+    #[doc = ""]
+    DevSharedKey = 1,
+    #[doc = ""]
+    OperatorPub = 2,
+    #[doc = ""]
+    OperatorShared = 3,
+    #[doc = ""]
+    CaPub = 4,
+}
+impl crate::Value for Typ {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Typ> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Typ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Alg {
+    #[doc = "Notes: For test purposes only"]
+    None = 0,
+    #[doc = ""]
+    AesGmac64 = 1,
+    #[doc = ""]
+    Ecc256 = 2,
+}
+impl crate::Value for Alg {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Alg> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Alg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

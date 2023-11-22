@@ -1,3 +1,5 @@
+//! String Combiner (Current)
+
 /// String Combiner (Current)
 ///
 /// A basic string combiner

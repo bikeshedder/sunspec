@@ -1,3 +1,5 @@
+//! Solar Module
+
 /// Solar Module
 ///
 /// A solar module model supporting DC-DC converter
@@ -8,7 +10,7 @@ pub struct Model501 {
     /// Status
     ///
     /// Enumerated value.  Module Status Code
-    pub stat: u16,
+    pub stat: Stat,
     /// Vendor Status
     ///
     /// Module Vendor Status Code
@@ -78,7 +80,7 @@ pub struct Model501 {
 #[allow(missing_docs)]
 
 impl Model501 {
-    pub const STAT: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
+    pub const STAT: crate::PointDef<Self, Stat> = crate::PointDef::new(0, 1, false);
     pub const STAT_VEND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(2, 2, false);
     pub const EVT_VEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, false);
@@ -119,5 +121,59 @@ impl crate::Model for Model501 {
             in_wh: Self::IN_WH.from_data(data)?,
             in_w: Self::IN_W.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Status\n\nEnumerated value.  Module Status Code"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Stat {
+    #[doc = ""]
+    Off = 1,
+    #[doc = ""]
+    Sleeping = 2,
+    #[doc = ""]
+    Starting = 3,
+    #[doc = ""]
+    Mppt = 4,
+    #[doc = ""]
+    Throttled = 5,
+    #[doc = ""]
+    ShuttingDown = 6,
+    #[doc = ""]
+    Fault = 7,
+    #[doc = ""]
+    Standby = 8,
+    #[doc = ""]
+    Test = 9,
+    #[doc = ""]
+    Other = 10,
+}
+impl crate::Value for Stat {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Stat> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Stat::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

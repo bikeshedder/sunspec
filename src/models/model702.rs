@@ -1,3 +1,5 @@
+//! DER Capacity
+
 /// DER Capacity
 ///
 /// DER capacity model.
@@ -84,11 +86,11 @@ pub struct Model702 {
     /// Normal Operating Category
     ///
     /// Normal operating performance category as specified in IEEE 1547-2018.
-    pub nor_op_cat_rtg: Option<u16>,
+    pub nor_op_cat_rtg: Option<NorOpCatRtg>,
     /// Abnormal Operating Category
     ///
     /// Abnormal operating performance category as specified in IEEE 1547-2018.
-    pub abn_op_cat_rtg: Option<u16>,
+    pub abn_op_cat_rtg: Option<AbnOpCatRtg>,
     /// Supported Control Modes
     ///
     /// Supported control mode functions.
@@ -240,9 +242,9 @@ impl Model702 {
         crate::PointDef::new(17, 1, false);
     pub const REACT_SUSCEPT_RTG: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(18, 1, false);
-    pub const NOR_OP_CAT_RTG: crate::PointDef<Self, Option<u16>> =
+    pub const NOR_OP_CAT_RTG: crate::PointDef<Self, Option<NorOpCatRtg>> =
         crate::PointDef::new(19, 1, false);
-    pub const ABN_OP_CAT_RTG: crate::PointDef<Self, Option<u16>> =
+    pub const ABN_OP_CAT_RTG: crate::PointDef<Self, Option<AbnOpCatRtg>> =
         crate::PointDef::new(20, 1, false);
     pub const CTRL_MODES: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(21, 2, false);
     pub const INT_ISLAND_CAT_RTG: crate::PointDef<Self, Option<u16>> =
@@ -333,5 +335,83 @@ impl crate::Model for Model702 {
             a_sf: Self::A_SF.from_data(data)?,
             s_sf: Self::S_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Normal Operating Category\n\nNormal operating performance category as specified in IEEE 1547-2018."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum NorOpCatRtg {
+    #[doc = "Category A"]
+    CatA = 0,
+    #[doc = "Category B"]
+    CatB = 1,
+}
+impl crate::Value for NorOpCatRtg {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<NorOpCatRtg> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                NorOpCatRtg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Abnormal Operating Category\n\nAbnormal operating performance category as specified in IEEE 1547-2018."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum AbnOpCatRtg {
+    #[doc = "Category I"]
+    Cat1 = 0,
+    #[doc = "Category II"]
+    Cat2 = 1,
+    #[doc = "Category III"]
+    Cat3 = 2,
+}
+impl crate::Value for AbnOpCatRtg {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<AbnOpCatRtg> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                AbnOpCatRtg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

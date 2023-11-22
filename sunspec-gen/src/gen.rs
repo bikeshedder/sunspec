@@ -1,5 +1,7 @@
 use codegen::Scope;
 use heck::{ToShoutySnakeCase, ToSnakeCase, ToUpperCamelCase};
+use proc_macro2::Literal;
+use quote::{format_ident, quote, ToTokens};
 use thiserror::Error;
 
 use crate::json::{Model, Point, PointAccess, PointMandatory, PointType};
@@ -22,10 +24,12 @@ pub fn gen_models_struct(models: &[Model]) -> Result<String, GenModelError> {
     let mut scope = Scope::new();
     for model in models {
         let model_id = model.id;
-        scope.raw(&format!("mod model{model_id};"));
+        scope.raw(&format!("pub mod model{model_id};"));
+        /*
         scope
             .import(&format!("model{model_id}"), &format!("Model{model_id}"))
             .vis("pub");
+        */
     }
     let models_struct = scope
         .new_struct("Models")
@@ -38,7 +42,7 @@ pub fn gen_models_struct(models: &[Model]) -> Result<String, GenModelError> {
         let field = models_struct
             .new_field(
                 &format!("m{}", model_id),
-                &format!("crate::ModelAddr<Model{}>", model_id),
+                &format!("crate::ModelAddr<model{model_id}::Model{model_id}>"),
             )
             .vis("pub");
         if let Some(label) = &model.group.doc.label {
@@ -108,6 +112,7 @@ fn safe_identifier(s: String) -> String {
 
 pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
     let mut scope = Scope::new();
+    scope.raw(format!("//! {}", model.group.doc.label.as_ref().unwrap()));
     let model_id = model.id;
     let model_name = format!("Model{}", model_id);
     let model_struct = scope.new_struct(&model_name).vis("pub").derive("Debug");
@@ -185,70 +190,115 @@ pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
         ));
     }
     fn_from_data.line("})");
+    for point in points {
+        if (point.r#type != PointType::Enum16 && point.r#type != PointType::Enum32)
+            || point.symbols.is_empty()
+        {
+            continue;
+        }
+        scope.raw(gen_enum(point));
+    }
     Ok(scope.to_string())
 }
 
+fn gen_enum(point: &Point) -> String {
+    let size = point.r#type.size().unwrap();
+    let repr = format_ident!("u{}", size * 16);
+    let name = format_ident!("{}", point.name.to_upper_camel_case());
+    let invalid = match point.r#type {
+        PointType::Enum16 => Literal::u16_unsuffixed(u16::MAX),
+        PointType::Enum32 => Literal::u32_unsuffixed(u32::MAX),
+        _ => unimplemented!(),
+    };
+    let variants = point.symbols.iter().map(|symbol| {
+        let name = format_ident!("{}", symbol.name.to_upper_camel_case());
+        let value = match point.r#type {
+            PointType::Enum16 => {
+                Literal::u16_unsuffixed(symbol.value.as_u64().unwrap().try_into().unwrap())
+            }
+            PointType::Enum32 => {
+                Literal::u32_unsuffixed(symbol.value.as_u64().unwrap().try_into().unwrap())
+            }
+            _ => unimplemented!(),
+        };
+        let variant_doc = symbol.doc.to_doc_string();
+        quote! {
+            #[doc = #variant_doc]
+            #name = #value
+        }
+        .into_token_stream()
+    });
+    let doc = point.doc.to_doc_string();
+    let code = quote!(
+        #[doc = #doc]
+        #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+        #[repr(#repr)]
+        pub enum #name {
+            #(#variants),*
+        }
+        impl crate::Value for #name {
+            fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+                let value = #repr::decode(data)?;
+                Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+            }
+            fn encode(self) -> Box<[u16]> {
+                (self as #repr).encode()
+            }
+        }
+        impl crate::Value for Option<#name> {
+            fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+                let value = #repr::decode(data)?;
+                if value != #invalid {
+                    Ok(Some(#name::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?))
+                } else {
+                    Ok(None)
+                }
+            }
+            fn encode(self) -> Box<[u16]> {
+                if let Some(value) = self {
+                    value.encode()
+                } else {
+                    #invalid.encode()
+                }
+            }
+        }
+    );
+    code.to_string()
+}
+
 fn rust_type(point: &Point) -> String {
-    let rty = match point.r#type {
-        PointType::Int16 => "i16",
-        PointType::Int32 => "i32",
-        PointType::Int64 => "i64",
-        PointType::Raw16 => "u16",
-        PointType::Uint16 => "u16",
-        PointType::Uint32 => "u32",
-        PointType::Uint64 => "u64",
-        PointType::Acc16 => "u16",
-        PointType::Acc32 => "u32",
-        PointType::Acc64 => "u64",
-        PointType::Bitfield16 => "u16",
-        PointType::Bitfield32 => "u32",
-        PointType::Bitfield64 => "u64",
-        PointType::Enum16 => "u16",
-        PointType::Enum32 => "u32",
-        PointType::Float32 => "f32",
-        PointType::Float64 => "f64",
-        PointType::String => "String",
-        PointType::Sf => "i16", // FIXME is this type correct?
+    let rty: String = match point.r#type {
+        PointType::Int16 => "i16".into(),
+        PointType::Int32 => "i32".into(),
+        PointType::Int64 => "i64".into(),
+        PointType::Raw16 => "u16".into(),
+        PointType::Uint16 => "u16".into(),
+        PointType::Uint32 => "u32".into(),
+        PointType::Uint64 => "u64".into(),
+        PointType::Acc16 => "u16".into(),
+        PointType::Acc32 => "u32".into(),
+        PointType::Acc64 => "u64".into(),
+        PointType::Bitfield16 => "u16".into(),
+        PointType::Bitfield32 => "u32".into(),
+        PointType::Bitfield64 => "u64".into(),
+        PointType::Enum16 if point.symbols.is_empty() => "u16".into(),
+        PointType::Enum16 => point.name.to_upper_camel_case(),
+        PointType::Enum32 if point.symbols.is_empty() => "u32".into(),
+        PointType::Enum32 => point.name.to_upper_camel_case(),
+        PointType::Float32 => "f32".into(),
+        PointType::Float64 => "f64".into(),
+        PointType::String => "String".into(),
+        PointType::Sf => "i16".into(), // FIXME is this type correct?
         PointType::Pad => unimplemented!(),
-        PointType::Ipaddr => "std::net::Ipv4Addr",
-        PointType::Ipv6addr => "std::net::Ipv6Addr",
-        PointType::Eui48 => "String",
-        PointType::Sunssf => "i16",
-        PointType::Count => "u16",
+        PointType::Ipaddr => "std::net::Ipv4Addr".into(),
+        PointType::Ipv6addr => "std::net::Ipv6Addr".into(),
+        PointType::Eui48 => "String".into(),
+        PointType::Sunssf => "i16".into(),
+        PointType::Count => "u16".into(),
     };
     if point.mandatory == PointMandatory::M {
-        String::from(rty)
+        rty
     } else {
         format!("Option<{rty}>")
     }
-}
-
-fn type_len(ty: PointType) -> Option<u16> {
-    Some(match ty {
-        PointType::Int16 => 1,
-        PointType::Int32 => 2,
-        PointType::Int64 => 4,
-        PointType::Raw16 => 1,
-        PointType::Uint16 => 1,
-        PointType::Uint32 => 2,
-        PointType::Uint64 => 4,
-        PointType::Acc16 => 1,
-        PointType::Acc32 => 2,
-        PointType::Acc64 => 4,
-        PointType::Bitfield16 => 1,
-        PointType::Bitfield32 => 2,
-        PointType::Bitfield64 => 4,
-        PointType::Enum16 => 1,
-        PointType::Enum32 => 2,
-        PointType::Float32 => 2,
-        PointType::Float64 => 4,
-        PointType::String => return None,
-        PointType::Sf => 1, // FIXME is this type correct?
-        PointType::Pad => 1,
-        PointType::Ipaddr => 2,
-        PointType::Ipv6addr => 8,
-        PointType::Eui48 => 3,
-        PointType::Sunssf => 1,
-        PointType::Count => 1,
-    })
 }

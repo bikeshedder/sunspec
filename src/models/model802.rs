@@ -1,3 +1,5 @@
+//! Battery Base Model
+
 /// Battery Base Model
 #[derive(Debug)]
 pub struct Model802 {
@@ -60,13 +62,13 @@ pub struct Model802 {
     /// Charge Status
     ///
     /// Charge status of storage device. Enumeration.
-    pub cha_st: Option<u16>,
+    pub cha_st: Option<ChaSt>,
     /// Control Mode
     ///
     /// Battery control mode. Enumeration.
     ///
     /// Notes: Maps to DRCC.LocRemCtl in IEC 61850.
-    pub loc_rem_ctl: u16,
+    pub loc_rem_ctl: LocRemCtl,
     /// Battery Heartbeat
     ///
     /// Value is incremented every second with periodic resets to zero.
@@ -86,13 +88,13 @@ pub struct Model802 {
     /// Type of battery. Enumeration.
     ///
     /// Notes: Maps to DBAT.BatTyp in 61850.
-    pub typ: u16,
+    pub typ: Typ,
     /// State of the Battery Bank
     ///
     /// State of the battery bank.  Enumeration.
     ///
     /// Notes: Must be reconciled with State in IEC 61850.
-    pub state: u16,
+    pub state: State,
     /// Vendor Battery Bank State
     ///
     /// Vendor specific battery bank state.  Enumeration.
@@ -202,7 +204,7 @@ pub struct Model802 {
     /// Request from battery to start or stop the inverter.  Enumeration.
     ///
     /// Notes: Used in special states such as manual battery charging.
-    pub req_inv_state: Option<u16>,
+    pub req_inv_state: Option<ReqInvState>,
     /// Battery Power Request
     ///
     /// AC Power requested by battery.
@@ -212,13 +214,13 @@ pub struct Model802 {
     /// Set Operation
     ///
     /// Instruct the battery bank to perform an operation such as connecting.  Enumeration.
-    pub set_op: u16,
+    pub set_op: SetOp,
     /// Set Inverter State
     ///
     /// Set the current state of the inverter.
     ///
     /// Notes: Information needed by battery for some operations.
-    pub set_inv_state: u16,
+    pub set_inv_state: SetInvState,
     /// Scale factor for charge capacity.
     pub ah_rtg_sf: i16,
     /// Scale factor for energy capacity.
@@ -261,13 +263,13 @@ impl Model802 {
     pub const DO_D: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, false);
     pub const SO_H: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(11, 1, false);
     pub const N_CYC: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(12, 2, false);
-    pub const CHA_ST: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(14, 1, false);
-    pub const LOC_REM_CTL: crate::PointDef<Self, u16> = crate::PointDef::new(15, 1, false);
+    pub const CHA_ST: crate::PointDef<Self, Option<ChaSt>> = crate::PointDef::new(14, 1, false);
+    pub const LOC_REM_CTL: crate::PointDef<Self, LocRemCtl> = crate::PointDef::new(15, 1, false);
     pub const HB: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(16, 1, false);
     pub const CTRL_HB: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, true);
     pub const ALM_RST: crate::PointDef<Self, u16> = crate::PointDef::new(18, 1, true);
-    pub const TYP: crate::PointDef<Self, u16> = crate::PointDef::new(19, 1, false);
-    pub const STATE: crate::PointDef<Self, u16> = crate::PointDef::new(20, 1, false);
+    pub const TYP: crate::PointDef<Self, Typ> = crate::PointDef::new(19, 1, false);
+    pub const STATE: crate::PointDef<Self, State> = crate::PointDef::new(20, 1, false);
     pub const STATE_VND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(21, 1, false);
     pub const WARR_DT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(22, 2, false);
     pub const EVT1: crate::PointDef<Self, u32> = crate::PointDef::new(24, 2, false);
@@ -293,11 +295,11 @@ impl Model802 {
     pub const A_DIS_CHA_MAX: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(44, 1, false);
     pub const W: crate::PointDef<Self, i16> = crate::PointDef::new(45, 1, false);
-    pub const REQ_INV_STATE: crate::PointDef<Self, Option<u16>> =
+    pub const REQ_INV_STATE: crate::PointDef<Self, Option<ReqInvState>> =
         crate::PointDef::new(46, 1, false);
     pub const REQ_W: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(47, 1, false);
-    pub const SET_OP: crate::PointDef<Self, u16> = crate::PointDef::new(48, 1, true);
-    pub const SET_INV_STATE: crate::PointDef<Self, u16> = crate::PointDef::new(49, 1, true);
+    pub const SET_OP: crate::PointDef<Self, SetOp> = crate::PointDef::new(48, 1, true);
+    pub const SET_INV_STATE: crate::PointDef<Self, SetInvState> = crate::PointDef::new(49, 1, true);
     pub const AH_RTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(50, 1, false);
     pub const WH_RTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(51, 1, false);
     pub const W_CHA_DIS_CHA_MAX_SF: crate::PointDef<Self, i16> = crate::PointDef::new(52, 1, false);
@@ -374,5 +376,315 @@ impl crate::Model for Model802 {
             a_max_sf: Self::A_MAX_SF.from_data(data)?,
             w_sf: Self::W_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Charge Status\n\nCharge status of storage device. Enumeration."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum ChaSt {
+    #[doc = ""]
+    Off = 1,
+    #[doc = ""]
+    Empty = 2,
+    #[doc = ""]
+    Discharging = 3,
+    #[doc = ""]
+    Charging = 4,
+    #[doc = ""]
+    Full = 5,
+    #[doc = ""]
+    Holding = 6,
+    #[doc = ""]
+    Testing = 7,
+}
+impl crate::Value for ChaSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ChaSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ChaSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Control Mode\n\nBattery control mode. Enumeration.\n\nNotes: Maps to DRCC.LocRemCtl in IEC 61850."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum LocRemCtl {
+    #[doc = "Notes: Value of 0 matches LocRemCtl in IEC 61850."]
+    Remote = 0,
+    #[doc = "Notes: Value of 1 matches LocRemCtl in IEC 61850."]
+    Local = 1,
+}
+impl crate::Value for LocRemCtl {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<LocRemCtl> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                LocRemCtl::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Battery Type\n\nType of battery. Enumeration.\n\nNotes: Maps to DBAT.BatTyp in 61850."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Typ {
+    #[doc = ""]
+    NotApplicableUnknown = 0,
+    #[doc = ""]
+    LeadAcid = 1,
+    #[doc = ""]
+    NickelMetalHydrate = 2,
+    #[doc = ""]
+    NickelCadmium = 3,
+    #[doc = ""]
+    LithiumIon = 4,
+    #[doc = ""]
+    CarbonZinc = 5,
+    #[doc = ""]
+    ZincChloride = 6,
+    #[doc = ""]
+    Alkaline = 7,
+    #[doc = ""]
+    RechargeableAlkaline = 8,
+    #[doc = ""]
+    SodiumSulfur = 9,
+    #[doc = ""]
+    Flow = 10,
+    #[doc = ""]
+    Other = 99,
+}
+impl crate::Value for Typ {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Typ> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Typ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "State of the Battery Bank\n\nState of the battery bank.  Enumeration.\n\nNotes: Must be reconciled with State in IEC 61850."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum State {
+    #[doc = ""]
+    Disconnected = 1,
+    #[doc = ""]
+    Initializing = 2,
+    #[doc = ""]
+    Connected = 3,
+    #[doc = ""]
+    Standby = 4,
+    #[doc = ""]
+    SocProtection = 5,
+    #[doc = ""]
+    Suspending = 6,
+    #[doc = ""]
+    Fault = 99,
+}
+impl crate::Value for State {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<State> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                State::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Inverter State Request\n\nRequest from battery to start or stop the inverter.  Enumeration.\n\nNotes: Used in special states such as manual battery charging."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum ReqInvState {
+    #[doc = ""]
+    NoRequest = 0,
+    #[doc = "Notes: Battery is notified of inverter state change through SetInvState."]
+    Start = 1,
+    #[doc = "Notes: Battery is notified of inverter state change through SetInvState."]
+    Stop = 2,
+}
+impl crate::Value for ReqInvState {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ReqInvState> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ReqInvState::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Set Operation\n\nInstruct the battery bank to perform an operation such as connecting.  Enumeration."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum SetOp {
+    #[doc = ""]
+    Connect = 1,
+    #[doc = ""]
+    Disconnect = 2,
+}
+impl crate::Value for SetOp {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<SetOp> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                SetOp::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Set Inverter State\n\nSet the current state of the inverter.\n\nNotes: Information needed by battery for some operations."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum SetInvState {
+    #[doc = ""]
+    InverterStopped = 1,
+    #[doc = ""]
+    InverterStandby = 2,
+    #[doc = ""]
+    InverterStarted = 3,
+}
+impl crate::Value for SetInvState {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<SetInvState> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                SetInvState::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

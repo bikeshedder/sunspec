@@ -1,3 +1,5 @@
+//! SunSpec Test Model 1
+
 /// SunSpec Test Model 1
 #[derive(Debug)]
 pub struct Model63001 {

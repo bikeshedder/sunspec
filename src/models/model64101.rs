@@ -1,3 +1,5 @@
+//! Eltek Inverter Extension
+
 /// Eltek Inverter Extension
 #[derive(Debug)]
 pub struct Model64101 {

@@ -1,3 +1,5 @@
+//! Common
+
 /// Common
 ///
 /// All SunSpec compliant devices must include this as the first model

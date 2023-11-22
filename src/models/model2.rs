@@ -1,3 +1,5 @@
+//! Basic Aggregator
+
 /// Basic Aggregator
 ///
 /// Aggregates a collection of models for a given model id
@@ -18,7 +20,7 @@ pub struct Model2 {
     /// Status
     ///
     /// Enumerated status code
-    pub st: u16,
+    pub st: St,
     /// Vendor Status
     ///
     /// Vendor specific status code
@@ -34,7 +36,7 @@ pub struct Model2 {
     /// Control
     ///
     /// Control register for all aggregated devices
-    pub ctl: Option<u16>,
+    pub ctl: Option<Ctl>,
     /// Vendor Control
     ///
     /// Vendor control register for all aggregated devices
@@ -51,11 +53,11 @@ impl Model2 {
     pub const AID: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const UN: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const ST: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
+    pub const ST: crate::PointDef<Self, St> = crate::PointDef::new(3, 1, false);
     pub const ST_VND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
     pub const EVT: crate::PointDef<Self, u32> = crate::PointDef::new(5, 2, false);
     pub const EVT_VND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, false);
-    pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, false);
+    pub const CTL: crate::PointDef<Self, Option<Ctl>> = crate::PointDef::new(9, 1, false);
     pub const CTL_VND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(10, 2, false);
     pub const CTL_VL: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(12, 2, false);
 }
@@ -75,5 +77,91 @@ impl crate::Model for Model2 {
             ctl_vnd: Self::CTL_VND.from_data(data)?,
             ctl_vl: Self::CTL_VL.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Status\n\nEnumerated status code"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum St {
+    #[doc = ""]
+    Off = 1,
+    #[doc = ""]
+    On = 2,
+    #[doc = ""]
+    Full = 3,
+    #[doc = ""]
+    Fault = 4,
+}
+impl crate::Value for St {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<St> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                St::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Control\n\nControl register for all aggregated devices"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Ctl {
+    #[doc = ""]
+    None = 0,
+    #[doc = ""]
+    Automatic = 1,
+    #[doc = ""]
+    ForceOff = 2,
+    #[doc = ""]
+    Test = 3,
+    #[doc = ""]
+    Throttle = 4,
+}
+impl crate::Value for Ctl {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Ctl> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Ctl::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

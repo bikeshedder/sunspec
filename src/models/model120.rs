@@ -1,3 +1,5 @@
+//! Nameplate
+
 /// Nameplate
 ///
 /// Inverter Controls Nameplate Ratings
@@ -8,7 +10,7 @@ pub struct Model120 {
     /// DERTyp
     ///
     /// Type of DER device. Default value is 4 to indicate PV device.
-    pub der_typ: u16,
+    pub der_typ: DerTyp,
     /// WRtg
     ///
     /// Continuous power output capability of the inverter.
@@ -120,7 +122,7 @@ pub struct Model120 {
 #[allow(missing_docs)]
 
 impl Model120 {
-    pub const DER_TYP: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
+    pub const DER_TYP: crate::PointDef<Self, DerTyp> = crate::PointDef::new(0, 1, false);
     pub const W_RTG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
     pub const W_RTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
     pub const VA_RTG: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
@@ -180,5 +182,43 @@ impl crate::Model for Model120 {
             max_dis_cha_rte: Self::MAX_DIS_CHA_RTE.from_data(data)?,
             max_dis_cha_rte_sf: Self::MAX_DIS_CHA_RTE_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "DERTyp\n\nType of DER device. Default value is 4 to indicate PV device."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum DerTyp {
+    #[doc = ""]
+    Pv = 4,
+    #[doc = ""]
+    PvStor = 82,
+}
+impl crate::Value for DerTyp {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<DerTyp> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                DerTyp::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

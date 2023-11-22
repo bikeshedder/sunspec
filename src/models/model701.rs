@@ -1,3 +1,5 @@
+//! DER AC Measurement
+
 /// DER AC Measurement
 ///
 /// DER AC measurement model.
@@ -8,25 +10,25 @@ pub struct Model701 {
     /// AC wiring type.
     ///
     /// Comments: Wiring Type
-    pub ac_type: u16,
+    pub ac_type: AcType,
     /// Operating State
     ///
     /// Operating state of the DER.
     ///
     /// Comments: Operating State
-    pub st: Option<u16>,
+    pub st: Option<St>,
     /// Inverter State
     ///
     /// Enumerated value.  Inverter state.
     ///
     /// Comments: Inverter State
-    pub inv_st: Option<u16>,
+    pub inv_st: Option<InvSt>,
     /// Grid Connection State
     ///
     /// Grid connection state of the DER.
     ///
     /// Comments: Grid Connection State
-    pub conn_st: Option<u16>,
+    pub conn_st: Option<ConnSt>,
     /// Alarm Bitfield
     ///
     /// Active alarms for the DER.
@@ -314,10 +316,10 @@ pub struct Model701 {
 #[allow(missing_docs)]
 
 impl Model701 {
-    pub const AC_TYPE: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const ST: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
-    pub const INV_ST: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
-    pub const CONN_ST: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
+    pub const AC_TYPE: crate::PointDef<Self, AcType> = crate::PointDef::new(0, 1, false);
+    pub const ST: crate::PointDef<Self, Option<St>> = crate::PointDef::new(1, 1, false);
+    pub const INV_ST: crate::PointDef<Self, Option<InvSt>> = crate::PointDef::new(2, 1, false);
+    pub const CONN_ST: crate::PointDef<Self, Option<ConnSt>> = crate::PointDef::new(3, 1, false);
     pub const ALRM: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, false);
     pub const DER_MODE: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(6, 2, false);
     pub const W: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(8, 1, false);
@@ -474,5 +476,171 @@ impl crate::Model for Model701 {
             tmp_sf: Self::TMP_SF.from_data(data)?,
             mn_alrm_info: Self::MN_ALRM_INFO.from_data(data)?,
         })
+    }
+}
+
+#[doc = "AC Wiring Type\n\nAC wiring type.\n\nComments: Wiring Type"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum AcType {
+    #[doc = "Single Phase"]
+    SinglePhase = 0,
+    #[doc = "Split Phase"]
+    SplitPhase = 1,
+    #[doc = "Three Phase"]
+    ThreePhase = 2,
+}
+impl crate::Value for AcType {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<AcType> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                AcType::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Operating State\n\nOperating state of the DER.\n\nComments: Operating State"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum St {
+    #[doc = "Off"]
+    Off = 0,
+    #[doc = "On"]
+    On = 1,
+}
+impl crate::Value for St {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<St> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                St::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Inverter State\n\nEnumerated value.  Inverter state.\n\nComments: Inverter State"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum InvSt {
+    #[doc = ""]
+    Off = 0,
+    #[doc = ""]
+    Sleeping = 1,
+    #[doc = ""]
+    Starting = 2,
+    #[doc = ""]
+    Running = 3,
+    #[doc = ""]
+    Throttled = 4,
+    #[doc = ""]
+    ShuttingDown = 5,
+    #[doc = ""]
+    Fault = 6,
+    #[doc = ""]
+    Standby = 7,
+}
+impl crate::Value for InvSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<InvSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                InvSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Grid Connection State\n\nGrid connection state of the DER.\n\nComments: Grid Connection State"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum ConnSt {
+    #[doc = "Disconnected\n\nDisconnected from the grid."]
+    Disconnected = 0,
+    #[doc = "Connected\n\nConnected to the grid."]
+    Connected = 1,
+}
+impl crate::Value for ConnSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ConnSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ConnSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

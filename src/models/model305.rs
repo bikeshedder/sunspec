@@ -1,3 +1,5 @@
+//! GPS
+
 /// GPS
 ///
 /// Include to support location measurements

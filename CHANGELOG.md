@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Generated types for Enum16 and Enum32 points
+
 ### Changed
 
 - Load models bigger than 125 registers in chunks
@@ -14,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change representation of IPv4 addresses to `std::net::Ipv4addr`
 - Load optional points as None if they don't contain a value
 - Use `heck` to generate better `type` and `field` names
+- Make `models::model*` module public as they do now contain
+  more than just the `Model` struct.
+
+### Removed
+
+- Model\* reexports in `models` module
 
 ## [0.2.0] - 2023-11-21
 

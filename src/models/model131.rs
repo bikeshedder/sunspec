@@ -1,3 +1,5 @@
+//! Watt-PF
+
 /// Watt-PF
 ///
 /// Watt-Power Factor

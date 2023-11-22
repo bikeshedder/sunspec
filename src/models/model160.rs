@@ -1,3 +1,5 @@
+//! Multiple MPPT Inverter Extension Model
+
 /// Multiple MPPT Inverter Extension Model
 #[derive(Debug)]
 pub struct Model160 {

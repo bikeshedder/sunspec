@@ -1,3 +1,5 @@
+//! Veris Status and Configuration
+
 /// Veris Status and Configuration
 #[derive(Debug)]
 pub struct Model64001 {

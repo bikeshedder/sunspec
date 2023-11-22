@@ -1,3 +1,5 @@
+//! Cellular Link
+
 /// Cellular Link
 ///
 /// Include this model to support a cellular interface link

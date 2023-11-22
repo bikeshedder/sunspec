@@ -1,3 +1,5 @@
+//! HFRTC
+
 /// HFRTC
 ///
 /// HFRT must remain connected

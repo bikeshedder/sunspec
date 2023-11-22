@@ -1,3 +1,5 @@
+//! wye-connect three phase (abcn) meter
+
 /// wye-connect three phase (abcn) meter
 #[derive(Debug)]
 pub struct Model203 {

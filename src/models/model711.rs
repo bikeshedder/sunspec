@@ -1,3 +1,5 @@
+//! DER Frequency Droop
+
 /// DER Frequency Droop
 ///
 /// DER Frequency Droop model.
@@ -6,7 +8,7 @@ pub struct Model711 {
     /// DER Frequency Droop Module Enable
     ///
     /// DER Frequency-Watt (Frequency-Droop) control enable.
-    pub ena: u16,
+    pub ena: Ena,
     /// Set Active Control Request
     ///
     /// Set active control. 0 = No active control.
@@ -14,7 +16,7 @@ pub struct Model711 {
     /// Set Active Control Result
     ///
     /// Result of last set active control operation.
-    pub adpt_ctl_rslt: u16,
+    pub adpt_ctl_rslt: AdptCtlRslt,
     /// Stored Control Count
     ///
     /// Number of stored controls supported.
@@ -48,9 +50,9 @@ pub struct Model711 {
 #[allow(missing_docs)]
 
 impl Model711 {
-    pub const ENA: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
+    pub const ENA: crate::PointDef<Self, Ena> = crate::PointDef::new(0, 1, true);
     pub const ADPT_CTL_REQ: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const ADPT_CTL_RSLT: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
+    pub const ADPT_CTL_RSLT: crate::PointDef<Self, AdptCtlRslt> = crate::PointDef::new(2, 1, false);
     pub const N_CTL: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
     pub const RVRT_TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, true);
     pub const RVRT_REM: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(6, 2, false);
@@ -75,5 +77,83 @@ impl crate::Model for Model711 {
             k_sf: Self::K_SF.from_data(data)?,
             rsp_tms_sf: Self::RSP_TMS_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "DER Frequency Droop Module Enable\n\nDER Frequency-Watt (Frequency-Droop) control enable."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Ena {
+    #[doc = "Disabled\n\nFunction is disabled."]
+    Disabled = 0,
+    #[doc = "Enabled\n\nFunction is enabled."]
+    Enabled = 1,
+}
+impl crate::Value for Ena {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Ena> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Ena::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Set Active Control Result\n\nResult of last set active control operation."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum AdptCtlRslt {
+    #[doc = "Update In Progress\n\nControl update in progress."]
+    InProgress = 0,
+    #[doc = "Update Complete\n\nControl update completed successfully."]
+    Completed = 1,
+    #[doc = "Update Failed\n\nControl update failed."]
+    Failed = 2,
+}
+impl crate::Value for AdptCtlRslt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<AdptCtlRslt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                AdptCtlRslt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

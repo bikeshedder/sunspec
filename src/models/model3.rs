@@ -1,3 +1,5 @@
+//! Secure Dataset Read Request
+
 /// Secure Dataset Read Request
 ///
 /// Request a digital signature over a specified set of data registers
@@ -138,7 +140,7 @@ pub struct Model3 {
     /// Algorithm used to compute the digital signature
     ///
     /// Notes: For future proof
-    pub alg: u16,
+    pub alg: Alg,
     /// N
     ///
     /// Number of registers comprising the digital signature.
@@ -205,7 +207,7 @@ impl Model3 {
     pub const MS: crate::PointDef<Self, u16> = crate::PointDef::new(53, 1, true);
     pub const SEQ: crate::PointDef<Self, u16> = crate::PointDef::new(54, 1, true);
     pub const ROLE: crate::PointDef<Self, u16> = crate::PointDef::new(55, 1, true);
-    pub const ALG: crate::PointDef<Self, u16> = crate::PointDef::new(56, 1, false);
+    pub const ALG: crate::PointDef<Self, Alg> = crate::PointDef::new(56, 1, false);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(57, 1, false);
 }
 
@@ -271,5 +273,45 @@ impl crate::Model for Model3 {
             alg: Self::ALG.from_data(data)?,
             n: Self::N.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Alg {
+    #[doc = "Notes: For test purposes only"]
+    None = 0,
+    #[doc = ""]
+    AesGmac64 = 1,
+    #[doc = ""]
+    Ecc256 = 2,
+}
+impl crate::Value for Alg {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Alg> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Alg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

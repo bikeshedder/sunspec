@@ -1,3 +1,5 @@
+//! LVRTC
+
 /// LVRTC
 ///
 /// LVRT must remain connected

@@ -1,3 +1,5 @@
+//! DER Storage Capacity
+
 /// DER Storage Capacity
 ///
 /// DER storage capacity.
@@ -22,7 +24,7 @@ pub struct Model713 {
     /// Status
     ///
     /// Storage status.
-    pub sta: Option<u16>,
+    pub sta: Option<Sta>,
     /// Energy Scale Factor
     ///
     /// Scale factor for energy capacity.
@@ -40,7 +42,7 @@ impl Model713 {
     pub const WH_AVAIL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
     pub const SO_C: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
     pub const SO_H: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
-    pub const STA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
+    pub const STA: crate::PointDef<Self, Option<Sta>> = crate::PointDef::new(4, 1, false);
     pub const WH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(5, 1, false);
     pub const PCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
 }
@@ -57,5 +59,45 @@ impl crate::Model for Model713 {
             wh_sf: Self::WH_SF.from_data(data)?,
             pct_sf: Self::PCT_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Status\n\nStorage status."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum Sta {
+    #[doc = "OK\n\nNo warnings or errors pending."]
+    Ok = 0,
+    #[doc = "Warning\n\nOne or more warnings pending."]
+    Warning = 1,
+    #[doc = "Error\n\nOne or more errors pending."]
+    Error = 2,
+}
+impl crate::Value for Sta {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<Sta> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                Sta::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

@@ -1,3 +1,5 @@
+//! Back of Module Temperature Model
+
 /// Back of Module Temperature Model
 ///
 /// Include to support variable number of  back of module temperature measurements

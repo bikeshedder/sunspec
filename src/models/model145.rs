@@ -1,3 +1,5 @@
+//! Extended Settings
+
 /// Extended Settings
 ///
 /// Inverter controls extended settings

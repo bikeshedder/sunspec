@@ -1,3 +1,5 @@
+//! Volt-Watt
+
 /// Volt-Watt
 ///
 /// Volt-Watt

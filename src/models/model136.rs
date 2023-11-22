@@ -1,3 +1,5 @@
+//! HFRT
+
 /// HFRT
 ///
 /// High Frequency Ride-through

@@ -1,3 +1,5 @@
+//! Storage
+
 /// Storage
 ///
 /// Basic Storage Controls
@@ -44,7 +46,7 @@ pub struct Model124 {
     /// ChaSt
     ///
     /// Charge status of storage device. Enumerated value.
-    pub cha_st: Option<u16>,
+    pub cha_st: Option<ChaSt>,
     /// OutWRte
     ///
     /// Percent of max discharge rate.
@@ -66,7 +68,7 @@ pub struct Model124 {
     /// Ramp time for moving from current setpoint to new setpoint.
     pub in_out_w_rte_rmp_tms: Option<u16>,
     #[allow(missing_docs)]
-    pub cha_gri_set: Option<u16>,
+    pub cha_gri_set: Option<ChaGriSet>,
     /// WChaMax_SF
     ///
     /// Scale factor for maximum charge.
@@ -113,7 +115,7 @@ impl Model124 {
     pub const CHA_STATE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
     pub const STOR_AVAL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
     pub const IN_BAT_V: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, false);
-    pub const CHA_ST: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, false);
+    pub const CHA_ST: crate::PointDef<Self, Option<ChaSt>> = crate::PointDef::new(9, 1, false);
     pub const OUT_W_RTE: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(10, 1, true);
     pub const IN_W_RTE: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(11, 1, true);
     pub const IN_OUT_W_RTE_WIN_TMS: crate::PointDef<Self, Option<u16>> =
@@ -122,7 +124,8 @@ impl Model124 {
         crate::PointDef::new(13, 1, true);
     pub const IN_OUT_W_RTE_RMP_TMS: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(14, 1, true);
-    pub const CHA_GRI_SET: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(15, 1, true);
+    pub const CHA_GRI_SET: crate::PointDef<Self, Option<ChaGriSet>> =
+        crate::PointDef::new(15, 1, true);
     pub const W_CHA_MAX_SF: crate::PointDef<Self, i16> = crate::PointDef::new(16, 1, false);
     pub const W_CHA_DIS_CHA_GRA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(17, 1, false);
     pub const VA_CHA_MAX_SF: crate::PointDef<Self, Option<i16>> =
@@ -165,5 +168,91 @@ impl crate::Model for Model124 {
             in_bat_v_sf: Self::IN_BAT_V_SF.from_data(data)?,
             in_out_w_rte_sf: Self::IN_OUT_W_RTE_SF.from_data(data)?,
         })
+    }
+}
+
+#[doc = "ChaSt\n\nCharge status of storage device. Enumerated value."]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum ChaSt {
+    #[doc = ""]
+    Off = 1,
+    #[doc = ""]
+    Empty = 2,
+    #[doc = ""]
+    Discharging = 3,
+    #[doc = ""]
+    Charging = 4,
+    #[doc = ""]
+    Full = 5,
+    #[doc = ""]
+    Holding = 6,
+    #[doc = ""]
+    Testing = 7,
+}
+impl crate::Value for ChaSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ChaSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ChaSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = ""]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum ChaGriSet {
+    #[doc = ""]
+    Pv = 0,
+    #[doc = ""]
+    Grid = 1,
+}
+impl crate::Value for ChaGriSet {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ChaGriSet> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ChaGriSet::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

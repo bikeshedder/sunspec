@@ -1,3 +1,5 @@
+//! Lithium-Ion Module Model
+
 /// Lithium-Ion Module Model
 #[derive(Debug)]
 pub struct Model805 {

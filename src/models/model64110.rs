@@ -1,3 +1,5 @@
+//! OutBack AXS device
+
 /// OutBack AXS device
 #[derive(Debug)]
 pub struct Model64110 {
@@ -32,7 +34,7 @@ pub struct Model64110 {
     /// SMTP Account Name
     pub smtp_account_nm: String,
     /// Enable SMTP SSL
-    pub smtp_enable_ssl: u16,
+    pub smtp_enable_ssl: SmtpEnableSsl,
     /// SMTP Password
     pub smtp_password: String,
     /// SMTP User Name
@@ -48,7 +50,7 @@ pub struct Model64110 {
     /// Status Email to Address 2
     pub stat_email_addr2: String,
     /// Enable Alarm Email
-    pub alarm_email_en: u16,
+    pub alarm_email_en: AlarmEmailEn,
     /// Alarm Email Subject
     pub alarm_email_sub: String,
     /// Alarm Email to Address 1
@@ -64,11 +66,11 @@ pub struct Model64110 {
     /// SD-Card Datalog Retain
     pub log_retain: u16,
     /// SD-Card Datalog Mode
-    pub log_mode: u16,
+    pub log_mode: LogMode,
     /// NTP Timer Server Name
     pub ntp_server_nm: String,
     /// Enable Network Time
-    pub ntp_enable: u16,
+    pub ntp_enable: NtpEnable,
     /// Time Zone
     pub time_zone: i16,
     /// Year
@@ -120,7 +122,8 @@ impl Model64110 {
     pub const MODBUS_PORT: crate::PointDef<Self, u16> = crate::PointDef::new(30, 1, false);
     pub const SMTP_SERVER_NM: crate::PointDef<Self, String> = crate::PointDef::new(31, 20, false);
     pub const SMTP_ACCOUNT_NM: crate::PointDef<Self, String> = crate::PointDef::new(51, 16, false);
-    pub const SMTP_ENABLE_SSL: crate::PointDef<Self, u16> = crate::PointDef::new(67, 1, false);
+    pub const SMTP_ENABLE_SSL: crate::PointDef<Self, SmtpEnableSsl> =
+        crate::PointDef::new(67, 1, false);
     pub const SMTP_PASSWORD: crate::PointDef<Self, String> = crate::PointDef::new(68, 8, false);
     pub const SMTP_USER_NM: crate::PointDef<Self, String> = crate::PointDef::new(76, 20, false);
     pub const STAT_EMAIL_INT: crate::PointDef<Self, u16> = crate::PointDef::new(96, 1, false);
@@ -130,7 +133,8 @@ impl Model64110 {
         crate::PointDef::new(123, 20, false);
     pub const STAT_EMAIL_ADDR2: crate::PointDef<Self, String> =
         crate::PointDef::new(143, 20, false);
-    pub const ALARM_EMAIL_EN: crate::PointDef<Self, u16> = crate::PointDef::new(163, 1, false);
+    pub const ALARM_EMAIL_EN: crate::PointDef<Self, AlarmEmailEn> =
+        crate::PointDef::new(163, 1, false);
     pub const ALARM_EMAIL_SUB: crate::PointDef<Self, String> = crate::PointDef::new(164, 25, false);
     pub const ALARM_EMAIL_ADDR1: crate::PointDef<Self, String> =
         crate::PointDef::new(189, 20, false);
@@ -140,9 +144,9 @@ impl Model64110 {
     pub const TELNET_PASSWORD: crate::PointDef<Self, String> = crate::PointDef::new(237, 8, false);
     pub const LOG_WRITE_INT: crate::PointDef<Self, u16> = crate::PointDef::new(245, 1, false);
     pub const LOG_RETAIN: crate::PointDef<Self, u16> = crate::PointDef::new(246, 1, false);
-    pub const LOG_MODE: crate::PointDef<Self, u16> = crate::PointDef::new(247, 1, false);
+    pub const LOG_MODE: crate::PointDef<Self, LogMode> = crate::PointDef::new(247, 1, false);
     pub const NTP_SERVER_NM: crate::PointDef<Self, String> = crate::PointDef::new(248, 20, false);
-    pub const NTP_ENABLE: crate::PointDef<Self, u16> = crate::PointDef::new(268, 1, false);
+    pub const NTP_ENABLE: crate::PointDef<Self, NtpEnable> = crate::PointDef::new(268, 1, false);
     pub const TIME_ZONE: crate::PointDef<Self, i16> = crate::PointDef::new(269, 1, false);
     pub const DATE_YEAR: crate::PointDef<Self, u16> = crate::PointDef::new(270, 1, false);
     pub const DATE_MONTH: crate::PointDef<Self, u16> = crate::PointDef::new(271, 1, false);
@@ -210,5 +214,159 @@ impl crate::Model for Model64110 {
             axs_status: Self::AXS_STATUS.from_data(data)?,
             axs_spare: Self::AXS_SPARE.from_data(data)?,
         })
+    }
+}
+
+#[doc = "Enable SMTP SSL"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum SmtpEnableSsl {
+    #[doc = ""]
+    AsxDisabled = 0,
+    #[doc = ""]
+    AsxEnabled = 1,
+}
+impl crate::Value for SmtpEnableSsl {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<SmtpEnableSsl> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                SmtpEnableSsl::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Enable Alarm Email"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum AlarmEmailEn {
+    #[doc = ""]
+    AsxDisabled = 0,
+    #[doc = ""]
+    AsxEnabled = 1,
+}
+impl crate::Value for AlarmEmailEn {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<AlarmEmailEn> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                AlarmEmailEn::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "SD-Card Datalog Mode"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum LogMode {
+    #[doc = ""]
+    LogDisabled = 0,
+    #[doc = ""]
+    LogExcel = 1,
+    #[doc = ""]
+    LogCompact = 2,
+}
+impl crate::Value for LogMode {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<LogMode> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                LogMode::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+
+#[doc = "Enable Network Time"]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[repr(u16)]
+pub enum NtpEnable {
+    #[doc = ""]
+    AsxDisabled = 0,
+    #[doc = ""]
+    AsxEnabled = 1,
+}
+impl crate::Value for NtpEnable {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<NtpEnable> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                NtpEnable::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
     }
 }

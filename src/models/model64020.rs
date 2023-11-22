@@ -1,3 +1,5 @@
+//! Mersen GreenString
+
 /// Mersen GreenString
 #[derive(Debug)]
 pub struct Model64020 {

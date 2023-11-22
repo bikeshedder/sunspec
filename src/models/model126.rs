@@ -1,3 +1,5 @@
+//! Static Volt-VAR
+
 /// Static Volt-VAR
 ///
 /// Static Volt-VAR Arrays

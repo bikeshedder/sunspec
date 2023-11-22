@@ -19,6 +19,7 @@ in a safe and convenient way.
       defined in the SunSpec specification.
 - [x] Fully typed models generated from the JSON files contained in the
       [SunSpec models repository](https://github.com/sunspec/models/)
+- [x] Fully typed enums
 - [x] Fully documented. Even the generated models.
 - [x] Reading of complete models in a single request.
 
