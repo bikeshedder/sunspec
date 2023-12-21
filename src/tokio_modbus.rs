@@ -11,9 +11,16 @@ use crate::DiscoveryResult;
 
 use tokio_modbus::client::{Context, Reader, Writer};
 
-async fn read_fixed_size<T: FixedSize>(context: &mut Context, addr: u16) -> io::Result<T> {
-    let words = context.read_holding_registers(addr, T::SIZE).await?;
-    Ok(T::decode(&words).unwrap())
+async fn read_fixed_size<T: FixedSize>(context: &mut Context, addr: u16) -> io::Result<Option<T>> {
+    match context.read_holding_registers(addr, T::SIZE).await {
+        Ok(words) => Ok(Some(T::decode(&words).unwrap())),
+        // TODO: Switch out string matching once tokio_modbus::frame::Exception
+        //       is made public. See these PR's:
+        //           - https://github.com/slowtec/tokio-modbus/pull/218
+        //           - https://github.com/slowtec/tokio-modbus/pull/231
+        Err(e) if e.to_string() == "Modbus function 3: Illegal data address" => Ok(None),
+        Err(e) => Err(e),
+    }
 }
 
 /// This function implements the "Device Information Model Discovery"
@@ -22,22 +29,10 @@ pub async fn discover_models(context: &mut Context) -> Result<DiscoveryResult, D
     // Read addresses 0, 40000 and 50000 looking for the SunS identifier
     let mut info_model_addr: Option<u16> = None;
     for addr in [0, 40000, 50000] {
-        match read_fixed_size::<u32>(context, addr).await {
-            Ok(SUNS_IDENTIFIER) => {
-                info_model_addr = Some(addr);
-                break
-            }
-            Ok(_) => {}
-            Err(exc) => {
-                match &exc.to_string()[..] {
-                    // TODO: Switch out string matching once tokio_modbus::frame::Exception
-                    //       is made public. See these PR's:
-                    //           - https://github.com/slowtec/tokio-modbus/pull/218
-                    //           - https://github.com/slowtec/tokio-modbus/pull/231
-                    "Modbus function 3: Illegal data address" => {},
-                    _ => Err(exc)?
-                }
-            }
+        let identifier = read_fixed_size::<u32>(context, addr).await?;
+        if identifier == Some(SUNS_IDENTIFIER) {
+            info_model_addr = Some(addr);
+            break;
         }
     }
     let Some(mut addr) = info_model_addr else {
