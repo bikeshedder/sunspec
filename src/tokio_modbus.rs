@@ -13,6 +13,8 @@ use tokio_modbus::client::{Context, Reader, Writer};
 
 async fn read_fixed_size<T: FixedSize>(context: &mut Context, addr: u16) -> io::Result<Option<T>> {
     match context.read_holding_registers(addr, T::SIZE).await {
+        // Unwrap is fine here as read_holding_registers is guaranteed to
+        // return the right amount of words.
         Ok(words) => Ok(Some(T::decode(&words).unwrap())),
         // TODO: Switch out string matching once tokio_modbus::frame::Exception
         //       is made public. See these PR's:
