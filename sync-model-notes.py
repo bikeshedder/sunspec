@@ -1,7 +1,7 @@
 #!/bin/python3
 
 #
-# Copy nodes from JSON models to XML
+# Copy notes from SMDX files to JSON models
 # See: https://github.com/sunspec/models/pull/247
 #
 
