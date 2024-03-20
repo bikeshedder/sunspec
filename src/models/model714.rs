@@ -4,6 +4,7 @@
 ///
 /// DER DC measurement.
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model714 {
     /// Port Alarms
     ///
@@ -89,7 +90,7 @@ impl crate::Model for Model714 {
     }
 }
 
-bitflags::bitflags! { # [doc = "Port Alarms\n\nBitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port.\n\nComments: DC General"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct PrtAlrms : u32 { } }
+bitflags::bitflags! { # [doc = "Port Alarms\n\nBitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port.\n\nComments: DC General"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct PrtAlrms : u32 { } }
 impl crate::Value for PrtAlrms {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

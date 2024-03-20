@@ -2,6 +2,7 @@
 
 /// Eltek Inverter Extension
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model64101 {
     #[allow(missing_docs)]
     pub eltek_country_code: Option<u16>,

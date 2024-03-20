@@ -2,6 +2,7 @@
 
 /// Mersen GreenString
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model64020 {
     /// Aux 0 temperature
     pub aux0_tmp: Option<i16>,

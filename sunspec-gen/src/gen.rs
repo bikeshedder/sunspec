@@ -36,6 +36,9 @@ pub fn gen_models_struct(models: &[Model]) -> Result<String, GenModelError> {
         .vis("pub")
         .derive("Debug")
         .derive("Default")
+        .r#macro(
+            "#[cfg_attr(feature = \"serde\", derive(::serde::Serialize, ::serde::Deserialize))]",
+        )
         .doc("This struct contains the addresses of all discovered models.");
     for model in models {
         let model_id = model.id;
@@ -110,12 +113,22 @@ fn safe_identifier(s: String) -> String {
     }
 }
 
+fn quote_string(s: &str) -> String {
+    format!("\"{}\"", s.replace("\\", "\\\\").replace("\"", "\\\""))
+}
+
 pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
     let mut scope = Scope::new();
     scope.raw(format!("//! {}", model.group.doc.label.as_ref().unwrap()));
     let model_id = model.id;
     let model_name = format!("Model{}", model_id);
-    let model_struct = scope.new_struct(&model_name).vis("pub").derive("Debug");
+    let model_struct = scope
+        .new_struct(&model_name)
+        .vis("pub")
+        .derive("Debug")
+        .r#macro(
+            "#[cfg_attr(feature = \"serde\", derive(::serde::Serialize, ::serde::Deserialize))]",
+        );
     let model_doc = model.group.doc.to_doc_string();
     if !model_doc.is_empty() {
         model_struct.doc(&model_doc);
@@ -235,6 +248,7 @@ fn gen_enum(point: &Point) -> String {
     let code = quote!(
         #[doc = #doc]
         #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+        #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
         #[repr(#repr)]
         pub enum #name {
             #(#variants),*
@@ -281,7 +295,8 @@ fn gen_bitfield(point: &Point) -> String {
     };
     let doc = point.doc.to_doc_string();
     let fields = point.symbols.iter().map(|symbol| {
-        let field_name = format_ident!("{}", symbol.name.to_upper_camel_case());
+        let symbol_name = symbol.name.clone();
+        let field_name = format_ident!("{}", symbol_name.to_upper_camel_case());
         let bit = Literal::u64_unsuffixed(1 << symbol.value.as_u64().unwrap());
         let field_doc = symbol.doc.to_doc_string();
         quote! {
@@ -294,6 +309,7 @@ fn gen_bitfield(point: &Point) -> String {
         bitflags::bitflags! {
             #[doc = #doc]
             #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+            #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
             pub struct #name: #repr {
                 #(#fields)*
             }

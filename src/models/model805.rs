@@ -2,6 +2,7 @@
 
 /// Lithium-Ion Module Model
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model805 {
     /// String Index
     ///

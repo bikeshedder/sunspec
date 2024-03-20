@@ -6,6 +6,7 @@
 ///
 /// Notes: Ref 3: 8.10.1.2; Ref 4: 12
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model128 {
     /// ArGraMod
     ///
@@ -102,6 +103,7 @@ impl crate::Model for Model128 {
 
 #[doc = "ArGraMod\n\nIndicates if gradients trend toward zero at the edges of the deadband or trend toward zero at the center of the deadband."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ArGraMod {
     #[doc = ""]
@@ -138,7 +140,7 @@ impl crate::Value for Option<ArGraMod> {
     }
 }
 
-bitflags::bitflags! { # [doc = "ModEna\n\nActivate dynamic reactive current model"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+bitflags::bitflags! { # [doc = "ModEna\n\nActivate dynamic reactive current model"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

@@ -6,6 +6,7 @@
 ///
 /// Notes: Ref 3: 8.4.2.1, Ref 4: 17
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model121 {
     /// WMax
     ///
@@ -215,6 +216,7 @@ impl crate::Model for Model121 {
 
 #[doc = "VArAct\n\nVAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VArAct {
     #[doc = ""]
@@ -253,6 +255,7 @@ impl crate::Value for Option<VArAct> {
 
 #[doc = "ClcTotVA\n\nCalculation method for total apparent power. 1=vector 2=arithmetic."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ClcTotVa {
     #[doc = ""]
@@ -291,6 +294,7 @@ impl crate::Value for Option<ClcTotVa> {
 
 #[doc = "ConnPh\n\nIdentity of connected phase for single phase inverters. A=1 B=2 C=3."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ConnPh {
     #[doc = ""]

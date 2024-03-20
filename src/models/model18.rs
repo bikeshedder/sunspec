@@ -4,6 +4,7 @@
 ///
 /// Include this model to support a cellular interface link
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model18 {
     /// Name
     ///

@@ -6,6 +6,7 @@
 ///
 /// Notes: Integer
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model502 {
     /// Current scale factor
     pub a_sf: Option<i16>,
@@ -142,6 +143,7 @@ impl crate::Model for Model502 {
 
 #[doc = "Status\n\nEnumerated value.  Module Status Code"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Stat {
     #[doc = ""]
@@ -194,7 +196,7 @@ impl crate::Value for Option<Stat> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Events\n\nBitmask value.  Module Event Flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt : u32 { # [doc = ""] const GroundFault = 1 ; # [doc = ""] const InputOverVoltage = 2 ; # [doc = ""] const Reserved2 = 4 ; # [doc = ""] const DcDisconnect = 8 ; # [doc = ""] const Reserved4 = 16 ; # [doc = ""] const Reserved5 = 32 ; # [doc = ""] const ManualShutdown = 64 ; # [doc = ""] const OverTemperature = 128 ; # [doc = ""] const Reserved8 = 256 ; # [doc = ""] const Reserved9 = 512 ; # [doc = ""] const Reserved10 = 1024 ; # [doc = ""] const Reserved11 = 2048 ; # [doc = ""] const BlownFuse = 4096 ; # [doc = ""] const UnderTemperature = 8192 ; # [doc = ""] const MemoryLoss = 16384 ; # [doc = ""] const ArcDetection = 32768 ; # [doc = ""] const TheftDetection = 65536 ; # [doc = ""] const OutputOverCurrent = 131072 ; # [doc = ""] const OutputOverVoltage = 262144 ; # [doc = ""] const OutputUnderVoltage = 524288 ; # [doc = ""] const TestFailed = 1048576 ; } }
+bitflags::bitflags! { # [doc = "Events\n\nBitmask value.  Module Event Flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt : u32 { # [doc = ""] const GroundFault = 1 ; # [doc = ""] const InputOverVoltage = 2 ; # [doc = ""] const Reserved2 = 4 ; # [doc = ""] const DcDisconnect = 8 ; # [doc = ""] const Reserved4 = 16 ; # [doc = ""] const Reserved5 = 32 ; # [doc = ""] const ManualShutdown = 64 ; # [doc = ""] const OverTemperature = 128 ; # [doc = ""] const Reserved8 = 256 ; # [doc = ""] const Reserved9 = 512 ; # [doc = ""] const Reserved10 = 1024 ; # [doc = ""] const Reserved11 = 2048 ; # [doc = ""] const BlownFuse = 4096 ; # [doc = ""] const UnderTemperature = 8192 ; # [doc = ""] const MemoryLoss = 16384 ; # [doc = ""] const ArcDetection = 32768 ; # [doc = ""] const TheftDetection = 65536 ; # [doc = ""] const OutputOverCurrent = 131072 ; # [doc = ""] const OutputOverVoltage = 262144 ; # [doc = ""] const OutputUnderVoltage = 524288 ; # [doc = ""] const TestFailed = 1048576 ; } }
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -222,7 +224,7 @@ impl crate::Value for Option<Evt> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Vendor Module Event Flags\n\nVendor specific flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVend : u32 { } }
+bitflags::bitflags! { # [doc = "Vendor Module Event Flags\n\nVendor specific flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVend : u32 { } }
 impl crate::Value for EvtVend {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

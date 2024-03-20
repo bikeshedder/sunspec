@@ -4,6 +4,7 @@
 ///
 /// Notes: Float
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model212 {
     /// Amps
     ///
@@ -348,7 +349,7 @@ impl crate::Model for Model212 {
     }
 }
 
-bitflags::bitflags! { # [doc = "Events\n\nMeter Event Flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt : u32 { # [doc = ""] const MEventPowerFailure = 4 ; # [doc = ""] const MEventUnderVoltage = 8 ; # [doc = ""] const MEventLowPf = 16 ; # [doc = ""] const MEventOverCurrent = 32 ; # [doc = ""] const MEventOverVoltage = 64 ; # [doc = ""] const MEventMissingSensor = 128 ; # [doc = ""] const MEventReserved1 = 256 ; # [doc = ""] const MEventReserved2 = 512 ; # [doc = ""] const MEventReserved3 = 1024 ; # [doc = ""] const MEventReserved4 = 2048 ; # [doc = ""] const MEventReserved5 = 4096 ; # [doc = ""] const MEventReserved6 = 8192 ; # [doc = ""] const MEventReserved7 = 16384 ; # [doc = ""] const MEventReserved8 = 32768 ; # [doc = ""] const MEventOem01 = 65536 ; # [doc = ""] const MEventOem02 = 131072 ; # [doc = ""] const MEventOem03 = 262144 ; # [doc = ""] const MEventOem04 = 524288 ; # [doc = ""] const MEventOem05 = 1048576 ; # [doc = ""] const MEventOem06 = 2097152 ; # [doc = ""] const MEventOem07 = 4194304 ; # [doc = ""] const MEventOem08 = 8388608 ; # [doc = ""] const MEventOem09 = 16777216 ; # [doc = ""] const MEventOem10 = 33554432 ; # [doc = ""] const MEventOem11 = 67108864 ; # [doc = ""] const MEventOem12 = 134217728 ; # [doc = ""] const MEventOem13 = 268435456 ; # [doc = ""] const MEventOem14 = 536870912 ; # [doc = ""] const MEventOem15 = 1073741824 ; } }
+bitflags::bitflags! { # [doc = "Events\n\nMeter Event Flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt : u32 { # [doc = ""] const MEventPowerFailure = 4 ; # [doc = ""] const MEventUnderVoltage = 8 ; # [doc = ""] const MEventLowPf = 16 ; # [doc = ""] const MEventOverCurrent = 32 ; # [doc = ""] const MEventOverVoltage = 64 ; # [doc = ""] const MEventMissingSensor = 128 ; # [doc = ""] const MEventReserved1 = 256 ; # [doc = ""] const MEventReserved2 = 512 ; # [doc = ""] const MEventReserved3 = 1024 ; # [doc = ""] const MEventReserved4 = 2048 ; # [doc = ""] const MEventReserved5 = 4096 ; # [doc = ""] const MEventReserved6 = 8192 ; # [doc = ""] const MEventReserved7 = 16384 ; # [doc = ""] const MEventReserved8 = 32768 ; # [doc = ""] const MEventOem01 = 65536 ; # [doc = ""] const MEventOem02 = 131072 ; # [doc = ""] const MEventOem03 = 262144 ; # [doc = ""] const MEventOem04 = 524288 ; # [doc = ""] const MEventOem05 = 1048576 ; # [doc = ""] const MEventOem06 = 2097152 ; # [doc = ""] const MEventOem07 = 4194304 ; # [doc = ""] const MEventOem08 = 8388608 ; # [doc = ""] const MEventOem09 = 16777216 ; # [doc = ""] const MEventOem10 = 33554432 ; # [doc = ""] const MEventOem11 = 67108864 ; # [doc = ""] const MEventOem12 = 134217728 ; # [doc = ""] const MEventOem13 = 268435456 ; # [doc = ""] const MEventOem14 = 536870912 ; # [doc = ""] const MEventOem15 = 1073741824 ; } }
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

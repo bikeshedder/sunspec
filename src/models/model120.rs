@@ -6,6 +6,7 @@
 ///
 /// Notes: Ref 3: 8.14.3.2, Ref 4: 17
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model120 {
     /// DERTyp
     ///
@@ -187,6 +188,7 @@ impl crate::Model for Model120 {
 
 #[doc = "DERTyp\n\nType of DER device. Default value is 4 to indicate PV device."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum DerTyp {
     #[doc = ""]

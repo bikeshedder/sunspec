@@ -6,6 +6,7 @@
 ///
 /// Notes: Ref 4: 11
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model139 {
     /// ActCrv
     ///
@@ -86,7 +87,7 @@ impl crate::Model for Model139 {
     }
 }
 
-bitflags::bitflags! { # [doc = "ModEna\n\nLVRT control mode. Enable active curve.  Bitfield value."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+bitflags::bitflags! { # [doc = "ModEna\n\nLVRT control mode. Enable active curve.  Bitfield value."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -116,6 +117,7 @@ impl crate::Value for Option<ModEna> {
 
 #[doc = ""]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CrvType {
     #[doc = ""]

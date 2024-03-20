@@ -212,6 +212,7 @@ pub mod model64112;
 
 /// This struct contains the addresses of all discovered models.
 #[derive(Debug, Default)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Models {
     /// Common
     pub m1: crate::ModelAddr<model1::Model1>,

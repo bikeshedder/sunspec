@@ -6,6 +6,7 @@
 ///
 /// Notes: Ref 3: 8.7.5.1; Ref 4: 6
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model125 {
     /// ModEna
     ///
@@ -64,7 +65,7 @@ impl crate::Model for Model125 {
     }
 }
 
-bitflags::bitflags! { # [doc = "ModEna\n\nIs price-based charge/discharge mode active?"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ModEna : u16 { # [doc = ""] const Enable = 1 ; } }
+bitflags::bitflags! { # [doc = "ModEna\n\nIs price-based charge/discharge mode active?"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enable = 1 ; } }
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -94,6 +95,7 @@ impl crate::Value for Option<ModEna> {
 
 #[doc = "SigType\n\nMeaning of the pricing signal. When a Price schedule is used, type must match the schedule range variable description."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum SigType {
     #[doc = ""]

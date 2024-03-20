@@ -4,6 +4,7 @@
 ///
 /// This model has been deprecated.
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model801 {
     /// Deprecated Model
     ///

@@ -4,6 +4,7 @@
 ///
 /// Include to support a wired ethernet port
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model11 {
     /// Ethernet Link Speed
     ///
@@ -62,7 +63,7 @@ impl crate::Model for Model11 {
     }
 }
 
-bitflags::bitflags! { # [doc = "Interface Status Flags\n\nBitmask values Interface flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct CfgSt : u16 { # [doc = ""] const Link = 1 ; # [doc = ""] const FullDuplex = 2 ; # [doc = ""] const AutoNeg1 = 4 ; # [doc = ""] const AutoNeg2 = 8 ; # [doc = ""] const AutoNeg3 = 16 ; # [doc = ""] const ResetRequired = 32 ; # [doc = ""] const HwFault = 64 ; } }
+bitflags::bitflags! { # [doc = "Interface Status Flags\n\nBitmask values Interface flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct CfgSt : u16 { # [doc = ""] const Link = 1 ; # [doc = ""] const FullDuplex = 2 ; # [doc = ""] const AutoNeg1 = 4 ; # [doc = ""] const AutoNeg2 = 8 ; # [doc = ""] const AutoNeg3 = 16 ; # [doc = ""] const ResetRequired = 32 ; # [doc = ""] const HwFault = 64 ; } }
 impl crate::Value for CfgSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -92,6 +93,7 @@ impl crate::Value for Option<CfgSt> {
 
 #[doc = "Link State\n\nEnumerated value. State information for this interface"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum St {
     #[doc = ""]
@@ -132,7 +134,7 @@ impl crate::Value for Option<St> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Control\n\nControl flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Ctl : u16 { # [doc = ""] const Auto = 1 ; # [doc = ""] const FullDuplex = 2 ; } }
+bitflags::bitflags! { # [doc = "Control\n\nControl flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Ctl : u16 { # [doc = ""] const Auto = 1 ; # [doc = ""] const FullDuplex = 2 ; } }
 impl crate::Value for Ctl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

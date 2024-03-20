@@ -2,6 +2,7 @@
 
 /// Multiple MPPT Inverter Extension Model
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model160 {
     /// Current Scale Factor
     pub dca_sf: Option<i16>,
@@ -46,7 +47,7 @@ impl crate::Model for Model160 {
     }
 }
 
-bitflags::bitflags! { # [doc = "Global Events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt : u32 { # [doc = ""] const GroundFault = 1 ; # [doc = ""] const InputOverVoltage = 2 ; # [doc = ""] const Reserved2 = 4 ; # [doc = ""] const DcDisconnect = 8 ; # [doc = ""] const Reserved4 = 16 ; # [doc = ""] const CabinetOpen = 32 ; # [doc = ""] const ManualShutdown = 64 ; # [doc = ""] const OverTemp = 128 ; # [doc = ""] const Reserved8 = 256 ; # [doc = ""] const Reserved9 = 512 ; # [doc = ""] const Reserved10 = 1024 ; # [doc = ""] const Reserved11 = 2048 ; # [doc = ""] const BlownFuse = 4096 ; # [doc = ""] const UnderTemp = 8192 ; # [doc = ""] const MemoryLoss = 16384 ; # [doc = ""] const ArcDetection = 32768 ; # [doc = ""] const Reserved16 = 65536 ; # [doc = ""] const Reserved17 = 131072 ; # [doc = ""] const Reserved18 = 262144 ; # [doc = ""] const Reserved19 = 524288 ; # [doc = ""] const TestFailed = 1048576 ; # [doc = ""] const InputUnderVoltage = 2097152 ; # [doc = ""] const InputOverCurrent = 4194304 ; } }
+bitflags::bitflags! { # [doc = "Global Events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt : u32 { # [doc = ""] const GroundFault = 1 ; # [doc = ""] const InputOverVoltage = 2 ; # [doc = ""] const Reserved2 = 4 ; # [doc = ""] const DcDisconnect = 8 ; # [doc = ""] const Reserved4 = 16 ; # [doc = ""] const CabinetOpen = 32 ; # [doc = ""] const ManualShutdown = 64 ; # [doc = ""] const OverTemp = 128 ; # [doc = ""] const Reserved8 = 256 ; # [doc = ""] const Reserved9 = 512 ; # [doc = ""] const Reserved10 = 1024 ; # [doc = ""] const Reserved11 = 2048 ; # [doc = ""] const BlownFuse = 4096 ; # [doc = ""] const UnderTemp = 8192 ; # [doc = ""] const MemoryLoss = 16384 ; # [doc = ""] const ArcDetection = 32768 ; # [doc = ""] const Reserved16 = 65536 ; # [doc = ""] const Reserved17 = 131072 ; # [doc = ""] const Reserved18 = 262144 ; # [doc = ""] const Reserved19 = 524288 ; # [doc = ""] const TestFailed = 1048576 ; # [doc = ""] const InputUnderVoltage = 2097152 ; # [doc = ""] const InputOverCurrent = 4194304 ; } }
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

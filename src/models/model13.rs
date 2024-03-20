@@ -4,6 +4,7 @@
 ///
 /// Include to support an IPv6 protocol stack on this interface
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model13 {
     /// Name
     ///
@@ -112,6 +113,7 @@ impl crate::Model for Model13 {
 
 #[doc = "Config Status\n\nEnumerated value.  Configuration status"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CfgSt {
     #[doc = ""]
@@ -150,7 +152,7 @@ impl crate::Value for Option<CfgSt> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Change Status\n\nBitmask value.  A configuration change is pending"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ChgSt : u16 { # [doc = ""] const Pending = 1 ; } }
+bitflags::bitflags! { # [doc = "Change Status\n\nBitmask value.  A configuration change is pending"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ChgSt : u16 { # [doc = ""] const Pending = 1 ; } }
 impl crate::Value for ChgSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -178,7 +180,7 @@ impl crate::Value for Option<ChgSt> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Config Capability\n\nBitmask value. Identify capable sources of configuration"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Cap : u16 { # [doc = ""] const Dhcp = 1 ; # [doc = ""] const Bootp = 2 ; # [doc = ""] const Zeroconf = 4 ; # [doc = ""] const Dns = 8 ; # [doc = ""] const CfgSettable = 16 ; # [doc = ""] const HwConfig = 32 ; # [doc = ""] const NtpClient = 64 ; # [doc = ""] const ResetRequired = 128 ; } }
+bitflags::bitflags! { # [doc = "Config Capability\n\nBitmask value. Identify capable sources of configuration"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Cap : u16 { # [doc = ""] const Dhcp = 1 ; # [doc = ""] const Bootp = 2 ; # [doc = ""] const Zeroconf = 4 ; # [doc = ""] const Dns = 8 ; # [doc = ""] const CfgSettable = 16 ; # [doc = ""] const HwConfig = 32 ; # [doc = ""] const NtpClient = 64 ; # [doc = ""] const ResetRequired = 128 ; } }
 impl crate::Value for Cap {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -208,6 +210,7 @@ impl crate::Value for Option<Cap> {
 
 #[doc = "IPv6 Config\n\nEnumerated value.  Configuration method used."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Cfg {
     #[doc = ""]
@@ -250,6 +253,7 @@ impl crate::Value for Option<Cfg> {
 
 #[doc = "Control\n\nBitmask value.  Configure use of services"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Ctl {
     #[doc = ""]

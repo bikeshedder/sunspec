@@ -6,6 +6,7 @@
 ///
 /// Notes: Trackers may include GPS model 305 for location information
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model601 {
     /// Controller
     ///
@@ -94,6 +95,7 @@ impl crate::Model for Model601 {
 
 #[doc = "Type\n\nType of tracker"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
     #[doc = ""]
@@ -142,6 +144,7 @@ impl crate::Value for Option<Typ> {
 
 #[doc = "Global Mode\n\nGlobal Control register operates on all trackers. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.\n\nNotes: The global controls all trackers"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum GlblCtl {
     #[doc = ""]
@@ -180,7 +183,7 @@ impl crate::Value for Option<GlblCtl> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Global Alarm\n\nGlobal tracker alarm conditions\n\nNotes: Combined tracker alarm conditions.  See individual trackers for alarms"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct GlblAlm : u16 { # [doc = ""] const SetPoint = 1 ; # [doc = ""] const ObsEl = 2 ; # [doc = ""] const ObsAz = 4 ; } }
+bitflags::bitflags! { # [doc = "Global Alarm\n\nGlobal tracker alarm conditions\n\nNotes: Combined tracker alarm conditions.  See individual trackers for alarms"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct GlblAlm : u16 { # [doc = ""] const SetPoint = 1 ; # [doc = ""] const ObsEl = 2 ; # [doc = ""] const ObsAz = 4 ; } }
 impl crate::Value for GlblAlm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

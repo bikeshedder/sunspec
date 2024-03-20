@@ -4,6 +4,7 @@
 ///
 /// Compute a digital signature over a specified set of data registers
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model4 {
     /// Request Sequence
     ///
@@ -288,6 +289,7 @@ impl crate::Model for Model4 {
 
 #[doc = "Status\n\nStatus of last read operation"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Sts {
     #[doc = ""]
@@ -330,6 +332,7 @@ impl crate::Value for Option<Sts> {
 
 #[doc = "Alarm\n\nBitmask alarm code"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alm {
     #[doc = ""]
@@ -368,6 +371,7 @@ impl crate::Value for Option<Alm> {
 
 #[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
     #[doc = "Notes: For test purposes only"]

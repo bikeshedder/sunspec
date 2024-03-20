@@ -6,6 +6,7 @@
 ///
 /// Notes: Ref 3: 8.7.1.2, 8.7.2.2, 8.7.3.2
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model123 {
     /// Conn_WinTms
     ///
@@ -180,6 +181,7 @@ impl crate::Model for Model123 {
 
 #[doc = "Conn\n\nEnumerated valued.  Connection control."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Conn {
     #[doc = ""]
@@ -218,6 +220,7 @@ impl crate::Value for Option<Conn> {
 
 #[doc = "WMaxLim_Ena\n\nEnumerated valued.  Throttle enable/disable control."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum WMaxLimEna {
     #[doc = ""]
@@ -256,6 +259,7 @@ impl crate::Value for Option<WMaxLimEna> {
 
 #[doc = "OutPFSet_Ena\n\nEnumerated valued.  Fixed power factor enable/disable control."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum OutPfSetEna {
     #[doc = ""]
@@ -294,6 +298,7 @@ impl crate::Value for Option<OutPfSetEna> {
 
 #[doc = "VArPct_Mod\n\nEnumerated value. VAR percent limit mode."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VArPctMod {
     #[doc = ""]
@@ -336,6 +341,7 @@ impl crate::Value for Option<VArPctMod> {
 
 #[doc = "VArPct_Ena\n\nEnumerated valued.  Percent limit VAr enable/disable control."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VArPctEna {
     #[doc = ""]

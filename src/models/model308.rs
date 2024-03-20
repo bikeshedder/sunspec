@@ -4,6 +4,7 @@
 ///
 /// Include to support a few basic measurements
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model308 {
     /// GHI
     ///

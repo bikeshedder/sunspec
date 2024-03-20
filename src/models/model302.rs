@@ -4,6 +4,7 @@
 ///
 /// Include to support various irradiance measurements
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model302;
 
 #[allow(missing_docs)]

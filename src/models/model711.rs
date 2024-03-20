@@ -4,6 +4,7 @@
 ///
 /// DER Frequency Droop model.
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model711 {
     /// DER Frequency Droop Module Enable
     ///
@@ -82,6 +83,7 @@ impl crate::Model for Model711 {
 
 #[doc = "DER Frequency Droop Module Enable\n\nDER Frequency-Watt (Frequency-Droop) control enable."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Ena {
     #[doc = "Disabled\n\nFunction is disabled."]
@@ -120,6 +122,7 @@ impl crate::Value for Option<Ena> {
 
 #[doc = "Set Active Control Result\n\nResult of last set active control operation."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum AdptCtlRslt {
     #[doc = "Update In Progress\n\nControl update in progress."]

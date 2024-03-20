@@ -4,6 +4,7 @@
 ///
 /// Include to support variable number of  back of module temperature measurements
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model303;
 
 #[allow(missing_docs)]

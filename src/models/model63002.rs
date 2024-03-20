@@ -2,6 +2,7 @@
 
 /// SunSpec Test Model 2
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model63002;
 
 #[allow(missing_docs)]

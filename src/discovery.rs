@@ -12,6 +12,7 @@ pub const SUNS_IDENTIFIER: u32 = 0x53756e53; // SunS
 /// This structure is used to store the address of
 /// models after a successful model discovery.
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct ModelAddr<M: Model> {
     /// The discovered address of this model.
     pub addr: u16,

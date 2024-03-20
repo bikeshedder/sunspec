@@ -6,6 +6,7 @@
 ///
 /// Notes: Ref 3: 8.9.1.2, 8.9.4.2
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model134 {
     /// ActCrv
     ///
@@ -83,7 +84,7 @@ impl crate::Model for Model134 {
     }
 }
 
-bitflags::bitflags! { # [doc = "ModEna\n\nIs curve-based Frequency-Watt control active."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+bitflags::bitflags! { # [doc = "ModEna\n\nIs curve-based Frequency-Watt control active."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

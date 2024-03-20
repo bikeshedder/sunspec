@@ -2,6 +2,7 @@
 
 /// Basic Charge Controller
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model64111 {
     /// Port Number
     pub port: u16,
@@ -112,6 +113,7 @@ impl crate::Model for Model64111 {
 
 #[doc = "Operating State"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ChargerSt {
     #[doc = ""]

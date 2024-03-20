@@ -4,6 +4,7 @@
 ///
 /// Include to support orientation measurements
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model304;
 
 #[allow(missing_docs)]

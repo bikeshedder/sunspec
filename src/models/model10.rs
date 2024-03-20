@@ -4,6 +4,7 @@
 ///
 /// To be included first for a complete interface description
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model10 {
     /// Interface Status
     ///
@@ -40,6 +41,7 @@ impl crate::Model for Model10 {
 
 #[doc = "Interface Status\n\nOverall interface status"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum St {
     #[doc = ""]
@@ -80,6 +82,7 @@ impl crate::Value for Option<St> {
 
 #[doc = "Physical Access Type\n\nEnumerated value.  Type of physical media"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
     #[doc = ""]

@@ -4,6 +4,7 @@
 ///
 /// DER Watt-Var model.
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model712 {
     /// DER Watt-Var Module Enable
     ///
@@ -82,6 +83,7 @@ impl crate::Model for Model712 {
 
 #[doc = "DER Watt-Var Module Enable\n\nDER Watt-Var control enable."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Ena {
     #[doc = "Disabled\n\nFunction is disabled."]
@@ -120,6 +122,7 @@ impl crate::Value for Option<Ena> {
 
 #[doc = "Set Active Curve Result\n\nResult of last set active curve operation."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum AdptCrvRslt {
     #[doc = "Update In Progress\n\nCurve update in progress."]

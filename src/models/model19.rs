@@ -4,6 +4,7 @@
 ///
 /// Include this model to configure a Point-to-Point Protocol link
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model19 {
     /// Name
     ///
@@ -76,6 +77,7 @@ impl crate::Model for Model19 {
 
 #[doc = "Parity\n\nBitmask value.  Parity setting"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Pty {
     #[doc = ""]
@@ -116,6 +118,7 @@ impl crate::Value for Option<Pty> {
 
 #[doc = "Duplex\n\nEnumerated value.  Duplex mode"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Dup {
     #[doc = ""]
@@ -154,6 +157,7 @@ impl crate::Value for Option<Dup> {
 
 #[doc = "Flow Control\n\nFlow Control Method"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Flw {
     #[doc = ""]
@@ -194,6 +198,7 @@ impl crate::Value for Option<Flw> {
 
 #[doc = "Authentication\n\nEnumerated value.  Authentication method"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Auth {
     #[doc = ""]

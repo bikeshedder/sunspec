@@ -2,6 +2,7 @@
 
 /// OutBack FM Charge Controller
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model64112 {
     /// Port Number
     pub port: u16,
@@ -323,7 +324,7 @@ impl crate::Model for Model64112 {
     }
 }
 
-bitflags::bitflags! { # [doc = "Faults"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct CcConfigFault : u16 { } }
+bitflags::bitflags! { # [doc = "Faults"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct CcConfigFault : u16 { } }
 impl crate::Value for CcConfigFault {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -353,6 +354,7 @@ impl crate::Value for Option<CcConfigFault> {
 
 #[doc = "MPPT mode"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigMpptMode {
     #[doc = ""]
@@ -393,6 +395,7 @@ impl crate::Value for Option<CcConfigMpptMode> {
 
 #[doc = "Sweep Width"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigSweepWidth {
     #[doc = ""]
@@ -431,6 +434,7 @@ impl crate::Value for Option<CcConfigSweepWidth> {
 
 #[doc = "Sweep Maximum"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigSweepMax {
     #[doc = ""]
@@ -473,6 +477,7 @@ impl crate::Value for Option<CcConfigSweepMax> {
 
 #[doc = "Grid Tie Mode"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigGridTie {
     #[doc = ""]
@@ -511,6 +516,7 @@ impl crate::Value for Option<CcConfigGridTie> {
 
 #[doc = "Temp Comp Mode"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigTempComp {
     #[doc = ""]
@@ -549,6 +555,7 @@ impl crate::Value for Option<CcConfigTempComp> {
 
 #[doc = "Auto Restart Mode"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigAutoRestart {
     #[doc = ""]
@@ -590,6 +597,7 @@ impl crate::Value for Option<CcConfigAutoRestart> {
 
 #[doc = "AUX Output Mode"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigAuxMode {
     #[doc = ""]
@@ -642,6 +650,7 @@ impl crate::Value for Option<CcConfigAuxMode> {
 
 #[doc = "AUX Output Control"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigAuxControl {
     #[doc = ""]
@@ -682,6 +691,7 @@ impl crate::Value for Option<CcConfigAuxControl> {
 
 #[doc = "AUX Output State"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigAuxState {
     #[doc = ""]
@@ -720,6 +730,7 @@ impl crate::Value for Option<CcConfigAuxState> {
 
 #[doc = "AUX Output Polarity"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CcConfigAuxPolarity {
     #[doc = ""]

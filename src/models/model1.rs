@@ -4,6 +4,7 @@
 ///
 /// All SunSpec compliant devices must include this as the first model
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model1 {
     /// Manufacturer
     ///

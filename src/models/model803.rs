@@ -2,6 +2,7 @@
 
 /// Lithium-Ion Battery Bank Model
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model803 {
     /// String Count
     ///

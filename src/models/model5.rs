@@ -4,6 +4,7 @@
 ///
 /// Include a digital signature along with the control data
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model5 {
     /// X
     ///
@@ -398,6 +399,7 @@ impl crate::Model for Model5 {
 
 #[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
     #[doc = "Notes: For test purposes only"]

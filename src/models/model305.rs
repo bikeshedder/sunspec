@@ -4,6 +4,7 @@
 ///
 /// Include to support location measurements
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model305 {
     /// Tm
     ///

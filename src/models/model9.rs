@@ -4,6 +4,7 @@
 ///
 /// Security model for PKI
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model9 {
     /// Cert_UID
     ///
@@ -426,6 +427,7 @@ impl crate::Model for Model9 {
 
 #[doc = "Format\n\nFormat of this certificate"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Fmt {
     #[doc = ""]
@@ -466,6 +468,7 @@ impl crate::Value for Option<Fmt> {
 
 #[doc = "Type\n\nType of this certificate"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
     #[doc = ""]
@@ -510,6 +513,7 @@ impl crate::Value for Option<Typ> {
 
 #[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
     #[doc = "Notes: For test purposes only"]

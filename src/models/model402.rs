@@ -6,6 +6,7 @@
 ///
 /// Notes: This model is SUPERSEDED by model 404
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model402 {
     /// Current scale factor
     pub dca_sf: i16,
@@ -108,7 +109,7 @@ impl crate::Model for Model402 {
     }
 }
 
-bitflags::bitflags! { # [doc = "Event\n\nBitmask value.  Events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt : u32 { # [doc = ""] const LowVoltage = 1 ; # [doc = ""] const LowPower = 2 ; # [doc = ""] const LowEfficiency = 4 ; # [doc = ""] const Current = 8 ; # [doc = ""] const Voltage = 16 ; # [doc = ""] const Power = 32 ; # [doc = ""] const Pr = 64 ; # [doc = ""] const Disconnected = 128 ; # [doc = ""] const FuseFault = 256 ; # [doc = ""] const CombinerFuseFault = 512 ; # [doc = ""] const CombinerCabinetOpen = 1024 ; # [doc = ""] const Temp = 2048 ; # [doc = ""] const Groundfault = 4096 ; # [doc = ""] const ReversedPolarity = 8192 ; # [doc = ""] const Incompatible = 16384 ; # [doc = ""] const CommError = 32768 ; # [doc = ""] const InternalError = 65536 ; # [doc = ""] const Theft = 131072 ; # [doc = ""] const ArcDetected = 262144 ; } }
+bitflags::bitflags! { # [doc = "Event\n\nBitmask value.  Events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt : u32 { # [doc = ""] const LowVoltage = 1 ; # [doc = ""] const LowPower = 2 ; # [doc = ""] const LowEfficiency = 4 ; # [doc = ""] const Current = 8 ; # [doc = ""] const Voltage = 16 ; # [doc = ""] const Power = 32 ; # [doc = ""] const Pr = 64 ; # [doc = ""] const Disconnected = 128 ; # [doc = ""] const FuseFault = 256 ; # [doc = ""] const CombinerFuseFault = 512 ; # [doc = ""] const CombinerCabinetOpen = 1024 ; # [doc = ""] const Temp = 2048 ; # [doc = ""] const Groundfault = 4096 ; # [doc = ""] const ReversedPolarity = 8192 ; # [doc = ""] const Incompatible = 16384 ; # [doc = ""] const CommError = 32768 ; # [doc = ""] const InternalError = 65536 ; # [doc = ""] const Theft = 131072 ; # [doc = ""] const ArcDetected = 262144 ; } }
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -136,7 +137,7 @@ impl crate::Value for Option<Evt> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Vendor Event\n\nBitmask value.  Vendor defined events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd : u32 { } }
+bitflags::bitflags! { # [doc = "Vendor Event\n\nBitmask value.  Vendor defined events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd : u32 { } }
 impl crate::Value for EvtVnd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

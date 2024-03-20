@@ -6,6 +6,7 @@
 ///
 /// Notes: This model supersedes model 301
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model307 {
     /// Ambient Temperature
     pub tmp_amb: Option<i16>,

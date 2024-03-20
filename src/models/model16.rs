@@ -4,6 +4,7 @@
 ///
 /// Include this model for a simple IPv4 network stack
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model16 {
     /// Name
     ///
@@ -82,6 +83,7 @@ impl crate::Model for Model16 {
 
 #[doc = "Config\n\nEnumerated value.  Force IPv4 configuration method"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Cfg {
     #[doc = ""]
@@ -118,7 +120,7 @@ impl crate::Value for Option<Cfg> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Control\n\nBitmask value Configure use of services"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Ctl : u16 { # [doc = ""] const EnableDns = 1 ; # [doc = ""] const EnableNtp = 2 ; } }
+bitflags::bitflags! { # [doc = "Control\n\nBitmask value Configure use of services"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Ctl : u16 { # [doc = ""] const EnableDns = 1 ; # [doc = ""] const EnableNtp = 2 ; } }
 impl crate::Value for Ctl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -146,7 +148,7 @@ impl crate::Value for Option<Ctl> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Link Control\n\nBitmask value.  Link control flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct LnkCtl : u16 { # [doc = ""] const Autonegotiate = 1 ; # [doc = ""] const FullDuplex = 2 ; # [doc = ""] const Force10mb = 4 ; # [doc = ""] const Force100mb = 8 ; # [doc = ""] const Force1gb = 16 ; } }
+bitflags::bitflags! { # [doc = "Link Control\n\nBitmask value.  Link control flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct LnkCtl : u16 { # [doc = ""] const Autonegotiate = 1 ; # [doc = ""] const FullDuplex = 2 ; # [doc = ""] const Force10mb = 4 ; # [doc = ""] const Force100mb = 8 ; # [doc = ""] const Force1gb = 16 ; } }
 impl crate::Value for LnkCtl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

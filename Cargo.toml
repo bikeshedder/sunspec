@@ -13,12 +13,17 @@ readme = "README.md"
 
 [features]
 default = ["tokio-modbus"]
+serde = ["dep:serde", "bitflags/serde"]
 
 [dependencies]
 bitflags = "2.4.1"
+serde = { version = "1.0", features = ["derive"], optional = true }
 strum = { version = "0.26.0", features = ["derive"] }
 thiserror = "1.0.50"
 tokio-modbus = { version = "0.11.0", optional = true }
+
+[dev-dependencies]
+serde_json = "1.0.114"
 
 [workspace]
 members = ["sunspec-gen", "examples/*"]

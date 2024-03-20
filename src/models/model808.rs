@@ -2,6 +2,7 @@
 
 /// Flow Battery Module Model
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model808 {
     /// Module Points To Be Determined
     pub module_tbd: u16,

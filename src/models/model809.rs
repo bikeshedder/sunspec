@@ -2,6 +2,7 @@
 
 /// Flow Battery Stack Model
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model809 {
     /// Stack Points To Be Determined
     pub stack_tbd: u16,

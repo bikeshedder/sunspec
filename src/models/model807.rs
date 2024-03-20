@@ -2,6 +2,7 @@
 
 /// Flow Battery String Model
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model807 {
     /// String Index
     ///
@@ -206,7 +207,7 @@ impl crate::Model for Model807 {
     }
 }
 
-bitflags::bitflags! { # [doc = "String Event 1\n\nAlarms, warnings and status values.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt1 : u32 { # [doc = ""] const CommunicationError = 1 ; # [doc = ""] const OverTempAlarm = 2 ; # [doc = ""] const OverTempWarning = 4 ; # [doc = ""] const UnderTempAlarm = 8 ; # [doc = ""] const UnderTempWarning = 16 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning = 256 ; # [doc = ""] const OverVoltAlarm = 512 ; # [doc = ""] const OverVoltWarning = 1024 ; # [doc = ""] const UnderVoltAlarm = 2048 ; # [doc = ""] const UnderVoltWarning = 4096 ; # [doc = ""] const UnderSocMinAlarm = 8192 ; # [doc = ""] const UnderSocMinWarning = 16384 ; # [doc = ""] const OverSocMaxAlarm = 32768 ; # [doc = ""] const OverSocMaxWarning = 65536 ; # [doc = ""] const VoltageImbalanceWarning = 131072 ; # [doc = "Notes: Do not implement."] const Reserved1 = 262144 ; # [doc = "Notes: Do not implement."] const Reserved2 = 524288 ; # [doc = ""] const ContactorError = 1048576 ; # [doc = ""] const FanError = 2097152 ; # [doc = ""] const GroundFault = 4194304 ; # [doc = ""] const OpenDoorError = 8388608 ; # [doc = "Notes: Do not implement."] const Reserved3 = 16777216 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning = 67108864 ; # [doc = ""] const FireAlarm = 134217728 ; # [doc = ""] const ConfigurationAlarm = 268435456 ; # [doc = ""] const ConfigurationWarning = 536870912 ; } }
+bitflags::bitflags! { # [doc = "String Event 1\n\nAlarms, warnings and status values.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt1 : u32 { # [doc = ""] const CommunicationError = 1 ; # [doc = ""] const OverTempAlarm = 2 ; # [doc = ""] const OverTempWarning = 4 ; # [doc = ""] const UnderTempAlarm = 8 ; # [doc = ""] const UnderTempWarning = 16 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning = 256 ; # [doc = ""] const OverVoltAlarm = 512 ; # [doc = ""] const OverVoltWarning = 1024 ; # [doc = ""] const UnderVoltAlarm = 2048 ; # [doc = ""] const UnderVoltWarning = 4096 ; # [doc = ""] const UnderSocMinAlarm = 8192 ; # [doc = ""] const UnderSocMinWarning = 16384 ; # [doc = ""] const OverSocMaxAlarm = 32768 ; # [doc = ""] const OverSocMaxWarning = 65536 ; # [doc = ""] const VoltageImbalanceWarning = 131072 ; # [doc = "Notes: Do not implement."] const Reserved1 = 262144 ; # [doc = "Notes: Do not implement."] const Reserved2 = 524288 ; # [doc = ""] const ContactorError = 1048576 ; # [doc = ""] const FanError = 2097152 ; # [doc = ""] const GroundFault = 4194304 ; # [doc = ""] const OpenDoorError = 8388608 ; # [doc = "Notes: Do not implement."] const Reserved3 = 16777216 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning = 67108864 ; # [doc = ""] const FireAlarm = 134217728 ; # [doc = ""] const ConfigurationAlarm = 268435456 ; # [doc = ""] const ConfigurationWarning = 536870912 ; } }
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -234,7 +235,7 @@ impl crate::Value for Option<Evt1> {
     }
 }
 
-bitflags::bitflags! { # [doc = "String Event 2\n\nAlarms, warnings and status values.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt2 : u32 { # [doc = ""] const LeakAlarm = 1 ; # [doc = ""] const PumpAlarm = 2 ; # [doc = ""] const HighPressureAlarm = 4 ; # [doc = ""] const HighPressureWarning = 8 ; # [doc = ""] const LowFlowAlarm = 16 ; # [doc = ""] const LowFlowWarning = 32 ; } }
+bitflags::bitflags! { # [doc = "String Event 2\n\nAlarms, warnings and status values.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt2 : u32 { # [doc = ""] const LeakAlarm = 1 ; # [doc = ""] const PumpAlarm = 2 ; # [doc = ""] const HighPressureAlarm = 4 ; # [doc = ""] const HighPressureWarning = 8 ; # [doc = ""] const LowFlowAlarm = 16 ; # [doc = ""] const LowFlowWarning = 32 ; } }
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -262,7 +263,7 @@ impl crate::Value for Option<Evt2> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Vendor Event Bitfield 1\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd1 : u32 { } }
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 1\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd1 : u32 { } }
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -290,7 +291,7 @@ impl crate::Value for Option<EvtVnd1> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Vendor Event Bitfield 2\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd2 : u32 { } }
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 2\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd2 : u32 { } }
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

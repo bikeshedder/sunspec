@@ -6,6 +6,7 @@
 ///
 /// Notes: Used in conjunction with Secure Dataset Read Response Model
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model3 {
     /// X
     ///
@@ -278,6 +279,7 @@ impl crate::Model for Model3 {
 
 #[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
     #[doc = "Notes: For test purposes only"]

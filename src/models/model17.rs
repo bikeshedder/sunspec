@@ -4,6 +4,7 @@
 ///
 /// Include this model for serial interface configuration support
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model17 {
     /// Name
     ///
@@ -70,6 +71,7 @@ impl crate::Model for Model17 {
 
 #[doc = "Parity\n\nBitmask value.  Parity setting"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Pty {
     #[doc = ""]
@@ -110,6 +112,7 @@ impl crate::Value for Option<Pty> {
 
 #[doc = "Duplex\n\nEnumerated value.  Duplex mode"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Dup {
     #[doc = ""]
@@ -148,6 +151,7 @@ impl crate::Value for Option<Dup> {
 
 #[doc = "Flow Control\n\nFlow Control Method"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Flw {
     #[doc = ""]
@@ -188,6 +192,7 @@ impl crate::Value for Option<Flw> {
 
 #[doc = "Interface Type\n\nEnumerated value.  Interface type"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
     #[doc = ""]
@@ -228,6 +233,7 @@ impl crate::Value for Option<Typ> {
 
 #[doc = "Protocol\n\nEnumerated value. Serial protocol selection"]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Pcol {
     #[doc = ""]

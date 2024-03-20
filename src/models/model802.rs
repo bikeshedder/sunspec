@@ -2,6 +2,7 @@
 
 /// Battery Base Model
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model802 {
     /// Nameplate Charge Capacity
     ///
@@ -381,6 +382,7 @@ impl crate::Model for Model802 {
 
 #[doc = "Charge Status\n\nCharge status of storage device. Enumeration."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ChaSt {
     #[doc = ""]
@@ -429,6 +431,7 @@ impl crate::Value for Option<ChaSt> {
 
 #[doc = "Control Mode\n\nBattery control mode. Enumeration.\n\nNotes: Maps to DRCC.LocRemCtl in IEC 61850."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum LocRemCtl {
     #[doc = "Notes: Value of 0 matches LocRemCtl in IEC 61850."]
@@ -467,6 +470,7 @@ impl crate::Value for Option<LocRemCtl> {
 
 #[doc = "Battery Type\n\nType of battery. Enumeration.\n\nNotes: Maps to DBAT.BatTyp in 61850."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
     #[doc = ""]
@@ -525,6 +529,7 @@ impl crate::Value for Option<Typ> {
 
 #[doc = "State of the Battery Bank\n\nState of the battery bank.  Enumeration.\n\nNotes: Must be reconciled with State in IEC 61850."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum State {
     #[doc = ""]
@@ -571,7 +576,7 @@ impl crate::Value for Option<State> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Battery Event 1 Bitfield\n\nAlarms and warnings.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt1 : u32 { # [doc = ""] const CommunicationError = 1 ; # [doc = ""] const OverTempAlarm = 2 ; # [doc = ""] const OverTempWarning = 4 ; # [doc = ""] const UnderTempAlarm = 8 ; # [doc = ""] const UnderTempWarning = 16 ; # [doc = "Notes: See AChaMax."] const OverChargeCurrentAlarm = 32 ; # [doc = "Notes: See AChaMax."] const OverChargeCurrentWarning = 64 ; # [doc = "Notes: See ADisChaMax."] const OverDischargeCurrentAlarm = 128 ; # [doc = "Notes: See ADisChaMax."] const OverDischargeCurrentWarning = 256 ; # [doc = ""] const OverVoltAlarm = 512 ; # [doc = ""] const OverVoltWarning = 1024 ; # [doc = ""] const UnderVoltAlarm = 2048 ; # [doc = ""] const UnderVoltWarning = 4096 ; # [doc = ""] const UnderSocMinAlarm = 8192 ; # [doc = ""] const UnderSocMinWarning = 16384 ; # [doc = ""] const OverSocMaxAlarm = 32768 ; # [doc = ""] const OverSocMaxWarning = 65536 ; # [doc = ""] const VoltageImbalanceWarning = 131072 ; # [doc = ""] const TemperatureImbalanceAlarm = 262144 ; # [doc = ""] const TemperatureImbalanceWarning = 524288 ; # [doc = ""] const ContactorError = 1048576 ; # [doc = ""] const FanError = 2097152 ; # [doc = ""] const GroundFault = 4194304 ; # [doc = ""] const OpenDoorError = 8388608 ; # [doc = ""] const CurrentImbalanceWarning = 16777216 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning = 67108864 ; # [doc = "Notes: Do not implement."] const Reserved1 = 134217728 ; # [doc = ""] const ConfigurationAlarm = 268435456 ; # [doc = ""] const ConfigurationWarning = 536870912 ; } }
+bitflags::bitflags! { # [doc = "Battery Event 1 Bitfield\n\nAlarms and warnings.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt1 : u32 { # [doc = ""] const CommunicationError = 1 ; # [doc = ""] const OverTempAlarm = 2 ; # [doc = ""] const OverTempWarning = 4 ; # [doc = ""] const UnderTempAlarm = 8 ; # [doc = ""] const UnderTempWarning = 16 ; # [doc = "Notes: See AChaMax."] const OverChargeCurrentAlarm = 32 ; # [doc = "Notes: See AChaMax."] const OverChargeCurrentWarning = 64 ; # [doc = "Notes: See ADisChaMax."] const OverDischargeCurrentAlarm = 128 ; # [doc = "Notes: See ADisChaMax."] const OverDischargeCurrentWarning = 256 ; # [doc = ""] const OverVoltAlarm = 512 ; # [doc = ""] const OverVoltWarning = 1024 ; # [doc = ""] const UnderVoltAlarm = 2048 ; # [doc = ""] const UnderVoltWarning = 4096 ; # [doc = ""] const UnderSocMinAlarm = 8192 ; # [doc = ""] const UnderSocMinWarning = 16384 ; # [doc = ""] const OverSocMaxAlarm = 32768 ; # [doc = ""] const OverSocMaxWarning = 65536 ; # [doc = ""] const VoltageImbalanceWarning = 131072 ; # [doc = ""] const TemperatureImbalanceAlarm = 262144 ; # [doc = ""] const TemperatureImbalanceWarning = 524288 ; # [doc = ""] const ContactorError = 1048576 ; # [doc = ""] const FanError = 2097152 ; # [doc = ""] const GroundFault = 4194304 ; # [doc = ""] const OpenDoorError = 8388608 ; # [doc = ""] const CurrentImbalanceWarning = 16777216 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning = 67108864 ; # [doc = "Notes: Do not implement."] const Reserved1 = 134217728 ; # [doc = ""] const ConfigurationAlarm = 268435456 ; # [doc = ""] const ConfigurationWarning = 536870912 ; } }
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -599,7 +604,7 @@ impl crate::Value for Option<Evt1> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Battery Event 2 Bitfield\n\nAlarms and warnings.  Bit flags.\n\nNotes: Reserved for future use."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct Evt2 : u32 { } }
+bitflags::bitflags! { # [doc = "Battery Event 2 Bitfield\n\nAlarms and warnings.  Bit flags.\n\nNotes: Reserved for future use."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt2 : u32 { } }
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -627,7 +632,7 @@ impl crate::Value for Option<Evt2> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Vendor Event Bitfield 1\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd1 : u32 { } }
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 1\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd1 : u32 { } }
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -655,7 +660,7 @@ impl crate::Value for Option<EvtVnd1> {
     }
 }
 
-bitflags::bitflags! { # [doc = "Vendor Event Bitfield 2\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] pub struct EvtVnd2 : u32 { } }
+bitflags::bitflags! { # [doc = "Vendor Event Bitfield 2\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd2 : u32 { } }
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -685,6 +690,7 @@ impl crate::Value for Option<EvtVnd2> {
 
 #[doc = "Inverter State Request\n\nRequest from battery to start or stop the inverter.  Enumeration.\n\nNotes: Used in special states such as manual battery charging."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ReqInvState {
     #[doc = ""]
@@ -725,6 +731,7 @@ impl crate::Value for Option<ReqInvState> {
 
 #[doc = "Set Operation\n\nInstruct the battery bank to perform an operation such as connecting.  Enumeration."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum SetOp {
     #[doc = ""]
@@ -763,6 +770,7 @@ impl crate::Value for Option<SetOp> {
 
 #[doc = "Set Inverter State\n\nSet the current state of the inverter.\n\nNotes: Information needed by battery for some operations."]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum SetInvState {
     #[doc = ""]
