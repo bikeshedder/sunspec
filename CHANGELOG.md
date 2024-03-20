@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update `strum` to version `0.26`
 - Update `tokio-modbus` to version `0.11`
+- Update sunspec models (2024-02-15)
+  - Remove model 64110 (Outback AXS device)
 
 ## [0.3.1] - 2023-12-21
 

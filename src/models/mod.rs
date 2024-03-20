@@ -206,8 +206,6 @@ pub mod model64020;
 
 pub mod model64101;
 
-pub mod model64110;
-
 pub mod model64111;
 
 pub mod model64112;
@@ -423,8 +421,6 @@ pub struct Models {
     pub m64020: crate::ModelAddr<model64020::Model64020>,
     /// Eltek Inverter Extension
     pub m64101: crate::ModelAddr<model64101::Model64101>,
-    /// OutBack AXS device
-    pub m64110: crate::ModelAddr<model64110::Model64110>,
     /// Basic Charge Controller
     pub m64111: crate::ModelAddr<model64111::Model64111>,
     /// OutBack FM Charge Controller
@@ -434,7 +430,7 @@ pub struct Models {
 impl Models {
     /// Returns a list of all supported model ids
     pub fn supported_model_ids(&self) -> Vec<u16> {
-        let mut v = Vec::with_capacity(107);
+        let mut v = Vec::with_capacity(106);
         if self.m1.addr != 0 {
             v.push(1);
         }
@@ -747,9 +743,6 @@ impl Models {
         if self.m64101.addr != 0 {
             v.push(64101);
         }
-        if self.m64110.addr != 0 {
-            v.push(64110);
-        }
         if self.m64111.addr != 0 {
             v.push(64111);
         }
@@ -868,7 +861,6 @@ impl Models {
             64001 => self.m64001.set_addr(addr, len),
             64020 => self.m64020.set_addr(addr, len),
             64101 => self.m64101.set_addr(addr, len),
-            64110 => self.m64110.set_addr(addr, len),
             64111 => self.m64111.set_addr(addr, len),
             64112 => self.m64112.set_addr(addr, len),
             _ => {
