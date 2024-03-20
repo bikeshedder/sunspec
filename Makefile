@@ -8,7 +8,8 @@ models: update_models gen_models
 
 update_models:
 	git submodule update --init
-	(cd models && git checkout master && git pull)
+	(cd models && git checkout . && git checkout master && git pull)
+	./sync-model-notes.py
 
 gen_models:
 	rm -f src/models/*.rs
