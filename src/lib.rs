@@ -33,5 +33,4 @@ pub mod models;
 mod point;
 #[cfg(feature = "tokio-modbus")]
 pub mod tokio_modbus;
-mod utils;
 mod value;
