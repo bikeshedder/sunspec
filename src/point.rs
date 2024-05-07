@@ -35,7 +35,7 @@ impl<M: Model, T: Value> PointDef<M, T> {
     pub fn from_data(&self, data: &[u16]) -> Result<T, ReadPointError> {
         let slice = data
             .get(self.offset as usize..(self.offset as usize + self.length as usize))
-            .ok_or(ReadPointError::OutOfBounds)?;
+            .ok_or(ReadPointError::DecodeError(DecodeError::OutOfBounds))?;
         let value = T::decode(slice)?;
         Ok(value)
     }
@@ -49,10 +49,6 @@ pub enum ReadPointError {
     /// are stored inside this I/O error.
     #[error("I/O error")]
     IO(#[from] io::Error),
-    /// The point could not be loaded because the given data was not large
-    /// enough.
-    #[error("Point data out of bounds")]
-    OutOfBounds,
     /// The decoding of the point data failed.
     #[error("Decode error")]
     DecodeError(#[from] DecodeError),
