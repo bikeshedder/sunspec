@@ -1,10 +1,11 @@
-use std::{io, marker::PhantomData};
+use std::marker::PhantomData;
 
 use thiserror::Error;
 
 use crate::{
     model::Model,
     value::{DecodeError, Value},
+    CommunicationError,
 };
 
 /// Definition of a point
@@ -45,10 +46,9 @@ impl<M: Model, T: Value> PointDef<M, T> {
 /// reading data from a point.
 #[derive(Debug, Error)]
 pub enum ReadPointError {
-    /// I/O error occured. Please note that all errors returned by `tokio-modbus`
-    /// are stored inside this I/O error.
-    #[error("I/O error")]
-    IO(#[from] io::Error),
+    /// Communication error.
+    #[error("Communication error")]
+    Communication(#[from] CommunicationError),
     /// The decoding of the point data failed.
     #[error("Decode error")]
     DecodeError(#[from] DecodeError),
@@ -61,10 +61,9 @@ pub enum ReadPointError {
 /// writing data to a point.
 #[derive(Debug, Error)]
 pub enum WritePointError {
-    /// I/O error occured. Please note that all errors returned by `tokio-modbus`
-    /// are stored inside this I/O error.
-    #[error("I/O error")]
-    IO(#[from] io::Error),
+    /// Communication error.
+    #[error("Communication error")]
+    Communication(#[from] CommunicationError),
     /// The encoded value was too large for the point.
     #[error("Encoded value too large for point")]
     ValueTooLarge,

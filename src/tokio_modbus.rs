@@ -1,32 +1,34 @@
 //! This module contains the actual communication methods via
 //! `tokio-modbus`.
 use std::future::Future;
-use std::io;
 use std::time::Duration;
 
 use crate::config::Config;
+use crate::discovery::DiscoveryResult;
 use crate::discovery::{DiscoveryError, ModelAddr, UnknownModel, SUNS_IDENTIFIER};
 use crate::model::{Model, ReadModelError};
 use crate::models::Models;
 use crate::point::{PointDef, ReadPointError, WritePointError};
 use crate::value::Value;
-use crate::DiscoveryResult;
+use crate::CommunicationError;
 
 use tokio_modbus::client::{Context, Reader, Writer};
 
 async fn read_holding_registers_array<const CNT: usize>(
     context: &mut Context,
     addr: u16,
-) -> io::Result<[u16; CNT]> {
+) -> tokio_modbus::Result<[u16; CNT]> {
     // Unwrap is fine here as read_holding_registers is guaranteed to
     // return the right amount of words.
     context
         .read_holding_registers(addr, CNT as u16)
         .await
-        .map(|words| {
-            words
-                .try_into()
-                .expect("read_holding_registers returned the wrong amount of words")
+        .map(|inner| {
+            inner.map(|words| {
+                words
+                    .try_into()
+                    .expect("read_holding_registers returned the wrong amount of words")
+            })
         })
 }
 
@@ -44,20 +46,17 @@ pub async fn discover_models(
             read_holding_registers_array::<2>(context, addr),
             config.read_timeout,
         )
-        .await
+        .await?
+        .map_err(CommunicationError::from_modbus)?
         {
             Ok(identifier) if identifier == SUNS_IDENTIFIER => {
                 info_model_addr = Some(addr);
                 break;
             }
             Ok(_) => continue,
-            // TODO: Switch out string matching once tokio_modbus::frame::Exception
-            //       is made public. See these PR's:
-            //           - https://github.com/slowtec/tokio-modbus/pull/218
-            //           - https://github.com/slowtec/tokio-modbus/pull/231
-            Err(e) if e.to_string() == "Modbus function 3: Illegal data address" => continue,
-            Err(e) => Err(e),
-        }?;
+            Err(tokio_modbus::Exception::IllegalDataAddress) => continue,
+            Err(e) => return Err(CommunicationError::from_modbus(e).into()),
+        }
     }
     let Some(mut addr) = info_model_addr else {
         return Err(DiscoveryError::SunsIdentifierNotFound);
@@ -73,7 +72,9 @@ pub async fn discover_models(
             read_holding_registers_array::<2>(context, addr),
             config.read_timeout,
         )
-        .await?;
+        .await?
+        .map_err(CommunicationError::from_modbus)?
+        .map_err(CommunicationError::from_modbus)?;
         if model_id == 0xFFFF {
             break;
         }
@@ -111,6 +112,8 @@ pub async fn read_model<M: Model>(
             config.read_timeout,
         )
         .await?
+        .map_err(CommunicationError::from_modbus)?
+        .map_err(CommunicationError::from_modbus)?
     } else {
         let mut data: Vec<u16> = Vec::with_capacity(addr.len.into());
         let begin = addr.addr;
@@ -120,10 +123,18 @@ pub async fn read_model<M: Model>(
             .map(|x| x..((x + config.max_read_length).min(start)));
         for range in ranges {
             let chunk = apply_timeout(
-                ctx.read_holding_registers(range.start, range.len().try_into().unwrap()),
+                ctx.read_holding_registers(
+                    range.start,
+                    range
+                        .len()
+                        .try_into()
+                        .expect("read_holding_registers returned the wrong amount of words"),
+                ),
                 config.read_timeout,
             )
-            .await?;
+            .await?
+            .map_err(CommunicationError::from_modbus)?
+            .map_err(CommunicationError::from_modbus)?;
             data.extend(chunk);
         }
         data
@@ -139,13 +150,15 @@ pub async fn read_point<M: Model, T: Value>(
     model_addr: &ModelAddr<M>,
     point_def: &PointDef<M, T>,
     config: &Config,
-) -> Result<Option<T>, ReadPointError> {
+) -> Result<T, ReadPointError> {
     let data = apply_timeout(
         ctx.read_holding_registers(model_addr.addr + point_def.offset, point_def.length),
         config.read_timeout,
     )
-    .await?;
-    Ok(Some(Value::decode(&data)?))
+    .await?
+    .map_err(CommunicationError::from_modbus)?
+    .map_err(CommunicationError::from_modbus)?;
+    Ok(Value::decode(&data)?)
 }
 
 /// Write data for a single point
@@ -164,17 +177,21 @@ pub async fn write_point<M: Model, T: Value>(
         ctx.write_multiple_registers(model_addr.addr + point_def.offset, &data),
         config.write_timeout,
     )
-    .await?;
+    .await?
+    .map_err(CommunicationError::from_modbus)?
+    .map_err(CommunicationError::from_modbus)?;
     Ok(())
 }
 
 async fn apply_timeout<T>(
-    fut: impl Future<Output = io::Result<T>>,
+    fut: impl Future<Output = tokio_modbus::Result<T>>,
     timeout: Option<Duration>,
-) -> io::Result<T> {
-    if let Some(timeout) = timeout {
-        tokio::time::timeout(timeout, fut).await?
+) -> Result<tokio_modbus::Result<T>, CommunicationError> {
+    Ok(if let Some(timeout) = timeout {
+        tokio::time::timeout(timeout, fut)
+            .await
+            .map_err(|_| CommunicationError::Timeout)?
     } else {
         fut.await
-    }
+    })
 }

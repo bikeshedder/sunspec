@@ -1,9 +1,10 @@
-use std::{io, marker::PhantomData};
+use std::marker::PhantomData;
 
 use thiserror::Error;
 
 use crate::model::Model;
 use crate::models::Models;
+use crate::CommunicationError;
 
 /// "SunS" identifier used when performing the
 /// model discovery.
@@ -67,9 +68,9 @@ pub struct DiscoveryResult {
 /// This error is returned when an error occurs during model discovery.
 #[derive(Debug, Error)]
 pub enum DiscoveryError {
-    /// I/O error occured.
-    #[error("I/O error")]
-    IO(#[from] io::Error),
+    /// Communication error.
+    #[error("Communication: {0}")]
+    Communication(#[from] CommunicationError),
     /// The Modbus slave did not provide the "SunS" header at the well known
     /// addresses 0, 40000 or 50000.
     #[error("SunS identifier not found")]

@@ -28,6 +28,7 @@ pub use discovery::{
     DiscoveryError, DiscoveryResult, ModelAddr, UnknownModel, DEFAULT_DISCOVERY_ADDRESSES,
     SUNS_IDENTIFIER,
 };
+pub use error::CommunicationError;
 pub use model::{Model, ReadModelError};
 pub use models::Models;
 pub use point::{PointDef, ReadPointError, WritePointError};
@@ -35,6 +36,7 @@ pub use value::{DecodeError, FixedSize, Value};
 
 mod config;
 mod discovery;
+mod error;
 mod model;
 /// This module contains all the genererated SunSpec models.
 pub mod models;

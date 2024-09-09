@@ -8,7 +8,7 @@ publish = false
 
 [dependencies]
 tokio = { version = "1.33.0", features = ["rt-multi-thread", "macros", "time"] }
-tokio-modbus = { version = "0.11.0", features = ["tcp"] }
+tokio-modbus = { version = "0.14", features = ["tcp"] }
 sunspec = { path = "../../" }
 clap = { version = "4.4.7", features = ["derive"] }
 itertools = "0.13.0"

@@ -1,8 +1,6 @@
-use std::io;
-
 use thiserror::Error;
 
-use crate::point::ReadPointError;
+use crate::{point::ReadPointError, CommunicationError};
 
 /// Every model implements this trait which contains methods
 /// for accessing
@@ -17,10 +15,10 @@ pub trait Model: Sized {
 /// requested model.
 #[derive(Debug, Error)]
 pub enum ReadModelError {
-    /// I/O error occured. Please note that all errors returned by `tokio-modbus`
-    /// are stored inside this I/O error.
-    #[error("I/O error")]
-    IO(#[from] io::Error),
+    /// Some error occured while communicating via the modbus. This
+    /// error is implementation specific.
+    #[error("Modbus: {0}")]
+    Communication(#[from] CommunicationError),
     /// The reading of a point within the model failed. Please see the
     /// encapsulated `ReadPointError` for further details.
     #[error("Reading point failed")]

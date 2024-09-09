@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Add support for timeouts
+- Add Config struct for timeouts and discovery addresses
+- Update `tokio_modbus` to version `0.14`
 
 ## [0.4.0] - 2024-03-20
 
