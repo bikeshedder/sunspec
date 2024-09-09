@@ -28,10 +28,10 @@ Nested and repeating groups are not supported, yet.
 
 ## Features
 
-| Feature | Description                   | Extra dependencies        | Default |
-| ------- | ----------------------------- | ------------------------- | ------- |
-| `tokio` | Enable `tokio_modbus` support | `tokio-modbus`            | yes     |
-| `serde` | Enable `serde` support        | `serde`, `bitflags/serde` | yes     |
+| Feature | Description                   | Extra dependencies            | Default |
+| ------- | ----------------------------- | ----------------------------- | ------- |
+| `tokio` | Enable `tokio_modbus` support | `tokio-modbus`, `tokio/time`  | yes     |
+| `serde` | Enable `serde` support        | `serde`, `bitflags/serde`     | yes     |
 
 ## Examples
 
