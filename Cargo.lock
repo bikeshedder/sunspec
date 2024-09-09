@@ -312,17 +312,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "model103"
-version = "0.1.0"
-dependencies = [
- "clap",
- "itertools",
- "sunspec",
- "tokio",
- "tokio-modbus",
-]
-
-[[package]]
 name = "object"
 version = "0.36.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -476,6 +465,29 @@ dependencies = [
  "serde_json",
  "strum",
  "thiserror",
+ "tokio",
+ "tokio-modbus",
+]
+
+[[package]]
+name = "sunspec-example-model103"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "itertools",
+ "sunspec",
+ "tokio",
+ "tokio-modbus",
+]
+
+[[package]]
+name = "sunspec-example-readme"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "itertools",
+ "sunspec",
+ "tokio",
  "tokio-modbus",
 ]
 

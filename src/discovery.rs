@@ -7,7 +7,10 @@ use crate::models::Models;
 
 /// "SunS" identifier used when performing the
 /// model discovery.
-pub const SUNS_IDENTIFIER: u32 = 0x53756e53; // SunS
+pub const SUNS_IDENTIFIER: [u16; 2] = [0x5375, 0x6e53]; // SunS
+
+/// Default addresses for "SunS" discovery.
+pub const DEFAULT_DISCOVERY_ADDRESSES: [u16; 3] = [0, 40000, 50000];
 
 /// This structure is used to store the address of
 /// models after a successful model discovery.
@@ -64,9 +67,8 @@ pub struct DiscoveryResult {
 /// This error is returned when an error occurs during model discovery.
 #[derive(Debug, Error)]
 pub enum DiscoveryError {
-    /// I/O error occured. Please note that all errors returned by `tokio-modbus`
-    /// are stored inside this I/O error.
-    #[error("I/O Error")]
+    /// I/O error occured.
+    #[error("I/O error")]
     IO(#[from] io::Error),
     /// The Modbus slave did not provide the "SunS" header at the well known
     /// addresses 0, 40000 or 50000.

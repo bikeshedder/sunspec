@@ -20,12 +20,20 @@
     unused_results
 )]
 
-pub use discovery::{DiscoveryError, DiscoveryResult, ModelAddr, UnknownModel, SUNS_IDENTIFIER};
+pub use config::{
+    Config, DEFAULT_MAX_READ_LENGTH, DEFAULT_MAX_WRITE_LENGTH, DEFAULT_READ_TIMEOUT,
+    DEFAULT_WRITE_TIMEOUT,
+};
+pub use discovery::{
+    DiscoveryError, DiscoveryResult, ModelAddr, UnknownModel, DEFAULT_DISCOVERY_ADDRESSES,
+    SUNS_IDENTIFIER,
+};
 pub use model::{Model, ReadModelError};
 pub use models::Models;
 pub use point::{PointDef, ReadPointError, WritePointError};
 pub use value::{DecodeError, FixedSize, Value};
 
+mod config;
 mod discovery;
 mod model;
 /// This module contains all the genererated SunSpec models.
