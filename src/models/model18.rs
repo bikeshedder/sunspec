@@ -1,5 +1,4 @@
 //! Cellular Link
-
 /// Cellular Link
 ///
 /// Include this model to support a cellular interface link
@@ -27,9 +26,7 @@ pub struct Model18 {
     /// Personal Identification Number for the interface
     pub pin: Option<String>,
 }
-
 #[allow(missing_docs)]
-
 impl Model18 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const IMEI: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(4, 2, true);
@@ -37,7 +34,6 @@ impl Model18 {
     pub const NUM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(10, 6, true);
     pub const PIN: crate::PointDef<Self, Option<String>> = crate::PointDef::new(16, 6, true);
 }
-
 impl crate::Model for Model18 {
     const ID: u16 = 18;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

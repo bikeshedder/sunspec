@@ -1,6 +1,5 @@
-use codegen::Scope;
 use heck::{ToShoutySnakeCase, ToSnakeCase, ToUpperCamelCase};
-use proc_macro2::Literal;
+use proc_macro2::{Literal, TokenStream};
 use quote::{format_ident, quote, ToTokens};
 use thiserror::Error;
 
@@ -20,123 +19,83 @@ pub enum GenModelError {
     MissingLength { model: String, point: String },
 }
 
-pub fn gen_models_struct(models: &[Model]) -> Result<String, GenModelError> {
-    let mut scope = Scope::new();
-    for model in models {
-        let model_id = model.id;
-        scope.raw(&format!("pub mod model{model_id};"));
-        /*
-        scope
-            .import(&format!("model{model_id}"), &format!("Model{model_id}"))
-            .vis("pub");
-        */
-    }
-    let models_struct = scope
-        .new_struct("Models")
-        .vis("pub")
-        .derive("Debug")
-        .derive("Default")
-        .r#macro(
-            "#[cfg_attr(feature = \"serde\", derive(::serde::Serialize, ::serde::Deserialize))]",
-        )
-        .doc("This struct contains the addresses of all discovered models.");
-    for model in models {
-        let model_id = model.id;
-        let field = models_struct
-            .new_field(
-                &format!("m{}", model_id),
-                &format!("crate::ModelAddr<model{model_id}::Model{model_id}>"),
-            )
-            .vis("pub");
-        if let Some(label) = &model.group.doc.label {
-            field.doc(label);
+pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError> {
+    let modules = models.iter().map(|model| {
+        let module_identifier = format_ident!("model{}", model.id);
+        quote! {
+            pub mod #module_identifier;
         }
-    }
-    let mimpl = scope.new_impl("Models");
-    // supported_ids() function
-    let fn_supported_ids = mimpl
-        .new_fn("supported_model_ids")
-        .vis("pub")
-        .arg_ref_self()
-        .ret("Vec<u16>")
-        .doc("Returns a list of all supported model ids");
-    fn_supported_ids.line(format!("let mut v = Vec::with_capacity({});", models.len()));
-    for model in models {
-        fn_supported_ids.line(format!("if self.m{}.addr != 0 {{", model.id));
-        fn_supported_ids.line(format!("    v.push({});", model.id));
-        fn_supported_ids.line("}");
-    }
-    fn_supported_ids.line("v");
-    // set_addr() function
-    let fn_set_addr = mimpl
-        .new_fn("set_addr")
-        .vis("pub")
-        .arg_mut_self()
-        .arg("model_id", "u16")
-        .arg("addr", "u16")
-        .arg("len", "u16")
-        .ret("bool")
-        .doc("Set address and length of the given model.\n\nThis method is used by the model discovery.");
-    fn_set_addr.line("match model_id {");
-    for model in models {
-        let model_id = model.id;
-        fn_set_addr.line(format!(
-            "    {model_id} => self.m{model_id}.set_addr(addr, len),"
-        ));
-    }
-    fn_set_addr.line("    _ => { return false; }");
-    fn_set_addr.line("}");
-    fn_set_addr.line("true");
-    Ok(scope.to_string())
+    });
+    let models_fields = models.iter().map(|model| {
+        let field_name = format_ident!("m{}", model.id);
+        let model_module = format_ident!("model{}", model.id);
+        let model_struct = format_ident!("Model{}", model.id);
+        let model_doc = doc_to_ts(model.group.doc.label.as_deref().unwrap_or_default());
+        quote! {
+            #model_doc
+            pub #field_name: crate::ModelAddr<#model_module::#model_struct>,
+        }
+    });
+    let models_struct = quote! {
+        /// This struct contains the addresses of all discovered models.
+        #[derive(Debug, Default)]
+        #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+        pub struct Models {
+            #(#models_fields)*
+        }
+    };
+    let models_len = models.len();
+    let supported_model_ids_code = models.iter().map(|model| {
+        let field_name = format_ident!("m{}", model.id);
+        let model_id = Literal::u16_unsuffixed(model.id);
+        quote! {
+            if self.#field_name.addr != 0 {
+                v.push(#model_id);
+            }
+        }
+    });
+    let set_addr_code = models.iter().map(|model| {
+        let field_name = format_ident!("m{}", model.id);
+        let model_id = Literal::u16_unsuffixed(model.id);
+        quote! {
+            #model_id => self.#field_name.set_addr(addr, len),
+        }
+    });
+    let models_impl = quote! {
+        impl Models {
+            /// Returns a list of all supported model ids
+            pub fn supported_model_ids(&self) -> Vec<u16> {
+                let mut v = Vec::with_capacity(#models_len);
+                #(#supported_model_ids_code)*
+                v
+            }
+            /// Set address and length of the given model.
+            ///
+            /// This method is used by the model discovery.
+            pub fn set_addr(&mut self, model_id: u16, addr: u16, len: u16) -> bool {
+                match model_id {
+                    #(#set_addr_code)*
+                    _ => { return false; }
+                }
+                true
+            }
+        }
+    };
+    Ok(quote! {
+        #(#modules)*
+        #models_struct
+        #models_impl
+    })
 }
 
-// See https://doc.rust-lang.org/reference/keywords.html
-#[rustfmt::skip]
-const RUST_KEYWORDS: &[&str] = &[
-    // strict
-    "break", "const", "continue", "crate", "else", "enum", "extern", "false", "fn", "for", "if",
-    "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref", "return", "self",
-    "Self", "static", "struct", "super", "trait", "true", "type", "unsafe", "use", "where",
-    "while", "async", "await", "dyn",
-    // reserved
-    "abstract", "become", "box", "do", "final", "macro", "override", "priv", "typeof", "unsized",
-    "virtual", "yield", "try",
-    // weak keywords
-    "macro_rules", "union",
-];
-
-fn safe_identifier(s: String) -> String {
-    if RUST_KEYWORDS.contains(&s.as_str()) {
-        format!("r#{s}")
-    } else {
-        s
-    }
-}
-
-fn quote_string(s: &str) -> String {
-    format!("\"{}\"", s.replace("\\", "\\\\").replace("\"", "\\\""))
-}
-
-pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
-    let mut scope = Scope::new();
-    scope.raw(format!("//! {}", model.group.doc.label.as_ref().unwrap()));
-    let model_id = model.id;
-    let model_name = format!("Model{}", model_id);
-    let model_struct = scope
-        .new_struct(&model_name)
-        .vis("pub")
-        .derive("Debug")
-        .r#macro(
-            "#[cfg_attr(feature = \"serde\", derive(::serde::Serialize, ::serde::Deserialize))]",
-        );
-    let model_doc = model.group.doc.to_doc_string();
-    if !model_doc.is_empty() {
-        model_struct.doc(&model_doc);
-    }
+pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
+    let module_doc = format!(" {}", model.group.doc.label.as_ref().unwrap());
+    let model_name = format_ident!("Model{}", model.id);
+    let model_doc = doc_to_ts(&model.group.doc.to_doc_string());
     if let Some(Point { name, .. }) = model.group.points.get(0) {
         if name != "ID" {
             return Err(GenModelError::MissingIdPoint {
-                model: model_name,
+                model: format!("Model{}", model.id),
                 point: name.clone(),
             });
         }
@@ -144,91 +103,125 @@ pub fn gen_model_struct(model: &Model) -> Result<String, GenModelError> {
     if let Some(Point { name, .. }) = model.group.points.get(1) {
         if name != "L" {
             return Err(GenModelError::MissingLPoint {
-                model: model_name,
+                model: format!("Model{}", model.id),
                 point: name.clone(),
             });
         }
     }
     let points = &model.group.points[2..];
-    for point in points {
-        if point.r#type == PointType::Pad {
-            continue;
+    let model_fields = points
+        .iter()
+        .filter(|point| !point.is_padding())
+        .map(|point| {
+            let point_name = format_ident!("{}", point.name.to_snake_case());
+            let point_type = rust_type(point, "");
+            let point_doc = doc_to_ts(&point.doc.to_doc_string());
+            // FIXME add #[allow[missing_docs)] if the doc is empty
+            quote! {
+                #point_doc
+                pub #point_name: #point_type,
+            }
+        });
+
+    // FIXME do not add empty model docs
+    let model_struct = quote! {
+        #model_doc
+        #[derive(Debug)]
+        #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+        pub struct #model_name {
+            #(#model_fields)*
         }
-        let field = model_struct
-            .new_field(safe_identifier(point.name.to_snake_case()), {
-                rust_type(point)
-            })
-            .vis("pub");
-        let field_doc = point.doc.to_doc_string();
-        if !field_doc.is_empty() {
-            field.doc(field_doc);
-        } else {
-            field.annotation("#[allow(missing_docs)]");
+    };
+
+    let model_impl_consts = points.iter()
+        .scan(0, |offset, point| {
+            let point_offset = *offset;
+            *offset = *offset + point.size;
+            Some((point_offset, point))
+        })
+        .filter(|(_, point)| !point.is_padding())
+        .map(|(offset, point)| {
+            let point_name = format_ident!("{}", point.name.to_shouty_snake_case());
+            let point_type = rust_type(point, "");
+            let len = Literal::u16_unsuffixed(point.size);
+            let offset = Literal::u16_unsuffixed(offset);
+            let writable = point.access == PointAccess::RW;
+            let code = quote! {
+                pub const #point_name: crate::PointDef<Self, #point_type> = crate::PointDef::new(#offset, #len, #writable);
+            };
+            Some(code)
+        });
+
+    let model_impl = quote! {
+        #[allow(missing_docs)]
+        impl #model_name {
+            #(#model_impl_consts)*
         }
-    }
-    scope.raw("#[allow(missing_docs)]");
-    let model_impl = scope.new_impl(&model_name);
-    let mut offset = 0;
-    for point in points {
-        let writable = point.access == PointAccess::RW;
-        if point.r#type != PointType::Pad {
-            model_impl.associate_const(
-                &point.name.to_shouty_snake_case(),
-                &format!("crate::PointDef<Self, {}>", rust_type(point)),
-                &format!(
-                    "crate::PointDef::new({}, {}, {})",
-                    offset, point.size, writable
-                ),
-                "pub",
-            );
+    };
+
+    let from_data_fields = points
+        .iter()
+        .filter(|point| !point.is_padding())
+        .map(|point| {
+            let field_name = format_ident!("{}", point.name.to_snake_case());
+            let const_name = format_ident!("{}", point.name.to_shouty_snake_case());
+            quote! {
+                #field_name: Self::#const_name.from_data(data)?,
+            }
+        });
+
+    let model_id = Literal::u16_unsuffixed(model.id);
+    let allow_unused = points.is_empty().then(|| quote! { #[allow(unused)] });
+    let trait_impl = quote! {
+        impl crate::Model for #model_name {
+            const ID: u16 = #model_id;
+            fn from_data(#allow_unused data: &[u16]) -> Result<Self, crate::ReadModelError> {
+                Ok(Self {
+                    #(#from_data_fields)*
+                })
+            }
         }
-        offset += point.size;
-    }
-    let trait_impl = scope.new_impl(&model_name).impl_trait("crate::Model");
-    trait_impl.associate_const("ID", "u16", model_id.to_string(), "");
-    //trait_impl.associate_const("LENGTH", "u16", format!("{}", offset), "");
-    let fn_from_data = trait_impl
-        .new_fn("from_data")
-        .arg(if points.is_empty() { "_data" } else { "data" }, "&[u16]")
-        .ret("Result<Self, crate::ReadModelError>");
-    fn_from_data.line("Ok(Self {");
-    for point in points {
-        if point.r#type == PointType::Pad {
-            continue;
-        }
-        fn_from_data.line(format!(
-            "    {}: Self::{}.from_data(data)?,",
-            safe_identifier(point.name.to_snake_case()),
-            safe_identifier(point.name.to_shouty_snake_case()),
-        ));
-    }
-    fn_from_data.line("})");
+    };
+
+    let mut extra = TokenStream::new();
+
     for point in points {
         match point.r#type {
             PointType::Enum16 | PointType::Enum32 if !point.symbols.is_empty() => {
-                scope.raw(gen_enum(point));
+                extra.extend(gen_enum(point, ""));
             }
             PointType::Bitfield16 | PointType::Bitfield32 | PointType::Bitfield64 => {
-                scope.raw(gen_bitfield(point));
+                extra.extend(gen_bitfield(point, ""));
             }
             _ => {}
         }
     }
-    Ok(scope.to_string())
+
+    Ok(quote! {
+        #![doc = #module_doc]
+        #model_struct
+        #model_impl
+        #trait_impl
+        #extra
+    })
 }
 
-fn gen_enum(point: &Point) -> String {
+fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
     let size = point.r#type.size().unwrap();
     let repr = format_ident!("u{}", size * 16);
-    let name = format_ident!("{}", point.name.to_upper_camel_case());
+    let name = format_ident!(
+        "{}{}",
+        prefix.to_upper_camel_case(),
+        point.name.to_upper_camel_case()
+    );
     let invalid = match point.r#type {
         PointType::Enum16 => Literal::u16_unsuffixed(u16::MAX),
         PointType::Enum32 => Literal::u32_unsuffixed(u32::MAX),
         _ => unimplemented!(),
     };
     let variants = point.symbols.iter().map(|symbol| {
-        let name = format_ident!("{}", symbol.name.to_upper_camel_case());
-        let value = match point.r#type {
+        let variant_name = format_ident!("{}", symbol.name.to_upper_camel_case());
+        let variant_value = match point.r#type {
             PointType::Enum16 => {
                 Literal::u16_unsuffixed(symbol.value.as_u64().unwrap().try_into().unwrap())
             }
@@ -237,21 +230,21 @@ fn gen_enum(point: &Point) -> String {
             }
             _ => unimplemented!(),
         };
-        let variant_doc = symbol.doc.to_doc_string();
+        let variant_doc = doc_to_ts(&symbol.doc.to_doc_string());
         quote! {
-            #[doc = #variant_doc]
-            #name = #value
+            #variant_doc
+            #variant_name = #variant_value,
         }
         .into_token_stream()
     });
-    let doc = point.doc.to_doc_string();
-    let code = quote!(
-        #[doc = #doc]
+    let doc = doc_to_ts(&point.doc.to_doc_string());
+    quote!(
+        #doc
         #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
         #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
         #[repr(#repr)]
         pub enum #name {
-            #(#variants),*
+            #(#variants)*
         }
         impl crate::Value for #name {
             fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -279,35 +272,38 @@ fn gen_enum(point: &Point) -> String {
                 }
             }
         }
-    );
-    code.to_string()
+    )
 }
 
-fn gen_bitfield(point: &Point) -> String {
+fn gen_bitfield(point: &Point, prefix: &str) -> TokenStream {
     let size = point.r#type.size().unwrap();
     let repr = format_ident!("u{}", size * 16);
-    let name = format_ident!("{}", point.name.to_upper_camel_case());
+    let name = format_ident!(
+        "{}{}",
+        prefix.to_upper_camel_case(),
+        point.name.to_upper_camel_case()
+    );
     let invalid = match point.r#type {
         PointType::Bitfield16 => Literal::u16_suffixed(u16::MAX),
         PointType::Bitfield32 => Literal::u32_suffixed(u32::MAX),
         PointType::Bitfield64 => Literal::u64_suffixed(u64::MAX),
         _ => unimplemented!(),
     };
-    let doc = point.doc.to_doc_string();
+    let doc = doc_to_ts(&point.doc.to_doc_string());
     let fields = point.symbols.iter().map(|symbol| {
         let symbol_name = symbol.name.clone();
         let field_name = format_ident!("{}", symbol_name.to_upper_camel_case());
         let bit = Literal::u64_unsuffixed(1 << symbol.value.as_u64().unwrap());
-        let field_doc = symbol.doc.to_doc_string();
+        let field_doc = doc_to_ts(&symbol.doc.to_doc_string());
         quote! {
-            #[doc = #field_doc]
+            #field_doc
             const #field_name = #bit;
         }
         .into_token_stream()
     });
-    let code = quote! {
+    quote! {
         bitflags::bitflags! {
-            #[doc = #doc]
+            #doc
             #[derive(Copy, Clone, Debug, Eq, PartialEq)]
             #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
             pub struct #name: #repr {
@@ -340,43 +336,75 @@ fn gen_bitfield(point: &Point) -> String {
                 }
             }
         }
-    };
-    code.to_string()
+    }
 }
 
-fn rust_type(point: &Point) -> String {
-    let rty: String = match point.r#type {
-        PointType::Int16 => "i16".into(),
-        PointType::Int32 => "i32".into(),
-        PointType::Int64 => "i64".into(),
-        PointType::Raw16 => "u16".into(),
-        PointType::Uint16 => "u16".into(),
-        PointType::Uint32 => "u32".into(),
-        PointType::Uint64 => "u64".into(),
-        PointType::Acc16 => "u16".into(),
-        PointType::Acc32 => "u32".into(),
-        PointType::Acc64 => "u64".into(),
-        PointType::Bitfield16 => point.name.to_upper_camel_case(),
-        PointType::Bitfield32 => point.name.to_upper_camel_case(),
-        PointType::Bitfield64 => point.name.to_upper_camel_case(),
-        PointType::Enum16 if point.symbols.is_empty() => "u16".into(),
-        PointType::Enum16 => point.name.to_upper_camel_case(),
-        PointType::Enum32 if point.symbols.is_empty() => "u32".into(),
-        PointType::Enum32 => point.name.to_upper_camel_case(),
-        PointType::Float32 => "f32".into(),
-        PointType::Float64 => "f64".into(),
-        PointType::String => "String".into(),
-        PointType::Sf => "i16".into(), // FIXME is this type correct?
+fn rust_type(point: &Point, prefix: &str) -> TokenStream {
+    let rty = match point.r#type {
+        PointType::Int16 => quote! { i16 },
+        PointType::Int32 => quote! { i32 },
+        PointType::Int64 => quote! { i64 },
+        PointType::Raw16 => quote! { u16 },
+        PointType::Uint16 => quote! { u16 },
+        PointType::Uint32 => quote! { u32 },
+        PointType::Uint64 => quote! { u64 },
+        PointType::Acc16 => quote! { u16 },
+        PointType::Acc32 => quote! { u32 },
+        PointType::Acc64 => quote! { u64 },
+        PointType::Bitfield16 | PointType::Bitfield32 | PointType::Bitfield64 => {
+            let ident = format_ident!(
+                "{}",
+                format!(
+                    "{}{}",
+                    prefix.to_upper_camel_case(),
+                    point.name.to_upper_camel_case()
+                )
+            );
+            quote! { #ident }
+        }
+        PointType::Enum16 if point.symbols.is_empty() => quote! { u16 },
+        PointType::Enum32 if point.symbols.is_empty() => quote! { u32 },
+        PointType::Enum16 | PointType::Enum32 => {
+            let ident = format_ident!(
+                "{}",
+                format!(
+                    "{}{}",
+                    prefix.to_upper_camel_case(),
+                    point.name.to_upper_camel_case()
+                )
+            );
+            quote! { #ident }
+        }
+        PointType::Float32 => quote! { f32 },
+        PointType::Float64 => quote! { f64 },
+        PointType::String => quote! { String },
+        PointType::Sf => quote! { i16 }, // FIXME is this type correct?
         PointType::Pad => unimplemented!(),
-        PointType::Ipaddr => "std::net::Ipv4Addr".into(),
-        PointType::Ipv6addr => "std::net::Ipv6Addr".into(),
-        PointType::Eui48 => "String".into(),
-        PointType::Sunssf => "i16".into(),
-        PointType::Count => "u16".into(),
+        PointType::Ipaddr => quote! { std::net::Ipv4Addr },
+        PointType::Ipv6addr => quote! { std::net::Ipv6Addr },
+        PointType::Eui48 => quote! { String },
+        PointType::Sunssf => quote! { i16 },
+        PointType::Count => quote! { u16 },
     };
     if point.mandatory == PointMandatory::M {
         rty
     } else {
-        format!("Option<{rty}>")
+        quote! { Option<#rty> }
+    }
+}
+
+fn doc_to_ts(doc: &str) -> TokenStream {
+    let lines = doc
+        .lines()
+        .map(|line| format!(" {}", line))
+        .collect::<Vec<_>>();
+    if lines.is_empty() {
+        quote! {
+            #[allow(missing_docs)]
+        }
+    } else {
+        quote! {
+            #( #[doc = #lines] )*
+        }
     }
 }

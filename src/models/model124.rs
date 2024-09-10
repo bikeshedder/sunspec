@@ -1,5 +1,4 @@
 //! Storage
-
 /// Storage
 ///
 /// Basic Storage Controls
@@ -103,9 +102,7 @@ pub struct Model124 {
     /// Scale factor for percent charge/discharge rate.
     pub in_out_w_rte_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model124 {
     pub const W_CHA_MAX: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const W_CHA_GRA: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
@@ -139,7 +136,6 @@ impl Model124 {
     pub const IN_OUT_W_RTE_SF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(23, 1, false);
 }
-
 impl crate::Model for Model124 {
     const ID: u16 = 124;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -171,8 +167,14 @@ impl crate::Model for Model124 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "StorCtl_Mod\n\nActivate hold/discharge/charge storage control mode. Bitfield value."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct StorCtlMod : u16 { # [doc = ""] const Charge = 1 ; # [doc = ""] const DiScharge = 2 ; } }
+bitflags::bitflags! {
+    #[doc = " StorCtl_Mod"] #[doc = " "] #[doc =
+    " Activate hold/discharge/charge storage control mode. Bitfield value."]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct StorCtlMod : u16 {
+    #[allow(missing_docs)] const Charge = 1; #[allow(missing_docs)] const DiScharge = 2;
+    }
+}
 impl crate::Value for StorCtlMod {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -199,25 +201,26 @@ impl crate::Value for Option<StorCtlMod> {
         }
     }
 }
-
-#[doc = "ChaSt\n\nCharge status of storage device. Enumerated value."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// ChaSt
+///
+/// Charge status of storage device. Enumerated value.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ChaSt {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Off = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Empty = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Discharging = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Charging = 4,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Full = 5,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Holding = 6,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Testing = 7,
 }
 impl crate::Value for ChaSt {
@@ -248,15 +251,14 @@ impl crate::Value for Option<ChaSt> {
         }
     }
 }
-
-#[doc = ""]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[allow(missing_docs)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ChaGriSet {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Pv = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Grid = 1,
 }
 impl crate::Value for ChaGriSet {

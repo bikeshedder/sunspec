@@ -1,5 +1,4 @@
 //! Serial Interface
-
 /// Serial Interface
 ///
 /// Include this model for serial interface configuration support
@@ -39,9 +38,7 @@ pub struct Model17 {
     /// Enumerated value. Serial protocol selection
     pub pcol: Option<Pcol>,
 }
-
 #[allow(missing_docs)]
-
 impl Model17 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const RTE: crate::PointDef<Self, u32> = crate::PointDef::new(4, 2, true);
@@ -52,7 +49,6 @@ impl Model17 {
     pub const TYP: crate::PointDef<Self, Option<Typ>> = crate::PointDef::new(10, 1, false);
     pub const PCOL: crate::PointDef<Self, Option<Pcol>> = crate::PointDef::new(11, 1, false);
 }
-
 impl crate::Model for Model17 {
     const ID: u16 = 17;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -68,17 +64,18 @@ impl crate::Model for Model17 {
         })
     }
 }
-
-#[doc = "Parity\n\nBitmask value.  Parity setting"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Parity
+///
+/// Bitmask value.  Parity setting
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Pty {
-    #[doc = ""]
+    #[allow(missing_docs)]
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Odd = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Even = 2,
 }
 impl crate::Value for Pty {
@@ -109,15 +106,16 @@ impl crate::Value for Option<Pty> {
         }
     }
 }
-
-#[doc = "Duplex\n\nEnumerated value.  Duplex mode"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Duplex
+///
+/// Enumerated value.  Duplex mode
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Dup {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Full = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Half = 1,
 }
 impl crate::Value for Dup {
@@ -148,17 +146,18 @@ impl crate::Value for Option<Dup> {
         }
     }
 }
-
-#[doc = "Flow Control\n\nFlow Control Method"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Flow Control
+///
+/// Flow Control Method
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Flw {
-    #[doc = ""]
+    #[allow(missing_docs)]
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Hw = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Xonxoff = 2,
 }
 impl crate::Value for Flw {
@@ -189,17 +188,18 @@ impl crate::Value for Option<Flw> {
         }
     }
 }
-
-#[doc = "Interface Type\n\nEnumerated value.  Interface type"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Interface Type
+///
+/// Enumerated value.  Interface type
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Unknown = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Rs232 = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Rs485 = 2,
 }
 impl crate::Value for Typ {
@@ -230,17 +230,18 @@ impl crate::Value for Option<Typ> {
         }
     }
 }
-
-#[doc = "Protocol\n\nEnumerated value. Serial protocol selection"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Protocol
+///
+/// Enumerated value. Serial protocol selection
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Pcol {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Unknown = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Modbus = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Vendor = 2,
 }
 impl crate::Value for Pcol {

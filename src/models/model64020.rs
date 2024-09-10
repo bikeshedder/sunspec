@@ -1,5 +1,4 @@
 //! Mersen GreenString
-
 /// Mersen GreenString
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -99,9 +98,7 @@ pub struct Model64020 {
     /// always 0 in reading, used the code 0xC0DA during the writing for resetting the system
     pub reset: Option<u16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model64020 {
     pub const AUX0_TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
     pub const AUX1_TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
@@ -149,7 +146,6 @@ impl Model64020 {
         crate::PointDef::new(28, 1, false);
     pub const RESET: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(29, 1, false);
 }
-
 impl crate::Model for Model64020 {
     const ID: u16 = 64020;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

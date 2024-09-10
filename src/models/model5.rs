@@ -1,5 +1,4 @@
 //! Secure Write Request
-
 /// Secure Write Request
 ///
 /// Include a digital signature along with the control data
@@ -209,9 +208,7 @@ pub struct Model5 {
     /// Notes: The value of N must be at least 4 (64 bits)
     pub n: u16,
 }
-
 #[allow(missing_docs)]
-
 impl Model5 {
     pub const X: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const OFF1: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
@@ -301,7 +298,6 @@ impl Model5 {
     pub const ALG: crate::PointDef<Self, Alg> = crate::PointDef::new(86, 1, true);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(87, 1, true);
 }
-
 impl crate::Model for Model5 {
     const ID: u16 = 5;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -396,17 +392,20 @@ impl crate::Model for Model5 {
         })
     }
 }
-
-#[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Algorithm
+///
+/// Algorithm used to compute the digital signature
+///
+/// Notes: For future proof
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
-    #[doc = "Notes: For test purposes only"]
+    /// Notes: For test purposes only
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     AesGmac64 = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Ecc256 = 2,
 }
 impl crate::Value for Alg {

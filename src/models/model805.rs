@@ -1,5 +1,4 @@
 //! Lithium-Ion Module Model
-
 /// Lithium-Ion Module Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -117,9 +116,7 @@ pub struct Model805 {
     /// Scale factor for module temperature.
     pub tmp_sf: i16,
 }
-
 #[allow(missing_docs)]
-
 impl Model805 {
     pub const STR_IDX: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const MOD_IDX: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
@@ -152,7 +149,6 @@ impl Model805 {
     pub const CELL_V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(40, 1, false);
     pub const TMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(41, 1, false);
 }
-
 impl crate::Model for Model805 {
     const ID: u16 = 805;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

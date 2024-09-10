@@ -1,5 +1,4 @@
 //! Enter Service
-
 /// Enter Service
 ///
 /// Enter service model.
@@ -51,9 +50,7 @@ pub struct Model703 {
     /// Frequency scale factor.
     pub hz_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model703 {
     pub const ES: crate::PointDef<Self, Option<Es>> = crate::PointDef::new(0, 1, true);
     pub const ESV_HI: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
@@ -68,7 +65,6 @@ impl Model703 {
     pub const V_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(15, 1, false);
     pub const HZ_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(16, 1, false);
 }
-
 impl crate::Model for Model703 {
     const ID: u16 = 703;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -87,15 +83,16 @@ impl crate::Model for Model703 {
         })
     }
 }
-
-#[doc = "Permit Enter Service\n\nPermit enter service."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Permit Enter Service
+///
+/// Permit enter service.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Es {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Disabled = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Enabled = 1,
 }
 impl crate::Value for Es {

@@ -1,5 +1,4 @@
 //! Set Operator Security Certificate
-
 /// Set Operator Security Certificate
 ///
 /// Security model for PKI
@@ -229,9 +228,7 @@ pub struct Model9 {
     /// Number of registers to follow for the certificate
     pub n: u16,
 }
-
 #[allow(missing_docs)]
-
 impl Model9 {
     pub const CERT_UID: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const CERT_ROLE: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
@@ -325,7 +322,6 @@ impl Model9 {
     pub const ALG: crate::PointDef<Self, Alg> = crate::PointDef::new(90, 1, true);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(91, 1, true);
 }
-
 impl crate::Model for Model9 {
     const ID: u16 = 9;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -424,17 +420,18 @@ impl crate::Model for Model9 {
         })
     }
 }
-
-#[doc = "Format\n\nFormat of this certificate"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Format
+///
+/// Format of this certificate
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Fmt {
-    #[doc = ""]
+    #[allow(missing_docs)]
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     X509Pem = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     X509Der = 2,
 }
 impl crate::Value for Fmt {
@@ -465,21 +462,22 @@ impl crate::Value for Option<Fmt> {
         }
     }
 }
-
-#[doc = "Type\n\nType of this certificate"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Type
+///
+/// Type of this certificate
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
-    #[doc = ""]
+    #[allow(missing_docs)]
     DevKeyPair = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     DevSharedKey = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     OperatorPub = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     OperatorShared = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     CaPub = 4,
 }
 impl crate::Value for Typ {
@@ -510,17 +508,20 @@ impl crate::Value for Option<Typ> {
         }
     }
 }
-
-#[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Algorithm
+///
+/// Algorithm used to compute the digital signature
+///
+/// Notes: For future proof
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
-    #[doc = "Notes: For test purposes only"]
+    /// Notes: For test purposes only
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     AesGmac64 = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Ecc256 = 2,
 }
 impl crate::Value for Alg {

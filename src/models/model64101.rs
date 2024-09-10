@@ -1,5 +1,4 @@
 //! Eltek Inverter Extension
-
 /// Eltek Inverter Extension
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -19,9 +18,7 @@ pub struct Model64101 {
     #[allow(missing_docs)]
     pub eltek_rps_cos_phi_ref: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model64101 {
     pub const ELTEK_COUNTRY_CODE: crate::PointDef<Self, Option<u16>> =
         crate::PointDef::new(0, 1, false);
@@ -38,7 +35,6 @@ impl Model64101 {
     pub const ELTEK_RPS_COS_PHI_REF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(6, 1, false);
 }
-
 impl crate::Model for Model64101 {
     const ID: u16 = 64101;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

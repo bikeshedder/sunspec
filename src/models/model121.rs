@@ -1,5 +1,4 @@
 //! Basic Settings
-
 /// Basic Settings
 ///
 /// Inverter Controls Basic Settings
@@ -137,9 +136,7 @@ pub struct Model121 {
     /// Scale factor for nominal frequency.
     pub ecp_nom_hz_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model121 {
     pub const W_MAX: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const V_REF: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
@@ -175,7 +172,6 @@ impl Model121 {
     pub const ECP_NOM_HZ_SF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(29, 1, false);
 }
-
 impl crate::Model for Model121 {
     const ID: u16 = 121;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -213,15 +209,16 @@ impl crate::Model for Model121 {
         })
     }
 }
-
-#[doc = "VArAct\n\nVAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// VArAct
+///
+/// VAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VArAct {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Switch = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Maintain = 2,
 }
 impl crate::Value for VArAct {
@@ -252,15 +249,16 @@ impl crate::Value for Option<VArAct> {
         }
     }
 }
-
-#[doc = "ClcTotVA\n\nCalculation method for total apparent power. 1=vector 2=arithmetic."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// ClcTotVA
+///
+/// Calculation method for total apparent power. 1=vector 2=arithmetic.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ClcTotVa {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Vector = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Arithmetic = 2,
 }
 impl crate::Value for ClcTotVa {
@@ -291,17 +289,18 @@ impl crate::Value for Option<ClcTotVa> {
         }
     }
 }
-
-#[doc = "ConnPh\n\nIdentity of connected phase for single phase inverters. A=1 B=2 C=3."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// ConnPh
+///
+/// Identity of connected phase for single phase inverters. A=1 B=2 C=3.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ConnPh {
-    #[doc = ""]
+    #[allow(missing_docs)]
     A = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     B = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     C = 3,
 }
 impl crate::Value for ConnPh {

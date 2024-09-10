@@ -33,7 +33,7 @@ pub struct Model {
 }
 
 impl Model {
-    pub fn size(&self) -> u32 {
+    pub fn size(&self) -> u16 {
         self.group.points.iter().map(|p| p.size).sum()
     }
 }
@@ -78,7 +78,7 @@ pub struct Point {
     pub r#type: PointType,
     pub value: Option<PointValue>,
     pub count: Option<u32>,
-    pub size: u32,
+    pub size: u16,
     pub sf: Option<Sf>,
     pub units: Option<String>,
     #[serde(default)]
@@ -91,6 +91,12 @@ pub struct Point {
     pub doc: Documentation,
     #[serde(default)]
     pub symbols: Vec<Symbol>,
+}
+
+impl Point {
+    pub fn is_padding(&self) -> bool {
+        self.r#type == PointType::Pad
+    }
 }
 
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]

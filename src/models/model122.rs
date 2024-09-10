@@ -1,5 +1,4 @@
 //! Measurements_Status
-
 /// Measurements_Status
 ///
 /// Inverter Controls Extended Measurements and Status
@@ -91,9 +90,7 @@ pub struct Model122 {
     /// Scale factor for isolation resistance.
     pub ris_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model122 {
     pub const PV_CONN: crate::PointDef<Self, PvConn> = crate::PointDef::new(0, 1, false);
     pub const STOR_CONN: crate::PointDef<Self, StorConn> = crate::PointDef::new(1, 1, false);
@@ -118,7 +115,6 @@ impl Model122 {
     pub const RIS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(42, 1, false);
     pub const RIS_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(43, 1, false);
 }
-
 impl crate::Model for Model122 {
     const ID: u16 = 122;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -146,8 +142,14 @@ impl crate::Model for Model122 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "PVConn\n\nPV inverter present/available status. Enumerated value."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct PvConn : u16 { # [doc = ""] const Connected = 1 ; # [doc = ""] const Available = 2 ; # [doc = ""] const Operating = 4 ; # [doc = ""] const Test = 8 ; } }
+bitflags::bitflags! {
+    #[doc = " PVConn"] #[doc = " "] #[doc =
+    " PV inverter present/available status. Enumerated value."] #[derive(Copy, Clone,
+    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct PvConn : u16 { #[allow(missing_docs)] const
+    Connected = 1; #[allow(missing_docs)] const Available = 2; #[allow(missing_docs)]
+    const Operating = 4; #[allow(missing_docs)] const Test = 8; }
+}
 impl crate::Value for PvConn {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -174,8 +176,15 @@ impl crate::Value for Option<PvConn> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "StorConn\n\nStorage inverter present/available status. Enumerated value."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct StorConn : u16 { # [doc = ""] const Connected = 1 ; # [doc = ""] const Available = 2 ; # [doc = ""] const Operating = 4 ; # [doc = ""] const Test = 8 ; } }
+bitflags::bitflags! {
+    #[doc = " StorConn"] #[doc = " "] #[doc =
+    " Storage inverter present/available status. Enumerated value."] #[derive(Copy,
+    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct StorConn : u16 {
+    #[allow(missing_docs)] const Connected = 1; #[allow(missing_docs)] const Available =
+    2; #[allow(missing_docs)] const Operating = 4; #[allow(missing_docs)] const Test = 8;
+    }
+}
 impl crate::Value for StorConn {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -202,8 +211,13 @@ impl crate::Value for Option<StorConn> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "ECPConn\n\nECP connection status: disconnected=0  connected=1."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EcpConn : u16 { # [doc = ""] const Connected = 1 ; } }
+bitflags::bitflags! {
+    #[doc = " ECPConn"] #[doc = " "] #[doc =
+    " ECP connection status: disconnected=0  connected=1."] #[derive(Copy, Clone, Debug,
+    Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct EcpConn : u16 { #[allow(missing_docs)] const
+    Connected = 1; }
+}
 impl crate::Value for EcpConn {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -230,8 +244,19 @@ impl crate::Value for Option<EcpConn> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "StSetLimMsk\n\nBit Mask indicating setpoint limit(s) reached.\n\nNotes: Bits shall be automatically cleared on read."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct StSetLimMsk : u32 { # [doc = ""] const WMax = 1 ; # [doc = ""] const VaMax = 2 ; # [doc = ""] const VArAval = 4 ; # [doc = ""] const VArMaxQ1 = 8 ; # [doc = ""] const VArMaxQ2 = 16 ; # [doc = ""] const VArMaxQ3 = 32 ; # [doc = ""] const VArMaxQ4 = 64 ; # [doc = ""] const PfMinQ1 = 128 ; # [doc = ""] const PfMinQ2 = 256 ; # [doc = ""] const PfMinQ3 = 512 ; # [doc = ""] const PfMinQ4 = 1024 ; } }
+bitflags::bitflags! {
+    #[doc = " StSetLimMsk"] #[doc = " "] #[doc =
+    " Bit Mask indicating setpoint limit(s) reached."] #[doc = " "] #[doc =
+    " Notes: Bits shall be automatically cleared on read."] #[derive(Copy, Clone, Debug,
+    Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct StSetLimMsk : u32 { #[allow(missing_docs)] const
+    WMax = 1; #[allow(missing_docs)] const VaMax = 2; #[allow(missing_docs)] const
+    VArAval = 4; #[allow(missing_docs)] const VArMaxQ1 = 8; #[allow(missing_docs)] const
+    VArMaxQ2 = 16; #[allow(missing_docs)] const VArMaxQ3 = 32; #[allow(missing_docs)]
+    const VArMaxQ4 = 64; #[allow(missing_docs)] const PfMinQ1 = 128;
+    #[allow(missing_docs)] const PfMinQ2 = 256; #[allow(missing_docs)] const PfMinQ3 =
+    512; #[allow(missing_docs)] const PfMinQ4 = 1024; }
+}
 impl crate::Value for StSetLimMsk {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -258,8 +283,20 @@ impl crate::Value for Option<StSetLimMsk> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "StActCtl\n\nBit Mask indicating which inverter controls are currently active."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct StActCtl : u32 { # [doc = ""] const FixedW = 1 ; # [doc = ""] const FixedVar = 2 ; # [doc = ""] const FixedPf = 4 ; # [doc = ""] const VoltVAr = 8 ; # [doc = ""] const FreqWattParam = 16 ; # [doc = ""] const FreqWattCurve = 32 ; # [doc = ""] const DynReactiveCurrent = 64 ; # [doc = ""] const Lvrt = 128 ; # [doc = ""] const Hvrt = 256 ; # [doc = ""] const WattPf = 512 ; # [doc = ""] const VoltWatt = 1024 ; # [doc = ""] const Scheduled = 4096 ; # [doc = ""] const Lfrt = 8192 ; # [doc = ""] const Hfrt = 16384 ; } }
+bitflags::bitflags! {
+    #[doc = " StActCtl"] #[doc = " "] #[doc =
+    " Bit Mask indicating which inverter controls are currently active."] #[derive(Copy,
+    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct StActCtl : u32 {
+    #[allow(missing_docs)] const FixedW = 1; #[allow(missing_docs)] const FixedVar = 2;
+    #[allow(missing_docs)] const FixedPf = 4; #[allow(missing_docs)] const VoltVAr = 8;
+    #[allow(missing_docs)] const FreqWattParam = 16; #[allow(missing_docs)] const
+    FreqWattCurve = 32; #[allow(missing_docs)] const DynReactiveCurrent = 64;
+    #[allow(missing_docs)] const Lvrt = 128; #[allow(missing_docs)] const Hvrt = 256;
+    #[allow(missing_docs)] const WattPf = 512; #[allow(missing_docs)] const VoltWatt =
+    1024; #[allow(missing_docs)] const Scheduled = 4096; #[allow(missing_docs)] const
+    Lfrt = 8192; #[allow(missing_docs)] const Hfrt = 16384; }
+}
 impl crate::Value for StActCtl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -286,8 +323,14 @@ impl crate::Value for Option<StActCtl> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "RtSt\n\nBit Mask indicating active ride-through status."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct RtSt : u16 { # [doc = ""] const LvrtActive = 1 ; # [doc = ""] const HvrtActive = 2 ; # [doc = ""] const LfrtActive = 4 ; # [doc = ""] const HfrtActive = 8 ; } }
+bitflags::bitflags! {
+    #[doc = " RtSt"] #[doc = " "] #[doc =
+    " Bit Mask indicating active ride-through status."] #[derive(Copy, Clone, Debug, Eq,
+    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct RtSt : u16 { #[allow(missing_docs)] const
+    LvrtActive = 1; #[allow(missing_docs)] const HvrtActive = 2; #[allow(missing_docs)]
+    const LfrtActive = 4; #[allow(missing_docs)] const HfrtActive = 8; }
+}
 impl crate::Value for RtSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

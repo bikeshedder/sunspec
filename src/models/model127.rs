@@ -1,5 +1,4 @@
 //! Freq-Watt Param
-
 /// Freq-Watt Param
 ///
 /// Parameterized Frequency-Watt
@@ -45,9 +44,7 @@ pub struct Model127 {
     /// Scale factor for increment and decrement ramps.
     pub rmp_inc_dec_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model127 {
     pub const W_GRA: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const HZ_STR: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, true);
@@ -61,7 +58,6 @@ impl Model127 {
     pub const RMP_INC_DEC_SF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(8, 1, false);
 }
-
 impl crate::Model for Model127 {
     const ID: u16 = 127;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -78,8 +74,12 @@ impl crate::Model for Model127 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "HysEna\n\nEnable hysteresis"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct HysEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+bitflags::bitflags! {
+    #[doc = " HysEna"] #[doc = " "] #[doc = " Enable hysteresis"] #[derive(Copy, Clone,
+    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct HysEna : u16 { #[allow(missing_docs)] const
+    Enabled = 1; }
+}
 impl crate::Value for HysEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -106,8 +106,13 @@ impl crate::Value for Option<HysEna> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "ModEna\n\nIs Parameterized Frequency-Watt control active."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+bitflags::bitflags! {
+    #[doc = " ModEna"] #[doc = " "] #[doc =
+    " Is Parameterized Frequency-Watt control active."] #[derive(Copy, Clone, Debug, Eq,
+    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct ModEna : u16 { #[allow(missing_docs)] const
+    Enabled = 1; }
+}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

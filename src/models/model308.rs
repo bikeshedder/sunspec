@@ -1,5 +1,4 @@
 //! Mini Met Model
-
 /// Mini Met Model
 ///
 /// Include to support a few basic measurements
@@ -19,16 +18,13 @@ pub struct Model308 {
     /// Wind Speed
     pub wnd_spd: Option<u16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model308 {
     pub const GHI: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
     pub const TMP_BOM: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
     pub const TMP_AMB: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
     pub const WND_SPD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
 }
-
 impl crate::Model for Model308 {
     const ID: u16 = 308;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

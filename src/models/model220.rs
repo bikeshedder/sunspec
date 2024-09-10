@@ -1,5 +1,4 @@
 //! Secure AC Meter Selected Readings
-
 /// Secure AC Meter Selected Readings
 ///
 /// Include this model for secure metering
@@ -117,9 +116,7 @@ pub struct Model220 {
     /// Notes: The value of N must be at least 4 (64 bits)
     pub n: u16,
 }
-
 #[allow(missing_docs)]
-
 impl Model220 {
     pub const A: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
     pub const A_SF: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, false);
@@ -157,7 +154,6 @@ impl Model220 {
     pub const ALG: crate::PointDef<Self, Alg> = crate::PointDef::new(40, 1, false);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(41, 1, false);
 }
-
 impl crate::Model for Model220 {
     const ID: u16 = 220;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -196,8 +192,24 @@ impl crate::Model for Model220 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "Events\n\nMeter Event Flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt : u32 { # [doc = ""] const PowerFailure = 4 ; # [doc = ""] const UnderVoltage = 8 ; # [doc = ""] const LowPf = 16 ; # [doc = ""] const OverCurrent = 32 ; # [doc = ""] const OverVoltage = 64 ; # [doc = ""] const MissingSensor = 128 ; # [doc = ""] const Oem01 = 65536 ; # [doc = ""] const Oem02 = 131072 ; # [doc = ""] const Oem03 = 262144 ; # [doc = ""] const Oem04 = 524288 ; # [doc = ""] const Oem05 = 1048576 ; # [doc = ""] const Oem06 = 2097152 ; # [doc = ""] const Oem07 = 4194304 ; # [doc = ""] const Oem08 = 8388608 ; # [doc = ""] const Oem09 = 16777216 ; # [doc = ""] const Oem10 = 33554432 ; # [doc = ""] const Oem11 = 67108864 ; # [doc = ""] const Oem12 = 134217728 ; # [doc = ""] const Oem13 = 268435456 ; # [doc = ""] const Oem14 = 536870912 ; # [doc = ""] const Oem15 = 1073741824 ; } }
+bitflags::bitflags! {
+    #[doc = " Events"] #[doc = " "] #[doc = " Meter Event Flags"] #[derive(Copy, Clone,
+    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct Evt : u32 { #[allow(missing_docs)] const
+    PowerFailure = 4; #[allow(missing_docs)] const UnderVoltage = 8;
+    #[allow(missing_docs)] const LowPf = 16; #[allow(missing_docs)] const OverCurrent =
+    32; #[allow(missing_docs)] const OverVoltage = 64; #[allow(missing_docs)] const
+    MissingSensor = 128; #[allow(missing_docs)] const Oem01 = 65536;
+    #[allow(missing_docs)] const Oem02 = 131072; #[allow(missing_docs)] const Oem03 =
+    262144; #[allow(missing_docs)] const Oem04 = 524288; #[allow(missing_docs)] const
+    Oem05 = 1048576; #[allow(missing_docs)] const Oem06 = 2097152; #[allow(missing_docs)]
+    const Oem07 = 4194304; #[allow(missing_docs)] const Oem08 = 8388608;
+    #[allow(missing_docs)] const Oem09 = 16777216; #[allow(missing_docs)] const Oem10 =
+    33554432; #[allow(missing_docs)] const Oem11 = 67108864; #[allow(missing_docs)] const
+    Oem12 = 134217728; #[allow(missing_docs)] const Oem13 = 268435456;
+    #[allow(missing_docs)] const Oem14 = 536870912; #[allow(missing_docs)] const Oem15 =
+    1073741824; }
+}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -224,17 +236,20 @@ impl crate::Value for Option<Evt> {
         }
     }
 }
-
-#[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Algorithm
+///
+/// Algorithm used to compute the digital signature
+///
+/// Notes: For future proof
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
-    #[doc = "Notes: For test purposes only"]
+    /// Notes: For test purposes only
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     AesGmac64 = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Ecc256 = 2,
 }
 impl crate::Value for Alg {

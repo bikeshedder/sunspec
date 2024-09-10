@@ -1,5 +1,4 @@
 //! HFRTX
-
 /// HFRTX
 ///
 /// HFRT extended curve
@@ -53,9 +52,7 @@ pub struct Model144 {
     #[allow(missing_docs)]
     pub crv_type: CrvType,
 }
-
 #[allow(missing_docs)]
-
 impl Model144 {
     pub const ACT_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(1, 1, true);
@@ -68,7 +65,6 @@ impl Model144 {
     pub const HZ_SF: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
     pub const CRV_TYPE: crate::PointDef<Self, CrvType> = crate::PointDef::new(9, 1, false);
 }
-
 impl crate::Model for Model144 {
     const ID: u16 = 144;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -86,8 +82,13 @@ impl crate::Model for Model144 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "ModEna\n\nLHzRT control mode. Enable active curve.  Bitfield value."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+bitflags::bitflags! {
+    #[doc = " ModEna"] #[doc = " "] #[doc =
+    " LHzRT control mode. Enable active curve.  Bitfield value."] #[derive(Copy, Clone,
+    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct ModEna : u16 { #[allow(missing_docs)] const
+    Enabled = 1; }
+}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -114,13 +115,12 @@ impl crate::Value for Option<ModEna> {
         }
     }
 }
-
-#[doc = ""]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+#[allow(missing_docs)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CrvType {
-    #[doc = ""]
+    #[allow(missing_docs)]
     CeaseToEnergize = 1,
 }
 impl crate::Value for CrvType {

@@ -1,5 +1,4 @@
 //! DERCtl
-
 /// DERCtl
 ///
 /// DER Control
@@ -29,9 +28,7 @@ pub struct Model715 {
     /// Commands to PCS. Enumerated value.
     pub op_ctl: Option<OpCtl>,
 }
-
 #[allow(missing_docs)]
-
 impl Model715 {
     pub const LOC_REM_CTL: crate::PointDef<Self, Option<LocRemCtl>> =
         crate::PointDef::new(0, 1, false);
@@ -40,7 +37,6 @@ impl Model715 {
     pub const ALARM_RESET: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
     pub const OP_CTL: crate::PointDef<Self, Option<OpCtl>> = crate::PointDef::new(6, 1, true);
 }
-
 impl crate::Model for Model715 {
     const ID: u16 = 715;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -53,15 +49,20 @@ impl crate::Model for Model715 {
         })
     }
 }
-
-#[doc = "Control Mode\n\nDER control mode. Enumeration.\n\nComments: DER Controls"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Control Mode
+///
+/// DER control mode. Enumeration.
+///
+/// Comments: DER Controls
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum LocRemCtl {
-    #[doc = "Remote Control"]
+    /// Remote Control
     Remote = 0,
-    #[doc = "Local Control\n\nLocal mode is required for manual/maintenance operations. Once invoked, it must be explicitly exited for the inverter to be controlled remotely."]
+    /// Local Control
+    ///
+    /// Local mode is required for manual/maintenance operations. Once invoked, it must be explicitly exited for the inverter to be controlled remotely.
     Local = 1,
 }
 impl crate::Value for LocRemCtl {
@@ -92,19 +93,20 @@ impl crate::Value for Option<LocRemCtl> {
         }
     }
 }
-
-#[doc = "Set Operation\n\nCommands to PCS. Enumerated value."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Set Operation
+///
+/// Commands to PCS. Enumerated value.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum OpCtl {
-    #[doc = "Stop the DER"]
+    /// Stop the DER
     Stop = 0,
-    #[doc = "Start the DER"]
+    /// Start the DER
     Start = 1,
-    #[doc = "Enter Standby Mode"]
+    /// Enter Standby Mode
     EnterStandby = 2,
-    #[doc = "Exit Standby Mode"]
+    /// Exit Standby Mode
     ExitStandby = 3,
 }
 impl crate::Value for OpCtl {

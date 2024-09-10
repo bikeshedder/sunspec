@@ -1,5 +1,4 @@
 //! Veris Status and Configuration
-
 /// Veris Status and Configuration
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -75,9 +74,7 @@ pub struct Model64001 {
     /// Sensor 4 Serial Num
     pub s4_serial: Option<String>,
 }
-
 #[allow(missing_docs)]
-
 impl Model64001 {
     pub const CMD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
     pub const HW_REV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
@@ -115,7 +112,6 @@ impl Model64001 {
     pub const S4_VER: crate::PointDef<Self, Option<String>> = crate::PointDef::new(64, 2, false);
     pub const S4_SERIAL: crate::PointDef<Self, Option<String>> = crate::PointDef::new(66, 5, false);
 }
-
 impl crate::Model for Model64001 {
     const ID: u16 = 64001;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -158,8 +154,11 @@ impl crate::Model for Model64001 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "DIP Switches"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Switch : u16 { } }
+bitflags::bitflags! {
+    #[doc = " DIP Switches"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Switch : u16 {}
+}
 impl crate::Value for Switch {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -186,8 +185,11 @@ impl crate::Value for Option<Switch> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "System Status"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Status : u16 { } }
+bitflags::bitflags! {
+    #[doc = " System Status"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Status : u16 {}
+}
 impl crate::Value for Status {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -214,8 +216,11 @@ impl crate::Value for Option<Status> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "System Configuration"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Config : u16 { } }
+bitflags::bitflags! {
+    #[doc = " System Configuration"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Config : u16 {}
+}
 impl crate::Value for Config {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

@@ -1,5 +1,4 @@
 //! DER Trip LV
-
 /// DER Trip LV
 ///
 /// DER low voltage trip model.
@@ -35,9 +34,7 @@ pub struct Model707 {
     /// Scale factor for curve time points.
     pub tms_sf: i16,
 }
-
 #[allow(missing_docs)]
-
 impl Model707 {
     pub const ENA: crate::PointDef<Self, Ena> = crate::PointDef::new(0, 1, true);
     pub const ADPT_CRV_REQ: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
@@ -47,7 +44,6 @@ impl Model707 {
     pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
     pub const TMS_SF: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
 }
-
 impl crate::Model for Model707 {
     const ID: u16 = 707;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -62,15 +58,20 @@ impl crate::Model for Model707 {
         })
     }
 }
-
-#[doc = "DER Trip LV Module Enable\n\nDER low voltage trip control enable."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// DER Trip LV Module Enable
+///
+/// DER low voltage trip control enable.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Ena {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for Ena {
@@ -101,17 +102,24 @@ impl crate::Value for Option<Ena> {
         }
     }
 }
-
-#[doc = "Adopt Curve Result\n\nResult of last adopt curve operation."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Adopt Curve Result
+///
+/// Result of last adopt curve operation.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum AdptCrvRslt {
-    #[doc = "Update In Progress\n\nCurve update in progress."]
+    /// Update In Progress
+    ///
+    /// Curve update in progress.
     InProgress = 0,
-    #[doc = "Update Complete\n\nCurve update completed successfully."]
+    /// Update Complete
+    ///
+    /// Curve update completed successfully.
     Completed = 1,
-    #[doc = "Update Failed\n\nCurve update failed."]
+    /// Update Failed
+    ///
+    /// Curve update failed.
     Failed = 2,
 }
 impl crate::Value for AdptCrvRslt {

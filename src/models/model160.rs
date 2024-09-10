@@ -1,5 +1,4 @@
 //! Multiple MPPT Inverter Extension Model
-
 /// Multiple MPPT Inverter Extension Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -19,9 +18,7 @@ pub struct Model160 {
     /// Timestamp Period
     pub tms_per: Option<u16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model160 {
     pub const DCA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
     pub const DCV_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
@@ -31,7 +28,6 @@ impl Model160 {
     pub const N: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, false);
     pub const TMS_PER: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, false);
 }
-
 impl crate::Model for Model160 {
     const ID: u16 = 160;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -46,8 +42,26 @@ impl crate::Model for Model160 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "Global Events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt : u32 { # [doc = ""] const GroundFault = 1 ; # [doc = ""] const InputOverVoltage = 2 ; # [doc = ""] const Reserved2 = 4 ; # [doc = ""] const DcDisconnect = 8 ; # [doc = ""] const Reserved4 = 16 ; # [doc = ""] const CabinetOpen = 32 ; # [doc = ""] const ManualShutdown = 64 ; # [doc = ""] const OverTemp = 128 ; # [doc = ""] const Reserved8 = 256 ; # [doc = ""] const Reserved9 = 512 ; # [doc = ""] const Reserved10 = 1024 ; # [doc = ""] const Reserved11 = 2048 ; # [doc = ""] const BlownFuse = 4096 ; # [doc = ""] const UnderTemp = 8192 ; # [doc = ""] const MemoryLoss = 16384 ; # [doc = ""] const ArcDetection = 32768 ; # [doc = ""] const Reserved16 = 65536 ; # [doc = ""] const Reserved17 = 131072 ; # [doc = ""] const Reserved18 = 262144 ; # [doc = ""] const Reserved19 = 524288 ; # [doc = ""] const TestFailed = 1048576 ; # [doc = ""] const InputUnderVoltage = 2097152 ; # [doc = ""] const InputOverCurrent = 4194304 ; } }
+bitflags::bitflags! {
+    #[doc = " Global Events"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Evt : u32 { #[allow(missing_docs)] const GroundFault = 1;
+    #[allow(missing_docs)] const InputOverVoltage = 2; #[allow(missing_docs)] const
+    Reserved2 = 4; #[allow(missing_docs)] const DcDisconnect = 8; #[allow(missing_docs)]
+    const Reserved4 = 16; #[allow(missing_docs)] const CabinetOpen = 32;
+    #[allow(missing_docs)] const ManualShutdown = 64; #[allow(missing_docs)] const
+    OverTemp = 128; #[allow(missing_docs)] const Reserved8 = 256; #[allow(missing_docs)]
+    const Reserved9 = 512; #[allow(missing_docs)] const Reserved10 = 1024;
+    #[allow(missing_docs)] const Reserved11 = 2048; #[allow(missing_docs)] const
+    BlownFuse = 4096; #[allow(missing_docs)] const UnderTemp = 8192;
+    #[allow(missing_docs)] const MemoryLoss = 16384; #[allow(missing_docs)] const
+    ArcDetection = 32768; #[allow(missing_docs)] const Reserved16 = 65536;
+    #[allow(missing_docs)] const Reserved17 = 131072; #[allow(missing_docs)] const
+    Reserved18 = 262144; #[allow(missing_docs)] const Reserved19 = 524288;
+    #[allow(missing_docs)] const TestFailed = 1048576; #[allow(missing_docs)] const
+    InputUnderVoltage = 2097152; #[allow(missing_docs)] const InputOverCurrent = 4194304;
+    }
+}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

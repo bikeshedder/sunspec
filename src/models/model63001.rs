@@ -1,5 +1,4 @@
 //! SunSpec Test Model 1
-
 /// SunSpec Test Model 1
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -115,9 +114,7 @@ pub struct Model63001 {
     #[allow(missing_docs)]
     pub sunssf_7: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model63001 {
     pub const SUNSSF_1: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
     pub const SUNSSF_2: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
@@ -184,7 +181,6 @@ impl Model63001 {
     pub const SUNSSF_6: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(131, 1, false);
     pub const SUNSSF_7: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(132, 1, false);
 }
-
 impl crate::Model for Model63001 {
     const ID: u16 = 63001;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -247,8 +243,11 @@ impl crate::Model for Model63001 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = ""] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Bitfield16 : u16 { } }
+bitflags::bitflags! {
+    #[allow(missing_docs)] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Bitfield16 : u16 {}
+}
 impl crate::Value for Bitfield16 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -275,8 +274,11 @@ impl crate::Value for Option<Bitfield16> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = ""] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Bitfield16U : u16 { } }
+bitflags::bitflags! {
+    #[allow(missing_docs)] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Bitfield16U : u16 {}
+}
 impl crate::Value for Bitfield16U {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -303,8 +305,11 @@ impl crate::Value for Option<Bitfield16U> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = ""] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Bitfield32 : u32 { } }
+bitflags::bitflags! {
+    #[allow(missing_docs)] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Bitfield32 : u32 {}
+}
 impl crate::Value for Bitfield32 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -331,8 +336,11 @@ impl crate::Value for Option<Bitfield32> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = ""] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Bitfield32U : u32 { } }
+bitflags::bitflags! {
+    #[allow(missing_docs)] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Bitfield32U : u32 {}
+}
 impl crate::Value for Bitfield32U {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

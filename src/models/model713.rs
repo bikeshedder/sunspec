@@ -1,5 +1,4 @@
 //! DER Storage Capacity
-
 /// DER Storage Capacity
 ///
 /// DER storage capacity.
@@ -35,9 +34,7 @@ pub struct Model713 {
     /// Scale factor for percentage.
     pub pct_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model713 {
     pub const WH_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
     pub const WH_AVAIL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
@@ -47,7 +44,6 @@ impl Model713 {
     pub const WH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(5, 1, false);
     pub const PCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
 }
-
 impl crate::Model for Model713 {
     const ID: u16 = 713;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -62,17 +58,24 @@ impl crate::Model for Model713 {
         })
     }
 }
-
-#[doc = "Status\n\nStorage status."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Status
+///
+/// Storage status.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Sta {
-    #[doc = "OK\n\nNo warnings or errors pending."]
+    /// OK
+    ///
+    /// No warnings or errors pending.
     Ok = 0,
-    #[doc = "Warning\n\nOne or more warnings pending."]
+    /// Warning
+    ///
+    /// One or more warnings pending.
     Warning = 1,
-    #[doc = "Error\n\nOne or more errors pending."]
+    /// Error
+    ///
+    /// One or more errors pending.
     Error = 2,
 }
 impl crate::Value for Sta {

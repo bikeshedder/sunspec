@@ -1,5 +1,4 @@
 //! DER Frequency Droop
-
 /// DER Frequency Droop
 ///
 /// DER Frequency Droop model.
@@ -47,9 +46,7 @@ pub struct Model711 {
     /// Open loop response time scale factor.
     pub rsp_tms_sf: i16,
 }
-
 #[allow(missing_docs)]
-
 impl Model711 {
     pub const ENA: crate::PointDef<Self, Ena> = crate::PointDef::new(0, 1, true);
     pub const ADPT_CTL_REQ: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
@@ -62,7 +59,6 @@ impl Model711 {
     pub const K_SF: crate::PointDef<Self, i16> = crate::PointDef::new(10, 1, false);
     pub const RSP_TMS_SF: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
 }
-
 impl crate::Model for Model711 {
     const ID: u16 = 711;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -80,15 +76,20 @@ impl crate::Model for Model711 {
         })
     }
 }
-
-#[doc = "DER Frequency Droop Module Enable\n\nDER Frequency-Watt (Frequency-Droop) control enable."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// DER Frequency Droop Module Enable
+///
+/// DER Frequency-Watt (Frequency-Droop) control enable.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Ena {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for Ena {
@@ -119,17 +120,24 @@ impl crate::Value for Option<Ena> {
         }
     }
 }
-
-#[doc = "Set Active Control Result\n\nResult of last set active control operation."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Set Active Control Result
+///
+/// Result of last set active control operation.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum AdptCtlRslt {
-    #[doc = "Update In Progress\n\nControl update in progress."]
+    /// Update In Progress
+    ///
+    /// Control update in progress.
     InProgress = 0,
-    #[doc = "Update Complete\n\nControl update completed successfully."]
+    /// Update Complete
+    ///
+    /// Control update completed successfully.
     Completed = 1,
-    #[doc = "Update Failed\n\nControl update failed."]
+    /// Update Failed
+    ///
+    /// Control update failed.
     Failed = 2,
 }
 impl crate::Value for AdptCtlRslt {

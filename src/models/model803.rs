@@ -1,5 +1,4 @@
 //! Lithium-Ion Battery Bank Model
-
 /// Lithium-Ion Battery Bank Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -115,9 +114,7 @@ pub struct Model803 {
     /// Scale factor for string voltage.
     pub v_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model803 {
     pub const N_STR: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const N_STR_CON: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
@@ -154,7 +151,6 @@ impl Model803 {
     pub const SO_C_SF: crate::PointDef<Self, i16> = crate::PointDef::new(24, 1, false);
     pub const V_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(25, 1, false);
 }
-
 impl crate::Model for Model803 {
     const ID: u16 = 803;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

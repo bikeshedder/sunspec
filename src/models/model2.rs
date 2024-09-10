@@ -1,5 +1,4 @@
 //! Basic Aggregator
-
 /// Basic Aggregator
 ///
 /// Aggregates a collection of models for a given model id
@@ -47,9 +46,7 @@ pub struct Model2 {
     /// Numerical value used as a parameter to the control
     pub ctl_vl: Option<u32>,
 }
-
 #[allow(missing_docs)]
-
 impl Model2 {
     pub const AID: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
@@ -62,7 +59,6 @@ impl Model2 {
     pub const CTL_VND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(10, 2, false);
     pub const CTL_VL: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(12, 2, false);
 }
-
 impl crate::Model for Model2 {
     const ID: u16 = 2;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -80,19 +76,20 @@ impl crate::Model for Model2 {
         })
     }
 }
-
-#[doc = "Status\n\nEnumerated status code"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Status
+///
+/// Enumerated status code
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum St {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Off = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     On = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Full = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Fault = 4,
 }
 impl crate::Value for St {
@@ -123,8 +120,25 @@ impl crate::Value for Option<St> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Event Code\n\nBitmask event code"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt : u32 { # [doc = ""] const GroundFault = 1 ; # [doc = ""] const InputOverVoltage = 2 ; # [doc = ""] const Reserved2 = 4 ; # [doc = ""] const DcDisconnect = 8 ; # [doc = ""] const Reserved4 = 16 ; # [doc = ""] const Reserved5 = 32 ; # [doc = ""] const ManualShutdown = 64 ; # [doc = ""] const OverTemperature = 128 ; # [doc = ""] const Reserved8 = 256 ; # [doc = ""] const Reserved9 = 512 ; # [doc = ""] const Reserved10 = 1024 ; # [doc = ""] const Reserved11 = 2048 ; # [doc = ""] const BlownFuse = 4096 ; # [doc = ""] const UnderTemperature = 8192 ; # [doc = ""] const MemoryLoss = 16384 ; # [doc = ""] const ArcDetection = 32768 ; # [doc = ""] const TheftDetection = 65536 ; # [doc = ""] const OutputOverCurrent = 131072 ; # [doc = ""] const OutputOverVoltage = 262144 ; # [doc = ""] const OutputUnderVoltage = 524288 ; # [doc = ""] const TestFailed = 1048576 ; } }
+bitflags::bitflags! {
+    #[doc = " Event Code"] #[doc = " "] #[doc = " Bitmask event code"] #[derive(Copy,
+    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct Evt : u32 {
+    #[allow(missing_docs)] const GroundFault = 1; #[allow(missing_docs)] const
+    InputOverVoltage = 2; #[allow(missing_docs)] const Reserved2 = 4;
+    #[allow(missing_docs)] const DcDisconnect = 8; #[allow(missing_docs)] const Reserved4
+    = 16; #[allow(missing_docs)] const Reserved5 = 32; #[allow(missing_docs)] const
+    ManualShutdown = 64; #[allow(missing_docs)] const OverTemperature = 128;
+    #[allow(missing_docs)] const Reserved8 = 256; #[allow(missing_docs)] const Reserved9
+    = 512; #[allow(missing_docs)] const Reserved10 = 1024; #[allow(missing_docs)] const
+    Reserved11 = 2048; #[allow(missing_docs)] const BlownFuse = 4096;
+    #[allow(missing_docs)] const UnderTemperature = 8192; #[allow(missing_docs)] const
+    MemoryLoss = 16384; #[allow(missing_docs)] const ArcDetection = 32768;
+    #[allow(missing_docs)] const TheftDetection = 65536; #[allow(missing_docs)] const
+    OutputOverCurrent = 131072; #[allow(missing_docs)] const OutputOverVoltage = 262144;
+    #[allow(missing_docs)] const OutputUnderVoltage = 524288; #[allow(missing_docs)]
+    const TestFailed = 1048576; }
+}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -151,8 +165,11 @@ impl crate::Value for Option<Evt> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Vendor Event Code\n\nVendor specific event code"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd : u32 { } }
+bitflags::bitflags! {
+    #[doc = " Vendor Event Code"] #[doc = " "] #[doc = " Vendor specific event code"]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd : u32 {}
+}
 impl crate::Value for EvtVnd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -179,21 +196,22 @@ impl crate::Value for Option<EvtVnd> {
         }
     }
 }
-
-#[doc = "Control\n\nControl register for all aggregated devices"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Control
+///
+/// Control register for all aggregated devices
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Ctl {
-    #[doc = ""]
+    #[allow(missing_docs)]
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Automatic = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     ForceOff = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Test = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Throttle = 4,
 }
 impl crate::Value for Ctl {

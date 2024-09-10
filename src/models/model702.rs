@@ -1,5 +1,4 @@
 //! DER Capacity
-
 /// DER Capacity
 ///
 /// DER capacity model.
@@ -209,9 +208,7 @@ pub struct Model702 {
     /// Susceptance scale factor.
     pub s_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model702 {
     pub const W_MAX_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
     pub const W_OVR_EXT_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
@@ -282,7 +279,6 @@ impl Model702 {
     pub const A_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(48, 1, false);
     pub const S_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(49, 1, false);
 }
-
 impl crate::Model for Model702 {
     const ID: u16 = 702;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -339,15 +335,16 @@ impl crate::Model for Model702 {
         })
     }
 }
-
-#[doc = "Normal Operating Category\n\nNormal operating performance category as specified in IEEE 1547-2018."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Normal Operating Category
+///
+/// Normal operating performance category as specified in IEEE 1547-2018.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum NorOpCatRtg {
-    #[doc = "Category A"]
+    /// Category A
     CatA = 0,
-    #[doc = "Category B"]
+    /// Category B
     CatB = 1,
 }
 impl crate::Value for NorOpCatRtg {
@@ -378,17 +375,18 @@ impl crate::Value for Option<NorOpCatRtg> {
         }
     }
 }
-
-#[doc = "Abnormal Operating Category\n\nAbnormal operating performance category as specified in IEEE 1547-2018."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Abnormal Operating Category
+///
+/// Abnormal operating performance category as specified in IEEE 1547-2018.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum AbnOpCatRtg {
-    #[doc = "Category I"]
+    /// Category I
     Cat1 = 0,
-    #[doc = "Category II"]
+    /// Category II
     Cat2 = 1,
-    #[doc = "Category III"]
+    /// Category III
     Cat3 = 2,
 }
 impl crate::Value for AbnOpCatRtg {
@@ -419,8 +417,21 @@ impl crate::Value for Option<AbnOpCatRtg> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Supported Control Modes\n\nSupported control mode functions."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct CtrlModes : u32 { # [doc = "Limit Maximum Active Power"] const MaxW = 1 ; # [doc = "Fixed Active Power"] const FixedW = 2 ; # [doc = "Fixed Reactive Power"] const FixedVar = 4 ; # [doc = "Fixed Power Factor"] const FixedPf = 8 ; # [doc = "Volt-Var Function"] const VoltVar = 16 ; # [doc = "Freq-Watt Function"] const FreqWatt = 32 ; # [doc = "Dynamic Reactive Current Function"] const DynReactCurr = 64 ; # [doc = "Low-Voltage Trip"] const LvTrip = 128 ; # [doc = "High-Voltage Trip"] const HvTrip = 256 ; # [doc = "Watt-Var Function"] const WattVar = 512 ; # [doc = "Volt-Watt Function"] const VoltWatt = 1024 ; # [doc = "Scheduling"] const Scheduled = 2048 ; # [doc = "Low-Frequency Trip"] const LfTrip = 4096 ; # [doc = "High-Frequency Trip"] const HfTrip = 8192 ; } }
+bitflags::bitflags! {
+    #[doc = " Supported Control Modes"] #[doc = " "] #[doc =
+    " Supported control mode functions."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct CtrlModes : u32 { #[doc = " Limit Maximum Active Power"] const MaxW = 1; #[doc
+    = " Fixed Active Power"] const FixedW = 2; #[doc = " Fixed Reactive Power"] const
+    FixedVar = 4; #[doc = " Fixed Power Factor"] const FixedPf = 8; #[doc =
+    " Volt-Var Function"] const VoltVar = 16; #[doc = " Freq-Watt Function"] const
+    FreqWatt = 32; #[doc = " Dynamic Reactive Current Function"] const DynReactCurr = 64;
+    #[doc = " Low-Voltage Trip"] const LvTrip = 128; #[doc = " High-Voltage Trip"] const
+    HvTrip = 256; #[doc = " Watt-Var Function"] const WattVar = 512; #[doc =
+    " Volt-Watt Function"] const VoltWatt = 1024; #[doc = " Scheduling"] const Scheduled
+    = 2048; #[doc = " Low-Frequency Trip"] const LfTrip = 4096; #[doc =
+    " High-Frequency Trip"] const HfTrip = 8192; }
+}
 impl crate::Value for CtrlModes {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -447,8 +458,15 @@ impl crate::Value for Option<CtrlModes> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Intentional Island Categories\n\nIntentional island categories."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct IntIslandCatRtg : u16 { # [doc = "Uncategorized"] const Uncategorized = 1 ; # [doc = "Intentional Island-Capable"] const IntIslCapable = 2 ; # [doc = "Black Start-Capable"] const BlackStartCapable = 4 ; # [doc = "Isochronous-Capable"] const IsochCapable = 8 ; } }
+bitflags::bitflags! {
+    #[doc = " Intentional Island Categories"] #[doc = " "] #[doc =
+    " Intentional island categories."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct IntIslandCatRtg : u16 { #[doc = " Uncategorized"] const Uncategorized = 1;
+    #[doc = " Intentional Island-Capable"] const IntIslCapable = 2; #[doc =
+    " Black Start-Capable"] const BlackStartCapable = 4; #[doc = " Isochronous-Capable"]
+    const IsochCapable = 8; }
+}
 impl crate::Value for IntIslandCatRtg {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -475,8 +493,15 @@ impl crate::Value for Option<IntIslandCatRtg> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Intentional Island Categories\n\nIntentional island categories."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct IntIslandCat : u16 { # [doc = "Uncategorized"] const Uncategorized = 1 ; # [doc = "Intentional Island-Capable"] const IntIslCapable = 2 ; # [doc = "Black Start-Capable"] const BlackStartCapable = 4 ; # [doc = "Isochronous-Capable"] const IsochCapable = 8 ; } }
+bitflags::bitflags! {
+    #[doc = " Intentional Island Categories"] #[doc = " "] #[doc =
+    " Intentional island categories."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct IntIslandCat : u16 { #[doc = " Uncategorized"] const Uncategorized = 1; #[doc
+    = " Intentional Island-Capable"] const IntIslCapable = 2; #[doc =
+    " Black Start-Capable"] const BlackStartCapable = 4; #[doc = " Isochronous-Capable"]
+    const IsochCapable = 8; }
+}
 impl crate::Value for IntIslandCat {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

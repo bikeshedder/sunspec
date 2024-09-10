@@ -1,5 +1,4 @@
 //! Nameplate
-
 /// Nameplate
 ///
 /// Inverter Controls Nameplate Ratings
@@ -119,9 +118,7 @@ pub struct Model120 {
     /// Scale factor
     pub max_dis_cha_rte_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model120 {
     pub const DER_TYP: crate::PointDef<Self, DerTyp> = crate::PointDef::new(0, 1, false);
     pub const W_RTG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
@@ -152,7 +149,6 @@ impl Model120 {
     pub const MAX_DIS_CHA_RTE_SF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(24, 1, false);
 }
-
 impl crate::Model for Model120 {
     const ID: u16 = 120;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -185,15 +181,16 @@ impl crate::Model for Model120 {
         })
     }
 }
-
-#[doc = "DERTyp\n\nType of DER device. Default value is 4 to indicate PV device."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// DERTyp
+///
+/// Type of DER device. Default value is 4 to indicate PV device.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum DerTyp {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Pv = 4,
-    #[doc = ""]
+    #[allow(missing_docs)]
     PvStor = 82,
 }
 impl crate::Value for DerTyp {

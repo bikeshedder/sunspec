@@ -1,5 +1,4 @@
 //! LFRT
-
 /// LFRT
 ///
 /// Low Frequency Ride-through
@@ -51,9 +50,7 @@ pub struct Model135 {
     /// Scale factor for frequency.
     pub hz_sf: i16,
 }
-
 #[allow(missing_docs)]
-
 impl Model135 {
     pub const ACT_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(1, 1, true);
@@ -65,7 +62,6 @@ impl Model135 {
     pub const TMS_SF: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
     pub const HZ_SF: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
 }
-
 impl crate::Model for Model135 {
     const ID: u16 = 135;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -82,8 +78,13 @@ impl crate::Model for Model135 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "ModEna\n\nLHzRT control mode. Enable active curve.  Bitfield value."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+bitflags::bitflags! {
+    #[doc = " ModEna"] #[doc = " "] #[doc =
+    " LHzRT control mode. Enable active curve.  Bitfield value."] #[derive(Copy, Clone,
+    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct ModEna : u16 { #[allow(missing_docs)] const
+    Enabled = 1; }
+}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

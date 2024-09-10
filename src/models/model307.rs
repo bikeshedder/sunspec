@@ -1,5 +1,4 @@
 //! Base Met
-
 /// Base Met
 ///
 /// Base Meteorological Model
@@ -33,9 +32,7 @@ pub struct Model307 {
     /// Soil Wetness
     pub soil_wet: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model307 {
     pub const TMP_AMB: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
     pub const RH: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
@@ -49,7 +46,6 @@ impl Model307 {
     pub const SUR_WET: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(9, 1, false);
     pub const SOIL_WET: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(10, 1, false);
 }
-
 impl crate::Model for Model307 {
     const ID: u16 = 307;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

@@ -1,5 +1,4 @@
 //! Dynamic Reactive Current
-
 /// Dynamic Reactive Current
 ///
 /// Dynamic Reactive Current
@@ -61,9 +60,7 @@ pub struct Model128 {
     /// Scale factor for the voltage zone and limit settings.
     pub v_ref_pct_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model128 {
     pub const AR_GRA_MOD: crate::PointDef<Self, ArGraMod> = crate::PointDef::new(0, 1, true);
     pub const AR_GRA_SAG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
@@ -79,7 +76,6 @@ impl Model128 {
     pub const AR_GRA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
     pub const V_REF_PCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(12, 1, false);
 }
-
 impl crate::Model for Model128 {
     const ID: u16 = 128;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -100,15 +96,16 @@ impl crate::Model for Model128 {
         })
     }
 }
-
-#[doc = "ArGraMod\n\nIndicates if gradients trend toward zero at the edges of the deadband or trend toward zero at the center of the deadband."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// ArGraMod
+///
+/// Indicates if gradients trend toward zero at the edges of the deadband or trend toward zero at the center of the deadband.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ArGraMod {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Edge = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Center = 1,
 }
 impl crate::Value for ArGraMod {
@@ -139,8 +136,12 @@ impl crate::Value for Option<ArGraMod> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "ModEna\n\nActivate dynamic reactive current model"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+bitflags::bitflags! {
+    #[doc = " ModEna"] #[doc = " "] #[doc = " Activate dynamic reactive current model"]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct ModEna : u16 {
+    #[allow(missing_docs)] const Enabled = 1; }
+}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

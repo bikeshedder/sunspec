@@ -1,5 +1,4 @@
 //! Proxy Server
-
 /// Proxy Server
 ///
 /// Include this block to allow for a proxy server
@@ -39,9 +38,7 @@ pub struct Model14 {
     /// Proxy password
     pub pw: Option<String>,
 }
-
 #[allow(missing_docs)]
-
 impl Model14 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const CAP: crate::PointDef<Self, Cap> = crate::PointDef::new(4, 1, true);
@@ -52,7 +49,6 @@ impl Model14 {
     pub const USER: crate::PointDef<Self, Option<String>> = crate::PointDef::new(28, 12, true);
     pub const PW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(40, 12, true);
 }
-
 impl crate::Model for Model14 {
     const ID: u16 = 14;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -68,8 +64,14 @@ impl crate::Model for Model14 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "Capabilities\n\nBitmask value.  Proxy configuration capabilities"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Cap : u16 { # [doc = ""] const NoProxy = 1 ; # [doc = ""] const Ipv4Proxy = 2 ; # [doc = ""] const Ipv6Proxy = 4 ; } }
+bitflags::bitflags! {
+    #[doc = " Capabilities"] #[doc = " "] #[doc =
+    " Bitmask value.  Proxy configuration capabilities"] #[derive(Copy, Clone, Debug, Eq,
+    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct Cap : u16 { #[allow(missing_docs)] const NoProxy =
+    1; #[allow(missing_docs)] const Ipv4Proxy = 2; #[allow(missing_docs)] const Ipv6Proxy
+    = 4; }
+}
 impl crate::Value for Cap {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -96,8 +98,11 @@ impl crate::Value for Option<Cap> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Type\n\nEnumerate value.  Proxy server type"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Typ : u16 { } }
+bitflags::bitflags! {
+    #[doc = " Type"] #[doc = " "] #[doc = " Enumerate value.  Proxy server type"]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct Typ : u16 {}
+}
 impl crate::Value for Typ {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

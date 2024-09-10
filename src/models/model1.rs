@@ -1,5 +1,4 @@
 //! Common
-
 /// Common
 ///
 /// All SunSpec compliant devices must include this as the first model
@@ -31,9 +30,7 @@ pub struct Model1 {
     /// Modbus device address
     pub da: Option<u16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model1 {
     pub const MN: crate::PointDef<Self, String> = crate::PointDef::new(0, 16, false);
     pub const MD: crate::PointDef<Self, String> = crate::PointDef::new(16, 16, false);
@@ -42,7 +39,6 @@ impl Model1 {
     pub const SN: crate::PointDef<Self, String> = crate::PointDef::new(48, 16, false);
     pub const DA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(64, 1, true);
 }
-
 impl crate::Model for Model1 {
     const ID: u16 = 1;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

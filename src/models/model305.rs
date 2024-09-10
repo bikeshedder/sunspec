@@ -1,5 +1,4 @@
 //! GPS
-
 /// GPS
 ///
 /// Include to support location measurements
@@ -31,9 +30,7 @@ pub struct Model305 {
     /// Altitude measurement in meters
     pub alt: Option<i32>,
 }
-
 #[allow(missing_docs)]
-
 impl Model305 {
     pub const TM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 6, false);
     pub const DATE: crate::PointDef<Self, Option<String>> = crate::PointDef::new(6, 4, false);
@@ -42,7 +39,6 @@ impl Model305 {
     pub const LONG: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(32, 2, false);
     pub const ALT: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(34, 2, false);
 }
-
 impl crate::Model for Model305 {
     const ID: u16 = 305;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

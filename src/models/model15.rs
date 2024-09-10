@@ -1,5 +1,4 @@
 //! Interface Counters Model
-
 /// Interface Counters Model
 ///
 /// Interface counters
@@ -55,9 +54,7 @@ pub struct Model15 {
     /// Number of outbound error packets
     pub out_err_cnt: Option<u32>,
 }
-
 #[allow(missing_docs)]
-
 impl Model15 {
     pub const CLR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
     pub const IN_CNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(1, 2, false);
@@ -72,7 +69,6 @@ impl Model15 {
     pub const OUT_DSC_CNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(19, 2, false);
     pub const OUT_ERR_CNT: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(21, 2, false);
 }
-
 impl crate::Model for Model15 {
     const ID: u16 = 15;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

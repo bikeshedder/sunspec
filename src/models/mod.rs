@@ -1,215 +1,109 @@
 pub mod model1;
-
-pub mod model2;
-
-pub mod model3;
-
-pub mod model4;
-
-pub mod model5;
-
-pub mod model6;
-
-pub mod model7;
-
-pub mod model8;
-
-pub mod model9;
-
 pub mod model10;
-
-pub mod model11;
-
-pub mod model12;
-
-pub mod model13;
-
-pub mod model14;
-
-pub mod model15;
-
-pub mod model16;
-
-pub mod model17;
-
-pub mod model18;
-
-pub mod model19;
-
 pub mod model101;
-
 pub mod model102;
-
 pub mod model103;
-
+pub mod model11;
 pub mod model111;
-
 pub mod model112;
-
 pub mod model113;
-
+pub mod model12;
 pub mod model120;
-
 pub mod model121;
-
 pub mod model122;
-
 pub mod model123;
-
 pub mod model124;
-
 pub mod model125;
-
 pub mod model126;
-
 pub mod model127;
-
 pub mod model128;
-
 pub mod model129;
-
+pub mod model13;
 pub mod model130;
-
 pub mod model131;
-
 pub mod model132;
-
 pub mod model133;
-
 pub mod model134;
-
 pub mod model135;
-
 pub mod model136;
-
 pub mod model137;
-
 pub mod model138;
-
 pub mod model139;
-
+pub mod model14;
 pub mod model140;
-
 pub mod model141;
-
 pub mod model142;
-
 pub mod model143;
-
 pub mod model144;
-
 pub mod model145;
-
+pub mod model15;
+pub mod model16;
 pub mod model160;
-
+pub mod model17;
+pub mod model18;
+pub mod model19;
+pub mod model2;
 pub mod model201;
-
 pub mod model202;
-
 pub mod model203;
-
 pub mod model204;
-
 pub mod model211;
-
 pub mod model212;
-
 pub mod model213;
-
 pub mod model214;
-
 pub mod model220;
-
+pub mod model3;
 pub mod model302;
-
 pub mod model303;
-
 pub mod model304;
-
 pub mod model305;
-
 pub mod model306;
-
 pub mod model307;
-
 pub mod model308;
-
+pub mod model4;
 pub mod model401;
-
 pub mod model402;
-
 pub mod model403;
-
 pub mod model404;
-
+pub mod model5;
 pub mod model501;
-
 pub mod model502;
-
+pub mod model6;
 pub mod model601;
-
-pub mod model701;
-
-pub mod model702;
-
-pub mod model703;
-
-pub mod model704;
-
-pub mod model705;
-
-pub mod model706;
-
-pub mod model707;
-
-pub mod model708;
-
-pub mod model709;
-
-pub mod model710;
-
-pub mod model711;
-
-pub mod model712;
-
-pub mod model713;
-
-pub mod model714;
-
-pub mod model715;
-
-pub mod model801;
-
-pub mod model802;
-
-pub mod model803;
-
-pub mod model804;
-
-pub mod model805;
-
-pub mod model806;
-
-pub mod model807;
-
-pub mod model808;
-
-pub mod model809;
-
 pub mod model63001;
-
 pub mod model63002;
-
 pub mod model64001;
-
 pub mod model64020;
-
 pub mod model64101;
-
 pub mod model64111;
-
 pub mod model64112;
-
+pub mod model7;
+pub mod model701;
+pub mod model702;
+pub mod model703;
+pub mod model704;
+pub mod model705;
+pub mod model706;
+pub mod model707;
+pub mod model708;
+pub mod model709;
+pub mod model710;
+pub mod model711;
+pub mod model712;
+pub mod model713;
+pub mod model714;
+pub mod model715;
+pub mod model8;
+pub mod model801;
+pub mod model802;
+pub mod model803;
+pub mod model804;
+pub mod model805;
+pub mod model806;
+pub mod model807;
+pub mod model808;
+pub mod model809;
+pub mod model9;
 /// This struct contains the addresses of all discovered models.
 #[derive(Debug, Default)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -427,11 +321,10 @@ pub struct Models {
     /// OutBack FM Charge Controller
     pub m64112: crate::ModelAddr<model64112::Model64112>,
 }
-
 impl Models {
     /// Returns a list of all supported model ids
     pub fn supported_model_ids(&self) -> Vec<u16> {
-        let mut v = Vec::with_capacity(106);
+        let mut v = Vec::with_capacity(106usize);
         if self.m1.addr != 0 {
             v.push(1);
         }
@@ -752,7 +645,6 @@ impl Models {
         }
         v
     }
-
     /// Set address and length of the given model.
     ///
     /// This method is used by the model discovery.

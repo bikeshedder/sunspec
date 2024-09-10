@@ -1,5 +1,4 @@
 //! Battery Base Model
-
 /// Battery Base Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -247,9 +246,7 @@ pub struct Model802 {
     /// Scale factor for AC power request.
     pub w_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model802 {
     pub const AH_RTG: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const WH_RTG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
@@ -315,7 +312,6 @@ impl Model802 {
     pub const A_MAX_SF: crate::PointDef<Self, i16> = crate::PointDef::new(60, 1, false);
     pub const W_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(61, 1, false);
 }
-
 impl crate::Model for Model802 {
     const ID: u16 = 802;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -379,25 +375,26 @@ impl crate::Model for Model802 {
         })
     }
 }
-
-#[doc = "Charge Status\n\nCharge status of storage device. Enumeration."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Charge Status
+///
+/// Charge status of storage device. Enumeration.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ChaSt {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Off = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Empty = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Discharging = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Charging = 4,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Full = 5,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Holding = 6,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Testing = 7,
 }
 impl crate::Value for ChaSt {
@@ -428,15 +425,18 @@ impl crate::Value for Option<ChaSt> {
         }
     }
 }
-
-#[doc = "Control Mode\n\nBattery control mode. Enumeration.\n\nNotes: Maps to DRCC.LocRemCtl in IEC 61850."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Control Mode
+///
+/// Battery control mode. Enumeration.
+///
+/// Notes: Maps to DRCC.LocRemCtl in IEC 61850.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum LocRemCtl {
-    #[doc = "Notes: Value of 0 matches LocRemCtl in IEC 61850."]
+    /// Notes: Value of 0 matches LocRemCtl in IEC 61850.
     Remote = 0,
-    #[doc = "Notes: Value of 1 matches LocRemCtl in IEC 61850."]
+    /// Notes: Value of 1 matches LocRemCtl in IEC 61850.
     Local = 1,
 }
 impl crate::Value for LocRemCtl {
@@ -467,35 +467,38 @@ impl crate::Value for Option<LocRemCtl> {
         }
     }
 }
-
-#[doc = "Battery Type\n\nType of battery. Enumeration.\n\nNotes: Maps to DBAT.BatTyp in 61850."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Battery Type
+///
+/// Type of battery. Enumeration.
+///
+/// Notes: Maps to DBAT.BatTyp in 61850.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
-    #[doc = ""]
+    #[allow(missing_docs)]
     NotApplicableUnknown = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     LeadAcid = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     NickelMetalHydrate = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     NickelCadmium = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     LithiumIon = 4,
-    #[doc = ""]
+    #[allow(missing_docs)]
     CarbonZinc = 5,
-    #[doc = ""]
+    #[allow(missing_docs)]
     ZincChloride = 6,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Alkaline = 7,
-    #[doc = ""]
+    #[allow(missing_docs)]
     RechargeableAlkaline = 8,
-    #[doc = ""]
+    #[allow(missing_docs)]
     SodiumSulfur = 9,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Flow = 10,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Other = 99,
 }
 impl crate::Value for Typ {
@@ -526,25 +529,28 @@ impl crate::Value for Option<Typ> {
         }
     }
 }
-
-#[doc = "State of the Battery Bank\n\nState of the battery bank.  Enumeration.\n\nNotes: Must be reconciled with State in IEC 61850."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// State of the Battery Bank
+///
+/// State of the battery bank.  Enumeration.
+///
+/// Notes: Must be reconciled with State in IEC 61850.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum State {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Disconnected = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Initializing = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Connected = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Standby = 4,
-    #[doc = ""]
+    #[allow(missing_docs)]
     SocProtection = 5,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Suspending = 6,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Fault = 99,
 }
 impl crate::Value for State {
@@ -575,8 +581,35 @@ impl crate::Value for Option<State> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Battery Event 1 Bitfield\n\nAlarms and warnings.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt1 : u32 { # [doc = ""] const CommunicationError = 1 ; # [doc = ""] const OverTempAlarm = 2 ; # [doc = ""] const OverTempWarning = 4 ; # [doc = ""] const UnderTempAlarm = 8 ; # [doc = ""] const UnderTempWarning = 16 ; # [doc = "Notes: See AChaMax."] const OverChargeCurrentAlarm = 32 ; # [doc = "Notes: See AChaMax."] const OverChargeCurrentWarning = 64 ; # [doc = "Notes: See ADisChaMax."] const OverDischargeCurrentAlarm = 128 ; # [doc = "Notes: See ADisChaMax."] const OverDischargeCurrentWarning = 256 ; # [doc = ""] const OverVoltAlarm = 512 ; # [doc = ""] const OverVoltWarning = 1024 ; # [doc = ""] const UnderVoltAlarm = 2048 ; # [doc = ""] const UnderVoltWarning = 4096 ; # [doc = ""] const UnderSocMinAlarm = 8192 ; # [doc = ""] const UnderSocMinWarning = 16384 ; # [doc = ""] const OverSocMaxAlarm = 32768 ; # [doc = ""] const OverSocMaxWarning = 65536 ; # [doc = ""] const VoltageImbalanceWarning = 131072 ; # [doc = ""] const TemperatureImbalanceAlarm = 262144 ; # [doc = ""] const TemperatureImbalanceWarning = 524288 ; # [doc = ""] const ContactorError = 1048576 ; # [doc = ""] const FanError = 2097152 ; # [doc = ""] const GroundFault = 4194304 ; # [doc = ""] const OpenDoorError = 8388608 ; # [doc = ""] const CurrentImbalanceWarning = 16777216 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning = 67108864 ; # [doc = "Notes: Do not implement."] const Reserved1 = 134217728 ; # [doc = ""] const ConfigurationAlarm = 268435456 ; # [doc = ""] const ConfigurationWarning = 536870912 ; } }
+bitflags::bitflags! {
+    #[doc = " Battery Event 1 Bitfield"] #[doc = " "] #[doc =
+    " Alarms and warnings.  Bit flags."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Evt1 : u32 { #[allow(missing_docs)] const CommunicationError = 1;
+    #[allow(missing_docs)] const OverTempAlarm = 2; #[allow(missing_docs)] const
+    OverTempWarning = 4; #[allow(missing_docs)] const UnderTempAlarm = 8;
+    #[allow(missing_docs)] const UnderTempWarning = 16; #[doc = " Notes: See AChaMax."]
+    const OverChargeCurrentAlarm = 32; #[doc = " Notes: See AChaMax."] const
+    OverChargeCurrentWarning = 64; #[doc = " Notes: See ADisChaMax."] const
+    OverDischargeCurrentAlarm = 128; #[doc = " Notes: See ADisChaMax."] const
+    OverDischargeCurrentWarning = 256; #[allow(missing_docs)] const OverVoltAlarm = 512;
+    #[allow(missing_docs)] const OverVoltWarning = 1024; #[allow(missing_docs)] const
+    UnderVoltAlarm = 2048; #[allow(missing_docs)] const UnderVoltWarning = 4096;
+    #[allow(missing_docs)] const UnderSocMinAlarm = 8192; #[allow(missing_docs)] const
+    UnderSocMinWarning = 16384; #[allow(missing_docs)] const OverSocMaxAlarm = 32768;
+    #[allow(missing_docs)] const OverSocMaxWarning = 65536; #[allow(missing_docs)] const
+    VoltageImbalanceWarning = 131072; #[allow(missing_docs)] const
+    TemperatureImbalanceAlarm = 262144; #[allow(missing_docs)] const
+    TemperatureImbalanceWarning = 524288; #[allow(missing_docs)] const ContactorError =
+    1048576; #[allow(missing_docs)] const FanError = 2097152; #[allow(missing_docs)]
+    const GroundFault = 4194304; #[allow(missing_docs)] const OpenDoorError = 8388608;
+    #[allow(missing_docs)] const CurrentImbalanceWarning = 16777216; #[doc =
+    " Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432;
+    #[doc = " Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning =
+    67108864; #[doc = " Notes: Do not implement."] const Reserved1 = 134217728;
+    #[allow(missing_docs)] const ConfigurationAlarm = 268435456; #[allow(missing_docs)]
+    const ConfigurationWarning = 536870912; }
+}
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -603,8 +636,13 @@ impl crate::Value for Option<Evt1> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Battery Event 2 Bitfield\n\nAlarms and warnings.  Bit flags.\n\nNotes: Reserved for future use."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt2 : u32 { } }
+bitflags::bitflags! {
+    #[doc = " Battery Event 2 Bitfield"] #[doc = " "] #[doc =
+    " Alarms and warnings.  Bit flags."] #[doc = " "] #[doc =
+    " Notes: Reserved for future use."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Evt2 : u32 {}
+}
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -631,8 +669,11 @@ impl crate::Value for Option<Evt2> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Vendor Event Bitfield 1\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd1 : u32 { } }
+bitflags::bitflags! {
+    #[doc = " Vendor Event Bitfield 1"] #[doc = " "] #[doc = " Vendor defined events."]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd1 : u32 {}
+}
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -659,8 +700,11 @@ impl crate::Value for Option<EvtVnd1> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Vendor Event Bitfield 2\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd2 : u32 { } }
+bitflags::bitflags! {
+    #[doc = " Vendor Event Bitfield 2"] #[doc = " "] #[doc = " Vendor defined events."]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd2 : u32 {}
+}
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -687,17 +731,20 @@ impl crate::Value for Option<EvtVnd2> {
         }
     }
 }
-
-#[doc = "Inverter State Request\n\nRequest from battery to start or stop the inverter.  Enumeration.\n\nNotes: Used in special states such as manual battery charging."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Inverter State Request
+///
+/// Request from battery to start or stop the inverter.  Enumeration.
+///
+/// Notes: Used in special states such as manual battery charging.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ReqInvState {
-    #[doc = ""]
+    #[allow(missing_docs)]
     NoRequest = 0,
-    #[doc = "Notes: Battery is notified of inverter state change through SetInvState."]
+    /// Notes: Battery is notified of inverter state change through SetInvState.
     Start = 1,
-    #[doc = "Notes: Battery is notified of inverter state change through SetInvState."]
+    /// Notes: Battery is notified of inverter state change through SetInvState.
     Stop = 2,
 }
 impl crate::Value for ReqInvState {
@@ -728,15 +775,16 @@ impl crate::Value for Option<ReqInvState> {
         }
     }
 }
-
-#[doc = "Set Operation\n\nInstruct the battery bank to perform an operation such as connecting.  Enumeration."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Set Operation
+///
+/// Instruct the battery bank to perform an operation such as connecting.  Enumeration.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum SetOp {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Connect = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Disconnect = 2,
 }
 impl crate::Value for SetOp {
@@ -767,17 +815,20 @@ impl crate::Value for Option<SetOp> {
         }
     }
 }
-
-#[doc = "Set Inverter State\n\nSet the current state of the inverter.\n\nNotes: Information needed by battery for some operations."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Set Inverter State
+///
+/// Set the current state of the inverter.
+///
+/// Notes: Information needed by battery for some operations.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum SetInvState {
-    #[doc = ""]
+    #[allow(missing_docs)]
     InverterStopped = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     InverterStandby = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     InverterStarted = 3,
 }
 impl crate::Value for SetInvState {

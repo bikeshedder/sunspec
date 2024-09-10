@@ -1,5 +1,4 @@
 //! DER AC Controls
-
 /// DER AC Controls
 ///
 /// DER AC controls model.
@@ -193,9 +192,7 @@ pub struct Model704 {
     /// Reactive power pct scale factor.
     pub var_set_pct_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model704 {
     pub const PFW_INJ_ENA: crate::PointDef<Self, Option<PfwInjEna>> =
         crate::PointDef::new(0, 1, true);
@@ -268,7 +265,6 @@ impl Model704 {
     pub const VAR_SET_PCT_SF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(56, 1, false);
 }
-
 impl crate::Model for Model704 {
     const ID: u16 = 704;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -319,15 +315,22 @@ impl crate::Model for Model704 {
         })
     }
 }
-
-#[doc = "Power Factor Enable (W Inj) Enable\n\nPower factor enable when injecting active power.\n\nComments: Set Power Factor (when injecting active power)"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Power Factor Enable (W Inj) Enable
+///
+/// Power factor enable when injecting active power.
+///
+/// Comments: Set Power Factor (when injecting active power)
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum PfwInjEna {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for PfwInjEna {
@@ -358,15 +361,20 @@ impl crate::Value for Option<PfwInjEna> {
         }
     }
 }
-
-#[doc = "Power Factor Reversion Enable (W Inj)\n\nPower factor reversion timer when injecting active power enable."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Power Factor Reversion Enable (W Inj)
+///
+/// Power factor reversion timer when injecting active power enable.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum PfwInjEnaRvrt {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for PfwInjEnaRvrt {
@@ -397,15 +405,22 @@ impl crate::Value for Option<PfwInjEnaRvrt> {
         }
     }
 }
-
-#[doc = "Power Factor Enable (W Abs) Enable\n\nPower factor enable when absorbing active power.\n\nComments: Set Power Factor (when absorbing active power)"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Power Factor Enable (W Abs) Enable
+///
+/// Power factor enable when absorbing active power.
+///
+/// Comments: Set Power Factor (when absorbing active power)
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum PfwAbsEna {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for PfwAbsEna {
@@ -436,15 +451,20 @@ impl crate::Value for Option<PfwAbsEna> {
         }
     }
 }
-
-#[doc = "Power Factor Reversion Enable (W Abs)\n\nPower factor reversion timer when absorbing active power enable."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Power Factor Reversion Enable (W Abs)
+///
+/// Power factor reversion timer when absorbing active power enable.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum PfwAbsEnaRvrt {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for PfwAbsEnaRvrt {
@@ -475,15 +495,22 @@ impl crate::Value for Option<PfwAbsEnaRvrt> {
         }
     }
 }
-
-#[doc = "Limit Max Power Pct Enable\n\nLimit maximum active power percent enable.\n\nComments: Limit Maximum Active Power Generation"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Limit Max Power Pct Enable
+///
+/// Limit maximum active power percent enable.
+///
+/// Comments: Limit Maximum Active Power Generation
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum WMaxLimPctEna {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for WMaxLimPctEna {
@@ -514,15 +541,20 @@ impl crate::Value for Option<WMaxLimPctEna> {
         }
     }
 }
-
-#[doc = "Reversion Limit Max Power Pct Enable\n\nReversion limit maximum active power percent value enable."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Reversion Limit Max Power Pct Enable
+///
+/// Reversion limit maximum active power percent value enable.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum WMaxLimPctEnaRvrt {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for WMaxLimPctEnaRvrt {
@@ -553,15 +585,22 @@ impl crate::Value for Option<WMaxLimPctEnaRvrt> {
         }
     }
 }
-
-#[doc = "Set Active Power Enable\n\nSet active power enable.\n\nComments: Set Active Power Level (may be negative for charging)"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Set Active Power Enable
+///
+/// Set active power enable.
+///
+/// Comments: Set Active Power Level (may be negative for charging)
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum WSetEna {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for WSetEna {
@@ -592,15 +631,20 @@ impl crate::Value for Option<WSetEna> {
         }
     }
 }
-
-#[doc = "Set Active Power Mode\n\nSet active power mode."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Set Active Power Mode
+///
+/// Set active power mode.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum WSetMod {
-    #[doc = "Active Power As Max Percent\n\nActive power setting is percentage of maximum active power."]
+    /// Active Power As Max Percent
+    ///
+    /// Active power setting is percentage of maximum active power.
     WMaxPct = 0,
-    #[doc = "Active Power As Watts\n\nActive power setting is in watts."]
+    /// Active Power As Watts
+    ///
+    /// Active power setting is in watts.
     Watts = 1,
 }
 impl crate::Value for WSetMod {
@@ -631,15 +675,20 @@ impl crate::Value for Option<WSetMod> {
         }
     }
 }
-
-#[doc = "Reversion Active Power Enable\n\nReversion active power function enable."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Reversion Active Power Enable
+///
+/// Reversion active power function enable.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum WSetEnaRvrt {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for WSetEnaRvrt {
@@ -670,15 +719,22 @@ impl crate::Value for Option<WSetEnaRvrt> {
         }
     }
 }
-
-#[doc = "Set Reactive Power Enable\n\nSet reactive power enable.\n\nComments: Set Reactive Power Level"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Set Reactive Power Enable
+///
+/// Set reactive power enable.
+///
+/// Comments: Set Reactive Power Level
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VarSetEna {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for VarSetEna {
@@ -709,21 +765,32 @@ impl crate::Value for Option<VarSetEna> {
         }
     }
 }
-
-#[doc = "Set Reactive Power Mode\n\nSet reactive power mode."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Set Reactive Power Mode
+///
+/// Set reactive power mode.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VarSetMod {
-    #[doc = "Reactive Power As Watt Max Pct\n\nReactive power setting is percent of maximum active power."]
+    /// Reactive Power As Watt Max Pct
+    ///
+    /// Reactive power setting is percent of maximum active power.
     WMaxPct = 0,
-    #[doc = "Reactive Power As Var Max Pct\n\nReactive power setting is percent of maximum reactive power."]
+    /// Reactive Power As Var Max Pct
+    ///
+    /// Reactive power setting is percent of maximum reactive power.
     VarMaxPct = 1,
-    #[doc = "Reactive Power As Var Avail Pct\n\nReactive power setting is percent of available reactive  power."]
+    /// Reactive Power As Var Avail Pct
+    ///
+    /// Reactive power setting is percent of available reactive  power.
     VarAvailPct = 2,
-    #[doc = "Reactive Power As VA Max Pct\n\nReactive power setting is percent of maximum apparent power."]
+    /// Reactive Power As VA Max Pct
+    ///
+    /// Reactive power setting is percent of maximum apparent power.
     VaMaxPct = 3,
-    #[doc = "Reactive Power As Vars\n\nReactive power is in vars."]
+    /// Reactive Power As Vars
+    ///
+    /// Reactive power is in vars.
     Vars = 4,
 }
 impl crate::Value for VarSetMod {
@@ -754,17 +821,24 @@ impl crate::Value for Option<VarSetMod> {
         }
     }
 }
-
-#[doc = "Reactive Power Priority\n\nReactive power priority."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Reactive Power Priority
+///
+/// Reactive power priority.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VarSetPri {
-    #[doc = "Active Power Priority\n\nActive power priority."]
+    /// Active Power Priority
+    ///
+    /// Active power priority.
     Active = 0,
-    #[doc = "Reactive Power Priority\n\nReactive power priority."]
+    /// Reactive Power Priority
+    ///
+    /// Reactive power priority.
     Reactive = 1,
-    #[doc = "Vendor Power Priority\n\nPower priority is vendor specific mode."]
+    /// Vendor Power Priority
+    ///
+    /// Power priority is vendor specific mode.
     Vendor = 2,
 }
 impl crate::Value for VarSetPri {
@@ -795,15 +869,20 @@ impl crate::Value for Option<VarSetPri> {
         }
     }
 }
-
-#[doc = "Reversion Reactive Power Enable\n\nReversion reactive power function enable."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Reversion Reactive Power Enable
+///
+/// Reversion reactive power function enable.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VarSetEnaRvrt {
-    #[doc = "Disabled\n\nFunction is disabled."]
+    /// Disabled
+    ///
+    /// Function is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nFunction is enabled."]
+    /// Enabled
+    ///
+    /// Function is enabled.
     Enabled = 1,
 }
 impl crate::Value for VarSetEnaRvrt {
@@ -834,15 +913,20 @@ impl crate::Value for Option<VarSetEnaRvrt> {
         }
     }
 }
-
-#[doc = "Normal Ramp Rate Reference\n\nRamp rate reference unit for increases in active power or current during normal generation."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Normal Ramp Rate Reference
+///
+/// Ramp rate reference unit for increases in active power or current during normal generation.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum WRmpRef {
-    #[doc = "Max Current Ramp\n\nRamp based on percent of max current per second."]
+    /// Max Current Ramp
+    ///
+    /// Ramp based on percent of max current per second.
     AMax = 0,
-    #[doc = "Max Active Power Ramp\n\nRamp based on percent of max active power per second."]
+    /// Max Active Power Ramp
+    ///
+    /// Ramp based on percent of max active power per second.
     WMax = 1,
 }
 impl crate::Value for WRmpRef {
@@ -873,15 +957,20 @@ impl crate::Value for Option<WRmpRef> {
         }
     }
 }
-
-#[doc = "Anti-Islanding Enable\n\nAnti-islanding enable."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Anti-Islanding Enable
+///
+/// Anti-islanding enable.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum AntiIslEna {
-    #[doc = "Disabled\n\nAnti-islanding is disabled."]
+    /// Disabled
+    ///
+    /// Anti-islanding is disabled.
     Disabled = 0,
-    #[doc = "Enabled\n\nAnti-islanding is enabled."]
+    /// Enabled
+    ///
+    /// Anti-islanding is enabled.
     Enabled = 1,
 }
 impl crate::Value for AntiIslEna {

@@ -1,5 +1,4 @@
 //! Reference Point Model
-
 /// Reference Point Model
 ///
 /// Include to support a standard reference point
@@ -23,16 +22,13 @@ pub struct Model306 {
     /// Temperature measurement at reference point
     pub tmp: Option<u16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model306 {
     pub const GHI: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
     pub const A: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
     pub const V: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, false);
     pub const TMP: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
 }
-
 impl crate::Model for Model306 {
     const ID: u16 = 306;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

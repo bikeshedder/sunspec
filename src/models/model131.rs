@@ -1,5 +1,4 @@
 //! Watt-PF
-
 /// Watt-PF
 ///
 /// Watt-Power Factor
@@ -49,9 +48,7 @@ pub struct Model131 {
     /// Scale factor for increment and decrement ramps.
     pub rmp_inc_dec_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model131 {
     pub const ACT_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
     pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(1, 1, true);
@@ -65,7 +62,6 @@ impl Model131 {
     pub const RMP_INC_DEC_SF: crate::PointDef<Self, Option<i16>> =
         crate::PointDef::new(9, 1, false);
 }
-
 impl crate::Model for Model131 {
     const ID: u16 = 131;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -83,8 +79,12 @@ impl crate::Model for Model131 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "ModEna\n\nIs watt-PF mode active."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enabled = 1 ; } }
+bitflags::bitflags! {
+    #[doc = " ModEna"] #[doc = " "] #[doc = " Is watt-PF mode active."] #[derive(Copy,
+    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct ModEna : u16 {
+    #[allow(missing_docs)] const Enabled = 1; }
+}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

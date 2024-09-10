@@ -1,5 +1,4 @@
 //! Pricing
-
 /// Pricing
 ///
 /// Pricing Signal
@@ -37,9 +36,7 @@ pub struct Model125 {
     /// Pricing signal scale factor.
     pub sig_sf: i16,
 }
-
 #[allow(missing_docs)]
-
 impl Model125 {
     pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(0, 1, true);
     pub const SIG_TYPE: crate::PointDef<Self, Option<SigType>> = crate::PointDef::new(1, 1, true);
@@ -49,7 +46,6 @@ impl Model125 {
     pub const RMP_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
     pub const SIG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
 }
-
 impl crate::Model for Model125 {
     const ID: u16 = 125;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -64,8 +60,13 @@ impl crate::Model for Model125 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "ModEna\n\nIs price-based charge/discharge mode active?"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ModEna : u16 { # [doc = ""] const Enable = 1 ; } }
+bitflags::bitflags! {
+    #[doc = " ModEna"] #[doc = " "] #[doc =
+    " Is price-based charge/discharge mode active?"] #[derive(Copy, Clone, Debug, Eq,
+    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct ModEna : u16 { #[allow(missing_docs)] const Enable
+    = 1; }
+}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -92,21 +93,22 @@ impl crate::Value for Option<ModEna> {
         }
     }
 }
-
-#[doc = "SigType\n\nMeaning of the pricing signal. When a Price schedule is used, type must match the schedule range variable description."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// SigType
+///
+/// Meaning of the pricing signal. When a Price schedule is used, type must match the schedule range variable description.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum SigType {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Unknown = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Absolute = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Relative = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Multiplier = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Level = 4,
 }
 impl crate::Value for SigType {

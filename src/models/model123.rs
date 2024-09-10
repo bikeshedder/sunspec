@@ -1,5 +1,4 @@
 //! Immediate Controls
-
 /// Immediate Controls
 ///
 /// Immediate Inverter Controls
@@ -105,9 +104,7 @@ pub struct Model123 {
     /// Scale factor for reactive power percent.
     pub v_ar_pct_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model123 {
     pub const CONN_WIN_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
     pub const CONN_RVRT_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
@@ -146,7 +143,6 @@ impl Model123 {
     pub const OUT_PF_SET_SF: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
     pub const V_AR_PCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
 }
-
 impl crate::Model for Model123 {
     const ID: u16 = 123;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -178,15 +174,16 @@ impl crate::Model for Model123 {
         })
     }
 }
-
-#[doc = "Conn\n\nEnumerated valued.  Connection control."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Conn
+///
+/// Enumerated valued.  Connection control.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Conn {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Disconnect = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Connect = 1,
 }
 impl crate::Value for Conn {
@@ -217,15 +214,16 @@ impl crate::Value for Option<Conn> {
         }
     }
 }
-
-#[doc = "WMaxLim_Ena\n\nEnumerated valued.  Throttle enable/disable control."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// WMaxLim_Ena
+///
+/// Enumerated valued.  Throttle enable/disable control.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum WMaxLimEna {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Disabled = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Enabled = 1,
 }
 impl crate::Value for WMaxLimEna {
@@ -256,15 +254,16 @@ impl crate::Value for Option<WMaxLimEna> {
         }
     }
 }
-
-#[doc = "OutPFSet_Ena\n\nEnumerated valued.  Fixed power factor enable/disable control."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// OutPFSet_Ena
+///
+/// Enumerated valued.  Fixed power factor enable/disable control.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum OutPfSetEna {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Disabled = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Enabled = 1,
 }
 impl crate::Value for OutPfSetEna {
@@ -295,19 +294,20 @@ impl crate::Value for Option<OutPfSetEna> {
         }
     }
 }
-
-#[doc = "VArPct_Mod\n\nEnumerated value. VAR percent limit mode."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// VArPct_Mod
+///
+/// Enumerated value. VAR percent limit mode.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VArPctMod {
-    #[doc = ""]
+    #[allow(missing_docs)]
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     WMax = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     VArMax = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     VArAval = 3,
 }
 impl crate::Value for VArPctMod {
@@ -338,15 +338,16 @@ impl crate::Value for Option<VArPctMod> {
         }
     }
 }
-
-#[doc = "VArPct_Ena\n\nEnumerated valued.  Percent limit VAr enable/disable control."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// VArPct_Ena
+///
+/// Enumerated valued.  Percent limit VAr enable/disable control.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum VArPctEna {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Disabled = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Enabled = 1,
 }
 impl crate::Value for VArPctEna {

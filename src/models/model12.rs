@@ -1,5 +1,4 @@
 //! IPv4
-
 /// IPv4
 ///
 /// Include to support an IPv4 protocol stack on this interface
@@ -67,9 +66,7 @@ pub struct Model12 {
     /// Host name (24 chars max)
     pub host_nam: Option<String>,
 }
-
 #[allow(missing_docs)]
-
 impl Model12 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const CFG_ST: crate::PointDef<Self, CfgSt> = crate::PointDef::new(4, 1, false);
@@ -87,7 +84,6 @@ impl Model12 {
     pub const DOM_NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(73, 12, true);
     pub const HOST_NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(85, 12, true);
 }
-
 impl crate::Model for Model12 {
     const ID: u16 = 12;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -110,17 +106,18 @@ impl crate::Model for Model12 {
         })
     }
 }
-
-#[doc = "Config Status\n\nEnumerated value.  Configuration status"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Config Status
+///
+/// Enumerated value.  Configuration status
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum CfgSt {
-    #[doc = ""]
+    #[allow(missing_docs)]
     NotConfigured = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     ValidSetting = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     ValidHw = 2,
 }
 impl crate::Value for CfgSt {
@@ -151,8 +148,13 @@ impl crate::Value for Option<CfgSt> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Change Status\n\nBitmask value.  A configuration change is pending"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ChgSt : u16 { # [doc = ""] const Pending = 1 ; } }
+bitflags::bitflags! {
+    #[doc = " Change Status"] #[doc = " "] #[doc =
+    " Bitmask value.  A configuration change is pending"] #[derive(Copy, Clone, Debug,
+    Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct ChgSt : u16 { #[allow(missing_docs)] const Pending
+    = 1; }
+}
 impl crate::Value for ChgSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -179,8 +181,16 @@ impl crate::Value for Option<ChgSt> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Config Capability\n\nBitmask value. Identify capable sources of configuration"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Cap : u16 { # [doc = ""] const Dhcp = 1 ; # [doc = ""] const Bootp = 2 ; # [doc = ""] const Zeroconf = 4 ; # [doc = ""] const Dns = 8 ; # [doc = ""] const CfgSettable = 16 ; # [doc = ""] const HwConfig = 32 ; # [doc = ""] const NtpClient = 64 ; # [doc = ""] const ResetRequired = 128 ; } }
+bitflags::bitflags! {
+    #[doc = " Config Capability"] #[doc = " "] #[doc =
+    " Bitmask value. Identify capable sources of configuration"] #[derive(Copy, Clone,
+    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct Cap : u16 { #[allow(missing_docs)] const Dhcp = 1;
+    #[allow(missing_docs)] const Bootp = 2; #[allow(missing_docs)] const Zeroconf = 4;
+    #[allow(missing_docs)] const Dns = 8; #[allow(missing_docs)] const CfgSettable = 16;
+    #[allow(missing_docs)] const HwConfig = 32; #[allow(missing_docs)] const NtpClient =
+    64; #[allow(missing_docs)] const ResetRequired = 128; }
+}
 impl crate::Value for Cap {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -207,19 +217,20 @@ impl crate::Value for Option<Cap> {
         }
     }
 }
-
-#[doc = "IPv4 Config\n\nEnumerated value.  Configuration method used."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// IPv4 Config
+///
+/// Enumerated value.  Configuration method used.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Cfg {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Static = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Dhcp = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Bootp = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Zeroconf = 3,
 }
 impl crate::Value for Cfg {
@@ -250,15 +261,16 @@ impl crate::Value for Option<Cfg> {
         }
     }
 }
-
-#[doc = "Control\n\nConfigure use of services"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Control
+///
+/// Configure use of services
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Ctl {
-    #[doc = ""]
+    #[allow(missing_docs)]
     EnableDns = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     EnableNtp = 1,
 }
 impl crate::Value for Ctl {

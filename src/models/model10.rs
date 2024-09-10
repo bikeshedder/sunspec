@@ -1,5 +1,4 @@
 //! Communication Interface Header
-
 /// Communication Interface Header
 ///
 /// To be included first for a complete interface description
@@ -19,15 +18,12 @@ pub struct Model10 {
     /// Enumerated value.  Type of physical media
     pub typ: Option<Typ>,
 }
-
 #[allow(missing_docs)]
-
 impl Model10 {
     pub const ST: crate::PointDef<Self, St> = crate::PointDef::new(0, 1, false);
     pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
     pub const TYP: crate::PointDef<Self, Option<Typ>> = crate::PointDef::new(2, 1, false);
 }
-
 impl crate::Model for Model10 {
     const ID: u16 = 10;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -38,17 +34,18 @@ impl crate::Model for Model10 {
         })
     }
 }
-
-#[doc = "Interface Status\n\nOverall interface status"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Interface Status
+///
+/// Overall interface status
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum St {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Down = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Up = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Fault = 2,
 }
 impl crate::Value for St {
@@ -79,21 +76,22 @@ impl crate::Value for Option<St> {
         }
     }
 }
-
-#[doc = "Physical Access Type\n\nEnumerated value.  Type of physical media"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Physical Access Type
+///
+/// Enumerated value.  Type of physical media
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Unknown = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Internal = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     TwistedPair = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Fiber = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Wireless = 4,
 }
 impl crate::Value for Typ {

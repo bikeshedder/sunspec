@@ -1,5 +1,4 @@
 //! delta-connect three phase (abc) meter
-
 /// delta-connect three phase (abc) meter
 ///
 /// Notes: Float
@@ -183,9 +182,7 @@ pub struct Model214 {
     /// Meter Event Flags
     pub evt: Evt,
 }
-
 #[allow(missing_docs)]
-
 impl Model214 {
     pub const A: crate::PointDef<Self, f32> = crate::PointDef::new(0, 2, false);
     pub const APH_A: crate::PointDef<Self, f32> = crate::PointDef::new(2, 2, false);
@@ -278,7 +275,6 @@ impl Model214 {
         crate::PointDef::new(120, 2, false);
     pub const EVT: crate::PointDef<Self, Evt> = crate::PointDef::new(122, 2, false);
 }
-
 impl crate::Model for Model214 {
     const ID: u16 = 214;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -348,8 +344,30 @@ impl crate::Model for Model214 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "Events\n\nMeter Event Flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt : u32 { # [doc = ""] const MEventPowerFailure = 4 ; # [doc = ""] const MEventUnderVoltage = 8 ; # [doc = ""] const MEventLowPf = 16 ; # [doc = ""] const MEventOverCurrent = 32 ; # [doc = ""] const MEventOverVoltage = 64 ; # [doc = ""] const MEventMissingSensor = 128 ; # [doc = ""] const MEventReserved1 = 256 ; # [doc = ""] const MEventReserved2 = 512 ; # [doc = ""] const MEventReserved3 = 1024 ; # [doc = ""] const MEventReserved4 = 2048 ; # [doc = ""] const MEventReserved5 = 4096 ; # [doc = ""] const MEventReserved6 = 8192 ; # [doc = ""] const MEventReserved7 = 16384 ; # [doc = ""] const MEventReserved8 = 32768 ; # [doc = ""] const MEventOem01 = 65536 ; # [doc = ""] const MEventOem02 = 131072 ; # [doc = ""] const MEventOem03 = 262144 ; # [doc = ""] const MEventOem04 = 524288 ; # [doc = ""] const MEventOem05 = 1048576 ; # [doc = ""] const MEventOem06 = 2097152 ; # [doc = ""] const MEventOem07 = 4194304 ; # [doc = ""] const MEventOem08 = 8388608 ; # [doc = ""] const MEventOem09 = 16777216 ; # [doc = ""] const MEventOem10 = 33554432 ; # [doc = ""] const MEventOem11 = 67108864 ; # [doc = ""] const MEventOem12 = 134217728 ; # [doc = ""] const MEventOem13 = 268435456 ; # [doc = ""] const MEventOem14 = 536870912 ; # [doc = ""] const MEventOem15 = 1073741824 ; } }
+bitflags::bitflags! {
+    #[doc = " Events"] #[doc = " "] #[doc = " Meter Event Flags"] #[derive(Copy, Clone,
+    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct Evt : u32 { #[allow(missing_docs)] const
+    MEventPowerFailure = 4; #[allow(missing_docs)] const MEventUnderVoltage = 8;
+    #[allow(missing_docs)] const MEventLowPf = 16; #[allow(missing_docs)] const
+    MEventOverCurrent = 32; #[allow(missing_docs)] const MEventOverVoltage = 64;
+    #[allow(missing_docs)] const MEventMissingSensor = 128; #[allow(missing_docs)] const
+    MEventReserved1 = 256; #[allow(missing_docs)] const MEventReserved2 = 512;
+    #[allow(missing_docs)] const MEventReserved3 = 1024; #[allow(missing_docs)] const
+    MEventReserved4 = 2048; #[allow(missing_docs)] const MEventReserved5 = 4096;
+    #[allow(missing_docs)] const MEventReserved6 = 8192; #[allow(missing_docs)] const
+    MEventReserved7 = 16384; #[allow(missing_docs)] const MEventReserved8 = 32768;
+    #[allow(missing_docs)] const MEventOem01 = 65536; #[allow(missing_docs)] const
+    MEventOem02 = 131072; #[allow(missing_docs)] const MEventOem03 = 262144;
+    #[allow(missing_docs)] const MEventOem04 = 524288; #[allow(missing_docs)] const
+    MEventOem05 = 1048576; #[allow(missing_docs)] const MEventOem06 = 2097152;
+    #[allow(missing_docs)] const MEventOem07 = 4194304; #[allow(missing_docs)] const
+    MEventOem08 = 8388608; #[allow(missing_docs)] const MEventOem09 = 16777216;
+    #[allow(missing_docs)] const MEventOem10 = 33554432; #[allow(missing_docs)] const
+    MEventOem11 = 67108864; #[allow(missing_docs)] const MEventOem12 = 134217728;
+    #[allow(missing_docs)] const MEventOem13 = 268435456; #[allow(missing_docs)] const
+    MEventOem14 = 536870912; #[allow(missing_docs)] const MEventOem15 = 1073741824; }
+}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

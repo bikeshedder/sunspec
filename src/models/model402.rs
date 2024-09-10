@@ -1,5 +1,4 @@
 //! String Combiner (Advanced)
-
 /// String Combiner (Advanced)
 ///
 /// An advanced string combiner
@@ -63,9 +62,7 @@ pub struct Model402 {
     /// Output energy
     pub dc_wh: u32,
 }
-
 #[allow(missing_docs)]
-
 impl Model402 {
     pub const DCA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
     pub const DC_AHR_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
@@ -84,7 +81,6 @@ impl Model402 {
     pub const DCPR: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, false);
     pub const DC_WH: crate::PointDef<Self, u32> = crate::PointDef::new(18, 2, false);
 }
-
 impl crate::Model for Model402 {
     const ID: u16 = 402;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -108,8 +104,23 @@ impl crate::Model for Model402 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "Event\n\nBitmask value.  Events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt : u32 { # [doc = ""] const LowVoltage = 1 ; # [doc = ""] const LowPower = 2 ; # [doc = ""] const LowEfficiency = 4 ; # [doc = ""] const Current = 8 ; # [doc = ""] const Voltage = 16 ; # [doc = ""] const Power = 32 ; # [doc = ""] const Pr = 64 ; # [doc = ""] const Disconnected = 128 ; # [doc = ""] const FuseFault = 256 ; # [doc = ""] const CombinerFuseFault = 512 ; # [doc = ""] const CombinerCabinetOpen = 1024 ; # [doc = ""] const Temp = 2048 ; # [doc = ""] const Groundfault = 4096 ; # [doc = ""] const ReversedPolarity = 8192 ; # [doc = ""] const Incompatible = 16384 ; # [doc = ""] const CommError = 32768 ; # [doc = ""] const InternalError = 65536 ; # [doc = ""] const Theft = 131072 ; # [doc = ""] const ArcDetected = 262144 ; } }
+bitflags::bitflags! {
+    #[doc = " Event"] #[doc = " "] #[doc = " Bitmask value.  Events"] #[derive(Copy,
+    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct Evt : u32 {
+    #[allow(missing_docs)] const LowVoltage = 1; #[allow(missing_docs)] const LowPower =
+    2; #[allow(missing_docs)] const LowEfficiency = 4; #[allow(missing_docs)] const
+    Current = 8; #[allow(missing_docs)] const Voltage = 16; #[allow(missing_docs)] const
+    Power = 32; #[allow(missing_docs)] const Pr = 64; #[allow(missing_docs)] const
+    Disconnected = 128; #[allow(missing_docs)] const FuseFault = 256;
+    #[allow(missing_docs)] const CombinerFuseFault = 512; #[allow(missing_docs)] const
+    CombinerCabinetOpen = 1024; #[allow(missing_docs)] const Temp = 2048;
+    #[allow(missing_docs)] const Groundfault = 4096; #[allow(missing_docs)] const
+    ReversedPolarity = 8192; #[allow(missing_docs)] const Incompatible = 16384;
+    #[allow(missing_docs)] const CommError = 32768; #[allow(missing_docs)] const
+    InternalError = 65536; #[allow(missing_docs)] const Theft = 131072;
+    #[allow(missing_docs)] const ArcDetected = 262144; }
+}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -136,8 +147,12 @@ impl crate::Value for Option<Evt> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Vendor Event\n\nBitmask value.  Vendor defined events"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd : u32 { } }
+bitflags::bitflags! {
+    #[doc = " Vendor Event"] #[doc = " "] #[doc =
+    " Bitmask value.  Vendor defined events"] #[derive(Copy, Clone, Debug, Eq,
+    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct EvtVnd : u32 {}
+}
 impl crate::Value for EvtVnd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

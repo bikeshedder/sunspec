@@ -1,5 +1,4 @@
 //! Extended Settings
-
 /// Extended Settings
 ///
 /// Inverter controls extended settings
@@ -39,9 +38,7 @@ pub struct Model145 {
     /// Ramp Rate Scale Factor
     pub rmp_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model145 {
     pub const NOM_RMP_UP_RTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
     pub const NOM_RMP_DN_RTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
@@ -54,7 +51,6 @@ impl Model145 {
     pub const A_GRA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
     pub const RMP_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(7, 1, false);
 }
-
 impl crate::Model for Model145 {
     const ID: u16 = 145;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {

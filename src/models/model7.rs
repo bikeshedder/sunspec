@@ -1,5 +1,4 @@
 //! Secure Write Response Model (DRAFT 1)
-
 /// Secure Write Response Model (DRAFT 1)
 ///
 /// Include a digital signature over the response
@@ -47,9 +46,7 @@ pub struct Model7 {
     /// Notes: The value of N must be at least 4 (64 bits)
     pub n: u16,
 }
-
 #[allow(missing_docs)]
-
 impl Model7 {
     pub const RQ_SEQ: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const STS: crate::PointDef<Self, Sts> = crate::PointDef::new(1, 1, false);
@@ -60,7 +57,6 @@ impl Model7 {
     pub const ALG: crate::PointDef<Self, Alg> = crate::PointDef::new(8, 1, false);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, true);
 }
-
 impl crate::Model for Model7 {
     const ID: u16 = 7;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -76,21 +72,22 @@ impl crate::Model for Model7 {
         })
     }
 }
-
-#[doc = "Status\n\nStatus of last write operation"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Status
+///
+/// Status of last write operation
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Sts {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Success = 0,
-    #[doc = "Notes: The signature was not valid"]
+    /// Notes: The signature was not valid
     Ds = 1,
-    #[doc = "Notes: One or more registers were not writable by this role"]
+    /// Notes: One or more registers were not writable by this role
     Acl = 2,
-    #[doc = "Notes: Offset out of range or missing from multi-register value"]
+    /// Notes: Offset out of range or missing from multi-register value
     Off = 3,
-    #[doc = "Notes: Value is out of acceptable range"]
+    /// Notes: Value is out of acceptable range
     Val = 4,
 }
 impl crate::Value for Sts {
@@ -121,15 +118,16 @@ impl crate::Value for Option<Sts> {
         }
     }
 }
-
-#[doc = "Alarm\n\nBitmask alarm code"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Alarm
+///
+/// Bitmask alarm code
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alm {
-    #[doc = ""]
+    #[allow(missing_docs)]
     None = 0,
-    #[doc = "Notes: Tampered"]
+    /// Notes: Tampered
     Alm = 1,
 }
 impl crate::Value for Alm {
@@ -160,17 +158,20 @@ impl crate::Value for Option<Alm> {
         }
     }
 }
-
-#[doc = "Algorithm\n\nAlgorithm used to compute the digital signature\n\nNotes: For future proof"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Algorithm
+///
+/// Algorithm used to compute the digital signature
+///
+/// Notes: For future proof
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
-    #[doc = "Notes: For test purposes only"]
+    /// Notes: For test purposes only
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     AesGmac64 = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Ecc256 = 2,
 }
 impl crate::Value for Alg {

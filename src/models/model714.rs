@@ -1,5 +1,4 @@
 //! DER DC Measurement
-
 /// DER DC Measurement
 ///
 /// DER DC measurement.
@@ -53,9 +52,7 @@ pub struct Model714 {
     /// Temperature Scale Factor.
     pub tmp_sf: Option<i16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model714 {
     pub const PRT_ALRMS: crate::PointDef<Self, Option<PrtAlrms>> =
         crate::PointDef::new(0, 2, false);
@@ -70,7 +67,6 @@ impl Model714 {
     pub const DCWH_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(16, 1, false);
     pub const TMP_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(17, 1, false);
 }
-
 impl crate::Model for Model714 {
     const ID: u16 = 714;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -89,8 +85,13 @@ impl crate::Model for Model714 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "Port Alarms\n\nBitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port.\n\nComments: DC General"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct PrtAlrms : u32 { } }
+bitflags::bitflags! {
+    #[doc = " Port Alarms"] #[doc = " "] #[doc =
+    " Bitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port."]
+    #[doc = " "] #[doc = " Comments: DC General"] #[derive(Copy, Clone, Debug, Eq,
+    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct PrtAlrms : u32 {}
+}
 impl crate::Value for PrtAlrms {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

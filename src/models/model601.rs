@@ -1,5 +1,4 @@
 //! Tracker Controller DRAFT 2
-
 /// Tracker Controller DRAFT 2
 ///
 /// Monitors and controls multiple trackers
@@ -57,9 +56,7 @@ pub struct Model601 {
     /// Number of trackers being controlled.  Size of repeating block.
     pub n: u16,
 }
-
 #[allow(missing_docs)]
-
 impl Model601 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 8, false);
     pub const TYP: crate::PointDef<Self, Typ> = crate::PointDef::new(8, 1, false);
@@ -73,7 +70,6 @@ impl Model601 {
     pub const DGR_SF: crate::PointDef<Self, i16> = crate::PointDef::new(24, 1, false);
     pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(25, 1, false);
 }
-
 impl crate::Model for Model601 {
     const ID: u16 = 601;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -92,25 +88,26 @@ impl crate::Model for Model601 {
         })
     }
 }
-
-#[doc = "Type\n\nType of tracker"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Type
+///
+/// Type of tracker
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Typ {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Unknown = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Fixed = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Horizontal = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Tilted = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Azimuth = 4,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Dual = 5,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Other = 99,
 }
 impl crate::Value for Typ {
@@ -141,17 +138,20 @@ impl crate::Value for Option<Typ> {
         }
     }
 }
-
-#[doc = "Global Mode\n\nGlobal Control register operates on all trackers. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.\n\nNotes: The global controls all trackers"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Global Mode
+///
+/// Global Control register operates on all trackers. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
+///
+/// Notes: The global controls all trackers
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum GlblCtl {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Automatic = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Manual = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Calibrate = 2,
 }
 impl crate::Value for GlblCtl {
@@ -182,8 +182,15 @@ impl crate::Value for Option<GlblCtl> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Global Alarm\n\nGlobal tracker alarm conditions\n\nNotes: Combined tracker alarm conditions.  See individual trackers for alarms"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct GlblAlm : u16 { # [doc = ""] const SetPoint = 1 ; # [doc = ""] const ObsEl = 2 ; # [doc = ""] const ObsAz = 4 ; } }
+bitflags::bitflags! {
+    #[doc = " Global Alarm"] #[doc = " "] #[doc = " Global tracker alarm conditions"]
+    #[doc = " "] #[doc =
+    " Notes: Combined tracker alarm conditions.  See individual trackers for alarms"]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct GlblAlm : u16 {
+    #[allow(missing_docs)] const SetPoint = 1; #[allow(missing_docs)] const ObsEl = 2;
+    #[allow(missing_docs)] const ObsAz = 4; }
+}
 impl crate::Value for GlblAlm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

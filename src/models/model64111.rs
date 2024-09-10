@@ -1,5 +1,4 @@
 //! Basic Charge Controller
-
 /// Basic Charge Controller
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -51,9 +50,7 @@ pub struct Model64111 {
     /// Lifetime Maximum VOC Voltage
     pub life_time_max_voc: u16,
 }
-
 #[allow(missing_docs)]
-
 impl Model64111 {
     pub const PORT: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, false);
@@ -79,7 +76,6 @@ impl Model64111 {
     pub const LIFE_TIME_MAX_BATT: crate::PointDef<Self, u16> = crate::PointDef::new(21, 1, false);
     pub const LIFE_TIME_MAX_VOC: crate::PointDef<Self, u16> = crate::PointDef::new(22, 1, false);
 }
-
 impl crate::Model for Model64111 {
     const ID: u16 = 64111;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -110,21 +106,20 @@ impl crate::Model for Model64111 {
         })
     }
 }
-
-#[doc = "Operating State"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Operating State
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ChargerSt {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Off = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Float = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Bulk = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Absorb = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Eq = 4,
 }
 impl crate::Value for ChargerSt {

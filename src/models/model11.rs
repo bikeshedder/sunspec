@@ -1,5 +1,4 @@
 //! Ethernet Link Layer
-
 /// Ethernet Link Layer
 ///
 /// Include to support a wired ethernet port
@@ -35,9 +34,7 @@ pub struct Model11 {
     /// Forced interface speed in Mb/s when AUTO is disabled
     pub frc_spd: Option<u16>,
 }
-
 #[allow(missing_docs)]
-
 impl Model11 {
     pub const SPD: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const CFG_ST: crate::PointDef<Self, CfgSt> = crate::PointDef::new(1, 1, false);
@@ -47,7 +44,6 @@ impl Model11 {
     pub const CTL: crate::PointDef<Self, Option<Ctl>> = crate::PointDef::new(11, 1, true);
     pub const FRC_SPD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, true);
 }
-
 impl crate::Model for Model11 {
     const ID: u16 = 11;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -62,8 +58,16 @@ impl crate::Model for Model11 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "Interface Status Flags\n\nBitmask values Interface flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct CfgSt : u16 { # [doc = ""] const Link = 1 ; # [doc = ""] const FullDuplex = 2 ; # [doc = ""] const AutoNeg1 = 4 ; # [doc = ""] const AutoNeg2 = 8 ; # [doc = ""] const AutoNeg3 = 16 ; # [doc = ""] const ResetRequired = 32 ; # [doc = ""] const HwFault = 64 ; } }
+bitflags::bitflags! {
+    #[doc = " Interface Status Flags"] #[doc = " "] #[doc =
+    " Bitmask values Interface flags."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct CfgSt : u16 { #[allow(missing_docs)] const Link = 1; #[allow(missing_docs)]
+    const FullDuplex = 2; #[allow(missing_docs)] const AutoNeg1 = 4;
+    #[allow(missing_docs)] const AutoNeg2 = 8; #[allow(missing_docs)] const AutoNeg3 =
+    16; #[allow(missing_docs)] const ResetRequired = 32; #[allow(missing_docs)] const
+    HwFault = 64; }
+}
 impl crate::Value for CfgSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -90,19 +94,20 @@ impl crate::Value for Option<CfgSt> {
         }
     }
 }
-
-#[doc = "Link State\n\nEnumerated value. State information for this interface"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Link State
+///
+/// Enumerated value. State information for this interface
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum St {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Unknown = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Enabled = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Disabled = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Testing = 3,
 }
 impl crate::Value for St {
@@ -133,8 +138,12 @@ impl crate::Value for Option<St> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Control\n\nControl flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Ctl : u16 { # [doc = ""] const Auto = 1 ; # [doc = ""] const FullDuplex = 2 ; } }
+bitflags::bitflags! {
+    #[doc = " Control"] #[doc = " "] #[doc = " Control flags"] #[derive(Copy, Clone,
+    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct Ctl : u16 { #[allow(missing_docs)] const Auto = 1;
+    #[allow(missing_docs)] const FullDuplex = 2; }
+}
 impl crate::Value for Ctl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

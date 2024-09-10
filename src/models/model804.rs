@@ -1,5 +1,4 @@
 //! Lithium-Ion String Model
-
 /// Lithium-Ion String Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -157,9 +156,7 @@ pub struct Model804 {
     /// Scale factor for module temperature.
     pub mod_tmp_sf: i16,
 }
-
 #[allow(missing_docs)]
-
 impl Model804 {
     pub const IDX: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
     pub const N_MOD: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
@@ -199,7 +196,6 @@ impl Model804 {
     pub const CELL_V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(41, 1, false);
     pub const MOD_TMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(42, 1, false);
 }
-
 impl crate::Model for Model804 {
     const ID: u16 = 804;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -242,8 +238,14 @@ impl crate::Model for Model804 {
         })
     }
 }
-
-bitflags::bitflags! { # [doc = "String Status\n\nCurrent status of the string."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct St : u32 { # [doc = ""] const StringEnabled = 1 ; # [doc = "Notes: If string has multiple contactors, indicates that all contactors are closed."] const ContactorStatus = 2 ; } }
+bitflags::bitflags! {
+    #[doc = " String Status"] #[doc = " "] #[doc = " Current status of the string."]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct St : u32 {
+    #[allow(missing_docs)] const StringEnabled = 1; #[doc =
+    " Notes: If string has multiple contactors, indicates that all contactors are closed."]
+    const ContactorStatus = 2; }
+}
 impl crate::Value for St {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -270,29 +272,28 @@ impl crate::Value for Option<St> {
         }
     }
 }
-
-#[doc = "Connection Failure Reason"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Connection Failure Reason
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ConFail {
-    #[doc = ""]
+    #[allow(missing_docs)]
     NoFailure = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     ButtonPushed = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     StrGroundFault = 2,
-    #[doc = ""]
+    #[allow(missing_docs)]
     OutsideVoltageRange = 3,
-    #[doc = ""]
+    #[allow(missing_docs)]
     StringNotEnabled = 4,
-    #[doc = ""]
+    #[allow(missing_docs)]
     FuseOpen = 5,
-    #[doc = ""]
+    #[allow(missing_docs)]
     ContactorFailure = 6,
-    #[doc = ""]
+    #[allow(missing_docs)]
     PrechargeFailure = 7,
-    #[doc = "Notes: See Evt1 for more information."]
+    /// Notes: See Evt1 for more information.
     StringFault = 8,
 }
 impl crate::Value for ConFail {
@@ -323,8 +324,32 @@ impl crate::Value for Option<ConFail> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Contactor Status\n\nStatus of the contactor(s) for the string."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct ConSt : u32 { # [doc = ""] const Contactor0 = 1 ; # [doc = ""] const Contactor1 = 2 ; # [doc = ""] const Contactor2 = 4 ; # [doc = ""] const Contactor3 = 8 ; # [doc = ""] const Contactor4 = 16 ; # [doc = ""] const Contactor5 = 32 ; # [doc = ""] const Contactor6 = 64 ; # [doc = ""] const Contactor7 = 128 ; # [doc = ""] const Contactor8 = 256 ; # [doc = ""] const Contactor9 = 512 ; # [doc = ""] const Contactor10 = 1024 ; # [doc = ""] const Contactor11 = 2048 ; # [doc = ""] const Contactor12 = 4096 ; # [doc = ""] const Contactor13 = 8192 ; # [doc = ""] const Contactor14 = 16384 ; # [doc = ""] const Contactor15 = 32768 ; # [doc = ""] const Contactor16 = 65536 ; # [doc = ""] const Contactor17 = 131072 ; # [doc = ""] const Contactor18 = 262144 ; # [doc = ""] const Contactor19 = 524288 ; # [doc = ""] const Contactor20 = 1048576 ; # [doc = ""] const Contactor21 = 2097152 ; # [doc = ""] const Contactor22 = 4194304 ; # [doc = ""] const Contactor23 = 8388608 ; # [doc = ""] const Contactor24 = 16777216 ; # [doc = ""] const Contactor25 = 33554432 ; # [doc = ""] const Contactor26 = 67108864 ; # [doc = ""] const Contactor27 = 134217728 ; # [doc = ""] const Contactor28 = 268435456 ; # [doc = ""] const Contactor29 = 536870912 ; # [doc = ""] const Contactor30 = 1073741824 ; } }
+bitflags::bitflags! {
+    #[doc = " Contactor Status"] #[doc = " "] #[doc =
+    " Status of the contactor(s) for the string."] #[derive(Copy, Clone, Debug, Eq,
+    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct ConSt : u32 { #[allow(missing_docs)] const
+    Contactor0 = 1; #[allow(missing_docs)] const Contactor1 = 2; #[allow(missing_docs)]
+    const Contactor2 = 4; #[allow(missing_docs)] const Contactor3 = 8;
+    #[allow(missing_docs)] const Contactor4 = 16; #[allow(missing_docs)] const Contactor5
+    = 32; #[allow(missing_docs)] const Contactor6 = 64; #[allow(missing_docs)] const
+    Contactor7 = 128; #[allow(missing_docs)] const Contactor8 = 256;
+    #[allow(missing_docs)] const Contactor9 = 512; #[allow(missing_docs)] const
+    Contactor10 = 1024; #[allow(missing_docs)] const Contactor11 = 2048;
+    #[allow(missing_docs)] const Contactor12 = 4096; #[allow(missing_docs)] const
+    Contactor13 = 8192; #[allow(missing_docs)] const Contactor14 = 16384;
+    #[allow(missing_docs)] const Contactor15 = 32768; #[allow(missing_docs)] const
+    Contactor16 = 65536; #[allow(missing_docs)] const Contactor17 = 131072;
+    #[allow(missing_docs)] const Contactor18 = 262144; #[allow(missing_docs)] const
+    Contactor19 = 524288; #[allow(missing_docs)] const Contactor20 = 1048576;
+    #[allow(missing_docs)] const Contactor21 = 2097152; #[allow(missing_docs)] const
+    Contactor22 = 4194304; #[allow(missing_docs)] const Contactor23 = 8388608;
+    #[allow(missing_docs)] const Contactor24 = 16777216; #[allow(missing_docs)] const
+    Contactor25 = 33554432; #[allow(missing_docs)] const Contactor26 = 67108864;
+    #[allow(missing_docs)] const Contactor27 = 134217728; #[allow(missing_docs)] const
+    Contactor28 = 268435456; #[allow(missing_docs)] const Contactor29 = 536870912;
+    #[allow(missing_docs)] const Contactor30 = 1073741824; }
+}
 impl crate::Value for ConSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -351,8 +376,36 @@ impl crate::Value for Option<ConSt> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "String Event 1\n\nAlarms, warnings and status values.  Bit flags."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt1 : u32 { # [doc = ""] const CommunicationError = 1 ; # [doc = ""] const OverTempAlarm = 2 ; # [doc = ""] const OverTempWarning = 4 ; # [doc = ""] const UnderTempAlarm = 8 ; # [doc = ""] const UnderTempWarning = 16 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32 ; # [doc = "Notes: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128 ; # [doc = "Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning = 256 ; # [doc = ""] const OverVoltAlarm = 512 ; # [doc = ""] const OverVoltWarning = 1024 ; # [doc = ""] const UnderVoltAlarm = 2048 ; # [doc = ""] const UnderVoltWarning = 4096 ; # [doc = ""] const UnderSocMinAlarm = 8192 ; # [doc = ""] const UnderSocMinWarning = 16384 ; # [doc = ""] const OverSocMaxAlarm = 32768 ; # [doc = ""] const OverSocMaxWarning = 65536 ; # [doc = ""] const VoltageImbalanceWarning = 131072 ; # [doc = ""] const TemperatureImbalanceAlarm = 262144 ; # [doc = ""] const TemperatureImbalanceWarning = 524288 ; # [doc = ""] const ContactorError = 1048576 ; # [doc = ""] const FanError = 2097152 ; # [doc = ""] const GroundFault = 4194304 ; # [doc = ""] const OpenDoorError = 8388608 ; # [doc = "Notes: Do not implement."] const Reserved1 = 16777216 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432 ; # [doc = "Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning = 67108864 ; # [doc = "Notes: Do not implement."] const Reserved2 = 134217728 ; # [doc = ""] const ConfigurationAlarm = 268435456 ; # [doc = ""] const ConfigurationWarning = 536870912 ; } }
+bitflags::bitflags! {
+    #[doc = " String Event 1"] #[doc = " "] #[doc =
+    " Alarms, warnings and status values.  Bit flags."] #[derive(Copy, Clone, Debug, Eq,
+    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
+    ::serde::Deserialize))] pub struct Evt1 : u32 { #[allow(missing_docs)] const
+    CommunicationError = 1; #[allow(missing_docs)] const OverTempAlarm = 2;
+    #[allow(missing_docs)] const OverTempWarning = 4; #[allow(missing_docs)] const
+    UnderTempAlarm = 8; #[allow(missing_docs)] const UnderTempWarning = 16; #[doc =
+    " Notes: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32; #[doc =
+    " Notes: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64; #[doc =
+    " Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128;
+    #[doc = " Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning =
+    256; #[allow(missing_docs)] const OverVoltAlarm = 512; #[allow(missing_docs)] const
+    OverVoltWarning = 1024; #[allow(missing_docs)] const UnderVoltAlarm = 2048;
+    #[allow(missing_docs)] const UnderVoltWarning = 4096; #[allow(missing_docs)] const
+    UnderSocMinAlarm = 8192; #[allow(missing_docs)] const UnderSocMinWarning = 16384;
+    #[allow(missing_docs)] const OverSocMaxAlarm = 32768; #[allow(missing_docs)] const
+    OverSocMaxWarning = 65536; #[allow(missing_docs)] const VoltageImbalanceWarning =
+    131072; #[allow(missing_docs)] const TemperatureImbalanceAlarm = 262144;
+    #[allow(missing_docs)] const TemperatureImbalanceWarning = 524288;
+    #[allow(missing_docs)] const ContactorError = 1048576; #[allow(missing_docs)] const
+    FanError = 2097152; #[allow(missing_docs)] const GroundFault = 4194304;
+    #[allow(missing_docs)] const OpenDoorError = 8388608; #[doc =
+    " Notes: Do not implement."] const Reserved1 = 16777216; #[doc =
+    " Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432;
+    #[doc = " Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning =
+    67108864; #[doc = " Notes: Do not implement."] const Reserved2 = 134217728;
+    #[allow(missing_docs)] const ConfigurationAlarm = 268435456; #[allow(missing_docs)]
+    const ConfigurationWarning = 536870912; }
+}
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -379,8 +432,13 @@ impl crate::Value for Option<Evt1> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "String Event 2\n\nAlarms, warnings and status values.  Bit flags.\n\nNotes: Reserved for future use."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Evt2 : u32 { } }
+bitflags::bitflags! {
+    #[doc = " String Event 2"] #[doc = " "] #[doc =
+    " Alarms, warnings and status values.  Bit flags."] #[doc = " "] #[doc =
+    " Notes: Reserved for future use."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct Evt2 : u32 {}
+}
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -407,8 +465,11 @@ impl crate::Value for Option<Evt2> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Vendor Event Bitfield 1\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd1 : u32 { } }
+bitflags::bitflags! {
+    #[doc = " Vendor Event Bitfield 1"] #[doc = " "] #[doc = " Vendor defined events."]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd1 : u32 {}
+}
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -435,8 +496,11 @@ impl crate::Value for Option<EvtVnd1> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Vendor Event Bitfield 2\n\nVendor defined events."] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct EvtVnd2 : u32 { } }
+bitflags::bitflags! {
+    #[doc = " Vendor Event Bitfield 2"] #[doc = " "] #[doc = " Vendor defined events."]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd2 : u32 {}
+}
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -463,15 +527,18 @@ impl crate::Value for Option<EvtVnd2> {
         }
     }
 }
-
-#[doc = "Connect/Disconnect String\n\nConnects and disconnects the string.\n\nNotes: Should reset to 0 upon completion."]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Connect/Disconnect String
+///
+/// Connects and disconnects the string.
+///
+/// Notes: Should reset to 0 upon completion.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum SetCon {
-    #[doc = ""]
+    #[allow(missing_docs)]
     ConnectString = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     DisconnectString = 2,
 }
 impl crate::Value for SetCon {

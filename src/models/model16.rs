@@ -1,5 +1,4 @@
 //! Simple IP Network
-
 /// Simple IP Network
 ///
 /// Include this model for a simple IPv4 network stack
@@ -47,9 +46,7 @@ pub struct Model16 {
     /// Bitmask value.  Link control flags
     pub lnk_ctl: Option<LnkCtl>,
 }
-
 #[allow(missing_docs)]
-
 impl Model16 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const CFG: crate::PointDef<Self, Cfg> = crate::PointDef::new(4, 1, false);
@@ -62,7 +59,6 @@ impl Model16 {
     pub const MAC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(46, 4, false);
     pub const LNK_CTL: crate::PointDef<Self, Option<LnkCtl>> = crate::PointDef::new(50, 1, true);
 }
-
 impl crate::Model for Model16 {
     const ID: u16 = 16;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -80,15 +76,16 @@ impl crate::Model for Model16 {
         })
     }
 }
-
-#[doc = "Config\n\nEnumerated value.  Force IPv4 configuration method"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Config
+///
+/// Enumerated value.  Force IPv4 configuration method
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Cfg {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Static = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Dhcp = 1,
 }
 impl crate::Value for Cfg {
@@ -119,8 +116,13 @@ impl crate::Value for Option<Cfg> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Control\n\nBitmask value Configure use of services"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct Ctl : u16 { # [doc = ""] const EnableDns = 1 ; # [doc = ""] const EnableNtp = 2 ; } }
+bitflags::bitflags! {
+    #[doc = " Control"] #[doc = " "] #[doc = " Bitmask value Configure use of services"]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct Ctl : u16 {
+    #[allow(missing_docs)] const EnableDns = 1; #[allow(missing_docs)] const EnableNtp =
+    2; }
+}
 impl crate::Value for Ctl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -147,8 +149,14 @@ impl crate::Value for Option<Ctl> {
         }
     }
 }
-
-bitflags::bitflags! { # [doc = "Link Control\n\nBitmask value.  Link control flags"] # [derive (Copy , Clone , Debug , Eq , PartialEq)] # [cfg_attr (feature = "serde" , derive (:: serde :: Serialize , :: serde :: Deserialize))] pub struct LnkCtl : u16 { # [doc = ""] const Autonegotiate = 1 ; # [doc = ""] const FullDuplex = 2 ; # [doc = ""] const Force10mb = 4 ; # [doc = ""] const Force100mb = 8 ; # [doc = ""] const Force1gb = 16 ; } }
+bitflags::bitflags! {
+    #[doc = " Link Control"] #[doc = " "] #[doc = " Bitmask value.  Link control flags"]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct LnkCtl : u16 {
+    #[allow(missing_docs)] const Autonegotiate = 1; #[allow(missing_docs)] const
+    FullDuplex = 2; #[allow(missing_docs)] const Force10mb = 4; #[allow(missing_docs)]
+    const Force100mb = 8; #[allow(missing_docs)] const Force1gb = 16; }
+}
 impl crate::Value for LnkCtl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

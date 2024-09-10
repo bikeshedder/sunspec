@@ -1,5 +1,4 @@
 //! PPP Link
-
 /// PPP Link
 ///
 /// Include this model to configure a Point-to-Point Protocol link
@@ -43,9 +42,7 @@ pub struct Model19 {
     /// Password for authentication
     pub pw: Option<String>,
 }
-
 #[allow(missing_docs)]
-
 impl Model19 {
     pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
     pub const RTE: crate::PointDef<Self, u32> = crate::PointDef::new(4, 2, true);
@@ -57,7 +54,6 @@ impl Model19 {
     pub const USR_NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(11, 12, false);
     pub const PW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(23, 6, false);
 }
-
 impl crate::Model for Model19 {
     const ID: u16 = 19;
     fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
@@ -74,17 +70,18 @@ impl crate::Model for Model19 {
         })
     }
 }
-
-#[doc = "Parity\n\nBitmask value.  Parity setting"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Parity
+///
+/// Bitmask value.  Parity setting
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Pty {
-    #[doc = ""]
+    #[allow(missing_docs)]
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Odd = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Even = 2,
 }
 impl crate::Value for Pty {
@@ -115,15 +112,16 @@ impl crate::Value for Option<Pty> {
         }
     }
 }
-
-#[doc = "Duplex\n\nEnumerated value.  Duplex mode"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Duplex
+///
+/// Enumerated value.  Duplex mode
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Dup {
-    #[doc = ""]
+    #[allow(missing_docs)]
     Full = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Half = 1,
 }
 impl crate::Value for Dup {
@@ -154,17 +152,18 @@ impl crate::Value for Option<Dup> {
         }
     }
 }
-
-#[doc = "Flow Control\n\nFlow Control Method"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Flow Control
+///
+/// Flow Control Method
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Flw {
-    #[doc = ""]
+    #[allow(missing_docs)]
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Hw = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Xonxoff = 2,
 }
 impl crate::Value for Flw {
@@ -195,17 +194,18 @@ impl crate::Value for Option<Flw> {
         }
     }
 }
-
-#[doc = "Authentication\n\nEnumerated value.  Authentication method"]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum :: FromRepr)]
+/// Authentication
+///
+/// Enumerated value.  Authentication method
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Auth {
-    #[doc = ""]
+    #[allow(missing_docs)]
     None = 0,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Pap = 1,
-    #[doc = ""]
+    #[allow(missing_docs)]
     Chap = 2,
 }
 impl crate::Value for Auth {
