@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2024-09-11
+
 ### Changed
 
 - Add Config struct for timeouts and discovery addresses
@@ -74,7 +76,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First release
 
-[unreleased]: https://github.com/bikeshedder/sunspec/compare/v0.4.0...HEAD
+[unreleased]: https://github.com/bikeshedder/sunspec/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/bikeshedder/sunspec/releases/tag/v0.5.0
 [0.4.0]: https://github.com/bikeshedder/sunspec/releases/tag/v0.4.0
 [0.3.1]: https://github.com/bikeshedder/sunspec/releases/tag/v0.3.1
 [0.3.0]: https://github.com/bikeshedder/sunspec/releases/tag/v0.3.0

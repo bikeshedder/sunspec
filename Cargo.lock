@@ -437,7 +437,7 @@ dependencies = [
 
 [[package]]
 name = "sunspec"
-version = "0.4.0"
+version = "0.5.0"
 dependencies = [
  "bitflags",
  "serde",
@@ -450,17 +450,6 @@ dependencies = [
 
 [[package]]
 name = "sunspec-example-model103"
-version = "0.1.0"
-dependencies = [
- "clap",
- "itertools",
- "sunspec",
- "tokio",
- "tokio-modbus",
-]
-
-[[package]]
-name = "sunspec-example-model712"
 version = "0.1.0"
 dependencies = [
  "clap",
@@ -556,9 +545,9 @@ dependencies = [
 
 [[package]]
 name = "tokio-modbus"
-version = "0.14.0"
+version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "033b1b9843d693c3543e6b9c656a566ea45d2564e72ad5447e83233b9e2f3fe1"
+checksum = "cefba206904cf7a3015fff8fb27af960e27e28d20dd081597d28e92046128f7c"
 dependencies = [
  "async-trait",
  "byteorder",
@@ -587,9 +576,9 @@ dependencies = [
 
 [[package]]
 name = "unicode-ident"
-version = "1.0.12"
+version = "1.0.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
+checksum = "e91b56cd4cadaeb79bbf1a5645f6b4f8dc5bde8834ad5894a8db35fda9efa1fe"
 
 [[package]]
 name = "utf8parse"
