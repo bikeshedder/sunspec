@@ -46,7 +46,7 @@ use clap::Parser;
 use itertools::Itertools;
 use sunspec::{
     tokio_modbus::{discover_models, read_model},
-    ClientConfig,
+    Config,
 };
 use tokio::time::sleep;
 use tokio_modbus::{client::tcp::connect_slave, Slave};
@@ -62,7 +62,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let args = Args::parse();
     let mut ctx = connect_slave(args.addr, Slave(args.device_id)).await?;
 
-    let cfg = ClientConfig::default();
+    let cfg = Config::default();
     let models = discover_models(&mut ctx, &cfg).await?.models;
     let m1 = read_model(&mut ctx, &models.m1, &cfg).await?;
 
