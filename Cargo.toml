@@ -32,4 +32,5 @@ members = [
     "sunspec-gen",
     "examples/readme",
     "examples/model103",
+    "examples/model712",
 ]
