@@ -1,6 +1,7 @@
-use std::error::Error;
-
 use thiserror::Error;
+
+#[cfg(feature = "tokio-modbus")]
+use crate::tokio_modbus::TokioModbusError;
 
 /// This error is returned if a communication fails because of a timeout
 /// or underlying modbus error.
@@ -10,13 +11,17 @@ pub enum CommunicationError {
     #[error("Timeout")]
     Timeout,
     /// Implementation specific modbus error
+    #[cfg(feature = "tokio-modbus")]
     #[error("Modbus")]
-    Modbus(Box<dyn Error>),
+    Modbus(#[from] TokioModbusError),
 }
 
+#[cfg(feature = "tokio-modbus")]
 impl CommunicationError {
-    /// Create communication error from implementation specific modbus error
-    pub fn from_modbus(error: impl Error + 'static) -> Self {
-        Self::Modbus(Box::new(error))
+    pub(crate) fn from_modbus_error(e: tokio_modbus::Error) -> Self {
+        Self::Modbus(TokioModbusError::Error(e))
+    }
+    pub(crate) fn from_modbus_exception(e: tokio_modbus::Exception) -> Self {
+        Self::Modbus(TokioModbusError::Exception(e))
     }
 }

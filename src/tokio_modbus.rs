@@ -47,7 +47,7 @@ pub async fn discover_models(
             config.read_timeout,
         )
         .await?
-        .map_err(CommunicationError::from_modbus)?
+        .map_err(CommunicationError::from_modbus_error)?
         {
             Ok(identifier) if identifier == SUNS_IDENTIFIER => {
                 info_model_addr = Some(addr);
@@ -55,7 +55,7 @@ pub async fn discover_models(
             }
             Ok(_) => continue,
             Err(tokio_modbus::Exception::IllegalDataAddress) => continue,
-            Err(e) => return Err(CommunicationError::from_modbus(e).into()),
+            Err(e) => return Err(CommunicationError::from_modbus_exception(e).into()),
         }
     }
     let Some(mut addr) = info_model_addr else {
@@ -73,8 +73,8 @@ pub async fn discover_models(
             config.read_timeout,
         )
         .await?
-        .map_err(CommunicationError::from_modbus)?
-        .map_err(CommunicationError::from_modbus)?;
+        .map_err(CommunicationError::from_modbus_error)?
+        .map_err(CommunicationError::from_modbus_exception)?;
         if model_id == 0xFFFF {
             break;
         }
@@ -112,8 +112,8 @@ pub async fn read_model<M: Model>(
             config.read_timeout,
         )
         .await?
-        .map_err(CommunicationError::from_modbus)?
-        .map_err(CommunicationError::from_modbus)?
+        .map_err(CommunicationError::from_modbus_error)?
+        .map_err(CommunicationError::from_modbus_exception)?
     } else {
         let mut data: Vec<u16> = Vec::with_capacity(addr.len.into());
         let begin = addr.addr;
@@ -133,8 +133,8 @@ pub async fn read_model<M: Model>(
                 config.read_timeout,
             )
             .await?
-            .map_err(CommunicationError::from_modbus)?
-            .map_err(CommunicationError::from_modbus)?;
+            .map_err(CommunicationError::from_modbus_error)?
+            .map_err(CommunicationError::from_modbus_exception)?;
             data.extend(chunk);
         }
         data
@@ -156,8 +156,8 @@ pub async fn read_point<M: Model, T: Value>(
         config.read_timeout,
     )
     .await?
-    .map_err(CommunicationError::from_modbus)?
-    .map_err(CommunicationError::from_modbus)?;
+    .map_err(CommunicationError::from_modbus_error)?
+    .map_err(CommunicationError::from_modbus_exception)?;
     Ok(Value::decode(&data)?)
 }
 
@@ -178,8 +178,8 @@ pub async fn write_point<M: Model, T: Value>(
         config.write_timeout,
     )
     .await?
-    .map_err(CommunicationError::from_modbus)?
-    .map_err(CommunicationError::from_modbus)?;
+    .map_err(CommunicationError::from_modbus_error)?
+    .map_err(CommunicationError::from_modbus_exception)?;
     Ok(())
 }
 
@@ -194,4 +194,15 @@ async fn apply_timeout<T>(
     } else {
         fut.await
     })
+}
+
+/// This error is returned if tokio-modbus fails with an error or exception message
+#[derive(Debug, thiserror::Error)]
+pub enum TokioModbusError {
+    /// tokio-modbus protocol or transport error
+    #[error(transparent)]
+    Error(#[from] tokio_modbus::Error),
+    /// tokio-modbus server exception
+    #[error(transparent)]
+    Exception(#[from] tokio_modbus::Exception),
 }
