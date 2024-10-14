@@ -9,4 +9,4 @@ clap = { version = "4.5.17", features = ["derive"] }
 itertools = "0.13.0"
 sunspec = { path = "../../" }
 tokio = { version = "1.40.0", features = ["macros", "rt-multi-thread", "time"] }
-tokio-modbus = "0.14"
+tokio-modbus = "0.15"
