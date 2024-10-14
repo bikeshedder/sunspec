@@ -54,7 +54,7 @@ pub async fn discover_models(
                 break;
             }
             Ok(_) => continue,
-            Err(tokio_modbus::Exception::IllegalDataAddress) => continue,
+            Err(tokio_modbus::ExceptionCode::IllegalDataAddress) => continue,
             Err(e) => return Err(CommunicationError::from_modbus(e).into()),
         }
     }
