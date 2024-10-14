@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 #[test]
 fn test_serialize_model1() {
     let model = sunspec::models::model1::Model1 {
@@ -14,6 +15,7 @@ fn test_serialize_model1() {
     );
 }
 
+#[cfg(feature = "serde")]
 #[test]
 fn test_serialize_model2() {
     let model = sunspec::models::model2::Model2 {
