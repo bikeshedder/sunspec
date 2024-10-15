@@ -8,9 +8,9 @@ use crate::discovery::DiscoveryResult;
 use crate::discovery::{DiscoveryError, ModelAddr, UnknownModel, SUNS_IDENTIFIER};
 use crate::model::{Model, ReadModelError};
 use crate::models::Models;
-use crate::point::{PointDef, ReadPointError, WritePointError};
+use crate::point::{PointDef, WritePointError};
 use crate::value::Value;
-use crate::CommunicationError;
+use crate::{CommunicationError, DecodeError};
 
 use tokio_modbus::client::{Context, Reader, Writer};
 
@@ -37,7 +37,7 @@ async fn read_holding_registers_array<const CNT: usize>(
 pub async fn discover_models(
     context: &mut Context,
     config: &Config,
-) -> Result<DiscoveryResult, DiscoveryError> {
+) -> Result<DiscoveryResult, TokioModbusError> {
     // Read addresses 0, 40000 and 50000 looking for the SunS identifier
     let mut info_model_addr: Option<u16> = None;
     for &addr in &config.discovery_addresses {
@@ -47,7 +47,7 @@ pub async fn discover_models(
             config.read_timeout,
         )
         .await?
-        .map_err(CommunicationError::from_modbus_error)?
+        .map_err(TokioModbusError::from_modbus_error)?
         {
             Ok(identifier) if identifier == SUNS_IDENTIFIER => {
                 info_model_addr = Some(addr);
@@ -55,11 +55,11 @@ pub async fn discover_models(
             }
             Ok(_) => continue,
             Err(tokio_modbus::Exception::IllegalDataAddress) => continue,
-            Err(e) => return Err(CommunicationError::from_modbus_exception(e).into()),
+            Err(e) => return Err(TokioModbusError::from_modbus_exception(e)),
         }
     }
     let Some(mut addr) = info_model_addr else {
-        return Err(DiscoveryError::SunsIdentifierNotFound);
+        return Err(DiscoveryError::SunsIdentifierNotFound.into());
     };
 
     addr += 2;
@@ -73,8 +73,8 @@ pub async fn discover_models(
             config.read_timeout,
         )
         .await?
-        .map_err(CommunicationError::from_modbus_error)?
-        .map_err(CommunicationError::from_modbus_exception)?;
+        .map_err(TokioModbusError::from_modbus_error)?
+        .map_err(TokioModbusError::from_modbus_exception)?;
         if model_id == 0xFFFF {
             break;
         }
@@ -105,15 +105,15 @@ pub async fn read_model<M: Model>(
     ctx: &mut Context,
     addr: &ModelAddr<M>,
     config: &Config,
-) -> Result<M, ReadModelError> {
+) -> Result<M, TokioModbusError> {
     let data = if addr.len <= config.max_read_length {
         apply_timeout(
             ctx.read_holding_registers(addr.addr, addr.len),
             config.read_timeout,
         )
         .await?
-        .map_err(CommunicationError::from_modbus_error)?
-        .map_err(CommunicationError::from_modbus_exception)?
+        .map_err(TokioModbusError::from_modbus_error)?
+        .map_err(TokioModbusError::from_modbus_exception)?
     } else {
         let mut data: Vec<u16> = Vec::with_capacity(addr.len.into());
         let begin = addr.addr;
@@ -133,13 +133,13 @@ pub async fn read_model<M: Model>(
                 config.read_timeout,
             )
             .await?
-            .map_err(CommunicationError::from_modbus_error)?
-            .map_err(CommunicationError::from_modbus_exception)?;
+            .map_err(TokioModbusError::from_modbus_error)?
+            .map_err(TokioModbusError::from_modbus_exception)?;
             data.extend(chunk);
         }
         data
     };
-    M::from_data(&data)
+    Ok(M::from_data(&data)?)
 }
 
 /// Read data for a single point. Please note that
@@ -150,14 +150,14 @@ pub async fn read_point<M: Model, T: Value>(
     model_addr: &ModelAddr<M>,
     point_def: &PointDef<M, T>,
     config: &Config,
-) -> Result<T, ReadPointError> {
+) -> Result<T, TokioModbusError> {
     let data = apply_timeout(
         ctx.read_holding_registers(model_addr.addr + point_def.offset, point_def.length),
         config.read_timeout,
     )
     .await?
-    .map_err(CommunicationError::from_modbus_error)?
-    .map_err(CommunicationError::from_modbus_exception)?;
+    .map_err(TokioModbusError::from_modbus_error)?
+    .map_err(TokioModbusError::from_modbus_exception)?;
     Ok(Value::decode(&data)?)
 }
 
@@ -168,25 +168,25 @@ pub async fn write_point<M: Model, T: Value>(
     point_def: &PointDef<M, T>,
     value: T,
     config: &Config,
-) -> Result<(), WritePointError> {
+) -> Result<(), TokioModbusError> {
     let data = value.encode();
     if data.len() > point_def.length as usize {
-        return Err(WritePointError::ValueTooLarge);
+        return Err(WritePointError::ValueTooLarge.into());
     }
     apply_timeout(
         ctx.write_multiple_registers(model_addr.addr + point_def.offset, &data),
         config.write_timeout,
     )
     .await?
-    .map_err(CommunicationError::from_modbus_error)?
-    .map_err(CommunicationError::from_modbus_exception)?;
+    .map_err(TokioModbusError::from_modbus_error)?
+    .map_err(TokioModbusError::from_modbus_exception)?;
     Ok(())
 }
 
 async fn apply_timeout<T>(
     fut: impl Future<Output = tokio_modbus::Result<T>>,
     timeout: Option<Duration>,
-) -> Result<tokio_modbus::Result<T>, CommunicationError> {
+) -> Result<tokio_modbus::Result<T>, TokioModbusError> {
     Ok(if let Some(timeout) = timeout {
         tokio::time::timeout(timeout, fut)
             .await
@@ -205,4 +205,28 @@ pub enum TokioModbusError {
     /// tokio-modbus server exception
     #[error(transparent)]
     Exception(#[from] tokio_modbus::Exception),
+    #[error(transparent)]
+    /// Discovery error
+    Discovery(#[from] DiscoveryError),
+    /// Communication error
+    #[error(transparent)]
+    Communication(#[from] CommunicationError),
+    /// Read model error
+    #[error(transparent)]
+    ReadModel(#[from] ReadModelError),
+    /// Write point error
+    #[error(transparent)]
+    WritePoint(#[from] WritePointError),
+    /// Decode error
+    #[error(transparent)]
+    Decode(#[from] DecodeError),
+}
+
+impl TokioModbusError {
+    pub(crate) fn from_modbus_error(e: tokio_modbus::Error) -> Self {
+        Self::Error(e)
+    }
+    pub(crate) fn from_modbus_exception(e: tokio_modbus::Exception) -> Self {
+        Self::Exception(e)
+    }
 }
