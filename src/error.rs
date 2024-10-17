@@ -11,12 +11,12 @@ pub enum CommunicationError {
     Timeout,
     /// Implementation specific modbus error
     #[error("Modbus")]
-    Modbus(Box<dyn Error>),
+    Modbus(Box<dyn Error + Send>),
 }
 
 impl CommunicationError {
     /// Create communication error from implementation specific modbus error
-    pub fn from_modbus(error: impl Error + 'static) -> Self {
+    pub fn from_modbus(error: impl Error + Send + 'static) -> Self {
         Self::Modbus(Box::new(error))
     }
 }
