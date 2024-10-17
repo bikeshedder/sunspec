@@ -3,7 +3,7 @@ use proc_macro2::{Literal, TokenStream};
 use quote::{format_ident, quote, ToTokens};
 use thiserror::Error;
 
-use crate::json::{Model, Point, PointAccess, PointMandatory, PointType};
+use crate::json::{Group, GroupCount, Model, Point, PointAccess, PointMandatory, PointType};
 
 #[derive(Debug, Error)]
 pub enum GenModelError {
@@ -109,7 +109,7 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
         }
     }
     let points = &model.group.points[2..];
-    let model_fields = points
+    let point_fields = points
         .iter()
         .filter(|point| !point.is_padding())
         .map(|point| {
@@ -123,13 +123,33 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
             }
         });
 
+    let groups = model
+        .group
+        .groups
+        .iter()
+        // XXX It's quite unfortunate but groups with a count of 0
+        // aren't defined properly in the sunspec JSON files.
+        .filter(|group| group.count != GroupCount::Integer(0))
+        .collect::<Vec<_>>();
+
+    let group_fields = groups.iter().map(|group| {
+        let field_name = format_ident!("{}", group.name.to_snake_case());
+        let group_type = format_ident!("{}", group.name.to_upper_camel_case());
+        let group_doc = doc_to_ts(&group.doc.to_doc_string());
+        quote! {
+            #group_doc
+            pub #field_name: Vec<#group_type>,
+        }
+    });
+
     // FIXME do not add empty model docs
     let model_struct = quote! {
         #model_doc
         #[derive(Debug)]
         #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
         pub struct #model_name {
-            #(#model_fields)*
+            #(#point_fields)*
+            #(#group_fields)*
         }
     };
 
@@ -170,15 +190,34 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
             }
         });
 
+    let from_data_groups_default = groups.iter().map(|group| {
+        let field_name = format_ident!("{}", group.name.to_snake_case());
+        quote! {
+            #field_name: Vec::new(),
+        }
+    });
+
+    let from_data_groups = groups.iter().map(|group| {
+        let group_type = format_ident!("{}", group.name.to_upper_camel_case());
+        quote! {
+            let data = #group_type::load(data, &mut model)?;
+        }
+    });
+
     let model_id = Literal::u16_unsuffixed(model.id);
+    let model_len = Literal::u16_unsuffixed(points.iter().map(|point| point.size).sum());
     let allow_unused = points.is_empty().then(|| quote! { #[allow(unused)] });
     let trait_impl = quote! {
         impl crate::Model for #model_name {
             const ID: u16 = #model_id;
+            const LEN: u16 = #model_len;
             fn from_data(#allow_unused data: &[u16]) -> Result<Self, crate::ReadModelError> {
-                Ok(Self {
+                let model = Self {
                     #(#from_data_fields)*
-                })
+                    #(#from_data_groups_default)*
+                };
+                //#( #from_data_groups )*
+                Ok(model)
             }
         }
     };
@@ -197,6 +236,10 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
         }
     }
 
+    for group in groups {
+        extra.extend(gen_group(model, group, ""));
+    }
+
     Ok(quote! {
         #![doc = #module_doc]
         #model_struct
@@ -204,6 +247,88 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
         #trait_impl
         #extra
     })
+}
+
+fn gen_group(model: &Model, group: &Group, prefix: &str) -> TokenStream {
+    let mut extra = TokenStream::new();
+    // group structure
+    let identifier = format_ident!(
+        "{}{}",
+        prefix.to_upper_camel_case(),
+        group.name.to_upper_camel_case()
+    );
+    let prefix = format!("{}{}", prefix, group.name);
+    let points = group
+        .points
+        .iter()
+        .filter(|point| !point.is_padding())
+        .map(|point| {
+            let point_name = format_ident!("{}", point.name.to_snake_case());
+            let point_type = rust_type(point, &group.name);
+            let point_doc = doc_to_ts(&point.doc.to_doc_string());
+            quote! {
+                #point_doc
+                pub #point_name: #point_type,
+            }
+        });
+    let group_doc = doc_to_ts(&group.doc.to_doc_string());
+    let group_struct = quote! {
+        #group_doc
+        #[derive(Debug)]
+        #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+        pub struct #identifier {
+            #(#points)*
+        }
+    };
+
+    let model_type = format_ident!("Model{}", model.id);
+    /*
+    let GroupCount::String(count_field) = &group.count else {
+        todo!(
+            "Non string counts are unsupported: {} {} {:?}",
+            model.group.name,
+            group.name,
+            group.count
+        );
+    };
+    let count_field = format_ident!("{}", count_field.to_snake_case());
+    */
+    let group_impl = quote! {
+        impl #identifier {
+            fn load<'a>(data: &'a [u16], _model: &mut #model_type) -> Result<&'a [u16], crate::ReadModelError> {
+                //let length = model.#count_field;
+                // FIXME implement actual loading
+                Ok(data)
+            }
+        }
+    };
+
+    // Generate enums and bitfields
+    for point in &group.points {
+        match point.r#type {
+            PointType::Enum16 | PointType::Enum32 if !point.symbols.is_empty() => {
+                extra.extend(gen_enum(point, &prefix));
+            }
+            PointType::Bitfield16 | PointType::Bitfield32 | PointType::Bitfield64 => {
+                extra.extend(gen_bitfield(point, &prefix));
+            }
+            _ => {}
+        }
+    }
+
+    for group in &group.groups {
+        extra.extend(gen_group(
+            model,
+            group,
+            &format!("{}{}", &prefix, group.name),
+        ));
+    }
+
+    quote! {
+        #group_struct
+        #group_impl
+        #extra
+    }
 }
 
 fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
