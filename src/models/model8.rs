@@ -16,8 +16,8 @@ pub struct Model8 {
 }
 #[allow(missing_docs)]
 impl Model8 {
-    pub const FMT: crate::PointDef<Self, Fmt> = crate::PointDef::new(0, 1, false);
-    pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
+    pub const FMT: crate::Point<Self, Fmt> = crate::Point::new(0, 1, false);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
 }
 impl crate::Model for Model8 {
     const ID: u16 = 8;

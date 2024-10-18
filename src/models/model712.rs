@@ -48,16 +48,16 @@ pub struct Model712 {
 }
 #[allow(missing_docs)]
 impl Model712 {
-    pub const ENA: crate::PointDef<Self, Ena> = crate::PointDef::new(0, 1, true);
-    pub const ADPT_CRV_REQ: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const ADPT_CRV_RSLT: crate::PointDef<Self, AdptCrvRslt> = crate::PointDef::new(2, 1, false);
-    pub const N_PT: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const N_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const RVRT_TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(5, 2, true);
-    pub const RVRT_REM: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, false);
-    pub const RVRT_CRV: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, true);
-    pub const W_SF: crate::PointDef<Self, i16> = crate::PointDef::new(10, 1, false);
-    pub const DEPT_REF_SF: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
+    pub const ENA: crate::Point<Self, Ena> = crate::Point::new(0, 1, true);
+    pub const ADPT_CRV_REQ: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
+    pub const ADPT_CRV_RSLT: crate::Point<Self, AdptCrvRslt> = crate::Point::new(2, 1, false);
+    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
+    pub const N_CRV: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
+    pub const RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(5, 2, true);
+    pub const RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, false);
+    pub const RVRT_CRV: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, true);
+    pub const W_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
+    pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
 }
 impl crate::Model for Model712 {
     const ID: u16 = 712;

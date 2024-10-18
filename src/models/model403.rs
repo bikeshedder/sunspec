@@ -52,19 +52,19 @@ pub struct Model403 {
 }
 #[allow(missing_docs)]
 impl Model403 {
-    pub const DCA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(0, 1, false);
-    pub const DC_AHR_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
-    pub const DCV_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
-    pub const DCA_MAX: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const EVT: crate::PointDef<Self, Evt> = crate::PointDef::new(5, 2, false);
-    pub const EVT_VND: crate::PointDef<Self, Option<EvtVnd>> = crate::PointDef::new(7, 2, false);
-    pub const DCA: crate::PointDef<Self, i16> = crate::PointDef::new(9, 1, false);
-    pub const DC_AHR: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(10, 2, false);
-    pub const DCV: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(12, 1, false);
-    pub const TMP: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(13, 1, false);
-    pub const IN_DCA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(14, 1, false);
-    pub const IN_DC_AHR_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(15, 1, false);
+    pub const DCA_SF: crate::Point<Self, i16> = crate::Point::new(0, 1, false);
+    pub const DC_AHR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
+    pub const DCV_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
+    pub const DCA_MAX: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
+    pub const EVT: crate::Point<Self, Evt> = crate::Point::new(5, 2, false);
+    pub const EVT_VND: crate::Point<Self, Option<EvtVnd>> = crate::Point::new(7, 2, false);
+    pub const DCA: crate::Point<Self, i16> = crate::Point::new(9, 1, false);
+    pub const DC_AHR: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
+    pub const DCV: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
+    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, false);
+    pub const IN_DCA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
+    pub const IN_DC_AHR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
 }
 impl crate::Model for Model403 {
     const ID: u16 = 403;

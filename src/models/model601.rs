@@ -58,17 +58,17 @@ pub struct Model601 {
 }
 #[allow(missing_docs)]
 impl Model601 {
-    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 8, false);
-    pub const TYP: crate::PointDef<Self, Typ> = crate::PointDef::new(8, 1, false);
-    pub const DT_LOC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(9, 5, false);
-    pub const TM_LOC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(14, 3, false);
-    pub const DAY: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, false);
-    pub const GLBL_EL_CTL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(18, 2, true);
-    pub const GLBL_AZ_CTL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(20, 2, true);
-    pub const GLBL_CTL: crate::PointDef<Self, Option<GlblCtl>> = crate::PointDef::new(22, 1, true);
-    pub const GLBL_ALM: crate::PointDef<Self, Option<GlblAlm>> = crate::PointDef::new(23, 1, false);
-    pub const DGR_SF: crate::PointDef<Self, i16> = crate::PointDef::new(24, 1, false);
-    pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(25, 1, false);
+    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 8, false);
+    pub const TYP: crate::Point<Self, Typ> = crate::Point::new(8, 1, false);
+    pub const DT_LOC: crate::Point<Self, Option<String>> = crate::Point::new(9, 5, false);
+    pub const TM_LOC: crate::Point<Self, Option<String>> = crate::Point::new(14, 3, false);
+    pub const DAY: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, false);
+    pub const GLBL_EL_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(18, 2, true);
+    pub const GLBL_AZ_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(20, 2, true);
+    pub const GLBL_CTL: crate::Point<Self, Option<GlblCtl>> = crate::Point::new(22, 1, true);
+    pub const GLBL_ALM: crate::Point<Self, Option<GlblAlm>> = crate::Point::new(23, 1, false);
+    pub const DGR_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(25, 1, false);
 }
 impl crate::Model for Model601 {
     const ID: u16 = 601;

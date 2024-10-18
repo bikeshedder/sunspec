@@ -46,17 +46,15 @@ pub struct Model127 {
 }
 #[allow(missing_docs)]
 impl Model127 {
-    pub const W_GRA: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const HZ_STR: crate::PointDef<Self, i16> = crate::PointDef::new(1, 1, true);
-    pub const HZ_STOP: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, true);
-    pub const HYS_ENA: crate::PointDef<Self, HysEna> = crate::PointDef::new(3, 1, true);
-    pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(4, 1, true);
-    pub const HZ_STOP_W_GRA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
-    pub const W_GRA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
-    pub const HZ_STR_STOP_SF: crate::PointDef<Self, Option<i16>> =
-        crate::PointDef::new(7, 1, false);
-    pub const RMP_INC_DEC_SF: crate::PointDef<Self, Option<i16>> =
-        crate::PointDef::new(8, 1, false);
+    pub const W_GRA: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
+    pub const HZ_STR: crate::Point<Self, i16> = crate::Point::new(1, 1, true);
+    pub const HZ_STOP: crate::Point<Self, i16> = crate::Point::new(2, 1, true);
+    pub const HYS_ENA: crate::Point<Self, HysEna> = crate::Point::new(3, 1, true);
+    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(4, 1, true);
+    pub const HZ_STOP_W_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
+    pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
+    pub const HZ_STR_STOP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
+    pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
 }
 impl crate::Model for Model127 {
     const ID: u16 = 127;

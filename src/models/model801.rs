@@ -12,7 +12,7 @@ pub struct Model801 {
 }
 #[allow(missing_docs)]
 impl Model801 {
-    pub const DEPRECATED: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
+    pub const DEPRECATED: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
 impl crate::Model for Model801 {
     const ID: u16 = 801;

@@ -34,17 +34,17 @@ pub struct Model307 {
 }
 #[allow(missing_docs)]
 impl Model307 {
-    pub const TMP_AMB: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(0, 1, false);
-    pub const RH: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
-    pub const PRES: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
-    pub const WND_SPD: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(3, 1, false);
-    pub const WND_DIR: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(4, 1, false);
-    pub const RAIN: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(5, 1, false);
-    pub const SNW: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, false);
-    pub const PPT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(7, 1, false);
-    pub const ELEC_FLD: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(8, 1, false);
-    pub const SUR_WET: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(9, 1, false);
-    pub const SOIL_WET: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(10, 1, false);
+    pub const TMP_AMB: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
+    pub const RH: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
+    pub const PRES: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
+    pub const WND_SPD: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
+    pub const WND_DIR: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1, false);
+    pub const RAIN: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, false);
+    pub const SNW: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
+    pub const PPT: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
+    pub const ELEC_FLD: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
+    pub const SUR_WET: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
+    pub const SOIL_WET: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
 }
 impl crate::Model for Model307 {
     const ID: u16 = 307;

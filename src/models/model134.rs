@@ -50,17 +50,17 @@ pub struct Model134 {
 }
 #[allow(missing_docs)]
 impl Model134 {
-    pub const ACT_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(1, 1, true);
-    pub const WIN_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, true);
-    pub const RVRT_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
-    pub const RMP_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
-    pub const N_CRV: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
-    pub const N_PT: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, false);
-    pub const HZ_SF: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
-    pub const W_SF: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
-    pub const RMP_INC_DEC_SF: crate::PointDef<Self, Option<i16>> =
-        crate::PointDef::new(9, 1, false);
+    pub const ACT_CRV: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
+    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(1, 1, true);
+    pub const WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
+    pub const RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
+    pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
+    pub const N_CRV: crate::Point<Self, u16> = crate::Point::new(5, 1, false);
+    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
+    pub const HZ_SF: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
+    pub const W_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
+    pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> =
+        crate::Point::new(9, 1, false);
 }
 impl crate::Model for Model134 {
     const ID: u16 = 134;

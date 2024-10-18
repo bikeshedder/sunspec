@@ -210,74 +210,74 @@ pub struct Model702 {
 }
 #[allow(missing_docs)]
 impl Model702 {
-    pub const W_MAX_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
-    pub const W_OVR_EXT_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
-    pub const W_OVR_EXT_RTG_PF: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(2, 1, false);
-    pub const W_UND_EXT_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
-    pub const W_UND_EXT_RTG_PF: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(4, 1, false);
-    pub const VA_MAX_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
-    pub const VAR_MAX_INJ_RTG: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(6, 1, false);
-    pub const VAR_MAX_ABS_RTG: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(7, 1, false);
-    pub const W_CHA_RTE_MAX_RTG: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(8, 1, false);
-    pub const W_DIS_CHA_RTE_MAX_RTG: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(9, 1, false);
-    pub const VA_CHA_RTE_MAX_RTG: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(10, 1, false);
-    pub const VA_DIS_CHA_RTE_MAX_RTG: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(11, 1, false);
-    pub const V_NOM_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(12, 1, false);
-    pub const V_MAX_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(13, 1, false);
-    pub const V_MIN_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(14, 1, false);
-    pub const A_MAX_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(15, 1, false);
-    pub const PF_OVR_EXT_RTG: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(16, 1, false);
-    pub const PF_UND_EXT_RTG: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(17, 1, false);
-    pub const REACT_SUSCEPT_RTG: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(18, 1, false);
-    pub const NOR_OP_CAT_RTG: crate::PointDef<Self, Option<NorOpCatRtg>> =
-        crate::PointDef::new(19, 1, false);
-    pub const ABN_OP_CAT_RTG: crate::PointDef<Self, Option<AbnOpCatRtg>> =
-        crate::PointDef::new(20, 1, false);
-    pub const CTRL_MODES: crate::PointDef<Self, Option<CtrlModes>> =
-        crate::PointDef::new(21, 2, false);
-    pub const INT_ISLAND_CAT_RTG: crate::PointDef<Self, Option<IntIslandCatRtg>> =
-        crate::PointDef::new(23, 1, false);
-    pub const W_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(24, 1, true);
-    pub const W_MAX_OVR_EXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(25, 1, true);
-    pub const W_OVR_EXT_PF: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(26, 1, true);
-    pub const W_MAX_UND_EXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(27, 1, true);
-    pub const W_UND_EXT_PF: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(28, 1, true);
-    pub const VA_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(29, 1, true);
-    pub const VAR_MAX_INJ: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(30, 1, true);
-    pub const VAR_MAX_ABS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(31, 1, true);
-    pub const W_CHA_RTE_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(32, 1, true);
-    pub const W_DIS_CHA_RTE_MAX: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(33, 1, true);
-    pub const VA_CHA_RTE_MAX: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(34, 1, true);
-    pub const VA_DIS_CHA_RTE_MAX: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(35, 1, true);
-    pub const V_NOM: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(36, 1, true);
-    pub const V_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(37, 1, true);
-    pub const V_MIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(38, 1, true);
-    pub const A_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(39, 1, true);
-    pub const PF_OVR_EXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(40, 1, true);
-    pub const PF_UND_EXT: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(41, 1, true);
-    pub const INT_ISLAND_CAT: crate::PointDef<Self, Option<IntIslandCat>> =
-        crate::PointDef::new(42, 1, true);
-    pub const W_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(43, 1, false);
-    pub const PF_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(44, 1, false);
-    pub const VA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(45, 1, false);
-    pub const VAR_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(46, 1, false);
-    pub const V_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(47, 1, false);
-    pub const A_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(48, 1, false);
-    pub const S_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(49, 1, false);
+    pub const W_MAX_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
+    pub const W_OVR_EXT_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
+    pub const W_OVR_EXT_RTG_PF: crate::Point<Self, Option<u16>> =
+        crate::Point::new(2, 1, false);
+    pub const W_UND_EXT_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
+    pub const W_UND_EXT_RTG_PF: crate::Point<Self, Option<u16>> =
+        crate::Point::new(4, 1, false);
+    pub const VA_MAX_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
+    pub const VAR_MAX_INJ_RTG: crate::Point<Self, Option<u16>> =
+        crate::Point::new(6, 1, false);
+    pub const VAR_MAX_ABS_RTG: crate::Point<Self, Option<u16>> =
+        crate::Point::new(7, 1, false);
+    pub const W_CHA_RTE_MAX_RTG: crate::Point<Self, Option<u16>> =
+        crate::Point::new(8, 1, false);
+    pub const W_DIS_CHA_RTE_MAX_RTG: crate::Point<Self, Option<u16>> =
+        crate::Point::new(9, 1, false);
+    pub const VA_CHA_RTE_MAX_RTG: crate::Point<Self, Option<u16>> =
+        crate::Point::new(10, 1, false);
+    pub const VA_DIS_CHA_RTE_MAX_RTG: crate::Point<Self, Option<u16>> =
+        crate::Point::new(11, 1, false);
+    pub const V_NOM_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
+    pub const V_MAX_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
+    pub const V_MIN_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, false);
+    pub const A_MAX_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(15, 1, false);
+    pub const PF_OVR_EXT_RTG: crate::Point<Self, Option<u16>> =
+        crate::Point::new(16, 1, false);
+    pub const PF_UND_EXT_RTG: crate::Point<Self, Option<u16>> =
+        crate::Point::new(17, 1, false);
+    pub const REACT_SUSCEPT_RTG: crate::Point<Self, Option<u16>> =
+        crate::Point::new(18, 1, false);
+    pub const NOR_OP_CAT_RTG: crate::Point<Self, Option<NorOpCatRtg>> =
+        crate::Point::new(19, 1, false);
+    pub const ABN_OP_CAT_RTG: crate::Point<Self, Option<AbnOpCatRtg>> =
+        crate::Point::new(20, 1, false);
+    pub const CTRL_MODES: crate::Point<Self, Option<CtrlModes>> =
+        crate::Point::new(21, 2, false);
+    pub const INT_ISLAND_CAT_RTG: crate::Point<Self, Option<IntIslandCatRtg>> =
+        crate::Point::new(23, 1, false);
+    pub const W_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(24, 1, true);
+    pub const W_MAX_OVR_EXT: crate::Point<Self, Option<u16>> = crate::Point::new(25, 1, true);
+    pub const W_OVR_EXT_PF: crate::Point<Self, Option<u16>> = crate::Point::new(26, 1, true);
+    pub const W_MAX_UND_EXT: crate::Point<Self, Option<u16>> = crate::Point::new(27, 1, true);
+    pub const W_UND_EXT_PF: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1, true);
+    pub const VA_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1, true);
+    pub const VAR_MAX_INJ: crate::Point<Self, Option<u16>> = crate::Point::new(30, 1, true);
+    pub const VAR_MAX_ABS: crate::Point<Self, Option<u16>> = crate::Point::new(31, 1, true);
+    pub const W_CHA_RTE_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(32, 1, true);
+    pub const W_DIS_CHA_RTE_MAX: crate::Point<Self, Option<u16>> =
+        crate::Point::new(33, 1, true);
+    pub const VA_CHA_RTE_MAX: crate::Point<Self, Option<u16>> =
+        crate::Point::new(34, 1, true);
+    pub const VA_DIS_CHA_RTE_MAX: crate::Point<Self, Option<u16>> =
+        crate::Point::new(35, 1, true);
+    pub const V_NOM: crate::Point<Self, Option<u16>> = crate::Point::new(36, 1, true);
+    pub const V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(37, 1, true);
+    pub const V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(38, 1, true);
+    pub const A_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(39, 1, true);
+    pub const PF_OVR_EXT: crate::Point<Self, Option<u16>> = crate::Point::new(40, 1, true);
+    pub const PF_UND_EXT: crate::Point<Self, Option<u16>> = crate::Point::new(41, 1, true);
+    pub const INT_ISLAND_CAT: crate::Point<Self, Option<IntIslandCat>> =
+        crate::Point::new(42, 1, true);
+    pub const W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
+    pub const PF_SF: crate::Point<Self, Option<i16>> = crate::Point::new(44, 1, false);
+    pub const VA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(45, 1, false);
+    pub const VAR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(46, 1, false);
+    pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(47, 1, false);
+    pub const A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(48, 1, false);
+    pub const S_SF: crate::Point<Self, Option<i16>> = crate::Point::new(49, 1, false);
 }
 impl crate::Model for Model702 {
     const ID: u16 = 702;

@@ -92,28 +92,28 @@ pub struct Model122 {
 }
 #[allow(missing_docs)]
 impl Model122 {
-    pub const PV_CONN: crate::PointDef<Self, PvConn> = crate::PointDef::new(0, 1, false);
-    pub const STOR_CONN: crate::PointDef<Self, StorConn> = crate::PointDef::new(1, 1, false);
-    pub const ECP_CONN: crate::PointDef<Self, EcpConn> = crate::PointDef::new(2, 1, false);
-    pub const ACT_WH: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(3, 4, false);
-    pub const ACT_V_AH: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(7, 4, false);
-    pub const ACT_V_ARH_Q1: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(11, 4, false);
-    pub const ACT_V_ARH_Q2: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(15, 4, false);
-    pub const ACT_V_ARH_Q3: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(19, 4, false);
-    pub const ACT_V_ARH_Q4: crate::PointDef<Self, Option<u64>> = crate::PointDef::new(23, 4, false);
-    pub const V_AR_AVAL: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(27, 1, false);
-    pub const V_AR_AVAL_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(28, 1, false);
-    pub const W_AVAL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(29, 1, false);
-    pub const W_AVAL_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(30, 1, false);
-    pub const ST_SET_LIM_MSK: crate::PointDef<Self, Option<StSetLimMsk>> =
-        crate::PointDef::new(31, 2, false);
-    pub const ST_ACT_CTL: crate::PointDef<Self, Option<StActCtl>> =
-        crate::PointDef::new(33, 2, false);
-    pub const TM_SRC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(35, 4, false);
-    pub const TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(39, 2, false);
-    pub const RT_ST: crate::PointDef<Self, Option<RtSt>> = crate::PointDef::new(41, 1, false);
-    pub const RIS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(42, 1, false);
-    pub const RIS_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(43, 1, false);
+    pub const PV_CONN: crate::Point<Self, PvConn> = crate::Point::new(0, 1, false);
+    pub const STOR_CONN: crate::Point<Self, StorConn> = crate::Point::new(1, 1, false);
+    pub const ECP_CONN: crate::Point<Self, EcpConn> = crate::Point::new(2, 1, false);
+    pub const ACT_WH: crate::Point<Self, Option<u64>> = crate::Point::new(3, 4, false);
+    pub const ACT_V_AH: crate::Point<Self, Option<u64>> = crate::Point::new(7, 4, false);
+    pub const ACT_V_ARH_Q1: crate::Point<Self, Option<u64>> = crate::Point::new(11, 4, false);
+    pub const ACT_V_ARH_Q2: crate::Point<Self, Option<u64>> = crate::Point::new(15, 4, false);
+    pub const ACT_V_ARH_Q3: crate::Point<Self, Option<u64>> = crate::Point::new(19, 4, false);
+    pub const ACT_V_ARH_Q4: crate::Point<Self, Option<u64>> = crate::Point::new(23, 4, false);
+    pub const V_AR_AVAL: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
+    pub const V_AR_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
+    pub const W_AVAL: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1, false);
+    pub const W_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(30, 1, false);
+    pub const ST_SET_LIM_MSK: crate::Point<Self, Option<StSetLimMsk>> =
+        crate::Point::new(31, 2, false);
+    pub const ST_ACT_CTL: crate::Point<Self, Option<StActCtl>> =
+        crate::Point::new(33, 2, false);
+    pub const TM_SRC: crate::Point<Self, Option<String>> = crate::Point::new(35, 4, false);
+    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(39, 2, false);
+    pub const RT_ST: crate::Point<Self, Option<RtSt>> = crate::Point::new(41, 1, false);
+    pub const RIS: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1, false);
+    pub const RIS_SF: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
 }
 impl crate::Model for Model122 {
     const ID: u16 = 122;

@@ -23,7 +23,7 @@
 pub use constants::{DEFAULT_DISCOVERY_ADDRESSES, SUNS_IDENTIFIER};
 pub use model::{Model, ModelAddr};
 pub use models::Models;
-pub use point::PointDef;
+pub use point::Point;
 pub use value::{DecodeError, FixedSize, Value};
 
 /// This module contains all client specific code.

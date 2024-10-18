@@ -44,15 +44,15 @@ pub struct Model19 {
 }
 #[allow(missing_docs)]
 impl Model19 {
-    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
-    pub const RTE: crate::PointDef<Self, u32> = crate::PointDef::new(4, 2, true);
-    pub const BITS: crate::PointDef<Self, u16> = crate::PointDef::new(6, 1, true);
-    pub const PTY: crate::PointDef<Self, Pty> = crate::PointDef::new(7, 1, true);
-    pub const DUP: crate::PointDef<Self, Option<Dup>> = crate::PointDef::new(8, 1, true);
-    pub const FLW: crate::PointDef<Self, Option<Flw>> = crate::PointDef::new(9, 1, true);
-    pub const AUTH: crate::PointDef<Self, Option<Auth>> = crate::PointDef::new(10, 1, false);
-    pub const USR_NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(11, 12, false);
-    pub const PW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(23, 6, false);
+    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 4, true);
+    pub const RTE: crate::Point<Self, u32> = crate::Point::new(4, 2, true);
+    pub const BITS: crate::Point<Self, u16> = crate::Point::new(6, 1, true);
+    pub const PTY: crate::Point<Self, Pty> = crate::Point::new(7, 1, true);
+    pub const DUP: crate::Point<Self, Option<Dup>> = crate::Point::new(8, 1, true);
+    pub const FLW: crate::Point<Self, Option<Flw>> = crate::Point::new(9, 1, true);
+    pub const AUTH: crate::Point<Self, Option<Auth>> = crate::Point::new(10, 1, false);
+    pub const USR_NAM: crate::Point<Self, Option<String>> = crate::Point::new(11, 12, false);
+    pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(23, 6, false);
 }
 impl crate::Model for Model19 {
     const ID: u16 = 19;

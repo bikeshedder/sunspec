@@ -38,13 +38,13 @@ pub struct Model125 {
 }
 #[allow(missing_docs)]
 impl Model125 {
-    pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(0, 1, true);
-    pub const SIG_TYPE: crate::PointDef<Self, Option<SigType>> = crate::PointDef::new(1, 1, true);
-    pub const SIG: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, true);
-    pub const WIN_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
-    pub const RVT_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
-    pub const RMP_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
-    pub const SIG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
+    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(0, 1, true);
+    pub const SIG_TYPE: crate::Point<Self, Option<SigType>> = crate::Point::new(1, 1, true);
+    pub const SIG: crate::Point<Self, i16> = crate::Point::new(2, 1, true);
+    pub const WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
+    pub const RVT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
+    pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
+    pub const SIG_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
 }
 impl crate::Model for Model125 {
     const ID: u16 = 125;

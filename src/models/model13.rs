@@ -68,21 +68,21 @@ pub struct Model13 {
 }
 #[allow(missing_docs)]
 impl Model13 {
-    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
-    pub const CFG_ST: crate::PointDef<Self, CfgSt> = crate::PointDef::new(4, 1, false);
-    pub const CHG_ST: crate::PointDef<Self, ChgSt> = crate::PointDef::new(5, 1, false);
-    pub const CAP: crate::PointDef<Self, Cap> = crate::PointDef::new(6, 1, false);
-    pub const CFG: crate::PointDef<Self, Cfg> = crate::PointDef::new(7, 1, true);
-    pub const CTL: crate::PointDef<Self, Ctl> = crate::PointDef::new(8, 1, true);
-    pub const ADDR: crate::PointDef<Self, String> = crate::PointDef::new(9, 20, true);
-    pub const CIDR: crate::PointDef<Self, Option<String>> = crate::PointDef::new(29, 20, true);
-    pub const GW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(49, 20, true);
-    pub const DNS1: crate::PointDef<Self, Option<String>> = crate::PointDef::new(69, 20, true);
-    pub const DNS2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(89, 20, true);
-    pub const NTP1: crate::PointDef<Self, Option<String>> = crate::PointDef::new(109, 20, true);
-    pub const NTP2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(129, 20, true);
-    pub const DOM_NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(149, 12, true);
-    pub const HOST_NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(161, 12, true);
+    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 4, true);
+    pub const CFG_ST: crate::Point<Self, CfgSt> = crate::Point::new(4, 1, false);
+    pub const CHG_ST: crate::Point<Self, ChgSt> = crate::Point::new(5, 1, false);
+    pub const CAP: crate::Point<Self, Cap> = crate::Point::new(6, 1, false);
+    pub const CFG: crate::Point<Self, Cfg> = crate::Point::new(7, 1, true);
+    pub const CTL: crate::Point<Self, Ctl> = crate::Point::new(8, 1, true);
+    pub const ADDR: crate::Point<Self, String> = crate::Point::new(9, 20, true);
+    pub const CIDR: crate::Point<Self, Option<String>> = crate::Point::new(29, 20, true);
+    pub const GW: crate::Point<Self, Option<String>> = crate::Point::new(49, 20, true);
+    pub const DNS1: crate::Point<Self, Option<String>> = crate::Point::new(69, 20, true);
+    pub const DNS2: crate::Point<Self, Option<String>> = crate::Point::new(89, 20, true);
+    pub const NTP1: crate::Point<Self, Option<String>> = crate::Point::new(109, 20, true);
+    pub const NTP2: crate::Point<Self, Option<String>> = crate::Point::new(129, 20, true);
+    pub const DOM_NAM: crate::Point<Self, Option<String>> = crate::Point::new(149, 12, true);
+    pub const HOST_NAM: crate::Point<Self, Option<String>> = crate::Point::new(161, 12, true);
 }
 impl crate::Model for Model13 {
     const ID: u16 = 13;

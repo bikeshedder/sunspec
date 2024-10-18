@@ -138,39 +138,39 @@ pub struct Model121 {
 }
 #[allow(missing_docs)]
 impl Model121 {
-    pub const W_MAX: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, true);
-    pub const V_REF: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const V_REF_OFS: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, true);
-    pub const V_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
-    pub const V_MIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
-    pub const VA_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
-    pub const V_AR_MAX_Q1: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(6, 1, true);
-    pub const V_AR_MAX_Q2: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(7, 1, true);
-    pub const V_AR_MAX_Q3: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(8, 1, true);
-    pub const V_AR_MAX_Q4: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(9, 1, true);
-    pub const W_GRA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, true);
-    pub const PF_MIN_Q1: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(11, 1, true);
-    pub const PF_MIN_Q2: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(12, 1, true);
-    pub const PF_MIN_Q3: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(13, 1, true);
-    pub const PF_MIN_Q4: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(14, 1, true);
-    pub const V_AR_ACT: crate::PointDef<Self, Option<VArAct>> = crate::PointDef::new(15, 1, true);
-    pub const CLC_TOT_VA: crate::PointDef<Self, Option<ClcTotVa>> =
-        crate::PointDef::new(16, 1, true);
-    pub const MAX_RMP_RTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, true);
-    pub const ECP_NOM_HZ: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(18, 1, true);
-    pub const CONN_PH: crate::PointDef<Self, Option<ConnPh>> = crate::PointDef::new(19, 1, true);
-    pub const W_MAX_SF: crate::PointDef<Self, i16> = crate::PointDef::new(20, 1, false);
-    pub const V_REF_SF: crate::PointDef<Self, i16> = crate::PointDef::new(21, 1, false);
-    pub const V_REF_OFS_SF: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
-    pub const V_MIN_MAX_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
-    pub const VA_MAX_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(24, 1, false);
-    pub const V_AR_MAX_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(25, 1, false);
-    pub const W_GRA_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(26, 1, false);
-    pub const PF_MIN_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(27, 1, false);
-    pub const MAX_RMP_RTE_SF: crate::PointDef<Self, Option<i16>> =
-        crate::PointDef::new(28, 1, false);
-    pub const ECP_NOM_HZ_SF: crate::PointDef<Self, Option<i16>> =
-        crate::PointDef::new(29, 1, false);
+    pub const W_MAX: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
+    pub const V_REF: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
+    pub const V_REF_OFS: crate::Point<Self, i16> = crate::Point::new(2, 1, true);
+    pub const V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
+    pub const V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
+    pub const VA_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
+    pub const V_AR_MAX_Q1: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, true);
+    pub const V_AR_MAX_Q2: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, true);
+    pub const V_AR_MAX_Q3: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, true);
+    pub const V_AR_MAX_Q4: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, true);
+    pub const W_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
+    pub const PF_MIN_Q1: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, true);
+    pub const PF_MIN_Q2: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, true);
+    pub const PF_MIN_Q3: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
+    pub const PF_MIN_Q4: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, true);
+    pub const V_AR_ACT: crate::Point<Self, Option<VArAct>> = crate::Point::new(15, 1, true);
+    pub const CLC_TOT_VA: crate::Point<Self, Option<ClcTotVa>> =
+        crate::Point::new(16, 1, true);
+    pub const MAX_RMP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, true);
+    pub const ECP_NOM_HZ: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
+    pub const CONN_PH: crate::Point<Self, Option<ConnPh>> = crate::Point::new(19, 1, true);
+    pub const W_MAX_SF: crate::Point<Self, i16> = crate::Point::new(20, 1, false);
+    pub const V_REF_SF: crate::Point<Self, i16> = crate::Point::new(21, 1, false);
+    pub const V_REF_OFS_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
+    pub const V_MIN_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
+    pub const VA_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
+    pub const V_AR_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, false);
+    pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(26, 1, false);
+    pub const PF_MIN_SF: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
+    pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> =
+        crate::Point::new(28, 1, false);
+    pub const ECP_NOM_HZ_SF: crate::Point<Self, Option<i16>> =
+        crate::Point::new(29, 1, false);
 }
 impl crate::Model for Model121 {
     const ID: u16 = 121;

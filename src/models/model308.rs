@@ -20,10 +20,10 @@ pub struct Model308 {
 }
 #[allow(missing_docs)]
 impl Model308 {
-    pub const GHI: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, false);
-    pub const TMP_BOM: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(1, 1, false);
-    pub const TMP_AMB: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(2, 1, false);
-    pub const WND_SPD: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
+    pub const GHI: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
+    pub const TMP_BOM: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
+    pub const TMP_AMB: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
+    pub const WND_SPD: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
 }
 impl crate::Model for Model308 {
     const ID: u16 = 308;

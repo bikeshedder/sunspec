@@ -147,7 +147,7 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
             let offset = Literal::u16_unsuffixed(offset);
             let writable = point.access == PointAccess::RW;
             let code = quote! {
-                pub const #point_name: crate::PointDef<Self, #point_type> = crate::PointDef::new(#offset, #len, #writable);
+                pub const #point_name: crate::Point<Self, #point_type> = crate::Point::new(#offset, #len, #writable);
             };
             Some(code)
         });

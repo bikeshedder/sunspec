@@ -48,16 +48,16 @@ pub struct Model16 {
 }
 #[allow(missing_docs)]
 impl Model16 {
-    pub const NAM: crate::PointDef<Self, Option<String>> = crate::PointDef::new(0, 4, true);
-    pub const CFG: crate::PointDef<Self, Cfg> = crate::PointDef::new(4, 1, false);
-    pub const CTL: crate::PointDef<Self, Ctl> = crate::PointDef::new(5, 1, true);
-    pub const ADDR: crate::PointDef<Self, String> = crate::PointDef::new(6, 8, true);
-    pub const MSK: crate::PointDef<Self, String> = crate::PointDef::new(14, 8, true);
-    pub const GW: crate::PointDef<Self, Option<String>> = crate::PointDef::new(22, 8, true);
-    pub const DNS1: crate::PointDef<Self, Option<String>> = crate::PointDef::new(30, 8, true);
-    pub const DNS2: crate::PointDef<Self, Option<String>> = crate::PointDef::new(38, 8, true);
-    pub const MAC: crate::PointDef<Self, Option<String>> = crate::PointDef::new(46, 4, false);
-    pub const LNK_CTL: crate::PointDef<Self, Option<LnkCtl>> = crate::PointDef::new(50, 1, true);
+    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 4, true);
+    pub const CFG: crate::Point<Self, Cfg> = crate::Point::new(4, 1, false);
+    pub const CTL: crate::Point<Self, Ctl> = crate::Point::new(5, 1, true);
+    pub const ADDR: crate::Point<Self, String> = crate::Point::new(6, 8, true);
+    pub const MSK: crate::Point<Self, String> = crate::Point::new(14, 8, true);
+    pub const GW: crate::Point<Self, Option<String>> = crate::Point::new(22, 8, true);
+    pub const DNS1: crate::Point<Self, Option<String>> = crate::Point::new(30, 8, true);
+    pub const DNS2: crate::Point<Self, Option<String>> = crate::Point::new(38, 8, true);
+    pub const MAC: crate::Point<Self, Option<String>> = crate::Point::new(46, 4, false);
+    pub const LNK_CTL: crate::Point<Self, Option<LnkCtl>> = crate::Point::new(50, 1, true);
 }
 impl crate::Model for Model16 {
     const ID: u16 = 16;

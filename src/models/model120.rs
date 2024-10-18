@@ -120,34 +120,34 @@ pub struct Model120 {
 }
 #[allow(missing_docs)]
 impl Model120 {
-    pub const DER_TYP: crate::PointDef<Self, DerTyp> = crate::PointDef::new(0, 1, false);
-    pub const W_RTG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
-    pub const W_RTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(2, 1, false);
-    pub const VA_RTG: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const VA_RTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(4, 1, false);
-    pub const V_AR_RTG_Q1: crate::PointDef<Self, i16> = crate::PointDef::new(5, 1, false);
-    pub const V_AR_RTG_Q2: crate::PointDef<Self, i16> = crate::PointDef::new(6, 1, false);
-    pub const V_AR_RTG_Q3: crate::PointDef<Self, i16> = crate::PointDef::new(7, 1, false);
-    pub const V_AR_RTG_Q4: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, false);
-    pub const V_AR_RTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(9, 1, false);
-    pub const A_RTG: crate::PointDef<Self, u16> = crate::PointDef::new(10, 1, false);
-    pub const A_RTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
-    pub const PF_RTG_Q1: crate::PointDef<Self, i16> = crate::PointDef::new(12, 1, false);
-    pub const PF_RTG_Q2: crate::PointDef<Self, i16> = crate::PointDef::new(13, 1, false);
-    pub const PF_RTG_Q3: crate::PointDef<Self, i16> = crate::PointDef::new(14, 1, false);
-    pub const PF_RTG_Q4: crate::PointDef<Self, i16> = crate::PointDef::new(15, 1, false);
-    pub const PF_RTG_SF: crate::PointDef<Self, i16> = crate::PointDef::new(16, 1, false);
-    pub const WH_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(17, 1, false);
-    pub const WH_RTG_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(18, 1, false);
-    pub const AHR_RTG: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(19, 1, false);
-    pub const AHR_RTG_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(20, 1, false);
-    pub const MAX_CHA_RTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(21, 1, false);
-    pub const MAX_CHA_RTE_SF: crate::PointDef<Self, Option<i16>> =
-        crate::PointDef::new(22, 1, false);
-    pub const MAX_DIS_CHA_RTE: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(23, 1, false);
-    pub const MAX_DIS_CHA_RTE_SF: crate::PointDef<Self, Option<i16>> =
-        crate::PointDef::new(24, 1, false);
+    pub const DER_TYP: crate::Point<Self, DerTyp> = crate::Point::new(0, 1, false);
+    pub const W_RTG: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
+    pub const W_RTG_SF: crate::Point<Self, i16> = crate::Point::new(2, 1, false);
+    pub const VA_RTG: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
+    pub const VA_RTG_SF: crate::Point<Self, i16> = crate::Point::new(4, 1, false);
+    pub const V_AR_RTG_Q1: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
+    pub const V_AR_RTG_Q2: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
+    pub const V_AR_RTG_Q3: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
+    pub const V_AR_RTG_Q4: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
+    pub const V_AR_RTG_SF: crate::Point<Self, i16> = crate::Point::new(9, 1, false);
+    pub const A_RTG: crate::Point<Self, u16> = crate::Point::new(10, 1, false);
+    pub const A_RTG_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
+    pub const PF_RTG_Q1: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
+    pub const PF_RTG_Q2: crate::Point<Self, i16> = crate::Point::new(13, 1, false);
+    pub const PF_RTG_Q3: crate::Point<Self, i16> = crate::Point::new(14, 1, false);
+    pub const PF_RTG_Q4: crate::Point<Self, i16> = crate::Point::new(15, 1, false);
+    pub const PF_RTG_SF: crate::Point<Self, i16> = crate::Point::new(16, 1, false);
+    pub const WH_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, false);
+    pub const WH_RTG_SF: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1, false);
+    pub const AHR_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(19, 1, false);
+    pub const AHR_RTG_SF: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1, false);
+    pub const MAX_CHA_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(21, 1, false);
+    pub const MAX_CHA_RTE_SF: crate::Point<Self, Option<i16>> =
+        crate::Point::new(22, 1, false);
+    pub const MAX_DIS_CHA_RTE: crate::Point<Self, Option<u16>> =
+        crate::Point::new(23, 1, false);
+    pub const MAX_DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> =
+        crate::Point::new(24, 1, false);
 }
 impl crate::Model for Model120 {
     const ID: u16 = 120;

@@ -10,7 +10,7 @@ use super::{CommunicationError, ReadModelError, ReadPointError, WritePointError}
 use crate::constants::SUNS_IDENTIFIER;
 use crate::model::{Model, ModelAddr};
 use crate::models::Models;
-use crate::point::PointDef;
+use crate::point::Point;
 use crate::value::Value;
 
 use tokio_modbus::client::{Context, Reader, Writer};
@@ -149,11 +149,11 @@ pub async fn read_model<M: Model>(
 pub async fn read_point<M: Model, T: Value>(
     ctx: &mut Context,
     model_addr: ModelAddr<M>,
-    point_def: PointDef<M, T>,
+    point: Point<M, T>,
     config: &Config,
 ) -> Result<T, ReadPointError> {
     let data = apply_timeout(
-        ctx.read_holding_registers(model_addr.addr + point_def.offset, point_def.length),
+        ctx.read_holding_registers(model_addr.addr + point.offset, point.length),
         config.read_timeout,
     )
     .await?
@@ -166,16 +166,16 @@ pub async fn read_point<M: Model, T: Value>(
 pub async fn write_point<M: Model, T: Value>(
     ctx: &mut Context,
     model_addr: ModelAddr<M>,
-    point_def: PointDef<M, T>,
+    point: Point<M, T>,
     value: T,
     config: &Config,
 ) -> Result<(), WritePointError> {
     let data = value.encode();
-    if data.len() > point_def.length as usize {
+    if data.len() > point.length as usize {
         return Err(WritePointError::ValueTooLarge);
     }
     apply_timeout(
-        ctx.write_multiple_registers(model_addr.addr + point_def.offset, &data),
+        ctx.write_multiple_registers(model_addr.addr + point.offset, &data),
         config.write_timeout,
     )
     .await?

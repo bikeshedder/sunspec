@@ -40,16 +40,16 @@ pub struct Model145 {
 }
 #[allow(missing_docs)]
 impl Model145 {
-    pub const NOM_RMP_UP_RTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
-    pub const NOM_RMP_DN_RTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
-    pub const EMG_RMP_UP_RTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, true);
-    pub const EMG_RMP_DN_RTE: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, true);
-    pub const CONN_RMP_UP_RTE: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(4, 1, true);
-    pub const CONN_RMP_DN_RTE: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(5, 1, true);
-    pub const A_GRA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
-    pub const RMP_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(7, 1, false);
+    pub const NOM_RMP_UP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const NOM_RMP_DN_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
+    pub const EMG_RMP_UP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
+    pub const EMG_RMP_DN_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
+    pub const CONN_RMP_UP_RTE: crate::Point<Self, Option<u16>> =
+        crate::Point::new(4, 1, true);
+    pub const CONN_RMP_DN_RTE: crate::Point<Self, Option<u16>> =
+        crate::Point::new(5, 1, true);
+    pub const A_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
+    pub const RMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
 }
 impl crate::Model for Model145 {
     const ID: u16 = 145;

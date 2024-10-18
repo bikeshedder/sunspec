@@ -8,7 +8,7 @@ pub struct Model808 {
 }
 #[allow(missing_docs)]
 impl Model808 {
-    pub const MODULE_TBD: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
+    pub const MODULE_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
 impl crate::Model for Model808 {
     const ID: u16 = 808;

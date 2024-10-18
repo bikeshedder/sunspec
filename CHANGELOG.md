@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ModelAddr` and `PointRef` now implement `Copy` and `Clone` and are passed by
   value and not by reference.
 - Move all client specific code into `client` module.
+- Rename `PointDef` to `Point`.
 
 ## [0.6.1] - 2024-10-18
 

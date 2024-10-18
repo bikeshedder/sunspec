@@ -20,9 +20,9 @@ pub struct Model10 {
 }
 #[allow(missing_docs)]
 impl Model10 {
-    pub const ST: crate::PointDef<Self, St> = crate::PointDef::new(0, 1, false);
-    pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
-    pub const TYP: crate::PointDef<Self, Option<Typ>> = crate::PointDef::new(2, 1, false);
+    pub const ST: crate::Point<Self, St> = crate::Point::new(0, 1, false);
+    pub const CTL: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
+    pub const TYP: crate::Point<Self, Option<Typ>> = crate::Point::new(2, 1, false);
 }
 impl crate::Model for Model10 {
     const ID: u16 = 10;

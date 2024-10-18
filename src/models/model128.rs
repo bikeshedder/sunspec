@@ -62,19 +62,19 @@ pub struct Model128 {
 }
 #[allow(missing_docs)]
 impl Model128 {
-    pub const AR_GRA_MOD: crate::PointDef<Self, ArGraMod> = crate::PointDef::new(0, 1, true);
-    pub const AR_GRA_SAG: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, true);
-    pub const AR_GRA_SWELL: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, true);
-    pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(3, 1, true);
-    pub const FIL_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, true);
-    pub const DB_V_MIN: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, true);
-    pub const DB_V_MAX: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
-    pub const BLK_ZN_V: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(7, 1, true);
-    pub const HYS_BLK_ZN_V: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(8, 1, true);
-    pub const BLK_ZN_TMMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(9, 1, true);
-    pub const HOLD_TMMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(10, 1, true);
-    pub const AR_GRA_SF: crate::PointDef<Self, i16> = crate::PointDef::new(11, 1, false);
-    pub const V_REF_PCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(12, 1, false);
+    pub const AR_GRA_MOD: crate::Point<Self, ArGraMod> = crate::Point::new(0, 1, true);
+    pub const AR_GRA_SAG: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
+    pub const AR_GRA_SWELL: crate::Point<Self, u16> = crate::Point::new(2, 1, true);
+    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(3, 1, true);
+    pub const FIL_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
+    pub const DB_V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
+    pub const DB_V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
+    pub const BLK_ZN_V: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
+    pub const HYS_BLK_ZN_V: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
+    pub const BLK_ZN_TMMS: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, true);
+    pub const HOLD_TMMS: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
+    pub const AR_GRA_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
+    pub const V_REF_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
 }
 impl crate::Model for Model128 {
     const ID: u16 = 128;

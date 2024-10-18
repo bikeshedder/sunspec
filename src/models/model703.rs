@@ -52,18 +52,18 @@ pub struct Model703 {
 }
 #[allow(missing_docs)]
 impl Model703 {
-    pub const ES: crate::PointDef<Self, Option<Es>> = crate::PointDef::new(0, 1, true);
-    pub const ESV_HI: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
-    pub const ESV_LO: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(2, 1, true);
-    pub const ES_HZ_HI: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(3, 2, true);
-    pub const ES_HZ_LO: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(5, 2, true);
-    pub const ES_DLY_TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, true);
-    pub const ES_RND_TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(9, 2, true);
-    pub const ES_RMP_TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(11, 2, true);
-    pub const ES_DLY_REM_TMS: crate::PointDef<Self, Option<u32>> =
-        crate::PointDef::new(13, 2, false);
-    pub const V_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(15, 1, false);
-    pub const HZ_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(16, 1, false);
+    pub const ES: crate::Point<Self, Option<Es>> = crate::Point::new(0, 1, true);
+    pub const ESV_HI: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
+    pub const ESV_LO: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
+    pub const ES_HZ_HI: crate::Point<Self, Option<u32>> = crate::Point::new(3, 2, true);
+    pub const ES_HZ_LO: crate::Point<Self, Option<u32>> = crate::Point::new(5, 2, true);
+    pub const ES_DLY_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, true);
+    pub const ES_RND_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(9, 2, true);
+    pub const ES_RMP_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(11, 2, true);
+    pub const ES_DLY_REM_TMS: crate::Point<Self, Option<u32>> =
+        crate::Point::new(13, 2, false);
+    pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
+    pub const HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
 }
 impl crate::Model for Model703 {
     const ID: u16 = 703;

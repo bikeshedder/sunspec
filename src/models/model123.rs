@@ -106,42 +106,42 @@ pub struct Model123 {
 }
 #[allow(missing_docs)]
 impl Model123 {
-    pub const CONN_WIN_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(0, 1, true);
-    pub const CONN_RVRT_TMS: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, true);
-    pub const CONN: crate::PointDef<Self, Conn> = crate::PointDef::new(2, 1, true);
-    pub const W_MAX_LIM_PCT: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, true);
-    pub const W_MAX_LIM_PCT_WIN_TMS: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(4, 1, true);
-    pub const W_MAX_LIM_PCT_RVRT_TMS: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(5, 1, true);
-    pub const W_MAX_LIM_PCT_RMP_TMS: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(6, 1, true);
-    pub const W_MAX_LIM_ENA: crate::PointDef<Self, WMaxLimEna> = crate::PointDef::new(7, 1, true);
-    pub const OUT_PF_SET: crate::PointDef<Self, i16> = crate::PointDef::new(8, 1, true);
-    pub const OUT_PF_SET_WIN_TMS: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(9, 1, true);
-    pub const OUT_PF_SET_RVRT_TMS: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(10, 1, true);
-    pub const OUT_PF_SET_RMP_TMS: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(11, 1, true);
-    pub const OUT_PF_SET_ENA: crate::PointDef<Self, OutPfSetEna> =
-        crate::PointDef::new(12, 1, true);
-    pub const V_AR_W_MAX_PCT: crate::PointDef<Self, Option<i16>> =
-        crate::PointDef::new(13, 1, true);
-    pub const V_AR_MAX_PCT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(14, 1, true);
-    pub const V_AR_AVAL_PCT: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(15, 1, true);
-    pub const V_AR_PCT_WIN_TMS: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(16, 1, true);
-    pub const V_AR_PCT_RVRT_TMS: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(17, 1, true);
-    pub const V_AR_PCT_RMP_TMS: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(18, 1, true);
-    pub const V_AR_PCT_MOD: crate::PointDef<Self, Option<VArPctMod>> =
-        crate::PointDef::new(19, 1, true);
-    pub const V_AR_PCT_ENA: crate::PointDef<Self, VArPctEna> = crate::PointDef::new(20, 1, true);
-    pub const W_MAX_LIM_PCT_SF: crate::PointDef<Self, i16> = crate::PointDef::new(21, 1, false);
-    pub const OUT_PF_SET_SF: crate::PointDef<Self, i16> = crate::PointDef::new(22, 1, false);
-    pub const V_AR_PCT_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(23, 1, false);
+    pub const CONN_WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const CONN_RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
+    pub const CONN: crate::Point<Self, Conn> = crate::Point::new(2, 1, true);
+    pub const W_MAX_LIM_PCT: crate::Point<Self, u16> = crate::Point::new(3, 1, true);
+    pub const W_MAX_LIM_PCT_WIN_TMS: crate::Point<Self, Option<u16>> =
+        crate::Point::new(4, 1, true);
+    pub const W_MAX_LIM_PCT_RVRT_TMS: crate::Point<Self, Option<u16>> =
+        crate::Point::new(5, 1, true);
+    pub const W_MAX_LIM_PCT_RMP_TMS: crate::Point<Self, Option<u16>> =
+        crate::Point::new(6, 1, true);
+    pub const W_MAX_LIM_ENA: crate::Point<Self, WMaxLimEna> = crate::Point::new(7, 1, true);
+    pub const OUT_PF_SET: crate::Point<Self, i16> = crate::Point::new(8, 1, true);
+    pub const OUT_PF_SET_WIN_TMS: crate::Point<Self, Option<u16>> =
+        crate::Point::new(9, 1, true);
+    pub const OUT_PF_SET_RVRT_TMS: crate::Point<Self, Option<u16>> =
+        crate::Point::new(10, 1, true);
+    pub const OUT_PF_SET_RMP_TMS: crate::Point<Self, Option<u16>> =
+        crate::Point::new(11, 1, true);
+    pub const OUT_PF_SET_ENA: crate::Point<Self, OutPfSetEna> =
+        crate::Point::new(12, 1, true);
+    pub const V_AR_W_MAX_PCT: crate::Point<Self, Option<i16>> =
+        crate::Point::new(13, 1, true);
+    pub const V_AR_MAX_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, true);
+    pub const V_AR_AVAL_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, true);
+    pub const V_AR_PCT_WIN_TMS: crate::Point<Self, Option<u16>> =
+        crate::Point::new(16, 1, true);
+    pub const V_AR_PCT_RVRT_TMS: crate::Point<Self, Option<u16>> =
+        crate::Point::new(17, 1, true);
+    pub const V_AR_PCT_RMP_TMS: crate::Point<Self, Option<u16>> =
+        crate::Point::new(18, 1, true);
+    pub const V_AR_PCT_MOD: crate::Point<Self, Option<VArPctMod>> =
+        crate::Point::new(19, 1, true);
+    pub const V_AR_PCT_ENA: crate::Point<Self, VArPctEna> = crate::Point::new(20, 1, true);
+    pub const W_MAX_LIM_PCT_SF: crate::Point<Self, i16> = crate::Point::new(21, 1, false);
+    pub const OUT_PF_SET_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
+    pub const V_AR_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
 }
 impl crate::Model for Model123 {
     const ID: u16 = 123;

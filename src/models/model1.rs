@@ -32,12 +32,12 @@ pub struct Model1 {
 }
 #[allow(missing_docs)]
 impl Model1 {
-    pub const MN: crate::PointDef<Self, String> = crate::PointDef::new(0, 16, false);
-    pub const MD: crate::PointDef<Self, String> = crate::PointDef::new(16, 16, false);
-    pub const OPT: crate::PointDef<Self, Option<String>> = crate::PointDef::new(32, 8, false);
-    pub const VR: crate::PointDef<Self, Option<String>> = crate::PointDef::new(40, 8, false);
-    pub const SN: crate::PointDef<Self, String> = crate::PointDef::new(48, 16, false);
-    pub const DA: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(64, 1, true);
+    pub const MN: crate::Point<Self, String> = crate::Point::new(0, 16, false);
+    pub const MD: crate::Point<Self, String> = crate::Point::new(16, 16, false);
+    pub const OPT: crate::Point<Self, Option<String>> = crate::Point::new(32, 8, false);
+    pub const VR: crate::Point<Self, Option<String>> = crate::Point::new(40, 8, false);
+    pub const SN: crate::Point<Self, String> = crate::Point::new(48, 16, false);
+    pub const DA: crate::Point<Self, Option<u16>> = crate::Point::new(64, 1, true);
 }
 impl crate::Model for Model1 {
     const ID: u16 = 1;

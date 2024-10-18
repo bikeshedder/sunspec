@@ -48,14 +48,14 @@ pub struct Model7 {
 }
 #[allow(missing_docs)]
 impl Model7 {
-    pub const RQ_SEQ: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const STS: crate::PointDef<Self, Sts> = crate::PointDef::new(1, 1, false);
-    pub const TS: crate::PointDef<Self, u32> = crate::PointDef::new(2, 2, false);
-    pub const MS: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
-    pub const SEQ: crate::PointDef<Self, u16> = crate::PointDef::new(5, 1, false);
-    pub const ALM: crate::PointDef<Self, Alm> = crate::PointDef::new(6, 1, false);
-    pub const ALG: crate::PointDef<Self, Alg> = crate::PointDef::new(8, 1, false);
-    pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, true);
+    pub const RQ_SEQ: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const STS: crate::Point<Self, Sts> = crate::Point::new(1, 1, false);
+    pub const TS: crate::Point<Self, u32> = crate::Point::new(2, 2, false);
+    pub const MS: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
+    pub const SEQ: crate::Point<Self, u16> = crate::Point::new(5, 1, false);
+    pub const ALM: crate::Point<Self, Alm> = crate::Point::new(6, 1, false);
+    pub const ALG: crate::Point<Self, Alg> = crate::Point::new(8, 1, false);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(9, 1, true);
 }
 impl crate::Model for Model7 {
     const ID: u16 = 7;

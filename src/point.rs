@@ -7,7 +7,7 @@ use crate::{
 
 /// Definition of a point
 #[derive(Debug)]
-pub struct PointDef<M: Model, T: Value> {
+pub struct Point<M: Model, T: Value> {
     /// Offset within the model
     pub offset: u16,
     /// Length of the data
@@ -18,7 +18,7 @@ pub struct PointDef<M: Model, T: Value> {
     point_type: PhantomData<T>,
 }
 
-impl<M: Model, T: Value> PointDef<M, T> {
+impl<M: Model, T: Value> Point<M, T> {
     /// Create new point definition
     pub const fn new(offset: u16, length: u16, writable: bool) -> Self {
         Self {
@@ -39,9 +39,9 @@ impl<M: Model, T: Value> PointDef<M, T> {
     }
 }
 
-impl<M: Model, T: Value> Copy for PointDef<M, T> {}
+impl<M: Model, T: Value> Copy for Point<M, T> {}
 
-impl<M: Model, T: Value> Clone for PointDef<M, T> {
+impl<M: Model, T: Value> Clone for Point<M, T> {
     fn clone(&self) -> Self {
         *self
     }

@@ -118,36 +118,36 @@ pub struct Model805 {
 }
 #[allow(missing_docs)]
 impl Model805 {
-    pub const STR_IDX: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const MOD_IDX: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
-    pub const N_CELL: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const SO_C: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(3, 1, false);
-    pub const DO_D: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
-    pub const SO_H: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(5, 1, false);
-    pub const N_CYC: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(6, 2, false);
-    pub const V: crate::PointDef<Self, u16> = crate::PointDef::new(8, 1, false);
-    pub const CELL_V_MAX: crate::PointDef<Self, u16> = crate::PointDef::new(9, 1, false);
-    pub const CELL_V_MAX_CELL: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(10, 1, false);
-    pub const CELL_V_MIN: crate::PointDef<Self, u16> = crate::PointDef::new(11, 1, false);
-    pub const CELL_V_MIN_CELL: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(12, 1, false);
-    pub const CELL_V_AVG: crate::PointDef<Self, u16> = crate::PointDef::new(13, 1, false);
-    pub const CELL_TMP_MAX: crate::PointDef<Self, i16> = crate::PointDef::new(14, 1, false);
-    pub const CELL_TMP_MAX_CELL: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(15, 1, false);
-    pub const CELL_TMP_MIN: crate::PointDef<Self, i16> = crate::PointDef::new(16, 1, false);
-    pub const CELL_TMP_MIN_CELL: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(17, 1, false);
-    pub const CELL_TMP_AVG: crate::PointDef<Self, i16> = crate::PointDef::new(18, 1, false);
-    pub const N_CELL_BAL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(19, 1, false);
-    pub const SN: crate::PointDef<Self, Option<String>> = crate::PointDef::new(20, 16, false);
-    pub const SO_C_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(36, 1, false);
-    pub const SO_H_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(37, 1, false);
-    pub const DO_D_SF: crate::PointDef<Self, Option<i16>> = crate::PointDef::new(38, 1, false);
-    pub const V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(39, 1, false);
-    pub const CELL_V_SF: crate::PointDef<Self, i16> = crate::PointDef::new(40, 1, false);
-    pub const TMP_SF: crate::PointDef<Self, i16> = crate::PointDef::new(41, 1, false);
+    pub const STR_IDX: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const MOD_IDX: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
+    pub const N_CELL: crate::Point<Self, u16> = crate::Point::new(2, 1, false);
+    pub const SO_C: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
+    pub const DO_D: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
+    pub const SO_H: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
+    pub const N_CYC: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2, false);
+    pub const V: crate::Point<Self, u16> = crate::Point::new(8, 1, false);
+    pub const CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(9, 1, false);
+    pub const CELL_V_MAX_CELL: crate::Point<Self, Option<u16>> =
+        crate::Point::new(10, 1, false);
+    pub const CELL_V_MIN: crate::Point<Self, u16> = crate::Point::new(11, 1, false);
+    pub const CELL_V_MIN_CELL: crate::Point<Self, Option<u16>> =
+        crate::Point::new(12, 1, false);
+    pub const CELL_V_AVG: crate::Point<Self, u16> = crate::Point::new(13, 1, false);
+    pub const CELL_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(14, 1, false);
+    pub const CELL_TMP_MAX_CELL: crate::Point<Self, Option<u16>> =
+        crate::Point::new(15, 1, false);
+    pub const CELL_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(16, 1, false);
+    pub const CELL_TMP_MIN_CELL: crate::Point<Self, Option<u16>> =
+        crate::Point::new(17, 1, false);
+    pub const CELL_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(18, 1, false);
+    pub const N_CELL_BAL: crate::Point<Self, Option<u16>> = crate::Point::new(19, 1, false);
+    pub const SN: crate::Point<Self, Option<String>> = crate::Point::new(20, 16, false);
+    pub const SO_C_SF: crate::Point<Self, Option<i16>> = crate::Point::new(36, 1, false);
+    pub const SO_H_SF: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, false);
+    pub const DO_D_SF: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1, false);
+    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(39, 1, false);
+    pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(40, 1, false);
+    pub const TMP_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
 }
 impl crate::Model for Model805 {
     const ID: u16 = 805;

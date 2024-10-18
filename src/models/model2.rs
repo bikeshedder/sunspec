@@ -48,16 +48,16 @@ pub struct Model2 {
 }
 #[allow(missing_docs)]
 impl Model2 {
-    pub const AID: crate::PointDef<Self, u16> = crate::PointDef::new(0, 1, false);
-    pub const N: crate::PointDef<Self, u16> = crate::PointDef::new(1, 1, false);
-    pub const UN: crate::PointDef<Self, u16> = crate::PointDef::new(2, 1, false);
-    pub const ST: crate::PointDef<Self, St> = crate::PointDef::new(3, 1, false);
-    pub const ST_VND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(4, 1, false);
-    pub const EVT: crate::PointDef<Self, Evt> = crate::PointDef::new(5, 2, false);
-    pub const EVT_VND: crate::PointDef<Self, Option<EvtVnd>> = crate::PointDef::new(7, 2, false);
-    pub const CTL: crate::PointDef<Self, Option<Ctl>> = crate::PointDef::new(9, 1, false);
-    pub const CTL_VND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(10, 2, false);
-    pub const CTL_VL: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(12, 2, false);
+    pub const AID: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
+    pub const UN: crate::Point<Self, u16> = crate::Point::new(2, 1, false);
+    pub const ST: crate::Point<Self, St> = crate::Point::new(3, 1, false);
+    pub const ST_VND: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
+    pub const EVT: crate::Point<Self, Evt> = crate::Point::new(5, 2, false);
+    pub const EVT_VND: crate::Point<Self, Option<EvtVnd>> = crate::Point::new(7, 2, false);
+    pub const CTL: crate::Point<Self, Option<Ctl>> = crate::Point::new(9, 1, false);
+    pub const CTL_VND: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
+    pub const CTL_VL: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
 }
 impl crate::Model for Model2 {
     const ID: u16 = 2;

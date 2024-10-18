@@ -26,10 +26,10 @@ pub struct Model133 {
 }
 #[allow(missing_docs)]
 impl Model133 {
-    pub const ACT_SCHD: crate::PointDef<Self, ActSchd> = crate::PointDef::new(0, 2, true);
-    pub const MOD_ENA: crate::PointDef<Self, ModEna> = crate::PointDef::new(2, 1, true);
-    pub const N_SCHD: crate::PointDef<Self, u16> = crate::PointDef::new(3, 1, false);
-    pub const N_PTS: crate::PointDef<Self, u16> = crate::PointDef::new(4, 1, false);
+    pub const ACT_SCHD: crate::Point<Self, ActSchd> = crate::Point::new(0, 2, true);
+    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(2, 1, true);
+    pub const N_SCHD: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
+    pub const N_PTS: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
 }
 impl crate::Model for Model133 {
     const ID: u16 = 133;

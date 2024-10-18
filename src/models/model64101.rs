@@ -20,20 +20,20 @@ pub struct Model64101 {
 }
 #[allow(missing_docs)]
 impl Model64101 {
-    pub const ELTEK_COUNTRY_CODE: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(0, 1, false);
-    pub const ELTEK_FEEDING_PHASE: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(1, 1, false);
-    pub const ELTEK_APD_METHOD: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(2, 1, false);
-    pub const ELTEK_APD_POWER_REF: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(3, 1, false);
-    pub const ELTEK_RPS_METHOD: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(4, 1, false);
-    pub const ELTEK_RPS_Q_REF: crate::PointDef<Self, Option<u16>> =
-        crate::PointDef::new(5, 1, false);
-    pub const ELTEK_RPS_COS_PHI_REF: crate::PointDef<Self, Option<i16>> =
-        crate::PointDef::new(6, 1, false);
+    pub const ELTEK_COUNTRY_CODE: crate::Point<Self, Option<u16>> =
+        crate::Point::new(0, 1, false);
+    pub const ELTEK_FEEDING_PHASE: crate::Point<Self, Option<u16>> =
+        crate::Point::new(1, 1, false);
+    pub const ELTEK_APD_METHOD: crate::Point<Self, Option<u16>> =
+        crate::Point::new(2, 1, false);
+    pub const ELTEK_APD_POWER_REF: crate::Point<Self, Option<u16>> =
+        crate::Point::new(3, 1, false);
+    pub const ELTEK_RPS_METHOD: crate::Point<Self, Option<u16>> =
+        crate::Point::new(4, 1, false);
+    pub const ELTEK_RPS_Q_REF: crate::Point<Self, Option<u16>> =
+        crate::Point::new(5, 1, false);
+    pub const ELTEK_RPS_COS_PHI_REF: crate::Point<Self, Option<i16>> =
+        crate::Point::new(6, 1, false);
 }
 impl crate::Model for Model64101 {
     const ID: u16 = 64101;

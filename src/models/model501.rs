@@ -78,23 +78,23 @@ pub struct Model501 {
 }
 #[allow(missing_docs)]
 impl Model501 {
-    pub const STAT: crate::PointDef<Self, Stat> = crate::PointDef::new(0, 1, false);
-    pub const STAT_VEND: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(1, 1, false);
-    pub const EVT: crate::PointDef<Self, Evt> = crate::PointDef::new(2, 2, false);
-    pub const EVT_VEND: crate::PointDef<Self, Option<EvtVend>> = crate::PointDef::new(4, 2, false);
-    pub const CTL: crate::PointDef<Self, Option<u16>> = crate::PointDef::new(6, 1, true);
-    pub const CTL_VEND: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(7, 2, true);
-    pub const CTL_VAL: crate::PointDef<Self, Option<i32>> = crate::PointDef::new(9, 2, true);
-    pub const TMS: crate::PointDef<Self, Option<u32>> = crate::PointDef::new(11, 2, false);
-    pub const OUT_A: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(13, 2, false);
-    pub const OUT_V: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(15, 2, false);
-    pub const OUT_WH: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(17, 2, false);
-    pub const OUT_W: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(19, 2, false);
-    pub const TMP: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(21, 2, false);
-    pub const IN_A: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(23, 2, false);
-    pub const IN_V: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(25, 2, false);
-    pub const IN_WH: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(27, 2, false);
-    pub const IN_W: crate::PointDef<Self, Option<f32>> = crate::PointDef::new(29, 2, false);
+    pub const STAT: crate::Point<Self, Stat> = crate::Point::new(0, 1, false);
+    pub const STAT_VEND: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
+    pub const EVT: crate::Point<Self, Evt> = crate::Point::new(2, 2, false);
+    pub const EVT_VEND: crate::Point<Self, Option<EvtVend>> = crate::Point::new(4, 2, false);
+    pub const CTL: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
+    pub const CTL_VEND: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, true);
+    pub const CTL_VAL: crate::Point<Self, Option<i32>> = crate::Point::new(9, 2, true);
+    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(11, 2, false);
+    pub const OUT_A: crate::Point<Self, Option<f32>> = crate::Point::new(13, 2, false);
+    pub const OUT_V: crate::Point<Self, Option<f32>> = crate::Point::new(15, 2, false);
+    pub const OUT_WH: crate::Point<Self, Option<f32>> = crate::Point::new(17, 2, false);
+    pub const OUT_W: crate::Point<Self, Option<f32>> = crate::Point::new(19, 2, false);
+    pub const TMP: crate::Point<Self, Option<f32>> = crate::Point::new(21, 2, false);
+    pub const IN_A: crate::Point<Self, Option<f32>> = crate::Point::new(23, 2, false);
+    pub const IN_V: crate::Point<Self, Option<f32>> = crate::Point::new(25, 2, false);
+    pub const IN_WH: crate::Point<Self, Option<f32>> = crate::Point::new(27, 2, false);
+    pub const IN_W: crate::Point<Self, Option<f32>> = crate::Point::new(29, 2, false);
 }
 impl crate::Model for Model501 {
     const ID: u16 = 501;
