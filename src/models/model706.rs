@@ -81,6 +81,9 @@ impl crate::Model for Model706 {
             rsp_tms_sf: Self::RSP_TMS_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m706
+    }
 }
 /// DER Volt-Watt Module Enable
 ///

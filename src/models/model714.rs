@@ -84,6 +84,9 @@ impl crate::Model for Model714 {
             tmp_sf: Self::TMP_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m714
+    }
 }
 bitflags::bitflags! {
     #[doc = " Port Alarms"] #[doc = " "] #[doc =

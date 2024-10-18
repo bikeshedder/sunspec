@@ -81,6 +81,9 @@ impl crate::Model for Model139 {
             crv_type: Self::CRV_TYPE.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m139
+    }
 }
 bitflags::bitflags! {
     #[doc = " ModEna"] #[doc = " "] #[doc =

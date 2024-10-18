@@ -95,6 +95,9 @@ impl crate::Model for Model128 {
             v_ref_pct_sf: Self::V_REF_PCT_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m128
+    }
 }
 /// ArGraMod
 ///

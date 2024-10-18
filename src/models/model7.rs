@@ -71,6 +71,9 @@ impl crate::Model for Model7 {
             n: Self::N.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m7
+    }
 }
 /// Status
 ///

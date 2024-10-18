@@ -81,6 +81,9 @@ impl crate::Model for Model705 {
             rsp_tms_sf: Self::RSP_TMS_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m705
+    }
 }
 /// DER Volt-Var Module Enable
 ///

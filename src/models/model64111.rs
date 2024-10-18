@@ -105,6 +105,9 @@ impl crate::Model for Model64111 {
             life_time_max_voc: Self::LIFE_TIME_MAX_VOC.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64111
+    }
 }
 /// Operating State
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]

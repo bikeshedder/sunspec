@@ -17,4 +17,7 @@ impl crate::Model for Model809 {
             stack_tbd: Self::STACK_TBD.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m809
+    }
 }

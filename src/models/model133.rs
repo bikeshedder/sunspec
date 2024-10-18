@@ -41,6 +41,9 @@ impl crate::Model for Model133 {
             n_pts: Self::N_PTS.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m133
+    }
 }
 bitflags::bitflags! {
     #[doc = " ActSchd"] #[doc = " "] #[doc = " Bitfield of active schedules"]

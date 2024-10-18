@@ -48,6 +48,9 @@ impl crate::Model for Model715 {
             op_ctl: Self::OP_CTL.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m715
+    }
 }
 /// Control Mode
 ///

@@ -201,6 +201,9 @@ impl crate::Model for Model807 {
             ocv_sf: Self::OCV_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m807
+    }
 }
 bitflags::bitflags! {
     #[doc = " String Event 1"] #[doc = " "] #[doc =

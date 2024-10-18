@@ -39,4 +39,7 @@ impl crate::Model for Model306 {
             tmp: Self::TMP.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m306
+    }
 }

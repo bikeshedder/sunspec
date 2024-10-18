@@ -57,6 +57,9 @@ impl crate::Model for Model11 {
             frc_spd: Self::FRC_SPD.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m11
+    }
 }
 bitflags::bitflags! {
     #[doc = " Interface Status Flags"] #[doc = " "] #[doc =

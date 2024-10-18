@@ -65,4 +65,7 @@ impl crate::Model for Model145 {
             rmp_sf: Self::RMP_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m145
+    }
 }

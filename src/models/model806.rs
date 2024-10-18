@@ -17,4 +17,7 @@ impl crate::Model for Model806 {
             bat_tbd: Self::BAT_TBD.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m806
+    }
 }

@@ -57,6 +57,9 @@ impl crate::Model for Model709 {
             tms_sf: Self::TMS_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m709
+    }
 }
 /// DER Trip LF Module Enable
 ///

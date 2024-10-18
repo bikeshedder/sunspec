@@ -119,6 +119,9 @@ impl crate::Model for Model501 {
             in_w: Self::IN_W.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m501
+    }
 }
 /// Status
 ///

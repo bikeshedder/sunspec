@@ -63,6 +63,9 @@ impl crate::Model for Model14 {
             pw: Self::PW.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m14
+    }
 }
 bitflags::bitflags! {
     #[doc = " Capabilities"] #[doc = " "] #[doc =

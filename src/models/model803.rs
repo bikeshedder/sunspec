@@ -183,4 +183,7 @@ impl crate::Model for Model803 {
             v_sf: Self::V_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m803
+    }
 }

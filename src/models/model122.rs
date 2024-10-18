@@ -141,6 +141,9 @@ impl crate::Model for Model122 {
             ris_sf: Self::RIS_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m122
+    }
 }
 bitflags::bitflags! {
     #[doc = " PVConn"] #[doc = " "] #[doc =

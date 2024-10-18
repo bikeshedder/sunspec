@@ -237,6 +237,9 @@ impl crate::Model for Model804 {
             mod_tmp_sf: Self::MOD_TMP_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m804
+    }
 }
 bitflags::bitflags! {
     #[doc = " String Status"] #[doc = " "] #[doc = " Current status of the string."]

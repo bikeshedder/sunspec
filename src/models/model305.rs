@@ -51,4 +51,7 @@ impl crate::Model for Model305 {
             alt: Self::ALT.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m305
+    }
 }

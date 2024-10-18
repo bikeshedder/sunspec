@@ -242,6 +242,9 @@ impl crate::Model for Model63001 {
             sunssf_7: Self::SUNSSF_7.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m63001
+    }
 }
 bitflags::bitflags! {
     #[allow(missing_docs)] #[derive(Copy, Clone, Debug, Eq, PartialEq)]

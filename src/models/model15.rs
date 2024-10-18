@@ -87,4 +87,7 @@ impl crate::Model for Model15 {
             out_err_cnt: Self::OUT_ERR_CNT.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m15
+    }
 }

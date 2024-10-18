@@ -57,6 +57,9 @@ impl crate::Model for Model708 {
             tms_sf: Self::TMS_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m708
+    }
 }
 /// DER Trip HV Module Enable
 ///

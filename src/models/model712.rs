@@ -75,6 +75,9 @@ impl crate::Model for Model712 {
             dept_ref_sf: Self::DEPT_REF_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m712
+    }
 }
 /// DER Watt-Var Module Enable
 ///

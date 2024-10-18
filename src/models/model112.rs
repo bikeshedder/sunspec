@@ -205,6 +205,9 @@ impl crate::Model for Model112 {
             evt_vnd4: Self::EVT_VND4.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m112
+    }
 }
 /// Operating State
 ///

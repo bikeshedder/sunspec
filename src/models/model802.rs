@@ -374,6 +374,9 @@ impl crate::Model for Model802 {
             w_sf: Self::W_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m802
+    }
 }
 /// Charge Status
 ///

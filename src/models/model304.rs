@@ -12,4 +12,7 @@ impl crate::Model for Model304 {
     fn from_data(#[allow(unused)] data: &[u16]) -> Result<Self, crate::ReadModelError> {
         Ok(Self {})
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m304
+    }
 }

@@ -78,6 +78,9 @@ impl crate::Model for Model131 {
             rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m131
+    }
 }
 bitflags::bitflags! {
     #[doc = " ModEna"] #[doc = " "] #[doc = " Is watt-PF mode active."] #[derive(Copy,

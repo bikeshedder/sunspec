@@ -57,6 +57,9 @@ impl crate::Model for Model713 {
             pct_sf: Self::PCT_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m713
+    }
 }
 /// Status
 ///

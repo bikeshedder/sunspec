@@ -76,6 +76,9 @@ impl crate::Model for Model126 {
             rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m126
+    }
 }
 bitflags::bitflags! {
     #[doc = " ModEna"] #[doc = " "] #[doc = " Is Volt-VAR control active."]

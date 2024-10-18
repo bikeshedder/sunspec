@@ -318,6 +318,9 @@ impl crate::Model for Model64112 {
             cc_config_data_log_clr_comp: Self::CC_CONFIG_DATA_LOG_CLR_COMP.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64112
+    }
 }
 bitflags::bitflags! {
     #[doc = " Faults"] #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature =

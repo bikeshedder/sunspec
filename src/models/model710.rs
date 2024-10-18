@@ -57,6 +57,9 @@ impl crate::Model for Model710 {
             tms_sf: Self::TMS_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m710
+    }
 }
 /// DER Trip HF Module Enable
 ///

@@ -48,4 +48,7 @@ impl crate::Model for Model64101 {
             eltek_rps_cos_phi_ref: Self::ELTEK_RPS_COS_PHI_REF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64101
+    }
 }

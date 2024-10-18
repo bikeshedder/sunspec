@@ -33,6 +33,9 @@ impl crate::Model for Model10 {
             typ: Self::TYP.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m10
+    }
 }
 /// Interface Status
 ///

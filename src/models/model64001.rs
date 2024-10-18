@@ -153,6 +153,9 @@ impl crate::Model for Model64001 {
             s4_serial: Self::S4_SERIAL.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64001
+    }
 }
 bitflags::bitflags! {
     #[doc = " DIP Switches"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]

@@ -75,6 +75,9 @@ impl crate::Model for Model2 {
             ctl_vl: Self::CTL_VL.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m2
+    }
 }
 /// Status
 ///

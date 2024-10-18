@@ -180,6 +180,9 @@ impl crate::Model for Model120 {
             max_dis_cha_rte_sf: Self::MAX_DIS_CHA_RTE_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m120
+    }
 }
 /// DERTyp
 ///

@@ -59,6 +59,9 @@ impl crate::Model for Model125 {
             sig_sf: Self::SIG_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m125
+    }
 }
 bitflags::bitflags! {
     #[doc = " ModEna"] #[doc = " "] #[doc =

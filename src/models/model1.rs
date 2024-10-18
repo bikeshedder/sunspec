@@ -51,4 +51,7 @@ impl crate::Model for Model1 {
             da: Self::DA.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m1
+    }
 }

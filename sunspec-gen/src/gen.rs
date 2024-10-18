@@ -172,6 +172,7 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
 
     let model_id = Literal::u16_unsuffixed(model.id);
     let allow_unused = points.is_empty().then(|| quote! { #[allow(unused)] });
+    let m_name = format_ident!("m{}", model.id);
     let trait_impl = quote! {
         impl crate::Model for #model_name {
             const ID: u16 = #model_id;
@@ -179,6 +180,9 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
                 Ok(Self {
                     #(#from_data_fields)*
                 })
+            }
+            fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+                models.#m_name
             }
         }
     };

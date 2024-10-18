@@ -63,6 +63,9 @@ impl crate::Model for Model17 {
             pcol: Self::PCOL.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m17
+    }
 }
 /// Parity
 ///

@@ -27,6 +27,9 @@ impl crate::Model for Model8 {
             n: Self::N.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m8
+    }
 }
 /// Format
 ///

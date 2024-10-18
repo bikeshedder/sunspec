@@ -75,6 +75,9 @@ impl crate::Model for Model711 {
             rsp_tms_sf: Self::RSP_TMS_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m711
+    }
 }
 /// DER Frequency Droop Module Enable
 ///

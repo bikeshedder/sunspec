@@ -173,6 +173,9 @@ impl crate::Model for Model123 {
             v_ar_pct_sf: Self::V_AR_PCT_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m123
+    }
 }
 /// Conn
 ///

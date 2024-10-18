@@ -382,6 +382,9 @@ impl crate::Model for Model204 {
             evt: Self::EVT.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m204
+    }
 }
 bitflags::bitflags! {
     #[doc = " Events"] #[doc = " "] #[doc = " Meter Event Flags"] #[derive(Copy, Clone,

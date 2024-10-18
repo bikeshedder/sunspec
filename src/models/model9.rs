@@ -419,6 +419,9 @@ impl crate::Model for Model9 {
             n: Self::N.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m9
+    }
 }
 /// Format
 ///

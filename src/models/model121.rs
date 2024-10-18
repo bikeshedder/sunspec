@@ -208,6 +208,9 @@ impl crate::Model for Model121 {
             ecp_nom_hz_sf: Self::ECP_NOM_HZ_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m121
+    }
 }
 /// VArAct
 ///

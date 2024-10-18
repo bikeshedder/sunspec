@@ -77,6 +77,9 @@ impl crate::Model for Model136 {
             hz_sf: Self::HZ_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m136
+    }
 }
 bitflags::bitflags! {
     #[doc = " ModEna"] #[doc = " "] #[doc =

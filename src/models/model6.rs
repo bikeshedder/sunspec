@@ -397,6 +397,9 @@ impl crate::Model for Model6 {
             n: Self::N.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m6
+    }
 }
 /// Algorithm
 ///

@@ -63,4 +63,7 @@ impl crate::Model for Model307 {
             soil_wet: Self::SOIL_WET.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m307
+    }
 }

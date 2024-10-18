@@ -334,6 +334,9 @@ impl crate::Model for Model702 {
             s_sf: Self::S_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m702
+    }
 }
 /// Normal Operating Category
 ///

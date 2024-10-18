@@ -69,6 +69,9 @@ impl crate::Model for Model19 {
             pw: Self::PW.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m19
+    }
 }
 /// Parity
 ///

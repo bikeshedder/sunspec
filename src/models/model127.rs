@@ -73,6 +73,9 @@ impl crate::Model for Model127 {
             rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m127
+    }
 }
 bitflags::bitflags! {
     #[doc = " HysEna"] #[doc = " "] #[doc = " Enable hysteresis"] #[derive(Copy, Clone,

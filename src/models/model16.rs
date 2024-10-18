@@ -75,6 +75,9 @@ impl crate::Model for Model16 {
             lnk_ctl: Self::LNK_CTL.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m16
+    }
 }
 /// Config
 ///

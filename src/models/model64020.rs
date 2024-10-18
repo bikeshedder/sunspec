@@ -182,4 +182,7 @@ impl crate::Model for Model64020 {
             reset: Self::RESET.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64020
+    }
 }

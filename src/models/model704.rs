@@ -314,6 +314,9 @@ impl crate::Model for Model704 {
             var_set_pct_sf: Self::VAR_SET_PCT_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m704
+    }
 }
 /// Power Factor Enable (W Inj) Enable
 ///

@@ -41,6 +41,9 @@ impl crate::Model for Model160 {
             tms_per: Self::TMS_PER.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m160
+    }
 }
 bitflags::bitflags! {
     #[doc = " Global Events"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]

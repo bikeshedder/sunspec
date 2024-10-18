@@ -475,6 +475,9 @@ impl crate::Model for Model701 {
             mn_alrm_info: Self::MN_ALRM_INFO.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m701
+    }
 }
 /// AC Wiring Type
 ///

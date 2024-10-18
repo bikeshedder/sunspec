@@ -17,4 +17,7 @@ impl crate::Model for Model808 {
             module_tbd: Self::MODULE_TBD.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m808
+    }
 }

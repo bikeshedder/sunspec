@@ -87,6 +87,9 @@ impl crate::Model for Model601 {
             n: Self::N.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m601
+    }
 }
 /// Type
 ///

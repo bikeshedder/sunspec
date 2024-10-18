@@ -103,6 +103,9 @@ impl crate::Model for Model402 {
             dc_wh: Self::DC_WH.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m402
+    }
 }
 bitflags::bitflags! {
     #[doc = " Event"] #[doc = " "] #[doc = " Bitmask value.  Events"] #[derive(Copy,

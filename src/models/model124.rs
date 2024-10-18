@@ -166,6 +166,9 @@ impl crate::Model for Model124 {
             in_out_w_rte_sf: Self::IN_OUT_W_RTE_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m124
+    }
 }
 bitflags::bitflags! {
     #[doc = " StorCtl_Mod"] #[doc = " "] #[doc =

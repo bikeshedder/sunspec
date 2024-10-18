@@ -1,6 +1,6 @@
 use thiserror::Error;
 
-use crate::{point::ReadPointError, CommunicationError};
+use crate::{point::ReadPointError, CommunicationError, ModelAddr, Models};
 
 /// Every model implements this trait which contains methods
 /// for accessing
@@ -9,6 +9,8 @@ pub trait Model: Sized {
     const ID: u16;
     /// Parse model points from a given u16 slice
     fn from_data(data: &[u16]) -> Result<Self, ReadModelError>;
+    /// Get model address from discovered models struct
+    fn addr(models: &Models) -> ModelAddr<Self>;
 }
 
 /// This error is returned if there was an error loading the

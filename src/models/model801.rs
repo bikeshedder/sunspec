@@ -21,4 +21,7 @@ impl crate::Model for Model801 {
             deprecated: Self::DEPRECATED.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m801
+    }
 }

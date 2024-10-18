@@ -82,6 +82,9 @@ impl crate::Model for Model703 {
             hz_sf: Self::HZ_SF.from_data(data)?,
         })
     }
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m703
+    }
 }
 /// Permit Enter Service
 ///
