@@ -34,6 +34,14 @@ impl<M: Model> ModelAddr<M> {
     }
 }
 
+impl<M: Model> Copy for ModelAddr<M> {}
+
+impl<M: Model> Clone for ModelAddr<M> {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+
 impl<M: Model> Default for ModelAddr<M> {
     fn default() -> Self {
         Self {

@@ -42,6 +42,14 @@ impl<M: Model, T: Value> PointDef<M, T> {
     }
 }
 
+impl<M: Model, T: Value> Copy for PointDef<M, T> {}
+
+impl<M: Model, T: Value> Clone for PointDef<M, T> {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+
 /// This error is returned if there was an error while
 /// reading data from a point.
 #[derive(Debug, Error)]
