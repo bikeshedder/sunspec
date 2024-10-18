@@ -47,7 +47,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let models = discover_models(&mut ctx, &client_config).await?.models;
 
-    let m1 = read_model(&mut ctx, &models.m1, &client_config).await?;
+    let m1 = read_model(&mut ctx, models.m1, &client_config).await?;
 
     println!("Manufacturer: {}", m1.mn);
     println!("Model: {}", m1.md);
@@ -64,7 +64,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
 
     loop {
-        let m103 = read_model(&mut ctx, &models.m103, &client_config).await?;
+        let m103 = read_model(&mut ctx, models.m103, &client_config).await?;
         let w = m103.w as f32 * 10f32.powf(m103.w_sf.into());
         let wh = m103.wh as f32 * 10f32.powf(m103.wh_sf.into());
         println!("{:12.3} kWh {:9.3} kW", wh / 1000.0, w / 1000.0,);

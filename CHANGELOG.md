@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `ModelAddr` and `PointRef` now implement `Copy` and `Clone` and are passed by
+  value and not by reference.
+
 ## [0.6.1] - 2024-10-18
 
 ### Fixed 

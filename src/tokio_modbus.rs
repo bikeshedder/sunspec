@@ -103,7 +103,7 @@ pub async fn discover_models(
 ///       and multiple read_holding_registers calls will be issued.
 pub async fn read_model<M: Model>(
     ctx: &mut Context,
-    addr: &ModelAddr<M>,
+    addr: ModelAddr<M>,
     config: &Config,
 ) -> Result<M, ReadModelError> {
     let data = if addr.len <= config.max_read_length {
@@ -147,8 +147,8 @@ pub async fn read_model<M: Model>(
 /// points from a single model.
 pub async fn read_point<M: Model, T: Value>(
     ctx: &mut Context,
-    model_addr: &ModelAddr<M>,
-    point_def: &PointDef<M, T>,
+    model_addr: ModelAddr<M>,
+    point_def: PointDef<M, T>,
     config: &Config,
 ) -> Result<T, ReadPointError> {
     let data = apply_timeout(
@@ -164,8 +164,8 @@ pub async fn read_point<M: Model, T: Value>(
 /// Write data for a single point
 pub async fn write_point<M: Model, T: Value>(
     ctx: &mut Context,
-    model_addr: &ModelAddr<M>,
-    point_def: &PointDef<M, T>,
+    model_addr: ModelAddr<M>,
+    point_def: PointDef<M, T>,
     value: T,
     config: &Config,
 ) -> Result<(), WritePointError> {
