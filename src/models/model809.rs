@@ -12,7 +12,7 @@ impl Model809 {
 }
 impl crate::Model for Model809 {
     const ID: u16 = 809;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             stack_tbd: Self::STACK_TBD.from_data(data)?,
         })

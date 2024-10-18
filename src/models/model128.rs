@@ -78,7 +78,7 @@ impl Model128 {
 }
 impl crate::Model for Model128 {
     const ID: u16 = 128;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             ar_gra_mod: Self::AR_GRA_MOD.from_data(data)?,
             ar_gra_sag: Self::AR_GRA_SAG.from_data(data)?,

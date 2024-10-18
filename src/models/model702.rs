@@ -281,7 +281,7 @@ impl Model702 {
 }
 impl crate::Model for Model702 {
     const ID: u16 = 702;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             w_max_rtg: Self::W_MAX_RTG.from_data(data)?,
             w_ovr_ext_rtg: Self::W_OVR_EXT_RTG.from_data(data)?,

@@ -305,7 +305,7 @@ impl Model6 {
 }
 impl crate::Model for Model6 {
     const ID: u16 = 6;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             x: Self::X.from_data(data)?,
             off: Self::OFF.from_data(data)?,

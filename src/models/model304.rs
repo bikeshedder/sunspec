@@ -9,7 +9,7 @@ pub struct Model304 {}
 impl Model304 {}
 impl crate::Model for Model304 {
     const ID: u16 = 304;
-    fn from_data(#[allow(unused)] data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(#[allow(unused)] data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {})
     }
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {

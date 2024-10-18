@@ -68,7 +68,7 @@ impl Model403 {
 }
 impl crate::Model for Model403 {
     const ID: u16 = 403;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             dca_sf: Self::DCA_SF.from_data(data)?,
             dc_ahr_sf: Self::DC_AHR_SF.from_data(data)?,

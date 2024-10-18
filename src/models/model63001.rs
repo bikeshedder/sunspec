@@ -183,7 +183,7 @@ impl Model63001 {
 }
 impl crate::Model for Model63001 {
     const ID: u16 = 63001;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             sunssf_1: Self::SUNSSF_1.from_data(data)?,
             sunssf_2: Self::SUNSSF_2.from_data(data)?,

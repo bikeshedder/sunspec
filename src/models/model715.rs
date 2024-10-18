@@ -39,7 +39,7 @@ impl Model715 {
 }
 impl crate::Model for Model715 {
     const ID: u16 = 715;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             loc_rem_ctl: Self::LOC_REM_CTL.from_data(data)?,
             der_hb: Self::DER_HB.from_data(data)?,

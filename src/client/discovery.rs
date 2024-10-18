@@ -1,54 +1,15 @@
-use std::marker::PhantomData;
-
 use thiserror::Error;
 
-use crate::model::Model;
+use crate::model::{Model, ModelAddr};
 use crate::models::Models;
-use crate::CommunicationError;
 
-/// "SunS" identifier used when performing the
-/// model discovery.
-pub const SUNS_IDENTIFIER: [u16; 2] = [0x5375, 0x6e53]; // SunS
-
-/// Default addresses for "SunS" discovery.
-pub const DEFAULT_DISCOVERY_ADDRESSES: [u16; 3] = [0, 40000, 50000];
-
-/// This structure is used to store the address of
-/// models after a successful model discovery.
-#[derive(Debug)]
-#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct ModelAddr<M: Model> {
-    /// The discovered address of this model.
-    pub addr: u16,
-    /// The discovered length of this model. A length of
-    /// 0 indicates that the model is unsupported.
-    pub len: u16,
-    model: PhantomData<M>,
-}
-
-impl<M: Model> ModelAddr<M> {
-    /// Set the address of a discovered model
-    pub fn set_addr(&mut self, addr: u16, len: u16) {
-        self.addr = addr;
-        self.len = len;
-    }
-}
+use super::error::CommunicationError;
 
 impl<M: Model> Copy for ModelAddr<M> {}
 
 impl<M: Model> Clone for ModelAddr<M> {
     fn clone(&self) -> Self {
         *self
-    }
-}
-
-impl<M: Model> Default for ModelAddr<M> {
-    fn default() -> Self {
-        Self {
-            addr: Default::default(),
-            len: Default::default(),
-            model: Default::default(),
-        }
     }
 }
 

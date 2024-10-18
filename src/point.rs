@@ -1,11 +1,8 @@
 use std::marker::PhantomData;
 
-use thiserror::Error;
-
 use crate::{
     model::Model,
     value::{DecodeError, Value},
-    CommunicationError,
 };
 
 /// Definition of a point
@@ -33,10 +30,10 @@ impl<M: Model, T: Value> PointDef<M, T> {
         }
     }
     /// Parse value from given data
-    pub fn from_data(&self, data: &[u16]) -> Result<T, ReadPointError> {
+    pub fn from_data(&self, data: &[u16]) -> Result<T, DecodeError> {
         let slice = data
             .get(self.offset as usize..(self.offset as usize + self.length as usize))
-            .ok_or(ReadPointError::DecodeError(DecodeError::OutOfBounds))?;
+            .ok_or(DecodeError::OutOfBounds)?;
         let value = T::decode(slice)?;
         Ok(value)
     }
@@ -48,31 +45,4 @@ impl<M: Model, T: Value> Clone for PointDef<M, T> {
     fn clone(&self) -> Self {
         *self
     }
-}
-
-/// This error is returned if there was an error while
-/// reading data from a point.
-#[derive(Debug, Error)]
-pub enum ReadPointError {
-    /// Communication error.
-    #[error("Communication error")]
-    Communication(#[from] CommunicationError),
-    /// The decoding of the point data failed.
-    #[error("Decode error")]
-    DecodeError(#[from] DecodeError),
-    /// The point is mandatory but value is missing.
-    #[error("Missing mandatory value")]
-    MissingMandatoryValue,
-}
-
-/// This error is returned if there was an error while
-/// writing data to a point.
-#[derive(Debug, Error)]
-pub enum WritePointError {
-    /// Communication error.
-    #[error("Communication error")]
-    Communication(#[from] CommunicationError),
-    /// The encoded value was too large for the point.
-    #[error("Encoded value too large for point")]
-    ValueTooLarge,
 }

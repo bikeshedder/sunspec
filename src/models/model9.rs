@@ -324,7 +324,7 @@ impl Model9 {
 }
 impl crate::Model for Model9 {
     const ID: u16 = 9;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             cert_uid: Self::CERT_UID.from_data(data)?,
             cert_role: Self::CERT_ROLE.from_data(data)?,

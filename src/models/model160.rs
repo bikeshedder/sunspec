@@ -30,7 +30,7 @@ impl Model160 {
 }
 impl crate::Model for Model160 {
     const ID: u16 = 160;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             dca_sf: Self::DCA_SF.from_data(data)?,
             dcv_sf: Self::DCV_SF.from_data(data)?,

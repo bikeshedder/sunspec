@@ -2,10 +2,11 @@ use std::{error::Error, net::SocketAddr, time::Duration};
 
 use clap::Parser;
 use itertools::Itertools;
-use sunspec::{
+use sunspec::client::{
     tokio_modbus::{discover_models, read_model},
-    Config, DEFAULT_DISCOVERY_ADDRESSES,
+    Config,
 };
+use sunspec::DEFAULT_DISCOVERY_ADDRESSES;
 use tokio::time::sleep;
 use tokio_modbus::{client::tcp::connect_slave, Slave};
 

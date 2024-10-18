@@ -138,7 +138,7 @@ impl Model124 {
 }
 impl crate::Model for Model124 {
     const ID: u16 = 124;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             w_cha_max: Self::W_CHA_MAX.from_data(data)?,
             w_cha_gra: Self::W_CHA_GRA.from_data(data)?,

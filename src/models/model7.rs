@@ -59,7 +59,7 @@ impl Model7 {
 }
 impl crate::Model for Model7 {
     const ID: u16 = 7;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             rq_seq: Self::RQ_SEQ.from_data(data)?,
             sts: Self::STS.from_data(data)?,

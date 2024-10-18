@@ -20,27 +20,17 @@
     unused_results
 )]
 
-pub use config::{
-    Config, DEFAULT_MAX_READ_LENGTH, DEFAULT_MAX_WRITE_LENGTH, DEFAULT_READ_TIMEOUT,
-    DEFAULT_WRITE_TIMEOUT,
-};
-pub use discovery::{
-    DiscoveryError, DiscoveryResult, ModelAddr, UnknownModel, DEFAULT_DISCOVERY_ADDRESSES,
-    SUNS_IDENTIFIER,
-};
-pub use error::CommunicationError;
-pub use model::{Model, ReadModelError};
+pub use constants::{DEFAULT_DISCOVERY_ADDRESSES, SUNS_IDENTIFIER};
+pub use model::{Model, ModelAddr};
 pub use models::Models;
-pub use point::{PointDef, ReadPointError, WritePointError};
+pub use point::PointDef;
 pub use value::{DecodeError, FixedSize, Value};
 
-mod config;
-mod discovery;
-mod error;
+/// This module contains all client specific code.
+pub mod client;
+mod constants;
 mod model;
 /// This module contains all the genererated SunSpec models.
 pub mod models;
 mod point;
-#[cfg(feature = "tokio-modbus")]
-pub mod tokio_modbus;
 mod value;

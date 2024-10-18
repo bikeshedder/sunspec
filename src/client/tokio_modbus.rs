@@ -3,14 +3,15 @@
 use std::future::Future;
 use std::time::Duration;
 
-use crate::config::Config;
-use crate::discovery::DiscoveryResult;
-use crate::discovery::{DiscoveryError, ModelAddr, UnknownModel, SUNS_IDENTIFIER};
-use crate::model::{Model, ReadModelError};
+use super::config::Config;
+use super::discovery::DiscoveryResult;
+use super::discovery::{DiscoveryError, UnknownModel};
+use super::{CommunicationError, ReadModelError, ReadPointError, WritePointError};
+use crate::constants::SUNS_IDENTIFIER;
+use crate::model::{Model, ModelAddr};
 use crate::models::Models;
-use crate::point::{PointDef, ReadPointError, WritePointError};
+use crate::point::PointDef;
 use crate::value::Value;
-use crate::CommunicationError;
 
 use tokio_modbus::client::{Context, Reader, Writer};
 
@@ -139,7 +140,7 @@ pub async fn read_model<M: Model>(
         }
         data
     };
-    M::from_data(&data)
+    M::from_data(&data).map_err(|e| ReadModelError::Point(ReadPointError::DecodeError(e)))
 }
 
 /// Read data for a single point. Please note that

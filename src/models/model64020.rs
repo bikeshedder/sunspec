@@ -148,7 +148,7 @@ impl Model64020 {
 }
 impl crate::Model for Model64020 {
     const ID: u16 = 64020;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             aux0_tmp: Self::AUX0_TMP.from_data(data)?,
             aux1_tmp: Self::AUX1_TMP.from_data(data)?,

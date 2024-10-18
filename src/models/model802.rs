@@ -314,7 +314,7 @@ impl Model802 {
 }
 impl crate::Model for Model802 {
     const ID: u16 = 802;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             ah_rtg: Self::AH_RTG.from_data(data)?,
             wh_rtg: Self::WH_RTG.from_data(data)?,

@@ -67,7 +67,7 @@ impl Model703 {
 }
 impl crate::Model for Model703 {
     const ID: u16 = 703;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             es: Self::ES.from_data(data)?,
             esv_hi: Self::ESV_HI.from_data(data)?,

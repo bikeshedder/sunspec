@@ -218,7 +218,7 @@ impl Model4 {
 }
 impl crate::Model for Model4 {
     const ID: u16 = 4;
-    fn from_data(data: &[u16]) -> Result<Self, crate::ReadModelError> {
+    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
         Ok(Self {
             rq_seq: Self::RQ_SEQ.from_data(data)?,
             sts: Self::STS.from_data(data)?,

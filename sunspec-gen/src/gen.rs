@@ -176,7 +176,7 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
     let trait_impl = quote! {
         impl crate::Model for #model_name {
             const ID: u16 = #model_id;
-            fn from_data(#allow_unused data: &[u16]) -> Result<Self, crate::ReadModelError> {
+            fn from_data(#allow_unused data: &[u16]) -> Result<Self, crate::DecodeError> {
                 Ok(Self {
                     #(#from_data_fields)*
                 })

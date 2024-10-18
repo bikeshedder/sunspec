@@ -44,7 +44,7 @@ use std::{error::Error, net::SocketAddr, time::Duration};
 
 use clap::Parser;
 use itertools::Itertools;
-use sunspec::{
+use sunspec::client::{
     tokio_modbus::{discover_models, read_model},
     Config,
 };
