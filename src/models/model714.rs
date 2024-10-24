@@ -54,8 +54,7 @@ pub struct Model714 {
 }
 #[allow(missing_docs)]
 impl Model714 {
-    pub const PRT_ALRMS: crate::Point<Self, Option<PrtAlrms>> =
-        crate::Point::new(0, 2, false);
+    pub const PRT_ALRMS: crate::Point<Self, Option<PrtAlrms>> = crate::Point::new(0, 2, false);
     pub const N_PRT: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
     pub const DCA: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
     pub const DCW: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1, false);

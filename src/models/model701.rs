@@ -345,14 +345,10 @@ impl Model701 {
     pub const AL1: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
     pub const VL1L2: crate::Point<Self, Option<u16>> = crate::Point::new(44, 1, false);
     pub const VL1: crate::Point<Self, Option<u16>> = crate::Point::new(45, 1, false);
-    pub const TOT_WH_INJ_L1: crate::Point<Self, Option<u64>> =
-        crate::Point::new(46, 4, false);
-    pub const TOT_WH_ABS_L1: crate::Point<Self, Option<u64>> =
-        crate::Point::new(50, 4, false);
-    pub const TOT_VARH_INJ_L1: crate::Point<Self, Option<u64>> =
-        crate::Point::new(54, 4, false);
-    pub const TOT_VARH_ABS_L1: crate::Point<Self, Option<u64>> =
-        crate::Point::new(58, 4, false);
+    pub const TOT_WH_INJ_L1: crate::Point<Self, Option<u64>> = crate::Point::new(46, 4, false);
+    pub const TOT_WH_ABS_L1: crate::Point<Self, Option<u64>> = crate::Point::new(50, 4, false);
+    pub const TOT_VARH_INJ_L1: crate::Point<Self, Option<u64>> = crate::Point::new(54, 4, false);
+    pub const TOT_VARH_ABS_L1: crate::Point<Self, Option<u64>> = crate::Point::new(58, 4, false);
     pub const WL2: crate::Point<Self, Option<i16>> = crate::Point::new(62, 1, false);
     pub const VAL2: crate::Point<Self, Option<i16>> = crate::Point::new(63, 1, false);
     pub const VAR_L2: crate::Point<Self, Option<i16>> = crate::Point::new(64, 1, false);
@@ -360,14 +356,10 @@ impl Model701 {
     pub const AL2: crate::Point<Self, Option<i16>> = crate::Point::new(66, 1, false);
     pub const VL2L3: crate::Point<Self, Option<u16>> = crate::Point::new(67, 1, false);
     pub const VL2: crate::Point<Self, Option<u16>> = crate::Point::new(68, 1, false);
-    pub const TOT_WH_INJ_L2: crate::Point<Self, Option<u64>> =
-        crate::Point::new(69, 4, false);
-    pub const TOT_WH_ABS_L2: crate::Point<Self, Option<u64>> =
-        crate::Point::new(73, 4, false);
-    pub const TOT_VARH_INJ_L2: crate::Point<Self, Option<u64>> =
-        crate::Point::new(77, 4, false);
-    pub const TOT_VARH_ABS_L2: crate::Point<Self, Option<u64>> =
-        crate::Point::new(81, 4, false);
+    pub const TOT_WH_INJ_L2: crate::Point<Self, Option<u64>> = crate::Point::new(69, 4, false);
+    pub const TOT_WH_ABS_L2: crate::Point<Self, Option<u64>> = crate::Point::new(73, 4, false);
+    pub const TOT_VARH_INJ_L2: crate::Point<Self, Option<u64>> = crate::Point::new(77, 4, false);
+    pub const TOT_VARH_ABS_L2: crate::Point<Self, Option<u64>> = crate::Point::new(81, 4, false);
     pub const WL3: crate::Point<Self, Option<i16>> = crate::Point::new(85, 1, false);
     pub const VAL3: crate::Point<Self, Option<i16>> = crate::Point::new(86, 1, false);
     pub const VAR_L3: crate::Point<Self, Option<i16>> = crate::Point::new(87, 1, false);
@@ -375,17 +367,12 @@ impl Model701 {
     pub const AL3: crate::Point<Self, Option<i16>> = crate::Point::new(89, 1, false);
     pub const VL3L1: crate::Point<Self, Option<u16>> = crate::Point::new(90, 1, false);
     pub const VL3: crate::Point<Self, Option<u16>> = crate::Point::new(91, 1, false);
-    pub const TOT_WH_INJ_L3: crate::Point<Self, Option<u64>> =
-        crate::Point::new(92, 4, false);
-    pub const TOT_WH_ABS_L3: crate::Point<Self, Option<u64>> =
-        crate::Point::new(96, 4, false);
-    pub const TOT_VARH_INJ_L3: crate::Point<Self, Option<u64>> =
-        crate::Point::new(100, 4, false);
-    pub const TOT_VARH_ABS_L3: crate::Point<Self, Option<u64>> =
-        crate::Point::new(104, 4, false);
+    pub const TOT_WH_INJ_L3: crate::Point<Self, Option<u64>> = crate::Point::new(92, 4, false);
+    pub const TOT_WH_ABS_L3: crate::Point<Self, Option<u64>> = crate::Point::new(96, 4, false);
+    pub const TOT_VARH_INJ_L3: crate::Point<Self, Option<u64>> = crate::Point::new(100, 4, false);
+    pub const TOT_VARH_ABS_L3: crate::Point<Self, Option<u64>> = crate::Point::new(104, 4, false);
     pub const THROT_PCT: crate::Point<Self, Option<u16>> = crate::Point::new(108, 1, false);
-    pub const THROT_SRC: crate::Point<Self, Option<ThrotSrc>> =
-        crate::Point::new(109, 2, false);
+    pub const THROT_SRC: crate::Point<Self, Option<ThrotSrc>> = crate::Point::new(109, 2, false);
     pub const A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(111, 1, false);
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(112, 1, false);
     pub const HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(113, 1, false);
@@ -396,8 +383,7 @@ impl Model701 {
     pub const TOT_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(118, 1, false);
     pub const TOT_VARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(119, 1, false);
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(120, 1, false);
-    pub const MN_ALRM_INFO: crate::Point<Self, Option<String>> =
-        crate::Point::new(121, 32, false);
+    pub const MN_ALRM_INFO: crate::Point<Self, Option<String>> = crate::Point::new(121, 32, false);
 }
 impl crate::Model for Model701 {
     const ID: u16 = 701;

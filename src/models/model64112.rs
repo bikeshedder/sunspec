@@ -141,43 +141,34 @@ impl Model64112 {
     pub const P_SF: crate::Point<Self, i16> = crate::Point::new(4, 1, false);
     pub const AH_SF: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
     pub const KWH_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
-    pub const CC_CONFIG_FAULT: crate::Point<Self, CcConfigFault> =
-        crate::Point::new(7, 1, false);
+    pub const CC_CONFIG_FAULT: crate::Point<Self, CcConfigFault> = crate::Point::new(7, 1, false);
     pub const CC_CONFIG_ABSORB_V: crate::Point<Self, u16> = crate::Point::new(8, 1, false);
     pub const CC_CONFIG_ABSORB_HR: crate::Point<Self, u16> = crate::Point::new(9, 1, false);
-    pub const CC_CONFIG_ABSORB_END_A: crate::Point<Self, u16> =
-        crate::Point::new(10, 1, false);
+    pub const CC_CONFIG_ABSORB_END_A: crate::Point<Self, u16> = crate::Point::new(10, 1, false);
     pub const CC_CONFIG_REBULK_V: crate::Point<Self, u16> = crate::Point::new(11, 1, false);
     pub const CC_CONFIG_FLOAT_V: crate::Point<Self, u16> = crate::Point::new(12, 1, false);
     pub const CC_CONFIG_MAX_CHG_A: crate::Point<Self, u16> = crate::Point::new(13, 1, false);
     pub const CC_CONFIG_EQUALIZE_V: crate::Point<Self, u16> = crate::Point::new(14, 1, false);
-    pub const CC_CONFIG_EQUALIZE_HR: crate::Point<Self, u16> =
-        crate::Point::new(15, 1, false);
-    pub const CC_CONFIG_AUTO_EQUALIZE: crate::Point<Self, u16> =
-        crate::Point::new(16, 1, false);
+    pub const CC_CONFIG_EQUALIZE_HR: crate::Point<Self, u16> = crate::Point::new(15, 1, false);
+    pub const CC_CONFIG_AUTO_EQUALIZE: crate::Point<Self, u16> = crate::Point::new(16, 1, false);
     pub const CC_CONFIG_MPPT_MODE: crate::Point<Self, CcConfigMpptMode> =
         crate::Point::new(17, 1, false);
     pub const CC_CONFIG_SWEEP_WIDTH: crate::Point<Self, CcConfigSweepWidth> =
         crate::Point::new(18, 1, false);
     pub const CC_CONFIG_SWEEP_MAX: crate::Point<Self, CcConfigSweepMax> =
         crate::Point::new(19, 1, false);
-    pub const CC_CONFIG_U_PICK_DUTY_CYC: crate::Point<Self, u16> =
-        crate::Point::new(20, 1, false);
+    pub const CC_CONFIG_U_PICK_DUTY_CYC: crate::Point<Self, u16> = crate::Point::new(20, 1, false);
     pub const CC_CONFIG_GRID_TIE: crate::Point<Self, CcConfigGridTie> =
         crate::Point::new(21, 1, false);
     pub const CC_CONFIG_TEMP_COMP: crate::Point<Self, CcConfigTempComp> =
         crate::Point::new(22, 1, false);
-    pub const CC_CONFIG_TEMP_COMP_LLIMT: crate::Point<Self, u16> =
-        crate::Point::new(23, 1, false);
-    pub const CC_CONFIG_TEMP_COMP_HLIMT: crate::Point<Self, u16> =
-        crate::Point::new(24, 1, false);
+    pub const CC_CONFIG_TEMP_COMP_LLIMT: crate::Point<Self, u16> = crate::Point::new(23, 1, false);
+    pub const CC_CONFIG_TEMP_COMP_HLIMT: crate::Point<Self, u16> = crate::Point::new(24, 1, false);
     pub const CC_CONFIG_AUTO_RESTART: crate::Point<Self, CcConfigAutoRestart> =
         crate::Point::new(25, 1, false);
     pub const CC_CONFIG_WAKEUP_VOC: crate::Point<Self, u16> = crate::Point::new(26, 1, false);
-    pub const CC_CONFIG_SNOOZE_MODE_A: crate::Point<Self, u16> =
-        crate::Point::new(27, 1, false);
-    pub const CC_CONFIG_WAKEUP_INTERVAL: crate::Point<Self, u16> =
-        crate::Point::new(28, 1, false);
+    pub const CC_CONFIG_SNOOZE_MODE_A: crate::Point<Self, u16> = crate::Point::new(27, 1, false);
+    pub const CC_CONFIG_WAKEUP_INTERVAL: crate::Point<Self, u16> = crate::Point::new(28, 1, false);
     pub const CC_CONFIG_AUX_MODE: crate::Point<Self, CcConfigAuxMode> =
         crate::Point::new(29, 1, false);
     pub const CC_CONFIG_AUX_CONTROL: crate::Point<Self, CcConfigAuxControl> =
@@ -186,41 +177,29 @@ impl Model64112 {
         crate::Point::new(31, 1, false);
     pub const CC_CONFIG_AUX_POLARITY: crate::Point<Self, CcConfigAuxPolarity> =
         crate::Point::new(32, 1, false);
-    pub const CC_CONFIG_AUX_L_BATT_DISC: crate::Point<Self, u16> =
-        crate::Point::new(33, 1, false);
-    pub const CC_CONFIG_AUX_L_BATT_RCON: crate::Point<Self, u16> =
-        crate::Point::new(34, 1, false);
-    pub const CC_CONFIG_AUX_L_BATT_DLY: crate::Point<Self, u16> =
-        crate::Point::new(35, 1, false);
-    pub const CC_CONFIG_AUX_VENT_FAN_V: crate::Point<Self, u16> =
-        crate::Point::new(36, 1, false);
-    pub const CC_CONFIG_AUX_PV_TRIGGER_V: crate::Point<Self, u16> =
-        crate::Point::new(37, 1, false);
-    pub const CC_CONFIG_AUX_PV_TRG_H_TM: crate::Point<Self, u16> =
-        crate::Point::new(38, 1, false);
-    pub const CC_CONFIG_AUX_NLITE_THRS_V: crate::Point<Self, u16> =
-        crate::Point::new(39, 1, false);
-    pub const CC_CONFIG_AUX_NLITE_ON_TM: crate::Point<Self, u16> =
-        crate::Point::new(40, 1, false);
+    pub const CC_CONFIG_AUX_L_BATT_DISC: crate::Point<Self, u16> = crate::Point::new(33, 1, false);
+    pub const CC_CONFIG_AUX_L_BATT_RCON: crate::Point<Self, u16> = crate::Point::new(34, 1, false);
+    pub const CC_CONFIG_AUX_L_BATT_DLY: crate::Point<Self, u16> = crate::Point::new(35, 1, false);
+    pub const CC_CONFIG_AUX_VENT_FAN_V: crate::Point<Self, u16> = crate::Point::new(36, 1, false);
+    pub const CC_CONFIG_AUX_PV_TRIGGER_V: crate::Point<Self, u16> = crate::Point::new(37, 1, false);
+    pub const CC_CONFIG_AUX_PV_TRG_H_TM: crate::Point<Self, u16> = crate::Point::new(38, 1, false);
+    pub const CC_CONFIG_AUX_NLITE_THRS_V: crate::Point<Self, u16> = crate::Point::new(39, 1, false);
+    pub const CC_CONFIG_AUX_NLITE_ON_TM: crate::Point<Self, u16> = crate::Point::new(40, 1, false);
     pub const CC_CONFIG_AUX_NLITE_ON_HIST: crate::Point<Self, u16> =
         crate::Point::new(41, 1, false);
     pub const CC_CONFIG_AUX_NLITE_OFF_HIST: crate::Point<Self, u16> =
         crate::Point::new(42, 1, false);
-    pub const CC_CONFIG_AUX_ERROR_BATT_V: crate::Point<Self, u16> =
-        crate::Point::new(43, 1, false);
+    pub const CC_CONFIG_AUX_ERROR_BATT_V: crate::Point<Self, u16> = crate::Point::new(43, 1, false);
     pub const CC_CONFIG_AUX_DIVERT_H_TIME: crate::Point<Self, u16> =
         crate::Point::new(44, 1, false);
     pub const CC_CONFIG_AUX_DIVERT_DLY_TIME: crate::Point<Self, u16> =
         crate::Point::new(45, 1, false);
-    pub const CC_CONFIG_AUX_DIVERT_REL_V: crate::Point<Self, u16> =
-        crate::Point::new(46, 1, false);
+    pub const CC_CONFIG_AUX_DIVERT_REL_V: crate::Point<Self, u16> = crate::Point::new(46, 1, false);
     pub const CC_CONFIG_AUX_DIVERT_HYST_V: crate::Point<Self, u16> =
         crate::Point::new(47, 1, false);
-    pub const CC_CONFIG_MAJOR_FW_REV: crate::Point<Self, u16> =
-        crate::Point::new(48, 1, false);
+    pub const CC_CONFIG_MAJOR_FW_REV: crate::Point<Self, u16> = crate::Point::new(48, 1, false);
     pub const CC_CONFIG_MID_FW_REV: crate::Point<Self, u16> = crate::Point::new(49, 1, false);
-    pub const CC_CONFIG_MINOR_FW_REV: crate::Point<Self, u16> =
-        crate::Point::new(50, 1, false);
+    pub const CC_CONFIG_MINOR_FW_REV: crate::Point<Self, u16> = crate::Point::new(50, 1, false);
     pub const CC_CONFIG_DATA_LOG_DAY_OFFSET: crate::Point<Self, u16> =
         crate::Point::new(51, 1, false);
     pub const CC_CONFIG_DATA_LOG_CUR_DAY_OFF: crate::Point<Self, u16> =
@@ -235,16 +214,14 @@ impl Model64112 {
         crate::Point::new(56, 1, false);
     pub const CC_CONFIG_DATA_LOG_ABSORB_T: crate::Point<Self, u16> =
         crate::Point::new(57, 1, false);
-    pub const CC_CONFIG_DATA_LOG_FLOAT_T: crate::Point<Self, u16> =
-        crate::Point::new(58, 1, false);
+    pub const CC_CONFIG_DATA_LOG_FLOAT_T: crate::Point<Self, u16> = crate::Point::new(58, 1, false);
     pub const CC_CONFIG_DATA_LOG_MIN_BATT_V: crate::Point<Self, u16> =
         crate::Point::new(59, 1, false);
     pub const CC_CONFIG_DATA_LOG_MAX_BATT_V: crate::Point<Self, u16> =
         crate::Point::new(60, 1, false);
     pub const CC_CONFIG_DATA_LOG_MAX_INPUT_V: crate::Point<Self, u16> =
         crate::Point::new(61, 1, false);
-    pub const CC_CONFIG_DATA_LOG_CLEAR: crate::Point<Self, u16> =
-        crate::Point::new(62, 1, false);
+    pub const CC_CONFIG_DATA_LOG_CLEAR: crate::Point<Self, u16> = crate::Point::new(62, 1, false);
     pub const CC_CONFIG_DATA_LOG_CLR_COMP: crate::Point<Self, u16> =
         crate::Point::new(63, 1, false);
 }

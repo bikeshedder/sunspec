@@ -107,8 +107,7 @@ impl Model122 {
     pub const W_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(30, 1, false);
     pub const ST_SET_LIM_MSK: crate::Point<Self, Option<StSetLimMsk>> =
         crate::Point::new(31, 2, false);
-    pub const ST_ACT_CTL: crate::Point<Self, Option<StActCtl>> =
-        crate::Point::new(33, 2, false);
+    pub const ST_ACT_CTL: crate::Point<Self, Option<StActCtl>> = crate::Point::new(33, 2, false);
     pub const TM_SRC: crate::Point<Self, Option<String>> = crate::Point::new(35, 4, false);
     pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(39, 2, false);
     pub const RT_ST: crate::Point<Self, Option<RtSt>> = crate::Point::new(41, 1, false);

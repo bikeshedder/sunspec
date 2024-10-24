@@ -59,8 +59,7 @@ impl Model132 {
     pub const N_PT: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
-    pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(9, 1, false);
+    pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
 }
 impl crate::Model for Model132 {
     const ID: u16 = 132;

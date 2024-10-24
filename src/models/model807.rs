@@ -126,7 +126,7 @@ pub struct Model807 {
     /// Scale factor for temperature.
     pub tmp_sf: i16,
     /// Scale factor for state of charge.
-    pub so_c_sf: i16,
+    pub soc_sf: i16,
     /// Scale factor for open circuit voltage.
     pub ocv_sf: i16,
 }
@@ -141,15 +141,11 @@ impl Model807 {
     pub const MOD_V_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
     pub const MOD_V_AVG: crate::Point<Self, u16> = crate::Point::new(7, 1, false);
     pub const CELL_V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, false);
-    pub const CELL_V_MAX_MOD: crate::Point<Self, Option<u16>> =
-        crate::Point::new(9, 1, false);
-    pub const CELL_V_MAX_STK: crate::Point<Self, Option<u16>> =
-        crate::Point::new(10, 1, false);
+    pub const CELL_V_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, false);
+    pub const CELL_V_MAX_STK: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
     pub const CELL_V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
-    pub const CELL_V_MIN_MOD: crate::Point<Self, Option<u16>> =
-        crate::Point::new(12, 1, false);
-    pub const CELL_V_MIN_STK: crate::Point<Self, Option<u16>> =
-        crate::Point::new(13, 1, false);
+    pub const CELL_V_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
+    pub const CELL_V_MIN_STK: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
     pub const CELL_V_AVG: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, false);
     pub const TMP_MAX: crate::Point<Self, i16> = crate::Point::new(15, 1, false);
     pub const TMP_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(16, 1, false);
@@ -163,7 +159,7 @@ impl Model807 {
     pub const MOD_V_SF: crate::Point<Self, i16> = crate::Point::new(28, 1, false);
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(29, 1, false);
     pub const TMP_SF: crate::Point<Self, i16> = crate::Point::new(30, 1, false);
-    pub const SO_C_SF: crate::Point<Self, i16> = crate::Point::new(31, 1, false);
+    pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(31, 1, false);
     pub const OCV_SF: crate::Point<Self, i16> = crate::Point::new(32, 1, false);
 }
 impl crate::Model for Model807 {
@@ -197,7 +193,7 @@ impl crate::Model for Model807 {
             mod_v_sf: Self::MOD_V_SF.from_data(data)?,
             cell_v_sf: Self::CELL_V_SF.from_data(data)?,
             tmp_sf: Self::TMP_SF.from_data(data)?,
-            so_c_sf: Self::SO_C_SF.from_data(data)?,
+            soc_sf: Self::SOC_SF.from_data(data)?,
             ocv_sf: Self::OCV_SF.from_data(data)?,
         })
     }

@@ -194,27 +194,20 @@ pub struct Model704 {
 }
 #[allow(missing_docs)]
 impl Model704 {
-    pub const PFW_INJ_ENA: crate::Point<Self, Option<PfwInjEna>> =
-        crate::Point::new(0, 1, true);
+    pub const PFW_INJ_ENA: crate::Point<Self, Option<PfwInjEna>> = crate::Point::new(0, 1, true);
     pub const PFW_INJ_ENA_RVRT: crate::Point<Self, Option<PfwInjEnaRvrt>> =
         crate::Point::new(1, 1, true);
-    pub const PFW_INJ_RVRT_TMS: crate::Point<Self, Option<u32>> =
-        crate::Point::new(2, 2, true);
-    pub const PFW_INJ_RVRT_REM: crate::Point<Self, Option<u32>> =
-        crate::Point::new(4, 2, false);
-    pub const PFW_ABS_ENA: crate::Point<Self, Option<PfwAbsEna>> =
-        crate::Point::new(6, 1, true);
+    pub const PFW_INJ_RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(2, 2, true);
+    pub const PFW_INJ_RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(4, 2, false);
+    pub const PFW_ABS_ENA: crate::Point<Self, Option<PfwAbsEna>> = crate::Point::new(6, 1, true);
     pub const PFW_ABS_ENA_RVRT: crate::Point<Self, Option<PfwAbsEnaRvrt>> =
         crate::Point::new(7, 1, true);
-    pub const PFW_ABS_RVRT_TMS: crate::Point<Self, Option<u32>> =
-        crate::Point::new(8, 2, true);
-    pub const PFW_ABS_RVRT_REM: crate::Point<Self, Option<u32>> =
-        crate::Point::new(10, 2, false);
+    pub const PFW_ABS_RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(8, 2, true);
+    pub const PFW_ABS_RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
     pub const W_MAX_LIM_PCT_ENA: crate::Point<Self, Option<WMaxLimPctEna>> =
         crate::Point::new(12, 1, true);
     pub const W_MAX_LIM_PCT: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, true);
-    pub const W_MAX_LIM_PCT_RVRT: crate::Point<Self, Option<u16>> =
-        crate::Point::new(14, 1, true);
+    pub const W_MAX_LIM_PCT_RVRT: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, true);
     pub const W_MAX_LIM_PCT_ENA_RVRT: crate::Point<Self, Option<WMaxLimPctEnaRvrt>> =
         crate::Point::new(15, 1, true);
     pub const W_MAX_LIM_PCT_RVRT_TMS: crate::Point<Self, Option<u32>> =
@@ -226,44 +219,32 @@ impl Model704 {
     pub const W_SET: crate::Point<Self, Option<i32>> = crate::Point::new(22, 2, true);
     pub const W_SET_RVRT: crate::Point<Self, Option<i32>> = crate::Point::new(24, 2, true);
     pub const W_SET_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(26, 1, true);
-    pub const W_SET_PCT_RVRT: crate::Point<Self, Option<i16>> =
-        crate::Point::new(27, 1, true);
+    pub const W_SET_PCT_RVRT: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, true);
     pub const W_SET_ENA_RVRT: crate::Point<Self, Option<WSetEnaRvrt>> =
         crate::Point::new(28, 1, true);
-    pub const W_SET_RVRT_TMS: crate::Point<Self, Option<u32>> =
-        crate::Point::new(29, 2, true);
-    pub const W_SET_RVRT_REM: crate::Point<Self, Option<u32>> =
-        crate::Point::new(31, 2, false);
-    pub const VAR_SET_ENA: crate::Point<Self, Option<VarSetEna>> =
-        crate::Point::new(33, 1, true);
-    pub const VAR_SET_MOD: crate::Point<Self, Option<VarSetMod>> =
-        crate::Point::new(34, 1, true);
-    pub const VAR_SET_PRI: crate::Point<Self, Option<VarSetPri>> =
-        crate::Point::new(35, 1, true);
+    pub const W_SET_RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(29, 2, true);
+    pub const W_SET_RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(31, 2, false);
+    pub const VAR_SET_ENA: crate::Point<Self, Option<VarSetEna>> = crate::Point::new(33, 1, true);
+    pub const VAR_SET_MOD: crate::Point<Self, Option<VarSetMod>> = crate::Point::new(34, 1, true);
+    pub const VAR_SET_PRI: crate::Point<Self, Option<VarSetPri>> = crate::Point::new(35, 1, true);
     pub const VAR_SET: crate::Point<Self, Option<i32>> = crate::Point::new(36, 2, true);
     pub const VAR_SET_RVRT: crate::Point<Self, Option<i32>> = crate::Point::new(38, 2, true);
     pub const VAR_SET_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(40, 1, true);
-    pub const VAR_SET_PCT_RVRT: crate::Point<Self, Option<i16>> =
-        crate::Point::new(41, 1, true);
+    pub const VAR_SET_PCT_RVRT: crate::Point<Self, Option<i16>> = crate::Point::new(41, 1, true);
     pub const VAR_SET_ENA_RVRT: crate::Point<Self, Option<VarSetEnaRvrt>> =
         crate::Point::new(42, 1, true);
-    pub const VAR_SET_RVRT_TMS: crate::Point<Self, Option<u32>> =
-        crate::Point::new(43, 2, true);
-    pub const VAR_SET_RVRT_REM: crate::Point<Self, Option<u32>> =
-        crate::Point::new(45, 2, false);
+    pub const VAR_SET_RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(43, 2, true);
+    pub const VAR_SET_RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(45, 2, false);
     pub const W_RMP: crate::Point<Self, Option<u16>> = crate::Point::new(47, 1, true);
     pub const W_RMP_REF: crate::Point<Self, Option<WRmpRef>> = crate::Point::new(48, 1, true);
     pub const VAR_RMP: crate::Point<Self, Option<u16>> = crate::Point::new(49, 1, true);
-    pub const ANTI_ISL_ENA: crate::Point<Self, Option<AntiIslEna>> =
-        crate::Point::new(50, 1, true);
+    pub const ANTI_ISL_ENA: crate::Point<Self, Option<AntiIslEna>> = crate::Point::new(50, 1, true);
     pub const PF_SF: crate::Point<Self, Option<i16>> = crate::Point::new(51, 1, false);
-    pub const W_MAX_LIM_PCT_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(52, 1, false);
+    pub const W_MAX_LIM_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(52, 1, false);
     pub const W_SET_SF: crate::Point<Self, Option<i16>> = crate::Point::new(53, 1, false);
     pub const W_SET_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(54, 1, false);
     pub const VAR_SET_SF: crate::Point<Self, Option<i16>> = crate::Point::new(55, 1, false);
-    pub const VAR_SET_PCT_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(56, 1, false);
+    pub const VAR_SET_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(56, 1, false);
 }
 impl crate::Model for Model704 {
     const ID: u16 = 704;

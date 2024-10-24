@@ -110,40 +110,25 @@ impl Model64020 {
     pub const SENSOR_V_SF: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
     pub const SENSOR_A_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
     pub const SENSOR_HZ_SF: crate::Point<Self, i16> = crate::Point::new(9, 1, false);
-    pub const SENSOR1_VOLTAGE: crate::Point<Self, Option<i16>> =
-        crate::Point::new(10, 1, false);
-    pub const SENSOR2_VOLTAGE: crate::Point<Self, Option<i16>> =
-        crate::Point::new(11, 1, false);
-    pub const SENSOR3_VOLTAGE: crate::Point<Self, Option<i16>> =
-        crate::Point::new(12, 1, false);
-    pub const SENSOR4_VOLTAGE: crate::Point<Self, Option<i16>> =
-        crate::Point::new(13, 1, false);
-    pub const SENSOR5_VOLTAGE: crate::Point<Self, Option<i16>> =
-        crate::Point::new(14, 1, false);
-    pub const SENSOR6_VOLTAGE: crate::Point<Self, Option<i16>> =
-        crate::Point::new(15, 1, false);
-    pub const SENSOR7_VOLTAGE: crate::Point<Self, Option<i16>> =
-        crate::Point::new(16, 1, false);
-    pub const SENSOR1_CURRENT: crate::Point<Self, Option<i16>> =
-        crate::Point::new(17, 1, false);
-    pub const SENSOR2_CURRENT: crate::Point<Self, Option<i16>> =
-        crate::Point::new(18, 1, false);
-    pub const SENSOR3_CURRENT: crate::Point<Self, Option<i16>> =
-        crate::Point::new(19, 1, false);
-    pub const SENSOR4_CURRENT: crate::Point<Self, Option<i16>> =
-        crate::Point::new(20, 1, false);
-    pub const SENSOR5_CURRENT: crate::Point<Self, Option<i16>> =
-        crate::Point::new(21, 1, false);
-    pub const SENSOR6_CURRENT: crate::Point<Self, Option<i16>> =
-        crate::Point::new(22, 1, false);
-    pub const SENSOR7_CURRENT: crate::Point<Self, Option<i16>> =
-        crate::Point::new(23, 1, false);
+    pub const SENSOR1_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
+    pub const SENSOR2_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, false);
+    pub const SENSOR3_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
+    pub const SENSOR4_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, false);
+    pub const SENSOR5_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
+    pub const SENSOR6_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
+    pub const SENSOR7_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
+    pub const SENSOR1_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
+    pub const SENSOR2_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1, false);
+    pub const SENSOR3_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(19, 1, false);
+    pub const SENSOR4_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1, false);
+    pub const SENSOR5_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
+    pub const SENSOR6_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
+    pub const SENSOR7_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
     pub const SENSOR8: crate::Point<Self, Option<u16>> = crate::Point::new(24, 1, false);
     pub const RELAY1: crate::Point<Self, Option<u16>> = crate::Point::new(25, 1, false);
     pub const RELAY2: crate::Point<Self, Option<u16>> = crate::Point::new(26, 1, false);
     pub const RELAY3: crate::Point<Self, Option<u16>> = crate::Point::new(27, 1, false);
-    pub const RESET_ACCUMULATORS: crate::Point<Self, Option<u16>> =
-        crate::Point::new(28, 1, false);
+    pub const RESET_ACCUMULATORS: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1, false);
     pub const RESET: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1, false);
 }
 impl crate::Model for Model64020 {

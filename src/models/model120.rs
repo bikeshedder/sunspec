@@ -142,12 +142,9 @@ impl Model120 {
     pub const AHR_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(19, 1, false);
     pub const AHR_RTG_SF: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1, false);
     pub const MAX_CHA_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(21, 1, false);
-    pub const MAX_CHA_RTE_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(22, 1, false);
-    pub const MAX_DIS_CHA_RTE: crate::Point<Self, Option<u16>> =
-        crate::Point::new(23, 1, false);
-    pub const MAX_DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(24, 1, false);
+    pub const MAX_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
+    pub const MAX_DIS_CHA_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(23, 1, false);
+    pub const MAX_DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
 }
 impl crate::Model for Model120 {
     const ID: u16 = 120;

@@ -28,7 +28,7 @@ pub struct Model804 {
     /// Battery string state of charge, expressed as a percentage.
     ///
     /// Notes: Measurement.
-    pub so_c: u16,
+    pub soc: u16,
     /// String Depth of Discharge
     ///
     /// Depth of discharge for the string, expressed as a percentage.
@@ -44,7 +44,7 @@ pub struct Model804 {
     /// Battery string state of health, expressed as a percentage.
     ///
     /// Notes: Measurement.
-    pub so_h: Option<u16>,
+    pub soh: Option<u16>,
     /// String Current
     ///
     /// String current measurement.
@@ -142,9 +142,9 @@ pub struct Model804 {
     /// Notes: Should reset to 0 upon completion.
     pub set_con: Option<SetCon>,
     /// Scale factor for string state of charge.
-    pub so_c_sf: i16,
+    pub soc_sf: i16,
     /// Scale factor for string state of health.
-    pub so_h_sf: Option<i16>,
+    pub soh_sf: Option<i16>,
     /// Scale factor for string depth of discharge.
     pub do_d_sf: Option<i16>,
     /// Scale factor for string current.
@@ -163,10 +163,10 @@ impl Model804 {
     pub const ST: crate::Point<Self, St> = crate::Point::new(2, 2, false);
     pub const CON_FAIL: crate::Point<Self, Option<ConFail>> = crate::Point::new(4, 1, false);
     pub const N_CELL_BAL: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
-    pub const SO_C: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
+    pub const SOC: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
     pub const DO_D: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
     pub const N_CYC: crate::Point<Self, Option<u32>> = crate::Point::new(8, 2, false);
-    pub const SO_H: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
+    pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
     pub const A: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
     pub const CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(13, 1, false);
@@ -186,8 +186,8 @@ impl Model804 {
     pub const EVT_VND2: crate::Point<Self, Option<EvtVnd2>> = crate::Point::new(32, 2, false);
     pub const SET_ENA: crate::Point<Self, Option<u16>> = crate::Point::new(34, 1, true);
     pub const SET_CON: crate::Point<Self, Option<SetCon>> = crate::Point::new(35, 1, true);
-    pub const SO_C_SF: crate::Point<Self, i16> = crate::Point::new(36, 1, false);
-    pub const SO_H_SF: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, false);
+    pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(36, 1, false);
+    pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, false);
     pub const DO_D_SF: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1, false);
     pub const A_SF: crate::Point<Self, i16> = crate::Point::new(39, 1, false);
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(40, 1, false);
@@ -203,10 +203,10 @@ impl crate::Model for Model804 {
             st: Self::ST.from_data(data)?,
             con_fail: Self::CON_FAIL.from_data(data)?,
             n_cell_bal: Self::N_CELL_BAL.from_data(data)?,
-            so_c: Self::SO_C.from_data(data)?,
+            soc: Self::SOC.from_data(data)?,
             do_d: Self::DO_D.from_data(data)?,
             n_cyc: Self::N_CYC.from_data(data)?,
-            so_h: Self::SO_H.from_data(data)?,
+            soh: Self::SOH.from_data(data)?,
             a: Self::A.from_data(data)?,
             v: Self::V.from_data(data)?,
             cell_v_max: Self::CELL_V_MAX.from_data(data)?,
@@ -226,8 +226,8 @@ impl crate::Model for Model804 {
             evt_vnd2: Self::EVT_VND2.from_data(data)?,
             set_ena: Self::SET_ENA.from_data(data)?,
             set_con: Self::SET_CON.from_data(data)?,
-            so_c_sf: Self::SO_C_SF.from_data(data)?,
-            so_h_sf: Self::SO_H_SF.from_data(data)?,
+            soc_sf: Self::SOC_SF.from_data(data)?,
+            soh_sf: Self::SOH_SF.from_data(data)?,
             do_d_sf: Self::DO_D_SF.from_data(data)?,
             a_sf: Self::A_SF.from_data(data)?,
             v_sf: Self::V_SF.from_data(data)?,

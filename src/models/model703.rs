@@ -60,8 +60,7 @@ impl Model703 {
     pub const ES_DLY_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, true);
     pub const ES_RND_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(9, 2, true);
     pub const ES_RMP_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(11, 2, true);
-    pub const ES_DLY_REM_TMS: crate::Point<Self, Option<u32>> =
-        crate::Point::new(13, 2, false);
+    pub const ES_DLY_REM_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(13, 2, false);
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
     pub const HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
 }

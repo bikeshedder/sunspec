@@ -122,19 +122,15 @@ impl Model124 {
         crate::Point::new(13, 1, true);
     pub const IN_OUT_W_RTE_RMP_TMS: crate::Point<Self, Option<u16>> =
         crate::Point::new(14, 1, true);
-    pub const CHA_GRI_SET: crate::Point<Self, Option<ChaGriSet>> =
-        crate::Point::new(15, 1, true);
+    pub const CHA_GRI_SET: crate::Point<Self, Option<ChaGriSet>> = crate::Point::new(15, 1, true);
     pub const W_CHA_MAX_SF: crate::Point<Self, i16> = crate::Point::new(16, 1, false);
     pub const W_CHA_DIS_CHA_GRA_SF: crate::Point<Self, i16> = crate::Point::new(17, 1, false);
-    pub const VA_CHA_MAX_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(18, 1, false);
-    pub const MIN_RSV_PCT_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(19, 1, false);
+    pub const VA_CHA_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1, false);
+    pub const MIN_RSV_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(19, 1, false);
     pub const CHA_STATE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1, false);
     pub const STOR_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
     pub const IN_BAT_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
-    pub const IN_OUT_W_RTE_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(23, 1, false);
+    pub const IN_OUT_W_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
 }
 impl crate::Model for Model124 {
     const ID: u16 = 124;

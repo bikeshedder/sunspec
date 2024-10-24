@@ -30,8 +30,7 @@ pub struct Model715 {
 }
 #[allow(missing_docs)]
 impl Model715 {
-    pub const LOC_REM_CTL: crate::Point<Self, Option<LocRemCtl>> =
-        crate::Point::new(0, 1, false);
+    pub const LOC_REM_CTL: crate::Point<Self, Option<LocRemCtl>> = crate::Point::new(0, 1, false);
     pub const DER_HB: crate::Point<Self, Option<u32>> = crate::Point::new(1, 2, false);
     pub const CONTROLLER_HB: crate::Point<Self, Option<u32>> = crate::Point::new(3, 2, true);
     pub const ALARM_RESET: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);

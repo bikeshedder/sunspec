@@ -1,9 +1,30 @@
-use heck::{ToShoutySnakeCase, ToSnakeCase, ToUpperCamelCase};
 use proc_macro2::{Literal, TokenStream};
 use quote::{format_ident, quote, ToTokens};
 use thiserror::Error;
 
 use crate::json::{Model, Point, PointAccess, PointMandatory, PointType};
+
+/// This fixes sunspec identifiers which contains things like
+/// `SoC` and `SoH` which causes heck to transform them to `so_c`
+/// and `so_h` which is not what we want.
+fn normalize_ident(s: &impl AsRef<str>) -> String {
+    s.as_ref().replace("SoC", "Soc").replace("SoH", "Soh")
+}
+
+fn snake_case(s: &impl AsRef<str>) -> String {
+    use heck::ToSnakeCase;
+    normalize_ident(s).to_snake_case()
+}
+
+fn shouty_snake_case(s: &impl AsRef<str>) -> String {
+    use heck::ToShoutySnakeCase;
+    normalize_ident(s).to_shouty_snake_case()
+}
+
+fn upper_camel_case(s: &impl AsRef<str>) -> String {
+    use heck::ToUpperCamelCase;
+    normalize_ident(s).to_upper_camel_case()
+}
 
 #[derive(Debug, Error)]
 pub enum GenModelError {
@@ -113,7 +134,7 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
         .iter()
         .filter(|point| !point.is_padding())
         .map(|point| {
-            let point_name = format_ident!("{}", point.name.to_snake_case());
+            let point_name = format_ident!("{}", snake_case(&point.name));
             let point_type = rust_type(point, "");
             let point_doc = doc_to_ts(&point.doc.to_doc_string());
             // FIXME add #[allow[missing_docs)] if the doc is empty
@@ -141,7 +162,7 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
         })
         .filter(|(_, point)| !point.is_padding())
         .map(|(offset, point)| {
-            let point_name = format_ident!("{}", point.name.to_shouty_snake_case());
+            let point_name = format_ident!("{}", shouty_snake_case(&point.name));
             let point_type = rust_type(point, "");
             let len = Literal::u16_unsuffixed(point.size);
             let offset = Literal::u16_unsuffixed(offset);
@@ -163,8 +184,8 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
         .iter()
         .filter(|point| !point.is_padding())
         .map(|point| {
-            let field_name = format_ident!("{}", point.name.to_snake_case());
-            let const_name = format_ident!("{}", point.name.to_shouty_snake_case());
+            let field_name = format_ident!("{}", snake_case(&point.name));
+            let const_name = format_ident!("{}", shouty_snake_case(&point.name));
             quote! {
                 #field_name: Self::#const_name.from_data(data)?,
             }
@@ -215,8 +236,8 @@ fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
     let repr = format_ident!("u{}", size * 16);
     let name = format_ident!(
         "{}{}",
-        prefix.to_upper_camel_case(),
-        point.name.to_upper_camel_case()
+        upper_camel_case(&prefix),
+        upper_camel_case(&point.name)
     );
     let invalid = match point.r#type {
         PointType::Enum16 => Literal::u16_unsuffixed(u16::MAX),
@@ -224,7 +245,7 @@ fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
         _ => unimplemented!(),
     };
     let variants = point.symbols.iter().map(|symbol| {
-        let variant_name = format_ident!("{}", symbol.name.to_upper_camel_case());
+        let variant_name = format_ident!("{}", upper_camel_case(&symbol.name));
         let variant_value = match point.r#type {
             PointType::Enum16 => {
                 Literal::u16_unsuffixed(symbol.value.as_u64().unwrap().try_into().unwrap())
@@ -284,8 +305,8 @@ fn gen_bitfield(point: &Point, prefix: &str) -> TokenStream {
     let repr = format_ident!("u{}", size * 16);
     let name = format_ident!(
         "{}{}",
-        prefix.to_upper_camel_case(),
-        point.name.to_upper_camel_case()
+        upper_camel_case(&prefix),
+        upper_camel_case(&point.name)
     );
     let invalid = match point.r#type {
         PointType::Bitfield16 => Literal::u16_suffixed(u16::MAX),
@@ -296,7 +317,7 @@ fn gen_bitfield(point: &Point, prefix: &str) -> TokenStream {
     let doc = doc_to_ts(&point.doc.to_doc_string());
     let fields = point.symbols.iter().map(|symbol| {
         let symbol_name = symbol.name.clone();
-        let field_name = format_ident!("{}", symbol_name.to_upper_camel_case());
+        let field_name = format_ident!("{}", upper_camel_case(&symbol_name));
         let bit = Literal::u64_unsuffixed(1 << symbol.value.as_u64().unwrap());
         let field_doc = doc_to_ts(&symbol.doc.to_doc_string());
         quote! {
@@ -360,8 +381,8 @@ fn rust_type(point: &Point, prefix: &str) -> TokenStream {
                 "{}",
                 format!(
                     "{}{}",
-                    prefix.to_upper_camel_case(),
-                    point.name.to_upper_camel_case()
+                    upper_camel_case(&prefix),
+                    upper_camel_case(&point.name)
                 )
             );
             quote! { #ident }
@@ -373,8 +394,8 @@ fn rust_type(point: &Point, prefix: &str) -> TokenStream {
                 "{}",
                 format!(
                     "{}{}",
-                    prefix.to_upper_camel_case(),
-                    point.name.to_upper_camel_case()
+                    upper_camel_case(&prefix),
+                    upper_camel_case(&point.name)
                 )
             );
             quote! { #ident }

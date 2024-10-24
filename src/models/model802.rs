@@ -26,11 +26,11 @@ pub struct Model802 {
     /// Nameplate Max SoC
     ///
     /// Manufacturer maximum state of charge, expressed as a percentage.
-    pub so_c_max: Option<u16>,
+    pub soc_max: Option<u16>,
     /// Nameplate Min SoC
     ///
     /// Manufacturer minimum state of charge, expressed as a percentage.
-    pub so_c_min: Option<u16>,
+    pub soc_min: Option<u16>,
     /// Max Reserve Percent
     ///
     /// Setpoint for maximum reserve for storage as a percentage of the nominal maximum storage.
@@ -38,13 +38,13 @@ pub struct Model802 {
     /// Min Reserve Percent
     ///
     /// Setpoint for minimum reserve for storage as a percentage of the nominal maximum storage.
-    pub so_c_rsv_min: Option<u16>,
+    pub soc_rsv_min: Option<u16>,
     /// State of Charge
     ///
     /// State of charge, expressed as a percentage.
     ///
     /// Notes: Measurement.
-    pub so_c: u16,
+    pub soc: u16,
     /// Depth of Discharge
     ///
     /// Depth of discharge, expressed as a percentage.
@@ -54,7 +54,7 @@ pub struct Model802 {
     /// State of Health
     ///
     /// Percentage of battery life remaining.
-    pub so_h: Option<u16>,
+    pub soh: Option<u16>,
     /// Cycle Count
     ///
     /// Number of cycles executed in the battery.
@@ -230,11 +230,11 @@ pub struct Model802 {
     /// Scale factor for self discharge rate.
     pub dis_cha_rte_sf: Option<i16>,
     /// Scale factor for state of charge values.
-    pub so_c_sf: i16,
+    pub soc_sf: i16,
     /// Scale factor for depth of discharge.
     pub do_d_sf: Option<i16>,
     /// Scale factor for state of health.
-    pub so_h_sf: Option<i16>,
+    pub soh_sf: Option<i16>,
     /// Scale factor for DC bus voltage.
     pub v_sf: i16,
     /// Scale factor for cell voltage.
@@ -253,13 +253,13 @@ impl Model802 {
     pub const W_CHA_RTE_MAX: crate::Point<Self, u16> = crate::Point::new(2, 1, false);
     pub const W_DIS_CHA_RTE_MAX: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
     pub const DIS_CHA_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
-    pub const SO_C_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
-    pub const SO_C_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
+    pub const SOC_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
+    pub const SOC_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
     pub const SOC_RSV_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
-    pub const SO_C_RSV_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
-    pub const SO_C: crate::Point<Self, u16> = crate::Point::new(9, 1, false);
+    pub const SOC_RSV_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
+    pub const SOC: crate::Point<Self, u16> = crate::Point::new(9, 1, false);
     pub const DO_D: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
-    pub const SO_H: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
+    pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
     pub const N_CYC: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
     pub const CHA_ST: crate::Point<Self, Option<ChaSt>> = crate::Point::new(14, 1, false);
     pub const LOC_REM_CTL: crate::Point<Self, LocRemCtl> = crate::Point::new(15, 1, false);
@@ -278,20 +278,15 @@ impl Model802 {
     pub const V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(33, 1, false);
     pub const V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(34, 1, false);
     pub const CELL_V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(35, 1, false);
-    pub const CELL_V_MAX_STR: crate::Point<Self, Option<u16>> =
-        crate::Point::new(36, 1, false);
-    pub const CELL_V_MAX_MOD: crate::Point<Self, Option<u16>> =
-        crate::Point::new(37, 1, false);
+    pub const CELL_V_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(36, 1, false);
+    pub const CELL_V_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(37, 1, false);
     pub const CELL_V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(38, 1, false);
-    pub const CELL_V_MIN_STR: crate::Point<Self, Option<u16>> =
-        crate::Point::new(39, 1, false);
-    pub const CELL_V_MIN_MOD: crate::Point<Self, Option<u16>> =
-        crate::Point::new(40, 1, false);
+    pub const CELL_V_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(39, 1, false);
+    pub const CELL_V_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(40, 1, false);
     pub const CELL_V_AVG: crate::Point<Self, Option<u16>> = crate::Point::new(41, 1, false);
     pub const A: crate::Point<Self, i16> = crate::Point::new(42, 1, false);
     pub const A_CHA_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(43, 1, false);
-    pub const A_DIS_CHA_MAX: crate::Point<Self, Option<u16>> =
-        crate::Point::new(44, 1, false);
+    pub const A_DIS_CHA_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(44, 1, false);
     pub const W: crate::Point<Self, i16> = crate::Point::new(45, 1, false);
     pub const REQ_INV_STATE: crate::Point<Self, Option<ReqInvState>> =
         crate::Point::new(46, 1, false);
@@ -301,11 +296,10 @@ impl Model802 {
     pub const AH_RTG_SF: crate::Point<Self, i16> = crate::Point::new(50, 1, false);
     pub const WH_RTG_SF: crate::Point<Self, i16> = crate::Point::new(51, 1, false);
     pub const W_CHA_DIS_CHA_MAX_SF: crate::Point<Self, i16> = crate::Point::new(52, 1, false);
-    pub const DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(53, 1, false);
-    pub const SO_C_SF: crate::Point<Self, i16> = crate::Point::new(54, 1, false);
+    pub const DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(53, 1, false);
+    pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(54, 1, false);
     pub const DO_D_SF: crate::Point<Self, Option<i16>> = crate::Point::new(55, 1, false);
-    pub const SO_H_SF: crate::Point<Self, Option<i16>> = crate::Point::new(56, 1, false);
+    pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(56, 1, false);
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(57, 1, false);
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(58, 1, false);
     pub const A_SF: crate::Point<Self, i16> = crate::Point::new(59, 1, false);
@@ -321,13 +315,13 @@ impl crate::Model for Model802 {
             w_cha_rte_max: Self::W_CHA_RTE_MAX.from_data(data)?,
             w_dis_cha_rte_max: Self::W_DIS_CHA_RTE_MAX.from_data(data)?,
             dis_cha_rte: Self::DIS_CHA_RTE.from_data(data)?,
-            so_c_max: Self::SO_C_MAX.from_data(data)?,
-            so_c_min: Self::SO_C_MIN.from_data(data)?,
+            soc_max: Self::SOC_MAX.from_data(data)?,
+            soc_min: Self::SOC_MIN.from_data(data)?,
             soc_rsv_max: Self::SOC_RSV_MAX.from_data(data)?,
-            so_c_rsv_min: Self::SO_C_RSV_MIN.from_data(data)?,
-            so_c: Self::SO_C.from_data(data)?,
+            soc_rsv_min: Self::SOC_RSV_MIN.from_data(data)?,
+            soc: Self::SOC.from_data(data)?,
             do_d: Self::DO_D.from_data(data)?,
-            so_h: Self::SO_H.from_data(data)?,
+            soh: Self::SOH.from_data(data)?,
             n_cyc: Self::N_CYC.from_data(data)?,
             cha_st: Self::CHA_ST.from_data(data)?,
             loc_rem_ctl: Self::LOC_REM_CTL.from_data(data)?,
@@ -364,9 +358,9 @@ impl crate::Model for Model802 {
             wh_rtg_sf: Self::WH_RTG_SF.from_data(data)?,
             w_cha_dis_cha_max_sf: Self::W_CHA_DIS_CHA_MAX_SF.from_data(data)?,
             dis_cha_rte_sf: Self::DIS_CHA_RTE_SF.from_data(data)?,
-            so_c_sf: Self::SO_C_SF.from_data(data)?,
+            soc_sf: Self::SOC_SF.from_data(data)?,
             do_d_sf: Self::DO_D_SF.from_data(data)?,
-            so_h_sf: Self::SO_H_SF.from_data(data)?,
+            soh_sf: Self::SOH_SF.from_data(data)?,
             v_sf: Self::V_SF.from_data(data)?,
             cell_v_sf: Self::CELL_V_SF.from_data(data)?,
             a_sf: Self::A_SF.from_data(data)?,

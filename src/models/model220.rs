@@ -138,14 +138,10 @@ impl Model220 {
     pub const TOT_V_AH_EXP: crate::Point<Self, Option<u32>> = crate::Point::new(19, 2, false);
     pub const TOT_V_AH_IMP: crate::Point<Self, Option<u32>> = crate::Point::new(21, 2, false);
     pub const TOT_V_AH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    pub const TOT_V_ARH_IMP_Q1: crate::Point<Self, Option<u32>> =
-        crate::Point::new(24, 2, false);
-    pub const TOT_V_ARH_IMP_Q2: crate::Point<Self, Option<u32>> =
-        crate::Point::new(26, 2, false);
-    pub const TOT_V_ARH_EXP_Q3: crate::Point<Self, Option<u32>> =
-        crate::Point::new(28, 2, false);
-    pub const TOT_V_ARH_EXP_Q4: crate::Point<Self, Option<u32>> =
-        crate::Point::new(30, 2, false);
+    pub const TOT_V_ARH_IMP_Q1: crate::Point<Self, Option<u32>> = crate::Point::new(24, 2, false);
+    pub const TOT_V_ARH_IMP_Q2: crate::Point<Self, Option<u32>> = crate::Point::new(26, 2, false);
+    pub const TOT_V_ARH_EXP_Q3: crate::Point<Self, Option<u32>> = crate::Point::new(28, 2, false);
+    pub const TOT_V_ARH_EXP_Q4: crate::Point<Self, Option<u32>> = crate::Point::new(30, 2, false);
     pub const TOT_V_ARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(32, 1, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(33, 2, false);
     pub const TS: crate::Point<Self, u32> = crate::Point::new(36, 2, false);

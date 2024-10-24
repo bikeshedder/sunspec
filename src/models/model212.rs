@@ -214,59 +214,43 @@ impl Model212 {
     pub const P_FPH_B: crate::Point<Self, Option<f32>> = crate::Point::new(54, 2, false);
     pub const P_FPH_C: crate::Point<Self, Option<f32>> = crate::Point::new(56, 2, false);
     pub const TOT_WH_EXP: crate::Point<Self, f32> = crate::Point::new(58, 2, false);
-    pub const TOT_WH_EXP_PH_A: crate::Point<Self, Option<f32>> =
-        crate::Point::new(60, 2, false);
-    pub const TOT_WH_EXP_PH_B: crate::Point<Self, Option<f32>> =
-        crate::Point::new(62, 2, false);
-    pub const TOT_WH_EXP_PH_C: crate::Point<Self, Option<f32>> =
-        crate::Point::new(64, 2, false);
+    pub const TOT_WH_EXP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(60, 2, false);
+    pub const TOT_WH_EXP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(62, 2, false);
+    pub const TOT_WH_EXP_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(64, 2, false);
     pub const TOT_WH_IMP: crate::Point<Self, f32> = crate::Point::new(66, 2, false);
-    pub const TOT_WH_IMP_PH_A: crate::Point<Self, Option<f32>> =
-        crate::Point::new(68, 2, false);
-    pub const TOT_WH_IMP_PH_B: crate::Point<Self, Option<f32>> =
-        crate::Point::new(70, 2, false);
-    pub const TOT_WH_IMP_PH_C: crate::Point<Self, Option<f32>> =
-        crate::Point::new(72, 2, false);
+    pub const TOT_WH_IMP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(68, 2, false);
+    pub const TOT_WH_IMP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(70, 2, false);
+    pub const TOT_WH_IMP_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(72, 2, false);
     pub const TOT_V_AH_EXP: crate::Point<Self, Option<f32>> = crate::Point::new(74, 2, false);
-    pub const TOT_V_AH_EXP_PH_A: crate::Point<Self, Option<f32>> =
-        crate::Point::new(76, 2, false);
-    pub const TOT_V_AH_EXP_PH_B: crate::Point<Self, Option<f32>> =
-        crate::Point::new(78, 2, false);
-    pub const TOT_V_AH_EXP_PH_C: crate::Point<Self, Option<f32>> =
-        crate::Point::new(80, 2, false);
+    pub const TOT_V_AH_EXP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(76, 2, false);
+    pub const TOT_V_AH_EXP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(78, 2, false);
+    pub const TOT_V_AH_EXP_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(80, 2, false);
     pub const TOT_V_AH_IMP: crate::Point<Self, Option<f32>> = crate::Point::new(82, 2, false);
-    pub const TOT_V_AH_IMP_PH_A: crate::Point<Self, Option<f32>> =
-        crate::Point::new(84, 2, false);
-    pub const TOT_V_AH_IMP_PH_B: crate::Point<Self, Option<f32>> =
-        crate::Point::new(86, 2, false);
-    pub const TOT_V_AH_IMP_PH_C: crate::Point<Self, Option<f32>> =
-        crate::Point::new(88, 2, false);
-    pub const TOT_V_ARH_IMP_Q1: crate::Point<Self, Option<f32>> =
-        crate::Point::new(90, 2, false);
+    pub const TOT_V_AH_IMP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(84, 2, false);
+    pub const TOT_V_AH_IMP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(86, 2, false);
+    pub const TOT_V_AH_IMP_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(88, 2, false);
+    pub const TOT_V_ARH_IMP_Q1: crate::Point<Self, Option<f32>> = crate::Point::new(90, 2, false);
     pub const TOT_V_ARH_IMP_Q1PH_A: crate::Point<Self, Option<f32>> =
         crate::Point::new(92, 2, false);
     pub const TOT_V_ARH_IMP_Q1PH_B: crate::Point<Self, Option<f32>> =
         crate::Point::new(94, 2, false);
     pub const TOT_V_ARH_IMP_Q1PH_C: crate::Point<Self, Option<f32>> =
         crate::Point::new(96, 2, false);
-    pub const TOT_V_ARH_IMP_Q2: crate::Point<Self, Option<f32>> =
-        crate::Point::new(98, 2, false);
+    pub const TOT_V_ARH_IMP_Q2: crate::Point<Self, Option<f32>> = crate::Point::new(98, 2, false);
     pub const TOT_V_ARH_IMP_Q2PH_A: crate::Point<Self, Option<f32>> =
         crate::Point::new(100, 2, false);
     pub const TOT_V_ARH_IMP_Q2PH_B: crate::Point<Self, Option<f32>> =
         crate::Point::new(102, 2, false);
     pub const TOT_V_ARH_IMP_Q2PH_C: crate::Point<Self, Option<f32>> =
         crate::Point::new(104, 2, false);
-    pub const TOT_V_ARH_EXP_Q3: crate::Point<Self, Option<f32>> =
-        crate::Point::new(106, 2, false);
+    pub const TOT_V_ARH_EXP_Q3: crate::Point<Self, Option<f32>> = crate::Point::new(106, 2, false);
     pub const TOT_V_ARH_EXP_Q3PH_A: crate::Point<Self, Option<f32>> =
         crate::Point::new(108, 2, false);
     pub const TOT_V_ARH_EXP_Q3PH_B: crate::Point<Self, Option<f32>> =
         crate::Point::new(110, 2, false);
     pub const TOT_V_ARH_EXP_Q3PH_C: crate::Point<Self, Option<f32>> =
         crate::Point::new(112, 2, false);
-    pub const TOT_V_ARH_EXP_Q4: crate::Point<Self, Option<f32>> =
-        crate::Point::new(114, 2, false);
+    pub const TOT_V_ARH_EXP_Q4: crate::Point<Self, Option<f32>> = crate::Point::new(114, 2, false);
     pub const TOT_V_ARH_EXP_Q4PH_A: crate::Point<Self, Option<f32>> =
         crate::Point::new(116, 2, false);
     pub const TOT_V_ARH_EXP_Q4PH_B: crate::Point<Self, Option<f32>> =

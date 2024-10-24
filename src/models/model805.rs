@@ -22,7 +22,7 @@ pub struct Model805 {
     /// Module SoC
     ///
     /// Module state of charge, expressed as a percentage.
-    pub so_c: Option<u16>,
+    pub soc: Option<u16>,
     /// Depth of Discharge
     ///
     /// Depth of discharge for the module.
@@ -32,7 +32,7 @@ pub struct Model805 {
     /// Module SoH
     ///
     /// Module state of health, expressed as a percentage.
-    pub so_h: Option<u16>,
+    pub soh: Option<u16>,
     /// Cycle Count
     ///
     /// Count of cycles executed.
@@ -104,9 +104,9 @@ pub struct Model805 {
     /// Serial number for the module.
     pub sn: Option<String>,
     /// Scale factor for module state of charge.
-    pub so_c_sf: Option<i16>,
+    pub soc_sf: Option<i16>,
     /// Scale factor for module state of health.
-    pub so_h_sf: Option<i16>,
+    pub soh_sf: Option<i16>,
     /// Scale factor for module depth of discharge.
     pub do_d_sf: Option<i16>,
     /// Scale factor for module voltage.
@@ -121,29 +121,25 @@ impl Model805 {
     pub const STR_IDX: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
     pub const MOD_IDX: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
     pub const N_CELL: crate::Point<Self, u16> = crate::Point::new(2, 1, false);
-    pub const SO_C: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
+    pub const SOC: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
     pub const DO_D: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
-    pub const SO_H: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
+    pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
     pub const N_CYC: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2, false);
     pub const V: crate::Point<Self, u16> = crate::Point::new(8, 1, false);
     pub const CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(9, 1, false);
-    pub const CELL_V_MAX_CELL: crate::Point<Self, Option<u16>> =
-        crate::Point::new(10, 1, false);
+    pub const CELL_V_MAX_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
     pub const CELL_V_MIN: crate::Point<Self, u16> = crate::Point::new(11, 1, false);
-    pub const CELL_V_MIN_CELL: crate::Point<Self, Option<u16>> =
-        crate::Point::new(12, 1, false);
+    pub const CELL_V_MIN_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
     pub const CELL_V_AVG: crate::Point<Self, u16> = crate::Point::new(13, 1, false);
     pub const CELL_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(14, 1, false);
-    pub const CELL_TMP_MAX_CELL: crate::Point<Self, Option<u16>> =
-        crate::Point::new(15, 1, false);
+    pub const CELL_TMP_MAX_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(15, 1, false);
     pub const CELL_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(16, 1, false);
-    pub const CELL_TMP_MIN_CELL: crate::Point<Self, Option<u16>> =
-        crate::Point::new(17, 1, false);
+    pub const CELL_TMP_MIN_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, false);
     pub const CELL_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(18, 1, false);
     pub const N_CELL_BAL: crate::Point<Self, Option<u16>> = crate::Point::new(19, 1, false);
     pub const SN: crate::Point<Self, Option<String>> = crate::Point::new(20, 16, false);
-    pub const SO_C_SF: crate::Point<Self, Option<i16>> = crate::Point::new(36, 1, false);
-    pub const SO_H_SF: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, false);
+    pub const SOC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(36, 1, false);
+    pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, false);
     pub const DO_D_SF: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1, false);
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(39, 1, false);
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(40, 1, false);
@@ -156,9 +152,9 @@ impl crate::Model for Model805 {
             str_idx: Self::STR_IDX.from_data(data)?,
             mod_idx: Self::MOD_IDX.from_data(data)?,
             n_cell: Self::N_CELL.from_data(data)?,
-            so_c: Self::SO_C.from_data(data)?,
+            soc: Self::SOC.from_data(data)?,
             do_d: Self::DO_D.from_data(data)?,
-            so_h: Self::SO_H.from_data(data)?,
+            soh: Self::SOH.from_data(data)?,
             n_cyc: Self::N_CYC.from_data(data)?,
             v: Self::V.from_data(data)?,
             cell_v_max: Self::CELL_V_MAX.from_data(data)?,
@@ -173,8 +169,8 @@ impl crate::Model for Model805 {
             cell_tmp_avg: Self::CELL_TMP_AVG.from_data(data)?,
             n_cell_bal: Self::N_CELL_BAL.from_data(data)?,
             sn: Self::SN.from_data(data)?,
-            so_c_sf: Self::SO_C_SF.from_data(data)?,
-            so_h_sf: Self::SO_H_SF.from_data(data)?,
+            soc_sf: Self::SOC_SF.from_data(data)?,
+            soh_sf: Self::SOH_SF.from_data(data)?,
             do_d_sf: Self::DO_D_SF.from_data(data)?,
             v_sf: Self::V_SF.from_data(data)?,
             cell_v_sf: Self::CELL_V_SF.from_data(data)?,

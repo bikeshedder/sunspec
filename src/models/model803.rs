@@ -108,9 +108,9 @@ pub struct Model803 {
     /// Scale factor for string currents.
     pub a_sf: i16,
     /// Scale factor for string state of health.
-    pub so_h_sf: Option<i16>,
+    pub soh_sf: Option<i16>,
     /// Scale factor for string state of charge.
-    pub so_c_sf: i16,
+    pub soc_sf: i16,
     /// Scale factor for string voltage.
     pub v_sf: Option<i16>,
 }
@@ -119,36 +119,28 @@ impl Model803 {
     pub const N_STR: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
     pub const N_STR_CON: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
     pub const MOD_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(2, 1, false);
-    pub const MOD_TMP_MAX_STR: crate::Point<Self, Option<u16>> =
-        crate::Point::new(3, 1, false);
-    pub const MOD_TMP_MAX_MOD: crate::Point<Self, Option<u16>> =
-        crate::Point::new(4, 1, false);
+    pub const MOD_TMP_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
+    pub const MOD_TMP_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
     pub const MOD_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
-    pub const MOD_TMP_MIN_STR: crate::Point<Self, Option<u16>> =
-        crate::Point::new(6, 1, false);
-    pub const MOD_TMP_MIN_MOD: crate::Point<Self, Option<u16>> =
-        crate::Point::new(7, 1, false);
+    pub const MOD_TMP_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
+    pub const MOD_TMP_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
     pub const MOD_TMP_AVG: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
     pub const STR_V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, false);
-    pub const STR_V_MAX_STR: crate::Point<Self, Option<u16>> =
-        crate::Point::new(10, 1, false);
+    pub const STR_V_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
     pub const STR_V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
-    pub const STR_V_MIN_STR: crate::Point<Self, Option<u16>> =
-        crate::Point::new(12, 1, false);
+    pub const STR_V_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
     pub const STR_V_AVG: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
     pub const STR_A_MAX: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
-    pub const STR_A_MAX_STR: crate::Point<Self, Option<u16>> =
-        crate::Point::new(15, 1, false);
+    pub const STR_A_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(15, 1, false);
     pub const STR_A_MIN: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
-    pub const STR_A_MIN_STR: crate::Point<Self, Option<u16>> =
-        crate::Point::new(17, 1, false);
+    pub const STR_A_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, false);
     pub const STR_A_AVG: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1, false);
     pub const N_CELL_BAL: crate::Point<Self, Option<u16>> = crate::Point::new(19, 1, false);
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(20, 1, false);
     pub const MOD_TMP_SF: crate::Point<Self, i16> = crate::Point::new(21, 1, false);
     pub const A_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
-    pub const SO_H_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    pub const SO_C_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
+    pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
+    pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, false);
 }
 impl crate::Model for Model803 {
@@ -178,8 +170,8 @@ impl crate::Model for Model803 {
             cell_v_sf: Self::CELL_V_SF.from_data(data)?,
             mod_tmp_sf: Self::MOD_TMP_SF.from_data(data)?,
             a_sf: Self::A_SF.from_data(data)?,
-            so_h_sf: Self::SO_H_SF.from_data(data)?,
-            so_c_sf: Self::SO_C_SF.from_data(data)?,
+            soh_sf: Self::SOH_SF.from_data(data)?,
+            soc_sf: Self::SOC_SF.from_data(data)?,
             v_sf: Self::V_SF.from_data(data)?,
         })
     }

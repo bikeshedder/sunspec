@@ -16,11 +16,11 @@ pub struct Model713 {
     /// State of Charge
     ///
     /// State of charge of the DER storage.
-    pub so_c: Option<u16>,
+    pub soc: Option<u16>,
     /// State of Health
     ///
     /// State of health of the DER storage.
-    pub so_h: Option<u16>,
+    pub soh: Option<u16>,
     /// Status
     ///
     /// Storage status.
@@ -38,8 +38,8 @@ pub struct Model713 {
 impl Model713 {
     pub const WH_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
     pub const WH_AVAIL: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const SO_C: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
-    pub const SO_H: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
+    pub const SOC: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
+    pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
     pub const STA: crate::Point<Self, Option<Sta>> = crate::Point::new(4, 1, false);
     pub const WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, false);
     pub const PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
@@ -50,8 +50,8 @@ impl crate::Model for Model713 {
         Ok(Self {
             wh_rtg: Self::WH_RTG.from_data(data)?,
             wh_avail: Self::WH_AVAIL.from_data(data)?,
-            so_c: Self::SO_C.from_data(data)?,
-            so_h: Self::SO_H.from_data(data)?,
+            soc: Self::SOC.from_data(data)?,
+            soh: Self::SOH.from_data(data)?,
             sta: Self::STA.from_data(data)?,
             wh_sf: Self::WH_SF.from_data(data)?,
             pct_sf: Self::PCT_SF.from_data(data)?,

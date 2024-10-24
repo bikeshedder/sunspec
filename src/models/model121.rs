@@ -154,8 +154,7 @@ impl Model121 {
     pub const PF_MIN_Q3: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
     pub const PF_MIN_Q4: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, true);
     pub const V_AR_ACT: crate::Point<Self, Option<VArAct>> = crate::Point::new(15, 1, true);
-    pub const CLC_TOT_VA: crate::Point<Self, Option<ClcTotVa>> =
-        crate::Point::new(16, 1, true);
+    pub const CLC_TOT_VA: crate::Point<Self, Option<ClcTotVa>> = crate::Point::new(16, 1, true);
     pub const MAX_RMP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, true);
     pub const ECP_NOM_HZ: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
     pub const CONN_PH: crate::Point<Self, Option<ConnPh>> = crate::Point::new(19, 1, true);
@@ -167,10 +166,8 @@ impl Model121 {
     pub const V_AR_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, false);
     pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(26, 1, false);
     pub const PF_MIN_SF: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
-    pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(28, 1, false);
-    pub const ECP_NOM_HZ_SF: crate::Point<Self, Option<i16>> =
-        crate::Point::new(29, 1, false);
+    pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
+    pub const ECP_NOM_HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, false);
 }
 impl crate::Model for Model121 {
     const ID: u16 = 121;
