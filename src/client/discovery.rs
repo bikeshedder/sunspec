@@ -3,7 +3,7 @@ use thiserror::Error;
 use crate::model::{Model, ModelAddr};
 use crate::models::Models;
 
-use super::error::CommunicationError;
+use super::ModbusError;
 
 impl<M: Model> Copy for ModelAddr<M> {}
 
@@ -38,8 +38,8 @@ pub struct DiscoveryResult {
 #[derive(Debug, Error)]
 pub enum DiscoveryError {
     /// Communication error.
-    #[error("Communication: {0}")]
-    Communication(#[from] CommunicationError),
+    #[error("Modbus error: {0}")]
+    ModbusError(#[from] ModbusError),
     /// The Modbus slave did not provide the "SunS" header at the well known
     /// addresses 0, 40000 or 50000.
     #[error("SunS identifier not found")]

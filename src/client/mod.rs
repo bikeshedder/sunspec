@@ -1,3 +1,4 @@
+mod r#async;
 mod config;
 mod discovery;
 mod error;
@@ -9,4 +10,5 @@ pub use config::{
     DEFAULT_WRITE_TIMEOUT,
 };
 pub use discovery::{DiscoveryError, DiscoveryResult, UnknownModel};
-pub use error::{CommunicationError, ReadModelError, ReadPointError, WritePointError};
+pub use error::{ModbusError, ReadModelError, ReadPointError, WritePointError};
+pub use r#async::{AsyncClient, AsyncModbusClient};

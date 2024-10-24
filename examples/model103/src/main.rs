@@ -2,11 +2,12 @@ use std::{error::Error, net::SocketAddr, time::Duration};
 
 use clap::Parser;
 use itertools::Itertools;
-use sunspec::client::{
-    tokio_modbus::{discover_models, read_model},
-    Config,
-};
+use sunspec::models::model103::Model103;
 use sunspec::DEFAULT_DISCOVERY_ADDRESSES;
+use sunspec::{
+    client::{AsyncClient, Config},
+    models::model1::Model1,
+};
 use tokio::time::sleep;
 use tokio_modbus::{client::tcp::connect_slave, Slave};
 
@@ -35,20 +36,20 @@ struct Args {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     let args = Args::parse();
-    let mut ctx = connect_slave(args.addr, Slave(args.device_id)).await?;
 
-    let read_timeout =
-        (args.read_timeout != 0.0).then(|| Duration::from_secs_f32(args.read_timeout));
+    let mut client = AsyncClient::new(
+        connect_slave(args.addr, Slave(args.device_id)).await?,
+        Config {
+            discovery_addresses: args.discovery_addresses,
+            read_timeout: (args.read_timeout != 0.0)
+                .then(|| Duration::from_secs_f32(args.read_timeout)),
+            ..Default::default()
+        },
+    );
 
-    let client_config = Config {
-        discovery_addresses: args.discovery_addresses,
-        read_timeout: read_timeout.clone(),
-        ..Default::default()
-    };
+    client.discover_models().await?;
 
-    let models = discover_models(&mut ctx, &client_config).await?.models;
-
-    let m1 = read_model(&mut ctx, models.m1, &client_config).await?;
+    let m1: Model1 = client.read_model().await?;
 
     println!("Manufacturer: {}", m1.mn);
     println!("Model: {}", m1.md);
@@ -57,7 +58,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     println!(
         "Supported models: {}",
-        models
+        client
+            .models
             .supported_model_ids()
             .iter()
             .map(|id| id.to_string())
@@ -65,7 +67,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
 
     loop {
-        let m103 = read_model(&mut ctx, models.m103, &client_config).await?;
+        let m103: Model103 = client.read_model().await?;
         let w = m103.w as f32 * 10f32.powf(m103.w_sf.into());
         let wh = m103.wh as f32 * 10f32.powf(m103.wh_sf.into());
         println!("{:12.3} kWh {:9.3} kW", wh / 1000.0, w / 1000.0,);
