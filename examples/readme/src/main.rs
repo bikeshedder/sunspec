@@ -22,9 +22,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut client = AsyncClient::new(
         connect_slave(args.addr, Slave(args.device_id)).await?,
         Config::default(),
-    );
+    )
+    .await?;
 
-    client.discover_models().await?;
     let m1: Model1 = client.read_model().await?;
 
     println!("Manufacturer: {}", m1.mn);

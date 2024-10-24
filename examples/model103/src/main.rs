@@ -45,9 +45,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
                 .then(|| Duration::from_secs_f32(args.read_timeout)),
             ..Default::default()
         },
-    );
-
-    client.discover_models().await?;
+    )
+    .await?;
 
     let m1: Model1 = client.read_model().await?;
 

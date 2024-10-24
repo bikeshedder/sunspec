@@ -21,27 +21,22 @@ pub struct AsyncClient<C: AsyncModbusClient> {
 }
 
 impl<C: AsyncModbusClient> AsyncClient<C> {
-    /// Create new AsyncClient using a `AsyncModbusClient` and a `Config`.
-    pub fn new(client: C, config: Config) -> Self {
-        Self {
-            client,
-            config,
-            models: Models::default(),
-            unknown_models: Vec::default(),
-        }
-    }
-    /// This function implements the "Device Information Model Discovery"
-    /// as explained in [SunSpec Device Information Specification V1.1](https://sunspec.org/wp-content/uploads/2022/05/SunSpec-Device-Information-Model-Specificiation-V1-1-final.pdf)
-    pub async fn discover_models(&mut self) -> Result<(), DiscoveryError> {
-        let result = discover_models(
-            &mut self.client,
-            &self.config.discovery_addresses,
-            self.config.read_timeout,
+    /// Create new AsyncClient using a `AsyncModbusClient` and a `Config`
+    /// and perform "Device Information Model Discovery" as explained in
+    /// [SunSpec Device Information Specification V1.1](https://sunspec.org/wp-content/uploads/2022/05/SunSpec-Device-Information-Model-Specificiation-V1-1-final.pdf)
+    pub async fn new(mut client: C, config: Config) -> Result<Self, DiscoveryError> {
+        let discovery_result = discover_models(
+            &mut client,
+            &config.discovery_addresses,
+            config.read_timeout,
         )
         .await?;
-        self.models = result.models;
-        self.unknown_models = result.unknown_models;
-        Ok(())
+        Ok(Self {
+            client,
+            config,
+            models: discovery_result.models,
+            unknown_models: discovery_result.unknown_models,
+        })
     }
     /// Read model data from modbus
     ///
