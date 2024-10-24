@@ -22,7 +22,8 @@ in a safe and convenient way.
 - [x] Fully documented. Even the generated models.
 - [x] Reading of complete models in a single request.
 
-> ⚠️ **Nested and repeating groups are not supported, yet.**
+| ⚠️ Nested and repeating groups are not supported, yet. |
+| ---- |
 
 ## Features
 
