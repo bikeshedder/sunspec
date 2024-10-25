@@ -1,7 +1,9 @@
 # SunSpec Rust Implementation
 
 [![Latest Version](https://img.shields.io/crates/v/sunspec.svg)](https://crates.io/crates/sunspec)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/bikeshedder/sunspec/ci.yml?branch=main)](https://github.com/bikeshedder/sunspec/actions?query=workflow%3ARust)
 ![Unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg "Unsafe forbidden")
+[![Rust 1.75+](https://img.shields.io/badge/rustc-1.75+-lightgray.svg "Rust 1.75+")](https://blog.rust-lang.org/2023/12/28/Rust-1.75.0.html)
 
 This [Rust](https://www.rust-lang.org) crate contains code for accessing [SunSpec](https://en.wikipedia.org/wiki/SunSpec) compliant devices
 in a safe and convenient way.
