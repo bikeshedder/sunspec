@@ -1,7 +1,7 @@
 # SunSpec Rust Implementation
 
 [![Latest Version](https://img.shields.io/crates/v/sunspec.svg)](https://crates.io/crates/sunspec)
-[![CI Status](https://img.shields.io/github/actions/workflow/status/bikeshedder/sunspec/rust.yml)](https://github.com/bikeshedder/sunspec/actions?query=workflow%3ARust)
+[![CI](https://img.shields.io/github/actions/workflow/status/bikeshedder/sunspec/rust.yml?logo=github&label=CI)](https://github.com/bikeshedder/sunspec/actions?query=workflow%3ARust)
 ![Unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg "Unsafe forbidden")
 [![Rust 1.75+](https://img.shields.io/badge/rustc-1.75+-lightgray.svg "Rust 1.75+")](https://blog.rust-lang.org/2023/12/28/Rust-1.75.0.html)
 
