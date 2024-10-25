@@ -14,7 +14,7 @@ in a safe and convenient way.
 - [x] No unsafe code
 - [x] Panic free
 - [x] All communication is abstracted via traits making it runtime agnostic
-- [x] Supports Modbus TCP and RTU (via `tokio-modbus`).
+- [x] Supports Modbus TCP and RTU (via [tokio-modbus](https://crates.io/crates/tokio-modbus)).
 - [x] Implements "Device Information Model Discovery" as
       defined in the SunSpec specification.
 - [x] Fully typed models generated from the JSON files contained in the
