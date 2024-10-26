@@ -19,7 +19,7 @@ pub const DEFAULT_MAX_READ_LENGTH: u16 = 125;
 pub const DEFAULT_MAX_WRITE_LENGTH: u16 = 123;
 
 /// Client configuration
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Config {
     /// Addresses to check for the SunS identifier (default: [0, 40000, 50000])
     ///
