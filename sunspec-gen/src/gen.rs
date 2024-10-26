@@ -113,7 +113,8 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
     let module_doc = format!(" {}", model.group.doc.label.as_ref().unwrap());
     let model_name = format_ident!("Model{}", model.id);
     let model_doc = doc_to_ts(&model.group.doc.to_doc_string());
-    if let Some(Point { name, .. }) = model.group.points.get(0) {
+    let mut points = model.group.points.iter();
+    if let Some(Point { name, .. }) = points.next() {
         if name != "ID" {
             return Err(GenModelError::MissingIdPoint {
                 model: format!("Model{}", model.id),
@@ -121,7 +122,7 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
             });
         }
     }
-    if let Some(Point { name, .. }) = model.group.points.get(1) {
+    if let Some(Point { name, .. }) = points.next() {
         if name != "L" {
             return Err(GenModelError::MissingLPoint {
                 model: format!("Model{}", model.id),
@@ -129,7 +130,7 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
             });
         }
     }
-    let points = &model.group.points[2..];
+    let points = points.as_slice();
     let model_fields = points
         .iter()
         .filter(|point| !point.is_padding())
@@ -157,7 +158,7 @@ pub fn gen_model_struct(model: &Model) -> Result<TokenStream, GenModelError> {
     let model_impl_consts = points.iter()
         .scan(0, |offset, point| {
             let point_offset = *offset;
-            *offset = *offset + point.size;
+            *offset += point.size;
             Some((point_offset, point))
         })
         .filter(|(_, point)| !point.is_padding())
