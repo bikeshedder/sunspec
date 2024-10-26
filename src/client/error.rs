@@ -14,7 +14,7 @@ pub enum ModbusError {
     /// The requested device does not implement modbus correctly and the
     /// underlying modbus implementation reported an error.
     #[error(transparent)]
-    Protocol(Box<dyn Error>),
+    Protocol(Box<dyn Error + Send + Sync>),
     /// I/O error
     #[error("I/O error")]
     IO(#[from] std::io::Error),
