@@ -7,6 +7,8 @@ use crate::{DecodeError, Models};
 pub trait Model: Sized {
     /// Model ID
     const ID: u16;
+    /// Model length
+    const LEN: u16;
     /// Parse model points from a given u16 slice
     fn from_data(data: &[u16]) -> Result<Self, DecodeError>;
     /// Get model address from discovered models struct

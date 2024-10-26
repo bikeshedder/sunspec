@@ -445,7 +445,7 @@ dependencies = [
  "strum",
  "thiserror",
  "tokio",
- "tokio-modbus",
+ "tokio-modbus 0.15.0",
 ]
 
 [[package]]
@@ -456,7 +456,18 @@ dependencies = [
  "itertools",
  "sunspec",
  "tokio",
- "tokio-modbus",
+ "tokio-modbus 0.15.0",
+]
+
+[[package]]
+name = "sunspec-example-model712"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "itertools",
+ "sunspec",
+ "tokio",
+ "tokio-modbus 0.14.0",
 ]
 
 [[package]]
@@ -467,7 +478,7 @@ dependencies = [
  "itertools",
  "sunspec",
  "tokio",
- "tokio-modbus",
+ "tokio-modbus 0.15.0",
 ]
 
 [[package]]
@@ -542,6 +553,24 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "tokio-modbus"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "033b1b9843d693c3543e6b9c656a566ea45d2564e72ad5447e83233b9e2f3fe1"
+dependencies = [
+ "async-trait",
+ "byteorder",
+ "bytes",
+ "futures-core",
+ "futures-util",
+ "log",
+ "smallvec",
+ "thiserror",
+ "tokio",
+ "tokio-util",
 ]
 
 [[package]]
