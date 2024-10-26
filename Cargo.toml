@@ -1,6 +1,6 @@
 [package]
 name = "sunspec"
-version = "0.6.1"
+version = "0.7.0"
 edition = "2021"
 authors = ["Michael P. Jung <michael.jung@terreon.de>"]
 description = "SunSpec 1.1 compliant library with tokio support"
@@ -29,8 +29,4 @@ tokio-modbus = { version = "0.15", optional = true }
 serde_json = "1.0.114"
 
 [workspace]
-members = [
-    "sunspec-gen",
-    "examples/readme",
-    "examples/model103",
-]
+members = ["sunspec-gen", "examples/readme", "examples/model103"]
