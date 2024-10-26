@@ -71,10 +71,10 @@ impl<C: AsyncModbusClient> AsyncClient<C> {
     /// Write data for a single point
     pub async fn write_point<M: Model, T: Value>(
         &mut self,
-        model_addr: ModelAddr<M>,
         point: Point<M, T>,
         value: T,
     ) -> Result<(), WritePointError> {
+        let model_addr = M::addr(&self.models);
         write_point(
             &mut self.client,
             model_addr,
