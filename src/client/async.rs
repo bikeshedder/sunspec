@@ -12,40 +12,77 @@ use super::{
 pub struct AsyncClient<C: AsyncModbusClient> {
     /// This is the actual modbus client which implements the `AsyncModbusClient` trait.
     pub client: C,
-    /// Model configuration
+    /// Client configuration
     pub config: Config,
+}
+
+impl<C: AsyncModbusClient> AsyncClient<C> {
+    /// Create new AsyncClient using a `AsyncModbusClient` and a `Config`
+    pub fn new(client: impl IntoAsyncModbusClient<C>, config: Config) -> Self {
+        Self {
+            client: client.into_async_modbus_client(),
+            config,
+        }
+    }
+    /// Perform "Device Information Model Discovery" as explained in
+    /// [SunSpec Device Information Specification V1.1](https://sunspec.org/wp-content/uploads/2022/05/SunSpec-Device-Information-Model-Specificiation-V1-1-final.pdf)
+    /// for all slave IDs (0..=255) and return a vector of discovered
+    /// devices.
+    pub async fn devices(&self) -> Vec<AsyncDevice<C>> {
+        let mut devices = Vec::new();
+        for slave_id in 0..=255 {
+            if let Ok(device) = self.device(slave_id).await {
+                devices.push(device);
+            }
+        }
+        devices
+    }
+    /// Perform "Device Information Model Discovery" as explained in
+    /// [SunSpec Device Information Specification V1.1](https://sunspec.org/wp-content/uploads/2022/05/SunSpec-Device-Information-Model-Specificiation-V1-1-final.pdf)
+    /// for a single slave ID and return the discovered device.
+    pub async fn device(&self, slave_id: u8) -> Result<AsyncDevice<C>, DiscoveryError> {
+        let discovery_result = discover_models(
+            &self.client,
+            slave_id,
+            &self.config.discovery_addresses,
+            self.config.read_timeout,
+        )
+        .await?;
+        Ok(AsyncDevice {
+            client: self.client.clone(),
+            config: self.config.clone(),
+            slave_id,
+            models: discovery_result.models,
+            unknown_models: discovery_result.unknown_models,
+        })
+    }
+}
+
+/// Client structure for a discovered device
+#[derive(Debug)]
+pub struct AsyncDevice<C: AsyncModbusClient> {
+    /// This is the actual modbus client which implements the `AsyncModbusClient` trait.
+    pub client: C,
+    /// Client configuration
+    pub config: Config,
+    /// The Slave ID
+    pub slave_id: u8,
     /// Discovered models
     pub models: Models,
     /// Unknown models
     pub unknown_models: Vec<UnknownModel>,
 }
 
-impl<C: AsyncModbusClient> AsyncClient<C> {
-    /// Create new AsyncClient using a `AsyncModbusClient` and a `Config`
-    /// and perform "Device Information Model Discovery" as explained in
-    /// [SunSpec Device Information Specification V1.1](https://sunspec.org/wp-content/uploads/2022/05/SunSpec-Device-Information-Model-Specificiation-V1-1-final.pdf)
-    pub async fn new(mut client: C, config: Config) -> Result<Self, DiscoveryError> {
-        let discovery_result = discover_models(
-            &mut client,
-            &config.discovery_addresses,
-            config.read_timeout,
-        )
-        .await?;
-        Ok(Self {
-            client,
-            config,
-            models: discovery_result.models,
-            unknown_models: discovery_result.unknown_models,
-        })
-    }
+impl<C: AsyncModbusClient> AsyncDevice<C> {
     /// Read model data from modbus
     ///
     /// Note: Some models are too big to be fetched in a single request
     ///       and multiple read_holding_registers calls will be issued.
-    pub async fn read_model<M: Model>(&mut self) -> Result<M, ReadModelError> {
+    pub async fn read_model<M: Model>(&self) -> Result<M, ReadModelError> {
         let addr = M::addr(&self.models);
         read_model(
-            &mut self.client,
+            &self.client,
+            self.slave_id,
             addr,
             self.config.max_read_length,
             self.config.read_timeout,
@@ -56,12 +93,13 @@ impl<C: AsyncModbusClient> AsyncClient<C> {
     /// `read_model` is more efficient when loading multiple
     /// points from a single model.
     pub async fn read_point<M: Model, T: Value>(
-        &mut self,
+        &self,
         point: Point<M, T>,
     ) -> Result<T, ReadPointError> {
         let model_addr = M::addr(&self.models);
         read_point(
-            &mut self.client,
+            &self.client,
+            self.slave_id,
             model_addr,
             point,
             self.config.read_timeout,
@@ -70,13 +108,14 @@ impl<C: AsyncModbusClient> AsyncClient<C> {
     }
     /// Write data for a single point
     pub async fn write_point<M: Model, T: Value>(
-        &mut self,
+        &self,
         point: Point<M, T>,
         value: T,
     ) -> Result<(), WritePointError> {
         let model_addr = M::addr(&self.models);
         write_point(
-            &mut self.client,
+            &self.client,
+            self.slave_id,
             model_addr,
             point,
             value,
@@ -87,38 +126,55 @@ impl<C: AsyncModbusClient> AsyncClient<C> {
 }
 
 /// Async Modbus client
-pub trait AsyncModbusClient {
+pub trait AsyncModbusClient: Sync + Clone {
     /// Read registers from Modbus device
     fn read_registers(
-        &mut self,
+        &self,
+        slave_id: u8,
         addr: u16,
         len: u16,
     ) -> impl Future<Output = Result<Vec<u16>, ModbusError>> + Send;
     /// Write registers to Modbus device
     fn write_registers(
-        &mut self,
+        &self,
+        slave_id: u8,
         addr: u16,
         data: &[u16],
     ) -> impl Future<Output = Result<(), ModbusError>> + Send;
 }
 
+pub trait IntoAsyncModbusClient<C: AsyncModbusClient> {
+    fn into_async_modbus_client(self) -> C;
+}
+
+impl<C: AsyncModbusClient> IntoAsyncModbusClient<C> for C {
+    fn into_async_modbus_client(self) -> C {
+        self
+    }
+}
+
 async fn read_holding_registers_array<const CNT: usize>(
-    client: &mut impl AsyncModbusClient,
+    client: &impl AsyncModbusClient,
+    slave_id: u8,
     addr: u16,
 ) -> Result<[u16; CNT], ModbusError> {
     // Unwrap is fine here as read_holding_registers is guaranteed to
     // return the right amount of words.
-    client.read_registers(addr, CNT as u16).await.map(|words| {
-        words
-            .try_into()
-            .expect("read_holding_registers returned the wrong amount of words")
-    })
+    client
+        .read_registers(slave_id, addr, CNT as u16)
+        .await
+        .map(|words| {
+            words
+                .try_into()
+                .expect("read_holding_registers returned the wrong amount of words")
+        })
 }
 
 /// This function implements the "Device Information Model Discovery"
 /// as explained in [SunSpec Device Information Specification V1.1](https://sunspec.org/wp-content/uploads/2022/05/SunSpec-Device-Information-Model-Specificiation-V1-1-final.pdf)
 async fn discover_models(
-    client: &mut impl AsyncModbusClient,
+    client: &impl AsyncModbusClient,
+    slave_id: u8,
     discovery_addresses: &[u16],
     read_timeout: Option<Duration>,
 ) -> Result<DiscoveryResult, DiscoveryError> {
@@ -127,7 +183,7 @@ async fn discover_models(
     for &addr in discovery_addresses.iter() {
         // TODO add timeout
         match apply_timeout(
-            read_holding_registers_array::<2>(client, addr),
+            read_holding_registers_array::<2>(client, slave_id, addr),
             read_timeout,
         )
         .await
@@ -154,7 +210,7 @@ async fn discover_models(
 
     loop {
         let res = apply_timeout(
-            read_holding_registers_array::<2>(client, addr),
+            read_holding_registers_array::<2>(client, slave_id, addr),
             read_timeout,
         )
         .await;
@@ -197,13 +253,18 @@ async fn discover_models(
 /// Note: Some models are too big to be fetched in a single request
 ///       and multiple read_holding_registers calls will be issued.
 async fn read_model<M: Model>(
-    client: &mut impl AsyncModbusClient,
+    client: &impl AsyncModbusClient,
+    slave_id: u8,
     addr: ModelAddr<M>,
     max_read_length: u16,
     read_timeout: Option<Duration>,
 ) -> Result<M, ReadModelError> {
     let data = if addr.len <= max_read_length {
-        apply_timeout(client.read_registers(addr.addr, addr.len), read_timeout).await?
+        apply_timeout(
+            client.read_registers(slave_id, addr.addr, addr.len),
+            read_timeout,
+        )
+        .await?
     } else {
         let mut data: Vec<u16> = Vec::with_capacity(addr.len.into());
         let begin = addr.addr;
@@ -214,6 +275,7 @@ async fn read_model<M: Model>(
         for range in ranges {
             let chunk = apply_timeout(
                 client.read_registers(
+                    slave_id,
                     range.start,
                     range
                         .len()
@@ -234,13 +296,14 @@ async fn read_model<M: Model>(
 /// `read_model` is more efficient when loading multiple
 /// points from a single model.
 async fn read_point<M: Model, T: Value>(
-    client: &mut impl AsyncModbusClient,
+    client: &impl AsyncModbusClient,
+    slave_id: u8,
     model_addr: ModelAddr<M>,
     point: Point<M, T>,
     read_timeout: Option<Duration>,
 ) -> Result<T, ReadPointError> {
     let data = apply_timeout(
-        client.read_registers(model_addr.addr + point.offset, point.length),
+        client.read_registers(slave_id, model_addr.addr + point.offset, point.length),
         read_timeout,
     )
     .await?;
@@ -249,7 +312,8 @@ async fn read_point<M: Model, T: Value>(
 
 /// Write data for a single point
 async fn write_point<M: Model, T: Value>(
-    client: &mut impl AsyncModbusClient,
+    client: &impl AsyncModbusClient,
+    slave_id: u8,
     model_addr: ModelAddr<M>,
     point: Point<M, T>,
     value: T,
@@ -260,7 +324,7 @@ async fn write_point<M: Model, T: Value>(
         return Err(WritePointError::ValueTooLarge);
     }
     apply_timeout(
-        client.write_registers(model_addr.addr + point.offset, &data),
+        client.write_registers(slave_id, model_addr.addr + point.offset, &data),
         write_timeout,
     )
     .await?;

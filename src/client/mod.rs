@@ -11,4 +11,4 @@ pub use config::{
 };
 pub use discovery::{DiscoveryError, DiscoveryResult, UnknownModel};
 pub use error::{ModbusError, ReadModelError, ReadPointError, WritePointError};
-pub use r#async::{AsyncClient, AsyncModbusClient};
+pub use r#async::{AsyncClient, AsyncDevice, AsyncModbusClient};
