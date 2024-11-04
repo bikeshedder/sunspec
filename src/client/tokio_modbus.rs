@@ -1,16 +1,43 @@
 //! This module contains the actual communication methods via
 //! `tokio-modbus`.
 
-use tokio_modbus::client::{Context, Reader, Writer};
+use std::sync::Arc;
 
-use super::{AsyncModbusClient, ModbusError};
+use tokio::sync::Mutex;
+use tokio_modbus::{
+    client::{Context, Reader, Writer},
+    slave::SlaveContext,
+    Slave,
+};
 
-impl AsyncModbusClient for Context {
-    async fn read_registers(&mut self, addr: u16, len: u16) -> Result<Vec<u16>, ModbusError> {
-        Ok(self.read_holding_registers(addr, len).await??)
+use super::{r#async::IntoAsyncModbusClient, AsyncModbusClient, ModbusError};
+
+impl AsyncModbusClient for Arc<Mutex<Context>> {
+    async fn read_registers(
+        &self,
+        slave_id: u8,
+        addr: u16,
+        len: u16,
+    ) -> Result<Vec<u16>, ModbusError> {
+        let mut ctx = self.lock().await;
+        ctx.set_slave(Slave(slave_id));
+        Ok(ctx.read_holding_registers(addr, len).await??)
     }
-    async fn write_registers(&mut self, addr: u16, data: &[u16]) -> Result<(), ModbusError> {
-        Ok(self.write_multiple_registers(addr, data).await??)
+    async fn write_registers(
+        &self,
+        slave_id: u8,
+        addr: u16,
+        data: &[u16],
+    ) -> Result<(), ModbusError> {
+        let mut ctx = self.lock().await;
+        ctx.set_slave(Slave(slave_id));
+        Ok(ctx.write_multiple_registers(addr, data).await??)
+    }
+}
+
+impl IntoAsyncModbusClient<Arc<Mutex<Context>>> for Context {
+    fn into_async_modbus_client(self) -> Arc<Mutex<Context>> {
+        Arc::new(Mutex::new(self))
     }
 }
 
