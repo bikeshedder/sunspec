@@ -137,6 +137,7 @@ async fn discover_models(
                 break;
             }
             Ok(_) => continue,
+            Err(ModbusError::Timeout) => continue,
             Err(ModbusError::IllegalDataAddress) => continue,
             Err(e) => return Err(e.into()),
         }
