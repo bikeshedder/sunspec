@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix timeout handling in model discovery
 
+### Changed
+
+- Change default order of discovery addresses to `[40000, 0, 50000]`. A lot
+  of devices timeout at address `0` and the Python implementation from the
+  sunspec Alliance uses the same order: [SunSpecModbusClientDevice.base_addr_list]
+
+[SunSpecModbusClientDevice.base_addr_list]: https://github.com/sunspec/pysunspec2/blob/7d27273e8568c48e54186ce7bfea3f4573b21deb/sunspec2/modbus/client.py#L193
+
 ### [0.7.0] - 2024-10-26
 
 ### Added
@@ -30,13 +38,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.6.1] - 2024-10-18
 
-### Fixed 
+### Fixed
 
 - Add `+ Sync` to `CommunicationError::Modbus` variant
 
 ## [0.6.0] - 2024-10-17
 
-### Fixed 
+### Fixed
 
 - Add `+ Send` to `CommunicationError::Modbus` variant
 
