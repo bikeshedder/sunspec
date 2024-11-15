@@ -212,7 +212,7 @@ pub struct Models {
     pub m145: crate::ModelAddr<model145::Model145>,
     /// Multiple MPPT Inverter Extension Model
     pub m160: crate::ModelAddr<model160::Model160>,
-    /// Meter (Single Phase)single phase (AN or AB) meter
+    /// Meter (Single Phase) single phase (AN or AB) meter
     pub m201: crate::ModelAddr<model201::Model201>,
     /// split single phase (ABN) meter
     pub m202: crate::ModelAddr<model202::Model202>,

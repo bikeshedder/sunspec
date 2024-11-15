@@ -43,7 +43,7 @@ pub struct Model701 {
     ///
     /// Total active power. Active power is positive for DER generation and negative for absorption.
     ///
-    /// Comments: Summary
+    /// Comments: Scale Factors
     pub w: Option<i16>,
     /// Apparent Power
     ///

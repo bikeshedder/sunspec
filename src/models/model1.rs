@@ -28,6 +28,8 @@ pub struct Model1 {
     /// Device Address
     ///
     /// Modbus device address
+    ///
+    /// Detail: This point is mandatory for all SunSpec RTU devices and, for those devices, they must support values from 1-247.
     pub da: Option<u16>,
 }
 #[allow(missing_docs)]

@@ -58,26 +58,36 @@ pub struct Model702 {
     /// AC Voltage Nominal Rating
     ///
     /// AC voltage nominal rating.
+    ///
+    /// Detail: Voltages are LN for single phase DER (e.g. 120 V nominal), LL for split phase DER (e.g. 240 V nominal), and LL for three phase DER (e.g., 480 V nominal).
     pub v_nom_rtg: Option<u16>,
     /// AC Voltage Max Rating
     ///
     /// AC voltage maximum rating.
+    ///
+    /// Detail: Voltages are LN for single phase DER (e.g. 120 V nominal), LL for split phase DER (e.g. 240 V nominal), and LL for three phase DER (e.g., 480 V nominal).
     pub v_max_rtg: Option<u16>,
     /// AC Voltage Min Rating
     ///
     /// AC voltage minimum rating.
+    ///
+    /// Detail: Voltages are LN for single phase DER (e.g. 120 V nominal), LL for split phase DER (e.g. 240 V nominal), and LL for three phase DER (e.g., 480 V nominal).
     pub v_min_rtg: Option<u16>,
     /// AC Current Max Rating
     ///
     /// AC current maximum rating in amps.
     pub a_max_rtg: Option<u16>,
-    /// PF Over-Excited Rating
+    /// PF Over-Excited Rating (Unused)
     ///
-    /// Power factor over-excited rating.
+    /// Unused. Please use WOvrExtRtgPF.
+    ///
+    /// Detail: This point is duplicative of WOvrExtRtgPF.
     pub pf_ovr_ext_rtg: Option<u16>,
-    /// PF Under-Excited Rating
+    /// PF Under-Excited Rating (Unused)
     ///
-    /// Power factor under-excited rating.
+    /// Unused. Please use WUndExtRtgPF.
+    ///
+    /// Detail: This point is duplicative of WUndExtRtgPF.
     pub pf_und_ext_rtg: Option<u16>,
     /// Reactive Susceptance
     ///
@@ -152,26 +162,36 @@ pub struct Model702 {
     /// Nominal AC Voltage Setting
     ///
     /// Nominal AC voltage setting.
+    ///
+    /// Detail: Voltages are LN for single phase DER (e.g. 120 V nominal), LL for split phase DER (e.g. 240 V nominal), and LL for three phase DER (e.g., 480 V nominal).
     pub v_nom: Option<u16>,
     /// AC Voltage Max Setting
     ///
     /// AC voltage maximum setting used to adjust AC voltage maximum rating.
+    ///
+    /// Detail: Voltages are LN for single phase DER (e.g. 120 V nominal), LL for split phase DER (e.g. 240 V nominal), and LL for three phase DER (e.g., 480 V nominal).
     pub v_max: Option<u16>,
     /// AC Voltage Min Setting
     ///
     /// AC voltage minimum setting used to adjust AC voltage minimum rating.
+    ///
+    /// Detail: Voltages are LN for single phase DER (e.g. 120 V nominal), LL for split phase DER (e.g. 240 V nominal), and LL for three phase DER (e.g., 480 V nominal).
     pub v_min: Option<u16>,
     /// AC Current Max Setting
     ///
     /// Maximum AC current setting used to adjust maximum AC current rating.
     pub a_max: Option<u16>,
-    /// PF Over-Excited Setting
+    /// PF Over-Excited Setting (Unused)
     ///
-    /// Power factor over-excited setting.
+    /// Unused. Please use WOvrExtPF.
+    ///
+    /// Detail: This point is duplicative of WOvrExtPF.
     pub pf_ovr_ext: Option<u16>,
-    /// PF Under-Excited Setting
+    /// PF Under-Excited Setting (Unused)
     ///
-    /// Power factor under-excited setting.
+    /// Unused. Please use WUndExtPF.
+    ///
+    /// Detail: This point is duplicative of WUndExtPF.
     pub pf_und_ext: Option<u16>,
     /// Intentional Island Categories
     ///

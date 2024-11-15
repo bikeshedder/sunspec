@@ -1,5 +1,5 @@
-//! Meter (Single Phase)single phase (AN or AB) meter
-/// Meter (Single Phase)single phase (AN or AB) meter
+//! Meter (Single Phase) single phase (AN or AB) meter
+/// Meter (Single Phase) single phase (AN or AB) meter
 ///
 /// Include this model for single phase (AN or AB) metering
 #[derive(Debug)]

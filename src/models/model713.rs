@@ -16,6 +16,8 @@ pub struct Model713 {
     /// State of Charge
     ///
     /// State of charge of the DER storage.
+    ///
+    /// Detail: SOC shall be fixed to 0% for DER without storage capabilities.
     pub soc: Option<u16>,
     /// State of Health
     ///
