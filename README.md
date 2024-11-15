@@ -50,7 +50,7 @@ use sunspec::{
     models::{model1::Model1, model103::Model103},
 };
 use tokio::time::sleep;
-use tokio_modbus::{client::tcp::connect_slave, Slave};
+use tokio_modbus::client::tcp::connect;
 
 #[derive(Parser)]
 struct Args {
@@ -62,12 +62,10 @@ struct Args {
 async fn main() -> Result<(), Box<dyn Error>> {
     let args = Args::parse();
 
-    let mut client = AsyncClient::new(
-        connect_slave(args.addr, Slave(args.device_id)).await?,
-        Config::default(),
-    ).await?;
+    let client = AsyncClient::new(connect(args.addr).await?, Config::default());
+    let device = client.device(args.device_id).await?;
 
-    let m1: Model1 = client.read_model().await?;
+    let m1: Model1 = device.read_model().await?;
 
     println!("Manufacturer: {}", m1.mn);
     println!("Model: {}", m1.md);
@@ -76,7 +74,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     println!(
         "Supported models: {}",
-        client
+        device
             .models
             .supported_model_ids()
             .iter()
@@ -85,7 +83,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
 
     loop {
-        let m103: Model103 = client.read_model().await?;
+        let m103: Model103 = device.read_model().await?;
         let w = m103.w as f32 * 10f32.powf(m103.w_sf.into());
         let wh = m103.wh as f32 * 10f32.powf(m103.wh_sf.into());
         println!("{:12.3} kWh {:9.3} kW", wh / 1000.0, w / 1000.0,);
