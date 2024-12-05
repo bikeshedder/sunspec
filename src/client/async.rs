@@ -150,16 +150,28 @@ async fn discover_models(
 
     let mut models = Models::default();
     let mut unknown_models: Vec<UnknownModel> = vec![];
+    let mut model_count = 0;
 
     loop {
-        let [model_id, len] = apply_timeout(
-            read_holding_registers_array::<2>(client, addr),
-            read_timeout,
-        )
-        .await?;
+        let res = apply_timeout(read_holding_registers_array::<2>(client, addr), read_timeout).await;
+        let [model_id, len] = match res {
+            Ok(d) => d,
+            Err(ModbusError::IllegalDataAddress) => {
+                if model_count > 0 {
+                    [0xFFFF, 0] //simulate end for devices without end model
+                } else {
+                    return Err(DiscoveryError::ModbusError(ModbusError::IllegalDataAddress));
+                }
+            }
+            Err(e) => return Err(DiscoveryError::ModbusError(e)),
+        };
+
         if model_id == 0xFFFF {
             break;
         }
+
+        model_count += 1;
+
         addr = addr.checked_add(2).ok_or(DiscoveryError::AddressOverflow)?;
         if !models.set_addr(model_id, addr, len) {
             unknown_models.push(UnknownModel {
