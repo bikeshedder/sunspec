@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update `tokio-modbus` to version `0.16`
+- Update `thiserror` to version `2.0`
+
 ## [0.7.2] - 2024-12-10
 
 ### Changed
