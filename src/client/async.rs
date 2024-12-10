@@ -153,22 +153,23 @@ async fn discover_models(
     let mut model_count = 0;
 
     loop {
-        let res = apply_timeout(read_holding_registers_array::<2>(client, addr), read_timeout).await;
-        let [model_id, len] = match res {
-            Ok(d) => d,
-            Err(ModbusError::IllegalDataAddress) => {
-                if model_count > 0 {
-                    [0xFFFF, 0] //simulate end for devices without end model
-                } else {
-                    return Err(DiscoveryError::ModbusError(ModbusError::IllegalDataAddress));
-                }
-            }
-            Err(e) => return Err(DiscoveryError::ModbusError(e)),
-        };
+        let res = apply_timeout(
+            read_holding_registers_array::<2>(client, addr),
+            read_timeout,
+        )
+        .await;
 
-        if model_id == 0xFFFF {
-            break;
-        }
+        let [model_id, len] = match res {
+            // End model found. Exit the loop.
+            Ok([0xFFFF, _]) => break,
+            // Some devices like SMA STP10.0-3SE-40 do not have an end model
+            // and discovery fails with an IllegalDataAddress modbus error.
+            // Work around that by pretending an end model was found when an
+            // IllegalDataAddress error occurs during discovery and at least
+            // one valid model has been found before.
+            Err(ModbusError::IllegalDataAddress) if model_count > 0 => break,
+            x => x,
+        }?;
 
         model_count += 1;
 
