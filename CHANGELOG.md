@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add workaround to model discovery for devices without end model (e.g. some SMA inverters)
+
 ### [0.7.1] - 2024-11-06
 
 ### Fixed
@@ -17,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Change default order of discovery addresses to `[40000, 0, 50000]`. A lot
   of devices timeout at address `0` and the Python implementation from the
-  sunspec Alliance uses the same order: [SunSpecModbusClientDevice.base_addr_list]
+  sunspec Alliance uses the same order: [SunSpecModbusClientDevice.base\_addr\_list]
 
 [SunSpecModbusClientDevice.base_addr_list]: https://github.com/sunspec/pysunspec2/blob/7d27273e8568c48e54186ce7bfea3f4573b21deb/sunspec2/modbus/client.py#L193
 
