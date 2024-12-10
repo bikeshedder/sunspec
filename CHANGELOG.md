@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.2] - 2024-12-10
+
+### Changed
+
 - Add workaround to model discovery for devices without end model (e.g. some SMA inverters)
 
-### [0.7.1] - 2024-11-06
+## [0.7.1] - 2024-11-06
 
 ### Fixed
 
@@ -125,7 +129,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First release
 
-[unreleased]: https://github.com/bikeshedder/sunspec/compare/v0.7.1...HEAD
+[unreleased]: https://github.com/bikeshedder/sunspec/compare/v0.7.2...HEAD
+[0.7.1]: https://github.com/bikeshedder/sunspec/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/bikeshedder/sunspec/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/bikeshedder/sunspec/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/bikeshedder/sunspec/compare/v0.6.0...v0.6.1
