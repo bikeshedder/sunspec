@@ -7,38 +7,42 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'sunspec-lib-test'",
+            "name": "Debug executable 'model701_tls'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=sunspec-lib-test",
-                    "--package=sunspec-lib-test"
+                    "--bin=model701_tls",
+                    "--package=model701_tls"
                 ],
                 "filter": {
-                    "name": "sunspec-lib-test",
+                    "name": "model701_tls",
                     "kind": "bin"
                 }
             },
-            "args": [],
+            "args": [
+                "127.0.0.1:8802",
+                "1"
+            ],
             "cwd": "${workspaceFolder}"
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'sunspec-lib-test'",
+            "name": "Debug unit tests in executable 'model701_tls'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=sunspec-lib-test",
-                    "--package=sunspec-lib-test"
+                    "--bin=model701_tls",
+                    "--package=model701_tls"
                 ],
                 "filter": {
-                    "name": "sunspec-lib-test",
+                    "name": "model701_tls",
                     "kind": "bin"
                 }
             },
-            "args": [],
+            "args": [
+            ],
             "cwd": "${workspaceFolder}"
         }
     ]
