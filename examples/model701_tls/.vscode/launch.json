@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'model701_tls'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=model701_tls",
+                    "--package=model701_tls"
+                ],
+                "filter": {
+                    "name": "model701_tls",
+                    "kind": "bin"
+                }
+            },
+            "args": [
+                "127.0.0.1:8802",
+                "1"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'model701_tls'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=model701_tls",
+                    "--package=model701_tls"
+                ],
+                "filter": {
+                    "name": "model701_tls",
+                    "kind": "bin"
+                }
+            },
+            "args": [
+            ],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
