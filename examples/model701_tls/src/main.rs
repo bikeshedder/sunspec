@@ -20,6 +20,7 @@ use sunspec::{
 use tokio::time::sleep;
 use tokio_modbus::client::{Context, tcp};
 use tokio::net::TcpStream;
+use rustls::crypto::{CryptoProvider, aws_lc_rs as provider};
 
 #[derive(Parser)]
 struct Args {
@@ -117,10 +118,24 @@ async fn connect_tls(socket_addr: SocketAddr) -> io::Result<Context> {
     let certs = load_certs(cert_path)?;
     let key = load_keys(key_path, None)?;
 
-    let config = tokio_rustls::rustls::ClientConfig::builder()
-        .with_root_certificates(root_cert_store)
-        .with_client_auth_cert(certs, key)
-        .map_err(|err| io::Error::new(io::ErrorKind::InvalidInput, err))?;
+    let mut config = tokio_rustls::rustls::ClientConfig::builder_with_provider(
+        CryptoProvider {
+            cipher_suites:
+            vec![provider::cipher_suite::TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256],
+            kx_groups: vec![provider::kx_group::SECP256R1],
+            ..provider::default_provider()
+        }
+        .into()
+    )
+    .with_protocol_versions(&[&rustls::version::TLS12])
+    .map_err(|err| io::Error::new(io::ErrorKind::InvalidInput, err))?
+    .with_root_certificates(root_cert_store)
+    .with_client_auth_cert(certs, key)
+    .map_err(|err| io::Error::new(io::ErrorKind::InvalidInput, err))?;
+
+    config.resumption = config.resumption
+        .tls12_resumption(rustls::client::Tls12Resumption::SessionIdOnly);
+
     let connector = TlsConnector::from(Arc::new(config));
 
     let stream = TcpStream::connect(&socket_addr).await?;
