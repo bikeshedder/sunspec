@@ -1,5 +1,9 @@
 //! DER Frequency Droop
+/// Type alias for [`DerFreqDroop`].
 pub type Model711 = DerFreqDroop;
+struct Counts {
+    n_ctl: u16,
+}
 /// DER Frequency Droop
 ///
 /// DER Frequency Droop model.
@@ -70,9 +74,14 @@ impl crate::Group for DerFreqDroop {
     const LEN: u16 = 12;
 }
 impl DerFreqDroop {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let counts = Counts {
+            n_ctl: Self::N_CTL.from_data(data)?,
+        };
+        let (nested_data, ctl) = Ctl::parse_multiple(nested_data, &counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 ena: Self::ENA.from_data(data)?,
                 adpt_ctl_req: Self::ADPT_CTL_REQ.from_data(data)?,
@@ -84,15 +93,9 @@ impl DerFreqDroop {
                 db_sf: Self::DB_SF.from_data(data)?,
                 k_sf: Self::K_SF.from_data(data)?,
                 rsp_tms_sf: Self::RSP_TMS_SF.from_data(data)?,
-                ctl: Vec::new(),
+                ctl,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.ctl) = Ctl::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 /// DER Frequency Droop Module Enable
@@ -238,9 +241,10 @@ impl crate::Group for Ctl {
     const LEN: u16 = 10;
 }
 impl Ctl {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 db_of: Self::DB_OF.from_data(data)?,
                 db_uf: Self::DB_UF.from_data(data)?,
@@ -252,24 +256,16 @@ impl Ctl {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerFreqDroop,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerFreqDroop,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_ctl {
-            let group;
-            (data, group) = Ctl::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) =
+            (0..counts.n_ctl).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Ctl::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

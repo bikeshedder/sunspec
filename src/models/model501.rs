@@ -1,4 +1,5 @@
 //! Solar Module
+/// Type alias for [`SolarModuleFloat`].
 pub type Model501 = SolarModuleFloat;
 /// Solar Module
 ///
@@ -101,9 +102,10 @@ impl crate::Group for SolarModuleFloat {
     const LEN: u16 = 31;
 }
 impl SolarModuleFloat {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 stat: Self::STAT.from_data(data)?,
                 stat_vend: Self::STAT_VEND.from_data(data)?,
@@ -124,11 +126,6 @@ impl SolarModuleFloat {
                 in_w: Self::IN_W.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Status

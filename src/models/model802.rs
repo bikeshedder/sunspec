@@ -1,4 +1,5 @@
 //! Battery Base Model
+/// Type alias for [`Battery`].
 pub type Model802 = Battery;
 /// Battery Base Model
 #[derive(Debug)]
@@ -311,9 +312,10 @@ impl crate::Group for Battery {
     const LEN: u16 = 62;
 }
 impl Battery {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 ah_rtg: Self::AH_RTG.from_data(data)?,
                 wh_rtg: Self::WH_RTG.from_data(data)?,
@@ -373,11 +375,6 @@ impl Battery {
                 w_sf: Self::W_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Charge Status

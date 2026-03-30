@@ -1,4 +1,5 @@
 //! DER AC Measurement
+/// Type alias for [`DerMeasureAc`].
 pub type Model701 = DerMeasureAc;
 /// DER AC Measurement
 ///
@@ -390,9 +391,10 @@ impl crate::Group for DerMeasureAc {
     const LEN: u16 = 153;
 }
 impl DerMeasureAc {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 ac_type: Self::AC_TYPE.from_data(data)?,
                 st: Self::ST.from_data(data)?,
@@ -466,11 +468,6 @@ impl DerMeasureAc {
                 mn_alrm_info: Self::MN_ALRM_INFO.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// AC Wiring Type

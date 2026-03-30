@@ -1,4 +1,5 @@
 //! Tracker Controller DRAFT 2
+/// Type alias for [`TrackerController`].
 pub type Model601 = TrackerController;
 /// Tracker Controller DRAFT 2
 ///
@@ -77,9 +78,11 @@ impl crate::Group for TrackerController {
     const LEN: u16 = 26;
 }
 impl TrackerController {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, tracker) = Tracker::parse_multiple(nested_data)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 nam: Self::NAM.from_data(data)?,
                 typ: Self::TYP.from_data(data)?,
@@ -92,15 +95,9 @@ impl TrackerController {
                 glbl_alm: Self::GLBL_ALM.from_data(data)?,
                 dgr_sf: Self::DGR_SF.from_data(data)?,
                 n: Self::N.from_data(data)?,
-                tracker: Vec::new(),
+                tracker,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.tracker) = Tracker::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 /// Type
@@ -289,9 +286,10 @@ impl crate::Group for Tracker {
     const LEN: u16 = 22;
 }
 impl Tracker {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 id: Self::ID.from_data(data)?,
                 el_trgt: Self::EL_TRGT.from_data(data)?,
@@ -305,24 +303,21 @@ impl Tracker {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &TrackerController,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &TrackerController,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..0 {
-            let group;
-            (data, group) = Tracker::parse_group(data, model)?;
-            groups.push(group);
+    fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+        let group_len = usize::from(<Tracker as crate::Group>::LEN);
+        if group_len == 0 {
+            return Ok((data, Vec::new()));
         }
+        if data.len() % group_len != 0 {
+            return Err(crate::DecodeError::OutOfBounds);
+        }
+        let group_count = data.len() / group_len;
+        let (data, groups) =
+            (0..group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Tracker::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

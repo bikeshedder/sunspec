@@ -1,5 +1,9 @@
 //! Lithium-Ion Battery Bank Model
+/// Type alias for [`LithiumIonBank`].
 pub type Model803 = LithiumIonBank;
+struct Counts {
+    n_str: u16,
+}
 /// Lithium-Ion Battery Bank Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -150,9 +154,14 @@ impl crate::Group for LithiumIonBank {
     const LEN: u16 = 26;
 }
 impl LithiumIonBank {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let counts = Counts {
+            n_str: Self::N_STR.from_data(data)?,
+        };
+        let (nested_data, string) = String::parse_multiple(nested_data, &counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 n_str: Self::N_STR.from_data(data)?,
                 n_str_con: Self::N_STR_CON.from_data(data)?,
@@ -180,15 +189,9 @@ impl LithiumIonBank {
                 soh_sf: Self::SOH_SF.from_data(data)?,
                 soc_sf: Self::SOC_SF.from_data(data)?,
                 v_sf: Self::V_SF.from_data(data)?,
-                string: Vec::new(),
+                string,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.string) = String::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 #[allow(missing_docs)]
@@ -330,9 +333,10 @@ impl crate::Group for String {
     const LEN: u16 = 32;
 }
 impl String {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 str_n_mod: Self::STR_N_MOD.from_data(data)?,
                 str_st: Self::STR_ST.from_data(data)?,
@@ -361,24 +365,16 @@ impl String {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &LithiumIonBank,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &LithiumIonBank,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_str {
-            let group;
-            (data, group) = String::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) =
+            (0..counts.n_str).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = String::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

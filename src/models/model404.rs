@@ -1,4 +1,5 @@
 //! String Combiner (Advanced)
+/// Type alias for [`StringCombinerAdvancedInputs`].
 pub type Model404 = StringCombinerAdvancedInputs;
 /// String Combiner (Advanced)
 ///
@@ -103,9 +104,11 @@ impl crate::Group for StringCombinerAdvancedInputs {
     const LEN: u16 = 25;
 }
 impl StringCombinerAdvancedInputs {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, string) = String::parse_multiple(nested_data)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 dca_sf: Self::DCA_SF.from_data(data)?,
                 dc_ahr_sf: Self::DC_AHR_SF.from_data(data)?,
@@ -128,15 +131,9 @@ impl StringCombinerAdvancedInputs {
                 in_dcv_sf: Self::IN_DCV_SF.from_data(data)?,
                 in_dcw_sf: Self::IN_DCW_SF.from_data(data)?,
                 in_dc_wh_sf: Self::IN_DC_WH_SF.from_data(data)?,
-                string: Vec::new(),
+                string,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.string) = String::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -277,9 +274,10 @@ impl crate::Group for String {
     const LEN: u16 = 14;
 }
 impl String {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 in_id: Self::IN_ID.from_data(data)?,
                 in_evt: Self::IN_EVT.from_data(data)?,
@@ -294,24 +292,21 @@ impl String {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &StringCombinerAdvancedInputs,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &StringCombinerAdvancedInputs,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..0 {
-            let group;
-            (data, group) = String::parse_group(data, model)?;
-            groups.push(group);
+    fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+        let group_len = usize::from(<String as crate::Group>::LEN);
+        if group_len == 0 {
+            return Ok((data, Vec::new()));
         }
+        if data.len() % group_len != 0 {
+            return Err(crate::DecodeError::OutOfBounds);
+        }
+        let group_count = data.len() / group_len;
+        let (data, groups) =
+            (0..group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = String::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

@@ -1,4 +1,5 @@
 //! Flow Battery String Model
+/// Type alias for [`FlowBatteryString`].
 pub type Model807 = FlowBatteryString;
 /// Flow Battery String Model
 #[derive(Debug)]
@@ -169,9 +170,11 @@ impl crate::Group for FlowBatteryString {
     const LEN: u16 = 34;
 }
 impl FlowBatteryString {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, module) = Module::parse_multiple(nested_data)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 idx: Self::IDX.from_data(data)?,
                 n_mod: Self::N_MOD.from_data(data)?,
@@ -202,15 +205,9 @@ impl FlowBatteryString {
                 tmp_sf: Self::TMP_SF.from_data(data)?,
                 soc_sf: Self::SOC_SF.from_data(data)?,
                 ocv_sf: Self::OCV_SF.from_data(data)?,
-                module: Vec::new(),
+                module,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.module) = Module::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -477,9 +474,10 @@ impl crate::Group for Module {
     const LEN: u16 = 24;
 }
 impl Module {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 mod_idx: Self::MOD_IDX.from_data(data)?,
                 mod_n_stk: Self::MOD_N_STK.from_data(data)?,
@@ -504,24 +502,21 @@ impl Module {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &FlowBatteryString,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &FlowBatteryString,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..0 {
-            let group;
-            (data, group) = Module::parse_group(data, model)?;
-            groups.push(group);
+    fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+        let group_len = usize::from(<Module as crate::Group>::LEN);
+        if group_len == 0 {
+            return Ok((data, Vec::new()));
         }
+        if data.len() % group_len != 0 {
+            return Err(crate::DecodeError::OutOfBounds);
+        }
+        let group_count = data.len() / group_len;
+        let (data, groups) =
+            (0..group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Module::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

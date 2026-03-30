@@ -1,5 +1,9 @@
 //! Lithium-Ion String Model
+/// Type alias for [`LithiumIonString`].
 pub type Model804 = LithiumIonString;
+struct Counts {
+    n_mod: u16,
+}
 /// Lithium-Ion String Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
@@ -201,9 +205,15 @@ impl crate::Group for LithiumIonString {
     const LEN: u16 = 46;
 }
 impl LithiumIonString {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let counts = Counts {
+            n_mod: Self::N_MOD.from_data(data)?,
+        };
+        let (nested_data, lithium_ion_string_module) =
+            LithiumIonStringModule::parse_multiple(nested_data, &counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 idx: Self::IDX.from_data(data)?,
                 n_mod: Self::N_MOD.from_data(data)?,
@@ -240,16 +250,9 @@ impl LithiumIonString {
                 v_sf: Self::V_SF.from_data(data)?,
                 cell_v_sf: Self::CELL_V_SF.from_data(data)?,
                 mod_tmp_sf: Self::MOD_TMP_SF.from_data(data)?,
-                lithium_ion_string_module: Vec::new(),
+                lithium_ion_string_module,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.lithium_ion_string_module) =
-            LithiumIonStringModule::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -662,9 +665,10 @@ impl crate::Group for LithiumIonStringModule {
     const LEN: u16 = 16;
 }
 impl LithiumIonStringModule {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 mod_n_cell: Self::MOD_N_CELL.from_data(data)?,
                 mod_soc: Self::MOD_SOC.from_data(data)?,
@@ -682,24 +686,16 @@ impl LithiumIonStringModule {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &LithiumIonString,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &LithiumIonString,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_mod {
-            let group;
-            (data, group) = LithiumIonStringModule::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) =
+            (0..counts.n_mod).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = LithiumIonStringModule::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

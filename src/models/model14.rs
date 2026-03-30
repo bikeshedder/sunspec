@@ -53,9 +53,10 @@ impl crate::Group for Model14 {
     const LEN: u16 = 52;
 }
 impl Model14 {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 nam: Self::NAM.from_data(data)?,
                 cap: Self::CAP.from_data(data)?,
@@ -67,11 +68,6 @@ impl Model14 {
                 pw: Self::PW.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {

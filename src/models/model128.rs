@@ -1,4 +1,5 @@
 //! Dynamic Reactive Current
+/// Type alias for [`ReactiveCurrent`].
 pub type Model128 = ReactiveCurrent;
 /// Dynamic Reactive Current
 ///
@@ -81,9 +82,10 @@ impl crate::Group for ReactiveCurrent {
     const LEN: u16 = 14;
 }
 impl ReactiveCurrent {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 ar_gra_mod: Self::AR_GRA_MOD.from_data(data)?,
                 ar_gra_sag: Self::AR_GRA_SAG.from_data(data)?,
@@ -100,11 +102,6 @@ impl ReactiveCurrent {
                 v_ref_pct_sf: Self::V_REF_PCT_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// ArGraMod

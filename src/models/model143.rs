@@ -1,4 +1,5 @@
 //! LFRTX
+/// Type alias for [`Lfrtx`].
 pub type Model143 = Lfrtx;
 /// LFRTX
 ///
@@ -72,9 +73,11 @@ impl crate::Group for Lfrtx {
     const LEN: u16 = 10;
 }
 impl Lfrtx {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, curve) = Curve::parse_multiple(nested_data)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 act_crv: Self::ACT_CRV.from_data(data)?,
                 mod_ena: Self::MOD_ENA.from_data(data)?,
@@ -86,15 +89,9 @@ impl Lfrtx {
                 tms_sf: Self::TMS_SF.from_data(data)?,
                 hz_sf: Self::HZ_SF.from_data(data)?,
                 crv_type: Self::CRV_TYPE.from_data(data)?,
-                curve: Vec::new(),
+                curve,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.curve) = Curve::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -393,9 +390,10 @@ impl crate::Group for Curve {
     const LEN: u16 = 50;
 }
 impl Curve {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 act_pt: Self::ACT_PT.from_data(data)?,
                 tms1: Self::TMS1.from_data(data)?,
@@ -443,24 +441,21 @@ impl Curve {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &Lfrtx,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &Lfrtx,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..0 {
-            let group;
-            (data, group) = Curve::parse_group(data, model)?;
-            groups.push(group);
+    fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+        let group_len = usize::from(<Curve as crate::Group>::LEN);
+        if group_len == 0 {
+            return Ok((data, Vec::new()));
         }
+        if data.len() % group_len != 0 {
+            return Err(crate::DecodeError::OutOfBounds);
+        }
+        let group_count = data.len() / group_len;
+        let (data, groups) =
+            (0..group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Curve::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

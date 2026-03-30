@@ -1,5 +1,10 @@
 //! AC Simulator Control Interface
+/// Type alias for [`AcSimInterface`].
 pub type Model64411 = AcSimInterface;
+struct Counts {
+    n_prof: u16,
+    n_pt: u16,
+}
 /// AC Simulator Control Interface
 ///
 /// A generic AC simulator/power supply control interface for DER electrical testing.
@@ -260,9 +265,15 @@ impl crate::Group for AcSimInterface {
     const LEN: u16 = 1396;
 }
 impl AcSimInterface {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let counts = Counts {
+            n_prof: Self::N_PROF.from_data(data)?,
+            n_pt: Self::N_PT.from_data(data)?,
+        };
+        let (nested_data, prof) = Prof::parse_multiple(nested_data, &counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 phases: Self::PHASES.from_data(data)?,
                 phase_angle: Self::PHASE_ANGLE.from_data(data)?,
@@ -312,15 +323,9 @@ impl AcSimInterface {
                 hz_slew_sf: Self::HZ_SLEW_SF.from_data(data)?,
                 v_slew_sf: Self::V_SLEW_SF.from_data(data)?,
                 thd_sf: Self::THD_SF.from_data(data)?,
-                prof: Vec::new(),
+                prof,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.prof) = Prof::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 /// Output State
@@ -559,35 +564,31 @@ impl crate::Group for Prof {
     const LEN: u16 = 33;
 }
 impl Prof {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group<'a>(
+        data: &'a [u16],
+        counts: &Counts,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 name: Self::NAME.from_data(data)?,
                 act_pt: Self::ACT_PT.from_data(data)?,
-                pt: Vec::new(),
+                pt,
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &AcSimInterface,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.pt) = Pt::parse_multiple(data, model)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &AcSimInterface,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_prof {
-            let group;
-            (data, group) = Prof::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) =
+            (0..counts.n_prof).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Prof::parse_group(data, counts)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }
@@ -647,9 +648,10 @@ impl crate::Group for Pt {
     const LEN: u16 = 8;
 }
 impl Pt {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 tms: Self::TMS.from_data(data)?,
                 va: Self::VA.from_data(data)?,
@@ -662,24 +664,16 @@ impl Pt {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &AcSimInterface,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &AcSimInterface,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_pt {
-            let group;
-            (data, group) = Pt::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) =
+            (0..counts.n_pt).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Pt::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

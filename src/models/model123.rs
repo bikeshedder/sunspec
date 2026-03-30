@@ -1,4 +1,5 @@
 //! Immediate Controls
+/// Type alias for [`Controls`].
 pub type Model123 = Controls;
 /// Immediate Controls
 ///
@@ -139,9 +140,10 @@ impl crate::Group for Controls {
     const LEN: u16 = 24;
 }
 impl Controls {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 conn_win_tms: Self::CONN_WIN_TMS.from_data(data)?,
                 conn_rvrt_tms: Self::CONN_RVRT_TMS.from_data(data)?,
@@ -169,11 +171,6 @@ impl Controls {
                 v_ar_pct_sf: Self::V_AR_PCT_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Conn

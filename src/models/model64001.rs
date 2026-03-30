@@ -116,9 +116,10 @@ impl crate::Group for Model64001 {
     const LEN: u16 = 71;
 }
 impl Model64001 {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 cmd: Self::CMD.from_data(data)?,
                 hw_rev: Self::HW_REV.from_data(data)?,
@@ -157,11 +158,6 @@ impl Model64001 {
                 s4_serial: Self::S4_SERIAL.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {

@@ -1,4 +1,5 @@
 //! DER Storage Capacity
+/// Type alias for [`DerStorageCapacity`].
 pub type Model713 = DerStorageCapacity;
 /// DER Storage Capacity
 ///
@@ -51,9 +52,10 @@ impl crate::Group for DerStorageCapacity {
     const LEN: u16 = 7;
 }
 impl DerStorageCapacity {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 wh_rtg: Self::WH_RTG.from_data(data)?,
                 wh_avail: Self::WH_AVAIL.from_data(data)?,
@@ -64,11 +66,6 @@ impl DerStorageCapacity {
                 pct_sf: Self::PCT_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Status

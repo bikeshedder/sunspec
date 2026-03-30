@@ -1,4 +1,5 @@
 //! Common
+/// Type alias for [`Common`].
 pub type Model1 = Common;
 /// Common
 ///
@@ -46,9 +47,10 @@ impl crate::Group for Common {
     const LEN: u16 = 66;
 }
 impl Common {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 mn: Self::MN.from_data(data)?,
                 md: Self::MD.from_data(data)?,
@@ -58,11 +60,6 @@ impl Common {
                 da: Self::DA.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 impl crate::Model for Common {

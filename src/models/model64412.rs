@@ -1,4 +1,5 @@
 //! DER Cyber Exploitation
+/// Type alias for [`DerExploitation`].
 pub type Model64412 = DerExploitation;
 /// DER Cyber Exploitation
 ///
@@ -261,9 +262,10 @@ impl crate::Group for DerExploitation {
     const LEN: u16 = 43;
 }
 impl DerExploitation {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 da_manipulation: Self::DA_MANIPULATION.from_data(data)?,
                 falsify_device_identity: Self::FALSIFY_DEVICE_IDENTITY.from_data(data)?,
@@ -310,11 +312,6 @@ impl DerExploitation {
                 change_common_model_length: Self::CHANGE_COMMON_MODEL_LENGTH.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// DA Manipulation

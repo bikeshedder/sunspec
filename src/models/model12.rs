@@ -88,9 +88,10 @@ impl crate::Group for Model12 {
     const LEN: u16 = 98;
 }
 impl Model12 {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 nam: Self::NAM.from_data(data)?,
                 cfg_st: Self::CFG_ST.from_data(data)?,
@@ -109,11 +110,6 @@ impl Model12 {
                 host_nam: Self::HOST_NAM.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Config Status

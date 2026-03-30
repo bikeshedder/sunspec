@@ -1,4 +1,5 @@
 //! Storage
+/// Type alias for [`StorageBasic`].
 pub type Model124 = StorageBasic;
 /// Storage
 ///
@@ -137,9 +138,10 @@ impl crate::Group for StorageBasic {
     const LEN: u16 = 24;
 }
 impl StorageBasic {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 w_cha_max: Self::W_CHA_MAX.from_data(data)?,
                 w_cha_gra: Self::W_CHA_GRA.from_data(data)?,
@@ -167,11 +169,6 @@ impl StorageBasic {
                 in_out_w_rte_sf: Self::IN_OUT_W_RTE_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {

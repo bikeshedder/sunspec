@@ -1,4 +1,5 @@
 //! wye-connect three phase (abcn) meter
+/// Type alias for [`AcMeterAbcn`].
 pub type Model203 = AcMeterAbcn;
 /// wye-connect three phase (abcn) meter
 #[derive(Debug)]
@@ -292,9 +293,10 @@ impl crate::Group for AcMeterAbcn {
     const LEN: u16 = 105;
 }
 impl AcMeterAbcn {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 a: Self::A.from_data(data)?,
                 aph_a: Self::APH_A.from_data(data)?,
@@ -370,11 +372,6 @@ impl AcMeterAbcn {
                 evt: Self::EVT.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {

@@ -1,4 +1,7 @@
-use std::{collections::HashMap, ptr};
+use std::{
+    collections::{HashMap, HashSet},
+    ptr,
+};
 
 use proc_macro2::{Literal, TokenStream};
 use quote::{format_ident, quote, ToTokens};
@@ -124,13 +127,25 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
     let m_name = format_ident!("m{}", model.id);
     let model_id = Literal::u16_unsuffixed(model.id);
     let group_name = group_ident(&model.group);
+    let count_point_names = find_count_points(model);
+    let has_counts = !count_point_names.is_empty();
+    let model_alias_doc = doc_to_ts(&format!("Type alias for [`{group_name}`]."));
     let type_alias = if model_name != group_name {
-        quote! { pub type #model_name = #group_name; }
+        quote! {
+            #model_alias_doc
+            pub type #model_name = #group_name;
+        }
     } else {
         quote! {}
     };
     let mut state = GenState::default();
-    let group = gen_group(&model, &model.group, &mut state)?;
+    let group = gen_group(
+        &model,
+        &model.group,
+        &count_point_names,
+        has_counts,
+        &mut state,
+    )?;
     let trait_impl = quote! {
         impl crate::Model for #group_name {
             const ID: u16 = #model_id;
@@ -154,6 +169,8 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
 fn gen_group(
     xmodel: &Model,
     group: &Group,
+    count_point_names: &[String],
+    has_counts: bool,
     state: &mut GenState,
 ) -> Result<TokenStream, GenModelError> {
     let is_root = ptr::eq(&xmodel.group, group);
@@ -216,22 +233,20 @@ fn gen_group(
             }
         });
 
-    let groups = group
-        .groups
-        .iter()
-        // XXX It's quite unfortunate but groups with a count of 0
-        // aren't defined properly in the sunspec JSON files.
-        // XXX
-        //.filter(|group| group.count != GroupCount::Integer(0))
-        .collect::<Vec<_>>();
+    let groups = group.groups.iter().collect::<Vec<_>>();
 
     let group_fields = groups.iter().map(|group| {
         let field_name = format_ident!("{}", snake_case(&group.name));
         let group_type = group_ident(group);
         let group_doc = doc_to_ts(&group.doc.to_doc_string());
+        let field_type = if group.count.is_one() {
+            quote! { #group_type }
+        } else {
+            quote! { Vec<#group_type> }
+        };
         quote! {
             #group_doc
-            pub #field_name: Vec<#group_type>,
+            pub #field_name: #field_type,
         }
     });
 
@@ -272,7 +287,7 @@ fn gen_group(
         }
     };
 
-    let from_data_fields = points
+    let point_field_inits = points
         .iter()
         .filter(|point| !point.is_padding())
         .map(|point| {
@@ -282,50 +297,132 @@ fn gen_group(
                 #field_name: Self::#const_name.from_data(data)?,
             }
         });
-
-    let from_data_groups_default = groups.iter().map(|group| {
-        let field_name = format_ident!("{}", snake_case(&group.name));
+    let count_inits = count_point_names.iter().map(|count_field_name| {
+        let field_name = format_ident!("{}", snake_case(count_field_name));
+        let const_name = format_ident!("{}", shouty_snake_case(count_field_name));
         quote! {
-            #field_name: Vec::new(),
+            #field_name: Self::#const_name.from_data(data)?,
         }
     });
-    let root_group_name = group_ident(&xmodel.group);
+    let count_fields = count_point_names.iter().map(|count_field_name| {
+        let field_name = format_ident!("{}", snake_case(count_field_name));
+        let point = find_point(&xmodel.group, count_field_name)
+            .unwrap_or_else(|| panic!("missing root count point: {}", count_field_name));
+        let field_type = rust_type(point, &String::new());
+        quote! {
+            #field_name: #field_type,
+        }
+    });
+    let counts_struct = if is_root && has_counts {
+        quote! {
+            struct Counts {
+                #(#count_fields)*
+            }
+        }
+    } else {
+        quote! {}
+    };
+    let counts_init = if is_root && has_counts {
+        quote! {
+            let counts = Counts {
+                #(#count_inits)*
+            };
+        }
+    } else {
+        quote! {}
+    };
     let parse_groups = groups.iter().map(|sub_group| {
         let field_name = format_ident!("{}", snake_case(&sub_group.name));
         let group_type = group_ident(sub_group);
+        let parse_fn = if sub_group.count.is_one() {
+            quote! { parse_group }
+        } else {
+            quote! { parse_multiple }
+        };
+        let needs_counts = if sub_group.count.is_one() {
+            group_parse_group_needs_counts(sub_group, has_counts)
+        } else {
+            group_parse_multiple_needs_counts(sub_group, has_counts)
+        };
         if is_root {
-            quote! {
-                (data, group.#field_name) = #group_type::parse_multiple(data, &group)?;
+            if needs_counts {
+                quote! {
+                    let (nested_data, #field_name) = #group_type::#parse_fn(nested_data, &counts)?;
+                }
+            } else {
+                quote! {
+                    let (nested_data, #field_name) = #group_type::#parse_fn(nested_data)?;
+                }
             }
         } else {
-            quote! {
-                (data, group.#field_name) = #group_type::parse_multiple(data, model)?;
+            if needs_counts {
+                quote! {
+                    let (nested_data, #field_name) = #group_type::#parse_fn(nested_data, counts)?;
+                }
+            } else {
+                quote! {
+                    let (nested_data, #field_name) = #group_type::#parse_fn(nested_data)?;
+                }
             }
+        }
+    });
+    let group_field_inits = groups.iter().map(|group| {
+        let field_name = format_ident!("{}", snake_case(&group.name));
+        quote! {
+            #field_name,
         }
     });
 
     let group_len = Literal::u16_unsuffixed(points.iter().map(|point| point.size).sum());
-    let fn_parse_multiple = if !is_root {
-        gen_group_fn_parse_multiple(group, xmodel)
+    let fn_parse_multiple = if !is_root && !group.count.is_one() {
+        gen_group_fn_parse_multiple(group, xmodel, has_counts)
     } else {
         quote! {}
     };
+    let parse_group_needs_counts = group_parse_group_needs_counts(group, has_counts);
     let parse_group = if is_root {
         quote! {
-            fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-                let mut group;
-                (data, group) = Self::parse_points(data)?;
+            fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+                let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+                #counts_init
                 #(#parse_groups)*
-                Ok((data, group))
+                Ok((
+                    nested_data,
+                    Self {
+                        #(#point_field_inits)*
+                        #(#group_field_inits)*
+                    }
+                ))
             }
         }
     } else {
-        quote! {
-            fn parse_group<'a>(mut data: &'a [u16], model: &#root_group_name) -> Result<(&'a [u16], Self), crate::DecodeError> {
-                let mut group;
-                (data, group) = Self::parse_points(data)?;
-                #(#parse_groups)*
-                Ok((data, group))
+        if parse_group_needs_counts {
+            quote! {
+                fn parse_group<'a>(data: &'a [u16], counts: &Counts) -> Result<(&'a [u16], Self), crate::DecodeError> {
+                    let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+                    #(#parse_groups)*
+                    Ok((
+                        nested_data,
+                        Self {
+                            #(#point_field_inits)*
+                            #(#group_field_inits)*
+                        }
+                    ))
+                }
+            }
+        } else {
+            quote! {
+                fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+                    let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+                    #(#parse_groups)*
+                    Ok((
+                        nested_data,
+                        Self {
+                            #(#point_field_inits)*
+                            #(#group_field_inits)*
+                        }
+                    ))
+                }
             }
         }
     };
@@ -334,15 +431,6 @@ fn gen_group(
             const LEN: u16 = #group_len;
         }
         impl #group_name {
-            fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-                Ok((
-                    &data[usize::from(<Self as crate::Group>::LEN)..],
-                    Self {
-                        #(#from_data_fields)*
-                        #(#from_data_groups_default)*
-                    }
-                ))
-            }
             #parse_group
             #fn_parse_multiple
         }
@@ -362,11 +450,18 @@ fn gen_group(
     }
 
     for sub_group in groups {
-        extra.extend(gen_group(xmodel, sub_group, state)?);
+        extra.extend(gen_group(
+            xmodel,
+            sub_group,
+            count_point_names,
+            has_counts,
+            state,
+        )?);
     }
 
     Ok(quote! {
 
+        #counts_struct
         #model_struct
         #model_impl
         #trait_impl
@@ -374,20 +469,27 @@ fn gen_group(
     })
 }
 
-fn gen_group_fn_parse_multiple(group: &Group, model: &Model) -> TokenStream {
-    let model_name = group_ident(&model.group);
+fn gen_group_fn_parse_multiple(group: &Group, model: &Model, has_counts: bool) -> TokenStream {
+    let model_name = format_ident!("Counts");
     let group_name = group_ident(group);
+    let parse_group_needs_counts = group_parse_group_needs_counts(group, has_counts);
+    let parse_multiple_needs_counts = group_parse_multiple_needs_counts(group, has_counts);
+    let parse_group_call_with_counts = if parse_group_needs_counts {
+        quote! { #group_name::parse_group(data, counts)? }
+    } else {
+        quote! { #group_name::parse_group(data)? }
+    };
     let group_count = match &group.count {
         GroupCount::String(count_field_name) => {
             let count_field = format_ident!("{}", snake_case(&count_field_name));
             if let Some(point) = find_point(&model.group, count_field_name) {
                 if point.mandatory == PointMandatory::M {
-                    quote! { model.#count_field }
+                    quote! { counts.#count_field }
                 } else {
-                    quote! { model.#count_field.unwrap_or_default() }
+                    quote! { counts.#count_field.unwrap_or_default() }
                 }
             } else {
-                quote! { model.#count_field.unwrap_or_default() }
+                quote! { counts.#count_field.unwrap_or_default() }
             }
         }
         GroupCount::Integer(count_value) => {
@@ -395,17 +497,94 @@ fn gen_group_fn_parse_multiple(group: &Group, model: &Model) -> TokenStream {
             quote! { #count_value }
         }
     };
-    quote! {
-        fn parse_multiple<'a>(mut data: &'a[u16], model: &#model_name) -> Result<(&'a[u16], Vec<Self>), crate::DecodeError> {
-            let mut groups = Vec::new();
-            for _ in 0..#group_count {
-                let group;
-                (data, group) = #group_name::parse_group(data, model)?;
-                groups.push(group);
+    if group.count.is_zero() {
+        return quote! {
+            fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+                let group_len = usize::from(<#group_name as crate::Group>::LEN);
+                if group_len == 0 {
+                    return Ok((data, Vec::new()));
+                }
+                if data.len() % group_len != 0 {
+                    return Err(crate::DecodeError::OutOfBounds);
+                }
+                let group_count = data.len() / group_len;
+                let (data, groups) = (0..group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                    let (data, group) = #group_name::parse_group(data)?;
+                    groups.push(group);
+                    Ok::<_, crate::DecodeError>((data, groups))
+                })?;
+                Ok((data, groups))
             }
-            Ok((data, groups))
+        };
+    }
+    if parse_multiple_needs_counts {
+        quote! {
+            fn parse_multiple<'a>(data: &'a[u16], counts: &#model_name) -> Result<(&'a[u16], Vec<Self>), crate::DecodeError> {
+                let (data, groups) = (0..#group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                    let (data, group) = #parse_group_call_with_counts;
+                    groups.push(group);
+                    Ok::<_, crate::DecodeError>((data, groups))
+                })?;
+                Ok((data, groups))
+            }
+        }
+    } else {
+        quote! {
+            fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+                let (data, groups) = (0..#group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                    let (data, group) = #group_name::parse_group(data)?;
+                    groups.push(group);
+                    Ok::<_, crate::DecodeError>((data, groups))
+                })?;
+                Ok((data, groups))
+            }
         }
     }
+}
+
+fn collect_count_field_names(group: &Group, names: &mut HashSet<String>) {
+    for sub_group in &group.groups {
+        if let GroupCount::String(name) = &sub_group.count {
+            names.insert(name.clone());
+        }
+        collect_count_field_names(sub_group, names);
+    }
+}
+
+/// Collect all root-level point names referenced by `count: "PointName"` in any nested
+/// group and return them ordered by their declaration order in the root group.
+fn find_count_points(model: &Model) -> Vec<String> {
+    let mut count_field_names = HashSet::new();
+    collect_count_field_names(&model.group, &mut count_field_names);
+    model
+        .group
+        .points
+        .iter()
+        .skip(2)
+        .filter(|point| !point.is_padding())
+        .map(|point| point.name.clone())
+        .filter(|name| count_field_names.contains(name))
+        .collect::<Vec<_>>()
+}
+
+fn group_parse_group_needs_counts(group: &Group, has_counts: bool) -> bool {
+    has_counts
+        && group.groups.iter().any(|sub_group| {
+            if sub_group.count.is_one() {
+                group_parse_group_needs_counts(sub_group, has_counts)
+            } else {
+                group_parse_multiple_needs_counts(sub_group, has_counts)
+            }
+        })
+}
+
+fn group_parse_multiple_needs_counts(group: &Group, has_counts: bool) -> bool {
+    has_counts
+        && match group.count {
+            GroupCount::String(_) => true,
+            GroupCount::Integer(0) => false,
+            GroupCount::Integer(_) => group_parse_group_needs_counts(group, has_counts),
+        }
 }
 
 fn group_ident(group: &Group) -> proc_macro2::Ident {

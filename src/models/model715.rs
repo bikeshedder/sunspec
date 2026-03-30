@@ -1,4 +1,5 @@
 //! DERCtl
+/// Type alias for [`DerCtl`].
 pub type Model715 = DerCtl;
 /// DERCtl
 ///
@@ -41,9 +42,10 @@ impl crate::Group for DerCtl {
     const LEN: u16 = 7;
 }
 impl DerCtl {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 loc_rem_ctl: Self::LOC_REM_CTL.from_data(data)?,
                 der_hb: Self::DER_HB.from_data(data)?,
@@ -52,11 +54,6 @@ impl DerCtl {
                 op_ctl: Self::OP_CTL.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Control Mode

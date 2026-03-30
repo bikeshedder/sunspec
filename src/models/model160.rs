@@ -1,4 +1,5 @@
 //! Multiple MPPT Inverter Extension Model
+/// Type alias for [`Mppt`].
 pub type Model160 = Mppt;
 /// Multiple MPPT Inverter Extension Model
 #[derive(Debug)]
@@ -35,9 +36,11 @@ impl crate::Group for Mppt {
     const LEN: u16 = 8;
 }
 impl Mppt {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, module) = Module::parse_multiple(nested_data)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 dca_sf: Self::DCA_SF.from_data(data)?,
                 dcv_sf: Self::DCV_SF.from_data(data)?,
@@ -46,15 +49,9 @@ impl Mppt {
                 evt: Self::EVT.from_data(data)?,
                 n: Self::N.from_data(data)?,
                 tms_per: Self::TMS_PER.from_data(data)?,
-                module: Vec::new(),
+                module,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.module) = Module::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -145,9 +142,10 @@ impl crate::Group for Module {
     const LEN: u16 = 20;
 }
 impl Module {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 id: Self::ID.from_data(data)?,
                 id_str: Self::ID_STR.from_data(data)?,
@@ -162,24 +160,21 @@ impl Module {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &Mppt,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &Mppt,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..0 {
-            let group;
-            (data, group) = Module::parse_group(data, model)?;
-            groups.push(group);
+    fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+        let group_len = usize::from(<Module as crate::Group>::LEN);
+        if group_len == 0 {
+            return Ok((data, Vec::new()));
         }
+        if data.len() % group_len != 0 {
+            return Err(crate::DecodeError::OutOfBounds);
+        }
+        let group_count = data.len() / group_len;
+        let (data, groups) =
+            (0..group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Module::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

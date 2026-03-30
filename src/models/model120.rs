@@ -1,4 +1,5 @@
 //! Nameplate
+/// Type alias for [`Nameplate`].
 pub type Model120 = Nameplate;
 /// Nameplate
 ///
@@ -151,9 +152,10 @@ impl crate::Group for Nameplate {
     const LEN: u16 = 26;
 }
 impl Nameplate {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 der_typ: Self::DER_TYP.from_data(data)?,
                 w_rtg: Self::W_RTG.from_data(data)?,
@@ -182,11 +184,6 @@ impl Nameplate {
                 max_dis_cha_rte_sf: Self::MAX_DIS_CHA_RTE_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// DERTyp

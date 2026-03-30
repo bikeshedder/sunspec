@@ -1,5 +1,10 @@
 //! DER Trip HV
+/// Type alias for [`DerTripHv`].
 pub type Model708 = DerTripHv;
+struct Counts {
+    n_pt: u16,
+    n_crv_set: u16,
+}
 /// DER Trip HV
 ///
 /// DER high voltage trip model.
@@ -55,9 +60,15 @@ impl crate::Group for DerTripHv {
     const LEN: u16 = 7;
 }
 impl DerTripHv {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let counts = Counts {
+            n_pt: Self::N_PT.from_data(data)?,
+            n_crv_set: Self::N_CRV_SET.from_data(data)?,
+        };
+        let (nested_data, crv) = Crv::parse_multiple(nested_data, &counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 ena: Self::ENA.from_data(data)?,
                 adpt_crv_req: Self::ADPT_CRV_REQ.from_data(data)?,
@@ -66,15 +77,9 @@ impl DerTripHv {
                 n_crv_set: Self::N_CRV_SET.from_data(data)?,
                 v_sf: Self::V_SF.from_data(data)?,
                 tms_sf: Self::TMS_SF.from_data(data)?,
-                crv: Vec::new(),
+                crv,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.crv) = Crv::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 /// DER Trip HV Module Enable
@@ -186,15 +191,15 @@ pub struct Crv {
     /// Stored must trip curve.
     ///
     /// Comments: Stored curve set containing a Must Trip, May Trip, and Momentary Cessation Curve - Number of curve points contained in NPt
-    pub must_trip: Vec<MustTrip>,
+    pub must_trip: MustTrip,
     /// May Trip Curve
     ///
     /// Stored may trip curve.
-    pub may_trip: Vec<MayTrip>,
+    pub may_trip: MayTrip,
     /// Momentary Cessation Curve
     ///
     /// Stored momentary cessation curve.
-    pub mom_cess: Vec<MomCess>,
+    pub mom_cess: MomCess,
 }
 #[allow(missing_docs)]
 impl Crv {
@@ -204,38 +209,34 @@ impl crate::Group for Crv {
     const LEN: u16 = 1;
 }
 impl Crv {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group<'a>(
+        data: &'a [u16],
+        counts: &Counts,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, must_trip) = MustTrip::parse_group(nested_data, counts)?;
+        let (nested_data, may_trip) = MayTrip::parse_group(nested_data, counts)?;
+        let (nested_data, mom_cess) = MomCess::parse_group(nested_data, counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 read_only: Self::READ_ONLY.from_data(data)?,
-                must_trip: Vec::new(),
-                may_trip: Vec::new(),
-                mom_cess: Vec::new(),
+                must_trip,
+                may_trip,
+                mom_cess,
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.must_trip) = MustTrip::parse_multiple(data, model)?;
-        (data, group.may_trip) = MayTrip::parse_multiple(data, model)?;
-        (data, group.mom_cess) = MomCess::parse_multiple(data, model)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_crv_set {
-            let group;
-            (data, group) = Crv::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) =
+            (0..counts.n_crv_set).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Crv::parse_group(data, counts)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }
@@ -308,35 +309,19 @@ impl crate::Group for MustTrip {
     const LEN: u16 = 1;
 }
 impl MustTrip {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group<'a>(
+        data: &'a [u16],
+        counts: &Counts,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 act_pt: Self::ACT_PT.from_data(data)?,
-                pt: Vec::new(),
+                pt,
             },
         ))
-    }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.pt) = Pt::parse_multiple(data, model)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..1 {
-            let group;
-            (data, group) = MustTrip::parse_group(data, model)?;
-            groups.push(group);
-        }
-        Ok((data, groups))
     }
 }
 /// Must Trip Curve Points
@@ -367,33 +352,26 @@ impl crate::Group for Pt {
     const LEN: u16 = 3;
 }
 impl Pt {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 v: Self::V.from_data(data)?,
                 tms: Self::TMS.from_data(data)?,
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_pt {
-            let group;
-            (data, group) = Pt::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) =
+            (0..counts.n_pt).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Pt::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }
@@ -420,35 +398,19 @@ impl crate::Group for MayTrip {
     const LEN: u16 = 1;
 }
 impl MayTrip {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group<'a>(
+        data: &'a [u16],
+        counts: &Counts,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 act_pt: Self::ACT_PT.from_data(data)?,
-                pt: Vec::new(),
+                pt,
             },
         ))
-    }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.pt) = Pt::parse_multiple(data, model)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..1 {
-            let group;
-            (data, group) = MayTrip::parse_group(data, model)?;
-            groups.push(group);
-        }
-        Ok((data, groups))
     }
 }
 /// Momentary Cessation Curve
@@ -474,35 +436,19 @@ impl crate::Group for MomCess {
     const LEN: u16 = 1;
 }
 impl MomCess {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group<'a>(
+        data: &'a [u16],
+        counts: &Counts,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 act_pt: Self::ACT_PT.from_data(data)?,
-                pt: Vec::new(),
+                pt,
             },
         ))
-    }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.pt) = Pt::parse_multiple(data, model)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerTripHv,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..1 {
-            let group;
-            (data, group) = MomCess::parse_group(data, model)?;
-            groups.push(group);
-        }
-        Ok((data, groups))
     }
 }
 impl crate::Model for DerTripHv {

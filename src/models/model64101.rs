@@ -33,9 +33,10 @@ impl crate::Group for Model64101 {
     const LEN: u16 = 7;
 }
 impl Model64101 {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 eltek_country_code: Self::ELTEK_COUNTRY_CODE.from_data(data)?,
                 eltek_feeding_phase: Self::ELTEK_FEEDING_PHASE.from_data(data)?,
@@ -46,11 +47,6 @@ impl Model64101 {
                 eltek_rps_cos_phi_ref: Self::ELTEK_RPS_COS_PHI_REF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 impl crate::Model for Model64101 {
