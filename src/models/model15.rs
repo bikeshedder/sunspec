@@ -69,25 +69,42 @@ impl Model15 {
     pub const OUT_DSC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(19, 2, false);
     pub const OUT_ERR_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(21, 2, false);
 }
+impl crate::Group for Model15 {
+    const LEN: u16 = 24;
+}
+impl Model15 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                clr: Self::CLR.from_data(data)?,
+                in_cnt: Self::IN_CNT.from_data(data)?,
+                in_uc_cnt: Self::IN_UC_CNT.from_data(data)?,
+                in_n_uc_cnt: Self::IN_N_UC_CNT.from_data(data)?,
+                in_dsc_cnt: Self::IN_DSC_CNT.from_data(data)?,
+                in_err_cnt: Self::IN_ERR_CNT.from_data(data)?,
+                in_unk_cnt: Self::IN_UNK_CNT.from_data(data)?,
+                out_cnt: Self::OUT_CNT.from_data(data)?,
+                out_uc_cnt: Self::OUT_UC_CNT.from_data(data)?,
+                out_n_uc_cnt: Self::OUT_N_UC_CNT.from_data(data)?,
+                out_dsc_cnt: Self::OUT_DSC_CNT.from_data(data)?,
+                out_err_cnt: Self::OUT_ERR_CNT.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+}
 impl crate::Model for Model15 {
     const ID: u16 = 15;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            clr: Self::CLR.from_data(data)?,
-            in_cnt: Self::IN_CNT.from_data(data)?,
-            in_uc_cnt: Self::IN_UC_CNT.from_data(data)?,
-            in_n_uc_cnt: Self::IN_N_UC_CNT.from_data(data)?,
-            in_dsc_cnt: Self::IN_DSC_CNT.from_data(data)?,
-            in_err_cnt: Self::IN_ERR_CNT.from_data(data)?,
-            in_unk_cnt: Self::IN_UNK_CNT.from_data(data)?,
-            out_cnt: Self::OUT_CNT.from_data(data)?,
-            out_uc_cnt: Self::OUT_UC_CNT.from_data(data)?,
-            out_n_uc_cnt: Self::OUT_N_UC_CNT.from_data(data)?,
-            out_dsc_cnt: Self::OUT_DSC_CNT.from_data(data)?,
-            out_err_cnt: Self::OUT_ERR_CNT.from_data(data)?,
-        })
-    }
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m15
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

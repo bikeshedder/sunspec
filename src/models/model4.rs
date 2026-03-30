@@ -153,6 +153,8 @@ pub struct Model4 {
     ///
     /// Detail: The value of N must be at least 4 (64 bits)
     pub n: u16,
+    #[allow(missing_docs)]
+    pub repeating: Vec<Repeating>,
 }
 #[allow(missing_docs)]
 impl Model4 {
@@ -216,73 +218,82 @@ impl Model4 {
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(58, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(59, 1, false);
 }
-impl crate::Model for Model4 {
-    const ID: u16 = 4;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            rq_seq: Self::RQ_SEQ.from_data(data)?,
-            sts: Self::STS.from_data(data)?,
-            x: Self::X.from_data(data)?,
-            val1: Self::VAL1.from_data(data)?,
-            val2: Self::VAL2.from_data(data)?,
-            val3: Self::VAL3.from_data(data)?,
-            val4: Self::VAL4.from_data(data)?,
-            val5: Self::VAL5.from_data(data)?,
-            val6: Self::VAL6.from_data(data)?,
-            val7: Self::VAL7.from_data(data)?,
-            val8: Self::VAL8.from_data(data)?,
-            val9: Self::VAL9.from_data(data)?,
-            val10: Self::VAL10.from_data(data)?,
-            val11: Self::VAL11.from_data(data)?,
-            val12: Self::VAL12.from_data(data)?,
-            val13: Self::VAL13.from_data(data)?,
-            val14: Self::VAL14.from_data(data)?,
-            val15: Self::VAL15.from_data(data)?,
-            val16: Self::VAL16.from_data(data)?,
-            val17: Self::VAL17.from_data(data)?,
-            val18: Self::VAL18.from_data(data)?,
-            val19: Self::VAL19.from_data(data)?,
-            val20: Self::VAL20.from_data(data)?,
-            val21: Self::VAL21.from_data(data)?,
-            val22: Self::VAL22.from_data(data)?,
-            val23: Self::VAL23.from_data(data)?,
-            val24: Self::VAL24.from_data(data)?,
-            val25: Self::VAL25.from_data(data)?,
-            val26: Self::VAL26.from_data(data)?,
-            val27: Self::VAL27.from_data(data)?,
-            val28: Self::VAL28.from_data(data)?,
-            val29: Self::VAL29.from_data(data)?,
-            val30: Self::VAL30.from_data(data)?,
-            val31: Self::VAL31.from_data(data)?,
-            val32: Self::VAL32.from_data(data)?,
-            val33: Self::VAL33.from_data(data)?,
-            val34: Self::VAL34.from_data(data)?,
-            val35: Self::VAL35.from_data(data)?,
-            val36: Self::VAL36.from_data(data)?,
-            val37: Self::VAL37.from_data(data)?,
-            val38: Self::VAL38.from_data(data)?,
-            val39: Self::VAL39.from_data(data)?,
-            val40: Self::VAL40.from_data(data)?,
-            val41: Self::VAL41.from_data(data)?,
-            val42: Self::VAL42.from_data(data)?,
-            val43: Self::VAL43.from_data(data)?,
-            val44: Self::VAL44.from_data(data)?,
-            val45: Self::VAL45.from_data(data)?,
-            val46: Self::VAL46.from_data(data)?,
-            val47: Self::VAL47.from_data(data)?,
-            val48: Self::VAL48.from_data(data)?,
-            val49: Self::VAL49.from_data(data)?,
-            val50: Self::VAL50.from_data(data)?,
-            ts: Self::TS.from_data(data)?,
-            ms: Self::MS.from_data(data)?,
-            seq: Self::SEQ.from_data(data)?,
-            alm: Self::ALM.from_data(data)?,
-            alg: Self::ALG.from_data(data)?,
-            n: Self::N.from_data(data)?,
-        })
+impl crate::Group for Model4 {
+    const LEN: u16 = 60;
+}
+impl Model4 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                rq_seq: Self::RQ_SEQ.from_data(data)?,
+                sts: Self::STS.from_data(data)?,
+                x: Self::X.from_data(data)?,
+                val1: Self::VAL1.from_data(data)?,
+                val2: Self::VAL2.from_data(data)?,
+                val3: Self::VAL3.from_data(data)?,
+                val4: Self::VAL4.from_data(data)?,
+                val5: Self::VAL5.from_data(data)?,
+                val6: Self::VAL6.from_data(data)?,
+                val7: Self::VAL7.from_data(data)?,
+                val8: Self::VAL8.from_data(data)?,
+                val9: Self::VAL9.from_data(data)?,
+                val10: Self::VAL10.from_data(data)?,
+                val11: Self::VAL11.from_data(data)?,
+                val12: Self::VAL12.from_data(data)?,
+                val13: Self::VAL13.from_data(data)?,
+                val14: Self::VAL14.from_data(data)?,
+                val15: Self::VAL15.from_data(data)?,
+                val16: Self::VAL16.from_data(data)?,
+                val17: Self::VAL17.from_data(data)?,
+                val18: Self::VAL18.from_data(data)?,
+                val19: Self::VAL19.from_data(data)?,
+                val20: Self::VAL20.from_data(data)?,
+                val21: Self::VAL21.from_data(data)?,
+                val22: Self::VAL22.from_data(data)?,
+                val23: Self::VAL23.from_data(data)?,
+                val24: Self::VAL24.from_data(data)?,
+                val25: Self::VAL25.from_data(data)?,
+                val26: Self::VAL26.from_data(data)?,
+                val27: Self::VAL27.from_data(data)?,
+                val28: Self::VAL28.from_data(data)?,
+                val29: Self::VAL29.from_data(data)?,
+                val30: Self::VAL30.from_data(data)?,
+                val31: Self::VAL31.from_data(data)?,
+                val32: Self::VAL32.from_data(data)?,
+                val33: Self::VAL33.from_data(data)?,
+                val34: Self::VAL34.from_data(data)?,
+                val35: Self::VAL35.from_data(data)?,
+                val36: Self::VAL36.from_data(data)?,
+                val37: Self::VAL37.from_data(data)?,
+                val38: Self::VAL38.from_data(data)?,
+                val39: Self::VAL39.from_data(data)?,
+                val40: Self::VAL40.from_data(data)?,
+                val41: Self::VAL41.from_data(data)?,
+                val42: Self::VAL42.from_data(data)?,
+                val43: Self::VAL43.from_data(data)?,
+                val44: Self::VAL44.from_data(data)?,
+                val45: Self::VAL45.from_data(data)?,
+                val46: Self::VAL46.from_data(data)?,
+                val47: Self::VAL47.from_data(data)?,
+                val48: Self::VAL48.from_data(data)?,
+                val49: Self::VAL49.from_data(data)?,
+                val50: Self::VAL50.from_data(data)?,
+                ts: Self::TS.from_data(data)?,
+                ms: Self::MS.from_data(data)?,
+                seq: Self::SEQ.from_data(data)?,
+                alm: Self::ALM.from_data(data)?,
+                alg: Self::ALG.from_data(data)?,
+                n: Self::N.from_data(data)?,
+                repeating: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m4
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.repeating) = Repeating::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 /// Status
@@ -411,5 +422,61 @@ impl crate::Value for Option<Alg> {
         } else {
             65535.encode()
         }
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Repeating {
+    /// DS
+    ///
+    /// Digital Signature
+    pub ds: u16,
+}
+#[allow(missing_docs)]
+impl Repeating {
+    pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+}
+impl crate::Group for Repeating {
+    const LEN: u16 = 1;
+}
+impl Repeating {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                ds: Self::DS.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &Model4,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &Model4,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = Repeating::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+impl crate::Model for Model4 {
+    const ID: u16 = 4;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m4
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

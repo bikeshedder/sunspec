@@ -1,10 +1,11 @@
 //! DER Storage Capacity
+pub type Model713 = DerStorageCapacity;
 /// DER Storage Capacity
 ///
 /// DER storage capacity.
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model713 {
+pub struct DerStorageCapacity {
     /// Energy Rating
     ///
     /// Energy rating of the DER storage.
@@ -37,7 +38,7 @@ pub struct Model713 {
     pub pct_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model713 {
+impl DerStorageCapacity {
     pub const WH_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
     pub const WH_AVAIL: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
     pub const SOC: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
@@ -46,21 +47,28 @@ impl Model713 {
     pub const WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, false);
     pub const PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
 }
-impl crate::Model for Model713 {
-    const ID: u16 = 713;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            wh_rtg: Self::WH_RTG.from_data(data)?,
-            wh_avail: Self::WH_AVAIL.from_data(data)?,
-            soc: Self::SOC.from_data(data)?,
-            soh: Self::SOH.from_data(data)?,
-            sta: Self::STA.from_data(data)?,
-            wh_sf: Self::WH_SF.from_data(data)?,
-            pct_sf: Self::PCT_SF.from_data(data)?,
-        })
+impl crate::Group for DerStorageCapacity {
+    const LEN: u16 = 7;
+}
+impl DerStorageCapacity {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                wh_rtg: Self::WH_RTG.from_data(data)?,
+                wh_avail: Self::WH_AVAIL.from_data(data)?,
+                soc: Self::SOC.from_data(data)?,
+                soh: Self::SOH.from_data(data)?,
+                sta: Self::STA.from_data(data)?,
+                wh_sf: Self::WH_SF.from_data(data)?,
+                pct_sf: Self::PCT_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m713
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Status
@@ -109,5 +117,15 @@ impl crate::Value for Option<Sta> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for DerStorageCapacity {
+    const ID: u16 = 713;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m713
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

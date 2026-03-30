@@ -64,7 +64,7 @@ pub enum GroupType {
     Sync,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(untagged)]
 pub enum GroupCount {
     Integer(u32),

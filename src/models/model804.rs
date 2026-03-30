@@ -1,8 +1,9 @@
 //! Lithium-Ion String Model
+pub type Model804 = LithiumIonString;
 /// Lithium-Ion String Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model804 {
+pub struct LithiumIonString {
     /// String Index
     ///
     /// Index of the string within the bank.
@@ -155,9 +156,11 @@ pub struct Model804 {
     pub cell_v_sf: i16,
     /// Scale factor for module temperature.
     pub mod_tmp_sf: i16,
+    #[allow(missing_docs)]
+    pub lithium_ion_string_module: Vec<LithiumIonStringModule>,
 }
 #[allow(missing_docs)]
-impl Model804 {
+impl LithiumIonString {
     pub const IDX: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
     pub const N_MOD: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
     pub const ST: crate::Point<Self, St> = crate::Point::new(2, 2, false);
@@ -194,49 +197,59 @@ impl Model804 {
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
     pub const MOD_TMP_SF: crate::Point<Self, i16> = crate::Point::new(42, 1, false);
 }
-impl crate::Model for Model804 {
-    const ID: u16 = 804;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            idx: Self::IDX.from_data(data)?,
-            n_mod: Self::N_MOD.from_data(data)?,
-            st: Self::ST.from_data(data)?,
-            con_fail: Self::CON_FAIL.from_data(data)?,
-            n_cell_bal: Self::N_CELL_BAL.from_data(data)?,
-            soc: Self::SOC.from_data(data)?,
-            do_d: Self::DO_D.from_data(data)?,
-            n_cyc: Self::N_CYC.from_data(data)?,
-            soh: Self::SOH.from_data(data)?,
-            a: Self::A.from_data(data)?,
-            v: Self::V.from_data(data)?,
-            cell_v_max: Self::CELL_V_MAX.from_data(data)?,
-            cell_v_max_mod: Self::CELL_V_MAX_MOD.from_data(data)?,
-            cell_v_min: Self::CELL_V_MIN.from_data(data)?,
-            cell_v_min_mod: Self::CELL_V_MIN_MOD.from_data(data)?,
-            cell_v_avg: Self::CELL_V_AVG.from_data(data)?,
-            mod_tmp_max: Self::MOD_TMP_MAX.from_data(data)?,
-            mod_tmp_max_mod: Self::MOD_TMP_MAX_MOD.from_data(data)?,
-            mod_tmp_min: Self::MOD_TMP_MIN.from_data(data)?,
-            mod_tmp_min_mod: Self::MOD_TMP_MIN_MOD.from_data(data)?,
-            mod_tmp_avg: Self::MOD_TMP_AVG.from_data(data)?,
-            con_st: Self::CON_ST.from_data(data)?,
-            evt1: Self::EVT1.from_data(data)?,
-            evt2: Self::EVT2.from_data(data)?,
-            evt_vnd1: Self::EVT_VND1.from_data(data)?,
-            evt_vnd2: Self::EVT_VND2.from_data(data)?,
-            set_ena: Self::SET_ENA.from_data(data)?,
-            set_con: Self::SET_CON.from_data(data)?,
-            soc_sf: Self::SOC_SF.from_data(data)?,
-            soh_sf: Self::SOH_SF.from_data(data)?,
-            do_d_sf: Self::DO_D_SF.from_data(data)?,
-            a_sf: Self::A_SF.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            cell_v_sf: Self::CELL_V_SF.from_data(data)?,
-            mod_tmp_sf: Self::MOD_TMP_SF.from_data(data)?,
-        })
+impl crate::Group for LithiumIonString {
+    const LEN: u16 = 46;
+}
+impl LithiumIonString {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                idx: Self::IDX.from_data(data)?,
+                n_mod: Self::N_MOD.from_data(data)?,
+                st: Self::ST.from_data(data)?,
+                con_fail: Self::CON_FAIL.from_data(data)?,
+                n_cell_bal: Self::N_CELL_BAL.from_data(data)?,
+                soc: Self::SOC.from_data(data)?,
+                do_d: Self::DO_D.from_data(data)?,
+                n_cyc: Self::N_CYC.from_data(data)?,
+                soh: Self::SOH.from_data(data)?,
+                a: Self::A.from_data(data)?,
+                v: Self::V.from_data(data)?,
+                cell_v_max: Self::CELL_V_MAX.from_data(data)?,
+                cell_v_max_mod: Self::CELL_V_MAX_MOD.from_data(data)?,
+                cell_v_min: Self::CELL_V_MIN.from_data(data)?,
+                cell_v_min_mod: Self::CELL_V_MIN_MOD.from_data(data)?,
+                cell_v_avg: Self::CELL_V_AVG.from_data(data)?,
+                mod_tmp_max: Self::MOD_TMP_MAX.from_data(data)?,
+                mod_tmp_max_mod: Self::MOD_TMP_MAX_MOD.from_data(data)?,
+                mod_tmp_min: Self::MOD_TMP_MIN.from_data(data)?,
+                mod_tmp_min_mod: Self::MOD_TMP_MIN_MOD.from_data(data)?,
+                mod_tmp_avg: Self::MOD_TMP_AVG.from_data(data)?,
+                con_st: Self::CON_ST.from_data(data)?,
+                evt1: Self::EVT1.from_data(data)?,
+                evt2: Self::EVT2.from_data(data)?,
+                evt_vnd1: Self::EVT_VND1.from_data(data)?,
+                evt_vnd2: Self::EVT_VND2.from_data(data)?,
+                set_ena: Self::SET_ENA.from_data(data)?,
+                set_con: Self::SET_CON.from_data(data)?,
+                soc_sf: Self::SOC_SF.from_data(data)?,
+                soh_sf: Self::SOH_SF.from_data(data)?,
+                do_d_sf: Self::DO_D_SF.from_data(data)?,
+                a_sf: Self::A_SF.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                cell_v_sf: Self::CELL_V_SF.from_data(data)?,
+                mod_tmp_sf: Self::MOD_TMP_SF.from_data(data)?,
+                lithium_ion_string_module: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m804
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.lithium_ion_string_module) =
+            LithiumIonStringModule::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -568,5 +581,135 @@ impl crate::Value for Option<SetCon> {
         } else {
             65535.encode()
         }
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct LithiumIonStringModule {
+    /// Module Cell Count
+    ///
+    /// Count of all cells in the module.
+    pub mod_n_cell: u16,
+    /// Module SoC
+    ///
+    /// Module state of charge, expressed as a percentage.
+    pub mod_soc: Option<u16>,
+    /// Module SoH
+    ///
+    /// Module state of health, expressed as a percentage.
+    pub mod_soh: Option<u16>,
+    /// Max Cell Voltage
+    ///
+    /// Maximum voltage for all cells in the module.
+    pub mod_cell_v_max: u16,
+    /// Max Cell Voltage Cell
+    ///
+    /// Cell with maximum voltage.
+    pub mod_cell_v_max_cell: Option<u16>,
+    /// Min Cell Voltage
+    ///
+    /// Minimum voltage for all cells in the module.
+    pub mod_cell_v_min: u16,
+    /// Min Cell Voltage Cell
+    ///
+    /// Cell with minimum voltage.
+    pub mod_cell_v_min_cell: Option<u16>,
+    /// Average Cell Voltage
+    ///
+    /// Average voltage for all cells in the module.
+    pub mod_cell_v_avg: u16,
+    /// Max Cell Temperature
+    ///
+    /// Maximum temperature for all cells in the module.
+    pub mod_cell_tmp_max: i16,
+    /// Max Cell Temperature Cell
+    ///
+    /// Cell with maximum temperature.
+    pub mod_cell_tmp_max_cell: Option<u16>,
+    /// Min Cell Temperature
+    ///
+    /// Minimum temperature for all cells in the module.
+    pub mod_cell_tmp_min: i16,
+    /// Min Cell Temperature Cell
+    ///
+    /// Cell with minimum temperature.
+    pub mod_cell_tmp_min_cell: Option<u16>,
+    /// Average Cell Temperature
+    ///
+    /// Average temperature for all cells in the module.
+    pub mod_cell_tmp_avg: i16,
+}
+#[allow(missing_docs)]
+impl LithiumIonStringModule {
+    pub const MOD_N_CELL: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const MOD_SOC: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
+    pub const MOD_SOH: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
+    pub const MOD_CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
+    pub const MOD_CELL_V_MAX_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
+    pub const MOD_CELL_V_MIN: crate::Point<Self, u16> = crate::Point::new(5, 1, false);
+    pub const MOD_CELL_V_MIN_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
+    pub const MOD_CELL_V_AVG: crate::Point<Self, u16> = crate::Point::new(7, 1, false);
+    pub const MOD_CELL_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
+    pub const MOD_CELL_TMP_MAX_CELL: crate::Point<Self, Option<u16>> =
+        crate::Point::new(9, 1, false);
+    pub const MOD_CELL_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
+    pub const MOD_CELL_TMP_MIN_CELL: crate::Point<Self, Option<u16>> =
+        crate::Point::new(11, 1, false);
+    pub const MOD_CELL_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
+}
+impl crate::Group for LithiumIonStringModule {
+    const LEN: u16 = 16;
+}
+impl LithiumIonStringModule {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                mod_n_cell: Self::MOD_N_CELL.from_data(data)?,
+                mod_soc: Self::MOD_SOC.from_data(data)?,
+                mod_soh: Self::MOD_SOH.from_data(data)?,
+                mod_cell_v_max: Self::MOD_CELL_V_MAX.from_data(data)?,
+                mod_cell_v_max_cell: Self::MOD_CELL_V_MAX_CELL.from_data(data)?,
+                mod_cell_v_min: Self::MOD_CELL_V_MIN.from_data(data)?,
+                mod_cell_v_min_cell: Self::MOD_CELL_V_MIN_CELL.from_data(data)?,
+                mod_cell_v_avg: Self::MOD_CELL_V_AVG.from_data(data)?,
+                mod_cell_tmp_max: Self::MOD_CELL_TMP_MAX.from_data(data)?,
+                mod_cell_tmp_max_cell: Self::MOD_CELL_TMP_MAX_CELL.from_data(data)?,
+                mod_cell_tmp_min: Self::MOD_CELL_TMP_MIN.from_data(data)?,
+                mod_cell_tmp_min_cell: Self::MOD_CELL_TMP_MIN_CELL.from_data(data)?,
+                mod_cell_tmp_avg: Self::MOD_CELL_TMP_AVG.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &LithiumIonString,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &LithiumIonString,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..model.n_mod {
+            let group;
+            (data, group) = LithiumIonStringModule::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+impl crate::Model for LithiumIonString {
+    const ID: u16 = 804;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m804
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

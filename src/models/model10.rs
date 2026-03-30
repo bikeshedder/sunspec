@@ -24,17 +24,24 @@ impl Model10 {
     pub const CTL: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
     pub const TYP: crate::Point<Self, Option<Typ>> = crate::Point::new(2, 1, false);
 }
-impl crate::Model for Model10 {
-    const ID: u16 = 10;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            st: Self::ST.from_data(data)?,
-            ctl: Self::CTL.from_data(data)?,
-            typ: Self::TYP.from_data(data)?,
-        })
+impl crate::Group for Model10 {
+    const LEN: u16 = 4;
+}
+impl Model10 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                st: Self::ST.from_data(data)?,
+                ctl: Self::CTL.from_data(data)?,
+                typ: Self::TYP.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m10
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Interface Status
@@ -123,5 +130,15 @@ impl crate::Value for Option<Typ> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for Model10 {
+    const ID: u16 = 10;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m10
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

@@ -1,10 +1,11 @@
 //! Enter Service
+pub type Model703 = DerEnterService;
 /// Enter Service
 ///
 /// Enter service model.
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model703 {
+pub struct DerEnterService {
     /// Permit Enter Service
     ///
     /// Permit enter service.
@@ -51,7 +52,7 @@ pub struct Model703 {
     pub hz_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model703 {
+impl DerEnterService {
     pub const ES: crate::Point<Self, Option<Es>> = crate::Point::new(0, 1, true);
     pub const ESV_HI: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
     pub const ESV_LO: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
@@ -64,25 +65,32 @@ impl Model703 {
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
     pub const HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
 }
-impl crate::Model for Model703 {
-    const ID: u16 = 703;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            es: Self::ES.from_data(data)?,
-            esv_hi: Self::ESV_HI.from_data(data)?,
-            esv_lo: Self::ESV_LO.from_data(data)?,
-            es_hz_hi: Self::ES_HZ_HI.from_data(data)?,
-            es_hz_lo: Self::ES_HZ_LO.from_data(data)?,
-            es_dly_tms: Self::ES_DLY_TMS.from_data(data)?,
-            es_rnd_tms: Self::ES_RND_TMS.from_data(data)?,
-            es_rmp_tms: Self::ES_RMP_TMS.from_data(data)?,
-            es_dly_rem_tms: Self::ES_DLY_REM_TMS.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            hz_sf: Self::HZ_SF.from_data(data)?,
-        })
+impl crate::Group for DerEnterService {
+    const LEN: u16 = 17;
+}
+impl DerEnterService {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                es: Self::ES.from_data(data)?,
+                esv_hi: Self::ESV_HI.from_data(data)?,
+                esv_lo: Self::ESV_LO.from_data(data)?,
+                es_hz_hi: Self::ES_HZ_HI.from_data(data)?,
+                es_hz_lo: Self::ES_HZ_LO.from_data(data)?,
+                es_dly_tms: Self::ES_DLY_TMS.from_data(data)?,
+                es_rnd_tms: Self::ES_RND_TMS.from_data(data)?,
+                es_rmp_tms: Self::ES_RMP_TMS.from_data(data)?,
+                es_dly_rem_tms: Self::ES_DLY_REM_TMS.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                hz_sf: Self::HZ_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m703
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Permit Enter Service
@@ -123,5 +131,15 @@ impl crate::Value for Option<Es> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for DerEnterService {
+    const ID: u16 = 703;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m703
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

@@ -1,4 +1,5 @@
 //! Basic Settings
+pub type Model121 = Settings;
 /// Basic Settings
 ///
 /// Inverter Controls Basic Settings
@@ -6,7 +7,7 @@
 /// Detail: Ref 3: 8.4.2.1, Ref 4: 17
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model121 {
+pub struct Settings {
     /// WMax
     ///
     /// Setting for maximum power output. Default to WRtg.
@@ -137,7 +138,7 @@ pub struct Model121 {
     pub ecp_nom_hz_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model121 {
+impl Settings {
     pub const W_MAX: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
     pub const V_REF: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
     pub const V_REF_OFS: crate::Point<Self, i16> = crate::Point::new(2, 1, true);
@@ -169,44 +170,51 @@ impl Model121 {
     pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
     pub const ECP_NOM_HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, false);
 }
-impl crate::Model for Model121 {
-    const ID: u16 = 121;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            w_max: Self::W_MAX.from_data(data)?,
-            v_ref: Self::V_REF.from_data(data)?,
-            v_ref_ofs: Self::V_REF_OFS.from_data(data)?,
-            v_max: Self::V_MAX.from_data(data)?,
-            v_min: Self::V_MIN.from_data(data)?,
-            va_max: Self::VA_MAX.from_data(data)?,
-            v_ar_max_q1: Self::V_AR_MAX_Q1.from_data(data)?,
-            v_ar_max_q2: Self::V_AR_MAX_Q2.from_data(data)?,
-            v_ar_max_q3: Self::V_AR_MAX_Q3.from_data(data)?,
-            v_ar_max_q4: Self::V_AR_MAX_Q4.from_data(data)?,
-            w_gra: Self::W_GRA.from_data(data)?,
-            pf_min_q1: Self::PF_MIN_Q1.from_data(data)?,
-            pf_min_q2: Self::PF_MIN_Q2.from_data(data)?,
-            pf_min_q3: Self::PF_MIN_Q3.from_data(data)?,
-            pf_min_q4: Self::PF_MIN_Q4.from_data(data)?,
-            v_ar_act: Self::V_AR_ACT.from_data(data)?,
-            clc_tot_va: Self::CLC_TOT_VA.from_data(data)?,
-            max_rmp_rte: Self::MAX_RMP_RTE.from_data(data)?,
-            ecp_nom_hz: Self::ECP_NOM_HZ.from_data(data)?,
-            conn_ph: Self::CONN_PH.from_data(data)?,
-            w_max_sf: Self::W_MAX_SF.from_data(data)?,
-            v_ref_sf: Self::V_REF_SF.from_data(data)?,
-            v_ref_ofs_sf: Self::V_REF_OFS_SF.from_data(data)?,
-            v_min_max_sf: Self::V_MIN_MAX_SF.from_data(data)?,
-            va_max_sf: Self::VA_MAX_SF.from_data(data)?,
-            v_ar_max_sf: Self::V_AR_MAX_SF.from_data(data)?,
-            w_gra_sf: Self::W_GRA_SF.from_data(data)?,
-            pf_min_sf: Self::PF_MIN_SF.from_data(data)?,
-            max_rmp_rte_sf: Self::MAX_RMP_RTE_SF.from_data(data)?,
-            ecp_nom_hz_sf: Self::ECP_NOM_HZ_SF.from_data(data)?,
-        })
+impl crate::Group for Settings {
+    const LEN: u16 = 30;
+}
+impl Settings {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                w_max: Self::W_MAX.from_data(data)?,
+                v_ref: Self::V_REF.from_data(data)?,
+                v_ref_ofs: Self::V_REF_OFS.from_data(data)?,
+                v_max: Self::V_MAX.from_data(data)?,
+                v_min: Self::V_MIN.from_data(data)?,
+                va_max: Self::VA_MAX.from_data(data)?,
+                v_ar_max_q1: Self::V_AR_MAX_Q1.from_data(data)?,
+                v_ar_max_q2: Self::V_AR_MAX_Q2.from_data(data)?,
+                v_ar_max_q3: Self::V_AR_MAX_Q3.from_data(data)?,
+                v_ar_max_q4: Self::V_AR_MAX_Q4.from_data(data)?,
+                w_gra: Self::W_GRA.from_data(data)?,
+                pf_min_q1: Self::PF_MIN_Q1.from_data(data)?,
+                pf_min_q2: Self::PF_MIN_Q2.from_data(data)?,
+                pf_min_q3: Self::PF_MIN_Q3.from_data(data)?,
+                pf_min_q4: Self::PF_MIN_Q4.from_data(data)?,
+                v_ar_act: Self::V_AR_ACT.from_data(data)?,
+                clc_tot_va: Self::CLC_TOT_VA.from_data(data)?,
+                max_rmp_rte: Self::MAX_RMP_RTE.from_data(data)?,
+                ecp_nom_hz: Self::ECP_NOM_HZ.from_data(data)?,
+                conn_ph: Self::CONN_PH.from_data(data)?,
+                w_max_sf: Self::W_MAX_SF.from_data(data)?,
+                v_ref_sf: Self::V_REF_SF.from_data(data)?,
+                v_ref_ofs_sf: Self::V_REF_OFS_SF.from_data(data)?,
+                v_min_max_sf: Self::V_MIN_MAX_SF.from_data(data)?,
+                va_max_sf: Self::VA_MAX_SF.from_data(data)?,
+                v_ar_max_sf: Self::V_AR_MAX_SF.from_data(data)?,
+                w_gra_sf: Self::W_GRA_SF.from_data(data)?,
+                pf_min_sf: Self::PF_MIN_SF.from_data(data)?,
+                max_rmp_rte_sf: Self::MAX_RMP_RTE_SF.from_data(data)?,
+                ecp_nom_hz_sf: Self::ECP_NOM_HZ_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m121
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// VArAct
@@ -329,5 +337,15 @@ impl crate::Value for Option<ConnPh> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for Settings {
+    const ID: u16 = 121;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m121
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

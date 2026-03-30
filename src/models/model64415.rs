@@ -1,10 +1,11 @@
 //! CSIP Client Control
+pub type Model64415 = CsipControl;
 /// CSIP Client Control
 ///
 /// CSIP Client Control for Alarms and Error tests
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model64415 {
+pub struct CsipControl {
     /// LogEvent Mode Enable
     ///
     /// Enable or disable the LogEvent mode
@@ -19,23 +20,30 @@ pub struct Model64415 {
     pub comm004_cert: Option<Comm004Cert>,
 }
 #[allow(missing_docs)]
-impl Model64415 {
+impl CsipControl {
     pub const LOG_EVENT_ENA: crate::Point<Self, Option<LogEventEna>> =
         crate::Point::new(0, 1, true);
     pub const HTTP_MSG: crate::Point<Self, Option<HttpMsg>> = crate::Point::new(1, 1, true);
     pub const COMM004_CERT: crate::Point<Self, Option<Comm004Cert>> = crate::Point::new(2, 1, true);
 }
-impl crate::Model for Model64415 {
-    const ID: u16 = 64415;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            log_event_ena: Self::LOG_EVENT_ENA.from_data(data)?,
-            http_msg: Self::HTTP_MSG.from_data(data)?,
-            comm004_cert: Self::COMM004_CERT.from_data(data)?,
-        })
+impl crate::Group for CsipControl {
+    const LEN: u16 = 3;
+}
+impl CsipControl {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                log_event_ena: Self::LOG_EVENT_ENA.from_data(data)?,
+                http_msg: Self::HTTP_MSG.from_data(data)?,
+                comm004_cert: Self::COMM004_CERT.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m64415
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// LogEvent Mode Enable
@@ -192,5 +200,15 @@ impl crate::Value for Option<Comm004Cert> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for CsipControl {
+    const ID: u16 = 64415;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64415
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

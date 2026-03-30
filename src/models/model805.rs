@@ -1,8 +1,9 @@
 //! Lithium-Ion Module Model
+pub type Model805 = LithiumIonModule;
 /// Lithium-Ion Module Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model805 {
+pub struct LithiumIonModule {
     /// String Index
     ///
     /// Index of the string containing the module.
@@ -115,9 +116,11 @@ pub struct Model805 {
     pub cell_v_sf: i16,
     /// Scale factor for module temperature.
     pub tmp_sf: i16,
+    #[allow(missing_docs)]
+    pub lithium_ion_module_cell: Vec<LithiumIonModuleCell>,
 }
 #[allow(missing_docs)]
-impl Model805 {
+impl LithiumIonModule {
     pub const STR_IDX: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
     pub const MOD_IDX: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
     pub const N_CELL: crate::Point<Self, u16> = crate::Point::new(2, 1, false);
@@ -145,39 +148,150 @@ impl Model805 {
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(40, 1, false);
     pub const TMP_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
 }
-impl crate::Model for Model805 {
-    const ID: u16 = 805;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            str_idx: Self::STR_IDX.from_data(data)?,
-            mod_idx: Self::MOD_IDX.from_data(data)?,
-            n_cell: Self::N_CELL.from_data(data)?,
-            soc: Self::SOC.from_data(data)?,
-            do_d: Self::DO_D.from_data(data)?,
-            soh: Self::SOH.from_data(data)?,
-            n_cyc: Self::N_CYC.from_data(data)?,
-            v: Self::V.from_data(data)?,
-            cell_v_max: Self::CELL_V_MAX.from_data(data)?,
-            cell_v_max_cell: Self::CELL_V_MAX_CELL.from_data(data)?,
-            cell_v_min: Self::CELL_V_MIN.from_data(data)?,
-            cell_v_min_cell: Self::CELL_V_MIN_CELL.from_data(data)?,
-            cell_v_avg: Self::CELL_V_AVG.from_data(data)?,
-            cell_tmp_max: Self::CELL_TMP_MAX.from_data(data)?,
-            cell_tmp_max_cell: Self::CELL_TMP_MAX_CELL.from_data(data)?,
-            cell_tmp_min: Self::CELL_TMP_MIN.from_data(data)?,
-            cell_tmp_min_cell: Self::CELL_TMP_MIN_CELL.from_data(data)?,
-            cell_tmp_avg: Self::CELL_TMP_AVG.from_data(data)?,
-            n_cell_bal: Self::N_CELL_BAL.from_data(data)?,
-            sn: Self::SN.from_data(data)?,
-            soc_sf: Self::SOC_SF.from_data(data)?,
-            soh_sf: Self::SOH_SF.from_data(data)?,
-            do_d_sf: Self::DO_D_SF.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            cell_v_sf: Self::CELL_V_SF.from_data(data)?,
-            tmp_sf: Self::TMP_SF.from_data(data)?,
-        })
+impl crate::Group for LithiumIonModule {
+    const LEN: u16 = 42;
+}
+impl LithiumIonModule {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                str_idx: Self::STR_IDX.from_data(data)?,
+                mod_idx: Self::MOD_IDX.from_data(data)?,
+                n_cell: Self::N_CELL.from_data(data)?,
+                soc: Self::SOC.from_data(data)?,
+                do_d: Self::DO_D.from_data(data)?,
+                soh: Self::SOH.from_data(data)?,
+                n_cyc: Self::N_CYC.from_data(data)?,
+                v: Self::V.from_data(data)?,
+                cell_v_max: Self::CELL_V_MAX.from_data(data)?,
+                cell_v_max_cell: Self::CELL_V_MAX_CELL.from_data(data)?,
+                cell_v_min: Self::CELL_V_MIN.from_data(data)?,
+                cell_v_min_cell: Self::CELL_V_MIN_CELL.from_data(data)?,
+                cell_v_avg: Self::CELL_V_AVG.from_data(data)?,
+                cell_tmp_max: Self::CELL_TMP_MAX.from_data(data)?,
+                cell_tmp_max_cell: Self::CELL_TMP_MAX_CELL.from_data(data)?,
+                cell_tmp_min: Self::CELL_TMP_MIN.from_data(data)?,
+                cell_tmp_min_cell: Self::CELL_TMP_MIN_CELL.from_data(data)?,
+                cell_tmp_avg: Self::CELL_TMP_AVG.from_data(data)?,
+                n_cell_bal: Self::N_CELL_BAL.from_data(data)?,
+                sn: Self::SN.from_data(data)?,
+                soc_sf: Self::SOC_SF.from_data(data)?,
+                soh_sf: Self::SOH_SF.from_data(data)?,
+                do_d_sf: Self::DO_D_SF.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                cell_v_sf: Self::CELL_V_SF.from_data(data)?,
+                tmp_sf: Self::TMP_SF.from_data(data)?,
+                lithium_ion_module_cell: Vec::new(),
+            },
+        ))
     }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.lithium_ion_module_cell) = LithiumIonModuleCell::parse_multiple(data, &group)?;
+        Ok((data, group))
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct LithiumIonModuleCell {
+    /// Cell Voltage
+    ///
+    /// Cell terminal voltage.
+    pub cell_v: u16,
+    /// Cell Temperature
+    ///
+    /// Cell temperature.
+    pub cell_tmp: i16,
+    /// Cell Status
+    ///
+    /// Status of the cell.
+    pub cell_st: Option<LithiumIonModuleCellCellSt>,
+}
+#[allow(missing_docs)]
+impl LithiumIonModuleCell {
+    pub const CELL_V: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const CELL_TMP: crate::Point<Self, i16> = crate::Point::new(1, 1, false);
+    pub const CELL_ST: crate::Point<Self, Option<LithiumIonModuleCellCellSt>> =
+        crate::Point::new(2, 2, false);
+}
+impl crate::Group for LithiumIonModuleCell {
+    const LEN: u16 = 4;
+}
+impl LithiumIonModuleCell {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                cell_v: Self::CELL_V.from_data(data)?,
+                cell_tmp: Self::CELL_TMP.from_data(data)?,
+                cell_st: Self::CELL_ST.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &LithiumIonModule,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &LithiumIonModule,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = LithiumIonModuleCell::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+bitflags::bitflags! {
+    #[doc = " Cell Status"] #[doc = " "] #[doc = " Status of the cell."] #[derive(Copy,
+    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct
+    LithiumIonModuleCellCellSt : u32 { #[allow(missing_docs)] const CellIsBalancing = 1;
+    }
+}
+impl crate::Value for LithiumIonModuleCellCellSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<LithiumIonModuleCellCellSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(LithiumIonModuleCellCellSt::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+impl crate::Model for LithiumIonModule {
+    const ID: u16 = 805;
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m805
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

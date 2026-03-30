@@ -1,4 +1,5 @@
 //! Nameplate
+pub type Model120 = Nameplate;
 /// Nameplate
 ///
 /// Inverter Controls Nameplate Ratings
@@ -6,7 +7,7 @@
 /// Detail: Ref 3: 8.14.3.2, Ref 4: 17
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model120 {
+pub struct Nameplate {
     /// DERTyp
     ///
     /// Type of DER device. Default value is 4 to indicate PV device.
@@ -119,7 +120,7 @@ pub struct Model120 {
     pub max_dis_cha_rte_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model120 {
+impl Nameplate {
     pub const DER_TYP: crate::Point<Self, DerTyp> = crate::Point::new(0, 1, false);
     pub const W_RTG: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
     pub const W_RTG_SF: crate::Point<Self, i16> = crate::Point::new(2, 1, false);
@@ -146,39 +147,46 @@ impl Model120 {
     pub const MAX_DIS_CHA_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(23, 1, false);
     pub const MAX_DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
 }
-impl crate::Model for Model120 {
-    const ID: u16 = 120;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            der_typ: Self::DER_TYP.from_data(data)?,
-            w_rtg: Self::W_RTG.from_data(data)?,
-            w_rtg_sf: Self::W_RTG_SF.from_data(data)?,
-            va_rtg: Self::VA_RTG.from_data(data)?,
-            va_rtg_sf: Self::VA_RTG_SF.from_data(data)?,
-            v_ar_rtg_q1: Self::V_AR_RTG_Q1.from_data(data)?,
-            v_ar_rtg_q2: Self::V_AR_RTG_Q2.from_data(data)?,
-            v_ar_rtg_q3: Self::V_AR_RTG_Q3.from_data(data)?,
-            v_ar_rtg_q4: Self::V_AR_RTG_Q4.from_data(data)?,
-            v_ar_rtg_sf: Self::V_AR_RTG_SF.from_data(data)?,
-            a_rtg: Self::A_RTG.from_data(data)?,
-            a_rtg_sf: Self::A_RTG_SF.from_data(data)?,
-            pf_rtg_q1: Self::PF_RTG_Q1.from_data(data)?,
-            pf_rtg_q2: Self::PF_RTG_Q2.from_data(data)?,
-            pf_rtg_q3: Self::PF_RTG_Q3.from_data(data)?,
-            pf_rtg_q4: Self::PF_RTG_Q4.from_data(data)?,
-            pf_rtg_sf: Self::PF_RTG_SF.from_data(data)?,
-            wh_rtg: Self::WH_RTG.from_data(data)?,
-            wh_rtg_sf: Self::WH_RTG_SF.from_data(data)?,
-            ahr_rtg: Self::AHR_RTG.from_data(data)?,
-            ahr_rtg_sf: Self::AHR_RTG_SF.from_data(data)?,
-            max_cha_rte: Self::MAX_CHA_RTE.from_data(data)?,
-            max_cha_rte_sf: Self::MAX_CHA_RTE_SF.from_data(data)?,
-            max_dis_cha_rte: Self::MAX_DIS_CHA_RTE.from_data(data)?,
-            max_dis_cha_rte_sf: Self::MAX_DIS_CHA_RTE_SF.from_data(data)?,
-        })
+impl crate::Group for Nameplate {
+    const LEN: u16 = 26;
+}
+impl Nameplate {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                der_typ: Self::DER_TYP.from_data(data)?,
+                w_rtg: Self::W_RTG.from_data(data)?,
+                w_rtg_sf: Self::W_RTG_SF.from_data(data)?,
+                va_rtg: Self::VA_RTG.from_data(data)?,
+                va_rtg_sf: Self::VA_RTG_SF.from_data(data)?,
+                v_ar_rtg_q1: Self::V_AR_RTG_Q1.from_data(data)?,
+                v_ar_rtg_q2: Self::V_AR_RTG_Q2.from_data(data)?,
+                v_ar_rtg_q3: Self::V_AR_RTG_Q3.from_data(data)?,
+                v_ar_rtg_q4: Self::V_AR_RTG_Q4.from_data(data)?,
+                v_ar_rtg_sf: Self::V_AR_RTG_SF.from_data(data)?,
+                a_rtg: Self::A_RTG.from_data(data)?,
+                a_rtg_sf: Self::A_RTG_SF.from_data(data)?,
+                pf_rtg_q1: Self::PF_RTG_Q1.from_data(data)?,
+                pf_rtg_q2: Self::PF_RTG_Q2.from_data(data)?,
+                pf_rtg_q3: Self::PF_RTG_Q3.from_data(data)?,
+                pf_rtg_q4: Self::PF_RTG_Q4.from_data(data)?,
+                pf_rtg_sf: Self::PF_RTG_SF.from_data(data)?,
+                wh_rtg: Self::WH_RTG.from_data(data)?,
+                wh_rtg_sf: Self::WH_RTG_SF.from_data(data)?,
+                ahr_rtg: Self::AHR_RTG.from_data(data)?,
+                ahr_rtg_sf: Self::AHR_RTG_SF.from_data(data)?,
+                max_cha_rte: Self::MAX_CHA_RTE.from_data(data)?,
+                max_cha_rte_sf: Self::MAX_CHA_RTE_SF.from_data(data)?,
+                max_dis_cha_rte: Self::MAX_DIS_CHA_RTE.from_data(data)?,
+                max_dis_cha_rte_sf: Self::MAX_DIS_CHA_RTE_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m120
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// DERTyp
@@ -219,5 +227,15 @@ impl crate::Value for Option<DerTyp> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for Nameplate {
+    const ID: u16 = 120;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m120
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

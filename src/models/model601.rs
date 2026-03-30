@@ -1,4 +1,5 @@
 //! Tracker Controller DRAFT 2
+pub type Model601 = TrackerController;
 /// Tracker Controller DRAFT 2
 ///
 /// Monitors and controls multiple trackers
@@ -6,7 +7,7 @@
 /// Detail: Trackers may include GPS model 305 for location information
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model601 {
+pub struct TrackerController {
     /// Controller
     ///
     /// Descriptive name for this control unit
@@ -55,9 +56,11 @@ pub struct Model601 {
     ///
     /// Number of trackers being controlled.  Size of repeating block.
     pub n: u16,
+    #[allow(missing_docs)]
+    pub tracker: Vec<Tracker>,
 }
 #[allow(missing_docs)]
-impl Model601 {
+impl TrackerController {
     pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 8, false);
     pub const TYP: crate::Point<Self, Typ> = crate::Point::new(8, 1, false);
     pub const DT_LOC: crate::Point<Self, Option<String>> = crate::Point::new(9, 5, false);
@@ -70,25 +73,34 @@ impl Model601 {
     pub const DGR_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(25, 1, false);
 }
-impl crate::Model for Model601 {
-    const ID: u16 = 601;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            nam: Self::NAM.from_data(data)?,
-            typ: Self::TYP.from_data(data)?,
-            dt_loc: Self::DT_LOC.from_data(data)?,
-            tm_loc: Self::TM_LOC.from_data(data)?,
-            day: Self::DAY.from_data(data)?,
-            glbl_el_ctl: Self::GLBL_EL_CTL.from_data(data)?,
-            glbl_az_ctl: Self::GLBL_AZ_CTL.from_data(data)?,
-            glbl_ctl: Self::GLBL_CTL.from_data(data)?,
-            glbl_alm: Self::GLBL_ALM.from_data(data)?,
-            dgr_sf: Self::DGR_SF.from_data(data)?,
-            n: Self::N.from_data(data)?,
-        })
+impl crate::Group for TrackerController {
+    const LEN: u16 = 26;
+}
+impl TrackerController {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                nam: Self::NAM.from_data(data)?,
+                typ: Self::TYP.from_data(data)?,
+                dt_loc: Self::DT_LOC.from_data(data)?,
+                tm_loc: Self::TM_LOC.from_data(data)?,
+                day: Self::DAY.from_data(data)?,
+                glbl_el_ctl: Self::GLBL_EL_CTL.from_data(data)?,
+                glbl_az_ctl: Self::GLBL_AZ_CTL.from_data(data)?,
+                glbl_ctl: Self::GLBL_CTL.from_data(data)?,
+                glbl_alm: Self::GLBL_ALM.from_data(data)?,
+                dgr_sf: Self::DGR_SF.from_data(data)?,
+                n: Self::N.from_data(data)?,
+                tracker: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m601
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.tracker) = Tracker::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 /// Type
@@ -218,5 +230,184 @@ impl crate::Value for Option<GlblAlm> {
         } else {
             65535u16.encode()
         }
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Tracker {
+    /// Tracker
+    ///
+    /// Descriptive name for this tracker unit
+    pub id: Option<String>,
+    /// Target Elevation
+    ///
+    /// Auto target elevation in degrees from horizontal.  Unimplemented for single axis azimuth tracker type
+    pub el_trgt: Option<i32>,
+    /// Target Azimuth
+    ///
+    /// Auto target azimuth  in degrees from true north towards east.  Unimplemented for single axis horizontal tracker type
+    pub az_trgt: Option<i32>,
+    /// Elevation
+    ///
+    /// Actual elevation position  in degrees from horizontal.  Unimplemented for single axis azimuth tracker type
+    pub el_pos: Option<i32>,
+    /// Azimuth
+    ///
+    /// Actual azimuth position  in degrees from true north towards east.  Unimplemented for single axis horizontal tracker type
+    pub az_pos: Option<i32>,
+    /// Manual Elevation
+    ///
+    /// Manual override target position of elevation in degrees from horizontal.  Unimplemented for single axis azimuth tracker type
+    pub el_ctl: Option<i32>,
+    /// Manual Azimuth
+    ///
+    /// Manual override target position of azimuth in degrees from true north towards east.  Unimplemented for single axis azimuth tracker type
+    pub az_ctl: Option<i32>,
+    /// Mode
+    ///
+    /// Control register. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
+    pub ctl: Option<TrackerCtl>,
+    /// Alarm
+    ///
+    /// Tracker alarm conditions
+    pub alm: Option<TrackerAlm>,
+}
+#[allow(missing_docs)]
+impl Tracker {
+    pub const ID: crate::Point<Self, Option<String>> = crate::Point::new(0, 8, false);
+    pub const EL_TRGT: crate::Point<Self, Option<i32>> = crate::Point::new(8, 2, false);
+    pub const AZ_TRGT: crate::Point<Self, Option<i32>> = crate::Point::new(10, 2, false);
+    pub const EL_POS: crate::Point<Self, Option<i32>> = crate::Point::new(12, 2, false);
+    pub const AZ_POS: crate::Point<Self, Option<i32>> = crate::Point::new(14, 2, false);
+    pub const EL_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(16, 2, true);
+    pub const AZ_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(18, 2, true);
+    pub const CTL: crate::Point<Self, Option<TrackerCtl>> = crate::Point::new(20, 1, true);
+    pub const ALM: crate::Point<Self, Option<TrackerAlm>> = crate::Point::new(21, 1, false);
+}
+impl crate::Group for Tracker {
+    const LEN: u16 = 22;
+}
+impl Tracker {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                id: Self::ID.from_data(data)?,
+                el_trgt: Self::EL_TRGT.from_data(data)?,
+                az_trgt: Self::AZ_TRGT.from_data(data)?,
+                el_pos: Self::EL_POS.from_data(data)?,
+                az_pos: Self::AZ_POS.from_data(data)?,
+                el_ctl: Self::EL_CTL.from_data(data)?,
+                az_ctl: Self::AZ_CTL.from_data(data)?,
+                ctl: Self::CTL.from_data(data)?,
+                alm: Self::ALM.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &TrackerController,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &TrackerController,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = Tracker::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+/// Mode
+///
+/// Control register. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[repr(u16)]
+pub enum TrackerCtl {
+    #[allow(missing_docs)]
+    Automatic = 0,
+    #[allow(missing_docs)]
+    Manual = 1,
+    #[allow(missing_docs)]
+    Calibrate = 2,
+}
+impl crate::Value for TrackerCtl {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<TrackerCtl> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                TrackerCtl::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+bitflags::bitflags! {
+    #[doc = " Alarm"] #[doc = " "] #[doc = " Tracker alarm conditions"] #[derive(Copy,
+    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct TrackerAlm : u16 {
+    #[allow(missing_docs)] const SetPoint = 1; #[allow(missing_docs)] const ObsEl = 2;
+    #[allow(missing_docs)] const ObsAz = 4; }
+}
+impl crate::Value for TrackerAlm {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<TrackerAlm> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535u16 {
+            Ok(Some(TrackerAlm::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535u16.encode()
+        }
+    }
+}
+impl crate::Model for TrackerController {
+    const ID: u16 = 601;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m601
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

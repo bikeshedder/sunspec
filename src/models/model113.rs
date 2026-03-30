@@ -1,10 +1,11 @@
 //! Inverter (Three Phase) FLOAT
+pub type Model113 = InverterThreePhaseFloat;
 /// Inverter (Three Phase) FLOAT
 ///
 /// Include this model for three phase inverter monitoring using float values
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model113 {
+pub struct InverterThreePhaseFloat {
     /// Amps
     ///
     /// AC Current
@@ -139,7 +140,7 @@ pub struct Model113 {
     pub evt_vnd4: Option<EvtVnd4>,
 }
 #[allow(missing_docs)]
-impl Model113 {
+impl InverterThreePhaseFloat {
     pub const A: crate::Point<Self, f32> = crate::Point::new(0, 2, false);
     pub const APH_A: crate::Point<Self, f32> = crate::Point::new(2, 2, false);
     pub const APH_B: crate::Point<Self, f32> = crate::Point::new(4, 2, false);
@@ -172,45 +173,52 @@ impl Model113 {
     pub const EVT_VND3: crate::Point<Self, Option<EvtVnd3>> = crate::Point::new(56, 2, false);
     pub const EVT_VND4: crate::Point<Self, Option<EvtVnd4>> = crate::Point::new(58, 2, false);
 }
-impl crate::Model for Model113 {
-    const ID: u16 = 113;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            a: Self::A.from_data(data)?,
-            aph_a: Self::APH_A.from_data(data)?,
-            aph_b: Self::APH_B.from_data(data)?,
-            aph_c: Self::APH_C.from_data(data)?,
-            pp_vph_ab: Self::PP_VPH_AB.from_data(data)?,
-            pp_vph_bc: Self::PP_VPH_BC.from_data(data)?,
-            pp_vph_ca: Self::PP_VPH_CA.from_data(data)?,
-            ph_vph_a: Self::PH_VPH_A.from_data(data)?,
-            ph_vph_b: Self::PH_VPH_B.from_data(data)?,
-            ph_vph_c: Self::PH_VPH_C.from_data(data)?,
-            w: Self::W.from_data(data)?,
-            hz: Self::HZ.from_data(data)?,
-            va: Self::VA.from_data(data)?,
-            v_ar: Self::V_AR.from_data(data)?,
-            pf: Self::PF.from_data(data)?,
-            wh: Self::WH.from_data(data)?,
-            dca: Self::DCA.from_data(data)?,
-            dcv: Self::DCV.from_data(data)?,
-            dcw: Self::DCW.from_data(data)?,
-            tmp_cab: Self::TMP_CAB.from_data(data)?,
-            tmp_snk: Self::TMP_SNK.from_data(data)?,
-            tmp_trns: Self::TMP_TRNS.from_data(data)?,
-            tmp_ot: Self::TMP_OT.from_data(data)?,
-            st: Self::ST.from_data(data)?,
-            st_vnd: Self::ST_VND.from_data(data)?,
-            evt1: Self::EVT1.from_data(data)?,
-            evt2: Self::EVT2.from_data(data)?,
-            evt_vnd1: Self::EVT_VND1.from_data(data)?,
-            evt_vnd2: Self::EVT_VND2.from_data(data)?,
-            evt_vnd3: Self::EVT_VND3.from_data(data)?,
-            evt_vnd4: Self::EVT_VND4.from_data(data)?,
-        })
+impl crate::Group for InverterThreePhaseFloat {
+    const LEN: u16 = 60;
+}
+impl InverterThreePhaseFloat {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                a: Self::A.from_data(data)?,
+                aph_a: Self::APH_A.from_data(data)?,
+                aph_b: Self::APH_B.from_data(data)?,
+                aph_c: Self::APH_C.from_data(data)?,
+                pp_vph_ab: Self::PP_VPH_AB.from_data(data)?,
+                pp_vph_bc: Self::PP_VPH_BC.from_data(data)?,
+                pp_vph_ca: Self::PP_VPH_CA.from_data(data)?,
+                ph_vph_a: Self::PH_VPH_A.from_data(data)?,
+                ph_vph_b: Self::PH_VPH_B.from_data(data)?,
+                ph_vph_c: Self::PH_VPH_C.from_data(data)?,
+                w: Self::W.from_data(data)?,
+                hz: Self::HZ.from_data(data)?,
+                va: Self::VA.from_data(data)?,
+                v_ar: Self::V_AR.from_data(data)?,
+                pf: Self::PF.from_data(data)?,
+                wh: Self::WH.from_data(data)?,
+                dca: Self::DCA.from_data(data)?,
+                dcv: Self::DCV.from_data(data)?,
+                dcw: Self::DCW.from_data(data)?,
+                tmp_cab: Self::TMP_CAB.from_data(data)?,
+                tmp_snk: Self::TMP_SNK.from_data(data)?,
+                tmp_trns: Self::TMP_TRNS.from_data(data)?,
+                tmp_ot: Self::TMP_OT.from_data(data)?,
+                st: Self::ST.from_data(data)?,
+                st_vnd: Self::ST_VND.from_data(data)?,
+                evt1: Self::EVT1.from_data(data)?,
+                evt2: Self::EVT2.from_data(data)?,
+                evt_vnd1: Self::EVT_VND1.from_data(data)?,
+                evt_vnd2: Self::EVT_VND2.from_data(data)?,
+                evt_vnd3: Self::EVT_VND3.from_data(data)?,
+                evt_vnd4: Self::EVT_VND4.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m113
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Operating State
@@ -460,5 +468,15 @@ impl crate::Value for Option<EvtVnd4> {
         } else {
             4294967295u32.encode()
         }
+    }
+}
+impl crate::Model for InverterThreePhaseFloat {
+    const ID: u16 = 113;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m113
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

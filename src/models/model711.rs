@@ -1,10 +1,11 @@
 //! DER Frequency Droop
+pub type Model711 = DerFreqDroop;
 /// DER Frequency Droop
 ///
 /// DER Frequency Droop model.
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model711 {
+pub struct DerFreqDroop {
     /// DER Frequency Droop Module Enable
     ///
     /// DER Frequency-Watt (Frequency-Droop) control enable.
@@ -45,9 +46,15 @@ pub struct Model711 {
     ///
     /// Open loop response time scale factor.
     pub rsp_tms_sf: i16,
+    /// Stored Controls
+    ///
+    /// Stored control sets.
+    ///
+    /// Comments: Stored control sets - Number of control sets contained in NCtl - The first set is read-only and indicates the current settings.
+    pub ctl: Vec<Ctl>,
 }
 #[allow(missing_docs)]
-impl Model711 {
+impl DerFreqDroop {
     pub const ENA: crate::Point<Self, Ena> = crate::Point::new(0, 1, true);
     pub const ADPT_CTL_REQ: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
     pub const ADPT_CTL_RSLT: crate::Point<Self, AdptCtlRslt> = crate::Point::new(2, 1, false);
@@ -59,24 +66,33 @@ impl Model711 {
     pub const K_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
     pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
 }
-impl crate::Model for Model711 {
-    const ID: u16 = 711;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            ena: Self::ENA.from_data(data)?,
-            adpt_ctl_req: Self::ADPT_CTL_REQ.from_data(data)?,
-            adpt_ctl_rslt: Self::ADPT_CTL_RSLT.from_data(data)?,
-            n_ctl: Self::N_CTL.from_data(data)?,
-            rvrt_tms: Self::RVRT_TMS.from_data(data)?,
-            rvrt_rem: Self::RVRT_REM.from_data(data)?,
-            rvrt_ctl: Self::RVRT_CTL.from_data(data)?,
-            db_sf: Self::DB_SF.from_data(data)?,
-            k_sf: Self::K_SF.from_data(data)?,
-            rsp_tms_sf: Self::RSP_TMS_SF.from_data(data)?,
-        })
+impl crate::Group for DerFreqDroop {
+    const LEN: u16 = 12;
+}
+impl DerFreqDroop {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                ena: Self::ENA.from_data(data)?,
+                adpt_ctl_req: Self::ADPT_CTL_REQ.from_data(data)?,
+                adpt_ctl_rslt: Self::ADPT_CTL_RSLT.from_data(data)?,
+                n_ctl: Self::N_CTL.from_data(data)?,
+                rvrt_tms: Self::RVRT_TMS.from_data(data)?,
+                rvrt_rem: Self::RVRT_REM.from_data(data)?,
+                rvrt_ctl: Self::RVRT_CTL.from_data(data)?,
+                db_sf: Self::DB_SF.from_data(data)?,
+                k_sf: Self::K_SF.from_data(data)?,
+                rsp_tms_sf: Self::RSP_TMS_SF.from_data(data)?,
+                ctl: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m711
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.ctl) = Ctl::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 /// DER Frequency Droop Module Enable
@@ -169,5 +185,145 @@ impl crate::Value for Option<AdptCtlRslt> {
         } else {
             65535.encode()
         }
+    }
+}
+/// Stored Controls
+///
+/// Stored control sets.
+///
+/// Comments: Stored control sets - Number of control sets contained in NCtl - The first set is read-only and indicates the current settings.
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Ctl {
+    /// Over-Frequency Deadband
+    ///
+    /// The deadband value for over-frequency conditions in Hz.
+    pub db_of: u32,
+    /// Under-Frequency Deadband
+    ///
+    /// The deadband value for under-frequency conditions in Hz.
+    pub db_uf: u32,
+    /// Over-Frequency Change Ratio
+    ///
+    /// Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.
+    pub k_of: u16,
+    /// Under-Frequency Change Ratio
+    ///
+    /// Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.
+    pub k_uf: u16,
+    /// Open-Loop Response Time
+    ///
+    /// The open-loop response time in seconds.
+    pub rsp_tms: u32,
+    /// Minimum Active Power
+    ///
+    /// The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.
+    pub p_min: Option<i16>,
+    /// Control Access
+    ///
+    /// Control read-write access.
+    pub read_only: CtlReadOnly,
+}
+#[allow(missing_docs)]
+impl Ctl {
+    pub const DB_OF: crate::Point<Self, u32> = crate::Point::new(0, 2, true);
+    pub const DB_UF: crate::Point<Self, u32> = crate::Point::new(2, 2, true);
+    pub const K_OF: crate::Point<Self, u16> = crate::Point::new(4, 1, true);
+    pub const K_UF: crate::Point<Self, u16> = crate::Point::new(5, 1, true);
+    pub const RSP_TMS: crate::Point<Self, u32> = crate::Point::new(6, 2, true);
+    pub const P_MIN: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, true);
+    pub const READ_ONLY: crate::Point<Self, CtlReadOnly> = crate::Point::new(9, 1, false);
+}
+impl crate::Group for Ctl {
+    const LEN: u16 = 10;
+}
+impl Ctl {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                db_of: Self::DB_OF.from_data(data)?,
+                db_uf: Self::DB_UF.from_data(data)?,
+                k_of: Self::K_OF.from_data(data)?,
+                k_uf: Self::K_UF.from_data(data)?,
+                rsp_tms: Self::RSP_TMS.from_data(data)?,
+                p_min: Self::P_MIN.from_data(data)?,
+                read_only: Self::READ_ONLY.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &DerFreqDroop,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &DerFreqDroop,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..model.n_ctl {
+            let group;
+            (data, group) = Ctl::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+/// Control Access
+///
+/// Control read-write access.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[repr(u16)]
+pub enum CtlReadOnly {
+    /// Read-Write Access
+    ///
+    /// Control has read-write access.
+    Rw = 0,
+    /// Read-Only Access
+    ///
+    /// Control has read-only access.
+    R = 1,
+}
+impl crate::Value for CtlReadOnly {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CtlReadOnly> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CtlReadOnly::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+impl crate::Model for DerFreqDroop {
+    const ID: u16 = 711;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m711
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

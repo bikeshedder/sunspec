@@ -1,4 +1,5 @@
 //! Dynamic Reactive Current
+pub type Model128 = ReactiveCurrent;
 /// Dynamic Reactive Current
 ///
 /// Dynamic Reactive Current
@@ -6,7 +7,7 @@
 /// Detail: Ref 3: 8.10.1.2; Ref 4: 12
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model128 {
+pub struct ReactiveCurrent {
     /// ArGraMod
     ///
     /// Indicates if gradients trend toward zero at the edges of the deadband or trend toward zero at the center of the deadband.
@@ -61,7 +62,7 @@ pub struct Model128 {
     pub v_ref_pct_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model128 {
+impl ReactiveCurrent {
     pub const AR_GRA_MOD: crate::Point<Self, ArGraMod> = crate::Point::new(0, 1, true);
     pub const AR_GRA_SAG: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
     pub const AR_GRA_SWELL: crate::Point<Self, u16> = crate::Point::new(2, 1, true);
@@ -76,27 +77,34 @@ impl Model128 {
     pub const AR_GRA_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const V_REF_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
 }
-impl crate::Model for Model128 {
-    const ID: u16 = 128;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            ar_gra_mod: Self::AR_GRA_MOD.from_data(data)?,
-            ar_gra_sag: Self::AR_GRA_SAG.from_data(data)?,
-            ar_gra_swell: Self::AR_GRA_SWELL.from_data(data)?,
-            mod_ena: Self::MOD_ENA.from_data(data)?,
-            fil_tms: Self::FIL_TMS.from_data(data)?,
-            db_v_min: Self::DB_V_MIN.from_data(data)?,
-            db_v_max: Self::DB_V_MAX.from_data(data)?,
-            blk_zn_v: Self::BLK_ZN_V.from_data(data)?,
-            hys_blk_zn_v: Self::HYS_BLK_ZN_V.from_data(data)?,
-            blk_zn_tmms: Self::BLK_ZN_TMMS.from_data(data)?,
-            hold_tmms: Self::HOLD_TMMS.from_data(data)?,
-            ar_gra_sf: Self::AR_GRA_SF.from_data(data)?,
-            v_ref_pct_sf: Self::V_REF_PCT_SF.from_data(data)?,
-        })
+impl crate::Group for ReactiveCurrent {
+    const LEN: u16 = 14;
+}
+impl ReactiveCurrent {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                ar_gra_mod: Self::AR_GRA_MOD.from_data(data)?,
+                ar_gra_sag: Self::AR_GRA_SAG.from_data(data)?,
+                ar_gra_swell: Self::AR_GRA_SWELL.from_data(data)?,
+                mod_ena: Self::MOD_ENA.from_data(data)?,
+                fil_tms: Self::FIL_TMS.from_data(data)?,
+                db_v_min: Self::DB_V_MIN.from_data(data)?,
+                db_v_max: Self::DB_V_MAX.from_data(data)?,
+                blk_zn_v: Self::BLK_ZN_V.from_data(data)?,
+                hys_blk_zn_v: Self::HYS_BLK_ZN_V.from_data(data)?,
+                blk_zn_tmms: Self::BLK_ZN_TMMS.from_data(data)?,
+                hold_tmms: Self::HOLD_TMMS.from_data(data)?,
+                ar_gra_sf: Self::AR_GRA_SF.from_data(data)?,
+                v_ref_pct_sf: Self::V_REF_PCT_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m128
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// ArGraMod
@@ -169,5 +177,15 @@ impl crate::Value for Option<ModEna> {
         } else {
             65535u16.encode()
         }
+    }
+}
+impl crate::Model for ReactiveCurrent {
+    const ID: u16 = 128;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m128
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

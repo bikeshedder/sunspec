@@ -1,10 +1,11 @@
 //! Mini Met Model
+pub type Model308 = MiniMet;
 /// Mini Met Model
 ///
 /// Include to support a few basic measurements
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model308 {
+pub struct MiniMet {
     /// GHI
     ///
     /// Global Horizontal Irradiance
@@ -19,23 +20,40 @@ pub struct Model308 {
     pub wnd_spd: Option<u16>,
 }
 #[allow(missing_docs)]
-impl Model308 {
+impl MiniMet {
     pub const GHI: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
     pub const TMP_BOM: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
     pub const TMP_AMB: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
     pub const WND_SPD: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
 }
-impl crate::Model for Model308 {
-    const ID: u16 = 308;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            ghi: Self::GHI.from_data(data)?,
-            tmp_bom: Self::TMP_BOM.from_data(data)?,
-            tmp_amb: Self::TMP_AMB.from_data(data)?,
-            wnd_spd: Self::WND_SPD.from_data(data)?,
-        })
+impl crate::Group for MiniMet {
+    const LEN: u16 = 4;
+}
+impl MiniMet {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                ghi: Self::GHI.from_data(data)?,
+                tmp_bom: Self::TMP_BOM.from_data(data)?,
+                tmp_amb: Self::TMP_AMB.from_data(data)?,
+                wnd_spd: Self::WND_SPD.from_data(data)?,
+            },
+        ))
     }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+}
+impl crate::Model for MiniMet {
+    const ID: u16 = 308;
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m308
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

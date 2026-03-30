@@ -1,10 +1,11 @@
 //! DERCtl
+pub type Model715 = DerCtl;
 /// DERCtl
 ///
 /// DER Control
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model715 {
+pub struct DerCtl {
     /// Control Mode
     ///
     /// DER control mode. Enumeration.
@@ -29,26 +30,33 @@ pub struct Model715 {
     pub op_ctl: Option<OpCtl>,
 }
 #[allow(missing_docs)]
-impl Model715 {
+impl DerCtl {
     pub const LOC_REM_CTL: crate::Point<Self, Option<LocRemCtl>> = crate::Point::new(0, 1, false);
     pub const DER_HB: crate::Point<Self, Option<u32>> = crate::Point::new(1, 2, false);
     pub const CONTROLLER_HB: crate::Point<Self, Option<u32>> = crate::Point::new(3, 2, true);
     pub const ALARM_RESET: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const OP_CTL: crate::Point<Self, Option<OpCtl>> = crate::Point::new(6, 1, true);
 }
-impl crate::Model for Model715 {
-    const ID: u16 = 715;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            loc_rem_ctl: Self::LOC_REM_CTL.from_data(data)?,
-            der_hb: Self::DER_HB.from_data(data)?,
-            controller_hb: Self::CONTROLLER_HB.from_data(data)?,
-            alarm_reset: Self::ALARM_RESET.from_data(data)?,
-            op_ctl: Self::OP_CTL.from_data(data)?,
-        })
+impl crate::Group for DerCtl {
+    const LEN: u16 = 7;
+}
+impl DerCtl {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                loc_rem_ctl: Self::LOC_REM_CTL.from_data(data)?,
+                der_hb: Self::DER_HB.from_data(data)?,
+                controller_hb: Self::CONTROLLER_HB.from_data(data)?,
+                alarm_reset: Self::ALARM_RESET.from_data(data)?,
+                op_ctl: Self::OP_CTL.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m715
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Control Mode
@@ -137,5 +145,15 @@ impl crate::Value for Option<OpCtl> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for DerCtl {
+    const ID: u16 = 715;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m715
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

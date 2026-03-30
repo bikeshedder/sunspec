@@ -1,10 +1,11 @@
 //! split single phase (ABN) meter
+pub type Model212 = AcMeterAbnFloat;
 /// split single phase (ABN) meter
 ///
 /// Detail: Float
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model212 {
+pub struct AcMeterAbnFloat {
     /// Amps
     ///
     /// Total AC Current
@@ -183,7 +184,7 @@ pub struct Model212 {
     pub evt: Evt,
 }
 #[allow(missing_docs)]
-impl Model212 {
+impl AcMeterAbnFloat {
     pub const A: crate::Point<Self, f32> = crate::Point::new(0, 2, false);
     pub const APH_A: crate::Point<Self, f32> = crate::Point::new(2, 2, false);
     pub const APH_B: crate::Point<Self, f32> = crate::Point::new(4, 2, false);
@@ -259,76 +260,83 @@ impl Model212 {
         crate::Point::new(120, 2, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(122, 2, false);
 }
-impl crate::Model for Model212 {
-    const ID: u16 = 212;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            a: Self::A.from_data(data)?,
-            aph_a: Self::APH_A.from_data(data)?,
-            aph_b: Self::APH_B.from_data(data)?,
-            aph_c: Self::APH_C.from_data(data)?,
-            ph_v: Self::PH_V.from_data(data)?,
-            ph_vph_a: Self::PH_VPH_A.from_data(data)?,
-            ph_vph_b: Self::PH_VPH_B.from_data(data)?,
-            ph_vph_c: Self::PH_VPH_C.from_data(data)?,
-            ppv: Self::PPV.from_data(data)?,
-            pp_vph_ab: Self::PP_VPH_AB.from_data(data)?,
-            pp_vph_bc: Self::PP_VPH_BC.from_data(data)?,
-            pp_vph_ca: Self::PP_VPH_CA.from_data(data)?,
-            hz: Self::HZ.from_data(data)?,
-            w: Self::W.from_data(data)?,
-            wph_a: Self::WPH_A.from_data(data)?,
-            wph_b: Self::WPH_B.from_data(data)?,
-            wph_c: Self::WPH_C.from_data(data)?,
-            va: Self::VA.from_data(data)?,
-            v_aph_a: Self::V_APH_A.from_data(data)?,
-            v_aph_b: Self::V_APH_B.from_data(data)?,
-            v_aph_c: Self::V_APH_C.from_data(data)?,
-            var: Self::VAR.from_data(data)?,
-            va_rph_a: Self::VA_RPH_A.from_data(data)?,
-            va_rph_b: Self::VA_RPH_B.from_data(data)?,
-            va_rph_c: Self::VA_RPH_C.from_data(data)?,
-            pf: Self::PF.from_data(data)?,
-            p_fph_a: Self::P_FPH_A.from_data(data)?,
-            p_fph_b: Self::P_FPH_B.from_data(data)?,
-            p_fph_c: Self::P_FPH_C.from_data(data)?,
-            tot_wh_exp: Self::TOT_WH_EXP.from_data(data)?,
-            tot_wh_exp_ph_a: Self::TOT_WH_EXP_PH_A.from_data(data)?,
-            tot_wh_exp_ph_b: Self::TOT_WH_EXP_PH_B.from_data(data)?,
-            tot_wh_exp_ph_c: Self::TOT_WH_EXP_PH_C.from_data(data)?,
-            tot_wh_imp: Self::TOT_WH_IMP.from_data(data)?,
-            tot_wh_imp_ph_a: Self::TOT_WH_IMP_PH_A.from_data(data)?,
-            tot_wh_imp_ph_b: Self::TOT_WH_IMP_PH_B.from_data(data)?,
-            tot_wh_imp_ph_c: Self::TOT_WH_IMP_PH_C.from_data(data)?,
-            tot_v_ah_exp: Self::TOT_V_AH_EXP.from_data(data)?,
-            tot_v_ah_exp_ph_a: Self::TOT_V_AH_EXP_PH_A.from_data(data)?,
-            tot_v_ah_exp_ph_b: Self::TOT_V_AH_EXP_PH_B.from_data(data)?,
-            tot_v_ah_exp_ph_c: Self::TOT_V_AH_EXP_PH_C.from_data(data)?,
-            tot_v_ah_imp: Self::TOT_V_AH_IMP.from_data(data)?,
-            tot_v_ah_imp_ph_a: Self::TOT_V_AH_IMP_PH_A.from_data(data)?,
-            tot_v_ah_imp_ph_b: Self::TOT_V_AH_IMP_PH_B.from_data(data)?,
-            tot_v_ah_imp_ph_c: Self::TOT_V_AH_IMP_PH_C.from_data(data)?,
-            tot_v_arh_imp_q1: Self::TOT_V_ARH_IMP_Q1.from_data(data)?,
-            tot_v_arh_imp_q1ph_a: Self::TOT_V_ARH_IMP_Q1PH_A.from_data(data)?,
-            tot_v_arh_imp_q1ph_b: Self::TOT_V_ARH_IMP_Q1PH_B.from_data(data)?,
-            tot_v_arh_imp_q1ph_c: Self::TOT_V_ARH_IMP_Q1PH_C.from_data(data)?,
-            tot_v_arh_imp_q2: Self::TOT_V_ARH_IMP_Q2.from_data(data)?,
-            tot_v_arh_imp_q2ph_a: Self::TOT_V_ARH_IMP_Q2PH_A.from_data(data)?,
-            tot_v_arh_imp_q2ph_b: Self::TOT_V_ARH_IMP_Q2PH_B.from_data(data)?,
-            tot_v_arh_imp_q2ph_c: Self::TOT_V_ARH_IMP_Q2PH_C.from_data(data)?,
-            tot_v_arh_exp_q3: Self::TOT_V_ARH_EXP_Q3.from_data(data)?,
-            tot_v_arh_exp_q3ph_a: Self::TOT_V_ARH_EXP_Q3PH_A.from_data(data)?,
-            tot_v_arh_exp_q3ph_b: Self::TOT_V_ARH_EXP_Q3PH_B.from_data(data)?,
-            tot_v_arh_exp_q3ph_c: Self::TOT_V_ARH_EXP_Q3PH_C.from_data(data)?,
-            tot_v_arh_exp_q4: Self::TOT_V_ARH_EXP_Q4.from_data(data)?,
-            tot_v_arh_exp_q4ph_a: Self::TOT_V_ARH_EXP_Q4PH_A.from_data(data)?,
-            tot_v_arh_exp_q4ph_b: Self::TOT_V_ARH_EXP_Q4PH_B.from_data(data)?,
-            tot_v_arh_exp_q4ph_c: Self::TOT_V_ARH_EXP_Q4PH_C.from_data(data)?,
-            evt: Self::EVT.from_data(data)?,
-        })
+impl crate::Group for AcMeterAbnFloat {
+    const LEN: u16 = 124;
+}
+impl AcMeterAbnFloat {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                a: Self::A.from_data(data)?,
+                aph_a: Self::APH_A.from_data(data)?,
+                aph_b: Self::APH_B.from_data(data)?,
+                aph_c: Self::APH_C.from_data(data)?,
+                ph_v: Self::PH_V.from_data(data)?,
+                ph_vph_a: Self::PH_VPH_A.from_data(data)?,
+                ph_vph_b: Self::PH_VPH_B.from_data(data)?,
+                ph_vph_c: Self::PH_VPH_C.from_data(data)?,
+                ppv: Self::PPV.from_data(data)?,
+                pp_vph_ab: Self::PP_VPH_AB.from_data(data)?,
+                pp_vph_bc: Self::PP_VPH_BC.from_data(data)?,
+                pp_vph_ca: Self::PP_VPH_CA.from_data(data)?,
+                hz: Self::HZ.from_data(data)?,
+                w: Self::W.from_data(data)?,
+                wph_a: Self::WPH_A.from_data(data)?,
+                wph_b: Self::WPH_B.from_data(data)?,
+                wph_c: Self::WPH_C.from_data(data)?,
+                va: Self::VA.from_data(data)?,
+                v_aph_a: Self::V_APH_A.from_data(data)?,
+                v_aph_b: Self::V_APH_B.from_data(data)?,
+                v_aph_c: Self::V_APH_C.from_data(data)?,
+                var: Self::VAR.from_data(data)?,
+                va_rph_a: Self::VA_RPH_A.from_data(data)?,
+                va_rph_b: Self::VA_RPH_B.from_data(data)?,
+                va_rph_c: Self::VA_RPH_C.from_data(data)?,
+                pf: Self::PF.from_data(data)?,
+                p_fph_a: Self::P_FPH_A.from_data(data)?,
+                p_fph_b: Self::P_FPH_B.from_data(data)?,
+                p_fph_c: Self::P_FPH_C.from_data(data)?,
+                tot_wh_exp: Self::TOT_WH_EXP.from_data(data)?,
+                tot_wh_exp_ph_a: Self::TOT_WH_EXP_PH_A.from_data(data)?,
+                tot_wh_exp_ph_b: Self::TOT_WH_EXP_PH_B.from_data(data)?,
+                tot_wh_exp_ph_c: Self::TOT_WH_EXP_PH_C.from_data(data)?,
+                tot_wh_imp: Self::TOT_WH_IMP.from_data(data)?,
+                tot_wh_imp_ph_a: Self::TOT_WH_IMP_PH_A.from_data(data)?,
+                tot_wh_imp_ph_b: Self::TOT_WH_IMP_PH_B.from_data(data)?,
+                tot_wh_imp_ph_c: Self::TOT_WH_IMP_PH_C.from_data(data)?,
+                tot_v_ah_exp: Self::TOT_V_AH_EXP.from_data(data)?,
+                tot_v_ah_exp_ph_a: Self::TOT_V_AH_EXP_PH_A.from_data(data)?,
+                tot_v_ah_exp_ph_b: Self::TOT_V_AH_EXP_PH_B.from_data(data)?,
+                tot_v_ah_exp_ph_c: Self::TOT_V_AH_EXP_PH_C.from_data(data)?,
+                tot_v_ah_imp: Self::TOT_V_AH_IMP.from_data(data)?,
+                tot_v_ah_imp_ph_a: Self::TOT_V_AH_IMP_PH_A.from_data(data)?,
+                tot_v_ah_imp_ph_b: Self::TOT_V_AH_IMP_PH_B.from_data(data)?,
+                tot_v_ah_imp_ph_c: Self::TOT_V_AH_IMP_PH_C.from_data(data)?,
+                tot_v_arh_imp_q1: Self::TOT_V_ARH_IMP_Q1.from_data(data)?,
+                tot_v_arh_imp_q1ph_a: Self::TOT_V_ARH_IMP_Q1PH_A.from_data(data)?,
+                tot_v_arh_imp_q1ph_b: Self::TOT_V_ARH_IMP_Q1PH_B.from_data(data)?,
+                tot_v_arh_imp_q1ph_c: Self::TOT_V_ARH_IMP_Q1PH_C.from_data(data)?,
+                tot_v_arh_imp_q2: Self::TOT_V_ARH_IMP_Q2.from_data(data)?,
+                tot_v_arh_imp_q2ph_a: Self::TOT_V_ARH_IMP_Q2PH_A.from_data(data)?,
+                tot_v_arh_imp_q2ph_b: Self::TOT_V_ARH_IMP_Q2PH_B.from_data(data)?,
+                tot_v_arh_imp_q2ph_c: Self::TOT_V_ARH_IMP_Q2PH_C.from_data(data)?,
+                tot_v_arh_exp_q3: Self::TOT_V_ARH_EXP_Q3.from_data(data)?,
+                tot_v_arh_exp_q3ph_a: Self::TOT_V_ARH_EXP_Q3PH_A.from_data(data)?,
+                tot_v_arh_exp_q3ph_b: Self::TOT_V_ARH_EXP_Q3PH_B.from_data(data)?,
+                tot_v_arh_exp_q3ph_c: Self::TOT_V_ARH_EXP_Q3PH_C.from_data(data)?,
+                tot_v_arh_exp_q4: Self::TOT_V_ARH_EXP_Q4.from_data(data)?,
+                tot_v_arh_exp_q4ph_a: Self::TOT_V_ARH_EXP_Q4PH_A.from_data(data)?,
+                tot_v_arh_exp_q4ph_b: Self::TOT_V_ARH_EXP_Q4PH_B.from_data(data)?,
+                tot_v_arh_exp_q4ph_c: Self::TOT_V_ARH_EXP_Q4PH_C.from_data(data)?,
+                evt: Self::EVT.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m212
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -379,5 +387,15 @@ impl crate::Value for Option<Evt> {
         } else {
             4294967295u32.encode()
         }
+    }
+}
+impl crate::Model for AcMeterAbnFloat {
+    const ID: u16 = 212;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m212
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

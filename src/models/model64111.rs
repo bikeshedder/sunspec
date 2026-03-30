@@ -76,37 +76,44 @@ impl Model64111 {
     pub const LIFE_TIME_MAX_BATT: crate::Point<Self, u16> = crate::Point::new(21, 1, false);
     pub const LIFE_TIME_MAX_VOC: crate::Point<Self, u16> = crate::Point::new(22, 1, false);
 }
-impl crate::Model for Model64111 {
-    const ID: u16 = 64111;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            port: Self::PORT.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            a_sf: Self::A_SF.from_data(data)?,
-            p_sf: Self::P_SF.from_data(data)?,
-            ah_sf: Self::AH_SF.from_data(data)?,
-            kwh_sf: Self::KWH_SF.from_data(data)?,
-            batt_v: Self::BATT_V.from_data(data)?,
-            array_v: Self::ARRAY_V.from_data(data)?,
-            output_a: Self::OUTPUT_A.from_data(data)?,
-            input_a: Self::INPUT_A.from_data(data)?,
-            charger_st: Self::CHARGER_ST.from_data(data)?,
-            output_w: Self::OUTPUT_W.from_data(data)?,
-            today_min_bat_v: Self::TODAY_MIN_BAT_V.from_data(data)?,
-            today_max_bat_v: Self::TODAY_MAX_BAT_V.from_data(data)?,
-            vocv: Self::VOCV.from_data(data)?,
-            today_max_voc: Self::TODAY_MAX_VOC.from_data(data)?,
-            todayk_wh_output: Self::TODAYK_WH_OUTPUT.from_data(data)?,
-            today_ah_output: Self::TODAY_AH_OUTPUT.from_data(data)?,
-            life_time_kwh_out: Self::LIFE_TIME_KWH_OUT.from_data(data)?,
-            life_time_ah_out: Self::LIFE_TIME_AH_OUT.from_data(data)?,
-            life_time_max_out: Self::LIFE_TIME_MAX_OUT.from_data(data)?,
-            life_time_max_batt: Self::LIFE_TIME_MAX_BATT.from_data(data)?,
-            life_time_max_voc: Self::LIFE_TIME_MAX_VOC.from_data(data)?,
-        })
+impl crate::Group for Model64111 {
+    const LEN: u16 = 23;
+}
+impl Model64111 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                port: Self::PORT.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                a_sf: Self::A_SF.from_data(data)?,
+                p_sf: Self::P_SF.from_data(data)?,
+                ah_sf: Self::AH_SF.from_data(data)?,
+                kwh_sf: Self::KWH_SF.from_data(data)?,
+                batt_v: Self::BATT_V.from_data(data)?,
+                array_v: Self::ARRAY_V.from_data(data)?,
+                output_a: Self::OUTPUT_A.from_data(data)?,
+                input_a: Self::INPUT_A.from_data(data)?,
+                charger_st: Self::CHARGER_ST.from_data(data)?,
+                output_w: Self::OUTPUT_W.from_data(data)?,
+                today_min_bat_v: Self::TODAY_MIN_BAT_V.from_data(data)?,
+                today_max_bat_v: Self::TODAY_MAX_BAT_V.from_data(data)?,
+                vocv: Self::VOCV.from_data(data)?,
+                today_max_voc: Self::TODAY_MAX_VOC.from_data(data)?,
+                todayk_wh_output: Self::TODAYK_WH_OUTPUT.from_data(data)?,
+                today_ah_output: Self::TODAY_AH_OUTPUT.from_data(data)?,
+                life_time_kwh_out: Self::LIFE_TIME_KWH_OUT.from_data(data)?,
+                life_time_ah_out: Self::LIFE_TIME_AH_OUT.from_data(data)?,
+                life_time_max_out: Self::LIFE_TIME_MAX_OUT.from_data(data)?,
+                life_time_max_batt: Self::LIFE_TIME_MAX_BATT.from_data(data)?,
+                life_time_max_voc: Self::LIFE_TIME_MAX_VOC.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m64111
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Operating State
@@ -151,5 +158,15 @@ impl crate::Value for Option<ChargerSt> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for Model64111 {
+    const ID: u16 = 64111;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64111
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

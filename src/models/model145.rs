@@ -1,10 +1,11 @@
 //! Extended Settings
+pub type Model145 = ExtSettings;
 /// Extended Settings
 ///
 /// Inverter controls extended settings
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model145 {
+pub struct ExtSettings {
     /// Ramp Up Rate
     ///
     /// Ramp up rate as a percentage of max current.
@@ -39,7 +40,7 @@ pub struct Model145 {
     pub rmp_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model145 {
+impl ExtSettings {
     pub const NOM_RMP_UP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const NOM_RMP_DN_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
     pub const EMG_RMP_UP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
@@ -49,21 +50,38 @@ impl Model145 {
     pub const A_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
     pub const RMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
 }
-impl crate::Model for Model145 {
-    const ID: u16 = 145;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            nom_rmp_up_rte: Self::NOM_RMP_UP_RTE.from_data(data)?,
-            nom_rmp_dn_rte: Self::NOM_RMP_DN_RTE.from_data(data)?,
-            emg_rmp_up_rte: Self::EMG_RMP_UP_RTE.from_data(data)?,
-            emg_rmp_dn_rte: Self::EMG_RMP_DN_RTE.from_data(data)?,
-            conn_rmp_up_rte: Self::CONN_RMP_UP_RTE.from_data(data)?,
-            conn_rmp_dn_rte: Self::CONN_RMP_DN_RTE.from_data(data)?,
-            a_gra: Self::A_GRA.from_data(data)?,
-            rmp_sf: Self::RMP_SF.from_data(data)?,
-        })
+impl crate::Group for ExtSettings {
+    const LEN: u16 = 8;
+}
+impl ExtSettings {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                nom_rmp_up_rte: Self::NOM_RMP_UP_RTE.from_data(data)?,
+                nom_rmp_dn_rte: Self::NOM_RMP_DN_RTE.from_data(data)?,
+                emg_rmp_up_rte: Self::EMG_RMP_UP_RTE.from_data(data)?,
+                emg_rmp_dn_rte: Self::EMG_RMP_DN_RTE.from_data(data)?,
+                conn_rmp_up_rte: Self::CONN_RMP_UP_RTE.from_data(data)?,
+                conn_rmp_dn_rte: Self::CONN_RMP_DN_RTE.from_data(data)?,
+                a_gra: Self::A_GRA.from_data(data)?,
+                rmp_sf: Self::RMP_SF.from_data(data)?,
+            },
+        ))
     }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+}
+impl crate::Model for ExtSettings {
+    const ID: u16 = 145;
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m145
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

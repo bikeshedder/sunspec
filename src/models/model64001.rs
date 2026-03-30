@@ -112,49 +112,56 @@ impl Model64001 {
     pub const S4_VER: crate::Point<Self, Option<String>> = crate::Point::new(64, 2, false);
     pub const S4_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(66, 5, false);
 }
-impl crate::Model for Model64001 {
-    const ID: u16 = 64001;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            cmd: Self::CMD.from_data(data)?,
-            hw_rev: Self::HW_REV.from_data(data)?,
-            rsfw_rev: Self::RSFW_REV.from_data(data)?,
-            osfw_rev: Self::OSFW_REV.from_data(data)?,
-            prod_rev: Self::PROD_REV.from_data(data)?,
-            boots: Self::BOOTS.from_data(data)?,
-            switch: Self::SWITCH.from_data(data)?,
-            sensors: Self::SENSORS.from_data(data)?,
-            talking: Self::TALKING.from_data(data)?,
-            status: Self::STATUS.from_data(data)?,
-            config: Self::CONFIG.from_data(data)?,
-            le_dblink: Self::LE_DBLINK.from_data(data)?,
-            le_don: Self::LE_DON.from_data(data)?,
-            reserved: Self::RESERVED.from_data(data)?,
-            loc: Self::LOC.from_data(data)?,
-            s1id: Self::S1ID.from_data(data)?,
-            s1_addr: Self::S1_ADDR.from_data(data)?,
-            s1os_ver: Self::S1OS_VER.from_data(data)?,
-            s1_ver: Self::S1_VER.from_data(data)?,
-            s1_serial: Self::S1_SERIAL.from_data(data)?,
-            s2id: Self::S2ID.from_data(data)?,
-            s2_addr: Self::S2_ADDR.from_data(data)?,
-            s2os_ver: Self::S2OS_VER.from_data(data)?,
-            s2_ver: Self::S2_VER.from_data(data)?,
-            s2_serial: Self::S2_SERIAL.from_data(data)?,
-            s3id: Self::S3ID.from_data(data)?,
-            s3_addr: Self::S3_ADDR.from_data(data)?,
-            s3os_ver: Self::S3OS_VER.from_data(data)?,
-            s3_ver: Self::S3_VER.from_data(data)?,
-            s3_serial: Self::S3_SERIAL.from_data(data)?,
-            s4id: Self::S4ID.from_data(data)?,
-            s4_addr: Self::S4_ADDR.from_data(data)?,
-            s4os_ver: Self::S4OS_VER.from_data(data)?,
-            s4_ver: Self::S4_VER.from_data(data)?,
-            s4_serial: Self::S4_SERIAL.from_data(data)?,
-        })
+impl crate::Group for Model64001 {
+    const LEN: u16 = 71;
+}
+impl Model64001 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                cmd: Self::CMD.from_data(data)?,
+                hw_rev: Self::HW_REV.from_data(data)?,
+                rsfw_rev: Self::RSFW_REV.from_data(data)?,
+                osfw_rev: Self::OSFW_REV.from_data(data)?,
+                prod_rev: Self::PROD_REV.from_data(data)?,
+                boots: Self::BOOTS.from_data(data)?,
+                switch: Self::SWITCH.from_data(data)?,
+                sensors: Self::SENSORS.from_data(data)?,
+                talking: Self::TALKING.from_data(data)?,
+                status: Self::STATUS.from_data(data)?,
+                config: Self::CONFIG.from_data(data)?,
+                le_dblink: Self::LE_DBLINK.from_data(data)?,
+                le_don: Self::LE_DON.from_data(data)?,
+                reserved: Self::RESERVED.from_data(data)?,
+                loc: Self::LOC.from_data(data)?,
+                s1id: Self::S1ID.from_data(data)?,
+                s1_addr: Self::S1_ADDR.from_data(data)?,
+                s1os_ver: Self::S1OS_VER.from_data(data)?,
+                s1_ver: Self::S1_VER.from_data(data)?,
+                s1_serial: Self::S1_SERIAL.from_data(data)?,
+                s2id: Self::S2ID.from_data(data)?,
+                s2_addr: Self::S2_ADDR.from_data(data)?,
+                s2os_ver: Self::S2OS_VER.from_data(data)?,
+                s2_ver: Self::S2_VER.from_data(data)?,
+                s2_serial: Self::S2_SERIAL.from_data(data)?,
+                s3id: Self::S3ID.from_data(data)?,
+                s3_addr: Self::S3_ADDR.from_data(data)?,
+                s3os_ver: Self::S3OS_VER.from_data(data)?,
+                s3_ver: Self::S3_VER.from_data(data)?,
+                s3_serial: Self::S3_SERIAL.from_data(data)?,
+                s4id: Self::S4ID.from_data(data)?,
+                s4_addr: Self::S4_ADDR.from_data(data)?,
+                s4os_ver: Self::S4OS_VER.from_data(data)?,
+                s4_ver: Self::S4_VER.from_data(data)?,
+                s4_serial: Self::S4_SERIAL.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m64001
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -248,5 +255,15 @@ impl crate::Value for Option<Config> {
         } else {
             65535u16.encode()
         }
+    }
+}
+impl crate::Model for Model64001 {
+    const ID: u16 = 64001;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64001
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

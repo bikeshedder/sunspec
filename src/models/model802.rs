@@ -1,8 +1,9 @@
 //! Battery Base Model
+pub type Model802 = Battery;
 /// Battery Base Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model802 {
+pub struct Battery {
     /// Nameplate Charge Capacity
     ///
     /// Nameplate charge capacity in amp-hours.
@@ -247,7 +248,7 @@ pub struct Model802 {
     pub w_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model802 {
+impl Battery {
     pub const AH_RTG: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
     pub const WH_RTG: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
     pub const W_CHA_RTE_MAX: crate::Point<Self, u16> = crate::Point::new(2, 1, false);
@@ -306,70 +307,77 @@ impl Model802 {
     pub const A_MAX_SF: crate::Point<Self, i16> = crate::Point::new(60, 1, false);
     pub const W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(61, 1, false);
 }
-impl crate::Model for Model802 {
-    const ID: u16 = 802;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            ah_rtg: Self::AH_RTG.from_data(data)?,
-            wh_rtg: Self::WH_RTG.from_data(data)?,
-            w_cha_rte_max: Self::W_CHA_RTE_MAX.from_data(data)?,
-            w_dis_cha_rte_max: Self::W_DIS_CHA_RTE_MAX.from_data(data)?,
-            dis_cha_rte: Self::DIS_CHA_RTE.from_data(data)?,
-            soc_max: Self::SOC_MAX.from_data(data)?,
-            soc_min: Self::SOC_MIN.from_data(data)?,
-            soc_rsv_max: Self::SOC_RSV_MAX.from_data(data)?,
-            soc_rsv_min: Self::SOC_RSV_MIN.from_data(data)?,
-            soc: Self::SOC.from_data(data)?,
-            do_d: Self::DO_D.from_data(data)?,
-            soh: Self::SOH.from_data(data)?,
-            n_cyc: Self::N_CYC.from_data(data)?,
-            cha_st: Self::CHA_ST.from_data(data)?,
-            loc_rem_ctl: Self::LOC_REM_CTL.from_data(data)?,
-            hb: Self::HB.from_data(data)?,
-            ctrl_hb: Self::CTRL_HB.from_data(data)?,
-            alm_rst: Self::ALM_RST.from_data(data)?,
-            typ: Self::TYP.from_data(data)?,
-            state: Self::STATE.from_data(data)?,
-            state_vnd: Self::STATE_VND.from_data(data)?,
-            warr_dt: Self::WARR_DT.from_data(data)?,
-            evt1: Self::EVT1.from_data(data)?,
-            evt2: Self::EVT2.from_data(data)?,
-            evt_vnd1: Self::EVT_VND1.from_data(data)?,
-            evt_vnd2: Self::EVT_VND2.from_data(data)?,
-            v: Self::V.from_data(data)?,
-            v_max: Self::V_MAX.from_data(data)?,
-            v_min: Self::V_MIN.from_data(data)?,
-            cell_v_max: Self::CELL_V_MAX.from_data(data)?,
-            cell_v_max_str: Self::CELL_V_MAX_STR.from_data(data)?,
-            cell_v_max_mod: Self::CELL_V_MAX_MOD.from_data(data)?,
-            cell_v_min: Self::CELL_V_MIN.from_data(data)?,
-            cell_v_min_str: Self::CELL_V_MIN_STR.from_data(data)?,
-            cell_v_min_mod: Self::CELL_V_MIN_MOD.from_data(data)?,
-            cell_v_avg: Self::CELL_V_AVG.from_data(data)?,
-            a: Self::A.from_data(data)?,
-            a_cha_max: Self::A_CHA_MAX.from_data(data)?,
-            a_dis_cha_max: Self::A_DIS_CHA_MAX.from_data(data)?,
-            w: Self::W.from_data(data)?,
-            req_inv_state: Self::REQ_INV_STATE.from_data(data)?,
-            req_w: Self::REQ_W.from_data(data)?,
-            set_op: Self::SET_OP.from_data(data)?,
-            set_inv_state: Self::SET_INV_STATE.from_data(data)?,
-            ah_rtg_sf: Self::AH_RTG_SF.from_data(data)?,
-            wh_rtg_sf: Self::WH_RTG_SF.from_data(data)?,
-            w_cha_dis_cha_max_sf: Self::W_CHA_DIS_CHA_MAX_SF.from_data(data)?,
-            dis_cha_rte_sf: Self::DIS_CHA_RTE_SF.from_data(data)?,
-            soc_sf: Self::SOC_SF.from_data(data)?,
-            do_d_sf: Self::DO_D_SF.from_data(data)?,
-            soh_sf: Self::SOH_SF.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            cell_v_sf: Self::CELL_V_SF.from_data(data)?,
-            a_sf: Self::A_SF.from_data(data)?,
-            a_max_sf: Self::A_MAX_SF.from_data(data)?,
-            w_sf: Self::W_SF.from_data(data)?,
-        })
+impl crate::Group for Battery {
+    const LEN: u16 = 62;
+}
+impl Battery {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                ah_rtg: Self::AH_RTG.from_data(data)?,
+                wh_rtg: Self::WH_RTG.from_data(data)?,
+                w_cha_rte_max: Self::W_CHA_RTE_MAX.from_data(data)?,
+                w_dis_cha_rte_max: Self::W_DIS_CHA_RTE_MAX.from_data(data)?,
+                dis_cha_rte: Self::DIS_CHA_RTE.from_data(data)?,
+                soc_max: Self::SOC_MAX.from_data(data)?,
+                soc_min: Self::SOC_MIN.from_data(data)?,
+                soc_rsv_max: Self::SOC_RSV_MAX.from_data(data)?,
+                soc_rsv_min: Self::SOC_RSV_MIN.from_data(data)?,
+                soc: Self::SOC.from_data(data)?,
+                do_d: Self::DO_D.from_data(data)?,
+                soh: Self::SOH.from_data(data)?,
+                n_cyc: Self::N_CYC.from_data(data)?,
+                cha_st: Self::CHA_ST.from_data(data)?,
+                loc_rem_ctl: Self::LOC_REM_CTL.from_data(data)?,
+                hb: Self::HB.from_data(data)?,
+                ctrl_hb: Self::CTRL_HB.from_data(data)?,
+                alm_rst: Self::ALM_RST.from_data(data)?,
+                typ: Self::TYP.from_data(data)?,
+                state: Self::STATE.from_data(data)?,
+                state_vnd: Self::STATE_VND.from_data(data)?,
+                warr_dt: Self::WARR_DT.from_data(data)?,
+                evt1: Self::EVT1.from_data(data)?,
+                evt2: Self::EVT2.from_data(data)?,
+                evt_vnd1: Self::EVT_VND1.from_data(data)?,
+                evt_vnd2: Self::EVT_VND2.from_data(data)?,
+                v: Self::V.from_data(data)?,
+                v_max: Self::V_MAX.from_data(data)?,
+                v_min: Self::V_MIN.from_data(data)?,
+                cell_v_max: Self::CELL_V_MAX.from_data(data)?,
+                cell_v_max_str: Self::CELL_V_MAX_STR.from_data(data)?,
+                cell_v_max_mod: Self::CELL_V_MAX_MOD.from_data(data)?,
+                cell_v_min: Self::CELL_V_MIN.from_data(data)?,
+                cell_v_min_str: Self::CELL_V_MIN_STR.from_data(data)?,
+                cell_v_min_mod: Self::CELL_V_MIN_MOD.from_data(data)?,
+                cell_v_avg: Self::CELL_V_AVG.from_data(data)?,
+                a: Self::A.from_data(data)?,
+                a_cha_max: Self::A_CHA_MAX.from_data(data)?,
+                a_dis_cha_max: Self::A_DIS_CHA_MAX.from_data(data)?,
+                w: Self::W.from_data(data)?,
+                req_inv_state: Self::REQ_INV_STATE.from_data(data)?,
+                req_w: Self::REQ_W.from_data(data)?,
+                set_op: Self::SET_OP.from_data(data)?,
+                set_inv_state: Self::SET_INV_STATE.from_data(data)?,
+                ah_rtg_sf: Self::AH_RTG_SF.from_data(data)?,
+                wh_rtg_sf: Self::WH_RTG_SF.from_data(data)?,
+                w_cha_dis_cha_max_sf: Self::W_CHA_DIS_CHA_MAX_SF.from_data(data)?,
+                dis_cha_rte_sf: Self::DIS_CHA_RTE_SF.from_data(data)?,
+                soc_sf: Self::SOC_SF.from_data(data)?,
+                do_d_sf: Self::DO_D_SF.from_data(data)?,
+                soh_sf: Self::SOH_SF.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                cell_v_sf: Self::CELL_V_SF.from_data(data)?,
+                a_sf: Self::A_SF.from_data(data)?,
+                a_max_sf: Self::A_MAX_SF.from_data(data)?,
+                w_sf: Self::W_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m802
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Charge Status
@@ -854,5 +862,15 @@ impl crate::Value for Option<SetInvState> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for Battery {
+    const ID: u16 = 802;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m802
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

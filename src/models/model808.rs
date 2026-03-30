@@ -1,23 +1,89 @@
 //! Flow Battery Module Model
+pub type Model808 = FlowBatteryModule;
 /// Flow Battery Module Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model808 {
+pub struct FlowBatteryModule {
     /// Module Points To Be Determined
     pub module_tbd: u16,
+    #[allow(missing_docs)]
+    pub stack: Vec<Stack>,
 }
 #[allow(missing_docs)]
-impl Model808 {
+impl FlowBatteryModule {
     pub const MODULE_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
-impl crate::Model for Model808 {
-    const ID: u16 = 808;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            module_tbd: Self::MODULE_TBD.from_data(data)?,
-        })
+impl crate::Group for FlowBatteryModule {
+    const LEN: u16 = 1;
+}
+impl FlowBatteryModule {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                module_tbd: Self::MODULE_TBD.from_data(data)?,
+                stack: Vec::new(),
+            },
+        ))
     }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.stack) = Stack::parse_multiple(data, &group)?;
+        Ok((data, group))
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Stack {
+    /// Stack Points To Be Determined
+    pub stack_tbd: u16,
+}
+#[allow(missing_docs)]
+impl Stack {
+    pub const STACK_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+}
+impl crate::Group for Stack {
+    const LEN: u16 = 1;
+}
+impl Stack {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                stack_tbd: Self::STACK_TBD.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &FlowBatteryModule,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &FlowBatteryModule,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = Stack::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+impl crate::Model for FlowBatteryModule {
+    const ID: u16 = 808;
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m808
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

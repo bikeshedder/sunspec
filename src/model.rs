@@ -1,16 +1,16 @@
 use std::marker::PhantomData;
 
-use crate::{DecodeError, Models};
+use crate::{DecodeError, Group, Models};
 
 /// Every model implements this trait which contains methods
 /// for accessing
-pub trait Model: Sized {
+pub trait Model: Sized + Group {
     /// Model ID
     const ID: u16;
-    /// Parse model points from a given u16 slice
-    fn from_data(data: &[u16]) -> Result<Self, DecodeError>;
     /// Get model address from discovered models struct
     fn addr(models: &Models) -> ModelAddr<Self>;
+    /// Parse model data from a given u16 slice
+    fn parse(data: &[u16]) -> Result<Self, DecodeError>;
 }
 
 /// This structure is used to store the address of

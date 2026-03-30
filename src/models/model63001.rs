@@ -113,6 +113,8 @@ pub struct Model63001 {
     pub sunssf_6: Option<i16>,
     #[allow(missing_docs)]
     pub sunssf_7: Option<i16>,
+    #[allow(missing_docs)]
+    pub repeating: Vec<Repeating>,
 }
 #[allow(missing_docs)]
 impl Model63001 {
@@ -178,69 +180,78 @@ impl Model63001 {
     pub const SUNSSF_6: crate::Point<Self, Option<i16>> = crate::Point::new(131, 1, false);
     pub const SUNSSF_7: crate::Point<Self, Option<i16>> = crate::Point::new(132, 1, false);
 }
-impl crate::Model for Model63001 {
-    const ID: u16 = 63001;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            sunssf_1: Self::SUNSSF_1.from_data(data)?,
-            sunssf_2: Self::SUNSSF_2.from_data(data)?,
-            sunssf_3: Self::SUNSSF_3.from_data(data)?,
-            sunssf_4: Self::SUNSSF_4.from_data(data)?,
-            int16_1: Self::INT16_1.from_data(data)?,
-            int16_2: Self::INT16_2.from_data(data)?,
-            int16_3: Self::INT16_3.from_data(data)?,
-            int16_4: Self::INT16_4.from_data(data)?,
-            int16_5: Self::INT16_5.from_data(data)?,
-            int16_u: Self::INT16_U.from_data(data)?,
-            uint16_1: Self::UINT16_1.from_data(data)?,
-            uint16_2: Self::UINT16_2.from_data(data)?,
-            uint16_3: Self::UINT16_3.from_data(data)?,
-            uint16_4: Self::UINT16_4.from_data(data)?,
-            uint16_5: Self::UINT16_5.from_data(data)?,
-            uint16_u: Self::UINT16_U.from_data(data)?,
-            acc16: Self::ACC16.from_data(data)?,
-            acc16_u: Self::ACC16_U.from_data(data)?,
-            enum16: Self::ENUM16.from_data(data)?,
-            enum16_u: Self::ENUM16_U.from_data(data)?,
-            bitfield16: Self::BITFIELD16.from_data(data)?,
-            bitfield16_u: Self::BITFIELD16_U.from_data(data)?,
-            int32_1: Self::INT32_1.from_data(data)?,
-            int32_2: Self::INT32_2.from_data(data)?,
-            int32_3: Self::INT32_3.from_data(data)?,
-            int32_4: Self::INT32_4.from_data(data)?,
-            int32_5: Self::INT32_5.from_data(data)?,
-            int32_u: Self::INT32_U.from_data(data)?,
-            uint32_1: Self::UINT32_1.from_data(data)?,
-            uint32_2: Self::UINT32_2.from_data(data)?,
-            uint32_3: Self::UINT32_3.from_data(data)?,
-            uint32_4: Self::UINT32_4.from_data(data)?,
-            uint32_5: Self::UINT32_5.from_data(data)?,
-            uint32_u: Self::UINT32_U.from_data(data)?,
-            acc32: Self::ACC32.from_data(data)?,
-            acc32_u: Self::ACC32_U.from_data(data)?,
-            enum32: Self::ENUM32.from_data(data)?,
-            enum32_u: Self::ENUM32_U.from_data(data)?,
-            bitfield32: Self::BITFIELD32.from_data(data)?,
-            bitfield32_u: Self::BITFIELD32_U.from_data(data)?,
-            ipaddr: Self::IPADDR.from_data(data)?,
-            ipaddr_u: Self::IPADDR_U.from_data(data)?,
-            int64: Self::INT64.from_data(data)?,
-            int64_u: Self::INT64_U.from_data(data)?,
-            acc64: Self::ACC64.from_data(data)?,
-            acc64_u: Self::ACC64_U.from_data(data)?,
-            ipv6addr: Self::IPV6ADDR.from_data(data)?,
-            ipv6addr_u: Self::IPV6ADDR_U.from_data(data)?,
-            float32: Self::FLOAT32.from_data(data)?,
-            float32_u: Self::FLOAT32_U.from_data(data)?,
-            string: Self::STRING.from_data(data)?,
-            string_u: Self::STRING_U.from_data(data)?,
-            sunssf_5: Self::SUNSSF_5.from_data(data)?,
-            sunssf_6: Self::SUNSSF_6.from_data(data)?,
-            sunssf_7: Self::SUNSSF_7.from_data(data)?,
-        })
+impl crate::Group for Model63001 {
+    const LEN: u16 = 134;
+}
+impl Model63001 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                sunssf_1: Self::SUNSSF_1.from_data(data)?,
+                sunssf_2: Self::SUNSSF_2.from_data(data)?,
+                sunssf_3: Self::SUNSSF_3.from_data(data)?,
+                sunssf_4: Self::SUNSSF_4.from_data(data)?,
+                int16_1: Self::INT16_1.from_data(data)?,
+                int16_2: Self::INT16_2.from_data(data)?,
+                int16_3: Self::INT16_3.from_data(data)?,
+                int16_4: Self::INT16_4.from_data(data)?,
+                int16_5: Self::INT16_5.from_data(data)?,
+                int16_u: Self::INT16_U.from_data(data)?,
+                uint16_1: Self::UINT16_1.from_data(data)?,
+                uint16_2: Self::UINT16_2.from_data(data)?,
+                uint16_3: Self::UINT16_3.from_data(data)?,
+                uint16_4: Self::UINT16_4.from_data(data)?,
+                uint16_5: Self::UINT16_5.from_data(data)?,
+                uint16_u: Self::UINT16_U.from_data(data)?,
+                acc16: Self::ACC16.from_data(data)?,
+                acc16_u: Self::ACC16_U.from_data(data)?,
+                enum16: Self::ENUM16.from_data(data)?,
+                enum16_u: Self::ENUM16_U.from_data(data)?,
+                bitfield16: Self::BITFIELD16.from_data(data)?,
+                bitfield16_u: Self::BITFIELD16_U.from_data(data)?,
+                int32_1: Self::INT32_1.from_data(data)?,
+                int32_2: Self::INT32_2.from_data(data)?,
+                int32_3: Self::INT32_3.from_data(data)?,
+                int32_4: Self::INT32_4.from_data(data)?,
+                int32_5: Self::INT32_5.from_data(data)?,
+                int32_u: Self::INT32_U.from_data(data)?,
+                uint32_1: Self::UINT32_1.from_data(data)?,
+                uint32_2: Self::UINT32_2.from_data(data)?,
+                uint32_3: Self::UINT32_3.from_data(data)?,
+                uint32_4: Self::UINT32_4.from_data(data)?,
+                uint32_5: Self::UINT32_5.from_data(data)?,
+                uint32_u: Self::UINT32_U.from_data(data)?,
+                acc32: Self::ACC32.from_data(data)?,
+                acc32_u: Self::ACC32_U.from_data(data)?,
+                enum32: Self::ENUM32.from_data(data)?,
+                enum32_u: Self::ENUM32_U.from_data(data)?,
+                bitfield32: Self::BITFIELD32.from_data(data)?,
+                bitfield32_u: Self::BITFIELD32_U.from_data(data)?,
+                ipaddr: Self::IPADDR.from_data(data)?,
+                ipaddr_u: Self::IPADDR_U.from_data(data)?,
+                int64: Self::INT64.from_data(data)?,
+                int64_u: Self::INT64_U.from_data(data)?,
+                acc64: Self::ACC64.from_data(data)?,
+                acc64_u: Self::ACC64_U.from_data(data)?,
+                ipv6addr: Self::IPV6ADDR.from_data(data)?,
+                ipv6addr_u: Self::IPV6ADDR_U.from_data(data)?,
+                float32: Self::FLOAT32.from_data(data)?,
+                float32_u: Self::FLOAT32_U.from_data(data)?,
+                string: Self::STRING.from_data(data)?,
+                string_u: Self::STRING_U.from_data(data)?,
+                sunssf_5: Self::SUNSSF_5.from_data(data)?,
+                sunssf_6: Self::SUNSSF_6.from_data(data)?,
+                sunssf_7: Self::SUNSSF_7.from_data(data)?,
+                repeating: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m63001
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.repeating) = Repeating::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -365,5 +376,107 @@ impl crate::Value for Option<Bitfield32U> {
         } else {
             4294967295u32.encode()
         }
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Repeating {
+    #[allow(missing_docs)]
+    pub sunssf_8: Option<i16>,
+    #[allow(missing_docs)]
+    pub int16_11: Option<i16>,
+    #[allow(missing_docs)]
+    pub int16_12: Option<i16>,
+    #[allow(missing_docs)]
+    pub int16_u: Option<i16>,
+    #[allow(missing_docs)]
+    pub uint16_11: Option<u16>,
+    #[allow(missing_docs)]
+    pub uint16_12: Option<u16>,
+    #[allow(missing_docs)]
+    pub uint16_13: Option<u16>,
+    #[allow(missing_docs)]
+    pub uint16_u: Option<u16>,
+    #[allow(missing_docs)]
+    pub int32: Option<i32>,
+    #[allow(missing_docs)]
+    pub int32_u: Option<i32>,
+    #[allow(missing_docs)]
+    pub uint32: Option<u32>,
+    #[allow(missing_docs)]
+    pub uint32_u: Option<u32>,
+    #[allow(missing_docs)]
+    pub sunssf_9: Option<i16>,
+}
+#[allow(missing_docs)]
+impl Repeating {
+    pub const SUNSSF_8: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
+    pub const INT16_11: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
+    pub const INT16_12: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
+    pub const INT16_U: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
+    pub const UINT16_11: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
+    pub const UINT16_12: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
+    pub const UINT16_13: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
+    pub const UINT16_U: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
+    pub const INT32: crate::Point<Self, Option<i32>> = crate::Point::new(8, 2, true);
+    pub const INT32_U: crate::Point<Self, Option<i32>> = crate::Point::new(10, 2, false);
+    pub const UINT32: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, true);
+    pub const UINT32_U: crate::Point<Self, Option<u32>> = crate::Point::new(14, 2, false);
+    pub const SUNSSF_9: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
+}
+impl crate::Group for Repeating {
+    const LEN: u16 = 18;
+}
+impl Repeating {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                sunssf_8: Self::SUNSSF_8.from_data(data)?,
+                int16_11: Self::INT16_11.from_data(data)?,
+                int16_12: Self::INT16_12.from_data(data)?,
+                int16_u: Self::INT16_U.from_data(data)?,
+                uint16_11: Self::UINT16_11.from_data(data)?,
+                uint16_12: Self::UINT16_12.from_data(data)?,
+                uint16_13: Self::UINT16_13.from_data(data)?,
+                uint16_u: Self::UINT16_U.from_data(data)?,
+                int32: Self::INT32.from_data(data)?,
+                int32_u: Self::INT32_U.from_data(data)?,
+                uint32: Self::UINT32.from_data(data)?,
+                uint32_u: Self::UINT32_U.from_data(data)?,
+                sunssf_9: Self::SUNSSF_9.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &Model63001,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &Model63001,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = Repeating::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+impl crate::Model for Model63001 {
+    const ID: u16 = 63001;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m63001
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

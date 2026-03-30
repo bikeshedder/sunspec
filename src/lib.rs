@@ -21,6 +21,7 @@
 )]
 
 pub use constants::{DEFAULT_DISCOVERY_ADDRESSES, SUNS_IDENTIFIER};
+pub use group::Group;
 pub use model::{Model, ModelAddr};
 pub use models::Models;
 pub use point::Point;
@@ -29,6 +30,7 @@ pub use value::{DecodeError, FixedSize, Value};
 /// This module contains all client specific code.
 pub mod client;
 mod constants;
+mod group;
 mod model;
 /// This module contains all the genererated SunSpec models.
 pub mod models;

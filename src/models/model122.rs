@@ -1,4 +1,5 @@
 //! Measurements_Status
+pub type Model122 = Status;
 /// Measurements_Status
 ///
 /// Inverter Controls Extended Measurements and Status
@@ -6,7 +7,7 @@
 /// Detail: Ref 3: 8.14.3.2, Ref 4: 17
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model122 {
+pub struct Status {
     /// PVConn
     ///
     /// PV inverter present/available status. Enumerated value.
@@ -91,7 +92,7 @@ pub struct Model122 {
     pub ris_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model122 {
+impl Status {
     pub const PV_CONN: crate::Point<Self, PvConn> = crate::Point::new(0, 1, false);
     pub const STOR_CONN: crate::Point<Self, StorConn> = crate::Point::new(1, 1, false);
     pub const ECP_CONN: crate::Point<Self, EcpConn> = crate::Point::new(2, 1, false);
@@ -114,34 +115,41 @@ impl Model122 {
     pub const RIS: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1, false);
     pub const RIS_SF: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
 }
-impl crate::Model for Model122 {
-    const ID: u16 = 122;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            pv_conn: Self::PV_CONN.from_data(data)?,
-            stor_conn: Self::STOR_CONN.from_data(data)?,
-            ecp_conn: Self::ECP_CONN.from_data(data)?,
-            act_wh: Self::ACT_WH.from_data(data)?,
-            act_v_ah: Self::ACT_V_AH.from_data(data)?,
-            act_v_arh_q1: Self::ACT_V_ARH_Q1.from_data(data)?,
-            act_v_arh_q2: Self::ACT_V_ARH_Q2.from_data(data)?,
-            act_v_arh_q3: Self::ACT_V_ARH_Q3.from_data(data)?,
-            act_v_arh_q4: Self::ACT_V_ARH_Q4.from_data(data)?,
-            v_ar_aval: Self::V_AR_AVAL.from_data(data)?,
-            v_ar_aval_sf: Self::V_AR_AVAL_SF.from_data(data)?,
-            w_aval: Self::W_AVAL.from_data(data)?,
-            w_aval_sf: Self::W_AVAL_SF.from_data(data)?,
-            st_set_lim_msk: Self::ST_SET_LIM_MSK.from_data(data)?,
-            st_act_ctl: Self::ST_ACT_CTL.from_data(data)?,
-            tm_src: Self::TM_SRC.from_data(data)?,
-            tms: Self::TMS.from_data(data)?,
-            rt_st: Self::RT_ST.from_data(data)?,
-            ris: Self::RIS.from_data(data)?,
-            ris_sf: Self::RIS_SF.from_data(data)?,
-        })
+impl crate::Group for Status {
+    const LEN: u16 = 44;
+}
+impl Status {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                pv_conn: Self::PV_CONN.from_data(data)?,
+                stor_conn: Self::STOR_CONN.from_data(data)?,
+                ecp_conn: Self::ECP_CONN.from_data(data)?,
+                act_wh: Self::ACT_WH.from_data(data)?,
+                act_v_ah: Self::ACT_V_AH.from_data(data)?,
+                act_v_arh_q1: Self::ACT_V_ARH_Q1.from_data(data)?,
+                act_v_arh_q2: Self::ACT_V_ARH_Q2.from_data(data)?,
+                act_v_arh_q3: Self::ACT_V_ARH_Q3.from_data(data)?,
+                act_v_arh_q4: Self::ACT_V_ARH_Q4.from_data(data)?,
+                v_ar_aval: Self::V_AR_AVAL.from_data(data)?,
+                v_ar_aval_sf: Self::V_AR_AVAL_SF.from_data(data)?,
+                w_aval: Self::W_AVAL.from_data(data)?,
+                w_aval_sf: Self::W_AVAL_SF.from_data(data)?,
+                st_set_lim_msk: Self::ST_SET_LIM_MSK.from_data(data)?,
+                st_act_ctl: Self::ST_ACT_CTL.from_data(data)?,
+                tm_src: Self::TM_SRC.from_data(data)?,
+                tms: Self::TMS.from_data(data)?,
+                rt_st: Self::RT_ST.from_data(data)?,
+                ris: Self::RIS.from_data(data)?,
+                ris_sf: Self::RIS_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m122
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -357,5 +365,15 @@ impl crate::Value for Option<RtSt> {
         } else {
             65535u16.encode()
         }
+    }
+}
+impl crate::Model for Status {
+    const ID: u16 = 122;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m122
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }
