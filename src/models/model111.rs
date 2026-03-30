@@ -13,7 +13,7 @@ pub struct Model111 {
     ///
     /// Phase A Current
     ///
-    /// Notes: Connected Phase
+    /// Detail: Connected Phase
     pub aph_a: f32,
     /// Amps PhaseB
     ///

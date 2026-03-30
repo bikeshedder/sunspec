@@ -7,13 +7,13 @@ pub struct Model805 {
     ///
     /// Index of the string containing the module.
     ///
-    /// Notes: Indices are one-based.
+    /// Detail: Indices are one-based.
     pub str_idx: u16,
     /// Module Index
     ///
     /// Index of the module within the string.
     ///
-    /// Notes: Indices are one-based.
+    /// Detail: Indices are one-based.
     pub mod_idx: u16,
     /// Module Cell Count
     ///
@@ -27,7 +27,7 @@ pub struct Model805 {
     ///
     /// Depth of discharge for the module.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub do_d: Option<u16>,
     /// Module SoH
     ///
@@ -41,13 +41,13 @@ pub struct Model805 {
     ///
     /// Voltage of the module.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub v: u16,
     /// Max Cell Voltage
     ///
     /// Maximum voltage for all cells in the module.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_v_max: u16,
     /// Max Cell Voltage Cell
     ///
@@ -57,7 +57,7 @@ pub struct Model805 {
     ///
     /// Minimum voltage for all cells in the module.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_v_min: u16,
     /// Min Cell Voltage Cell
     ///
@@ -67,13 +67,13 @@ pub struct Model805 {
     ///
     /// Average voltage for all cells in the module.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub cell_v_avg: u16,
     /// Max Cell Temperature
     ///
     /// Maximum temperature for all cells in the module.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_tmp_max: i16,
     /// Max Cell Temperature Cell
     ///
@@ -83,7 +83,7 @@ pub struct Model805 {
     ///
     /// Minimum temperature for all cells in the module.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_tmp_min: i16,
     /// Min Cell Temperature Cell
     ///
@@ -93,7 +93,7 @@ pub struct Model805 {
     ///
     /// Average temperature for all cells in the module.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub cell_tmp_avg: i16,
     /// Balanced Cell Count
     ///

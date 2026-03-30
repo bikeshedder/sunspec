@@ -3,7 +3,7 @@
 ///
 /// Inverter Controls Basic Settings
 ///
-/// Notes: Ref 3: 8.4.2.1, Ref 4: 17
+/// Detail: Ref 3: 8.4.2.1, Ref 4: 17
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model121 {
@@ -55,25 +55,25 @@ pub struct Model121 {
     ///
     /// Setpoint for minimum power factor value in quadrant 1. Default to PFRtgQ1.
     ///
-    /// Notes: EEI sign convention.
+    /// Detail: EEI sign convention.
     pub pf_min_q1: Option<i16>,
     /// PFMinQ2
     ///
     /// Setpoint for minimum power factor value in quadrant 2. Default to PFRtgQ2.
     ///
-    /// Notes: EEI sign convention.
+    /// Detail: EEI sign convention.
     pub pf_min_q2: Option<i16>,
     /// PFMinQ3
     ///
     /// Setpoint for minimum power factor value in quadrant 3. Default to PFRtgQ3.
     ///
-    /// Notes: EEI sign convention.
+    /// Detail: EEI sign convention.
     pub pf_min_q3: Option<i16>,
     /// PFMinQ4
     ///
     /// Setpoint for minimum power factor value in quadrant 4. Default to PFRtgQ4.
     ///
-    /// Notes: EEI sign convention.
+    /// Detail: EEI sign convention.
     pub pf_min_q4: Option<i16>,
     /// VArAct
     ///

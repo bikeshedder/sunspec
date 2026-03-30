@@ -3,7 +3,7 @@
 ///
 /// HVRT must remain connected
 ///
-/// Notes: Ref 4: 11
+/// Detail: Ref 4: 11
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model138 {
@@ -19,19 +19,19 @@ pub struct Model138 {
     ///
     /// Time window for HVRT change.
     ///
-    /// Notes: Setting is ignored for HVRT controls.
+    /// Detail: Setting is ignored for HVRT controls.
     pub win_tms: Option<u16>,
     /// RvrtTms
     ///
     /// Timeout period for HVRT curve selection.
     ///
-    /// Notes: Setting is ignored for HVRT controls.
+    /// Detail: Setting is ignored for HVRT controls.
     pub rvrt_tms: Option<u16>,
     /// RmpTms
     ///
     /// Ramp time for moving from current mode to new mode.
     ///
-    /// Notes: Setting is ignored for HVRT controls.
+    /// Detail: Setting is ignored for HVRT controls.
     pub rmp_tms: Option<u16>,
     /// NCrv
     ///

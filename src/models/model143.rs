@@ -3,7 +3,7 @@
 ///
 /// LFRT extended curve
 ///
-/// Notes: Ref 4: 11
+/// Detail: Ref 4: 11
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model143 {
@@ -19,19 +19,19 @@ pub struct Model143 {
     ///
     /// Time window for LFRT change.
     ///
-    /// Notes: Setting is ignored for LFRT controls.
+    /// Detail: Setting is ignored for LFRT controls.
     pub win_tms: Option<u16>,
     /// RvrtTms
     ///
     /// Timeout period for LFRT curve selection.
     ///
-    /// Notes: Setting is ignored for LFRT controls.
+    /// Detail: Setting is ignored for LFRT controls.
     pub rvrt_tms: Option<u16>,
     /// RmpTms
     ///
     /// Ramp time for moving from current mode to new mode.
     ///
-    /// Notes: Setting is ignored for LFRT controls.
+    /// Detail: Setting is ignored for LFRT controls.
     pub rmp_tms: Option<u16>,
     /// NCrv
     ///

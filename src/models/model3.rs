@@ -3,7 +3,7 @@
 ///
 /// Request a digital signature over a specified set of data registers
 ///
-/// Notes: Used in conjunction with Secure Dataset Read Response Model
+/// Detail: Used in conjunction with Secure Dataset Read Response Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model3 {
@@ -11,7 +11,7 @@ pub struct Model3 {
     ///
     /// Number of registers being requested
     ///
-    /// Notes: A max of 50 registers are allowed
+    /// Detail: A max of 50 registers are allowed
     pub x: u16,
     /// Offset1
     ///
@@ -127,25 +127,25 @@ pub struct Model3 {
     ///
     /// Sequence number of request
     ///
-    /// Notes: Shall be advanced for each request
+    /// Detail: Shall be advanced for each request
     pub seq: u16,
     /// Role
     ///
     /// Digital Signature ID
     ///
-    /// Notes: User's role id 0-5
+    /// Detail: User's role id 0-5
     pub role: u16,
     /// Algorithm
     ///
     /// Algorithm used to compute the digital signature
     ///
-    /// Notes: For future proof
+    /// Detail: For future proof
     pub alg: Alg,
     /// N
     ///
     /// Number of registers comprising the digital signature.
     ///
-    /// Notes: The value of N must be at least 4 (64 bits)
+    /// Detail: The value of N must be at least 4 (64 bits)
     pub n: u16,
 }
 #[allow(missing_docs)]
@@ -279,12 +279,12 @@ impl crate::Model for Model3 {
 ///
 /// Algorithm used to compute the digital signature
 ///
-/// Notes: For future proof
+/// Detail: For future proof
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
-    /// Notes: For test purposes only
+    /// Detail: For test purposes only
     None = 0,
     #[allow(missing_docs)]
     AesGmac64 = 1,

@@ -1,7 +1,7 @@
 //! single phase (AN or AB) meter
 /// single phase (AN or AB) meter
 ///
-/// Notes: Float
+/// Detail: Float
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model211 {

@@ -1,7 +1,7 @@
 //! delta-connect three phase (abc) meter
 /// delta-connect three phase (abc) meter
 ///
-/// Notes: Float
+/// Detail: Float
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model214 {

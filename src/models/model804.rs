@@ -7,7 +7,7 @@ pub struct Model804 {
     ///
     /// Index of the string within the bank.
     ///
-    /// Notes: Indices are one-based.
+    /// Detail: Indices are one-based.
     pub idx: u16,
     /// Module Count
     ///
@@ -27,13 +27,13 @@ pub struct Model804 {
     ///
     /// Battery string state of charge, expressed as a percentage.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub soc: u16,
     /// String Depth of Discharge
     ///
     /// Depth of discharge for the string, expressed as a percentage.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub do_d: Option<u16>,
     /// String Cycle Count
     ///
@@ -43,25 +43,25 @@ pub struct Model804 {
     ///
     /// Battery string state of health, expressed as a percentage.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub soh: Option<u16>,
     /// String Current
     ///
     /// String current measurement.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub a: i16,
     /// String Voltage
     ///
     /// String voltage measurement.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub v: Option<u16>,
     /// Max Cell Voltage
     ///
     /// Maximum voltage for all cells in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_v_max: u16,
     /// Max Cell Voltage Module
     ///
@@ -71,7 +71,7 @@ pub struct Model804 {
     ///
     /// Minimum voltage for all cells in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_v_min: u16,
     /// Min Cell Voltage Module
     ///
@@ -81,13 +81,13 @@ pub struct Model804 {
     ///
     /// Average voltage for all cells in the string.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub cell_v_avg: u16,
     /// Max Module Temperature
     ///
     /// Maximum temperature for all modules in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub mod_tmp_max: i16,
     /// Max Module Temperature Module
     ///
@@ -97,7 +97,7 @@ pub struct Model804 {
     ///
     /// Minimum temperature for all modules in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub mod_tmp_min: i16,
     /// Min Module Temperature Module
     ///
@@ -107,7 +107,7 @@ pub struct Model804 {
     ///
     /// Average temperature for all modules in the string.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub mod_tmp_avg: i16,
     /// Contactor Status
     ///
@@ -121,7 +121,7 @@ pub struct Model804 {
     ///
     /// Alarms, warnings and status values.  Bit flags.
     ///
-    /// Notes: Reserved for future use.
+    /// Detail: Reserved for future use.
     pub evt2: Option<Evt2>,
     /// Vendor Event Bitfield 1
     ///
@@ -139,7 +139,7 @@ pub struct Model804 {
     ///
     /// Connects and disconnects the string.
     ///
-    /// Notes: Should reset to 0 upon completion.
+    /// Detail: Should reset to 0 upon completion.
     pub set_con: Option<SetCon>,
     /// Scale factor for string state of charge.
     pub soc_sf: i16,
@@ -244,7 +244,7 @@ bitflags::bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
     derive(::serde::Serialize, ::serde::Deserialize))] pub struct St : u32 {
     #[allow(missing_docs)] const StringEnabled = 1; #[doc =
-    " Notes: If string has multiple contactors, indicates that all contactors are closed."]
+    " Detail: If string has multiple contactors, indicates that all contactors are closed."]
     const ContactorStatus = 2; }
 }
 impl crate::Value for St {
@@ -294,7 +294,7 @@ pub enum ConFail {
     ContactorFailure = 6,
     #[allow(missing_docs)]
     PrechargeFailure = 7,
-    /// Notes: See Evt1 for more information.
+    /// Detail: See Evt1 for more information.
     StringFault = 8,
 }
 impl crate::Value for ConFail {
@@ -385,11 +385,11 @@ bitflags::bitflags! {
     CommunicationError = 1; #[allow(missing_docs)] const OverTempAlarm = 2;
     #[allow(missing_docs)] const OverTempWarning = 4; #[allow(missing_docs)] const
     UnderTempAlarm = 8; #[allow(missing_docs)] const UnderTempWarning = 16; #[doc =
-    " Notes: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32; #[doc =
-    " Notes: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64; #[doc =
-    " Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128;
-    #[doc = " Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning =
-    256; #[allow(missing_docs)] const OverVoltAlarm = 512; #[allow(missing_docs)] const
+    " Detail: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32; #[doc =
+    " Detail: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64; #[doc =
+    " Detail: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128;
+    #[doc = " Detail: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning
+    = 256; #[allow(missing_docs)] const OverVoltAlarm = 512; #[allow(missing_docs)] const
     OverVoltWarning = 1024; #[allow(missing_docs)] const UnderVoltAlarm = 2048;
     #[allow(missing_docs)] const UnderVoltWarning = 4096; #[allow(missing_docs)] const
     UnderSocMinAlarm = 8192; #[allow(missing_docs)] const UnderSocMinWarning = 16384;
@@ -400,12 +400,12 @@ bitflags::bitflags! {
     #[allow(missing_docs)] const ContactorError = 1048576; #[allow(missing_docs)] const
     FanError = 2097152; #[allow(missing_docs)] const GroundFault = 4194304;
     #[allow(missing_docs)] const OpenDoorError = 8388608; #[doc =
-    " Notes: Do not implement."] const Reserved1 = 16777216; #[doc =
-    " Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432;
-    #[doc = " Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning =
-    67108864; #[doc = " Notes: Do not implement."] const Reserved2 = 134217728;
-    #[allow(missing_docs)] const ConfigurationAlarm = 268435456; #[allow(missing_docs)]
-    const ConfigurationWarning = 536870912; }
+    " Detail: Do not implement."] const Reserved1 = 16777216; #[doc =
+    " Detail: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm =
+    33554432; #[doc = " Detail: See EvtVnd1 and EvtVnd2 for more information."] const
+    OtherWarning = 67108864; #[doc = " Detail: Do not implement."] const Reserved2 =
+    134217728; #[allow(missing_docs)] const ConfigurationAlarm = 268435456;
+    #[allow(missing_docs)] const ConfigurationWarning = 536870912; }
 }
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -436,7 +436,7 @@ impl crate::Value for Option<Evt1> {
 bitflags::bitflags! {
     #[doc = " String Event 2"] #[doc = " "] #[doc =
     " Alarms, warnings and status values.  Bit flags."] #[doc = " "] #[doc =
-    " Notes: Reserved for future use."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    " Detail: Reserved for future use."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
     struct Evt2 : u32 {}
 }
@@ -532,7 +532,7 @@ impl crate::Value for Option<EvtVnd2> {
 ///
 /// Connects and disconnects the string.
 ///
-/// Notes: Should reset to 0 upon completion.
+/// Detail: Should reset to 0 upon completion.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]

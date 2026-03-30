@@ -77,6 +77,12 @@ pub mod model64020;
 pub mod model64101;
 pub mod model64111;
 pub mod model64112;
+pub mod model64410;
+pub mod model64411;
+pub mod model64412;
+pub mod model64413;
+pub mod model64414;
+pub mod model64415;
 pub mod model7;
 pub mod model701;
 pub mod model702;
@@ -320,11 +326,23 @@ pub struct Models {
     pub m64111: crate::ModelAddr<model64111::Model64111>,
     /// OutBack FM Charge Controller
     pub m64112: crate::ModelAddr<model64112::Model64112>,
+    /// DC Simulator Control Interface
+    pub m64410: crate::ModelAddr<model64410::Model64410>,
+    /// AC Simulator Control Interface
+    pub m64411: crate::ModelAddr<model64411::Model64411>,
+    /// DER Cyber Exploitation
+    pub m64412: crate::ModelAddr<model64412::Model64412>,
+    /// PV Curves
+    pub m64413: crate::ModelAddr<model64413::Model64413>,
+    /// DER Simulation Controls
+    pub m64414: crate::ModelAddr<model64414::Model64414>,
+    /// CSIP Client Control
+    pub m64415: crate::ModelAddr<model64415::Model64415>,
 }
 impl Models {
     /// Returns a list of all supported model ids
     pub fn supported_model_ids(&self) -> Vec<u16> {
-        let mut v = Vec::with_capacity(106usize);
+        let mut v = Vec::with_capacity(112usize);
         if self.m1.addr != 0 {
             v.push(1);
         }
@@ -643,6 +661,24 @@ impl Models {
         if self.m64112.addr != 0 {
             v.push(64112);
         }
+        if self.m64410.addr != 0 {
+            v.push(64410);
+        }
+        if self.m64411.addr != 0 {
+            v.push(64411);
+        }
+        if self.m64412.addr != 0 {
+            v.push(64412);
+        }
+        if self.m64413.addr != 0 {
+            v.push(64413);
+        }
+        if self.m64414.addr != 0 {
+            v.push(64414);
+        }
+        if self.m64415.addr != 0 {
+            v.push(64415);
+        }
         v
     }
     /// Set address and length of the given model.
@@ -756,6 +792,12 @@ impl Models {
             64101 => self.m64101.set_addr(addr, len),
             64111 => self.m64111.set_addr(addr, len),
             64112 => self.m64112.set_addr(addr, len),
+            64410 => self.m64410.set_addr(addr, len),
+            64411 => self.m64411.set_addr(addr, len),
+            64412 => self.m64412.set_addr(addr, len),
+            64413 => self.m64413.set_addr(addr, len),
+            64414 => self.m64414.set_addr(addr, len),
+            64415 => self.m64415.set_addr(addr, len),
             _ => {
                 return false;
             }

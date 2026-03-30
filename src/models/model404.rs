@@ -3,7 +3,7 @@
 ///
 /// An advanced string combiner including voltage and energy measurements
 ///
-/// Notes: This model supersedes model 402
+/// Detail: This model supersedes model 402
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model404 {

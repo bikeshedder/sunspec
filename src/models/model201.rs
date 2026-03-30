@@ -27,13 +27,13 @@ pub struct Model201 {
     ///
     /// Line to Neutral AC Voltage (average of active phases)
     ///
-    /// Notes: Conditional AN connection
+    /// Detail: Conditional AN connection
     pub ph_v: Option<i16>,
     /// Phase Voltage AN
     ///
     /// Phase Voltage AN
     ///
-    /// Notes: Conditional AN connection
+    /// Detail: Conditional AN connection
     pub ph_vph_a: Option<i16>,
     /// Phase Voltage BN
     ///
@@ -51,7 +51,7 @@ pub struct Model201 {
     ///
     /// Phase Voltage AB
     ///
-    /// Notes: Conditional AB connection
+    /// Detail: Conditional AB connection
     pub pp_vph_ab: Option<i16>,
     /// Phase Voltage BC
     ///

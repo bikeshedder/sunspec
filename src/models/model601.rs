@@ -3,7 +3,7 @@
 ///
 /// Monitors and controls multiple trackers
 ///
-/// Notes: Trackers may include GPS model 305 for location information
+/// Detail: Trackers may include GPS model 305 for location information
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model601 {
@@ -39,13 +39,13 @@ pub struct Model601 {
     ///
     /// Global Control register operates on all trackers. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
     ///
-    /// Notes: The global controls all trackers
+    /// Detail: The global controls all trackers
     pub glbl_ctl: Option<GlblCtl>,
     /// Global Alarm
     ///
     /// Global tracker alarm conditions
     ///
-    /// Notes: Combined tracker alarm conditions.  See individual trackers for alarms
+    /// Detail: Combined tracker alarm conditions.  See individual trackers for alarms
     pub glbl_alm: Option<GlblAlm>,
     /// SF
     ///
@@ -145,7 +145,7 @@ impl crate::Value for Option<Typ> {
 ///
 /// Global Control register operates on all trackers. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
 ///
-/// Notes: The global controls all trackers
+/// Detail: The global controls all trackers
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
@@ -188,7 +188,7 @@ impl crate::Value for Option<GlblCtl> {
 bitflags::bitflags! {
     #[doc = " Global Alarm"] #[doc = " "] #[doc = " Global tracker alarm conditions"]
     #[doc = " "] #[doc =
-    " Notes: Combined tracker alarm conditions.  See individual trackers for alarms"]
+    " Detail: Combined tracker alarm conditions.  See individual trackers for alarms"]
     #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
     derive(::serde::Serialize, ::serde::Deserialize))] pub struct GlblAlm : u16 {
     #[allow(missing_docs)] const SetPoint = 1; #[allow(missing_docs)] const ObsEl = 2;

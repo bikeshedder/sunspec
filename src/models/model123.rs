@@ -3,7 +3,7 @@
 ///
 /// Immediate Inverter Controls
 ///
-/// Notes: Ref 3: 8.7.1.2, 8.7.2.2, 8.7.3.2
+/// Detail: Ref 3: 8.7.1.2, 8.7.2.2, 8.7.3.2
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model123 {

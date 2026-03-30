@@ -3,7 +3,7 @@
 ///
 /// Curve-Based Frequency-Watt
 ///
-/// Notes: Ref 3: 8.9.1.2, 8.9.4.2
+/// Detail: Ref 3: 8.9.1.2, 8.9.4.2
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model134 {
@@ -33,7 +33,7 @@ pub struct Model134 {
     pub n_crv: u16,
     /// NPt
     ///
-    /// Number of curve points supported (maximum of 10).
+    /// Number of curve points supported (maximum of 20).
     pub n_pt: u16,
     /// Hz_SF
     ///

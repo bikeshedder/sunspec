@@ -3,7 +3,7 @@
 ///
 /// Inverter Controls Nameplate Ratings
 ///
-/// Notes: Ref 3: 8.14.3.2, Ref 4: 17
+/// Detail: Ref 3: 8.14.3.2, Ref 4: 17
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model120 {
@@ -51,7 +51,7 @@ pub struct Model120 {
     ///
     /// Maximum RMS AC current level capability of the inverter.
     ///
-    /// Notes: Sum of all connected phases.  Current rating under nominal voltage under nominal power factor.
+    /// Detail: Sum of all connected phases.  Current rating under nominal voltage under nominal power factor.
     pub a_rtg: u16,
     /// ARtg_SF
     ///
@@ -61,25 +61,25 @@ pub struct Model120 {
     ///
     /// Minimum power factor capability of the inverter in quadrant 1.
     ///
-    /// Notes: EEI sign convention.
+    /// Detail: EEI sign convention.
     pub pf_rtg_q1: i16,
     /// PFRtgQ2
     ///
     /// Minimum power factor capability of the inverter in quadrant 2.
     ///
-    /// Notes: EEI sign convention.
+    /// Detail: EEI sign convention.
     pub pf_rtg_q2: i16,
     /// PFRtgQ3
     ///
     /// Minimum power factor capability of the inverter in quadrant 3.
     ///
-    /// Notes: EEI sign convention.
+    /// Detail: EEI sign convention.
     pub pf_rtg_q3: i16,
     /// PFRtgQ4
     ///
     /// Minimum power factor capability of the inverter in quadrant 4.
     ///
-    /// Notes: EEI sign convention.
+    /// Detail: EEI sign convention.
     pub pf_rtg_q4: i16,
     /// PFRtg_SF
     ///

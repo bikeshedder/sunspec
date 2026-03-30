@@ -3,7 +3,7 @@
 ///
 /// A solar module model supporting DC-DC converter
 ///
-/// Notes: Integer
+/// Detail: Integer
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model502 {

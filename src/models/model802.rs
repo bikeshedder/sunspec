@@ -43,13 +43,13 @@ pub struct Model802 {
     ///
     /// State of charge, expressed as a percentage.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub soc: u16,
     /// Depth of Discharge
     ///
     /// Depth of discharge, expressed as a percentage.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub do_d: Option<u16>,
     /// State of Health
     ///
@@ -67,7 +67,7 @@ pub struct Model802 {
     ///
     /// Battery control mode. Enumeration.
     ///
-    /// Notes: Maps to DRCC.LocRemCtl in IEC 61850.
+    /// Detail: Maps to DRCC.LocRemCtl in IEC 61850.
     pub loc_rem_ctl: LocRemCtl,
     /// Battery Heartbeat
     ///
@@ -81,19 +81,19 @@ pub struct Model802 {
     ///
     /// Used to reset any latched alarms.  1 = Reset.
     ///
-    /// Notes: Battery should reset to 0 when reset is complete.
+    /// Detail: Battery should reset to 0 when reset is complete.
     pub alm_rst: u16,
     /// Battery Type
     ///
     /// Type of battery. Enumeration.
     ///
-    /// Notes: Maps to DBAT.BatTyp in 61850.
+    /// Detail: Maps to DBAT.BatTyp in 61850.
     pub typ: Typ,
     /// State of the Battery Bank
     ///
     /// State of the battery bank.  Enumeration.
     ///
-    /// Notes: Must be reconciled with State in IEC 61850.
+    /// Detail: Must be reconciled with State in IEC 61850.
     pub state: State,
     /// Vendor Battery Bank State
     ///
@@ -103,7 +103,7 @@ pub struct Model802 {
     ///
     /// Date the device warranty expires.
     ///
-    /// Notes: Number of days since 1/1/2000.
+    /// Detail: Number of days since 1/1/2000.
     pub warr_dt: Option<u32>,
     /// Battery Event 1 Bitfield
     ///
@@ -113,7 +113,7 @@ pub struct Model802 {
     ///
     /// Alarms and warnings.  Bit flags.
     ///
-    /// Notes: Reserved for future use.
+    /// Detail: Reserved for future use.
     pub evt2: Evt2,
     /// Vendor Event Bitfield 1
     ///
@@ -127,25 +127,25 @@ pub struct Model802 {
     ///
     /// DC Bus Voltage.
     ///
-    /// Notes: Maps to ZBAT.V in IEC 61850.
+    /// Detail: Maps to ZBAT.V in IEC 61850.
     pub v: u16,
     /// Max Battery Voltage
     ///
     /// Instantaneous maximum battery voltage.
     ///
-    /// Notes: If not implemented, must implement AChaMax and ADisChaMax.
+    /// Detail: If not implemented, must implement AChaMax and ADisChaMax.
     pub v_max: Option<u16>,
     /// Min Battery Voltage
     ///
     /// Instantaneous minimum battery voltage.
     ///
-    /// Notes: If not implemented, must implement AChaMax and ADisChaMax.
+    /// Detail: If not implemented, must implement AChaMax and ADisChaMax.
     pub v_min: Option<u16>,
     /// Max Cell Voltage
     ///
     /// Maximum voltage for all cells in the bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_v_max: Option<u16>,
     /// Max Cell Voltage String
     ///
@@ -159,7 +159,7 @@ pub struct Model802 {
     ///
     /// Minimum voltage for all cells in the bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_v_min: Option<u16>,
     /// Min Cell Voltage String
     ///
@@ -173,43 +173,43 @@ pub struct Model802 {
     ///
     /// Average cell voltage for all cells in the bank.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub cell_v_avg: Option<u16>,
     /// Total DC Current
     ///
     /// Total DC current flowing to/from the battery bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub a: i16,
     /// Max Charge Current
     ///
     /// Instantaneous maximum DC charge current.
     ///
-    /// Notes: Calculation which is always unsigned (i.e. magnitude only). If not implemented, must implement VMax and VMin.
+    /// Detail: Calculation which is always unsigned (i.e. magnitude only). If not implemented, must implement VMax and VMin.
     pub a_cha_max: Option<u16>,
     /// Max Discharge Current
     ///
     /// Instantaneous maximum DC discharge current.
     ///
-    /// Notes: Calculation which is always unsigned (i.e. magnitude only). If not implemented, must implement VMax and VMin.
+    /// Detail: Calculation which is always unsigned (i.e. magnitude only). If not implemented, must implement VMax and VMin.
     pub a_dis_cha_max: Option<u16>,
     /// Total Power
     ///
     /// Total power flowing to/from the battery bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: DC Measurement.
     pub w: i16,
     /// Inverter State Request
     ///
     /// Request from battery to start or stop the inverter.  Enumeration.
     ///
-    /// Notes: Used in special states such as manual battery charging.
+    /// Detail: Used in special states such as manual battery charging.
     pub req_inv_state: Option<ReqInvState>,
     /// Battery Power Request
     ///
     /// AC Power requested by battery.
     ///
-    /// Notes: Used in special states such as string balancing.
+    /// Detail: Used in special states such as string balancing.
     pub req_w: Option<i16>,
     /// Set Operation
     ///
@@ -219,7 +219,7 @@ pub struct Model802 {
     ///
     /// Set the current state of the inverter.
     ///
-    /// Notes: Information needed by battery for some operations.
+    /// Detail: Information needed by battery for some operations.
     pub set_inv_state: SetInvState,
     /// Scale factor for charge capacity.
     pub ah_rtg_sf: i16,
@@ -426,14 +426,14 @@ impl crate::Value for Option<ChaSt> {
 ///
 /// Battery control mode. Enumeration.
 ///
-/// Notes: Maps to DRCC.LocRemCtl in IEC 61850.
+/// Detail: Maps to DRCC.LocRemCtl in IEC 61850.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum LocRemCtl {
-    /// Notes: Value of 0 matches LocRemCtl in IEC 61850.
+    /// Detail: Value of 0 matches LocRemCtl in IEC 61850.
     Remote = 0,
-    /// Notes: Value of 1 matches LocRemCtl in IEC 61850.
+    /// Detail: Value of 1 matches LocRemCtl in IEC 61850.
     Local = 1,
 }
 impl crate::Value for LocRemCtl {
@@ -468,7 +468,7 @@ impl crate::Value for Option<LocRemCtl> {
 ///
 /// Type of battery. Enumeration.
 ///
-/// Notes: Maps to DBAT.BatTyp in 61850.
+/// Detail: Maps to DBAT.BatTyp in 61850.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
@@ -530,7 +530,7 @@ impl crate::Value for Option<Typ> {
 ///
 /// State of the battery bank.  Enumeration.
 ///
-/// Notes: Must be reconciled with State in IEC 61850.
+/// Detail: Must be reconciled with State in IEC 61850.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
@@ -585,10 +585,10 @@ bitflags::bitflags! {
     struct Evt1 : u32 { #[allow(missing_docs)] const CommunicationError = 1;
     #[allow(missing_docs)] const OverTempAlarm = 2; #[allow(missing_docs)] const
     OverTempWarning = 4; #[allow(missing_docs)] const UnderTempAlarm = 8;
-    #[allow(missing_docs)] const UnderTempWarning = 16; #[doc = " Notes: See AChaMax."]
-    const OverChargeCurrentAlarm = 32; #[doc = " Notes: See AChaMax."] const
-    OverChargeCurrentWarning = 64; #[doc = " Notes: See ADisChaMax."] const
-    OverDischargeCurrentAlarm = 128; #[doc = " Notes: See ADisChaMax."] const
+    #[allow(missing_docs)] const UnderTempWarning = 16; #[doc = " Detail: See AChaMax."]
+    const OverChargeCurrentAlarm = 32; #[doc = " Detail: See AChaMax."] const
+    OverChargeCurrentWarning = 64; #[doc = " Detail: See ADisChaMax."] const
+    OverDischargeCurrentAlarm = 128; #[doc = " Detail: See ADisChaMax."] const
     OverDischargeCurrentWarning = 256; #[allow(missing_docs)] const OverVoltAlarm = 512;
     #[allow(missing_docs)] const OverVoltWarning = 1024; #[allow(missing_docs)] const
     UnderVoltAlarm = 2048; #[allow(missing_docs)] const UnderVoltWarning = 4096;
@@ -601,11 +601,11 @@ bitflags::bitflags! {
     1048576; #[allow(missing_docs)] const FanError = 2097152; #[allow(missing_docs)]
     const GroundFault = 4194304; #[allow(missing_docs)] const OpenDoorError = 8388608;
     #[allow(missing_docs)] const CurrentImbalanceWarning = 16777216; #[doc =
-    " Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm = 33554432;
-    #[doc = " Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning =
-    67108864; #[doc = " Notes: Do not implement."] const Reserved1 = 134217728;
-    #[allow(missing_docs)] const ConfigurationAlarm = 268435456; #[allow(missing_docs)]
-    const ConfigurationWarning = 536870912; }
+    " Detail: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm =
+    33554432; #[doc = " Detail: See EvtVnd1 and EvtVnd2 for more information."] const
+    OtherWarning = 67108864; #[doc = " Detail: Do not implement."] const Reserved1 =
+    134217728; #[allow(missing_docs)] const ConfigurationAlarm = 268435456;
+    #[allow(missing_docs)] const ConfigurationWarning = 536870912; }
 }
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -636,7 +636,7 @@ impl crate::Value for Option<Evt1> {
 bitflags::bitflags! {
     #[doc = " Battery Event 2 Bitfield"] #[doc = " "] #[doc =
     " Alarms and warnings.  Bit flags."] #[doc = " "] #[doc =
-    " Notes: Reserved for future use."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    " Detail: Reserved for future use."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
     struct Evt2 : u32 {}
 }
@@ -732,16 +732,16 @@ impl crate::Value for Option<EvtVnd2> {
 ///
 /// Request from battery to start or stop the inverter.  Enumeration.
 ///
-/// Notes: Used in special states such as manual battery charging.
+/// Detail: Used in special states such as manual battery charging.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum ReqInvState {
     #[allow(missing_docs)]
     NoRequest = 0,
-    /// Notes: Battery is notified of inverter state change through SetInvState.
+    /// Detail: Battery is notified of inverter state change through SetInvState.
     Start = 1,
-    /// Notes: Battery is notified of inverter state change through SetInvState.
+    /// Detail: Battery is notified of inverter state change through SetInvState.
     Stop = 2,
 }
 impl crate::Value for ReqInvState {
@@ -816,7 +816,7 @@ impl crate::Value for Option<SetOp> {
 ///
 /// Set the current state of the inverter.
 ///
-/// Notes: Information needed by battery for some operations.
+/// Detail: Information needed by battery for some operations.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]

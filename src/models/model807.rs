@@ -7,7 +7,7 @@ pub struct Model807 {
     ///
     /// Index of the string within the bank.
     ///
-    /// Notes: Indices are one-based.
+    /// Detail: Indices are one-based.
     pub idx: u16,
     /// Module Count
     ///
@@ -21,7 +21,7 @@ pub struct Model807 {
     ///
     /// Maximum voltage for all modules in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub mod_v_max: u16,
     /// Max Module Voltage Module
     ///
@@ -31,7 +31,7 @@ pub struct Model807 {
     ///
     /// Minimum voltage for all modules in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub mod_v_min: u16,
     /// Min Module Voltage Module
     ///
@@ -41,13 +41,13 @@ pub struct Model807 {
     ///
     /// Average voltage for all modules in the string.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub mod_v_avg: u16,
     /// Max Cell Voltage
     ///
     /// Maximum voltage for all cells in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_v_max: Option<u16>,
     /// Max Cell Voltage Module
     ///
@@ -61,7 +61,7 @@ pub struct Model807 {
     ///
     /// Minimum voltage for all cells in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub cell_v_min: Option<u16>,
     /// Min Cell Voltage Module
     ///
@@ -75,13 +75,13 @@ pub struct Model807 {
     ///
     /// Average voltage for all cells in the string.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub cell_v_avg: Option<u16>,
     /// Max Temperature
     ///
     /// Maximum electrolyte temperature for all modules in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub tmp_max: i16,
     /// Max Temperature Module
     ///
@@ -91,7 +91,7 @@ pub struct Model807 {
     ///
     /// Minimum electrolyte temperature for all modules in the string.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub tmp_min: i16,
     /// Min Temperature Module
     ///
@@ -101,7 +101,7 @@ pub struct Model807 {
     ///
     /// Average electrolyte temperature for all modules in the string.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub tmp_avg: i16,
     /// String Event 1
     ///
@@ -209,24 +209,24 @@ bitflags::bitflags! {
     CommunicationError = 1; #[allow(missing_docs)] const OverTempAlarm = 2;
     #[allow(missing_docs)] const OverTempWarning = 4; #[allow(missing_docs)] const
     UnderTempAlarm = 8; #[allow(missing_docs)] const UnderTempWarning = 16; #[doc =
-    " Notes: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32; #[doc =
-    " Notes: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64; #[doc =
-    " Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128;
-    #[doc = " Notes: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning =
-    256; #[allow(missing_docs)] const OverVoltAlarm = 512; #[allow(missing_docs)] const
+    " Detail: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32; #[doc =
+    " Detail: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64; #[doc =
+    " Detail: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128;
+    #[doc = " Detail: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning
+    = 256; #[allow(missing_docs)] const OverVoltAlarm = 512; #[allow(missing_docs)] const
     OverVoltWarning = 1024; #[allow(missing_docs)] const UnderVoltAlarm = 2048;
     #[allow(missing_docs)] const UnderVoltWarning = 4096; #[allow(missing_docs)] const
     UnderSocMinAlarm = 8192; #[allow(missing_docs)] const UnderSocMinWarning = 16384;
     #[allow(missing_docs)] const OverSocMaxAlarm = 32768; #[allow(missing_docs)] const
     OverSocMaxWarning = 65536; #[allow(missing_docs)] const VoltageImbalanceWarning =
-    131072; #[doc = " Notes: Do not implement."] const Reserved1 = 262144; #[doc =
-    " Notes: Do not implement."] const Reserved2 = 524288; #[allow(missing_docs)] const
+    131072; #[doc = " Detail: Do not implement."] const Reserved1 = 262144; #[doc =
+    " Detail: Do not implement."] const Reserved2 = 524288; #[allow(missing_docs)] const
     ContactorError = 1048576; #[allow(missing_docs)] const FanError = 2097152;
     #[allow(missing_docs)] const GroundFault = 4194304; #[allow(missing_docs)] const
-    OpenDoorError = 8388608; #[doc = " Notes: Do not implement."] const Reserved3 =
-    16777216; #[doc = " Notes: See EvtVnd1 and EvtVnd2 for more information."] const
+    OpenDoorError = 8388608; #[doc = " Detail: Do not implement."] const Reserved3 =
+    16777216; #[doc = " Detail: See EvtVnd1 and EvtVnd2 for more information."] const
     OtherAlarm = 33554432; #[doc =
-    " Notes: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning =
+    " Detail: See EvtVnd1 and EvtVnd2 for more information."] const OtherWarning =
     67108864; #[allow(missing_docs)] const FireAlarm = 134217728; #[allow(missing_docs)]
     const ConfigurationAlarm = 268435456; #[allow(missing_docs)] const
     ConfigurationWarning = 536870912; }

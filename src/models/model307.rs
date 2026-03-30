@@ -3,7 +3,7 @@
 ///
 /// Base Meteorological Model
 ///
-/// Notes: This model supersedes model 301
+/// Detail: This model supersedes model 301
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model307 {

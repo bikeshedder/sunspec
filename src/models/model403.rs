@@ -3,7 +3,7 @@
 ///
 /// A basic string combiner model
 ///
-/// Notes: This model supersedes model 401
+/// Detail: This model supersedes model 401
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model403 {

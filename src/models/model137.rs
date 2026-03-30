@@ -3,7 +3,7 @@
 ///
 /// LVRT must remain connected
 ///
-/// Notes: Ref 4: 11
+/// Detail: Ref 4: 11
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model137 {
@@ -19,19 +19,19 @@ pub struct Model137 {
     ///
     /// Time window for LVRT change.
     ///
-    /// Notes: Setting is ignored for LVRT controls.
+    /// Detail: Setting is ignored for LVRT controls.
     pub win_tms: Option<u16>,
     /// RvrtTms
     ///
     /// Timeout period for LVRT curve selection.
     ///
-    /// Notes: Setting is ignored for LVRT controls.
+    /// Detail: Setting is ignored for LVRT controls.
     pub rvrt_tms: Option<u16>,
     /// RmpTms
     ///
     /// Ramp time for moving from current mode to new mode.
     ///
-    /// Notes: Setting is ignored for LVRT controls.
+    /// Detail: Setting is ignored for LVRT controls.
     pub rmp_tms: Option<u16>,
     /// NCrv
     ///

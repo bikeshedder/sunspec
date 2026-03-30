@@ -25,13 +25,13 @@ pub struct Model9 {
     ///
     /// Total Length of the Certificate
     ///
-    /// Notes: In registers, zero padded.
+    /// Detail: In registers, zero padded.
     pub tot_ln: u16,
     /// Fragment length
     ///
     /// Length of this fragment
     ///
-    /// Notes: Maximum fragment length is 80 registers
+    /// Detail: Maximum fragment length is 80 registers
     pub frg_ln: u16,
     /// Frag1
     ///
@@ -205,7 +205,7 @@ pub struct Model9 {
     ///
     /// Sequence number of request
     ///
-    /// Notes: Shall be advanced for each request
+    /// Detail: Shall be advanced for each request
     pub seq: u16,
     /// UID
     ///
@@ -215,13 +215,13 @@ pub struct Model9 {
     ///
     /// Signing key used 0-5
     ///
-    /// Notes: Each controller is assigned a key index that maps to their access control role
+    /// Detail: Each controller is assigned a key index that maps to their access control role
     pub role: u16,
     /// Algorithm
     ///
     /// Algorithm used to compute the digital signature
     ///
-    /// Notes: For future proof
+    /// Detail: For future proof
     pub alg: Alg,
     /// N
     ///
@@ -515,12 +515,12 @@ impl crate::Value for Option<Typ> {
 ///
 /// Algorithm used to compute the digital signature
 ///
-/// Notes: For future proof
+/// Detail: For future proof
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
-    /// Notes: For test purposes only
+    /// Detail: For test purposes only
     None = 0,
     #[allow(missing_docs)]
     AesGmac64 = 1,

@@ -15,7 +15,7 @@ pub struct Model803 {
     ///
     /// Maximum temperature for all modules in the bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub mod_tmp_max: i16,
     /// Max Module Temperature String
     ///
@@ -29,7 +29,7 @@ pub struct Model803 {
     ///
     /// Minimum temperature for all modules in the bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub mod_tmp_min: i16,
     /// Min Module Temperature String
     ///
@@ -43,13 +43,13 @@ pub struct Model803 {
     ///
     /// Average temperature for all modules in the bank.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub mod_tmp_avg: Option<i16>,
     /// Max String Voltage
     ///
     /// Maximum string voltage for all strings in the bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub str_v_max: Option<u16>,
     /// Max String Voltage String
     ///
@@ -59,7 +59,7 @@ pub struct Model803 {
     ///
     /// Minimum string voltage for all strings in the bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub str_v_min: Option<u16>,
     /// Min String Voltage String
     ///
@@ -69,13 +69,13 @@ pub struct Model803 {
     ///
     /// Average string voltage for all strings in the bank.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub str_v_avg: Option<u16>,
     /// Max String Current
     ///
     /// Maximum current of any string in the bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub str_a_max: Option<i16>,
     /// Max String Current String
     ///
@@ -85,7 +85,7 @@ pub struct Model803 {
     ///
     /// Minimum current of any string in the bank.
     ///
-    /// Notes: Measurement.
+    /// Detail: Measurement.
     pub str_a_min: Option<i16>,
     /// Min String Current String
     ///
@@ -95,7 +95,7 @@ pub struct Model803 {
     ///
     /// Average string current for all strings in the bank.
     ///
-    /// Notes: Calculation based on measurements.
+    /// Detail: Calculation based on measurements.
     pub str_a_avg: Option<i16>,
     /// Battery Cell Balancing Count
     ///

@@ -9,25 +9,25 @@ pub struct Model103 {
     ///
     /// AC Current
     ///
-    /// Notes: Sum of active phases
+    /// Detail: Sum of active phases
     pub a: u16,
     /// Amps PhaseA
     ///
     /// Phase A Current
     ///
-    /// Notes: Connected Phase
+    /// Detail: Connected Phase
     pub aph_a: u16,
     /// Amps PhaseB
     ///
     /// Phase B Current
     ///
-    /// Notes: Connected Phase
+    /// Detail: Connected Phase
     pub aph_b: u16,
     /// Amps PhaseC
     ///
     /// Phase C Current
     ///
-    /// Notes: Connected Phase
+    /// Detail: Connected Phase
     pub aph_c: u16,
     #[allow(missing_docs)]
     pub a_sf: i16,

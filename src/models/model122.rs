@@ -3,7 +3,7 @@
 ///
 /// Inverter Controls Extended Measurements and Status
 ///
-/// Notes: Ref 3: 8.14.3.2, Ref 4: 17
+/// Detail: Ref 3: 8.14.3.2, Ref 4: 17
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model122 {
@@ -63,7 +63,7 @@ pub struct Model122 {
     ///
     /// Bit Mask indicating setpoint limit(s) reached.
     ///
-    /// Notes: Bits shall be automatically cleared on read.
+    /// Detail: Bits shall be automatically cleared on read.
     pub st_set_lim_msk: Option<StSetLimMsk>,
     /// StActCtl
     ///
@@ -218,7 +218,7 @@ bitflags::bitflags! {
     " ECP connection status: disconnected=0  connected=1."] #[derive(Copy, Clone, Debug,
     Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
     ::serde::Deserialize))] pub struct EcpConn : u16 { #[allow(missing_docs)] const
-    Connected = 1; }
+    Disconnected = 1; #[allow(missing_docs)] const Connected = 2; }
 }
 impl crate::Value for EcpConn {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -249,7 +249,7 @@ impl crate::Value for Option<EcpConn> {
 bitflags::bitflags! {
     #[doc = " StSetLimMsk"] #[doc = " "] #[doc =
     " Bit Mask indicating setpoint limit(s) reached."] #[doc = " "] #[doc =
-    " Notes: Bits shall be automatically cleared on read."] #[derive(Copy, Clone, Debug,
+    " Detail: Bits shall be automatically cleared on read."] #[derive(Copy, Clone, Debug,
     Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
     ::serde::Deserialize))] pub struct StSetLimMsk : u32 { #[allow(missing_docs)] const
     WMax = 1; #[allow(missing_docs)] const VaMax = 2; #[allow(missing_docs)] const

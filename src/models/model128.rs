@@ -3,7 +3,7 @@
 ///
 /// Dynamic Reactive Current
 ///
-/// Notes: Ref 3: 8.10.1.2; Ref 4: 12
+/// Detail: Ref 3: 8.10.1.2; Ref 4: 12
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model128 {

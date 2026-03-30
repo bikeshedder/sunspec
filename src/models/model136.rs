@@ -3,7 +3,7 @@
 ///
 /// High Frequency Ride-through
 ///
-/// Notes: Ref 4: 11
+/// Detail: Ref 4: 11
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model136 {
@@ -19,19 +19,19 @@ pub struct Model136 {
     ///
     /// Time window for HFRT change.
     ///
-    /// Notes: Setting is ignored for HFRT controls.
+    /// Detail: Setting is ignored for HFRT controls.
     pub win_tms: Option<u16>,
     /// RvrtTms
     ///
     /// Timeout period for HFRT curve selection.
     ///
-    /// Notes: Setting is ignored for HFRT controls.
+    /// Detail: Setting is ignored for HFRT controls.
     pub rvrt_tms: Option<u16>,
     /// RmpTms
     ///
     /// Ramp time for moving from current mode to new mode.
     ///
-    /// Notes: Setting is ignored for HFRT controls.
+    /// Detail: Setting is ignored for HFRT controls.
     pub rmp_tms: Option<u16>,
     /// NCrv
     ///

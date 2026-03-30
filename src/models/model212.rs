@@ -1,7 +1,7 @@
 //! split single phase (ABN) meter
 /// split single phase (ABN) meter
 ///
-/// Notes: Float
+/// Detail: Float
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model212 {

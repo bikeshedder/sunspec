@@ -3,7 +3,7 @@
 ///
 /// Basic Storage Controls
 ///
-/// Notes: Ref 3: 8.7.4.2
+/// Detail: Ref 3: 8.7.4.2
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model124 {

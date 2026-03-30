@@ -3,7 +3,7 @@
 ///
 /// An advanced string combiner
 ///
-/// Notes: This model is SUPERSEDED by model 404
+/// Detail: This model is SUPERSEDED by model 404
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model402 {

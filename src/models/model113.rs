@@ -9,25 +9,25 @@ pub struct Model113 {
     ///
     /// AC Current
     ///
-    /// Notes: Sum of active phases
+    /// Detail: Sum of active phases
     pub a: f32,
     /// Amps PhaseA
     ///
     /// Phase A Current
     ///
-    /// Notes: Connected Phase
+    /// Detail: Connected Phase
     pub aph_a: f32,
     /// Amps PhaseB
     ///
     /// Phase B Current
     ///
-    /// Notes: Connected Phase
+    /// Detail: Connected Phase
     pub aph_b: f32,
     /// Amps PhaseC
     ///
     /// Phase C Current
     ///
-    /// Notes: Connected Phase
+    /// Detail: Connected Phase
     pub aph_c: f32,
     /// Phase Voltage AB
     ///

@@ -3,7 +3,7 @@
 ///
 /// Parameterized Frequency-Watt
 ///
-/// Notes: Ref 3: 8.9.1.2, 8.9.4.2
+/// Detail: Ref 3: 8.9.1.2, 8.9.4.2
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model127 {

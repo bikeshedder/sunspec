@@ -3,7 +3,7 @@
 ///
 /// Include a digital signature over the response
 ///
-/// Notes: Used in conjunction with a Secure Write Request
+/// Detail: Used in conjunction with a Secure Write Request
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model7 {
@@ -27,7 +27,7 @@ pub struct Model7 {
     ///
     /// Sequence number of response
     ///
-    /// Notes: Shall be advanced for each response
+    /// Detail: Shall be advanced for each response
     pub seq: u16,
     /// Alarm
     ///
@@ -37,13 +37,13 @@ pub struct Model7 {
     ///
     /// Algorithm used to compute the digital signature
     ///
-    /// Notes: For future proof
+    /// Detail: For future proof
     pub alg: Alg,
     /// N
     ///
     /// Number of registers comprising the digital signature.
     ///
-    /// Notes: The value of N must be at least 4 (64 bits)
+    /// Detail: The value of N must be at least 4 (64 bits)
     pub n: u16,
 }
 #[allow(missing_docs)]
@@ -84,13 +84,13 @@ impl crate::Model for Model7 {
 pub enum Sts {
     #[allow(missing_docs)]
     Success = 0,
-    /// Notes: The signature was not valid
+    /// Detail: The signature was not valid
     Ds = 1,
-    /// Notes: One or more registers were not writable by this role
+    /// Detail: One or more registers were not writable by this role
     Acl = 2,
-    /// Notes: Offset out of range or missing from multi-register value
+    /// Detail: Offset out of range or missing from multi-register value
     Off = 3,
-    /// Notes: Value is out of acceptable range
+    /// Detail: Value is out of acceptable range
     Val = 4,
 }
 impl crate::Value for Sts {
@@ -130,7 +130,7 @@ impl crate::Value for Option<Sts> {
 pub enum Alm {
     #[allow(missing_docs)]
     None = 0,
-    /// Notes: Tampered
+    /// Detail: Tampered
     Alm = 1,
 }
 impl crate::Value for Alm {
@@ -165,12 +165,12 @@ impl crate::Value for Option<Alm> {
 ///
 /// Algorithm used to compute the digital signature
 ///
-/// Notes: For future proof
+/// Detail: For future proof
 #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 #[repr(u16)]
 pub enum Alg {
-    /// Notes: For test purposes only
+    /// Detail: For test purposes only
     None = 0,
     #[allow(missing_docs)]
     AesGmac64 = 1,
