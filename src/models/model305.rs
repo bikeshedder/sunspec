@@ -1,10 +1,11 @@
 //! GPS
+pub type Model305 = Location;
 /// GPS
 ///
 /// Include to support location measurements
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model305 {
+pub struct Location {
     /// Tm
     ///
     /// UTC 24 hour time stamp to millisecond hhmmss.sssZ format
@@ -31,7 +32,7 @@ pub struct Model305 {
     pub alt: Option<i32>,
 }
 #[allow(missing_docs)]
-impl Model305 {
+impl Location {
     pub const TM: crate::Point<Self, Option<String>> = crate::Point::new(0, 6, false);
     pub const DATE: crate::Point<Self, Option<String>> = crate::Point::new(6, 4, false);
     pub const LOC: crate::Point<Self, Option<String>> = crate::Point::new(10, 20, false);
@@ -39,19 +40,36 @@ impl Model305 {
     pub const LONG: crate::Point<Self, Option<i32>> = crate::Point::new(32, 2, false);
     pub const ALT: crate::Point<Self, Option<i32>> = crate::Point::new(34, 2, false);
 }
-impl crate::Model for Model305 {
-    const ID: u16 = 305;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            tm: Self::TM.from_data(data)?,
-            date: Self::DATE.from_data(data)?,
-            loc: Self::LOC.from_data(data)?,
-            lat: Self::LAT.from_data(data)?,
-            long: Self::LONG.from_data(data)?,
-            alt: Self::ALT.from_data(data)?,
-        })
+impl crate::Group for Location {
+    const LEN: u16 = 36;
+}
+impl Location {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                tm: Self::TM.from_data(data)?,
+                date: Self::DATE.from_data(data)?,
+                loc: Self::LOC.from_data(data)?,
+                lat: Self::LAT.from_data(data)?,
+                long: Self::LONG.from_data(data)?,
+                alt: Self::ALT.from_data(data)?,
+            },
+        ))
     }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+}
+impl crate::Model for Location {
+    const ID: u16 = 305;
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m305
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

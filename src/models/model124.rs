@@ -1,4 +1,5 @@
 //! Storage
+pub type Model124 = StorageBasic;
 /// Storage
 ///
 /// Basic Storage Controls
@@ -6,7 +7,7 @@
 /// Detail: Ref 3: 8.7.4.2
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model124 {
+pub struct StorageBasic {
     /// WChaMax
     ///
     /// Setpoint for maximum charge.
@@ -103,7 +104,7 @@ pub struct Model124 {
     pub in_out_w_rte_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model124 {
+impl StorageBasic {
     pub const W_CHA_MAX: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
     pub const W_CHA_GRA: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
     pub const W_DIS_CHA_GRA: crate::Point<Self, u16> = crate::Point::new(2, 1, true);
@@ -132,38 +133,45 @@ impl Model124 {
     pub const IN_BAT_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
     pub const IN_OUT_W_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
 }
-impl crate::Model for Model124 {
-    const ID: u16 = 124;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            w_cha_max: Self::W_CHA_MAX.from_data(data)?,
-            w_cha_gra: Self::W_CHA_GRA.from_data(data)?,
-            w_dis_cha_gra: Self::W_DIS_CHA_GRA.from_data(data)?,
-            stor_ctl_mod: Self::STOR_CTL_MOD.from_data(data)?,
-            va_cha_max: Self::VA_CHA_MAX.from_data(data)?,
-            min_rsv_pct: Self::MIN_RSV_PCT.from_data(data)?,
-            cha_state: Self::CHA_STATE.from_data(data)?,
-            stor_aval: Self::STOR_AVAL.from_data(data)?,
-            in_bat_v: Self::IN_BAT_V.from_data(data)?,
-            cha_st: Self::CHA_ST.from_data(data)?,
-            out_w_rte: Self::OUT_W_RTE.from_data(data)?,
-            in_w_rte: Self::IN_W_RTE.from_data(data)?,
-            in_out_w_rte_win_tms: Self::IN_OUT_W_RTE_WIN_TMS.from_data(data)?,
-            in_out_w_rte_rvrt_tms: Self::IN_OUT_W_RTE_RVRT_TMS.from_data(data)?,
-            in_out_w_rte_rmp_tms: Self::IN_OUT_W_RTE_RMP_TMS.from_data(data)?,
-            cha_gri_set: Self::CHA_GRI_SET.from_data(data)?,
-            w_cha_max_sf: Self::W_CHA_MAX_SF.from_data(data)?,
-            w_cha_dis_cha_gra_sf: Self::W_CHA_DIS_CHA_GRA_SF.from_data(data)?,
-            va_cha_max_sf: Self::VA_CHA_MAX_SF.from_data(data)?,
-            min_rsv_pct_sf: Self::MIN_RSV_PCT_SF.from_data(data)?,
-            cha_state_sf: Self::CHA_STATE_SF.from_data(data)?,
-            stor_aval_sf: Self::STOR_AVAL_SF.from_data(data)?,
-            in_bat_v_sf: Self::IN_BAT_V_SF.from_data(data)?,
-            in_out_w_rte_sf: Self::IN_OUT_W_RTE_SF.from_data(data)?,
-        })
+impl crate::Group for StorageBasic {
+    const LEN: u16 = 24;
+}
+impl StorageBasic {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                w_cha_max: Self::W_CHA_MAX.from_data(data)?,
+                w_cha_gra: Self::W_CHA_GRA.from_data(data)?,
+                w_dis_cha_gra: Self::W_DIS_CHA_GRA.from_data(data)?,
+                stor_ctl_mod: Self::STOR_CTL_MOD.from_data(data)?,
+                va_cha_max: Self::VA_CHA_MAX.from_data(data)?,
+                min_rsv_pct: Self::MIN_RSV_PCT.from_data(data)?,
+                cha_state: Self::CHA_STATE.from_data(data)?,
+                stor_aval: Self::STOR_AVAL.from_data(data)?,
+                in_bat_v: Self::IN_BAT_V.from_data(data)?,
+                cha_st: Self::CHA_ST.from_data(data)?,
+                out_w_rte: Self::OUT_W_RTE.from_data(data)?,
+                in_w_rte: Self::IN_W_RTE.from_data(data)?,
+                in_out_w_rte_win_tms: Self::IN_OUT_W_RTE_WIN_TMS.from_data(data)?,
+                in_out_w_rte_rvrt_tms: Self::IN_OUT_W_RTE_RVRT_TMS.from_data(data)?,
+                in_out_w_rte_rmp_tms: Self::IN_OUT_W_RTE_RMP_TMS.from_data(data)?,
+                cha_gri_set: Self::CHA_GRI_SET.from_data(data)?,
+                w_cha_max_sf: Self::W_CHA_MAX_SF.from_data(data)?,
+                w_cha_dis_cha_gra_sf: Self::W_CHA_DIS_CHA_GRA_SF.from_data(data)?,
+                va_cha_max_sf: Self::VA_CHA_MAX_SF.from_data(data)?,
+                min_rsv_pct_sf: Self::MIN_RSV_PCT_SF.from_data(data)?,
+                cha_state_sf: Self::CHA_STATE_SF.from_data(data)?,
+                stor_aval_sf: Self::STOR_AVAL_SF.from_data(data)?,
+                in_bat_v_sf: Self::IN_BAT_V_SF.from_data(data)?,
+                in_out_w_rte_sf: Self::IN_OUT_W_RTE_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m124
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -286,5 +294,15 @@ impl crate::Value for Option<ChaGriSet> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for StorageBasic {
+    const ID: u16 = 124;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m124
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

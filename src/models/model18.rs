@@ -34,18 +34,35 @@ impl Model18 {
     pub const NUM: crate::Point<Self, Option<String>> = crate::Point::new(10, 6, true);
     pub const PIN: crate::Point<Self, Option<String>> = crate::Point::new(16, 6, true);
 }
+impl crate::Group for Model18 {
+    const LEN: u16 = 22;
+}
+impl Model18 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                nam: Self::NAM.from_data(data)?,
+                imei: Self::IMEI.from_data(data)?,
+                apn: Self::APN.from_data(data)?,
+                num: Self::NUM.from_data(data)?,
+                pin: Self::PIN.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+}
 impl crate::Model for Model18 {
     const ID: u16 = 18;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            nam: Self::NAM.from_data(data)?,
-            imei: Self::IMEI.from_data(data)?,
-            apn: Self::APN.from_data(data)?,
-            num: Self::NUM.from_data(data)?,
-            pin: Self::PIN.from_data(data)?,
-        })
-    }
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m18
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

@@ -1,8 +1,9 @@
 //! Multiple MPPT Inverter Extension Model
+pub type Model160 = Mppt;
 /// Multiple MPPT Inverter Extension Model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model160 {
+pub struct Mppt {
     /// Current Scale Factor
     pub dca_sf: Option<i16>,
     /// Voltage Scale Factor
@@ -17,9 +18,11 @@ pub struct Model160 {
     pub n: Option<u16>,
     /// Timestamp Period
     pub tms_per: Option<u16>,
+    #[allow(missing_docs)]
+    pub module: Vec<Module>,
 }
 #[allow(missing_docs)]
-impl Model160 {
+impl Mppt {
     pub const DCA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
     pub const DCV_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
     pub const DCW_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
@@ -28,21 +31,30 @@ impl Model160 {
     pub const N: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
     pub const TMS_PER: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
 }
-impl crate::Model for Model160 {
-    const ID: u16 = 160;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            dca_sf: Self::DCA_SF.from_data(data)?,
-            dcv_sf: Self::DCV_SF.from_data(data)?,
-            dcw_sf: Self::DCW_SF.from_data(data)?,
-            dcwh_sf: Self::DCWH_SF.from_data(data)?,
-            evt: Self::EVT.from_data(data)?,
-            n: Self::N.from_data(data)?,
-            tms_per: Self::TMS_PER.from_data(data)?,
-        })
+impl crate::Group for Mppt {
+    const LEN: u16 = 8;
+}
+impl Mppt {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                dca_sf: Self::DCA_SF.from_data(data)?,
+                dcv_sf: Self::DCV_SF.from_data(data)?,
+                dcw_sf: Self::DCW_SF.from_data(data)?,
+                dcwh_sf: Self::DCWH_SF.from_data(data)?,
+                evt: Self::EVT.from_data(data)?,
+                n: Self::N.from_data(data)?,
+                tms_per: Self::TMS_PER.from_data(data)?,
+                module: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m160
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.module) = Module::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -89,5 +101,195 @@ impl crate::Value for Option<Evt> {
         } else {
             4294967295u32.encode()
         }
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Module {
+    /// Input ID
+    pub id: Option<u16>,
+    /// Input ID String
+    pub id_str: Option<String>,
+    /// DC Current
+    pub dca: Option<u16>,
+    /// DC Voltage
+    pub dcv: Option<u16>,
+    /// DC Power
+    pub dcw: Option<u16>,
+    /// Lifetime Energy
+    pub dcwh: Option<u32>,
+    /// Timestamp
+    pub tms: Option<u32>,
+    /// Temperature
+    pub tmp: Option<i16>,
+    /// Operating State
+    pub dc_st: Option<ModuleDcSt>,
+    /// Module Events
+    pub dc_evt: Option<ModuleDcEvt>,
+}
+#[allow(missing_docs)]
+impl Module {
+    pub const ID: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
+    pub const ID_STR: crate::Point<Self, Option<String>> = crate::Point::new(1, 8, false);
+    pub const DCA: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, false);
+    pub const DCV: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
+    pub const DCW: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
+    pub const DCWH: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
+    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(14, 2, false);
+    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
+    pub const DC_ST: crate::Point<Self, Option<ModuleDcSt>> = crate::Point::new(17, 1, false);
+    pub const DC_EVT: crate::Point<Self, Option<ModuleDcEvt>> = crate::Point::new(18, 2, false);
+}
+impl crate::Group for Module {
+    const LEN: u16 = 20;
+}
+impl Module {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                id: Self::ID.from_data(data)?,
+                id_str: Self::ID_STR.from_data(data)?,
+                dca: Self::DCA.from_data(data)?,
+                dcv: Self::DCV.from_data(data)?,
+                dcw: Self::DCW.from_data(data)?,
+                dcwh: Self::DCWH.from_data(data)?,
+                tms: Self::TMS.from_data(data)?,
+                tmp: Self::TMP.from_data(data)?,
+                dc_st: Self::DC_ST.from_data(data)?,
+                dc_evt: Self::DC_EVT.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &Mppt,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &Mppt,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = Module::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+/// Operating State
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[repr(u16)]
+pub enum ModuleDcSt {
+    #[allow(missing_docs)]
+    Off = 1,
+    #[allow(missing_docs)]
+    Sleeping = 2,
+    #[allow(missing_docs)]
+    Starting = 3,
+    #[allow(missing_docs)]
+    Mppt = 4,
+    #[allow(missing_docs)]
+    Throttled = 5,
+    #[allow(missing_docs)]
+    ShuttingDown = 6,
+    #[allow(missing_docs)]
+    Fault = 7,
+    #[allow(missing_docs)]
+    Standby = 8,
+    #[allow(missing_docs)]
+    Test = 9,
+    #[allow(missing_docs)]
+    Reserved10 = 10,
+}
+impl crate::Value for ModuleDcSt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<ModuleDcSt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                ModuleDcSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+bitflags::bitflags! {
+    #[doc = " Module Events"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
+    struct ModuleDcEvt : u32 { #[allow(missing_docs)] const GroundFault = 1;
+    #[allow(missing_docs)] const InputOverVoltage = 2; #[allow(missing_docs)] const
+    Reserved2 = 4; #[allow(missing_docs)] const DcDisconnect = 8; #[allow(missing_docs)]
+    const Reserved4 = 16; #[allow(missing_docs)] const CabinetOpen = 32;
+    #[allow(missing_docs)] const ManualShutdown = 64; #[allow(missing_docs)] const
+    OverTemp = 128; #[allow(missing_docs)] const Reserved8 = 256; #[allow(missing_docs)]
+    const Reserved9 = 512; #[allow(missing_docs)] const Reserved10 = 1024;
+    #[allow(missing_docs)] const Reserved11 = 2048; #[allow(missing_docs)] const
+    BlownFuse = 4096; #[allow(missing_docs)] const UnderTemp = 8192;
+    #[allow(missing_docs)] const MemoryLoss = 16384; #[allow(missing_docs)] const
+    ArcDetection = 32768; #[allow(missing_docs)] const Reserved16 = 65536;
+    #[allow(missing_docs)] const Reserved17 = 131072; #[allow(missing_docs)] const
+    Reserved18 = 262144; #[allow(missing_docs)] const Reserved19 = 524288;
+    #[allow(missing_docs)] const TestFailed = 1048576; #[allow(missing_docs)] const
+    InputUnderVoltage = 2097152; #[allow(missing_docs)] const InputOverCurrent = 4194304;
+    }
+}
+impl crate::Value for ModuleDcEvt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<ModuleDcEvt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(ModuleDcEvt::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+impl crate::Model for Mppt {
+    const ID: u16 = 160;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m160
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

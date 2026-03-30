@@ -44,21 +44,28 @@ impl Model11 {
     pub const CTL: crate::Point<Self, Option<Ctl>> = crate::Point::new(11, 1, true);
     pub const FRC_SPD: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, true);
 }
-impl crate::Model for Model11 {
-    const ID: u16 = 11;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            spd: Self::SPD.from_data(data)?,
-            cfg_st: Self::CFG_ST.from_data(data)?,
-            st: Self::ST.from_data(data)?,
-            mac: Self::MAC.from_data(data)?,
-            nam: Self::NAM.from_data(data)?,
-            ctl: Self::CTL.from_data(data)?,
-            frc_spd: Self::FRC_SPD.from_data(data)?,
-        })
+impl crate::Group for Model11 {
+    const LEN: u16 = 13;
+}
+impl Model11 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                spd: Self::SPD.from_data(data)?,
+                cfg_st: Self::CFG_ST.from_data(data)?,
+                st: Self::ST.from_data(data)?,
+                mac: Self::MAC.from_data(data)?,
+                nam: Self::NAM.from_data(data)?,
+                ctl: Self::CTL.from_data(data)?,
+                frc_spd: Self::FRC_SPD.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m11
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -171,5 +178,15 @@ impl crate::Value for Option<Ctl> {
         } else {
             65535u16.encode()
         }
+    }
+}
+impl crate::Model for Model11 {
+    const ID: u16 = 11;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m11
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

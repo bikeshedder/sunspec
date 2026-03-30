@@ -1,10 +1,11 @@
 //! Basic Aggregator
+pub type Model2 = Aggregator;
 /// Basic Aggregator
 ///
 /// Aggregates a collection of models for a given model id
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model2 {
+pub struct Aggregator {
     /// AID
     ///
     /// Aggregated model id
@@ -47,7 +48,7 @@ pub struct Model2 {
     pub ctl_vl: Option<u32>,
 }
 #[allow(missing_docs)]
-impl Model2 {
+impl Aggregator {
     pub const AID: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
     pub const UN: crate::Point<Self, u16> = crate::Point::new(2, 1, false);
@@ -59,24 +60,31 @@ impl Model2 {
     pub const CTL_VND: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
     pub const CTL_VL: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
 }
-impl crate::Model for Model2 {
-    const ID: u16 = 2;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            aid: Self::AID.from_data(data)?,
-            n: Self::N.from_data(data)?,
-            un: Self::UN.from_data(data)?,
-            st: Self::ST.from_data(data)?,
-            st_vnd: Self::ST_VND.from_data(data)?,
-            evt: Self::EVT.from_data(data)?,
-            evt_vnd: Self::EVT_VND.from_data(data)?,
-            ctl: Self::CTL.from_data(data)?,
-            ctl_vnd: Self::CTL_VND.from_data(data)?,
-            ctl_vl: Self::CTL_VL.from_data(data)?,
-        })
+impl crate::Group for Aggregator {
+    const LEN: u16 = 14;
+}
+impl Aggregator {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                aid: Self::AID.from_data(data)?,
+                n: Self::N.from_data(data)?,
+                un: Self::UN.from_data(data)?,
+                st: Self::ST.from_data(data)?,
+                st_vnd: Self::ST_VND.from_data(data)?,
+                evt: Self::EVT.from_data(data)?,
+                evt_vnd: Self::EVT_VND.from_data(data)?,
+                ctl: Self::CTL.from_data(data)?,
+                ctl_vnd: Self::CTL_VND.from_data(data)?,
+                ctl_vl: Self::CTL_VL.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m2
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Status
@@ -243,5 +251,15 @@ impl crate::Value for Option<Ctl> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for Aggregator {
+    const ID: u16 = 2;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m2
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

@@ -1,4 +1,5 @@
 //! Freq-Watt Param
+pub type Model127 = FreqWattParam;
 /// Freq-Watt Param
 ///
 /// Parameterized Frequency-Watt
@@ -6,7 +7,7 @@
 /// Detail: Ref 3: 8.9.1.2, 8.9.4.2
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model127 {
+pub struct FreqWattParam {
     /// WGra
     ///
     /// The slope of the reduction in the maximum allowed watts output as a function of frequency.
@@ -45,7 +46,7 @@ pub struct Model127 {
     pub rmp_inc_dec_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model127 {
+impl FreqWattParam {
     pub const W_GRA: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
     pub const HZ_STR: crate::Point<Self, i16> = crate::Point::new(1, 1, true);
     pub const HZ_STOP: crate::Point<Self, i16> = crate::Point::new(2, 1, true);
@@ -56,23 +57,30 @@ impl Model127 {
     pub const HZ_STR_STOP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
 }
-impl crate::Model for Model127 {
-    const ID: u16 = 127;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            w_gra: Self::W_GRA.from_data(data)?,
-            hz_str: Self::HZ_STR.from_data(data)?,
-            hz_stop: Self::HZ_STOP.from_data(data)?,
-            hys_ena: Self::HYS_ENA.from_data(data)?,
-            mod_ena: Self::MOD_ENA.from_data(data)?,
-            hz_stop_w_gra: Self::HZ_STOP_W_GRA.from_data(data)?,
-            w_gra_sf: Self::W_GRA_SF.from_data(data)?,
-            hz_str_stop_sf: Self::HZ_STR_STOP_SF.from_data(data)?,
-            rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
-        })
+impl crate::Group for FreqWattParam {
+    const LEN: u16 = 10;
+}
+impl FreqWattParam {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                w_gra: Self::W_GRA.from_data(data)?,
+                hz_str: Self::HZ_STR.from_data(data)?,
+                hz_stop: Self::HZ_STOP.from_data(data)?,
+                hys_ena: Self::HYS_ENA.from_data(data)?,
+                mod_ena: Self::MOD_ENA.from_data(data)?,
+                hz_stop_w_gra: Self::HZ_STOP_W_GRA.from_data(data)?,
+                w_gra_sf: Self::W_GRA_SF.from_data(data)?,
+                hz_str_stop_sf: Self::HZ_STR_STOP_SF.from_data(data)?,
+                rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m127
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -138,5 +146,15 @@ impl crate::Value for Option<ModEna> {
         } else {
             65535u16.encode()
         }
+    }
+}
+impl crate::Model for FreqWattParam {
+    const ID: u16 = 127;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m127
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

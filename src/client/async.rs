@@ -289,7 +289,7 @@ async fn read_model<M: Model>(
         }
         data
     };
-    Ok(M::from_data(&data)?)
+    Ok(M::parse(&data)?)
 }
 
 /// Read data for a single point. Please note that

@@ -2,7 +2,7 @@ use std::{fs, path::PathBuf};
 
 use clap::Parser;
 use proc_macro2::TokenStream;
-use sunspec_gen::gen::{gen_model_struct, gen_models_struct};
+use sunspec_gen::gen::{gen_model, gen_models_struct};
 
 #[derive(Parser)]
 struct Args {
@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let filename = format!("model{}.rs", model.id);
         fs::write(
             args.target_dir.join(filename),
-            ts_to_str(gen_model_struct(&model)?).as_bytes(),
+            ts_to_str(gen_model(&model)?).as_bytes(),
         )?;
     }
     Ok(())

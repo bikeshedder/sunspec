@@ -1,10 +1,11 @@
 //! Secure AC Meter Selected Readings
+pub type Model220 = AcMeterSecure;
 /// Secure AC Meter Selected Readings
 ///
 /// Include this model for secure metering
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model220 {
+pub struct AcMeterSecure {
     /// Amps
     ///
     /// Total AC Current
@@ -115,9 +116,11 @@ pub struct Model220 {
     ///
     /// Detail: The value of N must be at least 4 (64 bits)
     pub n: u16,
+    #[allow(missing_docs)]
+    pub repeating: Vec<Repeating>,
 }
 #[allow(missing_docs)]
-impl Model220 {
+impl AcMeterSecure {
     pub const A: crate::Point<Self, i16> = crate::Point::new(0, 1, false);
     pub const A_SF: crate::Point<Self, i16> = crate::Point::new(1, 1, false);
     pub const PH_V: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
@@ -150,45 +153,54 @@ impl Model220 {
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(40, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(41, 1, false);
 }
-impl crate::Model for Model220 {
-    const ID: u16 = 220;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            a: Self::A.from_data(data)?,
-            a_sf: Self::A_SF.from_data(data)?,
-            ph_v: Self::PH_V.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            hz: Self::HZ.from_data(data)?,
-            hz_sf: Self::HZ_SF.from_data(data)?,
-            w: Self::W.from_data(data)?,
-            w_sf: Self::W_SF.from_data(data)?,
-            va: Self::VA.from_data(data)?,
-            va_sf: Self::VA_SF.from_data(data)?,
-            var: Self::VAR.from_data(data)?,
-            var_sf: Self::VAR_SF.from_data(data)?,
-            pf: Self::PF.from_data(data)?,
-            pf_sf: Self::PF_SF.from_data(data)?,
-            tot_wh_exp: Self::TOT_WH_EXP.from_data(data)?,
-            tot_wh_imp: Self::TOT_WH_IMP.from_data(data)?,
-            tot_wh_sf: Self::TOT_WH_SF.from_data(data)?,
-            tot_v_ah_exp: Self::TOT_V_AH_EXP.from_data(data)?,
-            tot_v_ah_imp: Self::TOT_V_AH_IMP.from_data(data)?,
-            tot_v_ah_sf: Self::TOT_V_AH_SF.from_data(data)?,
-            tot_v_arh_imp_q1: Self::TOT_V_ARH_IMP_Q1.from_data(data)?,
-            tot_v_arh_imp_q2: Self::TOT_V_ARH_IMP_Q2.from_data(data)?,
-            tot_v_arh_exp_q3: Self::TOT_V_ARH_EXP_Q3.from_data(data)?,
-            tot_v_arh_exp_q4: Self::TOT_V_ARH_EXP_Q4.from_data(data)?,
-            tot_v_arh_sf: Self::TOT_V_ARH_SF.from_data(data)?,
-            evt: Self::EVT.from_data(data)?,
-            ts: Self::TS.from_data(data)?,
-            ms: Self::MS.from_data(data)?,
-            seq: Self::SEQ.from_data(data)?,
-            alg: Self::ALG.from_data(data)?,
-            n: Self::N.from_data(data)?,
-        })
+impl crate::Group for AcMeterSecure {
+    const LEN: u16 = 42;
+}
+impl AcMeterSecure {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                a: Self::A.from_data(data)?,
+                a_sf: Self::A_SF.from_data(data)?,
+                ph_v: Self::PH_V.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                hz: Self::HZ.from_data(data)?,
+                hz_sf: Self::HZ_SF.from_data(data)?,
+                w: Self::W.from_data(data)?,
+                w_sf: Self::W_SF.from_data(data)?,
+                va: Self::VA.from_data(data)?,
+                va_sf: Self::VA_SF.from_data(data)?,
+                var: Self::VAR.from_data(data)?,
+                var_sf: Self::VAR_SF.from_data(data)?,
+                pf: Self::PF.from_data(data)?,
+                pf_sf: Self::PF_SF.from_data(data)?,
+                tot_wh_exp: Self::TOT_WH_EXP.from_data(data)?,
+                tot_wh_imp: Self::TOT_WH_IMP.from_data(data)?,
+                tot_wh_sf: Self::TOT_WH_SF.from_data(data)?,
+                tot_v_ah_exp: Self::TOT_V_AH_EXP.from_data(data)?,
+                tot_v_ah_imp: Self::TOT_V_AH_IMP.from_data(data)?,
+                tot_v_ah_sf: Self::TOT_V_AH_SF.from_data(data)?,
+                tot_v_arh_imp_q1: Self::TOT_V_ARH_IMP_Q1.from_data(data)?,
+                tot_v_arh_imp_q2: Self::TOT_V_ARH_IMP_Q2.from_data(data)?,
+                tot_v_arh_exp_q3: Self::TOT_V_ARH_EXP_Q3.from_data(data)?,
+                tot_v_arh_exp_q4: Self::TOT_V_ARH_EXP_Q4.from_data(data)?,
+                tot_v_arh_sf: Self::TOT_V_ARH_SF.from_data(data)?,
+                evt: Self::EVT.from_data(data)?,
+                ts: Self::TS.from_data(data)?,
+                ms: Self::MS.from_data(data)?,
+                seq: Self::SEQ.from_data(data)?,
+                alg: Self::ALG.from_data(data)?,
+                n: Self::N.from_data(data)?,
+                repeating: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m220
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.repeating) = Repeating::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -277,5 +289,59 @@ impl crate::Value for Option<Alg> {
         } else {
             65535.encode()
         }
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Repeating {
+    #[allow(missing_docs)]
+    pub ds: u16,
+}
+#[allow(missing_docs)]
+impl Repeating {
+    pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+}
+impl crate::Group for Repeating {
+    const LEN: u16 = 1;
+}
+impl Repeating {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                ds: Self::DS.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &AcMeterSecure,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &AcMeterSecure,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = Repeating::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+impl crate::Model for AcMeterSecure {
+    const ID: u16 = 220;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m220
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

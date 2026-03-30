@@ -1,4 +1,5 @@
 //! Static Volt-VAR
+pub type Model126 = VoltVar;
 /// Static Volt-VAR
 ///
 /// Static Volt-VAR Arrays
@@ -6,7 +7,7 @@
 /// Detail: Ref 3: 8.8.1.2
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model126 {
+pub struct VoltVar {
     /// ActCrv
     ///
     /// Index of active curve. 0=no active curve.
@@ -45,9 +46,11 @@ pub struct Model126 {
     pub dept_ref_sf: i16,
     #[allow(missing_docs)]
     pub rmp_inc_dec_sf: Option<i16>,
+    #[allow(missing_docs)]
+    pub curve: Vec<Curve>,
 }
 #[allow(missing_docs)]
-impl Model126 {
+impl VoltVar {
     pub const ACT_CRV: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
     pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(1, 1, true);
     pub const WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
@@ -59,24 +62,33 @@ impl Model126 {
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
 }
-impl crate::Model for Model126 {
-    const ID: u16 = 126;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            act_crv: Self::ACT_CRV.from_data(data)?,
-            mod_ena: Self::MOD_ENA.from_data(data)?,
-            win_tms: Self::WIN_TMS.from_data(data)?,
-            rvrt_tms: Self::RVRT_TMS.from_data(data)?,
-            rmp_tms: Self::RMP_TMS.from_data(data)?,
-            n_crv: Self::N_CRV.from_data(data)?,
-            n_pt: Self::N_PT.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            dept_ref_sf: Self::DEPT_REF_SF.from_data(data)?,
-            rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
-        })
+impl crate::Group for VoltVar {
+    const LEN: u16 = 10;
+}
+impl VoltVar {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                act_crv: Self::ACT_CRV.from_data(data)?,
+                mod_ena: Self::MOD_ENA.from_data(data)?,
+                win_tms: Self::WIN_TMS.from_data(data)?,
+                rvrt_tms: Self::RVRT_TMS.from_data(data)?,
+                rmp_tms: Self::RMP_TMS.from_data(data)?,
+                n_crv: Self::N_CRV.from_data(data)?,
+                n_pt: Self::N_PT.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                dept_ref_sf: Self::DEPT_REF_SF.from_data(data)?,
+                rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
+                curve: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m126
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.curve) = Curve::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -109,5 +121,419 @@ impl crate::Value for Option<ModEna> {
         } else {
             65535u16.encode()
         }
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Curve {
+    /// ActPt
+    ///
+    /// Number of active points in array.
+    pub act_pt: u16,
+    /// DeptRef
+    ///
+    /// Meaning of dependent variable: 1=%WMax 2=%VArMax 3=%VArAval.
+    pub dept_ref: CurveDeptRef,
+    /// V1
+    ///
+    /// Point 1 Volts.
+    pub v1: u16,
+    /// VAr1
+    ///
+    /// Point 1 VARs.
+    pub v_ar1: i16,
+    /// V2
+    ///
+    /// Point 2 Volts.
+    pub v2: Option<u16>,
+    /// VAr2
+    ///
+    /// Point 2 VARs.
+    pub v_ar2: Option<i16>,
+    /// V3
+    ///
+    /// Point 3 Volts.
+    pub v3: Option<u16>,
+    /// VAr3
+    ///
+    /// Point 3 VARs.
+    pub v_ar3: Option<i16>,
+    /// V4
+    ///
+    /// Point 4 Volts.
+    pub v4: Option<u16>,
+    /// VAr4
+    ///
+    /// Point 4 VARs.
+    pub v_ar4: Option<i16>,
+    /// V5
+    ///
+    /// Point 5 Volts.
+    pub v5: Option<u16>,
+    /// VAr5
+    ///
+    /// Point 5 VARs.
+    pub v_ar5: Option<i16>,
+    /// V6
+    ///
+    /// Point 6 Volts.
+    pub v6: Option<u16>,
+    /// VAr6
+    ///
+    /// Point 6 VARs.
+    pub v_ar6: Option<i16>,
+    /// V7
+    ///
+    /// Point 7 Volts.
+    pub v7: Option<u16>,
+    /// VAr7
+    ///
+    /// Point 7 VARs.
+    pub v_ar7: Option<i16>,
+    /// V8
+    ///
+    /// Point 8 Volts.
+    pub v8: Option<u16>,
+    /// VAr8
+    ///
+    /// Point 8 VARs.
+    pub v_ar8: Option<i16>,
+    /// V9
+    ///
+    /// Point 9 Volts.
+    pub v9: Option<u16>,
+    /// VAr9
+    ///
+    /// Point 9 VARs.
+    pub v_ar9: Option<i16>,
+    /// V10
+    ///
+    /// Point 10 Volts.
+    pub v10: Option<u16>,
+    /// VAr10
+    ///
+    /// Point 10 VARs.
+    pub v_ar10: Option<i16>,
+    /// V11
+    ///
+    /// Point 11 Volts.
+    pub v11: Option<u16>,
+    /// VAr11
+    ///
+    /// Point 11 VARs.
+    pub v_ar11: Option<i16>,
+    /// V12
+    ///
+    /// Point 12 Volts.
+    pub v12: Option<u16>,
+    /// VAr12
+    ///
+    /// Point 12 VARs.
+    pub v_ar12: Option<i16>,
+    /// V13
+    ///
+    /// Point 13 Volts.
+    pub v13: Option<u16>,
+    /// VAr13
+    ///
+    /// Point 13 VARs.
+    pub v_ar13: Option<i16>,
+    /// V14
+    ///
+    /// Point 14 Volts.
+    pub v14: Option<u16>,
+    /// VAr14
+    ///
+    /// Point 14 VARs.
+    pub v_ar14: Option<i16>,
+    /// V15
+    ///
+    /// Point 15 Volts.
+    pub v15: Option<u16>,
+    /// VAr15
+    ///
+    /// Point 15 VARs.
+    pub v_ar15: Option<i16>,
+    /// V16
+    ///
+    /// Point 16 Volts.
+    pub v16: Option<u16>,
+    /// VAr16
+    ///
+    /// Point 16 VARs.
+    pub v_ar16: Option<i16>,
+    /// V17
+    ///
+    /// Point 17 Volts.
+    pub v17: Option<u16>,
+    /// VAr17
+    ///
+    /// Point 17 VARs.
+    pub v_ar17: Option<i16>,
+    /// V18
+    ///
+    /// Point 18 Volts.
+    pub v18: Option<u16>,
+    /// VAr18
+    ///
+    /// Point 18 VARs.
+    pub v_ar18: Option<i16>,
+    /// V19
+    ///
+    /// Point 19 Volts.
+    pub v19: Option<u16>,
+    /// VAr19
+    ///
+    /// Point 19 VARs.
+    pub v_ar19: Option<i16>,
+    /// V20
+    ///
+    /// Point 20 Volts.
+    pub v20: Option<u16>,
+    /// VAr20
+    ///
+    /// Point 20 VARs.
+    pub v_ar20: Option<i16>,
+    /// CrvNam
+    ///
+    /// Optional description for curve. (Max 16 chars)
+    pub crv_nam: Option<String>,
+    /// RmpTms
+    ///
+    /// The time of the PT1 in seconds (time to accomplish a change of 95%).
+    pub rmp_tms: Option<u16>,
+    /// RmpDecTmm
+    ///
+    /// The maximum rate at which the VAR value may be reduced in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.
+    pub rmp_dec_tmm: Option<u16>,
+    /// RmpIncTmm
+    ///
+    /// The maximum rate at which the VAR value may be increased in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.
+    pub rmp_inc_tmm: Option<u16>,
+    /// ReadOnly
+    ///
+    /// Boolean flag indicates if curve is read-only or can be modified.
+    pub read_only: CurveReadOnly,
+}
+#[allow(missing_docs)]
+impl Curve {
+    pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
+    pub const DEPT_REF: crate::Point<Self, CurveDeptRef> = crate::Point::new(1, 1, true);
+    pub const V1: crate::Point<Self, u16> = crate::Point::new(2, 1, true);
+    pub const V_AR1: crate::Point<Self, i16> = crate::Point::new(3, 1, true);
+    pub const V2: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
+    pub const V_AR2: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, true);
+    pub const V3: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
+    pub const V_AR3: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, true);
+    pub const V4: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
+    pub const V_AR4: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, true);
+    pub const V5: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
+    pub const V_AR5: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, true);
+    pub const V6: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, true);
+    pub const V_AR6: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
+    pub const V7: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, true);
+    pub const V_AR7: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, true);
+    pub const V8: crate::Point<Self, Option<u16>> = crate::Point::new(16, 1, true);
+    pub const V_AR8: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, true);
+    pub const V9: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
+    pub const V_AR9: crate::Point<Self, Option<i16>> = crate::Point::new(19, 1, true);
+    pub const V10: crate::Point<Self, Option<u16>> = crate::Point::new(20, 1, true);
+    pub const V_AR10: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, true);
+    pub const V11: crate::Point<Self, Option<u16>> = crate::Point::new(22, 1, true);
+    pub const V_AR11: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, true);
+    pub const V12: crate::Point<Self, Option<u16>> = crate::Point::new(24, 1, true);
+    pub const V_AR12: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, true);
+    pub const V13: crate::Point<Self, Option<u16>> = crate::Point::new(26, 1, true);
+    pub const V_AR13: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, true);
+    pub const V14: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1, true);
+    pub const V_AR14: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, true);
+    pub const V15: crate::Point<Self, Option<u16>> = crate::Point::new(30, 1, true);
+    pub const V_AR15: crate::Point<Self, Option<i16>> = crate::Point::new(31, 1, true);
+    pub const V16: crate::Point<Self, Option<u16>> = crate::Point::new(32, 1, true);
+    pub const V_AR16: crate::Point<Self, Option<i16>> = crate::Point::new(33, 1, true);
+    pub const V17: crate::Point<Self, Option<u16>> = crate::Point::new(34, 1, true);
+    pub const V_AR17: crate::Point<Self, Option<i16>> = crate::Point::new(35, 1, true);
+    pub const V18: crate::Point<Self, Option<u16>> = crate::Point::new(36, 1, true);
+    pub const V_AR18: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, true);
+    pub const V19: crate::Point<Self, Option<u16>> = crate::Point::new(38, 1, true);
+    pub const V_AR19: crate::Point<Self, Option<i16>> = crate::Point::new(39, 1, true);
+    pub const V20: crate::Point<Self, Option<u16>> = crate::Point::new(40, 1, true);
+    pub const V_AR20: crate::Point<Self, Option<i16>> = crate::Point::new(41, 1, true);
+    pub const CRV_NAM: crate::Point<Self, Option<String>> = crate::Point::new(42, 8, true);
+    pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(50, 1, true);
+    pub const RMP_DEC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, true);
+    pub const RMP_INC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(52, 1, true);
+    pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(53, 1, false);
+}
+impl crate::Group for Curve {
+    const LEN: u16 = 54;
+}
+impl Curve {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                act_pt: Self::ACT_PT.from_data(data)?,
+                dept_ref: Self::DEPT_REF.from_data(data)?,
+                v1: Self::V1.from_data(data)?,
+                v_ar1: Self::V_AR1.from_data(data)?,
+                v2: Self::V2.from_data(data)?,
+                v_ar2: Self::V_AR2.from_data(data)?,
+                v3: Self::V3.from_data(data)?,
+                v_ar3: Self::V_AR3.from_data(data)?,
+                v4: Self::V4.from_data(data)?,
+                v_ar4: Self::V_AR4.from_data(data)?,
+                v5: Self::V5.from_data(data)?,
+                v_ar5: Self::V_AR5.from_data(data)?,
+                v6: Self::V6.from_data(data)?,
+                v_ar6: Self::V_AR6.from_data(data)?,
+                v7: Self::V7.from_data(data)?,
+                v_ar7: Self::V_AR7.from_data(data)?,
+                v8: Self::V8.from_data(data)?,
+                v_ar8: Self::V_AR8.from_data(data)?,
+                v9: Self::V9.from_data(data)?,
+                v_ar9: Self::V_AR9.from_data(data)?,
+                v10: Self::V10.from_data(data)?,
+                v_ar10: Self::V_AR10.from_data(data)?,
+                v11: Self::V11.from_data(data)?,
+                v_ar11: Self::V_AR11.from_data(data)?,
+                v12: Self::V12.from_data(data)?,
+                v_ar12: Self::V_AR12.from_data(data)?,
+                v13: Self::V13.from_data(data)?,
+                v_ar13: Self::V_AR13.from_data(data)?,
+                v14: Self::V14.from_data(data)?,
+                v_ar14: Self::V_AR14.from_data(data)?,
+                v15: Self::V15.from_data(data)?,
+                v_ar15: Self::V_AR15.from_data(data)?,
+                v16: Self::V16.from_data(data)?,
+                v_ar16: Self::V_AR16.from_data(data)?,
+                v17: Self::V17.from_data(data)?,
+                v_ar17: Self::V_AR17.from_data(data)?,
+                v18: Self::V18.from_data(data)?,
+                v_ar18: Self::V_AR18.from_data(data)?,
+                v19: Self::V19.from_data(data)?,
+                v_ar19: Self::V_AR19.from_data(data)?,
+                v20: Self::V20.from_data(data)?,
+                v_ar20: Self::V_AR20.from_data(data)?,
+                crv_nam: Self::CRV_NAM.from_data(data)?,
+                rmp_tms: Self::RMP_TMS.from_data(data)?,
+                rmp_dec_tmm: Self::RMP_DEC_TMM.from_data(data)?,
+                rmp_inc_tmm: Self::RMP_INC_TMM.from_data(data)?,
+                read_only: Self::READ_ONLY.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &VoltVar,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &VoltVar,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = Curve::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+/// DeptRef
+///
+/// Meaning of dependent variable: 1=%WMax 2=%VArMax 3=%VArAval.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[repr(u16)]
+pub enum CurveDeptRef {
+    #[allow(missing_docs)]
+    WMax = 1,
+    #[allow(missing_docs)]
+    VArMax = 2,
+    #[allow(missing_docs)]
+    VArAval = 3,
+}
+impl crate::Value for CurveDeptRef {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CurveDeptRef> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CurveDeptRef::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+/// ReadOnly
+///
+/// Boolean flag indicates if curve is read-only or can be modified.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[repr(u16)]
+pub enum CurveReadOnly {
+    #[allow(missing_docs)]
+    Readwrite = 0,
+    #[allow(missing_docs)]
+    Readonly = 1,
+}
+impl crate::Value for CurveReadOnly {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<CurveReadOnly> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                CurveReadOnly::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+impl crate::Model for VoltVar {
+    const ID: u16 = 126;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m126
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

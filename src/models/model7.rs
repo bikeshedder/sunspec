@@ -45,6 +45,8 @@ pub struct Model7 {
     ///
     /// Detail: The value of N must be at least 4 (64 bits)
     pub n: u16,
+    #[allow(missing_docs)]
+    pub repeating: Vec<Repeating>,
 }
 #[allow(missing_docs)]
 impl Model7 {
@@ -57,22 +59,31 @@ impl Model7 {
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(8, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(9, 1, true);
 }
-impl crate::Model for Model7 {
-    const ID: u16 = 7;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            rq_seq: Self::RQ_SEQ.from_data(data)?,
-            sts: Self::STS.from_data(data)?,
-            ts: Self::TS.from_data(data)?,
-            ms: Self::MS.from_data(data)?,
-            seq: Self::SEQ.from_data(data)?,
-            alm: Self::ALM.from_data(data)?,
-            alg: Self::ALG.from_data(data)?,
-            n: Self::N.from_data(data)?,
-        })
+impl crate::Group for Model7 {
+    const LEN: u16 = 10;
+}
+impl Model7 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                rq_seq: Self::RQ_SEQ.from_data(data)?,
+                sts: Self::STS.from_data(data)?,
+                ts: Self::TS.from_data(data)?,
+                ms: Self::MS.from_data(data)?,
+                seq: Self::SEQ.from_data(data)?,
+                alm: Self::ALM.from_data(data)?,
+                alg: Self::ALG.from_data(data)?,
+                n: Self::N.from_data(data)?,
+                repeating: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m7
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.repeating) = Repeating::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 /// Status
@@ -203,5 +214,61 @@ impl crate::Value for Option<Alg> {
         } else {
             65535.encode()
         }
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Repeating {
+    /// DS
+    ///
+    /// Digital Signature
+    pub ds: u16,
+}
+#[allow(missing_docs)]
+impl Repeating {
+    pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
+}
+impl crate::Group for Repeating {
+    const LEN: u16 = 1;
+}
+impl Repeating {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                ds: Self::DS.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &Model7,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &Model7,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = Repeating::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+impl crate::Model for Model7 {
+    const ID: u16 = 7;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m7
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

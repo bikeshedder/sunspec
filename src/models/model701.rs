@@ -1,10 +1,11 @@
 //! DER AC Measurement
+pub type Model701 = DerMeasureAc;
 /// DER AC Measurement
 ///
 /// DER AC measurement model.
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model701 {
+pub struct DerMeasureAc {
     /// AC Wiring Type
     ///
     /// AC wiring type.
@@ -313,7 +314,7 @@ pub struct Model701 {
     pub mn_alrm_info: Option<String>,
 }
 #[allow(missing_docs)]
-impl Model701 {
+impl DerMeasureAc {
     pub const AC_TYPE: crate::Point<Self, AcType> = crate::Point::new(0, 1, false);
     pub const ST: crate::Point<Self, Option<St>> = crate::Point::new(1, 1, false);
     pub const INV_ST: crate::Point<Self, Option<InvSt>> = crate::Point::new(2, 1, false);
@@ -385,84 +386,91 @@ impl Model701 {
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(120, 1, false);
     pub const MN_ALRM_INFO: crate::Point<Self, Option<String>> = crate::Point::new(121, 32, false);
 }
-impl crate::Model for Model701 {
-    const ID: u16 = 701;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            ac_type: Self::AC_TYPE.from_data(data)?,
-            st: Self::ST.from_data(data)?,
-            inv_st: Self::INV_ST.from_data(data)?,
-            conn_st: Self::CONN_ST.from_data(data)?,
-            alrm: Self::ALRM.from_data(data)?,
-            der_mode: Self::DER_MODE.from_data(data)?,
-            w: Self::W.from_data(data)?,
-            va: Self::VA.from_data(data)?,
-            var: Self::VAR.from_data(data)?,
-            pf: Self::PF.from_data(data)?,
-            a: Self::A.from_data(data)?,
-            llv: Self::LLV.from_data(data)?,
-            lnv: Self::LNV.from_data(data)?,
-            hz: Self::HZ.from_data(data)?,
-            tot_wh_inj: Self::TOT_WH_INJ.from_data(data)?,
-            tot_wh_abs: Self::TOT_WH_ABS.from_data(data)?,
-            tot_varh_inj: Self::TOT_VARH_INJ.from_data(data)?,
-            tot_varh_abs: Self::TOT_VARH_ABS.from_data(data)?,
-            tmp_amb: Self::TMP_AMB.from_data(data)?,
-            tmp_cab: Self::TMP_CAB.from_data(data)?,
-            tmp_snk: Self::TMP_SNK.from_data(data)?,
-            tmp_trns: Self::TMP_TRNS.from_data(data)?,
-            tmp_sw: Self::TMP_SW.from_data(data)?,
-            tmp_ot: Self::TMP_OT.from_data(data)?,
-            wl1: Self::WL1.from_data(data)?,
-            val1: Self::VAL1.from_data(data)?,
-            var_l1: Self::VAR_L1.from_data(data)?,
-            pfl1: Self::PFL1.from_data(data)?,
-            al1: Self::AL1.from_data(data)?,
-            vl1l2: Self::VL1L2.from_data(data)?,
-            vl1: Self::VL1.from_data(data)?,
-            tot_wh_inj_l1: Self::TOT_WH_INJ_L1.from_data(data)?,
-            tot_wh_abs_l1: Self::TOT_WH_ABS_L1.from_data(data)?,
-            tot_varh_inj_l1: Self::TOT_VARH_INJ_L1.from_data(data)?,
-            tot_varh_abs_l1: Self::TOT_VARH_ABS_L1.from_data(data)?,
-            wl2: Self::WL2.from_data(data)?,
-            val2: Self::VAL2.from_data(data)?,
-            var_l2: Self::VAR_L2.from_data(data)?,
-            pfl2: Self::PFL2.from_data(data)?,
-            al2: Self::AL2.from_data(data)?,
-            vl2l3: Self::VL2L3.from_data(data)?,
-            vl2: Self::VL2.from_data(data)?,
-            tot_wh_inj_l2: Self::TOT_WH_INJ_L2.from_data(data)?,
-            tot_wh_abs_l2: Self::TOT_WH_ABS_L2.from_data(data)?,
-            tot_varh_inj_l2: Self::TOT_VARH_INJ_L2.from_data(data)?,
-            tot_varh_abs_l2: Self::TOT_VARH_ABS_L2.from_data(data)?,
-            wl3: Self::WL3.from_data(data)?,
-            val3: Self::VAL3.from_data(data)?,
-            var_l3: Self::VAR_L3.from_data(data)?,
-            pfl3: Self::PFL3.from_data(data)?,
-            al3: Self::AL3.from_data(data)?,
-            vl3l1: Self::VL3L1.from_data(data)?,
-            vl3: Self::VL3.from_data(data)?,
-            tot_wh_inj_l3: Self::TOT_WH_INJ_L3.from_data(data)?,
-            tot_wh_abs_l3: Self::TOT_WH_ABS_L3.from_data(data)?,
-            tot_varh_inj_l3: Self::TOT_VARH_INJ_L3.from_data(data)?,
-            tot_varh_abs_l3: Self::TOT_VARH_ABS_L3.from_data(data)?,
-            throt_pct: Self::THROT_PCT.from_data(data)?,
-            throt_src: Self::THROT_SRC.from_data(data)?,
-            a_sf: Self::A_SF.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            hz_sf: Self::HZ_SF.from_data(data)?,
-            w_sf: Self::W_SF.from_data(data)?,
-            pf_sf: Self::PF_SF.from_data(data)?,
-            va_sf: Self::VA_SF.from_data(data)?,
-            var_sf: Self::VAR_SF.from_data(data)?,
-            tot_wh_sf: Self::TOT_WH_SF.from_data(data)?,
-            tot_varh_sf: Self::TOT_VARH_SF.from_data(data)?,
-            tmp_sf: Self::TMP_SF.from_data(data)?,
-            mn_alrm_info: Self::MN_ALRM_INFO.from_data(data)?,
-        })
+impl crate::Group for DerMeasureAc {
+    const LEN: u16 = 153;
+}
+impl DerMeasureAc {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                ac_type: Self::AC_TYPE.from_data(data)?,
+                st: Self::ST.from_data(data)?,
+                inv_st: Self::INV_ST.from_data(data)?,
+                conn_st: Self::CONN_ST.from_data(data)?,
+                alrm: Self::ALRM.from_data(data)?,
+                der_mode: Self::DER_MODE.from_data(data)?,
+                w: Self::W.from_data(data)?,
+                va: Self::VA.from_data(data)?,
+                var: Self::VAR.from_data(data)?,
+                pf: Self::PF.from_data(data)?,
+                a: Self::A.from_data(data)?,
+                llv: Self::LLV.from_data(data)?,
+                lnv: Self::LNV.from_data(data)?,
+                hz: Self::HZ.from_data(data)?,
+                tot_wh_inj: Self::TOT_WH_INJ.from_data(data)?,
+                tot_wh_abs: Self::TOT_WH_ABS.from_data(data)?,
+                tot_varh_inj: Self::TOT_VARH_INJ.from_data(data)?,
+                tot_varh_abs: Self::TOT_VARH_ABS.from_data(data)?,
+                tmp_amb: Self::TMP_AMB.from_data(data)?,
+                tmp_cab: Self::TMP_CAB.from_data(data)?,
+                tmp_snk: Self::TMP_SNK.from_data(data)?,
+                tmp_trns: Self::TMP_TRNS.from_data(data)?,
+                tmp_sw: Self::TMP_SW.from_data(data)?,
+                tmp_ot: Self::TMP_OT.from_data(data)?,
+                wl1: Self::WL1.from_data(data)?,
+                val1: Self::VAL1.from_data(data)?,
+                var_l1: Self::VAR_L1.from_data(data)?,
+                pfl1: Self::PFL1.from_data(data)?,
+                al1: Self::AL1.from_data(data)?,
+                vl1l2: Self::VL1L2.from_data(data)?,
+                vl1: Self::VL1.from_data(data)?,
+                tot_wh_inj_l1: Self::TOT_WH_INJ_L1.from_data(data)?,
+                tot_wh_abs_l1: Self::TOT_WH_ABS_L1.from_data(data)?,
+                tot_varh_inj_l1: Self::TOT_VARH_INJ_L1.from_data(data)?,
+                tot_varh_abs_l1: Self::TOT_VARH_ABS_L1.from_data(data)?,
+                wl2: Self::WL2.from_data(data)?,
+                val2: Self::VAL2.from_data(data)?,
+                var_l2: Self::VAR_L2.from_data(data)?,
+                pfl2: Self::PFL2.from_data(data)?,
+                al2: Self::AL2.from_data(data)?,
+                vl2l3: Self::VL2L3.from_data(data)?,
+                vl2: Self::VL2.from_data(data)?,
+                tot_wh_inj_l2: Self::TOT_WH_INJ_L2.from_data(data)?,
+                tot_wh_abs_l2: Self::TOT_WH_ABS_L2.from_data(data)?,
+                tot_varh_inj_l2: Self::TOT_VARH_INJ_L2.from_data(data)?,
+                tot_varh_abs_l2: Self::TOT_VARH_ABS_L2.from_data(data)?,
+                wl3: Self::WL3.from_data(data)?,
+                val3: Self::VAL3.from_data(data)?,
+                var_l3: Self::VAR_L3.from_data(data)?,
+                pfl3: Self::PFL3.from_data(data)?,
+                al3: Self::AL3.from_data(data)?,
+                vl3l1: Self::VL3L1.from_data(data)?,
+                vl3: Self::VL3.from_data(data)?,
+                tot_wh_inj_l3: Self::TOT_WH_INJ_L3.from_data(data)?,
+                tot_wh_abs_l3: Self::TOT_WH_ABS_L3.from_data(data)?,
+                tot_varh_inj_l3: Self::TOT_VARH_INJ_L3.from_data(data)?,
+                tot_varh_abs_l3: Self::TOT_VARH_ABS_L3.from_data(data)?,
+                throt_pct: Self::THROT_PCT.from_data(data)?,
+                throt_src: Self::THROT_SRC.from_data(data)?,
+                a_sf: Self::A_SF.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                hz_sf: Self::HZ_SF.from_data(data)?,
+                w_sf: Self::W_SF.from_data(data)?,
+                pf_sf: Self::PF_SF.from_data(data)?,
+                va_sf: Self::VA_SF.from_data(data)?,
+                var_sf: Self::VAR_SF.from_data(data)?,
+                tot_wh_sf: Self::TOT_WH_SF.from_data(data)?,
+                tot_varh_sf: Self::TOT_VARH_SF.from_data(data)?,
+                tmp_sf: Self::TMP_SF.from_data(data)?,
+                mn_alrm_info: Self::MN_ALRM_INFO.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m701
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// AC Wiring Type
@@ -772,5 +780,15 @@ impl crate::Value for Option<ThrotSrc> {
         } else {
             4294967295u32.encode()
         }
+    }
+}
+impl crate::Model for DerMeasureAc {
+    const ID: u16 = 701;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m701
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

@@ -1,10 +1,11 @@
 //! Common
+pub type Model1 = Common;
 /// Common
 ///
 /// All SunSpec compliant devices must include this as the first model
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model1 {
+pub struct Common {
     /// Manufacturer
     ///
     /// Well known value registered with SunSpec for compliance
@@ -33,7 +34,7 @@ pub struct Model1 {
     pub da: Option<u16>,
 }
 #[allow(missing_docs)]
-impl Model1 {
+impl Common {
     pub const MN: crate::Point<Self, String> = crate::Point::new(0, 16, false);
     pub const MD: crate::Point<Self, String> = crate::Point::new(16, 16, false);
     pub const OPT: crate::Point<Self, Option<String>> = crate::Point::new(32, 8, false);
@@ -41,19 +42,36 @@ impl Model1 {
     pub const SN: crate::Point<Self, String> = crate::Point::new(48, 16, false);
     pub const DA: crate::Point<Self, Option<u16>> = crate::Point::new(64, 1, true);
 }
-impl crate::Model for Model1 {
-    const ID: u16 = 1;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            mn: Self::MN.from_data(data)?,
-            md: Self::MD.from_data(data)?,
-            opt: Self::OPT.from_data(data)?,
-            vr: Self::VR.from_data(data)?,
-            sn: Self::SN.from_data(data)?,
-            da: Self::DA.from_data(data)?,
-        })
+impl crate::Group for Common {
+    const LEN: u16 = 66;
+}
+impl Common {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                mn: Self::MN.from_data(data)?,
+                md: Self::MD.from_data(data)?,
+                opt: Self::OPT.from_data(data)?,
+                vr: Self::VR.from_data(data)?,
+                sn: Self::SN.from_data(data)?,
+                da: Self::DA.from_data(data)?,
+            },
+        ))
     }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+}
+impl crate::Model for Common {
+    const ID: u16 = 1;
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m1
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

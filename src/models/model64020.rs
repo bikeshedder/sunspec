@@ -97,6 +97,8 @@ pub struct Model64020 {
     ///
     /// always 0 in reading, used the code 0xC0DA during the writing for resetting the system
     pub reset: Option<u16>,
+    #[allow(missing_docs)]
+    pub repeating: Vec<Repeating>,
 }
 #[allow(missing_docs)]
 impl Model64020 {
@@ -131,43 +133,118 @@ impl Model64020 {
     pub const RESET_ACCUMULATORS: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1, false);
     pub const RESET: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1, false);
 }
+impl crate::Group for Model64020 {
+    const LEN: u16 = 30;
+}
+impl Model64020 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                aux0_tmp: Self::AUX0_TMP.from_data(data)?,
+                aux1_tmp: Self::AUX1_TMP.from_data(data)?,
+                aux2_tmp: Self::AUX2_TMP.from_data(data)?,
+                aux3_tmp: Self::AUX3_TMP.from_data(data)?,
+                aux4_tmp: Self::AUX4_TMP.from_data(data)?,
+                probe_tmp: Self::PROBE_TMP.from_data(data)?,
+                main_tmp: Self::MAIN_TMP.from_data(data)?,
+                sensor_v_sf: Self::SENSOR_V_SF.from_data(data)?,
+                sensor_a_sf: Self::SENSOR_A_SF.from_data(data)?,
+                sensor_hz_sf: Self::SENSOR_HZ_SF.from_data(data)?,
+                sensor1_voltage: Self::SENSOR1_VOLTAGE.from_data(data)?,
+                sensor2_voltage: Self::SENSOR2_VOLTAGE.from_data(data)?,
+                sensor3_voltage: Self::SENSOR3_VOLTAGE.from_data(data)?,
+                sensor4_voltage: Self::SENSOR4_VOLTAGE.from_data(data)?,
+                sensor5_voltage: Self::SENSOR5_VOLTAGE.from_data(data)?,
+                sensor6_voltage: Self::SENSOR6_VOLTAGE.from_data(data)?,
+                sensor7_voltage: Self::SENSOR7_VOLTAGE.from_data(data)?,
+                sensor1_current: Self::SENSOR1_CURRENT.from_data(data)?,
+                sensor2_current: Self::SENSOR2_CURRENT.from_data(data)?,
+                sensor3_current: Self::SENSOR3_CURRENT.from_data(data)?,
+                sensor4_current: Self::SENSOR4_CURRENT.from_data(data)?,
+                sensor5_current: Self::SENSOR5_CURRENT.from_data(data)?,
+                sensor6_current: Self::SENSOR6_CURRENT.from_data(data)?,
+                sensor7_current: Self::SENSOR7_CURRENT.from_data(data)?,
+                sensor8: Self::SENSOR8.from_data(data)?,
+                relay1: Self::RELAY1.from_data(data)?,
+                relay2: Self::RELAY2.from_data(data)?,
+                relay3: Self::RELAY3.from_data(data)?,
+                reset_accumulators: Self::RESET_ACCUMULATORS.from_data(data)?,
+                reset: Self::RESET.from_data(data)?,
+                repeating: Vec::new(),
+            },
+        ))
+    }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.repeating) = Repeating::parse_multiple(data, &group)?;
+        Ok((data, group))
+    }
+}
+#[allow(missing_docs)]
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Repeating {
+    /// Serial number
+    ///
+    /// strings of 16 characters
+    pub serial_number: String,
+    /// Firmware version
+    ///
+    /// string of 11 characters
+    pub firmware: String,
+    /// Hardware version
+    pub hardware: u16,
+}
+#[allow(missing_docs)]
+impl Repeating {
+    pub const SERIAL_NUMBER: crate::Point<Self, String> = crate::Point::new(0, 9, false);
+    pub const FIRMWARE: crate::Point<Self, String> = crate::Point::new(9, 6, false);
+    pub const HARDWARE: crate::Point<Self, u16> = crate::Point::new(15, 1, false);
+}
+impl crate::Group for Repeating {
+    const LEN: u16 = 16;
+}
+impl Repeating {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                serial_number: Self::SERIAL_NUMBER.from_data(data)?,
+                firmware: Self::FIRMWARE.from_data(data)?,
+                hardware: Self::HARDWARE.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &Model64020,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &Model64020,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..0 {
+            let group;
+            (data, group) = Repeating::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
 impl crate::Model for Model64020 {
     const ID: u16 = 64020;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            aux0_tmp: Self::AUX0_TMP.from_data(data)?,
-            aux1_tmp: Self::AUX1_TMP.from_data(data)?,
-            aux2_tmp: Self::AUX2_TMP.from_data(data)?,
-            aux3_tmp: Self::AUX3_TMP.from_data(data)?,
-            aux4_tmp: Self::AUX4_TMP.from_data(data)?,
-            probe_tmp: Self::PROBE_TMP.from_data(data)?,
-            main_tmp: Self::MAIN_TMP.from_data(data)?,
-            sensor_v_sf: Self::SENSOR_V_SF.from_data(data)?,
-            sensor_a_sf: Self::SENSOR_A_SF.from_data(data)?,
-            sensor_hz_sf: Self::SENSOR_HZ_SF.from_data(data)?,
-            sensor1_voltage: Self::SENSOR1_VOLTAGE.from_data(data)?,
-            sensor2_voltage: Self::SENSOR2_VOLTAGE.from_data(data)?,
-            sensor3_voltage: Self::SENSOR3_VOLTAGE.from_data(data)?,
-            sensor4_voltage: Self::SENSOR4_VOLTAGE.from_data(data)?,
-            sensor5_voltage: Self::SENSOR5_VOLTAGE.from_data(data)?,
-            sensor6_voltage: Self::SENSOR6_VOLTAGE.from_data(data)?,
-            sensor7_voltage: Self::SENSOR7_VOLTAGE.from_data(data)?,
-            sensor1_current: Self::SENSOR1_CURRENT.from_data(data)?,
-            sensor2_current: Self::SENSOR2_CURRENT.from_data(data)?,
-            sensor3_current: Self::SENSOR3_CURRENT.from_data(data)?,
-            sensor4_current: Self::SENSOR4_CURRENT.from_data(data)?,
-            sensor5_current: Self::SENSOR5_CURRENT.from_data(data)?,
-            sensor6_current: Self::SENSOR6_CURRENT.from_data(data)?,
-            sensor7_current: Self::SENSOR7_CURRENT.from_data(data)?,
-            sensor8: Self::SENSOR8.from_data(data)?,
-            relay1: Self::RELAY1.from_data(data)?,
-            relay2: Self::RELAY2.from_data(data)?,
-            relay3: Self::RELAY3.from_data(data)?,
-            reset_accumulators: Self::RESET_ACCUMULATORS.from_data(data)?,
-            reset: Self::RESET.from_data(data)?,
-        })
-    }
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64020
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

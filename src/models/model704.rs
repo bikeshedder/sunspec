@@ -1,10 +1,11 @@
 //! DER AC Controls
+pub type Model704 = DerCtlAc;
 /// DER AC Controls
 ///
 /// DER AC controls model.
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model704 {
+pub struct DerCtlAc {
     /// Power Factor Enable (W Inj) Enable
     ///
     /// Power factor enable when injecting active power.
@@ -191,9 +192,27 @@ pub struct Model704 {
     ///
     /// Reactive power pct scale factor.
     pub var_set_pct_sf: Option<i16>,
+    /// Power Factor (W Inj)
+    ///
+    /// Power factor setpoint when injecting active power.
+    ///
+    /// Comments: Power Factor Settings
+    pub pfw_inj: Vec<PfwInj>,
+    /// Reversion Power Factor (W Inj)
+    ///
+    /// Reversion power factor setpoint when injecting active power.
+    pub pfw_inj_rvrt: Vec<PfwInjRvrt>,
+    /// Power Factor (W Abs)
+    ///
+    /// Power factor setpoint when absorbing active power.
+    pub pfw_abs: Vec<PfwAbs>,
+    /// Reversion Power Factor (W Abs)
+    ///
+    /// Reversion power factor setpoint when absorbing active power.
+    pub pfw_abs_rvrt: Vec<PfwAbsRvrt>,
 }
 #[allow(missing_docs)]
-impl Model704 {
+impl DerCtlAc {
     pub const PFW_INJ_ENA: crate::Point<Self, Option<PfwInjEna>> = crate::Point::new(0, 1, true);
     pub const PFW_INJ_ENA_RVRT: crate::Point<Self, Option<PfwInjEnaRvrt>> =
         crate::Point::new(1, 1, true);
@@ -246,57 +265,72 @@ impl Model704 {
     pub const VAR_SET_SF: crate::Point<Self, Option<i16>> = crate::Point::new(55, 1, false);
     pub const VAR_SET_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(56, 1, false);
 }
-impl crate::Model for Model704 {
-    const ID: u16 = 704;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            pfw_inj_ena: Self::PFW_INJ_ENA.from_data(data)?,
-            pfw_inj_ena_rvrt: Self::PFW_INJ_ENA_RVRT.from_data(data)?,
-            pfw_inj_rvrt_tms: Self::PFW_INJ_RVRT_TMS.from_data(data)?,
-            pfw_inj_rvrt_rem: Self::PFW_INJ_RVRT_REM.from_data(data)?,
-            pfw_abs_ena: Self::PFW_ABS_ENA.from_data(data)?,
-            pfw_abs_ena_rvrt: Self::PFW_ABS_ENA_RVRT.from_data(data)?,
-            pfw_abs_rvrt_tms: Self::PFW_ABS_RVRT_TMS.from_data(data)?,
-            pfw_abs_rvrt_rem: Self::PFW_ABS_RVRT_REM.from_data(data)?,
-            w_max_lim_pct_ena: Self::W_MAX_LIM_PCT_ENA.from_data(data)?,
-            w_max_lim_pct: Self::W_MAX_LIM_PCT.from_data(data)?,
-            w_max_lim_pct_rvrt: Self::W_MAX_LIM_PCT_RVRT.from_data(data)?,
-            w_max_lim_pct_ena_rvrt: Self::W_MAX_LIM_PCT_ENA_RVRT.from_data(data)?,
-            w_max_lim_pct_rvrt_tms: Self::W_MAX_LIM_PCT_RVRT_TMS.from_data(data)?,
-            w_max_lim_pct_rvrt_rem: Self::W_MAX_LIM_PCT_RVRT_REM.from_data(data)?,
-            w_set_ena: Self::W_SET_ENA.from_data(data)?,
-            w_set_mod: Self::W_SET_MOD.from_data(data)?,
-            w_set: Self::W_SET.from_data(data)?,
-            w_set_rvrt: Self::W_SET_RVRT.from_data(data)?,
-            w_set_pct: Self::W_SET_PCT.from_data(data)?,
-            w_set_pct_rvrt: Self::W_SET_PCT_RVRT.from_data(data)?,
-            w_set_ena_rvrt: Self::W_SET_ENA_RVRT.from_data(data)?,
-            w_set_rvrt_tms: Self::W_SET_RVRT_TMS.from_data(data)?,
-            w_set_rvrt_rem: Self::W_SET_RVRT_REM.from_data(data)?,
-            var_set_ena: Self::VAR_SET_ENA.from_data(data)?,
-            var_set_mod: Self::VAR_SET_MOD.from_data(data)?,
-            var_set_pri: Self::VAR_SET_PRI.from_data(data)?,
-            var_set: Self::VAR_SET.from_data(data)?,
-            var_set_rvrt: Self::VAR_SET_RVRT.from_data(data)?,
-            var_set_pct: Self::VAR_SET_PCT.from_data(data)?,
-            var_set_pct_rvrt: Self::VAR_SET_PCT_RVRT.from_data(data)?,
-            var_set_ena_rvrt: Self::VAR_SET_ENA_RVRT.from_data(data)?,
-            var_set_rvrt_tms: Self::VAR_SET_RVRT_TMS.from_data(data)?,
-            var_set_rvrt_rem: Self::VAR_SET_RVRT_REM.from_data(data)?,
-            w_rmp: Self::W_RMP.from_data(data)?,
-            w_rmp_ref: Self::W_RMP_REF.from_data(data)?,
-            var_rmp: Self::VAR_RMP.from_data(data)?,
-            anti_isl_ena: Self::ANTI_ISL_ENA.from_data(data)?,
-            pf_sf: Self::PF_SF.from_data(data)?,
-            w_max_lim_pct_sf: Self::W_MAX_LIM_PCT_SF.from_data(data)?,
-            w_set_sf: Self::W_SET_SF.from_data(data)?,
-            w_set_pct_sf: Self::W_SET_PCT_SF.from_data(data)?,
-            var_set_sf: Self::VAR_SET_SF.from_data(data)?,
-            var_set_pct_sf: Self::VAR_SET_PCT_SF.from_data(data)?,
-        })
+impl crate::Group for DerCtlAc {
+    const LEN: u16 = 57;
+}
+impl DerCtlAc {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                pfw_inj_ena: Self::PFW_INJ_ENA.from_data(data)?,
+                pfw_inj_ena_rvrt: Self::PFW_INJ_ENA_RVRT.from_data(data)?,
+                pfw_inj_rvrt_tms: Self::PFW_INJ_RVRT_TMS.from_data(data)?,
+                pfw_inj_rvrt_rem: Self::PFW_INJ_RVRT_REM.from_data(data)?,
+                pfw_abs_ena: Self::PFW_ABS_ENA.from_data(data)?,
+                pfw_abs_ena_rvrt: Self::PFW_ABS_ENA_RVRT.from_data(data)?,
+                pfw_abs_rvrt_tms: Self::PFW_ABS_RVRT_TMS.from_data(data)?,
+                pfw_abs_rvrt_rem: Self::PFW_ABS_RVRT_REM.from_data(data)?,
+                w_max_lim_pct_ena: Self::W_MAX_LIM_PCT_ENA.from_data(data)?,
+                w_max_lim_pct: Self::W_MAX_LIM_PCT.from_data(data)?,
+                w_max_lim_pct_rvrt: Self::W_MAX_LIM_PCT_RVRT.from_data(data)?,
+                w_max_lim_pct_ena_rvrt: Self::W_MAX_LIM_PCT_ENA_RVRT.from_data(data)?,
+                w_max_lim_pct_rvrt_tms: Self::W_MAX_LIM_PCT_RVRT_TMS.from_data(data)?,
+                w_max_lim_pct_rvrt_rem: Self::W_MAX_LIM_PCT_RVRT_REM.from_data(data)?,
+                w_set_ena: Self::W_SET_ENA.from_data(data)?,
+                w_set_mod: Self::W_SET_MOD.from_data(data)?,
+                w_set: Self::W_SET.from_data(data)?,
+                w_set_rvrt: Self::W_SET_RVRT.from_data(data)?,
+                w_set_pct: Self::W_SET_PCT.from_data(data)?,
+                w_set_pct_rvrt: Self::W_SET_PCT_RVRT.from_data(data)?,
+                w_set_ena_rvrt: Self::W_SET_ENA_RVRT.from_data(data)?,
+                w_set_rvrt_tms: Self::W_SET_RVRT_TMS.from_data(data)?,
+                w_set_rvrt_rem: Self::W_SET_RVRT_REM.from_data(data)?,
+                var_set_ena: Self::VAR_SET_ENA.from_data(data)?,
+                var_set_mod: Self::VAR_SET_MOD.from_data(data)?,
+                var_set_pri: Self::VAR_SET_PRI.from_data(data)?,
+                var_set: Self::VAR_SET.from_data(data)?,
+                var_set_rvrt: Self::VAR_SET_RVRT.from_data(data)?,
+                var_set_pct: Self::VAR_SET_PCT.from_data(data)?,
+                var_set_pct_rvrt: Self::VAR_SET_PCT_RVRT.from_data(data)?,
+                var_set_ena_rvrt: Self::VAR_SET_ENA_RVRT.from_data(data)?,
+                var_set_rvrt_tms: Self::VAR_SET_RVRT_TMS.from_data(data)?,
+                var_set_rvrt_rem: Self::VAR_SET_RVRT_REM.from_data(data)?,
+                w_rmp: Self::W_RMP.from_data(data)?,
+                w_rmp_ref: Self::W_RMP_REF.from_data(data)?,
+                var_rmp: Self::VAR_RMP.from_data(data)?,
+                anti_isl_ena: Self::ANTI_ISL_ENA.from_data(data)?,
+                pf_sf: Self::PF_SF.from_data(data)?,
+                w_max_lim_pct_sf: Self::W_MAX_LIM_PCT_SF.from_data(data)?,
+                w_set_sf: Self::W_SET_SF.from_data(data)?,
+                w_set_pct_sf: Self::W_SET_PCT_SF.from_data(data)?,
+                var_set_sf: Self::VAR_SET_SF.from_data(data)?,
+                var_set_pct_sf: Self::VAR_SET_PCT_SF.from_data(data)?,
+                pfw_inj: Vec::new(),
+                pfw_inj_rvrt: Vec::new(),
+                pfw_abs: Vec::new(),
+                pfw_abs_rvrt: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m704
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.pfw_inj) = PfwInj::parse_multiple(data, &group)?;
+        (data, group.pfw_inj_rvrt) = PfwInjRvrt::parse_multiple(data, &group)?;
+        (data, group.pfw_abs) = PfwAbs::parse_multiple(data, &group)?;
+        (data, group.pfw_abs_rvrt) = PfwAbsRvrt::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 /// Power Factor Enable (W Inj) Enable
@@ -983,5 +1017,409 @@ impl crate::Value for Option<AntiIslEna> {
         } else {
             65535.encode()
         }
+    }
+}
+/// Power Factor (W Inj)
+///
+/// Power factor setpoint when injecting active power.
+///
+/// Comments: Power Factor Settings
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct PfwInj {
+    /// Power Factor (W Inj)
+    ///
+    /// Power factor setpoint when injecting active power.
+    pub pf: Option<u16>,
+    /// Power Factor Excitation (W Inj)
+    ///
+    /// Power factor excitation setpoint when injecting active power.
+    pub ext: Option<PfwInjExt>,
+}
+#[allow(missing_docs)]
+impl PfwInj {
+    pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const EXT: crate::Point<Self, Option<PfwInjExt>> = crate::Point::new(1, 1, true);
+}
+impl crate::Group for PfwInj {
+    const LEN: u16 = 2;
+}
+impl PfwInj {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                pf: Self::PF.from_data(data)?,
+                ext: Self::EXT.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &DerCtlAc,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &DerCtlAc,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..1 {
+            let group;
+            (data, group) = PfwInj::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+/// Power Factor Excitation (W Inj)
+///
+/// Power factor excitation setpoint when injecting active power.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[repr(u16)]
+pub enum PfwInjExt {
+    /// Over-Excited
+    ///
+    /// Power factor over-excited excitation.
+    OverExcited = 0,
+    /// Under-Excited
+    ///
+    /// Power factor under-excited excitation.
+    UnderExcited = 1,
+}
+impl crate::Value for PfwInjExt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<PfwInjExt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                PfwInjExt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+/// Reversion Power Factor (W Inj)
+///
+/// Reversion power factor setpoint when injecting active power.
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct PfwInjRvrt {
+    /// Reversion Power Factor (W Inj)
+    ///
+    /// Reversion power factor setpoint when injecting active power.
+    pub pf: Option<u16>,
+    /// Reversion PF Excitation (W Inj)
+    ///
+    /// Reversion power factor excitation setpoint when injecting active power.
+    pub ext: Option<PfwInjRvrtExt>,
+}
+#[allow(missing_docs)]
+impl PfwInjRvrt {
+    pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const EXT: crate::Point<Self, Option<PfwInjRvrtExt>> = crate::Point::new(1, 1, true);
+}
+impl crate::Group for PfwInjRvrt {
+    const LEN: u16 = 2;
+}
+impl PfwInjRvrt {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                pf: Self::PF.from_data(data)?,
+                ext: Self::EXT.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &DerCtlAc,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &DerCtlAc,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..1 {
+            let group;
+            (data, group) = PfwInjRvrt::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+/// Reversion PF Excitation (W Inj)
+///
+/// Reversion power factor excitation setpoint when injecting active power.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[repr(u16)]
+pub enum PfwInjRvrtExt {
+    /// Over-Excited
+    ///
+    /// Power factor over-excited excitation.
+    OverExcited = 0,
+    /// Under-Excited
+    ///
+    /// Power factor under-excited excitation.
+    UnderExcited = 1,
+}
+impl crate::Value for PfwInjRvrtExt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<PfwInjRvrtExt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                PfwInjRvrtExt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+/// Power Factor (W Abs)
+///
+/// Power factor setpoint when absorbing active power.
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct PfwAbs {
+    /// Power Factor (W Abs)
+    ///
+    /// Power factor setpoint when absorbing active power.
+    pub pf: Option<u16>,
+    /// Power Factor Excitation (W Abs)
+    ///
+    /// Power factor excitation setpoint when absorbing active power.
+    pub ext: Option<PfwAbsExt>,
+}
+#[allow(missing_docs)]
+impl PfwAbs {
+    pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const EXT: crate::Point<Self, Option<PfwAbsExt>> = crate::Point::new(1, 1, true);
+}
+impl crate::Group for PfwAbs {
+    const LEN: u16 = 2;
+}
+impl PfwAbs {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                pf: Self::PF.from_data(data)?,
+                ext: Self::EXT.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &DerCtlAc,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &DerCtlAc,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..1 {
+            let group;
+            (data, group) = PfwAbs::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+/// Power Factor Excitation (W Abs)
+///
+/// Power factor excitation setpoint when absorbing active power.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[repr(u16)]
+pub enum PfwAbsExt {
+    /// Over-Excited
+    ///
+    /// Power factor over-excited excitation.
+    OverExcited = 0,
+    /// Under-Excited
+    ///
+    /// Power factor under-excited excitation.
+    UnderExcited = 1,
+}
+impl crate::Value for PfwAbsExt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<PfwAbsExt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                PfwAbsExt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+/// Reversion Power Factor (W Abs)
+///
+/// Reversion power factor setpoint when absorbing active power.
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct PfwAbsRvrt {
+    /// Reversion Power Factor (W Abs)
+    ///
+    /// Reversion power factor setpoint when absorbing active power.
+    pub pf: Option<u16>,
+    /// Reversion PF Excitation (W Abs)
+    ///
+    /// Reversion power factor excitation setpoint when absorbing active power.
+    pub ext: Option<PfwAbsRvrtExt>,
+}
+#[allow(missing_docs)]
+impl PfwAbsRvrt {
+    pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const EXT: crate::Point<Self, Option<PfwAbsRvrtExt>> = crate::Point::new(1, 1, true);
+}
+impl crate::Group for PfwAbsRvrt {
+    const LEN: u16 = 2;
+}
+impl PfwAbsRvrt {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                pf: Self::PF.from_data(data)?,
+                ext: Self::EXT.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &DerCtlAc,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &DerCtlAc,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..1 {
+            let group;
+            (data, group) = PfwAbsRvrt::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+/// Reversion PF Excitation (W Abs)
+///
+/// Reversion power factor excitation setpoint when absorbing active power.
+#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[repr(u16)]
+pub enum PfwAbsRvrtExt {
+    /// Over-Excited
+    ///
+    /// Power factor over-excited excitation.
+    OverExcited = 0,
+    /// Under-Excited
+    ///
+    /// Power factor under-excited excitation.
+    UnderExcited = 1,
+}
+impl crate::Value for PfwAbsRvrtExt {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
+    }
+    fn encode(self) -> Box<[u16]> {
+        (self as u16).encode()
+    }
+}
+impl crate::Value for Option<PfwAbsRvrtExt> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u16::decode(data)?;
+        if value != 65535 {
+            Ok(Some(
+                PfwAbsRvrtExt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
+            ))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            65535.encode()
+        }
+    }
+}
+impl crate::Model for DerCtlAc {
+    const ID: u16 = 704;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m704
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

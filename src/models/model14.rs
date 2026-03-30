@@ -49,22 +49,29 @@ impl Model14 {
     pub const USER: crate::Point<Self, Option<String>> = crate::Point::new(28, 12, true);
     pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(40, 12, true);
 }
-impl crate::Model for Model14 {
-    const ID: u16 = 14;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            nam: Self::NAM.from_data(data)?,
-            cap: Self::CAP.from_data(data)?,
-            cfg: Self::CFG.from_data(data)?,
-            typ: Self::TYP.from_data(data)?,
-            addr: Self::ADDR.from_data(data)?,
-            port: Self::PORT.from_data(data)?,
-            user: Self::USER.from_data(data)?,
-            pw: Self::PW.from_data(data)?,
-        })
+impl crate::Group for Model14 {
+    const LEN: u16 = 52;
+}
+impl Model14 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                nam: Self::NAM.from_data(data)?,
+                cap: Self::CAP.from_data(data)?,
+                cfg: Self::CFG.from_data(data)?,
+                typ: Self::TYP.from_data(data)?,
+                addr: Self::ADDR.from_data(data)?,
+                port: Self::PORT.from_data(data)?,
+                user: Self::USER.from_data(data)?,
+                pw: Self::PW.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m14
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -130,5 +137,15 @@ impl crate::Value for Option<Typ> {
         } else {
             65535u16.encode()
         }
+    }
+}
+impl crate::Model for Model14 {
+    const ID: u16 = 14;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m14
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

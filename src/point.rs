@@ -1,24 +1,24 @@
 use std::marker::PhantomData;
 
 use crate::{
-    model::Model,
     value::{DecodeError, Value},
+    Group,
 };
 
 /// Definition of a point
 #[derive(Debug)]
-pub struct Point<M: Model, T: Value> {
+pub struct Point<G: Group, T: Value> {
     /// Offset within the model
     pub offset: u16,
     /// Length of the data
     pub length: u16,
     /// Is this point writable?
     pub writable: bool,
-    model: PhantomData<M>,
+    model: PhantomData<G>,
     point_type: PhantomData<T>,
 }
 
-impl<M: Model, T: Value> Point<M, T> {
+impl<G: Group, T: Value> Point<G, T> {
     /// Create new point definition
     pub const fn new(offset: u16, length: u16, writable: bool) -> Self {
         Self {
@@ -36,13 +36,5 @@ impl<M: Model, T: Value> Point<M, T> {
             .ok_or(DecodeError::OutOfBounds)?;
         let value = T::decode(slice)?;
         Ok(value)
-    }
-}
-
-impl<M: Model, T: Value> Copy for Point<M, T> {}
-
-impl<M: Model, T: Value> Clone for Point<M, T> {
-    fn clone(&self) -> Self {
-        *self
     }
 }

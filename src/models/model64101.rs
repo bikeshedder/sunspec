@@ -29,20 +29,37 @@ impl Model64101 {
     pub const ELTEK_RPS_COS_PHI_REF: crate::Point<Self, Option<i16>> =
         crate::Point::new(6, 1, false);
 }
+impl crate::Group for Model64101 {
+    const LEN: u16 = 7;
+}
+impl Model64101 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                eltek_country_code: Self::ELTEK_COUNTRY_CODE.from_data(data)?,
+                eltek_feeding_phase: Self::ELTEK_FEEDING_PHASE.from_data(data)?,
+                eltek_apd_method: Self::ELTEK_APD_METHOD.from_data(data)?,
+                eltek_apd_power_ref: Self::ELTEK_APD_POWER_REF.from_data(data)?,
+                eltek_rps_method: Self::ELTEK_RPS_METHOD.from_data(data)?,
+                eltek_rps_q_ref: Self::ELTEK_RPS_Q_REF.from_data(data)?,
+                eltek_rps_cos_phi_ref: Self::ELTEK_RPS_COS_PHI_REF.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+}
 impl crate::Model for Model64101 {
     const ID: u16 = 64101;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            eltek_country_code: Self::ELTEK_COUNTRY_CODE.from_data(data)?,
-            eltek_feeding_phase: Self::ELTEK_FEEDING_PHASE.from_data(data)?,
-            eltek_apd_method: Self::ELTEK_APD_METHOD.from_data(data)?,
-            eltek_apd_power_ref: Self::ELTEK_APD_POWER_REF.from_data(data)?,
-            eltek_rps_method: Self::ELTEK_RPS_METHOD.from_data(data)?,
-            eltek_rps_q_ref: Self::ELTEK_RPS_Q_REF.from_data(data)?,
-            eltek_rps_cos_phi_ref: Self::ELTEK_RPS_COS_PHI_REF.from_data(data)?,
-        })
-    }
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64101
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

@@ -54,23 +54,30 @@ impl Model19 {
     pub const USR_NAM: crate::Point<Self, Option<String>> = crate::Point::new(11, 12, false);
     pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(23, 6, false);
 }
-impl crate::Model for Model19 {
-    const ID: u16 = 19;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            nam: Self::NAM.from_data(data)?,
-            rte: Self::RTE.from_data(data)?,
-            bits: Self::BITS.from_data(data)?,
-            pty: Self::PTY.from_data(data)?,
-            dup: Self::DUP.from_data(data)?,
-            flw: Self::FLW.from_data(data)?,
-            auth: Self::AUTH.from_data(data)?,
-            usr_nam: Self::USR_NAM.from_data(data)?,
-            pw: Self::PW.from_data(data)?,
-        })
+impl crate::Group for Model19 {
+    const LEN: u16 = 30;
+}
+impl Model19 {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                nam: Self::NAM.from_data(data)?,
+                rte: Self::RTE.from_data(data)?,
+                bits: Self::BITS.from_data(data)?,
+                pty: Self::PTY.from_data(data)?,
+                dup: Self::DUP.from_data(data)?,
+                flw: Self::FLW.from_data(data)?,
+                auth: Self::AUTH.from_data(data)?,
+                usr_nam: Self::USR_NAM.from_data(data)?,
+                pw: Self::PW.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m19
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Parity
@@ -237,5 +244,15 @@ impl crate::Value for Option<Auth> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for Model19 {
+    const ID: u16 = 19;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m19
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

@@ -1,10 +1,11 @@
 //! DC Simulator Control Interface
+pub type Model64410 = DcSimInterface;
 /// DC Simulator Control Interface
 ///
 /// A generic DC simulator/power supply control interface for DER electrical testing.
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model64410 {
+pub struct DcSimInterface {
     /// Maximum Voltage
     ///
     /// Upper Voltage Protection Limit
@@ -141,9 +142,15 @@ pub struct Model64410 {
     ///
     /// Scale factor for percentages.
     pub pct_sf: i16,
+    /// Stored Profiles
+    ///
+    /// Stored profile sets.
+    ///
+    /// Comments: Stored Pofile Sets - Number of profile sets = NProf - The first set is read-only and indicates the current settings.
+    pub prof: Vec<Prof>,
 }
 #[allow(missing_docs)]
-impl Model64410 {
+impl DcSimInterface {
     pub const V_MAX_LIM: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const P_MAX_LIM: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
     pub const I_MAX_LIM: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
@@ -179,48 +186,57 @@ impl Model64410 {
     pub const I_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(66, 1, true);
     pub const PCT_SF: crate::Point<Self, i16> = crate::Point::new(67, 1, true);
 }
-impl crate::Model for Model64410 {
-    const ID: u16 = 64410;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            v_max_lim: Self::V_MAX_LIM.from_data(data)?,
-            p_max_lim: Self::P_MAX_LIM.from_data(data)?,
-            i_max_lim: Self::I_MAX_LIM.from_data(data)?,
-            mode: Self::MODE.from_data(data)?,
-            ena: Self::ENA.from_data(data)?,
-            reset: Self::RESET.from_data(data)?,
-            v_set: Self::V_SET.from_data(data)?,
-            p_set: Self::P_SET.from_data(data)?,
-            i_set: Self::I_SET.from_data(data)?,
-            en50530: Self::EN50530.from_data(data)?,
-            vmpp: Self::VMPP.from_data(data)?,
-            pmpp: Self::PMPP.from_data(data)?,
-            g_set: Self::G_SET.from_data(data)?,
-            v_slew_rate: Self::V_SLEW_RATE.from_data(data)?,
-            p_slew_rate: Self::P_SLEW_RATE.from_data(data)?,
-            i_slew_rate: Self::I_SLEW_RATE.from_data(data)?,
-            ena_prof: Self::ENA_PROF.from_data(data)?,
-            adpt_prof_req: Self::ADPT_PROF_REQ.from_data(data)?,
-            adpt_prof_rslt: Self::ADPT_PROF_RSLT.from_data(data)?,
-            v: Self::V.from_data(data)?,
-            p: Self::P.from_data(data)?,
-            i: Self::I.from_data(data)?,
-            errors: Self::ERRORS.from_data(data)?,
-            n_pt: Self::N_PT.from_data(data)?,
-            n_prof: Self::N_PROF.from_data(data)?,
-            w_sf: Self::W_SF.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            a_sf: Self::A_SF.from_data(data)?,
-            g_sf: Self::G_SF.from_data(data)?,
-            tms_sf: Self::TMS_SF.from_data(data)?,
-            v_slew_sf: Self::V_SLEW_SF.from_data(data)?,
-            p_slew_sf: Self::P_SLEW_SF.from_data(data)?,
-            i_slew_sf: Self::I_SLEW_SF.from_data(data)?,
-            pct_sf: Self::PCT_SF.from_data(data)?,
-        })
+impl crate::Group for DcSimInterface {
+    const LEN: u16 = 68;
+}
+impl DcSimInterface {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                v_max_lim: Self::V_MAX_LIM.from_data(data)?,
+                p_max_lim: Self::P_MAX_LIM.from_data(data)?,
+                i_max_lim: Self::I_MAX_LIM.from_data(data)?,
+                mode: Self::MODE.from_data(data)?,
+                ena: Self::ENA.from_data(data)?,
+                reset: Self::RESET.from_data(data)?,
+                v_set: Self::V_SET.from_data(data)?,
+                p_set: Self::P_SET.from_data(data)?,
+                i_set: Self::I_SET.from_data(data)?,
+                en50530: Self::EN50530.from_data(data)?,
+                vmpp: Self::VMPP.from_data(data)?,
+                pmpp: Self::PMPP.from_data(data)?,
+                g_set: Self::G_SET.from_data(data)?,
+                v_slew_rate: Self::V_SLEW_RATE.from_data(data)?,
+                p_slew_rate: Self::P_SLEW_RATE.from_data(data)?,
+                i_slew_rate: Self::I_SLEW_RATE.from_data(data)?,
+                ena_prof: Self::ENA_PROF.from_data(data)?,
+                adpt_prof_req: Self::ADPT_PROF_REQ.from_data(data)?,
+                adpt_prof_rslt: Self::ADPT_PROF_RSLT.from_data(data)?,
+                v: Self::V.from_data(data)?,
+                p: Self::P.from_data(data)?,
+                i: Self::I.from_data(data)?,
+                errors: Self::ERRORS.from_data(data)?,
+                n_pt: Self::N_PT.from_data(data)?,
+                n_prof: Self::N_PROF.from_data(data)?,
+                w_sf: Self::W_SF.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                a_sf: Self::A_SF.from_data(data)?,
+                g_sf: Self::G_SF.from_data(data)?,
+                tms_sf: Self::TMS_SF.from_data(data)?,
+                v_slew_sf: Self::V_SLEW_SF.from_data(data)?,
+                p_slew_sf: Self::P_SLEW_SF.from_data(data)?,
+                i_slew_sf: Self::I_SLEW_SF.from_data(data)?,
+                pct_sf: Self::PCT_SF.from_data(data)?,
+                prof: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m64410
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.prof) = Prof::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 /// CV or CC Mode
@@ -489,5 +505,186 @@ impl crate::Value for Option<AdptProfRslt> {
         } else {
             65535.encode()
         }
+    }
+}
+/// Stored Profiles
+///
+/// Stored profile sets.
+///
+/// Comments: Stored Pofile Sets - Number of profile sets = NProf - The first set is read-only and indicates the current settings.
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Prof {
+    /// Active Points
+    ///
+    /// Number of active points.
+    pub act_pt: u16,
+    /// Dependent References
+    ///
+    /// Profile references.
+    pub dept_ref: ProfDeptRef,
+    /// Stored Profile Points
+    ///
+    /// Stored profile points.
+    ///
+    /// Comments: Stored Profile Sets - Profile points for each stored profile - Number of profile points contained in NPt
+    pub pt: Vec<Pt>,
+}
+#[allow(missing_docs)]
+impl Prof {
+    pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
+    pub const DEPT_REF: crate::Point<Self, ProfDeptRef> = crate::Point::new(1, 1, true);
+}
+impl crate::Group for Prof {
+    const LEN: u16 = 2;
+}
+impl Prof {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                act_pt: Self::ACT_PT.from_data(data)?,
+                dept_ref: Self::DEPT_REF.from_data(data)?,
+                pt: Vec::new(),
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &DcSimInterface,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.pt) = Pt::parse_multiple(data, model)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &DcSimInterface,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..model.n_prof {
+            let group;
+            (data, group) = Prof::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+bitflags::bitflags! {
+    #[doc = " Dependent References"] #[doc = " "] #[doc = " Profile references."]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
+    derive(::serde::Serialize, ::serde::Deserialize))] pub struct ProfDeptRef : u32 {
+    #[doc = " Voltage"] const Voltage = 1; #[doc = " Power"] const Power = 2; #[doc =
+    " Current"] const Current = 4; #[doc = " Irradiance"] const Irradiance = 8; }
+}
+impl crate::Value for ProfDeptRef {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        Ok(Self::from_bits_retain(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        self.bits().encode()
+    }
+}
+impl crate::Value for Option<ProfDeptRef> {
+    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let value = u32::decode(data)?;
+        if value != 4294967295u32 {
+            Ok(Some(ProfDeptRef::from_bits_retain(value)))
+        } else {
+            Ok(None)
+        }
+    }
+    fn encode(self) -> Box<[u16]> {
+        if let Some(value) = self {
+            value.encode()
+        } else {
+            4294967295u32.encode()
+        }
+    }
+}
+/// Stored Profile Points
+///
+/// Stored profile points.
+///
+/// Comments: Stored Profile Sets - Profile points for each stored profile - Number of profile points contained in NPt
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Pt {
+    /// Profile Time
+    ///
+    /// Profile time.
+    pub tms: Option<u16>,
+    /// Voltage Point
+    ///
+    /// Profile voltage point in Volts.
+    pub v: Option<u16>,
+    /// Power Point
+    ///
+    /// Profile power point in Watts.
+    pub p: Option<u16>,
+    /// Current Point
+    ///
+    /// Profile current point in Amps.
+    pub i: Option<u16>,
+    /// Irradiance Point
+    ///
+    /// Profile irradiance point as percentage.
+    pub g: Option<u16>,
+}
+#[allow(missing_docs)]
+impl Pt {
+    pub const TMS: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
+    pub const P: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
+    pub const I: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
+    pub const G: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
+}
+impl crate::Group for Pt {
+    const LEN: u16 = 5;
+}
+impl Pt {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                tms: Self::TMS.from_data(data)?,
+                v: Self::V.from_data(data)?,
+                p: Self::P.from_data(data)?,
+                i: Self::I.from_data(data)?,
+                g: Self::G.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &DcSimInterface,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &DcSimInterface,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..model.n_pt {
+            let group;
+            (data, group) = Pt::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+impl crate::Model for DcSimInterface {
+    const ID: u16 = 64410;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64410
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

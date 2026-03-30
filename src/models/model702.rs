@@ -1,10 +1,11 @@
 //! DER Capacity
+pub type Model702 = DerCapacity;
 /// DER Capacity
 ///
 /// DER capacity model.
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model702 {
+pub struct DerCapacity {
     /// Active Power Max Rating
     ///
     /// Maximum active power rating at unity power factor in watts.
@@ -229,7 +230,7 @@ pub struct Model702 {
     pub s_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model702 {
+impl DerCapacity {
     pub const W_MAX_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
     pub const W_OVR_EXT_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
     pub const W_OVR_EXT_RTG_PF: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
@@ -286,63 +287,70 @@ impl Model702 {
     pub const A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(48, 1, false);
     pub const S_SF: crate::Point<Self, Option<i16>> = crate::Point::new(49, 1, false);
 }
-impl crate::Model for Model702 {
-    const ID: u16 = 702;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            w_max_rtg: Self::W_MAX_RTG.from_data(data)?,
-            w_ovr_ext_rtg: Self::W_OVR_EXT_RTG.from_data(data)?,
-            w_ovr_ext_rtg_pf: Self::W_OVR_EXT_RTG_PF.from_data(data)?,
-            w_und_ext_rtg: Self::W_UND_EXT_RTG.from_data(data)?,
-            w_und_ext_rtg_pf: Self::W_UND_EXT_RTG_PF.from_data(data)?,
-            va_max_rtg: Self::VA_MAX_RTG.from_data(data)?,
-            var_max_inj_rtg: Self::VAR_MAX_INJ_RTG.from_data(data)?,
-            var_max_abs_rtg: Self::VAR_MAX_ABS_RTG.from_data(data)?,
-            w_cha_rte_max_rtg: Self::W_CHA_RTE_MAX_RTG.from_data(data)?,
-            w_dis_cha_rte_max_rtg: Self::W_DIS_CHA_RTE_MAX_RTG.from_data(data)?,
-            va_cha_rte_max_rtg: Self::VA_CHA_RTE_MAX_RTG.from_data(data)?,
-            va_dis_cha_rte_max_rtg: Self::VA_DIS_CHA_RTE_MAX_RTG.from_data(data)?,
-            v_nom_rtg: Self::V_NOM_RTG.from_data(data)?,
-            v_max_rtg: Self::V_MAX_RTG.from_data(data)?,
-            v_min_rtg: Self::V_MIN_RTG.from_data(data)?,
-            a_max_rtg: Self::A_MAX_RTG.from_data(data)?,
-            pf_ovr_ext_rtg: Self::PF_OVR_EXT_RTG.from_data(data)?,
-            pf_und_ext_rtg: Self::PF_UND_EXT_RTG.from_data(data)?,
-            react_suscept_rtg: Self::REACT_SUSCEPT_RTG.from_data(data)?,
-            nor_op_cat_rtg: Self::NOR_OP_CAT_RTG.from_data(data)?,
-            abn_op_cat_rtg: Self::ABN_OP_CAT_RTG.from_data(data)?,
-            ctrl_modes: Self::CTRL_MODES.from_data(data)?,
-            int_island_cat_rtg: Self::INT_ISLAND_CAT_RTG.from_data(data)?,
-            w_max: Self::W_MAX.from_data(data)?,
-            w_max_ovr_ext: Self::W_MAX_OVR_EXT.from_data(data)?,
-            w_ovr_ext_pf: Self::W_OVR_EXT_PF.from_data(data)?,
-            w_max_und_ext: Self::W_MAX_UND_EXT.from_data(data)?,
-            w_und_ext_pf: Self::W_UND_EXT_PF.from_data(data)?,
-            va_max: Self::VA_MAX.from_data(data)?,
-            var_max_inj: Self::VAR_MAX_INJ.from_data(data)?,
-            var_max_abs: Self::VAR_MAX_ABS.from_data(data)?,
-            w_cha_rte_max: Self::W_CHA_RTE_MAX.from_data(data)?,
-            w_dis_cha_rte_max: Self::W_DIS_CHA_RTE_MAX.from_data(data)?,
-            va_cha_rte_max: Self::VA_CHA_RTE_MAX.from_data(data)?,
-            va_dis_cha_rte_max: Self::VA_DIS_CHA_RTE_MAX.from_data(data)?,
-            v_nom: Self::V_NOM.from_data(data)?,
-            v_max: Self::V_MAX.from_data(data)?,
-            v_min: Self::V_MIN.from_data(data)?,
-            a_max: Self::A_MAX.from_data(data)?,
-            pf_ovr_ext: Self::PF_OVR_EXT.from_data(data)?,
-            pf_und_ext: Self::PF_UND_EXT.from_data(data)?,
-            int_island_cat: Self::INT_ISLAND_CAT.from_data(data)?,
-            w_sf: Self::W_SF.from_data(data)?,
-            pf_sf: Self::PF_SF.from_data(data)?,
-            va_sf: Self::VA_SF.from_data(data)?,
-            var_sf: Self::VAR_SF.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            a_sf: Self::A_SF.from_data(data)?,
-            s_sf: Self::S_SF.from_data(data)?,
-        })
+impl crate::Group for DerCapacity {
+    const LEN: u16 = 50;
+}
+impl DerCapacity {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                w_max_rtg: Self::W_MAX_RTG.from_data(data)?,
+                w_ovr_ext_rtg: Self::W_OVR_EXT_RTG.from_data(data)?,
+                w_ovr_ext_rtg_pf: Self::W_OVR_EXT_RTG_PF.from_data(data)?,
+                w_und_ext_rtg: Self::W_UND_EXT_RTG.from_data(data)?,
+                w_und_ext_rtg_pf: Self::W_UND_EXT_RTG_PF.from_data(data)?,
+                va_max_rtg: Self::VA_MAX_RTG.from_data(data)?,
+                var_max_inj_rtg: Self::VAR_MAX_INJ_RTG.from_data(data)?,
+                var_max_abs_rtg: Self::VAR_MAX_ABS_RTG.from_data(data)?,
+                w_cha_rte_max_rtg: Self::W_CHA_RTE_MAX_RTG.from_data(data)?,
+                w_dis_cha_rte_max_rtg: Self::W_DIS_CHA_RTE_MAX_RTG.from_data(data)?,
+                va_cha_rte_max_rtg: Self::VA_CHA_RTE_MAX_RTG.from_data(data)?,
+                va_dis_cha_rte_max_rtg: Self::VA_DIS_CHA_RTE_MAX_RTG.from_data(data)?,
+                v_nom_rtg: Self::V_NOM_RTG.from_data(data)?,
+                v_max_rtg: Self::V_MAX_RTG.from_data(data)?,
+                v_min_rtg: Self::V_MIN_RTG.from_data(data)?,
+                a_max_rtg: Self::A_MAX_RTG.from_data(data)?,
+                pf_ovr_ext_rtg: Self::PF_OVR_EXT_RTG.from_data(data)?,
+                pf_und_ext_rtg: Self::PF_UND_EXT_RTG.from_data(data)?,
+                react_suscept_rtg: Self::REACT_SUSCEPT_RTG.from_data(data)?,
+                nor_op_cat_rtg: Self::NOR_OP_CAT_RTG.from_data(data)?,
+                abn_op_cat_rtg: Self::ABN_OP_CAT_RTG.from_data(data)?,
+                ctrl_modes: Self::CTRL_MODES.from_data(data)?,
+                int_island_cat_rtg: Self::INT_ISLAND_CAT_RTG.from_data(data)?,
+                w_max: Self::W_MAX.from_data(data)?,
+                w_max_ovr_ext: Self::W_MAX_OVR_EXT.from_data(data)?,
+                w_ovr_ext_pf: Self::W_OVR_EXT_PF.from_data(data)?,
+                w_max_und_ext: Self::W_MAX_UND_EXT.from_data(data)?,
+                w_und_ext_pf: Self::W_UND_EXT_PF.from_data(data)?,
+                va_max: Self::VA_MAX.from_data(data)?,
+                var_max_inj: Self::VAR_MAX_INJ.from_data(data)?,
+                var_max_abs: Self::VAR_MAX_ABS.from_data(data)?,
+                w_cha_rte_max: Self::W_CHA_RTE_MAX.from_data(data)?,
+                w_dis_cha_rte_max: Self::W_DIS_CHA_RTE_MAX.from_data(data)?,
+                va_cha_rte_max: Self::VA_CHA_RTE_MAX.from_data(data)?,
+                va_dis_cha_rte_max: Self::VA_DIS_CHA_RTE_MAX.from_data(data)?,
+                v_nom: Self::V_NOM.from_data(data)?,
+                v_max: Self::V_MAX.from_data(data)?,
+                v_min: Self::V_MIN.from_data(data)?,
+                a_max: Self::A_MAX.from_data(data)?,
+                pf_ovr_ext: Self::PF_OVR_EXT.from_data(data)?,
+                pf_und_ext: Self::PF_UND_EXT.from_data(data)?,
+                int_island_cat: Self::INT_ISLAND_CAT.from_data(data)?,
+                w_sf: Self::W_SF.from_data(data)?,
+                pf_sf: Self::PF_SF.from_data(data)?,
+                va_sf: Self::VA_SF.from_data(data)?,
+                var_sf: Self::VAR_SF.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                a_sf: Self::A_SF.from_data(data)?,
+                s_sf: Self::S_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m702
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Normal Operating Category
@@ -536,5 +544,15 @@ impl crate::Value for Option<IntIslandCat> {
         } else {
             65535u16.encode()
         }
+    }
+}
+impl crate::Model for DerCapacity {
+    const ID: u16 = 702;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m702
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

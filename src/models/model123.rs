@@ -1,4 +1,5 @@
 //! Immediate Controls
+pub type Model123 = Controls;
 /// Immediate Controls
 ///
 /// Immediate Inverter Controls
@@ -6,7 +7,7 @@
 /// Detail: Ref 3: 8.7.1.2, 8.7.2.2, 8.7.3.2
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model123 {
+pub struct Controls {
     /// Conn_WinTms
     ///
     /// Time window for connect/disconnect.
@@ -105,7 +106,7 @@ pub struct Model123 {
     pub v_ar_pct_sf: Option<i16>,
 }
 #[allow(missing_docs)]
-impl Model123 {
+impl Controls {
     pub const CONN_WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const CONN_RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
     pub const CONN: crate::Point<Self, Conn> = crate::Point::new(2, 1, true);
@@ -134,38 +135,45 @@ impl Model123 {
     pub const OUT_PF_SET_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
     pub const V_AR_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
 }
-impl crate::Model for Model123 {
-    const ID: u16 = 123;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            conn_win_tms: Self::CONN_WIN_TMS.from_data(data)?,
-            conn_rvrt_tms: Self::CONN_RVRT_TMS.from_data(data)?,
-            conn: Self::CONN.from_data(data)?,
-            w_max_lim_pct: Self::W_MAX_LIM_PCT.from_data(data)?,
-            w_max_lim_pct_win_tms: Self::W_MAX_LIM_PCT_WIN_TMS.from_data(data)?,
-            w_max_lim_pct_rvrt_tms: Self::W_MAX_LIM_PCT_RVRT_TMS.from_data(data)?,
-            w_max_lim_pct_rmp_tms: Self::W_MAX_LIM_PCT_RMP_TMS.from_data(data)?,
-            w_max_lim_ena: Self::W_MAX_LIM_ENA.from_data(data)?,
-            out_pf_set: Self::OUT_PF_SET.from_data(data)?,
-            out_pf_set_win_tms: Self::OUT_PF_SET_WIN_TMS.from_data(data)?,
-            out_pf_set_rvrt_tms: Self::OUT_PF_SET_RVRT_TMS.from_data(data)?,
-            out_pf_set_rmp_tms: Self::OUT_PF_SET_RMP_TMS.from_data(data)?,
-            out_pf_set_ena: Self::OUT_PF_SET_ENA.from_data(data)?,
-            v_ar_w_max_pct: Self::V_AR_W_MAX_PCT.from_data(data)?,
-            v_ar_max_pct: Self::V_AR_MAX_PCT.from_data(data)?,
-            v_ar_aval_pct: Self::V_AR_AVAL_PCT.from_data(data)?,
-            v_ar_pct_win_tms: Self::V_AR_PCT_WIN_TMS.from_data(data)?,
-            v_ar_pct_rvrt_tms: Self::V_AR_PCT_RVRT_TMS.from_data(data)?,
-            v_ar_pct_rmp_tms: Self::V_AR_PCT_RMP_TMS.from_data(data)?,
-            v_ar_pct_mod: Self::V_AR_PCT_MOD.from_data(data)?,
-            v_ar_pct_ena: Self::V_AR_PCT_ENA.from_data(data)?,
-            w_max_lim_pct_sf: Self::W_MAX_LIM_PCT_SF.from_data(data)?,
-            out_pf_set_sf: Self::OUT_PF_SET_SF.from_data(data)?,
-            v_ar_pct_sf: Self::V_AR_PCT_SF.from_data(data)?,
-        })
+impl crate::Group for Controls {
+    const LEN: u16 = 24;
+}
+impl Controls {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                conn_win_tms: Self::CONN_WIN_TMS.from_data(data)?,
+                conn_rvrt_tms: Self::CONN_RVRT_TMS.from_data(data)?,
+                conn: Self::CONN.from_data(data)?,
+                w_max_lim_pct: Self::W_MAX_LIM_PCT.from_data(data)?,
+                w_max_lim_pct_win_tms: Self::W_MAX_LIM_PCT_WIN_TMS.from_data(data)?,
+                w_max_lim_pct_rvrt_tms: Self::W_MAX_LIM_PCT_RVRT_TMS.from_data(data)?,
+                w_max_lim_pct_rmp_tms: Self::W_MAX_LIM_PCT_RMP_TMS.from_data(data)?,
+                w_max_lim_ena: Self::W_MAX_LIM_ENA.from_data(data)?,
+                out_pf_set: Self::OUT_PF_SET.from_data(data)?,
+                out_pf_set_win_tms: Self::OUT_PF_SET_WIN_TMS.from_data(data)?,
+                out_pf_set_rvrt_tms: Self::OUT_PF_SET_RVRT_TMS.from_data(data)?,
+                out_pf_set_rmp_tms: Self::OUT_PF_SET_RMP_TMS.from_data(data)?,
+                out_pf_set_ena: Self::OUT_PF_SET_ENA.from_data(data)?,
+                v_ar_w_max_pct: Self::V_AR_W_MAX_PCT.from_data(data)?,
+                v_ar_max_pct: Self::V_AR_MAX_PCT.from_data(data)?,
+                v_ar_aval_pct: Self::V_AR_AVAL_PCT.from_data(data)?,
+                v_ar_pct_win_tms: Self::V_AR_PCT_WIN_TMS.from_data(data)?,
+                v_ar_pct_rvrt_tms: Self::V_AR_PCT_RVRT_TMS.from_data(data)?,
+                v_ar_pct_rmp_tms: Self::V_AR_PCT_RMP_TMS.from_data(data)?,
+                v_ar_pct_mod: Self::V_AR_PCT_MOD.from_data(data)?,
+                v_ar_pct_ena: Self::V_AR_PCT_ENA.from_data(data)?,
+                w_max_lim_pct_sf: Self::W_MAX_LIM_PCT_SF.from_data(data)?,
+                out_pf_set_sf: Self::OUT_PF_SET_SF.from_data(data)?,
+                v_ar_pct_sf: Self::V_AR_PCT_SF.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m123
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Conn
@@ -370,5 +378,15 @@ impl crate::Value for Option<VArPctEna> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for Controls {
+    const ID: u16 = 123;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m123
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

@@ -1,4 +1,5 @@
 //! Solar Module
+pub type Model501 = SolarModuleFloat;
 /// Solar Module
 ///
 /// A solar module model supporting DC-DC converter
@@ -6,7 +7,7 @@
 /// Detail: Float
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model501 {
+pub struct SolarModuleFloat {
     /// Status
     ///
     /// Enumerated value.  Module Status Code
@@ -77,7 +78,7 @@ pub struct Model501 {
     pub in_w: Option<f32>,
 }
 #[allow(missing_docs)]
-impl Model501 {
+impl SolarModuleFloat {
     pub const STAT: crate::Point<Self, Stat> = crate::Point::new(0, 1, false);
     pub const STAT_VEND: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(2, 2, false);
@@ -96,31 +97,38 @@ impl Model501 {
     pub const IN_WH: crate::Point<Self, Option<f32>> = crate::Point::new(27, 2, false);
     pub const IN_W: crate::Point<Self, Option<f32>> = crate::Point::new(29, 2, false);
 }
-impl crate::Model for Model501 {
-    const ID: u16 = 501;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            stat: Self::STAT.from_data(data)?,
-            stat_vend: Self::STAT_VEND.from_data(data)?,
-            evt: Self::EVT.from_data(data)?,
-            evt_vend: Self::EVT_VEND.from_data(data)?,
-            ctl: Self::CTL.from_data(data)?,
-            ctl_vend: Self::CTL_VEND.from_data(data)?,
-            ctl_val: Self::CTL_VAL.from_data(data)?,
-            tms: Self::TMS.from_data(data)?,
-            out_a: Self::OUT_A.from_data(data)?,
-            out_v: Self::OUT_V.from_data(data)?,
-            out_wh: Self::OUT_WH.from_data(data)?,
-            out_w: Self::OUT_W.from_data(data)?,
-            tmp: Self::TMP.from_data(data)?,
-            in_a: Self::IN_A.from_data(data)?,
-            in_v: Self::IN_V.from_data(data)?,
-            in_wh: Self::IN_WH.from_data(data)?,
-            in_w: Self::IN_W.from_data(data)?,
-        })
+impl crate::Group for SolarModuleFloat {
+    const LEN: u16 = 31;
+}
+impl SolarModuleFloat {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                stat: Self::STAT.from_data(data)?,
+                stat_vend: Self::STAT_VEND.from_data(data)?,
+                evt: Self::EVT.from_data(data)?,
+                evt_vend: Self::EVT_VEND.from_data(data)?,
+                ctl: Self::CTL.from_data(data)?,
+                ctl_vend: Self::CTL_VEND.from_data(data)?,
+                ctl_val: Self::CTL_VAL.from_data(data)?,
+                tms: Self::TMS.from_data(data)?,
+                out_a: Self::OUT_A.from_data(data)?,
+                out_v: Self::OUT_V.from_data(data)?,
+                out_wh: Self::OUT_WH.from_data(data)?,
+                out_w: Self::OUT_W.from_data(data)?,
+                tmp: Self::TMP.from_data(data)?,
+                in_a: Self::IN_A.from_data(data)?,
+                in_v: Self::IN_V.from_data(data)?,
+                in_wh: Self::IN_WH.from_data(data)?,
+                in_w: Self::IN_W.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m501
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// Status
@@ -253,5 +261,15 @@ impl crate::Value for Option<EvtVend> {
         } else {
             4294967295u32.encode()
         }
+    }
+}
+impl crate::Model for SolarModuleFloat {
+    const ID: u16 = 501;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m501
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

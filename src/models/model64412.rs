@@ -1,10 +1,11 @@
 //! DER Cyber Exploitation
+pub type Model64412 = DerExploitation;
 /// DER Cyber Exploitation
 ///
 /// Operations that represent a hacked DER device
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model64412 {
+pub struct DerExploitation {
     /// DA Manipulation
     ///
     /// Modify the device ID of the DER
@@ -179,7 +180,7 @@ pub struct Model64412 {
     pub change_common_model_length: Option<ChangeCommonModelLength>,
 }
 #[allow(missing_docs)]
-impl Model64412 {
+impl DerExploitation {
     pub const DA_MANIPULATION: crate::Point<Self, Option<DaManipulation>> =
         crate::Point::new(0, 1, true);
     pub const FALSIFY_DEVICE_IDENTITY: crate::Point<Self, Option<FalsifyDeviceIdentity>> =
@@ -256,57 +257,64 @@ impl Model64412 {
     pub const CHANGE_COMMON_MODEL_LENGTH: crate::Point<Self, Option<ChangeCommonModelLength>> =
         crate::Point::new(42, 1, true);
 }
-impl crate::Model for Model64412 {
-    const ID: u16 = 64412;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            da_manipulation: Self::DA_MANIPULATION.from_data(data)?,
-            falsify_device_identity: Self::FALSIFY_DEVICE_IDENTITY.from_data(data)?,
-            meas_p_always_nameplate: Self::MEAS_P_ALWAYS_NAMEPLATE.from_data(data)?,
-            meas_q_always_minimum: Self::MEAS_Q_ALWAYS_MINIMUM.from_data(data)?,
-            meas_q_always_maximum: Self::MEAS_Q_ALWAYS_MAXIMUM.from_data(data)?,
-            meas_q_always_zero: Self::MEAS_Q_ALWAYS_ZERO.from_data(data)?,
-            meas_zero_p: Self::MEAS_ZERO_P.from_data(data)?,
-            meas_invert_q: Self::MEAS_INVERT_Q.from_data(data)?,
-            meas_low_v: Self::MEAS_LOW_V.from_data(data)?,
-            meas_high_v: Self::MEAS_HIGH_V.from_data(data)?,
-            meas_low_l1v: Self::MEAS_LOW_L1V.from_data(data)?,
-            meas_high_l1v: Self::MEAS_HIGH_L1V.from_data(data)?,
-            meas_low_f: Self::MEAS_LOW_F.from_data(data)?,
-            meas_high_f: Self::MEAS_HIGH_F.from_data(data)?,
-            meas_low_amps: Self::MEAS_LOW_AMPS.from_data(data)?,
-            meas_high_amps: Self::MEAS_HIGH_AMPS.from_data(data)?,
-            meas_high_s: Self::MEAS_HIGH_S.from_data(data)?,
-            meas_low_s: Self::MEAS_LOW_S.from_data(data)?,
-            meas_high_q: Self::MEAS_HIGH_Q.from_data(data)?,
-            meas_low_q: Self::MEAS_LOW_Q.from_data(data)?,
-            meas_low_pf: Self::MEAS_LOW_PF.from_data(data)?,
-            meas_low_reversed_pf: Self::MEAS_LOW_REVERSED_PF.from_data(data)?,
-            nameplate_high_p: Self::NAMEPLATE_HIGH_P.from_data(data)?,
-            nameplate_low_p: Self::NAMEPLATE_LOW_P.from_data(data)?,
-            nameplate_high_s: Self::NAMEPLATE_HIGH_S.from_data(data)?,
-            nameplate_low_s: Self::NAMEPLATE_LOW_S.from_data(data)?,
-            nameplate_high_q: Self::NAMEPLATE_HIGH_Q.from_data(data)?,
-            nameplate_low_q: Self::NAMEPLATE_LOW_Q.from_data(data)?,
-            nameplate_high_nom_v: Self::NAMEPLATE_HIGH_NOM_V.from_data(data)?,
-            nameplate_low_nom_v: Self::NAMEPLATE_LOW_NOM_V.from_data(data)?,
-            nameplate_low_amps: Self::NAMEPLATE_LOW_AMPS.from_data(data)?,
-            nameplate_low_varmaxinj: Self::NAMEPLATE_LOW_VARMAXINJ.from_data(data)?,
-            nameplate_low_varmaxabs: Self::NAMEPLATE_LOW_VARMAXABS.from_data(data)?,
-            nameplate_low_pf: Self::NAMEPLATE_LOW_PF.from_data(data)?,
-            settings_high_nom_v: Self::SETTINGS_HIGH_NOM_V.from_data(data)?,
-            settings_low_amps: Self::SETTINGS_LOW_AMPS.from_data(data)?,
-            settings_high_p: Self::SETTINGS_HIGH_P.from_data(data)?,
-            settings_low_p: Self::SETTINGS_LOW_P.from_data(data)?,
-            settings_high_va_max: Self::SETTINGS_HIGH_VA_MAX.from_data(data)?,
-            settings_high_varmaxinj: Self::SETTINGS_HIGH_VARMAXINJ.from_data(data)?,
-            settings_high_varmaxabs: Self::SETTINGS_HIGH_VARMAXABS.from_data(data)?,
-            change_common_model_id: Self::CHANGE_COMMON_MODEL_ID.from_data(data)?,
-            change_common_model_length: Self::CHANGE_COMMON_MODEL_LENGTH.from_data(data)?,
-        })
+impl crate::Group for DerExploitation {
+    const LEN: u16 = 43;
+}
+impl DerExploitation {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                da_manipulation: Self::DA_MANIPULATION.from_data(data)?,
+                falsify_device_identity: Self::FALSIFY_DEVICE_IDENTITY.from_data(data)?,
+                meas_p_always_nameplate: Self::MEAS_P_ALWAYS_NAMEPLATE.from_data(data)?,
+                meas_q_always_minimum: Self::MEAS_Q_ALWAYS_MINIMUM.from_data(data)?,
+                meas_q_always_maximum: Self::MEAS_Q_ALWAYS_MAXIMUM.from_data(data)?,
+                meas_q_always_zero: Self::MEAS_Q_ALWAYS_ZERO.from_data(data)?,
+                meas_zero_p: Self::MEAS_ZERO_P.from_data(data)?,
+                meas_invert_q: Self::MEAS_INVERT_Q.from_data(data)?,
+                meas_low_v: Self::MEAS_LOW_V.from_data(data)?,
+                meas_high_v: Self::MEAS_HIGH_V.from_data(data)?,
+                meas_low_l1v: Self::MEAS_LOW_L1V.from_data(data)?,
+                meas_high_l1v: Self::MEAS_HIGH_L1V.from_data(data)?,
+                meas_low_f: Self::MEAS_LOW_F.from_data(data)?,
+                meas_high_f: Self::MEAS_HIGH_F.from_data(data)?,
+                meas_low_amps: Self::MEAS_LOW_AMPS.from_data(data)?,
+                meas_high_amps: Self::MEAS_HIGH_AMPS.from_data(data)?,
+                meas_high_s: Self::MEAS_HIGH_S.from_data(data)?,
+                meas_low_s: Self::MEAS_LOW_S.from_data(data)?,
+                meas_high_q: Self::MEAS_HIGH_Q.from_data(data)?,
+                meas_low_q: Self::MEAS_LOW_Q.from_data(data)?,
+                meas_low_pf: Self::MEAS_LOW_PF.from_data(data)?,
+                meas_low_reversed_pf: Self::MEAS_LOW_REVERSED_PF.from_data(data)?,
+                nameplate_high_p: Self::NAMEPLATE_HIGH_P.from_data(data)?,
+                nameplate_low_p: Self::NAMEPLATE_LOW_P.from_data(data)?,
+                nameplate_high_s: Self::NAMEPLATE_HIGH_S.from_data(data)?,
+                nameplate_low_s: Self::NAMEPLATE_LOW_S.from_data(data)?,
+                nameplate_high_q: Self::NAMEPLATE_HIGH_Q.from_data(data)?,
+                nameplate_low_q: Self::NAMEPLATE_LOW_Q.from_data(data)?,
+                nameplate_high_nom_v: Self::NAMEPLATE_HIGH_NOM_V.from_data(data)?,
+                nameplate_low_nom_v: Self::NAMEPLATE_LOW_NOM_V.from_data(data)?,
+                nameplate_low_amps: Self::NAMEPLATE_LOW_AMPS.from_data(data)?,
+                nameplate_low_varmaxinj: Self::NAMEPLATE_LOW_VARMAXINJ.from_data(data)?,
+                nameplate_low_varmaxabs: Self::NAMEPLATE_LOW_VARMAXABS.from_data(data)?,
+                nameplate_low_pf: Self::NAMEPLATE_LOW_PF.from_data(data)?,
+                settings_high_nom_v: Self::SETTINGS_HIGH_NOM_V.from_data(data)?,
+                settings_low_amps: Self::SETTINGS_LOW_AMPS.from_data(data)?,
+                settings_high_p: Self::SETTINGS_HIGH_P.from_data(data)?,
+                settings_low_p: Self::SETTINGS_LOW_P.from_data(data)?,
+                settings_high_va_max: Self::SETTINGS_HIGH_VA_MAX.from_data(data)?,
+                settings_high_varmaxinj: Self::SETTINGS_HIGH_VARMAXINJ.from_data(data)?,
+                settings_high_varmaxabs: Self::SETTINGS_HIGH_VARMAXABS.from_data(data)?,
+                change_common_model_id: Self::CHANGE_COMMON_MODEL_ID.from_data(data)?,
+                change_common_model_length: Self::CHANGE_COMMON_MODEL_LENGTH.from_data(data)?,
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m64412
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
     }
 }
 /// DA Manipulation
@@ -2207,5 +2215,15 @@ impl crate::Value for Option<ChangeCommonModelLength> {
         } else {
             65535.encode()
         }
+    }
+}
+impl crate::Model for DerExploitation {
+    const ID: u16 = 64412;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64412
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

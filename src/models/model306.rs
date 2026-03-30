@@ -1,10 +1,11 @@
 //! Reference Point Model
+pub type Model306 = RefPoint;
 /// Reference Point Model
 ///
 /// Include to support a standard reference point
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model306 {
+pub struct RefPoint {
     /// GHI
     ///
     /// Global Horizontal Irradiance
@@ -23,23 +24,40 @@ pub struct Model306 {
     pub tmp: Option<u16>,
 }
 #[allow(missing_docs)]
-impl Model306 {
+impl RefPoint {
     pub const GHI: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
     pub const A: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
     pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
     pub const TMP: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
 }
-impl crate::Model for Model306 {
-    const ID: u16 = 306;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            ghi: Self::GHI.from_data(data)?,
-            a: Self::A.from_data(data)?,
-            v: Self::V.from_data(data)?,
-            tmp: Self::TMP.from_data(data)?,
-        })
+impl crate::Group for RefPoint {
+    const LEN: u16 = 4;
+}
+impl RefPoint {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                ghi: Self::GHI.from_data(data)?,
+                a: Self::A.from_data(data)?,
+                v: Self::V.from_data(data)?,
+                tmp: Self::TMP.from_data(data)?,
+            },
+        ))
     }
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+}
+impl crate::Model for RefPoint {
+    const ID: u16 = 306;
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m306
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }

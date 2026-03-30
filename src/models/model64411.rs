@@ -1,10 +1,11 @@
 //! AC Simulator Control Interface
+pub type Model64411 = AcSimInterface;
 /// AC Simulator Control Interface
 ///
 /// A generic AC simulator/power supply control interface for DER electrical testing.
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct Model64411 {
+pub struct AcSimInterface {
     /// Active Phases
     ///
     /// Set the number of active phases for the power supply
@@ -197,9 +198,15 @@ pub struct Model64411 {
     ///
     /// Scale factor for THD values.
     pub thd_sf: i16,
+    /// Stored AC Profiles
+    ///
+    /// Stored AC profile sets.
+    ///
+    /// Comments: Stored AC Profile Sets - Number of profile sets = NProf
+    pub prof: Vec<Prof>,
 }
 #[allow(missing_docs)]
-impl Model64411 {
+impl AcSimInterface {
     pub const PHASES: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const PHASE_ANGLE: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
     pub const V_NOM: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
@@ -249,62 +256,71 @@ impl Model64411 {
     pub const V_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(1394, 1, false);
     pub const THD_SF: crate::Point<Self, i16> = crate::Point::new(1395, 1, false);
 }
-impl crate::Model for Model64411 {
-    const ID: u16 = 64411;
-    fn from_data(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        Ok(Self {
-            phases: Self::PHASES.from_data(data)?,
-            phase_angle: Self::PHASE_ANGLE.from_data(data)?,
-            v_nom: Self::V_NOM.from_data(data)?,
-            v_max: Self::V_MAX.from_data(data)?,
-            i_max: Self::I_MAX.from_data(data)?,
-            freq: Self::FREQ.from_data(data)?,
-            output: Self::OUTPUT.from_data(data)?,
-            relay: Self::RELAY.from_data(data)?,
-            regen: Self::REGEN.from_data(data)?,
-            v_set: Self::V_SET.from_data(data)?,
-            v_set_a: Self::V_SET_A.from_data(data)?,
-            v_set_b: Self::V_SET_B.from_data(data)?,
-            v_set_c: Self::V_SET_C.from_data(data)?,
-            freq_slew: Self::FREQ_SLEW.from_data(data)?,
-            v_slew: Self::V_SLEW.from_data(data)?,
-            va: Self::VA.from_data(data)?,
-            vb: Self::VB.from_data(data)?,
-            vc: Self::VC.from_data(data)?,
-            hz: Self::HZ.from_data(data)?,
-            ia: Self::IA.from_data(data)?,
-            ib: Self::IB.from_data(data)?,
-            ic: Self::IC.from_data(data)?,
-            v_har_a: Self::V_HAR_A.from_data(data)?,
-            v_har_b: Self::V_HAR_B.from_data(data)?,
-            v_har_c: Self::V_HAR_C.from_data(data)?,
-            i_har_a: Self::I_HAR_A.from_data(data)?,
-            i_har_b: Self::I_HAR_B.from_data(data)?,
-            i_har_c: Self::I_HAR_C.from_data(data)?,
-            i_int_har_a: Self::I_INT_HAR_A.from_data(data)?,
-            i_int_har_b: Self::I_INT_HAR_B.from_data(data)?,
-            i_int_har_c: Self::I_INT_HAR_C.from_data(data)?,
-            v_thd_a: Self::V_THD_A.from_data(data)?,
-            v_thd_b: Self::V_THD_B.from_data(data)?,
-            v_thd_c: Self::V_THD_C.from_data(data)?,
-            i_thd_a: Self::I_THD_A.from_data(data)?,
-            i_thd_b: Self::I_THD_B.from_data(data)?,
-            i_thd_c: Self::I_THD_C.from_data(data)?,
-            ena_prof: Self::ENA_PROF.from_data(data)?,
-            prof_rslt: Self::PROF_RSLT.from_data(data)?,
-            n_prof: Self::N_PROF.from_data(data)?,
-            n_pt: Self::N_PT.from_data(data)?,
-            v_sf: Self::V_SF.from_data(data)?,
-            a_sf: Self::A_SF.from_data(data)?,
-            tms_sf: Self::TMS_SF.from_data(data)?,
-            hz_sf: Self::HZ_SF.from_data(data)?,
-            hz_slew_sf: Self::HZ_SLEW_SF.from_data(data)?,
-            v_slew_sf: Self::V_SLEW_SF.from_data(data)?,
-            thd_sf: Self::THD_SF.from_data(data)?,
-        })
+impl crate::Group for AcSimInterface {
+    const LEN: u16 = 1396;
+}
+impl AcSimInterface {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                phases: Self::PHASES.from_data(data)?,
+                phase_angle: Self::PHASE_ANGLE.from_data(data)?,
+                v_nom: Self::V_NOM.from_data(data)?,
+                v_max: Self::V_MAX.from_data(data)?,
+                i_max: Self::I_MAX.from_data(data)?,
+                freq: Self::FREQ.from_data(data)?,
+                output: Self::OUTPUT.from_data(data)?,
+                relay: Self::RELAY.from_data(data)?,
+                regen: Self::REGEN.from_data(data)?,
+                v_set: Self::V_SET.from_data(data)?,
+                v_set_a: Self::V_SET_A.from_data(data)?,
+                v_set_b: Self::V_SET_B.from_data(data)?,
+                v_set_c: Self::V_SET_C.from_data(data)?,
+                freq_slew: Self::FREQ_SLEW.from_data(data)?,
+                v_slew: Self::V_SLEW.from_data(data)?,
+                va: Self::VA.from_data(data)?,
+                vb: Self::VB.from_data(data)?,
+                vc: Self::VC.from_data(data)?,
+                hz: Self::HZ.from_data(data)?,
+                ia: Self::IA.from_data(data)?,
+                ib: Self::IB.from_data(data)?,
+                ic: Self::IC.from_data(data)?,
+                v_har_a: Self::V_HAR_A.from_data(data)?,
+                v_har_b: Self::V_HAR_B.from_data(data)?,
+                v_har_c: Self::V_HAR_C.from_data(data)?,
+                i_har_a: Self::I_HAR_A.from_data(data)?,
+                i_har_b: Self::I_HAR_B.from_data(data)?,
+                i_har_c: Self::I_HAR_C.from_data(data)?,
+                i_int_har_a: Self::I_INT_HAR_A.from_data(data)?,
+                i_int_har_b: Self::I_INT_HAR_B.from_data(data)?,
+                i_int_har_c: Self::I_INT_HAR_C.from_data(data)?,
+                v_thd_a: Self::V_THD_A.from_data(data)?,
+                v_thd_b: Self::V_THD_B.from_data(data)?,
+                v_thd_c: Self::V_THD_C.from_data(data)?,
+                i_thd_a: Self::I_THD_A.from_data(data)?,
+                i_thd_b: Self::I_THD_B.from_data(data)?,
+                i_thd_c: Self::I_THD_C.from_data(data)?,
+                ena_prof: Self::ENA_PROF.from_data(data)?,
+                prof_rslt: Self::PROF_RSLT.from_data(data)?,
+                n_prof: Self::N_PROF.from_data(data)?,
+                n_pt: Self::N_PT.from_data(data)?,
+                v_sf: Self::V_SF.from_data(data)?,
+                a_sf: Self::A_SF.from_data(data)?,
+                tms_sf: Self::TMS_SF.from_data(data)?,
+                hz_sf: Self::HZ_SF.from_data(data)?,
+                hz_slew_sf: Self::HZ_SLEW_SF.from_data(data)?,
+                v_slew_sf: Self::V_SLEW_SF.from_data(data)?,
+                thd_sf: Self::THD_SF.from_data(data)?,
+                prof: Vec::new(),
+            },
+        ))
     }
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
-        models.m64411
+    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.prof) = Prof::parse_multiple(data, &group)?;
+        Ok((data, group))
     }
 }
 /// Output State
@@ -509,5 +525,171 @@ impl crate::Value for Option<ProfRslt> {
         } else {
             65535.encode()
         }
+    }
+}
+/// Stored AC Profiles
+///
+/// Stored AC profile sets.
+///
+/// Comments: Stored AC Profile Sets - Number of profile sets = NProf
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Prof {
+    /// Profile Name
+    ///
+    /// Profile name.
+    pub name: Option<String>,
+    /// Active Points
+    ///
+    /// Number of active points.
+    pub act_pt: u16,
+    /// Stored AC Profile Points
+    ///
+    /// Stored AC profile points.
+    ///
+    /// Comments: Stored AC Profile Sets - Profile points for each stored profile - Number of profile points contained in NPt
+    pub pt: Vec<Pt>,
+}
+#[allow(missing_docs)]
+impl Prof {
+    pub const NAME: crate::Point<Self, Option<String>> = crate::Point::new(0, 32, true);
+    pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(32, 1, true);
+}
+impl crate::Group for Prof {
+    const LEN: u16 = 33;
+}
+impl Prof {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                name: Self::NAME.from_data(data)?,
+                act_pt: Self::ACT_PT.from_data(data)?,
+                pt: Vec::new(),
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &AcSimInterface,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        (data, group.pt) = Pt::parse_multiple(data, model)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &AcSimInterface,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..model.n_prof {
+            let group;
+            (data, group) = Prof::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+/// Stored AC Profile Points
+///
+/// Stored AC profile points.
+///
+/// Comments: Stored AC Profile Sets - Profile points for each stored profile - Number of profile points contained in NPt
+#[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Pt {
+    /// Profile Time
+    ///
+    /// Profile time.
+    pub tms: Option<u16>,
+    /// Voltage Point
+    ///
+    /// Profile voltage phase A point in Volts.
+    pub va: Option<u16>,
+    /// Voltage Point Phase B
+    ///
+    /// Profile voltage phase B point in Volts.
+    pub vb: Option<u16>,
+    /// Voltage Point Phase C
+    ///
+    /// Profile voltage phase C point in Volts.
+    pub vc: Option<u16>,
+    /// Frequency Point
+    ///
+    /// Profile frequency point in Hz.
+    pub hz: Option<u16>,
+    /// Phase Angle A
+    ///
+    /// Profile phase A angle in degrees.
+    pub phase_angle_a: Option<u16>,
+    /// Phase Angle B
+    ///
+    /// Profile phase B angle in degrees.
+    pub phase_angle_b: Option<u16>,
+    /// Phase Angle C
+    ///
+    /// Profile phase C angle in degrees.
+    pub phase_angle_c: Option<u16>,
+}
+#[allow(missing_docs)]
+impl Pt {
+    pub const TMS: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const VA: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
+    pub const VB: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
+    pub const VC: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
+    pub const HZ: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
+    pub const PHASE_ANGLE_A: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
+    pub const PHASE_ANGLE_B: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
+    pub const PHASE_ANGLE_C: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
+}
+impl crate::Group for Pt {
+    const LEN: u16 = 8;
+}
+impl Pt {
+    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        Ok((
+            &data[usize::from(<Self as crate::Group>::LEN)..],
+            Self {
+                tms: Self::TMS.from_data(data)?,
+                va: Self::VA.from_data(data)?,
+                vb: Self::VB.from_data(data)?,
+                vc: Self::VC.from_data(data)?,
+                hz: Self::HZ.from_data(data)?,
+                phase_angle_a: Self::PHASE_ANGLE_A.from_data(data)?,
+                phase_angle_b: Self::PHASE_ANGLE_B.from_data(data)?,
+                phase_angle_c: Self::PHASE_ANGLE_C.from_data(data)?,
+            },
+        ))
+    }
+    fn parse_group<'a>(
+        mut data: &'a [u16],
+        model: &AcSimInterface,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let mut group;
+        (data, group) = Self::parse_points(data)?;
+        Ok((data, group))
+    }
+    fn parse_multiple<'a>(
+        mut data: &'a [u16],
+        model: &AcSimInterface,
+    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+        let mut groups = Vec::new();
+        for _ in 0..model.n_pt {
+            let group;
+            (data, group) = Pt::parse_group(data, model)?;
+            groups.push(group);
+        }
+        Ok((data, groups))
+    }
+}
+impl crate::Model for AcSimInterface {
+    const ID: u16 = 64411;
+    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+        models.m64411
+    }
+    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+        let (_, model) = Self::parse_group(data)?;
+        Ok(model)
     }
 }
