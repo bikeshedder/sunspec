@@ -1,4 +1,5 @@
 //! CSIP Client Control
+/// Type alias for [`CsipControl`].
 pub type Model64415 = CsipControl;
 /// CSIP Client Control
 ///
@@ -30,20 +31,16 @@ impl crate::Group for CsipControl {
     const LEN: u16 = 3;
 }
 impl CsipControl {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 log_event_ena: Self::LOG_EVENT_ENA.from_data(data)?,
                 http_msg: Self::HTTP_MSG.from_data(data)?,
                 comm004_cert: Self::COMM004_CERT.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// LogEvent Mode Enable

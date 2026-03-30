@@ -1,4 +1,5 @@
 //! Measurements_Status
+/// Type alias for [`Status`].
 pub type Model122 = Status;
 /// Measurements_Status
 ///
@@ -119,9 +120,10 @@ impl crate::Group for Status {
     const LEN: u16 = 44;
 }
 impl Status {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 pv_conn: Self::PV_CONN.from_data(data)?,
                 stor_conn: Self::STOR_CONN.from_data(data)?,
@@ -145,11 +147,6 @@ impl Status {
                 ris_sf: Self::RIS_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {

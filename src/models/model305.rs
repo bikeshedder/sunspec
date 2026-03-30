@@ -1,4 +1,5 @@
 //! GPS
+/// Type alias for [`Location`].
 pub type Model305 = Location;
 /// GPS
 ///
@@ -44,9 +45,10 @@ impl crate::Group for Location {
     const LEN: u16 = 36;
 }
 impl Location {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 tm: Self::TM.from_data(data)?,
                 date: Self::DATE.from_data(data)?,
@@ -56,11 +58,6 @@ impl Location {
                 alt: Self::ALT.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 impl crate::Model for Location {

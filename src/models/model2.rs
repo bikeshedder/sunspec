@@ -1,4 +1,5 @@
 //! Basic Aggregator
+/// Type alias for [`Aggregator`].
 pub type Model2 = Aggregator;
 /// Basic Aggregator
 ///
@@ -64,9 +65,10 @@ impl crate::Group for Aggregator {
     const LEN: u16 = 14;
 }
 impl Aggregator {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 aid: Self::AID.from_data(data)?,
                 n: Self::N.from_data(data)?,
@@ -80,11 +82,6 @@ impl Aggregator {
                 ctl_vl: Self::CTL_VL.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Status

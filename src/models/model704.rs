@@ -1,4 +1,5 @@
 //! DER AC Controls
+/// Type alias for [`DerCtlAc`].
 pub type Model704 = DerCtlAc;
 /// DER AC Controls
 ///
@@ -197,19 +198,19 @@ pub struct DerCtlAc {
     /// Power factor setpoint when injecting active power.
     ///
     /// Comments: Power Factor Settings
-    pub pfw_inj: Vec<PfwInj>,
+    pub pfw_inj: PfwInj,
     /// Reversion Power Factor (W Inj)
     ///
     /// Reversion power factor setpoint when injecting active power.
-    pub pfw_inj_rvrt: Vec<PfwInjRvrt>,
+    pub pfw_inj_rvrt: PfwInjRvrt,
     /// Power Factor (W Abs)
     ///
     /// Power factor setpoint when absorbing active power.
-    pub pfw_abs: Vec<PfwAbs>,
+    pub pfw_abs: PfwAbs,
     /// Reversion Power Factor (W Abs)
     ///
     /// Reversion power factor setpoint when absorbing active power.
-    pub pfw_abs_rvrt: Vec<PfwAbsRvrt>,
+    pub pfw_abs_rvrt: PfwAbsRvrt,
 }
 #[allow(missing_docs)]
 impl DerCtlAc {
@@ -269,9 +270,14 @@ impl crate::Group for DerCtlAc {
     const LEN: u16 = 57;
 }
 impl DerCtlAc {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, pfw_inj) = PfwInj::parse_group(nested_data)?;
+        let (nested_data, pfw_inj_rvrt) = PfwInjRvrt::parse_group(nested_data)?;
+        let (nested_data, pfw_abs) = PfwAbs::parse_group(nested_data)?;
+        let (nested_data, pfw_abs_rvrt) = PfwAbsRvrt::parse_group(nested_data)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 pfw_inj_ena: Self::PFW_INJ_ENA.from_data(data)?,
                 pfw_inj_ena_rvrt: Self::PFW_INJ_ENA_RVRT.from_data(data)?,
@@ -316,21 +322,12 @@ impl DerCtlAc {
                 w_set_pct_sf: Self::W_SET_PCT_SF.from_data(data)?,
                 var_set_sf: Self::VAR_SET_SF.from_data(data)?,
                 var_set_pct_sf: Self::VAR_SET_PCT_SF.from_data(data)?,
-                pfw_inj: Vec::new(),
-                pfw_inj_rvrt: Vec::new(),
-                pfw_abs: Vec::new(),
-                pfw_abs_rvrt: Vec::new(),
+                pfw_inj,
+                pfw_inj_rvrt,
+                pfw_abs,
+                pfw_abs_rvrt,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.pfw_inj) = PfwInj::parse_multiple(data, &group)?;
-        (data, group.pfw_inj_rvrt) = PfwInjRvrt::parse_multiple(data, &group)?;
-        (data, group.pfw_abs) = PfwAbs::parse_multiple(data, &group)?;
-        (data, group.pfw_abs_rvrt) = PfwAbsRvrt::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 /// Power Factor Enable (W Inj) Enable
@@ -1045,34 +1042,15 @@ impl crate::Group for PfwInj {
     const LEN: u16 = 2;
 }
 impl PfwInj {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 pf: Self::PF.from_data(data)?,
                 ext: Self::EXT.from_data(data)?,
             },
         ))
-    }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerCtlAc,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerCtlAc,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..1 {
-            let group;
-            (data, group) = PfwInj::parse_group(data, model)?;
-            groups.push(group);
-        }
-        Ok((data, groups))
     }
 }
 /// Power Factor Excitation (W Inj)
@@ -1143,34 +1121,15 @@ impl crate::Group for PfwInjRvrt {
     const LEN: u16 = 2;
 }
 impl PfwInjRvrt {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 pf: Self::PF.from_data(data)?,
                 ext: Self::EXT.from_data(data)?,
             },
         ))
-    }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerCtlAc,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerCtlAc,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..1 {
-            let group;
-            (data, group) = PfwInjRvrt::parse_group(data, model)?;
-            groups.push(group);
-        }
-        Ok((data, groups))
     }
 }
 /// Reversion PF Excitation (W Inj)
@@ -1241,34 +1200,15 @@ impl crate::Group for PfwAbs {
     const LEN: u16 = 2;
 }
 impl PfwAbs {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 pf: Self::PF.from_data(data)?,
                 ext: Self::EXT.from_data(data)?,
             },
         ))
-    }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerCtlAc,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerCtlAc,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..1 {
-            let group;
-            (data, group) = PfwAbs::parse_group(data, model)?;
-            groups.push(group);
-        }
-        Ok((data, groups))
     }
 }
 /// Power Factor Excitation (W Abs)
@@ -1339,34 +1279,15 @@ impl crate::Group for PfwAbsRvrt {
     const LEN: u16 = 2;
 }
 impl PfwAbsRvrt {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 pf: Self::PF.from_data(data)?,
                 ext: Self::EXT.from_data(data)?,
             },
         ))
-    }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerCtlAc,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerCtlAc,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..1 {
-            let group;
-            (data, group) = PfwAbsRvrt::parse_group(data, model)?;
-            groups.push(group);
-        }
-        Ok((data, groups))
     }
 }
 /// Reversion PF Excitation (W Abs)

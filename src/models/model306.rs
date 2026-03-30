@@ -1,4 +1,5 @@
 //! Reference Point Model
+/// Type alias for [`RefPoint`].
 pub type Model306 = RefPoint;
 /// Reference Point Model
 ///
@@ -34,9 +35,10 @@ impl crate::Group for RefPoint {
     const LEN: u16 = 4;
 }
 impl RefPoint {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 ghi: Self::GHI.from_data(data)?,
                 a: Self::A.from_data(data)?,
@@ -44,11 +46,6 @@ impl RefPoint {
                 tmp: Self::TMP.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 impl crate::Model for RefPoint {

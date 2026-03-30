@@ -1,4 +1,5 @@
 //! Pricing
+/// Type alias for [`Pricing`].
 pub type Model125 = Pricing;
 /// Pricing
 ///
@@ -51,9 +52,10 @@ impl crate::Group for Pricing {
     const LEN: u16 = 8;
 }
 impl Pricing {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 mod_ena: Self::MOD_ENA.from_data(data)?,
                 sig_type: Self::SIG_TYPE.from_data(data)?,
@@ -64,11 +66,6 @@ impl Pricing {
                 sig_sf: Self::SIG_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {

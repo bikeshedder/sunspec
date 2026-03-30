@@ -1,5 +1,10 @@
 //! DER Volt-Var
+/// Type alias for [`DerVoltVar`].
 pub type Model705 = DerVoltVar;
+struct Counts {
+    n_pt: u16,
+    n_crv: u16,
+}
 /// DER Volt-Var
 ///
 /// DER Volt-Var model.
@@ -75,9 +80,15 @@ impl crate::Group for DerVoltVar {
     const LEN: u16 = 13;
 }
 impl DerVoltVar {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let counts = Counts {
+            n_pt: Self::N_PT.from_data(data)?,
+            n_crv: Self::N_CRV.from_data(data)?,
+        };
+        let (nested_data, crv) = Crv::parse_multiple(nested_data, &counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 ena: Self::ENA.from_data(data)?,
                 adpt_crv_req: Self::ADPT_CRV_REQ.from_data(data)?,
@@ -90,15 +101,9 @@ impl DerVoltVar {
                 v_sf: Self::V_SF.from_data(data)?,
                 dept_ref_sf: Self::DEPT_REF_SF.from_data(data)?,
                 rsp_tms_sf: Self::RSP_TMS_SF.from_data(data)?,
-                crv: Vec::new(),
+                crv,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.crv) = Crv::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 /// DER Volt-Var Module Enable
@@ -261,9 +266,14 @@ impl crate::Group for Crv {
     const LEN: u16 = 10;
 }
 impl Crv {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group<'a>(
+        data: &'a [u16],
+        counts: &Counts,
+    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 act_pt: Self::ACT_PT.from_data(data)?,
                 dept_ref: Self::DEPT_REF.from_data(data)?,
@@ -274,29 +284,20 @@ impl Crv {
                 v_ref_auto_tms: Self::V_REF_AUTO_TMS.from_data(data)?,
                 rsp_tms: Self::RSP_TMS.from_data(data)?,
                 read_only: Self::READ_ONLY.from_data(data)?,
-                pt: Vec::new(),
+                pt,
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerVoltVar,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.pt) = Pt::parse_multiple(data, model)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerVoltVar,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_crv {
-            let group;
-            (data, group) = Crv::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) =
+            (0..counts.n_crv).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Crv::parse_group(data, counts)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }
@@ -510,33 +511,26 @@ impl crate::Group for Pt {
     const LEN: u16 = 2;
 }
 impl Pt {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 v: Self::V.from_data(data)?,
                 var: Self::VAR.from_data(data)?,
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerVoltVar,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerVoltVar,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_pt {
-            let group;
-            (data, group) = Pt::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) =
+            (0..counts.n_pt).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = Pt::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

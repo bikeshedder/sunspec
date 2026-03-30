@@ -1,4 +1,5 @@
 //! Freq-Watt Param
+/// Type alias for [`FreqWattParam`].
 pub type Model127 = FreqWattParam;
 /// Freq-Watt Param
 ///
@@ -61,9 +62,10 @@ impl crate::Group for FreqWattParam {
     const LEN: u16 = 10;
 }
 impl FreqWattParam {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 w_gra: Self::W_GRA.from_data(data)?,
                 hz_str: Self::HZ_STR.from_data(data)?,
@@ -76,11 +78,6 @@ impl FreqWattParam {
                 rmp_inc_dec_sf: Self::RMP_INC_DEC_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {

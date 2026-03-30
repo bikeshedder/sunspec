@@ -3,7 +3,7 @@ use std::marker::PhantomData;
 use crate::{DecodeError, Group, Models};
 
 /// Every model implements this trait which contains methods
-/// for accessing
+/// for accessing the address and parsing the model.
 pub trait Model: Sized + Group {
     /// Model ID
     const ID: u16;

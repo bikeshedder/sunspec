@@ -1,4 +1,5 @@
 //! Extended Settings
+/// Type alias for [`ExtSettings`].
 pub type Model145 = ExtSettings;
 /// Extended Settings
 ///
@@ -54,9 +55,10 @@ impl crate::Group for ExtSettings {
     const LEN: u16 = 8;
 }
 impl ExtSettings {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 nom_rmp_up_rte: Self::NOM_RMP_UP_RTE.from_data(data)?,
                 nom_rmp_dn_rte: Self::NOM_RMP_DN_RTE.from_data(data)?,
@@ -68,11 +70,6 @@ impl ExtSettings {
                 rmp_sf: Self::RMP_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 impl crate::Model for ExtSettings {

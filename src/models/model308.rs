@@ -1,4 +1,5 @@
 //! Mini Met Model
+/// Type alias for [`MiniMet`].
 pub type Model308 = MiniMet;
 /// Mini Met Model
 ///
@@ -30,9 +31,10 @@ impl crate::Group for MiniMet {
     const LEN: u16 = 4;
 }
 impl MiniMet {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 ghi: Self::GHI.from_data(data)?,
                 tmp_bom: Self::TMP_BOM.from_data(data)?,
@@ -40,11 +42,6 @@ impl MiniMet {
                 wnd_spd: Self::WND_SPD.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 impl crate::Model for MiniMet {

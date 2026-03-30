@@ -1,4 +1,5 @@
 //! Enter Service
+/// Type alias for [`DerEnterService`].
 pub type Model703 = DerEnterService;
 /// Enter Service
 ///
@@ -69,9 +70,10 @@ impl crate::Group for DerEnterService {
     const LEN: u16 = 17;
 }
 impl DerEnterService {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 es: Self::ES.from_data(data)?,
                 esv_hi: Self::ESV_HI.from_data(data)?,
@@ -86,11 +88,6 @@ impl DerEnterService {
                 hz_sf: Self::HZ_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Permit Enter Service

@@ -1,5 +1,9 @@
 //! DER DC Measurement
+/// Type alias for [`DerMeasureDc`].
 pub type Model714 = DerMeasureDc;
+struct Counts {
+    n_prt: Option<u16>,
+}
 /// DER DC Measurement
 ///
 /// DER DC measurement.
@@ -73,9 +77,14 @@ impl crate::Group for DerMeasureDc {
     const LEN: u16 = 18;
 }
 impl DerMeasureDc {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let counts = Counts {
+            n_prt: Self::N_PRT.from_data(data)?,
+        };
+        let (nested_data, prt) = Prt::parse_multiple(nested_data, &counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 prt_alrms: Self::PRT_ALRMS.from_data(data)?,
                 n_prt: Self::N_PRT.from_data(data)?,
@@ -88,15 +97,9 @@ impl DerMeasureDc {
                 dcw_sf: Self::DCW_SF.from_data(data)?,
                 dcwh_sf: Self::DCWH_SF.from_data(data)?,
                 tmp_sf: Self::TMP_SF.from_data(data)?,
-                prt: Vec::new(),
+                prt,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.prt) = Prt::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {
@@ -199,9 +202,10 @@ impl crate::Group for Prt {
     const LEN: u16 = 25;
 }
 impl Prt {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 prt_typ: Self::PRT_TYP.from_data(data)?,
                 id: Self::ID.from_data(data)?,
@@ -217,24 +221,18 @@ impl Prt {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &DerMeasureDc,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &DerMeasureDc,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.n_prt.unwrap_or_default() {
-            let group;
-            (data, group) = Prt::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) = (0..counts.n_prt.unwrap_or_default()).try_fold(
+            (data, Vec::new()),
+            |(data, mut groups), _| {
+                let (data, group) = Prt::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            },
+        )?;
         Ok((data, groups))
     }
 }

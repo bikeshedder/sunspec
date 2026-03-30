@@ -1,4 +1,5 @@
 //! DER Simulation Controls
+/// Type alias for [`DerSimControls`].
 pub type Model64414 = DerSimControls;
 /// DER Simulation Controls
 ///
@@ -45,9 +46,10 @@ impl crate::Group for DerSimControls {
     const LEN: u16 = 86;
 }
 impl DerSimControls {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 time: Self::TIME.from_data(data)?,
                 temperature: Self::TEMPERATURE.from_data(data)?,
@@ -60,11 +62,6 @@ impl DerSimControls {
                 grid_frequency: Self::GRID_FREQUENCY.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 impl crate::Model for DerSimControls {

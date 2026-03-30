@@ -1,5 +1,9 @@
 //! PV Curves
+/// Type alias for [`PvSimCurves`].
 pub type Model64413 = PvSimCurves;
+struct Counts {
+    iv_len: Option<u16>,
+}
 /// PV Curves
 ///
 /// Current-Voltage and Power-Voltage Profiles for PV Simulation.
@@ -29,22 +33,21 @@ impl crate::Group for PvSimCurves {
     const LEN: u16 = 3;
 }
 impl PvSimCurves {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let counts = Counts {
+            iv_len: Self::IV_LEN.from_data(data)?,
+        };
+        let (nested_data, iv) = Iv::parse_multiple(nested_data, &counts)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 iv_len: Self::IV_LEN.from_data(data)?,
                 irr: Self::IRR.from_data(data)?,
                 irr_sf: Self::IRR_SF.from_data(data)?,
-                iv: Vec::new(),
+                iv,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.iv) = Iv::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 /// Comments: IV Curve Points
@@ -74,9 +77,10 @@ impl crate::Group for Iv {
     const LEN: u16 = 6;
 }
 impl Iv {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 p: Self::P.from_data(data)?,
                 i: Self::I.from_data(data)?,
@@ -84,24 +88,18 @@ impl Iv {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &PvSimCurves,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
     fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &PvSimCurves,
+        data: &'a [u16],
+        counts: &Counts,
     ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..model.iv_len.unwrap_or_default() {
-            let group;
-            (data, group) = Iv::parse_group(data, model)?;
-            groups.push(group);
-        }
+        let (data, groups) = (0..counts.iv_len.unwrap_or_default()).try_fold(
+            (data, Vec::new()),
+            |(data, mut groups), _| {
+                let (data, group) = Iv::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            },
+        )?;
         Ok((data, groups))
     }
 }

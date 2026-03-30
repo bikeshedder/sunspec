@@ -1,4 +1,5 @@
 //! Inverter (Three Phase) FLOAT
+/// Type alias for [`InverterThreePhaseFloat`].
 pub type Model113 = InverterThreePhaseFloat;
 /// Inverter (Three Phase) FLOAT
 ///
@@ -177,9 +178,10 @@ impl crate::Group for InverterThreePhaseFloat {
     const LEN: u16 = 60;
 }
 impl InverterThreePhaseFloat {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 a: Self::A.from_data(data)?,
                 aph_a: Self::APH_A.from_data(data)?,
@@ -214,11 +216,6 @@ impl InverterThreePhaseFloat {
                 evt_vnd4: Self::EVT_VND4.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Operating State

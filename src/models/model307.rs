@@ -1,4 +1,5 @@
 //! Base Met
+/// Type alias for [`BaseMet`].
 pub type Model307 = BaseMet;
 /// Base Met
 ///
@@ -51,9 +52,10 @@ impl crate::Group for BaseMet {
     const LEN: u16 = 11;
 }
 impl BaseMet {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 tmp_amb: Self::TMP_AMB.from_data(data)?,
                 rh: Self::RH.from_data(data)?,
@@ -68,11 +70,6 @@ impl BaseMet {
                 soil_wet: Self::SOIL_WET.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 impl crate::Model for BaseMet {

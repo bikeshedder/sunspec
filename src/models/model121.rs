@@ -1,4 +1,5 @@
 //! Basic Settings
+/// Type alias for [`Settings`].
 pub type Model121 = Settings;
 /// Basic Settings
 ///
@@ -174,9 +175,10 @@ impl crate::Group for Settings {
     const LEN: u16 = 30;
 }
 impl Settings {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 w_max: Self::W_MAX.from_data(data)?,
                 v_ref: Self::V_REF.from_data(data)?,
@@ -210,11 +212,6 @@ impl Settings {
                 ecp_nom_hz_sf: Self::ECP_NOM_HZ_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// VArAct

@@ -1,4 +1,5 @@
 //! DER Capacity
+/// Type alias for [`DerCapacity`].
 pub type Model702 = DerCapacity;
 /// DER Capacity
 ///
@@ -291,9 +292,10 @@ impl crate::Group for DerCapacity {
     const LEN: u16 = 50;
 }
 impl DerCapacity {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 w_max_rtg: Self::W_MAX_RTG.from_data(data)?,
                 w_ovr_ext_rtg: Self::W_OVR_EXT_RTG.from_data(data)?,
@@ -346,11 +348,6 @@ impl DerCapacity {
                 s_sf: Self::S_SF.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 /// Normal Operating Category

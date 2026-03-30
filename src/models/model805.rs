@@ -1,4 +1,5 @@
 //! Lithium-Ion Module Model
+/// Type alias for [`LithiumIonModule`].
 pub type Model805 = LithiumIonModule;
 /// Lithium-Ion Module Model
 #[derive(Debug)]
@@ -152,9 +153,12 @@ impl crate::Group for LithiumIonModule {
     const LEN: u16 = 42;
 }
 impl LithiumIonModule {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let (nested_data, lithium_ion_module_cell) =
+            LithiumIonModuleCell::parse_multiple(nested_data)?;
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 str_idx: Self::STR_IDX.from_data(data)?,
                 mod_idx: Self::MOD_IDX.from_data(data)?,
@@ -182,15 +186,9 @@ impl LithiumIonModule {
                 v_sf: Self::V_SF.from_data(data)?,
                 cell_v_sf: Self::CELL_V_SF.from_data(data)?,
                 tmp_sf: Self::TMP_SF.from_data(data)?,
-                lithium_ion_module_cell: Vec::new(),
+                lithium_ion_module_cell,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        (data, group.lithium_ion_module_cell) = LithiumIonModuleCell::parse_multiple(data, &group)?;
-        Ok((data, group))
     }
 }
 #[allow(missing_docs)]
@@ -221,9 +219,10 @@ impl crate::Group for LithiumIonModuleCell {
     const LEN: u16 = 4;
 }
 impl LithiumIonModuleCell {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 cell_v: Self::CELL_V.from_data(data)?,
                 cell_tmp: Self::CELL_TMP.from_data(data)?,
@@ -231,24 +230,21 @@ impl LithiumIonModuleCell {
             },
         ))
     }
-    fn parse_group<'a>(
-        mut data: &'a [u16],
-        model: &LithiumIonModule,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
-    }
-    fn parse_multiple<'a>(
-        mut data: &'a [u16],
-        model: &LithiumIonModule,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
-        let mut groups = Vec::new();
-        for _ in 0..0 {
-            let group;
-            (data, group) = LithiumIonModuleCell::parse_group(data, model)?;
-            groups.push(group);
+    fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+        let group_len = usize::from(<LithiumIonModuleCell as crate::Group>::LEN);
+        if group_len == 0 {
+            return Ok((data, Vec::new()));
         }
+        if data.len() % group_len != 0 {
+            return Err(crate::DecodeError::OutOfBounds);
+        }
+        let group_count = data.len() / group_len;
+        let (data, groups) =
+            (0..group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
+                let (data, group) = LithiumIonModuleCell::parse_group(data)?;
+                groups.push(group);
+                Ok::<_, crate::DecodeError>((data, groups))
+            })?;
         Ok((data, groups))
     }
 }

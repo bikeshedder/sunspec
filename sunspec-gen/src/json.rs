@@ -71,6 +71,20 @@ pub enum GroupCount {
     String(String),
 }
 
+impl GroupCount {
+    /// A group count of zero indicates that the number of groups
+    /// must be deduced from the remaining data after reading the
+    /// points of the model itself.
+    pub fn is_zero(&self) -> bool {
+        matches!(self, Self::Integer(0))
+    }
+    /// A group count of one indicates that the group is nested
+    /// and not repeating.
+    pub fn is_one(&self) -> bool {
+        matches!(self, Self::Integer(1))
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Point {

@@ -1,4 +1,5 @@
 //! Meter (Single Phase) single phase (AN or AB) meter
+/// Type alias for [`AcMeterAnOrAb`].
 pub type Model201 = AcMeterAnOrAb;
 /// Meter (Single Phase) single phase (AN or AB) meter
 ///
@@ -300,9 +301,10 @@ impl crate::Group for AcMeterAnOrAb {
     const LEN: u16 = 105;
 }
 impl AcMeterAnOrAb {
-    fn parse_points(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
         Ok((
-            &data[usize::from(<Self as crate::Group>::LEN)..],
+            nested_data,
             Self {
                 a: Self::A.from_data(data)?,
                 aph_a: Self::APH_A.from_data(data)?,
@@ -378,11 +380,6 @@ impl AcMeterAnOrAb {
                 evt: Self::EVT.from_data(data)?,
             },
         ))
-    }
-    fn parse_group(mut data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let mut group;
-        (data, group) = Self::parse_points(data)?;
-        Ok((data, group))
     }
 }
 bitflags::bitflags! {
