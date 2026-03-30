@@ -26,7 +26,7 @@ pub fn read_dir(json_dir: &str) -> Result<Vec<Model>, Box<dyn std::error::Error>
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Model {
-    pub id: u16, // TODO minimum 1
+    pub id: u16,
     pub group: Group,
     #[serde(flatten)]
     pub doc: Documentation,

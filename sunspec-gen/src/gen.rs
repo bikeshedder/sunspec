@@ -226,7 +226,6 @@ fn gen_group(
             let point_name = format_ident!("{}", snake_case(&point.name));
             let point_type = rust_type(point, &point_type_prefix);
             let point_doc = doc_to_ts(&point.doc.to_doc_string());
-            // FIXME add #[allow[missing_docs)] if the doc is empty
             quote! {
                 #point_doc
                 pub #point_name: #point_type,
@@ -250,7 +249,6 @@ fn gen_group(
         }
     });
 
-    // FIXME do not add empty group docs
     let model_struct = quote! {
         #group_doc
         #[derive(Debug)]
