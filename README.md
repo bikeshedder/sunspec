@@ -16,23 +16,21 @@ in a safe and convenient way.
 - [x] All communication is abstracted via traits making it runtime agnostic
 - [x] Supports Modbus TCP and RTU (via [tokio-modbus](https://crates.io/crates/tokio-modbus)).
 - [x] Implements "Device Information Model Discovery" as
-      defined in the SunSpec specification.
+  defined in the SunSpec specification.
 - [x] Fully typed models generated from the JSON files contained in the
-      [SunSpec models repository](https://github.com/sunspec/models/)
+  [SunSpec models repository](https://github.com/sunspec/models/)
 - [x] Fully typed enums
 - [x] Fully typed bitfields
 - [x] Fully documented. Even the generated models.
 - [x] Reading of complete models in a single request.
-
-| ⚠️ Nested and repeating groups are not supported, yet. |
-| ---- |
+- [x] Supports nested and repeating groups.
 
 ## Features
 
-| Feature | Description                   | Extra dependencies            | Default |
-| ------- | ----------------------------- | ----------------------------- | ------- |
-| `tokio` | Enable `tokio_modbus` support | `tokio-modbus`, `tokio/time`  | yes     |
-| `serde` | Enable `serde` support        | `serde`, `bitflags/serde`     | yes     |
+| Feature | Description                   | Extra dependencies           | Default |
+| ------- | ----------------------------- | ---------------------------- | ------- |
+| `tokio` | Enable `tokio_modbus` support | `tokio-modbus`, `tokio/time` | yes     |
+| `serde` | Enable `serde` support        | `serde`, `bitflags/serde`    | yes     |
 
 ## Examples
 
