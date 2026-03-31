@@ -266,7 +266,9 @@ impl crate::Group for AcSimInterface {
 }
 impl AcSimInterface {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         let counts = Counts {
             n_prof: Self::N_PROF.from_data(data)?,
             n_pt: Self::N_PT.from_data(data)?,
@@ -562,7 +564,9 @@ impl Prof {
         data: &'a [u16],
         counts: &Counts,
     ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
             nested_data,
@@ -643,7 +647,9 @@ impl crate::Group for Pt {
 }
 impl Pt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {

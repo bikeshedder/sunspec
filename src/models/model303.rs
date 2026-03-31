@@ -17,7 +17,9 @@ impl crate::Group for BomTemp {
 }
 impl BomTemp {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         let (nested_data, temp) = Temp::parse_multiple(nested_data)?;
         Ok((nested_data, Self { temp }))
     }
@@ -40,7 +42,9 @@ impl crate::Group for Temp {
 }
 impl Temp {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {

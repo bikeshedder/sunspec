@@ -154,7 +154,9 @@ impl crate::Group for LithiumIonModule {
 }
 impl LithiumIonModule {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         let (nested_data, lithium_ion_module_cell) =
             LithiumIonModuleCell::parse_multiple(nested_data)?;
         Ok((
@@ -220,7 +222,9 @@ impl crate::Group for LithiumIonModuleCell {
 }
 impl LithiumIonModuleCell {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {

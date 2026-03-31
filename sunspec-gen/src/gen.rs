@@ -381,7 +381,9 @@ fn gen_group(
     let parse_group = if is_root {
         quote! {
             fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-                let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+                let nested_data = data
+                    .get(usize::from(<Self as crate::Group>::LEN)..)
+                    .unwrap_or(&[]);
                 #counts_init
                 #(#parse_groups)*
                 Ok((
@@ -397,7 +399,9 @@ fn gen_group(
         if parse_group_needs_counts {
             quote! {
                 fn parse_group<'a>(data: &'a [u16], counts: &Counts) -> Result<(&'a [u16], Self), crate::DecodeError> {
-                    let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+                    let nested_data = data
+                        .get(usize::from(<Self as crate::Group>::LEN)..)
+                        .unwrap_or(&[]);
                     #(#parse_groups)*
                     Ok((
                         nested_data,
@@ -411,7 +415,9 @@ fn gen_group(
         } else {
             quote! {
                 fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-                    let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+                    let nested_data = data
+                        .get(usize::from(<Self as crate::Group>::LEN)..)
+                        .unwrap_or(&[]);
                     #(#parse_groups)*
                     Ok((
                         nested_data,

@@ -68,7 +68,9 @@ impl crate::Group for VoltVar {
 }
 impl VoltVar {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         let (nested_data, curve) = Curve::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -358,7 +360,9 @@ impl crate::Group for Curve {
 }
 impl Curve {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {

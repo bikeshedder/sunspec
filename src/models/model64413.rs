@@ -34,7 +34,9 @@ impl crate::Group for PvSimCurves {
 }
 impl PvSimCurves {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         let counts = Counts {
             iv_len: Self::IV_LEN.from_data(data)?,
         };
@@ -78,7 +80,9 @@ impl crate::Group for Iv {
 }
 impl Iv {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {

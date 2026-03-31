@@ -171,7 +171,9 @@ impl crate::Group for FlowBatteryString {
 }
 impl FlowBatteryString {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         let (nested_data, module) = Module::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -435,7 +437,9 @@ impl crate::Group for Module {
 }
 impl Module {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {

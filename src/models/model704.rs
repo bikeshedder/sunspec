@@ -271,7 +271,9 @@ impl crate::Group for DerCtlAc {
 }
 impl DerCtlAc {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         let (nested_data, pfw_inj) = PfwInj::parse_group(nested_data)?;
         let (nested_data, pfw_inj_rvrt) = PfwInjRvrt::parse_group(nested_data)?;
         let (nested_data, pfw_abs) = PfwAbs::parse_group(nested_data)?;
@@ -1021,7 +1023,9 @@ impl crate::Group for PfwInj {
 }
 impl PfwInj {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -1098,7 +1102,9 @@ impl crate::Group for PfwInjRvrt {
 }
 impl PfwInjRvrt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -1175,7 +1181,9 @@ impl crate::Group for PfwAbs {
 }
 impl PfwAbs {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -1252,7 +1260,9 @@ impl crate::Group for PfwAbsRvrt {
 }
 impl PfwAbsRvrt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = &data[usize::from(<Self as crate::Group>::LEN)..];
+        let nested_data = data
+            .get(usize::from(<Self as crate::Group>::LEN)..)
+            .unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
