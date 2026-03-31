@@ -297,6 +297,451 @@ impl AcMeterAnOrAb {
     pub const TOT_V_ARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(102, 1, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(103, 2, false);
 }
+static AC_METER_AN_OR_AB_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "a",
+        label: "Amps",
+        description: "Total AC Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "aph_a",
+        label: "Amps PhaseA",
+        description: "Phase A Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "aph_b",
+        label: "Amps PhaseB",
+        description: "Phase B Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "aph_c",
+        label: "Amps PhaseC",
+        description: "Phase C Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_sf",
+        label: "A_SF",
+        description: "Current scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ph_v",
+        label: "Voltage LN",
+        description: "Line to Neutral AC Voltage (average of active phases)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ph_vph_a",
+        label: "Phase Voltage AN",
+        description: "Phase Voltage AN",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ph_vph_b",
+        label: "Phase Voltage BN",
+        description: "Phase Voltage BN",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ph_vph_c",
+        label: "Phase Voltage CN",
+        description: "Phase Voltage CN",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ppv",
+        label: "Voltage LL",
+        description: "Line to Line AC Voltage (average of active phases)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pp_vph_ab",
+        label: "Phase Voltage AB",
+        description: "Phase Voltage AB",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pp_vph_bc",
+        label: "Phase Voltage BC",
+        description: "Phase Voltage BC",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pp_vph_ca",
+        label: "Phase Voltage CA",
+        description: "Phase Voltage CA",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "Voltage scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz",
+        label: "Hz",
+        description: "Frequency",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_sf",
+        label: "Hz_SF",
+        description: "Frequency scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w",
+        label: "Watts",
+        description: "Total Real Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wph_a",
+        label: "Watts phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wph_b",
+        label: "Watts phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wph_c",
+        label: "Watts phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_sf",
+        label: "W_SF",
+        description: "Real Power scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va",
+        label: "VA",
+        description: "AC Apparent Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_aph_a",
+        label: "VA phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_aph_b",
+        label: "VA phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_aph_c",
+        label: "VA phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_sf",
+        label: "VA_SF",
+        description: "Apparent Power scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var",
+        label: "VAR",
+        description: "Reactive Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_rph_a",
+        label: "VAR phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_rph_b",
+        label: "VAR phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_rph_c",
+        label: "VAR phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_sf",
+        label: "VAR_SF",
+        description: "Reactive Power scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf",
+        label: "PF",
+        description: "Power Factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "p_fph_a",
+        label: "PF phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "p_fph_b",
+        label: "PF phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "p_fph_c",
+        label: "PF phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_sf",
+        label: "PF_SF",
+        description: "Power Factor scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_exp",
+        label: "Total Watt-hours Exported",
+        description: "Total Real Energy Exported",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_exp_ph_a",
+        label: "Total Watt-hours Exported phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_exp_ph_b",
+        label: "Total Watt-hours Exported phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_exp_ph_c",
+        label: "Total Watt-hours Exported phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_imp",
+        label: "Total Watt-hours Imported",
+        description: "Total Real Energy Imported",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_imp_ph_a",
+        label: "Total Watt-hours Imported phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_imp_ph_b",
+        label: "Total Watt-hours Imported phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_imp_ph_c",
+        label: "Total Watt-hours Imported phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_sf",
+        label: "TotWh_SF",
+        description: "Real Energy scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_exp",
+        label: "Total VA-hours Exported",
+        description: "Total Apparent Energy Exported",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_exp_ph_a",
+        label: "Total VA-hours Exported phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_exp_ph_b",
+        label: "Total VA-hours Exported phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_exp_ph_c",
+        label: "Total VA-hours Exported phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_imp",
+        label: "Total VA-hours Imported",
+        description: "Total Apparent Energy Imported",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_imp_ph_a",
+        label: "Total VA-hours Imported phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_imp_ph_b",
+        label: "Total VA-hours Imported phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_imp_ph_c",
+        label: "Total VA-hours Imported phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_sf",
+        label: "TotVAh_SF",
+        description: "Apparent Energy scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q1",
+        label: "Total VAR-hours Imported Q1",
+        description: "Total Reactive Energy Imported Quadrant 1",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q1_ph_a",
+        label: "Total VAr-hours Imported Q1 phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q1_ph_b",
+        label: "Total VAr-hours Imported Q1 phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q1_ph_c",
+        label: "Total VAr-hours Imported Q1 phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q2",
+        label: "Total VAr-hours Imported Q2",
+        description: "Total Reactive Power Imported Quadrant 2",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q2_ph_a",
+        label: "Total VAr-hours Imported Q2 phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q2_ph_b",
+        label: "Total VAr-hours Imported Q2 phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q2_ph_c",
+        label: "Total VAr-hours Imported Q2 phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q3",
+        label: "Total VAr-hours Exported Q3",
+        description: "Total Reactive Power Exported Quadrant 3",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q3_ph_a",
+        label: "Total VAr-hours Exported Q3 phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q3_ph_b",
+        label: "Total VAr-hours Exported Q3 phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q3_ph_c",
+        label: "Total VAr-hours Exported Q3 phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q4",
+        label: "Total VAr-hours Exported Q4",
+        description: "Total Reactive Power Exported Quadrant 4",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q4_ph_a",
+        label: "Total VAr-hours Exported Q4 Imported phase A",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q4_ph_b",
+        label: "Total VAr-hours Exported Q4 Imported phase B",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q4_ph_c",
+        label: "Total VAr-hours Exported Q4 Imported phase C",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_sf",
+        label: "TotVArh_SF",
+        description: "Reactive Energy scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt",
+        label: "Events",
+        description: "Meter Event Flags",
+        kind: crate::FieldKind::Point,
+    },
+];
+static AC_METER_AN_OR_AB_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "ac_meter_an_or_ab",
+    label: "Meter (Single Phase) single phase (AN or AB) meter",
+    description: "Include this model for single phase (AN or AB) metering",
+    fields: AC_METER_AN_OR_AB_FIELDS,
+};
+impl crate::GroupMeta for AcMeterAnOrAb {
+    fn group_info() -> &'static crate::GroupInfo {
+        &AC_METER_AN_OR_AB_GROUP_INFO
+    }
+}
 impl crate::Group for AcMeterAnOrAb {
     const LEN: u16 = 105;
 }
@@ -420,6 +865,9 @@ impl crate::FixedSize for Evt {
 }
 impl crate::Model for AcMeterAnOrAb {
     const ID: u16 = 201;
+    const NAME: &'static str = "ac_meter_an_or_ab";
+    const LABEL: &'static str = "Meter (Single Phase) single phase (AN or AB) meter";
+    const DESCRIPTION: &'static str = "Include this model for single phase (AN or AB) metering";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m201
     }

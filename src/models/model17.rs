@@ -49,6 +49,67 @@ impl Model17 {
     pub const TYP: crate::Point<Self, Option<Typ>> = crate::Point::new(10, 1, false);
     pub const PCOL: crate::Point<Self, Option<Pcol>> = crate::Point::new(11, 1, false);
 }
+static MODEL17_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "nam",
+        label: "Name",
+        description: "Interface name (8 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rte",
+        label: "Rate",
+        description: "Interface baud rate in bits per second",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "bits",
+        label: "Bits",
+        description: "Number of data bits per character",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pty",
+        label: "Parity",
+        description: "Bitmask value.  Parity setting",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dup",
+        label: "Duplex",
+        description: "Enumerated value.  Duplex mode",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "flw",
+        label: "Flow Control",
+        description: "Flow Control Method",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "typ",
+        label: "Interface Type",
+        description: "Enumerated value.  Interface type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pcol",
+        label: "Protocol",
+        description: "Enumerated value. Serial protocol selection",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL17_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_17",
+    label: "Serial Interface",
+    description: "Include this model for serial interface configuration support",
+    fields: MODEL17_FIELDS,
+};
+impl crate::GroupMeta for Model17 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL17_GROUP_INFO
+    }
+}
 impl crate::Group for Model17 {
     const LEN: u16 = 12;
 }
@@ -280,6 +341,10 @@ impl crate::FixedSize for Pcol {
 }
 impl crate::Model for Model17 {
     const ID: u16 = 17;
+    const NAME: &'static str = "model_17";
+    const LABEL: &'static str = "Serial Interface";
+    const DESCRIPTION: &'static str =
+        "Include this model for serial interface configuration support";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m17
     }

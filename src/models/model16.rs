@@ -59,6 +59,79 @@ impl Model16 {
     pub const MAC: crate::Point<Self, Option<String>> = crate::Point::new(46, 4, false);
     pub const LNK_CTL: crate::Point<Self, Option<LnkCtl>> = crate::Point::new(50, 1, true);
 }
+static MODEL16_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "nam",
+        label: "Name",
+        description: "Interface name.  (8 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cfg",
+        label: "Config",
+        description: "Enumerated value.  Force IPv4 configuration method",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl",
+        label: "Control",
+        description: "Bitmask value Configure use of services",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "addr",
+        label: "Address",
+        description: "IP address",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "msk",
+        label: "Netmask",
+        description: "Netmask",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "gw",
+        label: "Gateway",
+        description: "Gateway IP address",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dns1",
+        label: "DNS1",
+        description: "32 bit IP address of DNS server",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dns2",
+        label: "DNS2",
+        description: "32 bit IP address of DNS server",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mac",
+        label: "MAC",
+        description: "IEEE MAC address of this interface",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "lnk_ctl",
+        label: "Link Control",
+        description: "Bitmask value.  Link control flags",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL16_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_16",
+    label: "Simple IP Network",
+    description: "Include this model for a simple IPv4 network stack",
+    fields: MODEL16_FIELDS,
+};
+impl crate::GroupMeta for Model16 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL16_GROUP_INFO
+    }
+}
 impl crate::Group for Model16 {
     const LEN: u16 = 52;
 }
@@ -171,6 +244,9 @@ impl crate::FixedSize for LnkCtl {
 }
 impl crate::Model for Model16 {
     const ID: u16 = 16;
+    const NAME: &'static str = "model_16";
+    const LABEL: &'static str = "Simple IP Network";
+    const DESCRIPTION: &'static str = "Include this model for a simple IPv4 network stack";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m16
     }

@@ -110,6 +110,145 @@ impl SolarModule {
     pub const IN_WH: crate::Point<Self, Option<u32>> = crate::Point::new(25, 2, false);
     pub const IN_W: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
 }
+static SOLAR_MODULE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "a_sf",
+        label: "A_SF",
+        description: "Current scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "Voltage scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_sf",
+        label: "W_SF",
+        description: "Power scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wh_sf",
+        label: "Wh_SF",
+        description: "Energy scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "stat",
+        label: "Status",
+        description: "Enumerated value.  Module Status Code",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "stat_vend",
+        label: "Vendor Status",
+        description: "Module Vendor Status Code",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt",
+        label: "Events",
+        description: "Bitmask value.  Module Event Flags",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vend",
+        label: "Vendor Module Event Flags",
+        description: "Vendor specific flags",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl",
+        label: "Control",
+        description: "Module Control",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl_vend",
+        label: "Vendor Control",
+        description: "Vendor Module Control",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl_val",
+        label: "Control Value",
+        description: "Module Control Value",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms",
+        label: "Timestamp",
+        description: "Time in seconds since 2000 epoch",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "out_a",
+        label: "Output Current",
+        description: "Output Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "out_v",
+        label: "Output Voltage",
+        description: "Output Voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "out_wh",
+        label: "Output Energy",
+        description: "Output Energy",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "out_pw",
+        label: "Output Power",
+        description: "Output Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp",
+        label: "Temp",
+        description: "Module Temperature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_a",
+        label: "Input Current",
+        description: "Input Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_v",
+        label: "Input Voltage",
+        description: "Input Voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_wh",
+        label: "Input Energy",
+        description: "Input Energy",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_w",
+        label: "Input Power",
+        description: "Input Power",
+        kind: crate::FieldKind::Point,
+    },
+];
+static SOLAR_MODULE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "solar_module",
+    label: "Solar Module",
+    description: "A solar module model supporting DC-DC converter",
+    fields: SOLAR_MODULE_FIELDS,
+};
+impl crate::GroupMeta for SolarModule {
+    fn group_info() -> &'static crate::GroupInfo {
+        &SOLAR_MODULE_GROUP_INFO
+    }
+}
 impl crate::Group for SolarModule {
     const LEN: u16 = 28;
 }
@@ -274,6 +413,9 @@ impl crate::FixedSize for EvtVend {
 }
 impl crate::Model for SolarModule {
     const ID: u16 = 502;
+    const NAME: &'static str = "solar_module";
+    const LABEL: &'static str = "Solar Module";
+    const DESCRIPTION: &'static str = "A solar module model supporting DC-DC converter";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m502
     }

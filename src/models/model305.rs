@@ -41,6 +41,55 @@ impl Location {
     pub const LONG: crate::Point<Self, Option<i32>> = crate::Point::new(32, 2, false);
     pub const ALT: crate::Point<Self, Option<i32>> = crate::Point::new(34, 2, false);
 }
+static LOCATION_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "tm",
+        label: "Tm",
+        description: "UTC 24 hour time stamp to millisecond hhmmss.sssZ format",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "date",
+        label: "Date",
+        description: "UTC Date string YYYYMMDD format",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "loc",
+        label: "Location",
+        description: "Location string (40 chars max)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "lat",
+        label: "Lat",
+        description: "Latitude with seven degrees of precision",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "long",
+        label: "Long",
+        description: "Longitude with seven degrees of precision",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alt",
+        label: "Altitude",
+        description: "Altitude measurement in meters",
+        kind: crate::FieldKind::Point,
+    },
+];
+static LOCATION_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "location",
+    label: "GPS",
+    description: "Include to support location measurements",
+    fields: LOCATION_FIELDS,
+};
+impl crate::GroupMeta for Location {
+    fn group_info() -> &'static crate::GroupInfo {
+        &LOCATION_GROUP_INFO
+    }
+}
 impl crate::Group for Location {
     const LEN: u16 = 36;
 }
@@ -64,6 +113,9 @@ impl Location {
 }
 impl crate::Model for Location {
     const ID: u16 = 305;
+    const NAME: &'static str = "location";
+    const LABEL: &'static str = "GPS";
+    const DESCRIPTION: &'static str = "Include to support location measurements";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m305
     }

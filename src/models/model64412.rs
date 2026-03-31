@@ -258,6 +258,277 @@ impl DerExploitation {
     pub const CHANGE_COMMON_MODEL_LENGTH: crate::Point<Self, Option<ChangeCommonModelLength>> =
         crate::Point::new(42, 1, true);
 }
+static DER_EXPLOITATION_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "da_manipulation",
+        label: "DA Manipulation",
+        description: "Modify the device ID of the DER",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "falsify_device_identity",
+        label: "Falsify Device Identity",
+        description: "Change the DER manufacturer and model",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_p_always_nameplate",
+        label: "Meas P Always Nameplate",
+        description: "Set the DER meas to always be at nameplate power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_q_always_minimum",
+        label: "Meas Q Always Minimum",
+        description: "Set the DER to always be at minimum reactive power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_q_always_maximum",
+        label: "Meas Q Always Maximum",
+        description: "Set the DER to always be at maximum reactive power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_q_always_zero",
+        label: "Meas Q Always Zero",
+        description: "Set the DER to always be at zero reactive power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_zero_p",
+        label: "Meas Zero P",
+        description: "Set the DER to always be at zero P, Q, and S",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_invert_q",
+        label: "Meas Invert Q",
+        description: "Set the DER to reverse the Q measurement data",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_low_v",
+        label: "Meas Low V",
+        description: "Set the DER to always measure low voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_high_v",
+        label: "Meas High V",
+        description: "Set the DER to always measure high voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_low_l1v",
+        label: "Meas Low L1 V",
+        description: "Set the DER to always measure low line 1 voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_high_l1v",
+        label: "Meas High L1 V",
+        description: "Set the DER to always measure high line 1 voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_low_f",
+        label: "Meas Low F",
+        description: "Set the DER to always measure low frequency",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_high_f",
+        label: "Meas High F",
+        description: "Set the DER to always measure high frequency",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_low_amps",
+        label: "Meas Low Amps",
+        description: "Set the DER to always measure low current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_high_amps",
+        label: "Meas High Amps",
+        description: "Set the DER to always measure high current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_high_s",
+        label: "Meas High S",
+        description: "Set the DER to always measure high apparent power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_low_s",
+        label: "Meas Low S",
+        description: "Set the DER to always measure low apparent power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_high_q",
+        label: "Meas High Q",
+        description: "Set the DER to always measure high reactive power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_low_q",
+        label: "Meas Low Q",
+        description: "Set the DER to always measure low reactive power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_low_pf",
+        label: "Meas Low PF",
+        description: "Set the DER to always measure low power factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "meas_low_reversed_pf",
+        label: "Meas Low Reversed PF",
+        description: "Set the DER to always measure low reversed power factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_high_p",
+        label: "Nameplate High P",
+        description: "Set the DER nameplate power to be high",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_low_p",
+        label: "Nameplate Low P",
+        description: "Set the DER nameplate power to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_high_s",
+        label: "Nameplate High S",
+        description: "Set the DER nameplate apparent power to be high",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_low_s",
+        label: "Nameplate Low S",
+        description: "Set the DER nameplate apparent power to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_high_q",
+        label: "Nameplate High Q",
+        description: "Set the DER nameplate reactive power to be high",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_low_q",
+        label: "Nameplate Low Q",
+        description: "Set the DER nameplate reactive power to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_high_nom_v",
+        label: "Nameplate High Nom V",
+        description: "Set the DER nameplate voltage to be high",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_low_nom_v",
+        label: "Nameplate Low Nom V",
+        description: "Set the DER nameplate voltage to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_low_amps",
+        label: "Nameplate Low Amps",
+        description: "Set the DER nameplate current to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_low_varmaxinj",
+        label: "Nameplate Low Varmaxinj",
+        description: "Set the DER nameplate VarMaxInj to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_low_varmaxabs",
+        label: "Nameplate Low Varmaxabs",
+        description: "Set the DER nameplate VarMaxAbs to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nameplate_low_pf",
+        label: "Nameplate Low PF",
+        description: "Set the DER nameplate power factor to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "settings_high_nom_v",
+        label: "Settings High Nom V",
+        description: "Set the DER settings voltage to be high",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "settings_low_amps",
+        label: "Settings Low Amps",
+        description: "Set the DER settings current to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "settings_high_p",
+        label: "Settings High P",
+        description: "Set the DER settings power to be high",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "settings_low_p",
+        label: "Settings Low P",
+        description: "Set the DER settings power to be low",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "settings_high_va_max",
+        label: "Settings High VAMax",
+        description: "Set the DER settings VAMax to be high",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "settings_high_varmaxinj",
+        label: "Settings High Varmaxinj",
+        description: "Set the DER settings VarMaxInj to be high",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "settings_high_varmaxabs",
+        label: "Settings High Varmaxabs",
+        description: "Set the DER settings VarMaxAbs to be high",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "change_common_model_id",
+        label: "Change Common Model ID",
+        description: "Change the common model ID",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "change_common_model_length",
+        label: "Change Common Model Length",
+        description: "Change the common model length",
+        kind: crate::FieldKind::Point,
+    },
+];
+static DER_EXPLOITATION_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERExploitation",
+    label: "DER Cyber Exploitation",
+    description: "Operations that represent a hacked DER device",
+    fields: DER_EXPLOITATION_FIELDS,
+};
+impl crate::GroupMeta for DerExploitation {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_EXPLOITATION_GROUP_INFO
+    }
+}
 impl crate::Group for DerExploitation {
     const LEN: u16 = 43;
 }
@@ -2124,6 +2395,9 @@ impl crate::FixedSize for ChangeCommonModelLength {
 }
 impl crate::Model for DerExploitation {
     const ID: u16 = 64412;
+    const NAME: &'static str = "DERExploitation";
+    const LABEL: &'static str = "DER Cyber Exploitation";
+    const DESCRIPTION: &'static str = "Operations that represent a hacked DER device";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64412
     }

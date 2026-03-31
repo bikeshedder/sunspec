@@ -112,6 +112,229 @@ impl Model64001 {
     pub const S4_VER: crate::Point<Self, Option<String>> = crate::Point::new(64, 2, false);
     pub const S4_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(66, 5, false);
 }
+static MODEL64001_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "cmd",
+        label: "Command Code",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hw_rev",
+        label: "Hardware Revision",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rsfw_rev",
+        label: "RS FW Revision",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "osfw_rev",
+        label: "OS FW Revision",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "prod_rev",
+        label: "Product Revision",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "boots",
+        label: "Boot Count",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "switch",
+        label: "DIP Switches",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sensors",
+        label: "Num Detected Sensors",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "talking",
+        label: "Num Communicating Sensors",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "status",
+        label: "System Status",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "config",
+        label: "System Configuration",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "le_dblink",
+        label: "LED Blink Threshold",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "le_don",
+        label: "LED On Threshold",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "reserved",
+        label: "Reserved",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "loc",
+        label: "Location String",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s1id",
+        label: "Sensor 1 Unit ID",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s1_addr",
+        label: "Sensor 1 Address",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s1os_ver",
+        label: "Sensor 1 OS Version",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s1_ver",
+        label: "Sensor 1 Product Version",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s1_serial",
+        label: "Sensor 1 Serial Num",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s2id",
+        label: "Sensor 2 Unit ID",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s2_addr",
+        label: "Sensor 2 Address",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s2os_ver",
+        label: "Sensor 2 OS Version",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s2_ver",
+        label: "Sensor 2 Product Version",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s2_serial",
+        label: "Sensor 2 Serial Num",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s3id",
+        label: "Sensor 3 Unit ID",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s3_addr",
+        label: "Sensor 3 Address",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s3os_ver",
+        label: "Sensor 3 OS Version",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s3_ver",
+        label: "Sensor 3 Product Version",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s3_serial",
+        label: "Sensor 3 Serial Num",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s4id",
+        label: "Sensor 4 Unit ID",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s4_addr",
+        label: "Sensor 4 Address",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s4os_ver",
+        label: "Sensor 4 OS Version",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s4_ver",
+        label: "Sensor 4 Product Version",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s4_serial",
+        label: "Sensor 4 Serial Num",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL64001_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_64001",
+    label: "Veris Status and Configuration",
+    description: "",
+    fields: MODEL64001_FIELDS,
+};
+impl crate::GroupMeta for Model64001 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL64001_GROUP_INFO
+    }
+}
 impl crate::Group for Model64001 {
     const LEN: u16 = 71;
 }
@@ -227,6 +450,9 @@ impl crate::FixedSize for Config {
 }
 impl crate::Model for Model64001 {
     const ID: u16 = 64001;
+    const NAME: &'static str = "model_64001";
+    const LABEL: &'static str = "Veris Status and Configuration";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64001
     }

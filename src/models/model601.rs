@@ -74,6 +74,91 @@ impl TrackerController {
     pub const DGR_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(25, 1, false);
 }
+static TRACKER_CONTROLLER_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "nam",
+        label: "Controller",
+        description: "Descriptive name for this control unit",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "typ",
+        label: "Type",
+        description: "Type of tracker",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dt_loc",
+        label: "Date",
+        description: "Local date in YYYYMMDD format",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tm_loc",
+        label: "Time",
+        description: "24 hour local time stamp to second",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "day",
+        label: "Day",
+        description: "Number of the day in the year (1-366)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "glbl_el_ctl",
+        label: "Manual Elevation",
+        description: "Global manual override target position of elevation in degrees from horizontal.  Unimplemented for single axis azimuth tracker type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "glbl_az_ctl",
+        label: "Manual Azimuth",
+        description: "Global manual override target position of azimuth in degrees from true north towards east.  Unimplemented for single axis azimuth tracker type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "glbl_ctl",
+        label: "Global Mode",
+        description: "Global Control register operates on all trackers. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "glbl_alm",
+        label: "Global Alarm",
+        description: "Global tracker alarm conditions",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dgr_sf",
+        label: "SF",
+        description: "Scale Factor for targets and position measurements in degrees",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n",
+        label: "Trackers",
+        description: "Number of trackers being controlled.  Size of repeating block.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tracker",
+        label: "tracker",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Tracker as crate::GroupMeta>::group_info),
+    },
+];
+static TRACKER_CONTROLLER_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "tracker_controller",
+    label: "Tracker Controller DRAFT 2",
+    description: "Monitors and controls multiple trackers",
+    fields: TRACKER_CONTROLLER_FIELDS,
+};
+impl crate::GroupMeta for TrackerController {
+    fn group_info() -> &'static crate::GroupInfo {
+        &TRACKER_CONTROLLER_GROUP_INFO
+    }
+}
 impl crate::Group for TrackerController {
     const LEN: u16 = 26;
 }
@@ -282,6 +367,73 @@ impl Tracker {
     pub const CTL: crate::Point<Self, Option<TrackerCtl>> = crate::Point::new(20, 1, true);
     pub const ALM: crate::Point<Self, Option<TrackerAlm>> = crate::Point::new(21, 1, false);
 }
+static TRACKER_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "id",
+        label: "Tracker",
+        description: "Descriptive name for this tracker unit",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "el_trgt",
+        label: "Target Elevation",
+        description: "Auto target elevation in degrees from horizontal.  Unimplemented for single axis azimuth tracker type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "az_trgt",
+        label: "Target Azimuth",
+        description: "Auto target azimuth  in degrees from true north towards east.  Unimplemented for single axis horizontal tracker type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "el_pos",
+        label: "Elevation",
+        description: "Actual elevation position  in degrees from horizontal.  Unimplemented for single axis azimuth tracker type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "az_pos",
+        label: "Azimuth",
+        description: "Actual azimuth position  in degrees from true north towards east.  Unimplemented for single axis horizontal tracker type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "el_ctl",
+        label: "Manual Elevation",
+        description: "Manual override target position of elevation in degrees from horizontal.  Unimplemented for single axis azimuth tracker type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "az_ctl",
+        label: "Manual Azimuth",
+        description: "Manual override target position of azimuth in degrees from true north towards east.  Unimplemented for single axis azimuth tracker type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl",
+        label: "Mode",
+        description: "Control register. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alm",
+        label: "Alarm",
+        description: "Tracker alarm conditions",
+        kind: crate::FieldKind::Point,
+    },
+];
+static TRACKER_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "tracker",
+    label: "tracker",
+    description: "",
+    fields: TRACKER_FIELDS,
+};
+impl crate::GroupMeta for Tracker {
+    fn group_info() -> &'static crate::GroupInfo {
+        &TRACKER_GROUP_INFO
+    }
+}
 impl crate::Group for Tracker {
     const LEN: u16 = 22;
 }
@@ -390,6 +542,9 @@ impl crate::FixedSize for TrackerAlm {
 }
 impl crate::Model for TrackerController {
     const ID: u16 = 601;
+    const NAME: &'static str = "tracker_controller";
+    const LABEL: &'static str = "Tracker Controller DRAFT 2";
+    const DESCRIPTION: &'static str = "Monitors and controls multiple trackers";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m601
     }

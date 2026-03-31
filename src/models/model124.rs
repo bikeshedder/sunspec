@@ -134,6 +134,163 @@ impl StorageBasic {
     pub const IN_BAT_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
     pub const IN_OUT_W_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
 }
+static STORAGE_BASIC_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "w_cha_max",
+        label: "WChaMax",
+        description: "Setpoint for maximum charge.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_cha_gra",
+        label: "WChaGra",
+        description: "Setpoint for maximum charging rate. Default is MaxChaRte.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_dis_cha_gra",
+        label: "WDisChaGra",
+        description: "Setpoint for maximum discharge rate. Default is MaxDisChaRte.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "stor_ctl_mod",
+        label: "StorCtl_Mod",
+        description: "Activate hold/discharge/charge storage control mode. Bitfield value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_cha_max",
+        label: "VAChaMax",
+        description: "Setpoint for maximum charging VA.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "min_rsv_pct",
+        label: "MinRsvPct",
+        description: "Setpoint for minimum reserve for storage as a percentage of the nominal maximum storage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cha_state",
+        label: "ChaState",
+        description: "Currently available energy as a percent of the capacity rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "stor_aval",
+        label: "StorAval",
+        description: "State of charge (ChaState) minus storage reserve (MinRsvPct) times capacity rating (AhrRtg).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_bat_v",
+        label: "InBatV",
+        description: "Internal battery voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cha_st",
+        label: "ChaSt",
+        description: "Charge status of storage device. Enumerated value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "out_w_rte",
+        label: "OutWRte",
+        description: "Percent of max discharge rate.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_w_rte",
+        label: "InWRte",
+        description: "Percent of max charging rate.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_out_w_rte_win_tms",
+        label: "InOutWRte_WinTms",
+        description: "Time window for charge/discharge rate change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_out_w_rte_rvrt_tms",
+        label: "InOutWRte_RvrtTms",
+        description: "Timeout period for charge/discharge rate.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_out_w_rte_rmp_tms",
+        label: "InOutWRte_RmpTms",
+        description: "Ramp time for moving from current setpoint to new setpoint.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cha_gri_set",
+        label: "ChaGriSet",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_cha_max_sf",
+        label: "WChaMax_SF",
+        description: "Scale factor for maximum charge.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_cha_dis_cha_gra_sf",
+        label: "WChaDisChaGra_SF",
+        description: "Scale factor for maximum charge and discharge rate.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_cha_max_sf",
+        label: "VAChaMax_SF",
+        description: "Scale factor for maximum charging VA.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "min_rsv_pct_sf",
+        label: "MinRsvPct_SF",
+        description: "Scale factor for minimum reserve percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cha_state_sf",
+        label: "ChaState_SF",
+        description: "Scale factor for available energy percent.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "stor_aval_sf",
+        label: "StorAval_SF",
+        description: "Scale factor for state of charge.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_bat_v_sf",
+        label: "InBatV_SF",
+        description: "Scale factor for battery voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_out_w_rte_sf",
+        label: "InOutWRte_SF",
+        description: "Scale factor for percent charge/discharge rate.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static STORAGE_BASIC_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "storage_basic",
+    label: "Storage",
+    description: "Basic Storage Controls ",
+    fields: STORAGE_BASIC_FIELDS,
+};
+impl crate::GroupMeta for StorageBasic {
+    fn group_info() -> &'static crate::GroupInfo {
+        &STORAGE_BASIC_GROUP_INFO
+    }
+}
 impl crate::Group for StorageBasic {
     const LEN: u16 = 24;
 }
@@ -293,6 +450,9 @@ impl crate::FixedSize for ChaGriSet {
 }
 impl crate::Model for StorageBasic {
     const ID: u16 = 124;
+    const NAME: &'static str = "storage_basic";
+    const LABEL: &'static str = "Storage";
+    const DESCRIPTION: &'static str = "Basic Storage Controls ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m124
     }

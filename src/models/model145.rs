@@ -51,6 +51,67 @@ impl ExtSettings {
     pub const A_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
     pub const RMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
 }
+static EXT_SETTINGS_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "nom_rmp_up_rte",
+        label: "Ramp Up Rate",
+        description: "Ramp up rate as a percentage of max current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nom_rmp_dn_rte",
+        label: "NomRmpDnRte",
+        description: "Ramp down rate as a percentage of max current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "emg_rmp_up_rte",
+        label: "Emergency Ramp Up Rate",
+        description: "Emergency ramp up rate as a percentage of max current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "emg_rmp_dn_rte",
+        label: "Emergency Ramp Down Rate",
+        description: "Emergency ramp down rate as a percentage of max current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "conn_rmp_up_rte",
+        label: "Connect Ramp Up Rate",
+        description: "Connect ramp up rate as a percentage of max current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "conn_rmp_dn_rte",
+        label: "Connect Ramp Down Rate",
+        description: "Connect ramp down rate as a percentage of max current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_gra",
+        label: "Default Ramp Rate",
+        description: "Ramp rate specified in percent of max current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_sf",
+        label: "Ramp Rate Scale Factor",
+        description: "Ramp Rate Scale Factor",
+        kind: crate::FieldKind::Point,
+    },
+];
+static EXT_SETTINGS_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "ext_settings",
+    label: "Extended Settings",
+    description: "Inverter controls extended settings ",
+    fields: EXT_SETTINGS_FIELDS,
+};
+impl crate::GroupMeta for ExtSettings {
+    fn group_info() -> &'static crate::GroupInfo {
+        &EXT_SETTINGS_GROUP_INFO
+    }
+}
 impl crate::Group for ExtSettings {
     const LEN: u16 = 8;
 }
@@ -76,6 +137,9 @@ impl ExtSettings {
 }
 impl crate::Model for ExtSettings {
     const ID: u16 = 145;
+    const NAME: &'static str = "ext_settings";
+    const LABEL: &'static str = "Extended Settings";
+    const DESCRIPTION: &'static str = "Inverter controls extended settings ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m145
     }

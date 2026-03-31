@@ -24,6 +24,37 @@ impl Model10 {
     pub const CTL: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
     pub const TYP: crate::Point<Self, Option<Typ>> = crate::Point::new(2, 1, false);
 }
+static MODEL10_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "st",
+        label: "Interface Status",
+        description: "Overall interface status",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl",
+        label: "Interface Control",
+        description: "Overall interface control (TBD)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "typ",
+        label: "Physical Access Type",
+        description: "Enumerated value.  Type of physical media",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL10_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_10",
+    label: "Communication Interface Header",
+    description: "To be included first for a complete interface description",
+    fields: MODEL10_FIELDS,
+};
+impl crate::GroupMeta for Model10 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL10_GROUP_INFO
+    }
+}
 impl crate::Group for Model10 {
     const LEN: u16 = 4;
 }
@@ -136,6 +167,9 @@ impl crate::FixedSize for Typ {
 }
 impl crate::Model for Model10 {
     const ID: u16 = 10;
+    const NAME: &'static str = "model_10";
+    const LABEL: &'static str = "Communication Interface Header";
+    const DESCRIPTION: &'static str = "To be included first for a complete interface description";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m10
     }

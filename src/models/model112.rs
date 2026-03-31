@@ -170,6 +170,205 @@ impl InverterSplitPhaseFloat {
     pub const EVT_VND3: crate::Point<Self, Option<EvtVnd3>> = crate::Point::new(56, 2, false);
     pub const EVT_VND4: crate::Point<Self, Option<EvtVnd4>> = crate::Point::new(58, 2, false);
 }
+static INVERTER_SPLIT_PHASE_FLOAT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "a",
+        label: "Amps",
+        description: "AC Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "aph_a",
+        label: "Amps PhaseA",
+        description: "Phase A Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "aph_b",
+        label: "Amps PhaseB",
+        description: "Phase B Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "aph_c",
+        label: "Amps PhaseC",
+        description: "Phase C Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pp_vph_ab",
+        label: "Phase Voltage AB",
+        description: "Phase Voltage AB",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pp_vph_bc",
+        label: "Phase Voltage BC",
+        description: "Phase Voltage BC",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pp_vph_ca",
+        label: "Phase Voltage CA",
+        description: "Phase Voltage CA",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ph_vph_a",
+        label: "Phase Voltage AN",
+        description: "Phase Voltage AN",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ph_vph_b",
+        label: "Phase Voltage BN",
+        description: "Phase Voltage BN",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ph_vph_c",
+        label: "Phase Voltage CN",
+        description: "Phase Voltage CN",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w",
+        label: "Watts",
+        description: "AC Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz",
+        label: "Hz",
+        description: "Line Frequency",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va",
+        label: "VA",
+        description: "AC Apparent Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar",
+        label: "VAr",
+        description: "AC Reactive Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf",
+        label: "PF",
+        description: "AC Power Factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wh",
+        label: "WattHours",
+        description: "AC Energy",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dca",
+        label: "DC Amps",
+        description: "DC Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcv",
+        label: "DC Voltage",
+        description: "DC Voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcw",
+        label: "DC Watts",
+        description: "DC Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_cab",
+        label: "Cabinet Temperature",
+        description: "Cabinet Temperature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_snk",
+        label: "Heat Sink Temperature",
+        description: "Heat Sink Temperature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_trns",
+        label: "Transformer Temperature",
+        description: "Transformer Temperature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_ot",
+        label: "Other Temperature",
+        description: "Other Temperature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "st",
+        label: "Operating State",
+        description: "Enumerated value.  Operating state",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "st_vnd",
+        label: "Vendor Operating State",
+        description: "Vendor specific operating state code",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt1",
+        label: "Event1",
+        description: "Bitmask value. Event fields",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt2",
+        label: "Event Bitfield 2",
+        description: "Reserved for future use",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd1",
+        label: "Vendor Event Bitfield 1",
+        description: "Vendor defined events",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd2",
+        label: "Vendor Event Bitfield 2",
+        description: "Vendor defined events",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd3",
+        label: "Vendor Event Bitfield 3",
+        description: "Vendor defined events",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd4",
+        label: "Vendor Event Bitfield 4",
+        description: "Vendor defined events",
+        kind: crate::FieldKind::Point,
+    },
+];
+static INVERTER_SPLIT_PHASE_FLOAT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "inverter_split_phase_float",
+    label: "Inverter (Split Phase) FLOAT",
+    description: "Include this model for split phase inverter monitoring using float values",
+    fields: INVERTER_SPLIT_PHASE_FLOAT_FIELDS,
+};
+impl crate::GroupMeta for InverterSplitPhaseFloat {
+    fn group_info() -> &'static crate::GroupInfo {
+        &INVERTER_SPLIT_PHASE_FLOAT_GROUP_INFO
+    }
+}
 impl crate::Group for InverterSplitPhaseFloat {
     const LEN: u16 = 60;
 }
@@ -417,6 +616,10 @@ impl crate::FixedSize for EvtVnd4 {
 }
 impl crate::Model for InverterSplitPhaseFloat {
     const ID: u16 = 112;
+    const NAME: &'static str = "inverter_split_phase_float";
+    const LABEL: &'static str = "Inverter (Split Phase) FLOAT";
+    const DESCRIPTION: &'static str =
+        "Include this model for split phase inverter monitoring using float values";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m112
     }

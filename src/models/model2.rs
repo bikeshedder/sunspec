@@ -61,6 +61,79 @@ impl Aggregator {
     pub const CTL_VND: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
     pub const CTL_VL: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
 }
+static AGGREGATOR_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "aid",
+        label: "AID",
+        description: "Aggregated model id",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n",
+        label: "N",
+        description: "Number of aggregated models",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "un",
+        label: "UN",
+        description: "Update Number.  Incrementing number each time the mapping is changed.  If the number is not changed from the last reading the direct access to a specific offset will result in reading the same logical model as before.  Otherwise the entire model must be read to refresh the changes",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "st",
+        label: "Status",
+        description: "Enumerated status code",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "st_vnd",
+        label: "Vendor Status",
+        description: "Vendor specific status code",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt",
+        label: "Event Code",
+        description: "Bitmask event code",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd",
+        label: "Vendor Event Code",
+        description: "Vendor specific event code",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl",
+        label: "Control",
+        description: "Control register for all aggregated devices",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl_vnd",
+        label: "Vendor Control",
+        description: "Vendor control register for all aggregated devices",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl_vl",
+        label: "Control Value",
+        description: "Numerical value used as a parameter to the control",
+        kind: crate::FieldKind::Point,
+    },
+];
+static AGGREGATOR_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "aggregator",
+    label: "Basic Aggregator",
+    description: "Aggregates a collection of models for a given model id",
+    fields: AGGREGATOR_FIELDS,
+};
+impl crate::GroupMeta for Aggregator {
+    fn group_info() -> &'static crate::GroupInfo {
+        &AGGREGATOR_GROUP_INFO
+    }
+}
 impl crate::Group for Aggregator {
     const LEN: u16 = 14;
 }
@@ -240,6 +313,9 @@ impl crate::FixedSize for Ctl {
 }
 impl crate::Model for Aggregator {
     const ID: u16 = 2;
+    const NAME: &'static str = "aggregator";
+    const LABEL: &'static str = "Basic Aggregator";
+    const DESCRIPTION: &'static str = "Aggregates a collection of models for a given model id";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m2
     }

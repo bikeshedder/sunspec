@@ -266,6 +266,301 @@ impl DerCtlAc {
     pub const VAR_SET_SF: crate::Point<Self, Option<i16>> = crate::Point::new(55, 1, false);
     pub const VAR_SET_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(56, 1, false);
 }
+static DER_CTL_AC_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "pfw_inj_ena",
+        label: "Power Factor Enable (W Inj) Enable",
+        description: "Power factor enable when injecting active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfw_inj_ena_rvrt",
+        label: "Power Factor Reversion Enable (W Inj)",
+        description: "Power factor reversion timer when injecting active power enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfw_inj_rvrt_tms",
+        label: "PF Reversion Time (W Inj)",
+        description: "Power factor reversion timer when injecting active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfw_inj_rvrt_rem",
+        label: "PF Reversion Time Rem (W Inj)",
+        description: "Power factor reversion time remaining when injecting active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfw_abs_ena",
+        label: "Power Factor Enable (W Abs) Enable",
+        description: "Power factor enable when absorbing active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfw_abs_ena_rvrt",
+        label: "Power Factor Reversion Enable (W Abs)",
+        description: "Power factor reversion timer when absorbing active power enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfw_abs_rvrt_tms",
+        label: "PF Reversion Time (W Abs)",
+        description: "Power factor reversion timer when absorbing active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfw_abs_rvrt_rem",
+        label: "PF Reversion Time Rem (W Abs)",
+        description: "Power factor reversion time remaining when absorbing active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_lim_pct_ena",
+        label: "Limit Max Power Pct Enable",
+        description: "Limit maximum active power percent enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_lim_pct",
+        label: "Limit Max Power Pct Setpoint",
+        description: "Limit maximum active power percent value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_lim_pct_rvrt",
+        label: "Reversion Limit Max Power Pct",
+        description: "Reversion limit maximum active power percent value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_lim_pct_ena_rvrt",
+        label: "Reversion Limit Max Power Pct Enable",
+        description: "Reversion limit maximum active power percent value enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_lim_pct_rvrt_tms",
+        label: "Limit Max Power Pct Reversion Time",
+        description: "Limit maximum active power percent reversion time.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_lim_pct_rvrt_rem",
+        label: "Limit Max Power Pct Rev Time Rem",
+        description: "Limit maximum active power percent reversion time remaining.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_ena",
+        label: "Set Active Power Enable",
+        description: "Set active power enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_mod",
+        label: "Set Active Power Mode",
+        description: "Set active power mode.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set",
+        label: "Active Power Setpoint (W)",
+        description: "Active power setting value in watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_rvrt",
+        label: "Reversion Active Power (W)",
+        description: "Reversion active power setting value in watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_pct",
+        label: "Active Power Setpoint (Pct)",
+        description: "Active power setting value as percent.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_pct_rvrt",
+        label: "Reversion Active Power (Pct)",
+        description: "Reversion active power setting value as percent.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_ena_rvrt",
+        label: "Reversion Active Power Enable",
+        description: "Reversion active power function enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_rvrt_tms",
+        label: "Active Power Reversion Time",
+        description: "Set active power reversion time.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_rvrt_rem",
+        label: "Active Power Rev Time Rem",
+        description: "Set active power reversion time remaining.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_ena",
+        label: "Set Reactive Power Enable",
+        description: "Set reactive power enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_mod",
+        label: "Set Reactive Power Mode",
+        description: "Set reactive power mode.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_pri",
+        label: "Reactive Power Priority",
+        description: "Reactive power priority.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set",
+        label: "Reactive Power Setpoint (Vars)",
+        description: "Reactive power setting value in vars.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_rvrt",
+        label: "Reversion Reactive Power (Vars)",
+        description: "Reversion reactive power setting value in vars.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_pct",
+        label: "Reactive Power Setpoint (Pct)",
+        description: "Reactive power setting value as percent.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_pct_rvrt",
+        label: "Reversion Reactive Power (Pct)",
+        description: "Reversion reactive power setting value as percent.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_ena_rvrt",
+        label: "Reversion Reactive Power Enable",
+        description: "Reversion reactive power function enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_rvrt_tms",
+        label: "Reactive Power Reversion Time",
+        description: "Set reactive power reversion time.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_rvrt_rem",
+        label: "Reactive Power Rev Time Rem",
+        description: "Set reactive power reversion time remaining.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_rmp",
+        label: "Normal Ramp Rate",
+        description: "Ramp rate for increases in active power during normal generation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_rmp_ref",
+        label: "Normal Ramp Rate Reference",
+        description: "Ramp rate reference unit for increases in active power or current during normal generation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_rmp",
+        label: "Reactive Power Ramp Rate",
+        description: "Ramp rate based on max reactive power per second.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "anti_isl_ena",
+        label: "Anti-Islanding Enable",
+        description: "Anti-islanding enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_sf",
+        label: "Power Factor Scale Factor",
+        description: "Power factor scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_lim_pct_sf",
+        label: "Limit Max Power Scale Factor",
+        description: "Limit maximum power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_sf",
+        label: "Active Power Scale Factor",
+        description: "Active power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_set_pct_sf",
+        label: "Active Power Pct Scale Factor",
+        description: "Active power pct scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_sf",
+        label: "Reactive Power Scale Factor",
+        description: "Reactive power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_set_pct_sf",
+        label: "Reactive Power Pct Scale Factor",
+        description: "Reactive power pct scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfw_inj",
+        label: "Power Factor (W Inj) ",
+        description: "Power factor setpoint when injecting active power.",
+        kind: crate::FieldKind::Group(<PfwInj as crate::GroupMeta>::group_info),
+    },
+    crate::FieldInfo {
+        name: "pfw_inj_rvrt",
+        label: "Reversion Power Factor (W Inj) ",
+        description: "Reversion power factor setpoint when injecting active power.",
+        kind: crate::FieldKind::Group(<PfwInjRvrt as crate::GroupMeta>::group_info),
+    },
+    crate::FieldInfo {
+        name: "pfw_abs",
+        label: "Power Factor (W Abs) ",
+        description: "Power factor setpoint when absorbing active power.",
+        kind: crate::FieldKind::Group(<PfwAbs as crate::GroupMeta>::group_info),
+    },
+    crate::FieldInfo {
+        name: "pfw_abs_rvrt",
+        label: "Reversion Power Factor (W Abs) ",
+        description: "Reversion power factor setpoint when absorbing active power.",
+        kind: crate::FieldKind::Group(<PfwAbsRvrt as crate::GroupMeta>::group_info),
+    },
+];
+static DER_CTL_AC_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERCtlAC",
+    label: "DER AC Controls",
+    description: "DER AC controls model.",
+    fields: DER_CTL_AC_FIELDS,
+};
+impl crate::GroupMeta for DerCtlAc {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_CTL_AC_GROUP_INFO
+    }
+}
 impl crate::Group for DerCtlAc {
     const LEN: u16 = 57;
 }
@@ -1018,6 +1313,31 @@ impl PfwInj {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwInjExt>> = crate::Point::new(1, 1, true);
 }
+static PFW_INJ_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "pf",
+        label: "Power Factor (W Inj) ",
+        description: "Power factor setpoint when injecting active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ext",
+        label: "Power Factor Excitation (W Inj)",
+        description: "Power factor excitation setpoint when injecting active power.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static PFW_INJ_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "PFWInj",
+    label: "Power Factor (W Inj) ",
+    description: "Power factor setpoint when injecting active power.",
+    fields: PFW_INJ_FIELDS,
+};
+impl crate::GroupMeta for PfwInj {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PFW_INJ_GROUP_INFO
+    }
+}
 impl crate::Group for PfwInj {
     const LEN: u16 = 2;
 }
@@ -1096,6 +1416,31 @@ pub struct PfwInjRvrt {
 impl PfwInjRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwInjRvrtExt>> = crate::Point::new(1, 1, true);
+}
+static PFW_INJ_RVRT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "pf",
+        label: "Reversion Power Factor (W Inj) ",
+        description: "Reversion power factor setpoint when injecting active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ext",
+        label: "Reversion PF Excitation (W Inj)",
+        description: "Reversion power factor excitation setpoint when injecting active power.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static PFW_INJ_RVRT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "PFWInjRvrt",
+    label: "Reversion Power Factor (W Inj) ",
+    description: "Reversion power factor setpoint when injecting active power.",
+    fields: PFW_INJ_RVRT_FIELDS,
+};
+impl crate::GroupMeta for PfwInjRvrt {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PFW_INJ_RVRT_GROUP_INFO
+    }
 }
 impl crate::Group for PfwInjRvrt {
     const LEN: u16 = 2;
@@ -1176,6 +1521,31 @@ impl PfwAbs {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwAbsExt>> = crate::Point::new(1, 1, true);
 }
+static PFW_ABS_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "pf",
+        label: "Power Factor (W Abs) ",
+        description: "Power factor setpoint when absorbing active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ext",
+        label: "Power Factor Excitation (W Abs)",
+        description: "Power factor excitation setpoint when absorbing active power.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static PFW_ABS_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "PFWAbs",
+    label: "Power Factor (W Abs) ",
+    description: "Power factor setpoint when absorbing active power.",
+    fields: PFW_ABS_FIELDS,
+};
+impl crate::GroupMeta for PfwAbs {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PFW_ABS_GROUP_INFO
+    }
+}
 impl crate::Group for PfwAbs {
     const LEN: u16 = 2;
 }
@@ -1255,6 +1625,31 @@ impl PfwAbsRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwAbsRvrtExt>> = crate::Point::new(1, 1, true);
 }
+static PFW_ABS_RVRT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "pf",
+        label: "Reversion Power Factor (W Abs) ",
+        description: "Reversion power factor setpoint when absorbing active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ext",
+        label: "Reversion PF Excitation (W Abs)",
+        description: "Reversion power factor excitation setpoint when absorbing active power.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static PFW_ABS_RVRT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "PFWAbsRvrt",
+    label: "Reversion Power Factor (W Abs) ",
+    description: "Reversion power factor setpoint when absorbing active power.",
+    fields: PFW_ABS_RVRT_FIELDS,
+};
+impl crate::GroupMeta for PfwAbsRvrt {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PFW_ABS_RVRT_GROUP_INFO
+    }
+}
 impl crate::Group for PfwAbsRvrt {
     const LEN: u16 = 2;
 }
@@ -1316,6 +1711,9 @@ impl crate::FixedSize for PfwAbsRvrtExt {
 }
 impl crate::Model for DerCtlAc {
     const ID: u16 = 704;
+    const NAME: &'static str = "DERCtlAC";
+    const LABEL: &'static str = "DER AC Controls";
+    const DESCRIPTION: &'static str = "DER AC controls model.";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m704
     }

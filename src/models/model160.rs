@@ -32,6 +32,67 @@ impl Mppt {
     pub const N: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
     pub const TMS_PER: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
 }
+static MPPT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "dca_sf",
+        label: "Current Scale Factor",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcv_sf",
+        label: "Voltage Scale Factor",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcw_sf",
+        label: "Power Scale Factor",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcwh_sf",
+        label: "Energy Scale Factor",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt",
+        label: "Global Events",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n",
+        label: "Number of Modules",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms_per",
+        label: "Timestamp Period",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "module",
+        label: "module",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Module as crate::GroupMeta>::group_info),
+    },
+];
+static MPPT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "mppt",
+    label: "Multiple MPPT Inverter Extension Model",
+    description: "",
+    fields: MPPT_FIELDS,
+};
+impl crate::GroupMeta for Mppt {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MPPT_GROUP_INFO
+    }
+}
 impl crate::Group for Mppt {
     const LEN: u16 = 8;
 }
@@ -129,6 +190,79 @@ impl Module {
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
     pub const DC_ST: crate::Point<Self, Option<ModuleDcSt>> = crate::Point::new(17, 1, false);
     pub const DC_EVT: crate::Point<Self, Option<ModuleDcEvt>> = crate::Point::new(18, 2, false);
+}
+static MODULE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "id",
+        label: "Input ID",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "id_str",
+        label: "Input ID String",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dca",
+        label: "DC Current",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcv",
+        label: "DC Voltage",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcw",
+        label: "DC Power",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcwh",
+        label: "Lifetime Energy",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms",
+        label: "Timestamp",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp",
+        label: "Temperature",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_st",
+        label: "Operating State",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_evt",
+        label: "Module Events",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODULE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "module",
+    label: "module",
+    description: "",
+    fields: MODULE_FIELDS,
+};
+impl crate::GroupMeta for Module {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODULE_GROUP_INFO
+    }
 }
 impl crate::Group for Module {
     const LEN: u16 = 20;
@@ -278,6 +412,9 @@ impl crate::FixedSize for ModuleDcEvt {
 }
 impl crate::Model for Mppt {
     const ID: u16 = 160;
+    const NAME: &'static str = "mppt";
+    const LABEL: &'static str = "Multiple MPPT Inverter Extension Model";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m160
     }

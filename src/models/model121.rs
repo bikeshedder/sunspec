@@ -171,6 +171,199 @@ impl Settings {
     pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
     pub const ECP_NOM_HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, false);
 }
+static SETTINGS_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "w_max",
+        label: "WMax",
+        description: "Setting for maximum power output. Default to WRtg.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ref",
+        label: "VRef",
+        description: "Voltage at the PCC.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ref_ofs",
+        label: "VRefOfs",
+        description: "Offset  from PCC to inverter.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_max",
+        label: "VMax",
+        description: "Setpoint for maximum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_min",
+        label: "VMin",
+        description: "Setpoint for minimum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_max",
+        label: "VAMax",
+        description: "Setpoint for maximum apparent power. Default to VARtg.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_max_q1",
+        label: "VArMaxQ1",
+        description: "Setting for maximum reactive power in quadrant 1. Default to VArRtgQ1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_max_q2",
+        label: "VArMaxQ2",
+        description: "Setting for maximum reactive power in quadrant 2. Default to VArRtgQ2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_max_q3",
+        label: "VArMaxQ3",
+        description: "Setting for maximum reactive power in quadrant 3. Default to VArRtgQ3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_max_q4",
+        label: "VArMaxQ4",
+        description: "Setting for maximum reactive power in quadrant 4. Default to VArRtgQ4.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_gra",
+        label: "WGra",
+        description: "Default ramp rate of change of active power due to command or internal action.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_min_q1",
+        label: "PFMinQ1",
+        description: "Setpoint for minimum power factor value in quadrant 1. Default to PFRtgQ1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_min_q2",
+        label: "PFMinQ2",
+        description: "Setpoint for minimum power factor value in quadrant 2. Default to PFRtgQ2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_min_q3",
+        label: "PFMinQ3",
+        description: "Setpoint for minimum power factor value in quadrant 3. Default to PFRtgQ3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_min_q4",
+        label: "PFMinQ4",
+        description: "Setpoint for minimum power factor value in quadrant 4. Default to PFRtgQ4.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_act",
+        label: "VArAct",
+        description: "VAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "clc_tot_va",
+        label: "ClcTotVA",
+        description: "Calculation method for total apparent power. 1=vector 2=arithmetic.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "max_rmp_rte",
+        label: "MaxRmpRte",
+        description: "Setpoint for maximum ramp rate as percentage of nominal maximum ramp rate. This setting will limit the rate that watts delivery to the grid can increase or decrease in response to intermittent PV generation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ecp_nom_hz",
+        label: "ECPNomHz",
+        description: "Setpoint for nominal frequency at the ECP.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "conn_ph",
+        label: "ConnPh",
+        description: "Identity of connected phase for single phase inverters. A=1 B=2 C=3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_sf",
+        label: "WMax_SF",
+        description: "Scale factor for real power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ref_sf",
+        label: "VRef_SF",
+        description: "Scale factor for voltage at the PCC.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ref_ofs_sf",
+        label: "VRefOfs_SF",
+        description: "Scale factor for offset voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_min_max_sf",
+        label: "VMinMax_SF",
+        description: "Scale factor for min/max voltages.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_max_sf",
+        label: "VAMax_SF",
+        description: "Scale factor for apparent power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_max_sf",
+        label: "VArMax_SF",
+        description: "Scale factor for reactive power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_gra_sf",
+        label: "WGra_SF",
+        description: "Scale factor for default ramp rate.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_min_sf",
+        label: "PFMin_SF",
+        description: "Scale factor for minimum power factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "max_rmp_rte_sf",
+        label: "MaxRmpRte_SF",
+        description: "Scale factor for maximum ramp percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ecp_nom_hz_sf",
+        label: "ECPNomHz_SF",
+        description: "Scale factor for nominal frequency.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static SETTINGS_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "settings",
+    label: "Basic Settings",
+    description: "Inverter Controls Basic Settings ",
+    fields: SETTINGS_FIELDS,
+};
+impl crate::GroupMeta for Settings {
+    fn group_info() -> &'static crate::GroupInfo {
+        &SETTINGS_GROUP_INFO
+    }
+}
 impl crate::Group for Settings {
     const LEN: u16 = 30;
 }
@@ -336,6 +529,9 @@ impl crate::FixedSize for ConnPh {
 }
 impl crate::Model for Settings {
     const ID: u16 = 121;
+    const NAME: &'static str = "settings";
+    const LABEL: &'static str = "Basic Settings";
+    const DESCRIPTION: &'static str = "Inverter Controls Basic Settings ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m121
     }

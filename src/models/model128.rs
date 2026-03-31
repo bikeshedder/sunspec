@@ -78,6 +78,97 @@ impl ReactiveCurrent {
     pub const AR_GRA_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const V_REF_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
 }
+static REACTIVE_CURRENT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "ar_gra_mod",
+        label: "ArGraMod",
+        description: "Indicates if gradients trend toward zero at the edges of the deadband or trend toward zero at the center of the deadband.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ar_gra_sag",
+        label: "ArGraSag",
+        description: "The gradient used to increase capacitive dynamic current. A value of 0 indicates no additional reactive current support.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ar_gra_swell",
+        label: "ArGraSwell",
+        description: "The gradient used to increase inductive dynamic current.  A value of 0 indicates no additional reactive current support.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_ena",
+        label: "ModEna",
+        description: "Activate dynamic reactive current model",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "fil_tms",
+        label: "FilTms",
+        description: "The time window used to calculate the moving average voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "db_v_min",
+        label: "DbVMin",
+        description: "The lower delta voltage limit for which negative voltage deviations less than this value no dynamic vars are produced.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "db_v_max",
+        label: "DbVMax",
+        description: "The upper delta voltage limit for which positive voltage deviations less than this value no dynamic current produced.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "blk_zn_v",
+        label: "BlkZnV",
+        description: "Block zone voltage which defines a lower voltage boundary below which no dynamic current is produced.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hys_blk_zn_v",
+        label: "HysBlkZnV",
+        description: "Hysteresis voltage used with BlkZnV.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "blk_zn_tmms",
+        label: "BlkZnTmms",
+        description: "Block zone time the time before which reactive current support remains active regardless of how low the voltage drops.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hold_tmms",
+        label: "HoldTmms",
+        description: "Hold time during which reactive current support continues after the average voltage has entered the dead zone.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ar_gra_sf",
+        label: "ArGra_SF",
+        description: "Scale factor for the gradients.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ref_pct_sf",
+        label: "VRefPct_SF",
+        description: "Scale factor for the voltage zone and limit settings.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static REACTIVE_CURRENT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "reactive_current",
+    label: "Dynamic Reactive Current",
+    description: "Dynamic Reactive Current ",
+    fields: REACTIVE_CURRENT_FIELDS,
+};
+impl crate::GroupMeta for ReactiveCurrent {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REACTIVE_CURRENT_GROUP_INFO
+    }
+}
 impl crate::Group for ReactiveCurrent {
     const LEN: u16 = 14;
 }
@@ -168,6 +259,9 @@ impl crate::FixedSize for ModEna {
 }
 impl crate::Model for ReactiveCurrent {
     const ID: u16 = 128;
+    const NAME: &'static str = "reactive_current";
+    const LABEL: &'static str = "Dynamic Reactive Current";
+    const DESCRIPTION: &'static str = "Dynamic Reactive Current ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m128
     }

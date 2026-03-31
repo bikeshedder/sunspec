@@ -42,6 +42,73 @@ impl DerSimControls {
     pub const GRID_VOLTAGE_C: crate::Point<Self, Option<f32>> = crate::Point::new(82, 2, true);
     pub const GRID_FREQUENCY: crate::Point<Self, Option<f32>> = crate::Point::new(84, 2, true);
 }
+static DER_SIM_CONTROLS_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "time",
+        label: "Time offset",
+        description: "Time offset for simulation formatted 'HH:MM:SS'",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "temperature",
+        label: "Temperature",
+        description: "Ambient temperature (degrees Celsius)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "grid_model_source",
+        label: "GridModelSource",
+        description: "The data source for the grid model. 'csv' or 'const'",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "irradiance_model_source",
+        label: "IrradianceModelSource",
+        description: "The data source for the irradiance model. 'csv' or 'const'",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "irradiance",
+        label: "Irradiance",
+        description: "The irradiance on the DER device (W/m^2) for the 'const' irradiance model",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "grid_voltage_a",
+        label: "GridVoltageA",
+        description: "Phase A RMS Voltage (pu) for the 'const' grid model",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "grid_voltage_b",
+        label: "GridVoltageB",
+        description: "Phase B RMS Voltage (pu) for the 'const' grid model",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "grid_voltage_c",
+        label: "GridVoltageC",
+        description: "Phase C RMS Voltage (pu) for the 'const' grid model",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "grid_frequency",
+        label: "GridFrequency",
+        description: "Grid frequency (Hz) for the 'const' grid model",
+        kind: crate::FieldKind::Point,
+    },
+];
+static DER_SIM_CONTROLS_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERSimControls",
+    label: "DER Simulation Controls",
+    description: "Configuration parameters for the DER device simulator.",
+    fields: DER_SIM_CONTROLS_FIELDS,
+};
+impl crate::GroupMeta for DerSimControls {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_SIM_CONTROLS_GROUP_INFO
+    }
+}
 impl crate::Group for DerSimControls {
     const LEN: u16 = 86;
 }
@@ -68,6 +135,9 @@ impl DerSimControls {
 }
 impl crate::Model for DerSimControls {
     const ID: u16 = 64414;
+    const NAME: &'static str = "DERSimControls";
+    const LABEL: &'static str = "DER Simulation Controls";
+    const DESCRIPTION: &'static str = "Configuration parameters for the DER device simulator.";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64414
     }

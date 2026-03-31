@@ -84,6 +84,109 @@ impl Model13 {
     pub const DOM_NAM: crate::Point<Self, Option<String>> = crate::Point::new(149, 12, true);
     pub const HOST_NAM: crate::Point<Self, Option<String>> = crate::Point::new(161, 12, true);
 }
+static MODEL13_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "nam",
+        label: "Name",
+        description: "Interface name",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cfg_st",
+        label: "Config Status",
+        description: "Enumerated value.  Configuration status",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "chg_st",
+        label: "Change Status",
+        description: "Bitmask value.  A configuration change is pending",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cap",
+        label: "Config Capability",
+        description: "Bitmask value. Identify capable sources of configuration",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cfg",
+        label: "IPv6 Config",
+        description: "Enumerated value.  Configuration method used.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl",
+        label: "Control",
+        description: "Bitmask value.  Configure use of services",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "addr",
+        label: "IP",
+        description: "IPv6 numeric address as a dotted string xxxx.xxxx.xxxx.xxxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cidr",
+        label: "CIDR",
+        description: "Classless Inter-Domain Routing Number",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "gw",
+        label: "Gateway",
+        description: "IPv6 numeric address as a dotted string xxxx.xxxx.xxxx.xxxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dns1",
+        label: "DNS1",
+        description: "IPv6 numeric DNS address as a dotted string xxxx.xxxx.xxxx.xxxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dns2",
+        label: "DNS2",
+        description: "IPv6 numeric DNS address as a dotted string xxxx.xxxx.xxxx.xxxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ntp1",
+        label: "NTP1",
+        description: "IPv6 numeric NTP address as a name or dotted string xxxx.xxxx.xxxx.xxxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ntp2",
+        label: "NTP2",
+        description: "IPv6 numeric NTP address as a name or dotted string xxxx.xxxx.xxxx.xxxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dom_nam",
+        label: "Domain",
+        description: "Domain name (24 chars max)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "host_nam",
+        label: "Host Name",
+        description: "Host name (24 chars max)",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL13_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_13",
+    label: "IPv6",
+    description: "Include to support an IPv6 protocol stack on this interface",
+    fields: MODEL13_FIELDS,
+};
+impl crate::GroupMeta for Model13 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL13_GROUP_INFO
+    }
+}
 impl crate::Group for Model13 {
     const LEN: u16 = 174;
 }
@@ -291,6 +394,9 @@ impl crate::FixedSize for Ctl {
 }
 impl crate::Model for Model13 {
     const ID: u16 = 13;
+    const NAME: &'static str = "model_13";
+    const LABEL: &'static str = "IPv6";
+    const DESCRIPTION: &'static str = "Include to support an IPv6 protocol stack on this interface";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m13
     }

@@ -76,6 +76,157 @@ impl Model64111 {
     pub const LIFE_TIME_MAX_BATT: crate::Point<Self, u16> = crate::Point::new(21, 1, false);
     pub const LIFE_TIME_MAX_VOC: crate::Point<Self, u16> = crate::Point::new(22, 1, false);
 }
+static MODEL64111_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "port",
+        label: "Port Number",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_sf",
+        label: "A_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "p_sf",
+        label: "P_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ah_sf",
+        label: "AH_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "kwh_sf",
+        label: "KWH_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "batt_v",
+        label: "Battery Voltage",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "array_v",
+        label: "Array Voltage",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "output_a",
+        label: "Output Current",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "input_a",
+        label: "Array Current",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "charger_st",
+        label: "Operating State",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "output_w",
+        label: "Output Wattage",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "today_min_bat_v",
+        label: "Today's Minimum Battery Voltage",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "today_max_bat_v",
+        label: "Today's Maximum Battery Voltage",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vocv",
+        label: "VOC",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "today_max_voc",
+        label: "Today's Maximum VOC",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "todayk_wh_output",
+        label: "Today's kWh",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "today_ah_output",
+        label: "Today's AH",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "life_time_kwh_out",
+        label: "Lifetime kWh",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "life_time_ah_out",
+        label: "Lifetime kAH",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "life_time_max_out",
+        label: "Lifetime Maximum Output Wattage",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "life_time_max_batt",
+        label: "Lifetime Maximum Battery Voltage",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "life_time_max_voc",
+        label: "Lifetime Maximum VOC Voltage",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL64111_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_64111",
+    label: "Basic Charge Controller",
+    description: "",
+    fields: MODEL64111_FIELDS,
+};
+impl crate::GroupMeta for Model64111 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL64111_GROUP_INFO
+    }
+}
 impl crate::Group for Model64111 {
     const LEN: u16 = 23;
 }
@@ -164,6 +315,9 @@ impl crate::FixedSize for ChargerSt {
 }
 impl crate::Model for Model64111 {
     const ID: u16 = 64111;
+    const NAME: &'static str = "model_64111";
+    const LABEL: &'static str = "Basic Charge Controller";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64111
     }

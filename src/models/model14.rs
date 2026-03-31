@@ -49,6 +49,67 @@ impl Model14 {
     pub const USER: crate::Point<Self, Option<String>> = crate::Point::new(28, 12, true);
     pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(40, 12, true);
 }
+static MODEL14_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "nam",
+        label: "name",
+        description: "Interface name (8 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cap",
+        label: "Capabilities",
+        description: "Bitmask value.  Proxy configuration capabilities",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cfg",
+        label: "Config",
+        description: "Enumerated value.  Set proxy address type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "typ",
+        label: "Type",
+        description: "Enumerate value.  Proxy server type",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "addr",
+        label: "Address",
+        description: "IPv4 or IPv6 proxy hostname or dotted address (40 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "port",
+        label: "Port",
+        description: "Proxy port number",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "user",
+        label: "Username",
+        description: "Proxy user name",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pw",
+        label: "Password",
+        description: "Proxy password",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL14_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_14",
+    label: "Proxy Server",
+    description: "Include this block to allow for a proxy server",
+    fields: MODEL14_FIELDS,
+};
+impl crate::GroupMeta for Model14 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL14_GROUP_INFO
+    }
+}
 impl crate::Group for Model14 {
     const LEN: u16 = 52;
 }
@@ -119,6 +180,9 @@ impl crate::FixedSize for Typ {
 }
 impl crate::Model for Model14 {
     const ID: u16 = 14;
+    const NAME: &'static str = "model_14";
+    const LABEL: &'static str = "Proxy Server";
+    const DESCRIPTION: &'static str = "Include this block to allow for a proxy server";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m14
     }

@@ -387,6 +387,439 @@ impl DerMeasureAc {
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(120, 1, false);
     pub const MN_ALRM_INFO: crate::Point<Self, Option<String>> = crate::Point::new(121, 32, false);
 }
+static DER_MEASURE_AC_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "ac_type",
+        label: "AC Wiring Type",
+        description: "AC wiring type.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "st",
+        label: "Operating State",
+        description: "Operating state of the DER.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "inv_st",
+        label: "Inverter State",
+        description: "Enumerated value.  Inverter state.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "conn_st",
+        label: "Grid Connection State",
+        description: "Grid connection state of the DER.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alrm",
+        label: "Alarm Bitfield",
+        description: "Active alarms for the DER.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "der_mode",
+        label: "DER Operational Characteristics",
+        description: "Current operational characteristics of the DER.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w",
+        label: "Active Power",
+        description: "Total active power. Active power is positive for DER generation and negative for absorption.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va",
+        label: "Apparent Power",
+        description: "Total apparent power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var",
+        label: "Reactive Power",
+        description: "Total reactive power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf",
+        label: "Power Factor",
+        description: "Power factor. The sign of power factor should be the sign of active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a",
+        label: "Total AC Current",
+        description: "Total AC current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "llv",
+        label: "Voltage LL",
+        description: "Line to line AC voltage as an average of active phases.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "lnv",
+        label: "Voltage LN",
+        description: "Line to neutral AC voltage as an average of active phases.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz",
+        label: "Frequency",
+        description: "AC frequency.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_inj",
+        label: "Total Energy Injected",
+        description: "Total active energy injected (Quadrants 1 & 4).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_abs",
+        label: "Total Energy Absorbed",
+        description: "Total active energy absorbed (Quadrants 2 & 3).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_varh_inj",
+        label: "Total Reactive Energy Inj",
+        description: "Total reactive energy injected (Quadrants 1 & 2).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_varh_abs",
+        label: "Total Reactive Energy Abs",
+        description: "Total reactive energy absorbed (Quadrants 3 & 4).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_amb",
+        label: "Ambient Temperature",
+        description: "Ambient temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_cab",
+        label: "Cabinet Temperature",
+        description: "Cabinet temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_snk",
+        label: "Heat Sink Temperature",
+        description: "Heat sink temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_trns",
+        label: "Transformer Temperature",
+        description: "Transformer temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_sw",
+        label: "IGBT/MOSFET Temperature",
+        description: "IGBT/MOSFET temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_ot",
+        label: "Other Temperature",
+        description: "Other temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wl1",
+        label: "Watts L1",
+        description: "Active power L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val1",
+        label: "VA L1",
+        description: "Apparent power L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_l1",
+        label: "Var L1",
+        description: "Reactive power L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfl1",
+        label: "PF L1",
+        description: "Power factor phase L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "al1",
+        label: "Amps L1",
+        description: "Current phase L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vl1l2",
+        label: "Phase Voltage L1-L2",
+        description: "Phase voltage L1-L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vl1",
+        label: "Phase Voltage L1-N",
+        description: "Phase voltage L1-N.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_inj_l1",
+        label: "Total Watt-Hours Inj L1",
+        description: "Total active energy injected L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_abs_l1",
+        label: "Total Watt-Hours Abs L1",
+        description: "Total active energy absorbed L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_varh_inj_l1",
+        label: "Total Var-Hours Inj L1",
+        description: "Total reactive energy injected L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_varh_abs_l1",
+        label: "Total Var-Hours Abs L1",
+        description: "Total reactive energy absorbed L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wl2",
+        label: "Watts L2",
+        description: "Active power L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val2",
+        label: "VA L2",
+        description: "Apparent power L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_l2",
+        label: "Var L2",
+        description: "Reactive power L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfl2",
+        label: "PF L2",
+        description: "Power factor L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "al2",
+        label: "Amps L2",
+        description: "Current L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vl2l3",
+        label: "Phase Voltage L2-L3",
+        description: "Phase voltage L2-L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vl2",
+        label: "Phase Voltage L2-N",
+        description: "Phase voltage L2-N.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_inj_l2",
+        label: "Total Watt-Hours Inj L2",
+        description: "Total active energy injected L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_abs_l2",
+        label: "Total Watt-Hours Abs L2",
+        description: "Total active energy absorbed L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_varh_inj_l2",
+        label: "Total Var-Hours Inj L2",
+        description: "Total reactive energy injected L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_varh_abs_l2",
+        label: "Total Var-Hours Abs L2",
+        description: "Total reactive energy absorbed L2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wl3",
+        label: "Watts L3",
+        description: "Active power L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val3",
+        label: "VA L3",
+        description: "Apparent power L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_l3",
+        label: "Var L3",
+        description: "Reactive power L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pfl3",
+        label: "PF L3",
+        description: "Power factor L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "al3",
+        label: "Amps L3",
+        description: "Current L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vl3l1",
+        label: "Phase Voltage L3-L1",
+        description: "Phase voltage L3-L1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vl3",
+        label: "Phase Voltage L3-N",
+        description: "Phase voltage L3-N.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_inj_l3",
+        label: "Total Watt-Hours Inj L3",
+        description: "Total active energy injected L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_abs_l3",
+        label: "Total Watt-Hours Abs L3",
+        description: "Total active energy absorbed L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_varh_inj_l3",
+        label: "Total Var-Hours Inj L3",
+        description: "Total reactive energy injected L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_varh_abs_l3",
+        label: "Total Var-Hours Abs L3",
+        description: "Total reactive energy absorbed L3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "throt_pct",
+        label: "Throttling In Pct",
+        description: "Throttling in pct of maximum active power.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "throt_src",
+        label: "Throttle Source Information",
+        description: "Active throttling source.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_sf",
+        label: "Current Scale Factor",
+        description: "Current scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "Voltage Scale Factor",
+        description: "Voltage scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_sf",
+        label: "Frequency Scale Factor",
+        description: "Frequency scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_sf",
+        label: "Active Power Scale Factor",
+        description: "Active power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_sf",
+        label: "Power Factor Scale Factor",
+        description: "Power factor scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_sf",
+        label: "Apparent Power Scale Factor",
+        description: "Apparent power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_sf",
+        label: "Reactive Power Scale Factor",
+        description: "Reactive power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_sf",
+        label: "Active Energy Scale Factor",
+        description: "Active energy scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_varh_sf",
+        label: "Reactive Energy Scale Factor",
+        description: "Reactive energy scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_sf",
+        label: "Temperature Scale Factor",
+        description: "Temperature scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mn_alrm_info",
+        label: "Manufacturer Alarm Info",
+        description: "Manufacturer alarm information. Valid if MANUFACTURER_ALRM indication is active.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static DER_MEASURE_AC_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERMeasureAC",
+    label: "DER AC Measurement",
+    description: "DER AC measurement model.",
+    fields: DER_MEASURE_AC_FIELDS,
+};
+impl crate::GroupMeta for DerMeasureAc {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_MEASURE_AC_GROUP_INFO
+    }
+}
 impl crate::Group for DerMeasureAc {
     const LEN: u16 = 153;
 }
@@ -759,6 +1192,9 @@ impl crate::FixedSize for ThrotSrc {
 }
 impl crate::Model for DerMeasureAc {
     const ID: u16 = 701;
+    const NAME: &'static str = "DERMeasureAC";
+    const LABEL: &'static str = "DER AC Measurement";
+    const DESCRIPTION: &'static str = "DER AC measurement model.";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m701
     }

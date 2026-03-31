@@ -225,6 +225,403 @@ impl Model64112 {
     pub const CC_CONFIG_DATA_LOG_CLR_COMP: crate::Point<Self, u16> =
         crate::Point::new(63, 1, false);
 }
+static MODEL64112_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "port",
+        label: "Port Number",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "c_sf",
+        label: "C_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "h_sf",
+        label: "H_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "p_sf",
+        label: "P_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ah_sf",
+        label: "AH_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "kwh_sf",
+        label: "KWH_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_fault",
+        label: "Faults",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_absorb_v",
+        label: "Absorb",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_absorb_hr",
+        label: "Absorb Time",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_absorb_end_a",
+        label: "Absorb End",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_rebulk_v",
+        label: "Rebulk",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_float_v",
+        label: "Float",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_max_chg_a",
+        label: "Maximum Charge",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_equalize_v",
+        label: "Equalize",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_equalize_hr",
+        label: "Equalize Time",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_auto_equalize",
+        label: "Auto Equalize Interval",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_mppt_mode",
+        label: "MPPT mode",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_sweep_width",
+        label: "Sweep Width",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_sweep_max",
+        label: "Sweep Maximum",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_u_pick_duty_cyc",
+        label: "U-Pick PWM Duty Cycle",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_grid_tie",
+        label: "Grid Tie Mode",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_temp_comp",
+        label: "Temp Comp Mode",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_temp_comp_llimt",
+        label: "Temp Comp Lower Limit",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_temp_comp_hlimt",
+        label: "Temp Comp Upper Limit",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_auto_restart",
+        label: "Auto Restart Mode",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_wakeup_voc",
+        label: "Wakeup VOC Change",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_snooze_mode_a",
+        label: "Snooze Mode",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_wakeup_interval",
+        label: "Wakeup Interval",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_mode",
+        label: "AUX Output Mode",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_control",
+        label: "AUX Output Control",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_state",
+        label: "AUX Output State",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_polarity",
+        label: "AUX Output Polarity",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_l_batt_disc",
+        label: "AUX Low Battery Disconnect",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_l_batt_rcon",
+        label: "AUX Low Battery Reconnect",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_l_batt_dly",
+        label: "AUX Low Battery Disconnect Delay",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_vent_fan_v",
+        label: "AUX Vent Fan",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_pv_trigger_v",
+        label: "AUX PV Trigger",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_pv_trg_h_tm",
+        label: "AUX PV Trigger Hold Time",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_nlite_thrs_v",
+        label: "AUX Night Light Threshold",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_nlite_on_tm",
+        label: "AUX Night Light On Time",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_nlite_on_hist",
+        label: "AUX Night Light On Hysteresis",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_nlite_off_hist",
+        label: "AUX Night Light Off Hysteresis",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_error_batt_v",
+        label: "AUX Error Output Low Battery",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_divert_h_time",
+        label: "AUX Divert Hold Time",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_divert_dly_time",
+        label: "AUX Divert Delay Time",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_divert_rel_v",
+        label: "AUX Divert Relative",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_aux_divert_hyst_v",
+        label: "AUX Divert Hysteresis",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_major_fw_rev",
+        label: "FM CC Major Firmware Number",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_mid_fw_rev",
+        label: "FM CC Mid Firmware Number",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_minor_fw_rev",
+        label: "FM CC Minor Firmware Number",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_day_offset",
+        label: "Set Data Log Day Offset",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_cur_day_off",
+        label: "Current Data Log Day Offset",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_daily_ah",
+        label: "Data Log Daily (Ah)",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_daily_kwh",
+        label: "Data Log Daily (kWh)",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_max_out_a",
+        label: "Data Log Daily Maximum Output (A)",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_max_out_w",
+        label: "Data Log Daily Maximum Output (W)",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_absorb_t",
+        label: "Data Log Daily Absorb Time",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_float_t",
+        label: "Data Log Daily Float Time",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_min_batt_v",
+        label: "Data Log Daily Minimum Battery",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_max_batt_v",
+        label: "Data Log Daily Maximum Battery",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_max_input_v",
+        label: "Data Log Daily Maximum Input",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_clear",
+        label: "Data Log Clear",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cc_config_data_log_clr_comp",
+        label: "Data Log Clear Complement",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL64112_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_64112",
+    label: "OutBack FM Charge Controller",
+    description: "",
+    fields: MODEL64112_FIELDS,
+};
+impl crate::GroupMeta for Model64112 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL64112_GROUP_INFO
+    }
+}
 impl crate::Group for Model64112 {
     const LEN: u16 = 64;
 }
@@ -741,6 +1138,9 @@ impl crate::FixedSize for CcConfigAuxPolarity {
 }
 impl crate::Model for Model64112 {
     const ID: u16 = 64112;
+    const NAME: &'static str = "model_64112";
+    const LABEL: &'static str = "OutBack FM Charge Controller";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64112
     }

@@ -166,6 +166,199 @@ impl FlowBatteryString {
     pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(31, 1, false);
     pub const OCV_SF: crate::Point<Self, i16> = crate::Point::new(32, 1, false);
 }
+static FLOW_BATTERY_STRING_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "idx",
+        label: "String Index",
+        description: "Index of the string within the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_mod",
+        label: "Module Count",
+        description: "Number of modules in this string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_mod_con",
+        label: "Connected Module Count",
+        description: "Number of electrically connected modules in this string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_v_max",
+        label: "Max Module Voltage",
+        description: "Maximum voltage for all modules in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_v_max_mod",
+        label: "Max Module Voltage Module",
+        description: "Module with the maximum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_v_min",
+        label: "Min Module Voltage",
+        description: "Minimum voltage for all modules in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_v_min_mod",
+        label: "Min Module Voltage Module",
+        description: "Module with the minimum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_v_avg",
+        label: "Average Module Voltage",
+        description: "Average voltage for all modules in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_max",
+        label: "Max Cell Voltage",
+        description: "Maximum voltage for all cells in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_max_mod",
+        label: "Max Cell Voltage Module",
+        description: "Module containing the cell with the maximum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_max_stk",
+        label: "Max Cell Voltage Stack",
+        description: "Stack containing the cell with the maximum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_min",
+        label: "Min Cell Voltage",
+        description: "Minimum voltage for all cells in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_min_mod",
+        label: "Min Cell Voltage Module",
+        description: "Module containing the cell with the minimum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_min_stk",
+        label: "Min Cell Voltage Stack",
+        description: "Stack containing the cell with the minimum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_avg",
+        label: "Average Cell Voltage",
+        description: "Average voltage for all cells in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_max",
+        label: "Max Temperature",
+        description: "Maximum electrolyte temperature for all modules in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_max_mod",
+        label: "Max Temperature Module",
+        description: "Module with the maximum temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_min",
+        label: "Min Temperature",
+        description: "Minimum electrolyte temperature for all modules in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_min_mod",
+        label: "Min Temperature Module",
+        description: "Module with the minimum temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_avg",
+        label: "Average Temperature",
+        description: "Average electrolyte temperature for all modules in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt1",
+        label: "String Event 1",
+        description: "Alarms, warnings and status values.  Bit flags.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt2",
+        label: "String Event 2",
+        description: "Alarms, warnings and status values.  Bit flags.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd1",
+        label: "Vendor Event Bitfield 1",
+        description: "Vendor defined events.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd2",
+        label: "Vendor Event Bitfield 2",
+        description: "Vendor defined events.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_v_sf",
+        label: "ModV_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_sf",
+        label: "CellV_SF",
+        description: "Scale factor for voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_sf",
+        label: "Tmp_SF",
+        description: "Scale factor for temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc_sf",
+        label: "SoC_SF",
+        description: "Scale factor for state of charge.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ocv_sf",
+        label: "OCV_SF",
+        description: "Scale factor for open circuit voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "module",
+        label: "module",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Module as crate::GroupMeta>::group_info),
+    },
+];
+static FLOW_BATTERY_STRING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "flow_battery_string",
+    label: "Flow Battery String Model",
+    description: "",
+    fields: FLOW_BATTERY_STRING_FIELDS,
+};
+impl crate::GroupMeta for FlowBatteryString {
+    fn group_info() -> &'static crate::GroupInfo {
+        &FLOW_BATTERY_STRING_GROUP_INFO
+    }
+}
 impl crate::Group for FlowBatteryString {
     const LEN: u16 = 34;
 }
@@ -431,6 +624,139 @@ impl Module {
         crate::Point::new(22, 1, true);
     pub const MOD_DIS_RSN: crate::Point<Self, Option<ModuleModDisRsn>> =
         crate::Point::new(23, 1, false);
+}
+static MODULE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "mod_idx",
+        label: "Module Index",
+        description: "Index of the module within the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_n_stk",
+        label: "Stack Count",
+        description: "Number of stacks in this module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_st",
+        label: "Module Status",
+        description: "Current status of the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_soc",
+        label: "Module State of Charge",
+        description: "State of charge for this module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_ocv",
+        label: "Open Circuit Voltage",
+        description: "Open circuit voltage for this module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_v",
+        label: "External Voltage",
+        description: "External voltage fo this module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_cell_v_max",
+        label: "Maximum Cell Voltage",
+        description: "Maximum voltage for all cells in this module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_cell_v_max_cell",
+        label: "Max Cell Voltage Cell",
+        description: "Cell with the maximum cell voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_cell_v_min",
+        label: "Minimum Cell Voltage",
+        description: "Minimum voltage for all cells in this module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_cell_v_min_cell",
+        label: "Min Cell Voltage Cell",
+        description: "Cell with the minimum cell voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_cell_v_avg",
+        label: "Average Cell Voltage",
+        description: "Average voltage for all cells in this module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_ano_tmp",
+        label: "Anolyte Temperature",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_cat_tmp",
+        label: "Catholyte Temperature",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_con_st",
+        label: "Contactor Status",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_evt1",
+        label: "Module Event 1",
+        description: "Alarms, warnings and status values.  Bit flags.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_evt2",
+        label: "Module Event 2",
+        description: "Alarms, warnings and status values.  Bit flags.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_con_fail",
+        label: "Connection Failure Reason",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_set_ena",
+        label: "Enable/Disable Module",
+        description: "Enables and disables the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_set_con",
+        label: "Connect/Disconnect Module ",
+        description: "Connects and disconnects the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_dis_rsn",
+        label: "Disabled Reason",
+        description: "Reason why the module is currently disabled.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODULE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "module",
+    label: "module",
+    description: "",
+    fields: MODULE_FIELDS,
+};
+impl crate::GroupMeta for Module {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODULE_GROUP_INFO
+    }
 }
 impl crate::Group for Module {
     const LEN: u16 = 24;
@@ -809,6 +1135,9 @@ impl crate::FixedSize for ModuleModDisRsn {
 }
 impl crate::Model for FlowBatteryString {
     const ID: u16 = 807;
+    const NAME: &'static str = "flow_battery_string";
+    const LABEL: &'static str = "Flow Battery String Model";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m807
     }

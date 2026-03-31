@@ -8,6 +8,23 @@ pub struct Model63002 {
 }
 #[allow(missing_docs)]
 impl Model63002 {}
+static MODEL63002_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    kind: crate::FieldKind::RepeatingGroup(<Repeating as crate::GroupMeta>::group_info),
+}];
+static MODEL63002_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_63002",
+    label: "SunSpec Test Model 2",
+    description: "",
+    fields: MODEL63002_FIELDS,
+};
+impl crate::GroupMeta for Model63002 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL63002_GROUP_INFO
+    }
+}
 impl crate::Group for Model63002 {
     const LEN: u16 = 0;
 }
@@ -39,6 +56,43 @@ impl Repeating {
     pub const INT16_1: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
     pub const INT16_2: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
     pub const SUNSSF_2: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
+}
+static REPEATING_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "sunssf_1",
+        label: "sunssf_1",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_1",
+        label: "int16_1",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_2",
+        label: "int16_2",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sunssf_2",
+        label: "sunssf_2",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+];
+static REPEATING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    fields: REPEATING_FIELDS,
+};
+impl crate::GroupMeta for Repeating {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REPEATING_GROUP_INFO
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 4;
@@ -78,6 +132,9 @@ impl Repeating {
 }
 impl crate::Model for Model63002 {
     const ID: u16 = 63002;
+    const NAME: &'static str = "model_63002";
+    const LABEL: &'static str = "SunSpec Test Model 2";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m63002
     }

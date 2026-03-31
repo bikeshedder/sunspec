@@ -84,6 +84,109 @@ impl Model12 {
     pub const DOM_NAM: crate::Point<Self, Option<String>> = crate::Point::new(73, 12, true);
     pub const HOST_NAM: crate::Point<Self, Option<String>> = crate::Point::new(85, 12, true);
 }
+static MODEL12_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "nam",
+        label: "Name",
+        description: "Interface name",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cfg_st",
+        label: "Config Status",
+        description: "Enumerated value.  Configuration status",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "chg_st",
+        label: "Change Status",
+        description: "Bitmask value.  A configuration change is pending",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cap",
+        label: "Config Capability",
+        description: "Bitmask value. Identify capable sources of configuration",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cfg",
+        label: "IPv4 Config",
+        description: "Enumerated value.  Configuration method used.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl",
+        label: "Control",
+        description: "Configure use of services",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "addr",
+        label: "IP",
+        description: "IPv4 numeric address as a dotted string xxx.xxx.xxx.xxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "msk",
+        label: "Netmask",
+        description: "IPv4 numeric netmask as a dotted string xxx.xxx.xxx.xxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "gw",
+        label: "Gateway",
+        description: "IPv4 numeric gateway address as a dotted string xxx.xxx.xxx.xxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dns1",
+        label: "DNS1",
+        description: "IPv4 numeric DNS address as a dotted string xxx.xxx.xxx.xxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dns2",
+        label: "DNS2",
+        description: "IPv4 numeric DNS address as a dotted string xxx.xxx.xxx.xxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ntp1",
+        label: "NTP1",
+        description: "IPv4 numeric NTP address as a dotted string xxx.xxx.xxx.xxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ntp2",
+        label: "NTP2",
+        description: "IPv4 numeric NTP address as a dotted string xxx.xxx.xxx.xxx",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dom_nam",
+        label: "Domain",
+        description: "Domain name (24 chars max)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "host_nam",
+        label: "Host Name",
+        description: "Host name (24 chars max)",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL12_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_12",
+    label: "IPv4",
+    description: "Include to support an IPv4 protocol stack on this interface",
+    fields: MODEL12_FIELDS,
+};
+impl crate::GroupMeta for Model12 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL12_GROUP_INFO
+    }
+}
 impl crate::Group for Model12 {
     const LEN: u16 = 98;
 }
@@ -291,6 +394,9 @@ impl crate::FixedSize for Ctl {
 }
 impl crate::Model for Model12 {
     const ID: u16 = 12;
+    const NAME: &'static str = "model_12";
+    const LABEL: &'static str = "IPv4";
+    const DESCRIPTION: &'static str = "Include to support an IPv4 protocol stack on this interface";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m12
     }

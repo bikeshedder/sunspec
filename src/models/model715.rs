@@ -38,6 +38,50 @@ impl DerCtl {
     pub const ALARM_RESET: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const OP_CTL: crate::Point<Self, Option<OpCtl>> = crate::Point::new(6, 1, true);
 }
+static DER_CTL_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "loc_rem_ctl",
+        label: "Control Mode",
+        description: "DER control mode. Enumeration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "der_hb",
+        label: "DER Heartbeat",
+        description: "Value is incremented every second by the DER with periodic resets to zero.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "controller_hb",
+        label: "Controller Heartbeat",
+        description:
+            "Value is incremented every second by the controller with periodic resets to zero.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alarm_reset",
+        label: "Alarm Reset",
+        description: "Used to reset any latched alarms. 1 = Reset.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "op_ctl",
+        label: "Set Operation",
+        description: "Commands to PCS. Enumerated value.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static DER_CTL_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERCtl",
+    label: "DERCtl",
+    description: "DER Control",
+    fields: DER_CTL_FIELDS,
+};
+impl crate::GroupMeta for DerCtl {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_CTL_GROUP_INFO
+    }
+}
 impl crate::Group for DerCtl {
     const LEN: u16 = 7;
 }
@@ -148,6 +192,9 @@ impl crate::FixedSize for OpCtl {
 }
 impl crate::Model for DerCtl {
     const ID: u16 = 715;
+    const NAME: &'static str = "DERCtl";
+    const LABEL: &'static str = "DERCtl";
+    const DESCRIPTION: &'static str = "DER Control";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m715
     }

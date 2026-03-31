@@ -48,6 +48,61 @@ impl Pricing {
     pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const SIG_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
 }
+static PRICING_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "mod_ena",
+        label: "ModEna",
+        description: "Is price-based charge/discharge mode active?",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sig_type",
+        label: "SigType",
+        description: "Meaning of the pricing signal. When a Price schedule is used, type must match the schedule range variable description.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sig",
+        label: "Sig",
+        description: "Utility/ESP specific pricing signal. Content depends on pricing signal type. When H/M/L type is specified. Low=0; Med=1; High=2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "win_tms",
+        label: "WinTms",
+        description: "Time window for charge/discharge pricing change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvt_tms",
+        label: "RvtTms",
+        description: "Timeout period for charge/discharge pricing change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_tms",
+        label: "RmpTms",
+        description: "Ramp time for moving from current charge or discharge level to new level.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sig_sf",
+        label: "Sig_SF",
+        description: "Pricing signal scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static PRICING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "pricing",
+    label: "Pricing",
+    description: "Pricing Signal  ",
+    fields: PRICING_FIELDS,
+};
+impl crate::GroupMeta for Pricing {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PRICING_GROUP_INFO
+    }
+}
 impl crate::Group for Pricing {
     const LEN: u16 = 8;
 }
@@ -145,6 +200,9 @@ impl crate::FixedSize for SigType {
 }
 impl crate::Model for Pricing {
     const ID: u16 = 125;
+    const NAME: &'static str = "pricing";
+    const LABEL: &'static str = "Pricing";
+    const DESCRIPTION: &'static str = "Pricing Signal  ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m125
     }

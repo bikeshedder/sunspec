@@ -43,6 +43,55 @@ impl Common {
     pub const SN: crate::Point<Self, String> = crate::Point::new(48, 16, false);
     pub const DA: crate::Point<Self, Option<u16>> = crate::Point::new(64, 1, true);
 }
+static COMMON_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "mn",
+        label: "Manufacturer",
+        description: "Well known value registered with SunSpec for compliance",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "md",
+        label: "Model",
+        description: "Manufacturer specific value (32 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "opt",
+        label: "Options",
+        description: "Manufacturer specific value (16 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vr",
+        label: "Version",
+        description: "Manufacturer specific value (16 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sn",
+        label: "Serial Number",
+        description: "Manufacturer specific value (32 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "da",
+        label: "Device Address",
+        description: "Modbus device address",
+        kind: crate::FieldKind::Point,
+    },
+];
+static COMMON_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "common",
+    label: "Common",
+    description: "All SunSpec compliant devices must include this as the first model",
+    fields: COMMON_FIELDS,
+};
+impl crate::GroupMeta for Common {
+    fn group_info() -> &'static crate::GroupInfo {
+        &COMMON_GROUP_INFO
+    }
+}
 impl crate::Group for Common {
     const LEN: u16 = 66;
 }
@@ -66,6 +115,10 @@ impl Common {
 }
 impl crate::Model for Common {
     const ID: u16 = 1;
+    const NAME: &'static str = "common";
+    const LABEL: &'static str = "Common";
+    const DESCRIPTION: &'static str =
+        "All SunSpec compliant devices must include this as the first model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m1
     }

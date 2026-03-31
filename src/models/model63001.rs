@@ -180,6 +180,355 @@ impl Model63001 {
     pub const SUNSSF_6: crate::Point<Self, Option<i16>> = crate::Point::new(131, 1, false);
     pub const SUNSSF_7: crate::Point<Self, Option<i16>> = crate::Point::new(132, 1, false);
 }
+static MODEL63001_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "sunssf_1",
+        label: "sunssf_1",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sunssf_2",
+        label: "sunssf_2",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sunssf_3",
+        label: "sunssf_3",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sunssf_4",
+        label: "sunssf_4",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_1",
+        label: "int16_1",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_2",
+        label: "int16_2",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_3",
+        label: "int16_3",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_4",
+        label: "int16_4",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_5",
+        label: "int16_5",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_u",
+        label: "int16_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_1",
+        label: "uint16_1",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_2",
+        label: "uint16_2",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_3",
+        label: "uint16_3",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_4",
+        label: "uint16_4",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_5",
+        label: "uint16_5",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_u",
+        label: "uint16_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "acc16",
+        label: "acc16",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "acc16_u",
+        label: "acc16_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "enum16",
+        label: "enum16",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "enum16_u",
+        label: "enum16_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "bitfield16",
+        label: "bitfield16",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "bitfield16_u",
+        label: "bitfield16_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int32_1",
+        label: "int32_1",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int32_2",
+        label: "int32_2",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int32_3",
+        label: "int32_3",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int32_4",
+        label: "int32_4",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int32_5",
+        label: "int32_5",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int32_u",
+        label: "int32_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint32_1",
+        label: "uint32_1",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint32_2",
+        label: "uint32_2",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint32_3",
+        label: "uint32_3",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint32_4",
+        label: "uint32_4",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint32_5",
+        label: "uint32_5",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint32_u",
+        label: "uint32_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "acc32",
+        label: "acc32",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "acc32_u",
+        label: "acc32_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "enum32",
+        label: "enum32",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "enum32_u",
+        label: "enum32_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "bitfield32",
+        label: "bitfield32",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "bitfield32_u",
+        label: "bitfield32_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ipaddr",
+        label: "ipaddr",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ipaddr_u",
+        label: "ipaddr_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int64",
+        label: "int64",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int64_u",
+        label: "int64_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "acc64",
+        label: "acc64",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "acc64_u",
+        label: "acc64_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ipv6addr",
+        label: "ipv6addr",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ipv6addr_u",
+        label: "ipv6addr_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "float32",
+        label: "float32",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "float32_u",
+        label: "float32_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "string",
+        label: "string",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "string_u",
+        label: "string_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sunssf_5",
+        label: "sunssf_5",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sunssf_6",
+        label: "sunssf_6",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sunssf_7",
+        label: "sunssf_7",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Repeating as crate::GroupMeta>::group_info),
+    },
+];
+static MODEL63001_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_63001",
+    label: "SunSpec Test Model 1",
+    description: "",
+    fields: MODEL63001_FIELDS,
+};
+impl crate::GroupMeta for Model63001 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL63001_GROUP_INFO
+    }
+}
 impl crate::Group for Model63001 {
     const LEN: u16 = 134;
 }
@@ -383,6 +732,97 @@ impl Repeating {
     pub const UINT32_U: crate::Point<Self, Option<u32>> = crate::Point::new(14, 2, false);
     pub const SUNSSF_9: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
 }
+static REPEATING_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "sunssf_8",
+        label: "sunssf_8",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_11",
+        label: "int16_11",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_12",
+        label: "int16_12",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int16_u",
+        label: "int16_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_11",
+        label: "uint16_11",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_12",
+        label: "uint16_12",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_13",
+        label: "uint16_13",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint16_u",
+        label: "uint16_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int32",
+        label: "int32",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int32_u",
+        label: "int32_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint32",
+        label: "uint32",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uint32_u",
+        label: "uint32_u",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sunssf_9",
+        label: "sunssf_9",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+];
+static REPEATING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    fields: REPEATING_FIELDS,
+};
+impl crate::GroupMeta for Repeating {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REPEATING_GROUP_INFO
+    }
+}
 impl crate::Group for Repeating {
     const LEN: u16 = 18;
 }
@@ -430,6 +870,9 @@ impl Repeating {
 }
 impl crate::Model for Model63001 {
     const ID: u16 = 63001;
+    const NAME: &'static str = "model_63001";
+    const LABEL: &'static str = "SunSpec Test Model 1";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m63001
     }

@@ -76,6 +76,91 @@ impl DerVoltVar {
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
 }
+static DER_VOLT_VAR_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "ena",
+        label: "DER Volt-Var Module Enable",
+        description: "Volt-Var control enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "adpt_crv_req",
+        label: "Adopt Curve Request",
+        description: "Index of curve points to adopt. First curve index is 1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "adpt_crv_rslt",
+        label: "Adopt Curve Result",
+        description: "Result of last adopt curve operation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_pt",
+        label: "Number Of Points",
+        description: "Number of curve points supported.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_crv",
+        label: "Stored Curve Count",
+        description: "Number of stored curves supported.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_tms",
+        label: "Reversion Timeout",
+        description: "Reversion time in seconds.  0 = No reversion time.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_rem",
+        label: "Reversion Time Remaining",
+        description: "Reversion time remaining in seconds.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_crv",
+        label: "Reversion Curve",
+        description: "Default curve after reversion timeout.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "Voltage Scale Factor",
+        description: "Scale factor for curve voltage points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dept_ref_sf",
+        label: "Var Scale Factor",
+        description: "Scale factor for curve var points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rsp_tms_sf",
+        label: "Open-Loop Scale Factor",
+        description: "Open loop response time scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "crv",
+        label: "Stored Curves",
+        description: "Stored curve sets.",
+        kind: crate::FieldKind::RepeatingGroup(<Crv as crate::GroupMeta>::group_info),
+    },
+];
+static DER_VOLT_VAR_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERVoltVar",
+    label: "DER Volt-Var",
+    description: "DER Volt-Var model.",
+    fields: DER_VOLT_VAR_FIELDS,
+};
+impl crate::GroupMeta for DerVoltVar {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_VOLT_VAR_GROUP_INFO
+    }
+}
 impl crate::Group for DerVoltVar {
     const LEN: u16 = 13;
 }
@@ -261,6 +346,79 @@ impl Crv {
     pub const V_REF_AUTO_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
     pub const RSP_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, true);
     pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(9, 1, false);
+}
+static CRV_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_pt",
+        label: "Active Points",
+        description: "Number of active points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dept_ref",
+        label: "Dependent Reference",
+        description: "Curve dependent reference.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pri",
+        label: "Power Priority",
+        description: "Power priority.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ref",
+        label: "Vref Adjustment",
+        description: "Vref adjustment as percentage of nominal voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ref_auto",
+        label: "Current Autonomous Vref",
+        description: "Autonomous vref value as a percentage of nominal voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ref_auto_ena",
+        label: "Autonomous Vref Enable",
+        description: "Enable autonomous vref.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ref_auto_tms",
+        label: "Auto Vref Time Constant",
+        description: "Autonomous vref time constant.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rsp_tms",
+        label: "Open Loop Response Time",
+        description: "Open loop response time.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "read_only",
+        label: "Curve Access",
+        description: "Curve read-write access.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pt",
+        label: "Stored Curve Points",
+        description: "Stored curve points.",
+        kind: crate::FieldKind::RepeatingGroup(<Pt as crate::GroupMeta>::group_info),
+    },
+];
+static CRV_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "Crv",
+    label: "Stored Curves",
+    description: "Stored curve sets.",
+    fields: CRV_FIELDS,
+};
+impl crate::GroupMeta for Crv {
+    fn group_info() -> &'static crate::GroupInfo {
+        &CRV_GROUP_INFO
+    }
 }
 impl crate::Group for Crv {
     const LEN: u16 = 10;
@@ -507,6 +665,31 @@ impl Pt {
     pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const VAR: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
 }
+static PT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "v",
+        label: "Voltage Point",
+        description: "Curve voltage point as percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var",
+        label: "Reactive Power Point",
+        description: "Curve reactive power point as set in DeptRef point.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static PT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "Pt",
+    label: "Stored Curve Points",
+    description: "Stored curve points.",
+    fields: PT_FIELDS,
+};
+impl crate::GroupMeta for Pt {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PT_GROUP_INFO
+    }
+}
 impl crate::Group for Pt {
     const LEN: u16 = 2;
 }
@@ -538,6 +721,9 @@ impl Pt {
 }
 impl crate::Model for DerVoltVar {
     const ID: u16 = 705;
+    const NAME: &'static str = "DERVoltVar";
+    const LABEL: &'static str = "DER Volt-Var";
+    const DESCRIPTION: &'static str = "DER Volt-Var model.";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m705
     }

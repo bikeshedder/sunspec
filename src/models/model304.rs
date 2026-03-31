@@ -12,6 +12,23 @@ pub struct Inclinometer {
 }
 #[allow(missing_docs)]
 impl Inclinometer {}
+static INCLINOMETER_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "incl",
+    label: "incl",
+    description: "",
+    kind: crate::FieldKind::RepeatingGroup(<Incl as crate::GroupMeta>::group_info),
+}];
+static INCLINOMETER_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "inclinometer",
+    label: "Inclinometer Model",
+    description: "Include to support orientation measurements",
+    fields: INCLINOMETER_FIELDS,
+};
+impl crate::GroupMeta for Inclinometer {
+    fn group_info() -> &'static crate::GroupInfo {
+        &INCLINOMETER_GROUP_INFO
+    }
+}
 impl crate::Group for Inclinometer {
     const LEN: u16 = 0;
 }
@@ -46,6 +63,37 @@ impl Incl {
     pub const INCLX: crate::Point<Self, i32> = crate::Point::new(0, 2, false);
     pub const INCLY: crate::Point<Self, Option<i32>> = crate::Point::new(2, 2, false);
     pub const INCLZ: crate::Point<Self, Option<i32>> = crate::Point::new(4, 2, false);
+}
+static INCL_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "inclx",
+        label: "X",
+        description: "X-Axis inclination",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "incly",
+        label: "Y",
+        description: "Y-Axis inclination",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "inclz",
+        label: "Z",
+        description: "Z-Axis inclination",
+        kind: crate::FieldKind::Point,
+    },
+];
+static INCL_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "incl",
+    label: "incl",
+    description: "",
+    fields: INCL_FIELDS,
+};
+impl crate::GroupMeta for Incl {
+    fn group_info() -> &'static crate::GroupInfo {
+        &INCL_GROUP_INFO
+    }
 }
 impl crate::Group for Incl {
     const LEN: u16 = 6;
@@ -84,6 +132,9 @@ impl Incl {
 }
 impl crate::Model for Inclinometer {
     const ID: u16 = 304;
+    const NAME: &'static str = "inclinometer";
+    const LABEL: &'static str = "Inclinometer Model";
+    const DESCRIPTION: &'static str = "Include to support orientation measurements";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m304
     }

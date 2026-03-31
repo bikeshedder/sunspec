@@ -65,6 +65,85 @@ impl WattPf {
     pub const PF_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
 }
+static WATT_PF_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_crv",
+        label: "ActCrv",
+        description: "Index of active curve. 0=no active curve.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_ena",
+        label: "ModEna",
+        description: "Is watt-PF mode active.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "win_tms",
+        label: "WinTms",
+        description: "Time window for watt-PF change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_tms",
+        label: "RvrtTms",
+        description: "Timeout period for watt-PF curve selection.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_tms",
+        label: "RmpTms",
+        description: "Ramp time for moving from current mode to new mode.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_crv",
+        label: "NCrv",
+        description: "Number of curves supported (recommend 4).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_pt",
+        label: "NPt",
+        description: "Max number of points in array.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_sf",
+        label: "W_SF",
+        description: "Scale factor for percent WMax.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_sf",
+        label: "PF_SF",
+        description: "Scale factor for PF.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_inc_dec_sf",
+        label: "RmpIncDec_SF",
+        description: "Scale factor for increment and decrement ramps.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "curve",
+        label: "curve",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Curve as crate::GroupMeta>::group_info),
+    },
+];
+static WATT_PF_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "watt_pf",
+    label: "Watt-PF",
+    description: "Watt-Power Factor ",
+    fields: WATT_PF_FIELDS,
+};
+impl crate::GroupMeta for WattPf {
+    fn group_info() -> &'static crate::GroupInfo {
+        &WATT_PF_GROUP_INFO
+    }
+}
 impl crate::Group for WattPf {
     const LEN: u16 = 10;
 }
@@ -352,6 +431,295 @@ impl Curve {
     pub const RMP_INC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, true);
     pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(52, 1, false);
 }
+static CURVE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_pt",
+        label: "ActPt",
+        description: "Number of active points in array.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w1",
+        label: "W1",
+        description: "Point 1 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf1",
+        label: "PF1",
+        description: "Point 1 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w2",
+        label: "W2",
+        description: "Point 2 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf2",
+        label: "PF2",
+        description: "Point 2 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w3",
+        label: "W3",
+        description: "Point 3 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf3",
+        label: "PF3",
+        description: "Point 3 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w4",
+        label: "W4",
+        description: "Point 4 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf4",
+        label: "PF4",
+        description: "Point 4 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w5",
+        label: "W5",
+        description: "Point 5 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf5",
+        label: "PF5",
+        description: "Point 5 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w6",
+        label: "W6",
+        description: "Point 6 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf6",
+        label: "PF6",
+        description: "Point 6 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w7",
+        label: "W7",
+        description: "Point 7 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf7",
+        label: "PF7",
+        description: "Point 7 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w8",
+        label: "W8",
+        description: "Point 8 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf8",
+        label: "PF8",
+        description: "Point 8 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w9",
+        label: "W9",
+        description: "Point 9 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf9",
+        label: "PF9",
+        description: "Point 9 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w10",
+        label: "W10",
+        description: "Point 10 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf10",
+        label: "PF10",
+        description: "Point 10 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w11",
+        label: "W11",
+        description: "Point 11 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf11",
+        label: "PF11",
+        description: "Point 11 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w12",
+        label: "W12",
+        description: "Point 12 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf12",
+        label: "PF12",
+        description: "Point 12 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w13",
+        label: "W13",
+        description: "Point 13 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf13",
+        label: "PF13",
+        description: "Point 13 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w14",
+        label: "W14",
+        description: "Point 14 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf14",
+        label: "PF14",
+        description: "Point 14 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w15",
+        label: "W15",
+        description: "Point 15 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf15",
+        label: "PF15",
+        description: "Point 15 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w16",
+        label: "W16",
+        description: "Point 16 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf16",
+        label: "PF16",
+        description: "Point 16 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w17",
+        label: "W17",
+        description: "Point 17 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf17",
+        label: "PF17",
+        description: "Point 17 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w18",
+        label: "W18",
+        description: "Point 18 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf18",
+        label: "PF18",
+        description: "Point 18 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w19",
+        label: "W19",
+        description: "Point 19 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf19",
+        label: "PF19",
+        description: "Point 19 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w20",
+        label: "W20",
+        description: "Point 20 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf20",
+        label: "PF20",
+        description: "Point 20 PF in EEI notation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "crv_nam",
+        label: "CrvNam",
+        description: "Optional description for curve.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_pt1_tms",
+        label: "RmpPT1Tms",
+        description: "The time of the PT1 in seconds (time to accomplish a change of 95%).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_dec_tmm",
+        label: "RmpDecTmm",
+        description: "The maximum rate at which the power factor may be reduced in response to changes in the power value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_inc_tmm",
+        label: "RmpIncTmm",
+        description: "The maximum rate at which the power factor may be increased in response to changes in the power value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "read_only",
+        label: "ReadOnly",
+        description: "Enumerated value indicates if curve is read-only or can be modified.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static CURVE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "curve",
+    label: "curve",
+    description: "",
+    fields: CURVE_FIELDS,
+};
+impl crate::GroupMeta for Curve {
+    fn group_info() -> &'static crate::GroupInfo {
+        &CURVE_GROUP_INFO
+    }
+}
 impl crate::Group for Curve {
     const LEN: u16 = 54;
 }
@@ -470,6 +838,9 @@ impl crate::FixedSize for CurveReadOnly {
 }
 impl crate::Model for WattPf {
     const ID: u16 = 131;
+    const NAME: &'static str = "watt_pf";
+    const LABEL: &'static str = "Watt-PF";
+    const DESCRIPTION: &'static str = "Watt-Power Factor ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m131
     }

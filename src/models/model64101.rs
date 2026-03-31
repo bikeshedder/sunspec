@@ -29,6 +29,61 @@ impl Model64101 {
     pub const ELTEK_RPS_COS_PHI_REF: crate::Point<Self, Option<i16>> =
         crate::Point::new(6, 1, false);
 }
+static MODEL64101_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "eltek_country_code",
+        label: "Eltek_Country_Code",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "eltek_feeding_phase",
+        label: "Eltek_Feeding_Phase",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "eltek_apd_method",
+        label: "Eltek_APD_Method",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "eltek_apd_power_ref",
+        label: "Eltek_APD_Power_Ref",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "eltek_rps_method",
+        label: "Eltek_RPS_Method",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "eltek_rps_q_ref",
+        label: "Eltek_RPS_Q_Ref",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "eltek_rps_cos_phi_ref",
+        label: "Eltek_RPS_CosPhi_Ref",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL64101_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_64101",
+    label: "Eltek Inverter Extension",
+    description: "",
+    fields: MODEL64101_FIELDS,
+};
+impl crate::GroupMeta for Model64101 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL64101_GROUP_INFO
+    }
+}
 impl crate::Group for Model64101 {
     const LEN: u16 = 7;
 }
@@ -53,6 +108,9 @@ impl Model64101 {
 }
 impl crate::Model for Model64101 {
     const ID: u16 = 64101;
+    const NAME: &'static str = "model_64101";
+    const LABEL: &'static str = "Eltek Inverter Extension";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64101
     }

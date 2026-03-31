@@ -150,6 +150,181 @@ impl LithiumIonBank {
     pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, false);
 }
+static LITHIUM_ION_BANK_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "n_str",
+        label: "String Count",
+        description: "Number of strings in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_str_con",
+        label: "Connected String Count",
+        description: "Number of strings with contactor closed.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_tmp_max",
+        label: "Max Module Temperature",
+        description: "Maximum temperature for all modules in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_tmp_max_str",
+        label: "Max Module Temperature String",
+        description: "String containing the module with maximum temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_tmp_max_mod",
+        label: "Max Module Temperature Module",
+        description: "Module with maximum temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_tmp_min",
+        label: "Min Module Temperature",
+        description: "Minimum temperature for all modules in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_tmp_min_str",
+        label: "Min Module Temperature String",
+        description: "String containing the module with minimum temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_tmp_min_mod",
+        label: "Min Module Temperature Module",
+        description: "Module with minimum temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_tmp_avg",
+        label: "Average Module Temperature",
+        description: "Average temperature for all modules in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_v_max",
+        label: "Max String Voltage",
+        description: "Maximum string voltage for all strings in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_v_max_str",
+        label: "Max String Voltage String",
+        description: "String with maximum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_v_min",
+        label: "Min String Voltage",
+        description: "Minimum string voltage for all strings in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_v_min_str",
+        label: "Min String Voltage String",
+        description: "String with minimum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_v_avg",
+        label: "Average String Voltage",
+        description: "Average string voltage for all strings in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_a_max",
+        label: "Max String Current",
+        description: "Maximum current of any string in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_a_max_str",
+        label: "Max String Current String",
+        description: "String with the maximum current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_a_min",
+        label: "Min String Current",
+        description: "Minimum current of any string in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_a_min_str",
+        label: "Min String Current String",
+        description: "String with the minimum current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_a_avg",
+        label: "Average String Current",
+        description: "Average string current for all strings in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_cell_bal",
+        label: "Battery Cell Balancing Count",
+        description: "Total number of cells that are currently being balanced.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_sf",
+        label: "CellV_SF",
+        description: "Scale factor for cell voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_tmp_sf",
+        label: "ModTmp_SF",
+        description: "Scale factor for module temperatures.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_sf",
+        label: "A_SF",
+        description: "Scale factor for string currents.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soh_sf",
+        label: "SoH_SF",
+        description: "Scale factor for string state of health.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc_sf",
+        label: "SoC_SF",
+        description: "Scale factor for string state of charge.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "Scale factor for string voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "string",
+        label: "string",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<String as crate::GroupMeta>::group_info),
+    },
+];
+static LITHIUM_ION_BANK_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "lithium_ion_bank",
+    label: "Lithium-Ion Battery Bank Model",
+    description: "",
+    fields: LITHIUM_ION_BANK_FIELDS,
+};
+impl crate::GroupMeta for LithiumIonBank {
+    fn group_info() -> &'static crate::GroupInfo {
+        &LITHIUM_ION_BANK_GROUP_INFO
+    }
+}
 impl crate::Group for LithiumIonBank {
     const LEN: u16 = 26;
 }
@@ -330,6 +505,163 @@ impl String {
         crate::Point::new(28, 1, true);
     pub const STR_SET_CON: crate::Point<Self, Option<StringStrSetCon>> =
         crate::Point::new(29, 1, true);
+}
+static STRING_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "str_n_mod",
+        label: "Module Count",
+        description: "Count of modules in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_st",
+        label: "String Status",
+        description: "Current status of the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_con_fail",
+        label: "Connection Failure Reason",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_soc",
+        label: "String State of Charge",
+        description: "Battery string state of charge, expressed as a percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_soh",
+        label: "String State of Health",
+        description: "Battery string state of health, expressed as a percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_a",
+        label: "String Current",
+        description: "String current measurement.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_cell_v_max",
+        label: "Max Cell Voltage",
+        description: "Maximum voltage for all cells in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_cell_v_max_mod",
+        label: "Max Cell Voltage Module",
+        description: "Module containing the maximum cell voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_cell_v_min",
+        label: "Min Cell Voltage",
+        description: "Minimum voltage for all cells in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_cell_v_min_mod",
+        label: "Min Cell Voltage Module",
+        description: "Module containing the minimum cell voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_cell_v_avg",
+        label: "Average Cell Voltage",
+        description: "Average voltage for all cells in the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_mod_tmp_max",
+        label: "Max Module Temperature",
+        description: "Maximum temperature for all modules in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_mod_tmp_max_mod",
+        label: "Max Module Temperature Module",
+        description: "Module with the maximum temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_mod_tmp_min",
+        label: "Min Module Temperature",
+        description: "Minimum temperature for all modules in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_mod_tmp_min_mod",
+        label: "Min Module Temperature Module",
+        description: "Module with the minimum temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_mod_tmp_avg",
+        label: "Average Module Temperature",
+        description: "Average temperature for all modules in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_dis_rsn",
+        label: "Disabled Reason",
+        description: "Reason why the string is currently disabled.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_con_st",
+        label: "Contactor Status",
+        description: "Status of the contactor(s) for the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_evt1",
+        label: "String Event 1",
+        description: "Alarms, warnings and status values.  Bit flags.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_evt2",
+        label: "String Event 2",
+        description: "Alarms, warnings and status values.  Bit flags.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_evt_vnd1",
+        label: "Vendor String Event Bitfield 1",
+        description: "Vendor defined events.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_evt_vnd2",
+        label: "Vendor String Event Bitfield 2",
+        description: "Vendor defined events.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_set_ena",
+        label: "Enable/Disable String",
+        description: "Enables and disables the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_set_con",
+        label: "Connect/Disconnect String",
+        description: "Connects and disconnects the string.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static STRING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "string",
+    label: "string",
+    description: "",
+    fields: STRING_FIELDS,
+};
+impl crate::GroupMeta for String {
+    fn group_info() -> &'static crate::GroupInfo {
+        &STRING_GROUP_INFO
+    }
 }
 impl crate::Group for String {
     const LEN: u16 = 32;
@@ -749,6 +1081,9 @@ impl crate::FixedSize for StringStrSetCon {
 }
 impl crate::Model for LithiumIonBank {
     const ID: u16 = 803;
+    const NAME: &'static str = "lithium_ion_bank";
+    const LABEL: &'static str = "Lithium-Ion Battery Bank Model";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m803
     }

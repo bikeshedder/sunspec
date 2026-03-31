@@ -44,6 +44,61 @@ impl Model11 {
     pub const CTL: crate::Point<Self, Option<Ctl>> = crate::Point::new(11, 1, true);
     pub const FRC_SPD: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, true);
 }
+static MODEL11_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "spd",
+        label: "Ethernet Link Speed",
+        description: "Interface speed in Mb/s",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cfg_st",
+        label: "Interface Status Flags",
+        description: "Bitmask values Interface flags.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "st",
+        label: "Link State",
+        description: "Enumerated value. State information for this interface",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mac",
+        label: "MAC",
+        description: "IEEE MAC address of this interface",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nam",
+        label: "Name",
+        description: "Interface name (8 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl",
+        label: "Control",
+        description: "Control flags",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frc_spd",
+        label: "Forced Speed",
+        description: "Forced interface speed in Mb/s when AUTO is disabled",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL11_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_11",
+    label: "Ethernet Link Layer",
+    description: "Include to support a wired ethernet port",
+    fields: MODEL11_FIELDS,
+};
+impl crate::GroupMeta for Model11 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL11_GROUP_INFO
+    }
+}
 impl crate::Group for Model11 {
     const LEN: u16 = 13;
 }
@@ -162,6 +217,9 @@ impl crate::FixedSize for Ctl {
 }
 impl crate::Model for Model11 {
     const ID: u16 = 11;
+    const NAME: &'static str = "model_11";
+    const LABEL: &'static str = "Ethernet Link Layer";
+    const DESCRIPTION: &'static str = "Include to support a wired ethernet port";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m11
     }

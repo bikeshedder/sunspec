@@ -148,6 +148,169 @@ impl Nameplate {
     pub const MAX_DIS_CHA_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(23, 1, false);
     pub const MAX_DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
 }
+static NAMEPLATE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "der_typ",
+        label: "DERTyp",
+        description: "Type of DER device. Default value is 4 to indicate PV device.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_rtg",
+        label: "WRtg",
+        description: "Continuous power output capability of the inverter.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_rtg_sf",
+        label: "WRtg_SF",
+        description: "Scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_rtg",
+        label: "VARtg",
+        description: "Continuous Volt-Ampere capability of the inverter.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_rtg_sf",
+        label: "VARtg_SF",
+        description: "Scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_rtg_q1",
+        label: "VArRtgQ1",
+        description: "Continuous VAR capability of the inverter in quadrant 1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_rtg_q2",
+        label: "VArRtgQ2",
+        description: "Continuous VAR capability of the inverter in quadrant 2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_rtg_q3",
+        label: "VArRtgQ3",
+        description: "Continuous VAR capability of the inverter in quadrant 3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_rtg_q4",
+        label: "VArRtgQ4",
+        description: "Continuous VAR capability of the inverter in quadrant 4.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_rtg_sf",
+        label: "VArRtg_SF",
+        description: "Scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_rtg",
+        label: "ARtg",
+        description: "Maximum RMS AC current level capability of the inverter.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_rtg_sf",
+        label: "ARtg_SF",
+        description: "Scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_rtg_q1",
+        label: "PFRtgQ1",
+        description: "Minimum power factor capability of the inverter in quadrant 1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_rtg_q2",
+        label: "PFRtgQ2",
+        description: "Minimum power factor capability of the inverter in quadrant 2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_rtg_q3",
+        label: "PFRtgQ3",
+        description: "Minimum power factor capability of the inverter in quadrant 3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_rtg_q4",
+        label: "PFRtgQ4",
+        description: "Minimum power factor capability of the inverter in quadrant 4.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_rtg_sf",
+        label: "PFRtg_SF",
+        description: "Scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wh_rtg",
+        label: "WHRtg",
+        description: "Nominal energy rating of storage device.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wh_rtg_sf",
+        label: "WHRtg_SF",
+        description: "Scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ahr_rtg",
+        label: "AhrRtg",
+        description: "The usable capacity of the battery.  Maximum charge minus minimum charge from a technology capability perspective (Amp-hour capacity rating).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ahr_rtg_sf",
+        label: "AhrRtg_SF",
+        description: "Scale factor for amp-hour rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "max_cha_rte",
+        label: "MaxChaRte",
+        description: "Maximum rate of energy transfer into the storage device.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "max_cha_rte_sf",
+        label: "MaxChaRte_SF",
+        description: "Scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "max_dis_cha_rte",
+        label: "MaxDisChaRte",
+        description: "Maximum rate of energy transfer out of the storage device.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "max_dis_cha_rte_sf",
+        label: "MaxDisChaRte_SF",
+        description: "Scale factor",
+        kind: crate::FieldKind::Point,
+    },
+];
+static NAMEPLATE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "nameplate",
+    label: "Nameplate",
+    description: "Inverter Controls Nameplate Ratings ",
+    fields: NAMEPLATE_FIELDS,
+};
+impl crate::GroupMeta for Nameplate {
+    fn group_info() -> &'static crate::GroupInfo {
+        &NAMEPLATE_GROUP_INFO
+    }
+}
 impl crate::Group for Nameplate {
     const LEN: u16 = 26;
 }
@@ -228,6 +391,9 @@ impl crate::FixedSize for DerTyp {
 }
 impl crate::Model for Nameplate {
     const ID: u16 = 120;
+    const NAME: &'static str = "nameplate";
+    const LABEL: &'static str = "Nameplate";
+    const DESCRIPTION: &'static str = "Inverter Controls Nameplate Ratings ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m120
     }

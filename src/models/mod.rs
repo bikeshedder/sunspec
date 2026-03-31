@@ -681,6 +681,795 @@ impl Models {
         }
         v
     }
+    /// Returns all discovered models together with their static metadata.
+    pub fn discovered_models(&self) -> Vec<crate::DiscoveredModel> {
+        let mut v = Vec::with_capacity(112usize);
+        if self.m1.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model1::Model1 as crate::Model>::info(),
+                addr: self.m1.addr,
+                len: self.m1.len,
+            });
+        }
+        if self.m2.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model2::Model2 as crate::Model>::info(),
+                addr: self.m2.addr,
+                len: self.m2.len,
+            });
+        }
+        if self.m3.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model3::Model3 as crate::Model>::info(),
+                addr: self.m3.addr,
+                len: self.m3.len,
+            });
+        }
+        if self.m4.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model4::Model4 as crate::Model>::info(),
+                addr: self.m4.addr,
+                len: self.m4.len,
+            });
+        }
+        if self.m5.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model5::Model5 as crate::Model>::info(),
+                addr: self.m5.addr,
+                len: self.m5.len,
+            });
+        }
+        if self.m6.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model6::Model6 as crate::Model>::info(),
+                addr: self.m6.addr,
+                len: self.m6.len,
+            });
+        }
+        if self.m7.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model7::Model7 as crate::Model>::info(),
+                addr: self.m7.addr,
+                len: self.m7.len,
+            });
+        }
+        if self.m8.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model8::Model8 as crate::Model>::info(),
+                addr: self.m8.addr,
+                len: self.m8.len,
+            });
+        }
+        if self.m9.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model9::Model9 as crate::Model>::info(),
+                addr: self.m9.addr,
+                len: self.m9.len,
+            });
+        }
+        if self.m10.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model10::Model10 as crate::Model>::info(),
+                addr: self.m10.addr,
+                len: self.m10.len,
+            });
+        }
+        if self.m11.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model11::Model11 as crate::Model>::info(),
+                addr: self.m11.addr,
+                len: self.m11.len,
+            });
+        }
+        if self.m12.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model12::Model12 as crate::Model>::info(),
+                addr: self.m12.addr,
+                len: self.m12.len,
+            });
+        }
+        if self.m13.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model13::Model13 as crate::Model>::info(),
+                addr: self.m13.addr,
+                len: self.m13.len,
+            });
+        }
+        if self.m14.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model14::Model14 as crate::Model>::info(),
+                addr: self.m14.addr,
+                len: self.m14.len,
+            });
+        }
+        if self.m15.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model15::Model15 as crate::Model>::info(),
+                addr: self.m15.addr,
+                len: self.m15.len,
+            });
+        }
+        if self.m16.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model16::Model16 as crate::Model>::info(),
+                addr: self.m16.addr,
+                len: self.m16.len,
+            });
+        }
+        if self.m17.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model17::Model17 as crate::Model>::info(),
+                addr: self.m17.addr,
+                len: self.m17.len,
+            });
+        }
+        if self.m18.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model18::Model18 as crate::Model>::info(),
+                addr: self.m18.addr,
+                len: self.m18.len,
+            });
+        }
+        if self.m19.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model19::Model19 as crate::Model>::info(),
+                addr: self.m19.addr,
+                len: self.m19.len,
+            });
+        }
+        if self.m101.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model101::Model101 as crate::Model>::info(),
+                addr: self.m101.addr,
+                len: self.m101.len,
+            });
+        }
+        if self.m102.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model102::Model102 as crate::Model>::info(),
+                addr: self.m102.addr,
+                len: self.m102.len,
+            });
+        }
+        if self.m103.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model103::Model103 as crate::Model>::info(),
+                addr: self.m103.addr,
+                len: self.m103.len,
+            });
+        }
+        if self.m111.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model111::Model111 as crate::Model>::info(),
+                addr: self.m111.addr,
+                len: self.m111.len,
+            });
+        }
+        if self.m112.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model112::Model112 as crate::Model>::info(),
+                addr: self.m112.addr,
+                len: self.m112.len,
+            });
+        }
+        if self.m113.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model113::Model113 as crate::Model>::info(),
+                addr: self.m113.addr,
+                len: self.m113.len,
+            });
+        }
+        if self.m120.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model120::Model120 as crate::Model>::info(),
+                addr: self.m120.addr,
+                len: self.m120.len,
+            });
+        }
+        if self.m121.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model121::Model121 as crate::Model>::info(),
+                addr: self.m121.addr,
+                len: self.m121.len,
+            });
+        }
+        if self.m122.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model122::Model122 as crate::Model>::info(),
+                addr: self.m122.addr,
+                len: self.m122.len,
+            });
+        }
+        if self.m123.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model123::Model123 as crate::Model>::info(),
+                addr: self.m123.addr,
+                len: self.m123.len,
+            });
+        }
+        if self.m124.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model124::Model124 as crate::Model>::info(),
+                addr: self.m124.addr,
+                len: self.m124.len,
+            });
+        }
+        if self.m125.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model125::Model125 as crate::Model>::info(),
+                addr: self.m125.addr,
+                len: self.m125.len,
+            });
+        }
+        if self.m126.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model126::Model126 as crate::Model>::info(),
+                addr: self.m126.addr,
+                len: self.m126.len,
+            });
+        }
+        if self.m127.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model127::Model127 as crate::Model>::info(),
+                addr: self.m127.addr,
+                len: self.m127.len,
+            });
+        }
+        if self.m128.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model128::Model128 as crate::Model>::info(),
+                addr: self.m128.addr,
+                len: self.m128.len,
+            });
+        }
+        if self.m129.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model129::Model129 as crate::Model>::info(),
+                addr: self.m129.addr,
+                len: self.m129.len,
+            });
+        }
+        if self.m130.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model130::Model130 as crate::Model>::info(),
+                addr: self.m130.addr,
+                len: self.m130.len,
+            });
+        }
+        if self.m131.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model131::Model131 as crate::Model>::info(),
+                addr: self.m131.addr,
+                len: self.m131.len,
+            });
+        }
+        if self.m132.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model132::Model132 as crate::Model>::info(),
+                addr: self.m132.addr,
+                len: self.m132.len,
+            });
+        }
+        if self.m133.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model133::Model133 as crate::Model>::info(),
+                addr: self.m133.addr,
+                len: self.m133.len,
+            });
+        }
+        if self.m134.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model134::Model134 as crate::Model>::info(),
+                addr: self.m134.addr,
+                len: self.m134.len,
+            });
+        }
+        if self.m135.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model135::Model135 as crate::Model>::info(),
+                addr: self.m135.addr,
+                len: self.m135.len,
+            });
+        }
+        if self.m136.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model136::Model136 as crate::Model>::info(),
+                addr: self.m136.addr,
+                len: self.m136.len,
+            });
+        }
+        if self.m137.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model137::Model137 as crate::Model>::info(),
+                addr: self.m137.addr,
+                len: self.m137.len,
+            });
+        }
+        if self.m138.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model138::Model138 as crate::Model>::info(),
+                addr: self.m138.addr,
+                len: self.m138.len,
+            });
+        }
+        if self.m139.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model139::Model139 as crate::Model>::info(),
+                addr: self.m139.addr,
+                len: self.m139.len,
+            });
+        }
+        if self.m140.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model140::Model140 as crate::Model>::info(),
+                addr: self.m140.addr,
+                len: self.m140.len,
+            });
+        }
+        if self.m141.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model141::Model141 as crate::Model>::info(),
+                addr: self.m141.addr,
+                len: self.m141.len,
+            });
+        }
+        if self.m142.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model142::Model142 as crate::Model>::info(),
+                addr: self.m142.addr,
+                len: self.m142.len,
+            });
+        }
+        if self.m143.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model143::Model143 as crate::Model>::info(),
+                addr: self.m143.addr,
+                len: self.m143.len,
+            });
+        }
+        if self.m144.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model144::Model144 as crate::Model>::info(),
+                addr: self.m144.addr,
+                len: self.m144.len,
+            });
+        }
+        if self.m145.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model145::Model145 as crate::Model>::info(),
+                addr: self.m145.addr,
+                len: self.m145.len,
+            });
+        }
+        if self.m160.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model160::Model160 as crate::Model>::info(),
+                addr: self.m160.addr,
+                len: self.m160.len,
+            });
+        }
+        if self.m201.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model201::Model201 as crate::Model>::info(),
+                addr: self.m201.addr,
+                len: self.m201.len,
+            });
+        }
+        if self.m202.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model202::Model202 as crate::Model>::info(),
+                addr: self.m202.addr,
+                len: self.m202.len,
+            });
+        }
+        if self.m203.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model203::Model203 as crate::Model>::info(),
+                addr: self.m203.addr,
+                len: self.m203.len,
+            });
+        }
+        if self.m204.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model204::Model204 as crate::Model>::info(),
+                addr: self.m204.addr,
+                len: self.m204.len,
+            });
+        }
+        if self.m211.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model211::Model211 as crate::Model>::info(),
+                addr: self.m211.addr,
+                len: self.m211.len,
+            });
+        }
+        if self.m212.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model212::Model212 as crate::Model>::info(),
+                addr: self.m212.addr,
+                len: self.m212.len,
+            });
+        }
+        if self.m213.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model213::Model213 as crate::Model>::info(),
+                addr: self.m213.addr,
+                len: self.m213.len,
+            });
+        }
+        if self.m214.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model214::Model214 as crate::Model>::info(),
+                addr: self.m214.addr,
+                len: self.m214.len,
+            });
+        }
+        if self.m220.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model220::Model220 as crate::Model>::info(),
+                addr: self.m220.addr,
+                len: self.m220.len,
+            });
+        }
+        if self.m302.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model302::Model302 as crate::Model>::info(),
+                addr: self.m302.addr,
+                len: self.m302.len,
+            });
+        }
+        if self.m303.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model303::Model303 as crate::Model>::info(),
+                addr: self.m303.addr,
+                len: self.m303.len,
+            });
+        }
+        if self.m304.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model304::Model304 as crate::Model>::info(),
+                addr: self.m304.addr,
+                len: self.m304.len,
+            });
+        }
+        if self.m305.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model305::Model305 as crate::Model>::info(),
+                addr: self.m305.addr,
+                len: self.m305.len,
+            });
+        }
+        if self.m306.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model306::Model306 as crate::Model>::info(),
+                addr: self.m306.addr,
+                len: self.m306.len,
+            });
+        }
+        if self.m307.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model307::Model307 as crate::Model>::info(),
+                addr: self.m307.addr,
+                len: self.m307.len,
+            });
+        }
+        if self.m308.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model308::Model308 as crate::Model>::info(),
+                addr: self.m308.addr,
+                len: self.m308.len,
+            });
+        }
+        if self.m401.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model401::Model401 as crate::Model>::info(),
+                addr: self.m401.addr,
+                len: self.m401.len,
+            });
+        }
+        if self.m402.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model402::Model402 as crate::Model>::info(),
+                addr: self.m402.addr,
+                len: self.m402.len,
+            });
+        }
+        if self.m403.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model403::Model403 as crate::Model>::info(),
+                addr: self.m403.addr,
+                len: self.m403.len,
+            });
+        }
+        if self.m404.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model404::Model404 as crate::Model>::info(),
+                addr: self.m404.addr,
+                len: self.m404.len,
+            });
+        }
+        if self.m501.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model501::Model501 as crate::Model>::info(),
+                addr: self.m501.addr,
+                len: self.m501.len,
+            });
+        }
+        if self.m502.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model502::Model502 as crate::Model>::info(),
+                addr: self.m502.addr,
+                len: self.m502.len,
+            });
+        }
+        if self.m601.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model601::Model601 as crate::Model>::info(),
+                addr: self.m601.addr,
+                len: self.m601.len,
+            });
+        }
+        if self.m701.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model701::Model701 as crate::Model>::info(),
+                addr: self.m701.addr,
+                len: self.m701.len,
+            });
+        }
+        if self.m702.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model702::Model702 as crate::Model>::info(),
+                addr: self.m702.addr,
+                len: self.m702.len,
+            });
+        }
+        if self.m703.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model703::Model703 as crate::Model>::info(),
+                addr: self.m703.addr,
+                len: self.m703.len,
+            });
+        }
+        if self.m704.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model704::Model704 as crate::Model>::info(),
+                addr: self.m704.addr,
+                len: self.m704.len,
+            });
+        }
+        if self.m705.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model705::Model705 as crate::Model>::info(),
+                addr: self.m705.addr,
+                len: self.m705.len,
+            });
+        }
+        if self.m706.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model706::Model706 as crate::Model>::info(),
+                addr: self.m706.addr,
+                len: self.m706.len,
+            });
+        }
+        if self.m707.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model707::Model707 as crate::Model>::info(),
+                addr: self.m707.addr,
+                len: self.m707.len,
+            });
+        }
+        if self.m708.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model708::Model708 as crate::Model>::info(),
+                addr: self.m708.addr,
+                len: self.m708.len,
+            });
+        }
+        if self.m709.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model709::Model709 as crate::Model>::info(),
+                addr: self.m709.addr,
+                len: self.m709.len,
+            });
+        }
+        if self.m710.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model710::Model710 as crate::Model>::info(),
+                addr: self.m710.addr,
+                len: self.m710.len,
+            });
+        }
+        if self.m711.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model711::Model711 as crate::Model>::info(),
+                addr: self.m711.addr,
+                len: self.m711.len,
+            });
+        }
+        if self.m712.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model712::Model712 as crate::Model>::info(),
+                addr: self.m712.addr,
+                len: self.m712.len,
+            });
+        }
+        if self.m713.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model713::Model713 as crate::Model>::info(),
+                addr: self.m713.addr,
+                len: self.m713.len,
+            });
+        }
+        if self.m714.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model714::Model714 as crate::Model>::info(),
+                addr: self.m714.addr,
+                len: self.m714.len,
+            });
+        }
+        if self.m715.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model715::Model715 as crate::Model>::info(),
+                addr: self.m715.addr,
+                len: self.m715.len,
+            });
+        }
+        if self.m801.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model801::Model801 as crate::Model>::info(),
+                addr: self.m801.addr,
+                len: self.m801.len,
+            });
+        }
+        if self.m802.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model802::Model802 as crate::Model>::info(),
+                addr: self.m802.addr,
+                len: self.m802.len,
+            });
+        }
+        if self.m803.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model803::Model803 as crate::Model>::info(),
+                addr: self.m803.addr,
+                len: self.m803.len,
+            });
+        }
+        if self.m804.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model804::Model804 as crate::Model>::info(),
+                addr: self.m804.addr,
+                len: self.m804.len,
+            });
+        }
+        if self.m805.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model805::Model805 as crate::Model>::info(),
+                addr: self.m805.addr,
+                len: self.m805.len,
+            });
+        }
+        if self.m806.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model806::Model806 as crate::Model>::info(),
+                addr: self.m806.addr,
+                len: self.m806.len,
+            });
+        }
+        if self.m807.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model807::Model807 as crate::Model>::info(),
+                addr: self.m807.addr,
+                len: self.m807.len,
+            });
+        }
+        if self.m808.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model808::Model808 as crate::Model>::info(),
+                addr: self.m808.addr,
+                len: self.m808.len,
+            });
+        }
+        if self.m809.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model809::Model809 as crate::Model>::info(),
+                addr: self.m809.addr,
+                len: self.m809.len,
+            });
+        }
+        if self.m63001.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model63001::Model63001 as crate::Model>::info(),
+                addr: self.m63001.addr,
+                len: self.m63001.len,
+            });
+        }
+        if self.m63002.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model63002::Model63002 as crate::Model>::info(),
+                addr: self.m63002.addr,
+                len: self.m63002.len,
+            });
+        }
+        if self.m64001.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64001::Model64001 as crate::Model>::info(),
+                addr: self.m64001.addr,
+                len: self.m64001.len,
+            });
+        }
+        if self.m64020.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64020::Model64020 as crate::Model>::info(),
+                addr: self.m64020.addr,
+                len: self.m64020.len,
+            });
+        }
+        if self.m64101.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64101::Model64101 as crate::Model>::info(),
+                addr: self.m64101.addr,
+                len: self.m64101.len,
+            });
+        }
+        if self.m64111.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64111::Model64111 as crate::Model>::info(),
+                addr: self.m64111.addr,
+                len: self.m64111.len,
+            });
+        }
+        if self.m64112.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64112::Model64112 as crate::Model>::info(),
+                addr: self.m64112.addr,
+                len: self.m64112.len,
+            });
+        }
+        if self.m64410.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64410::Model64410 as crate::Model>::info(),
+                addr: self.m64410.addr,
+                len: self.m64410.len,
+            });
+        }
+        if self.m64411.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64411::Model64411 as crate::Model>::info(),
+                addr: self.m64411.addr,
+                len: self.m64411.len,
+            });
+        }
+        if self.m64412.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64412::Model64412 as crate::Model>::info(),
+                addr: self.m64412.addr,
+                len: self.m64412.len,
+            });
+        }
+        if self.m64413.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64413::Model64413 as crate::Model>::info(),
+                addr: self.m64413.addr,
+                len: self.m64413.len,
+            });
+        }
+        if self.m64414.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64414::Model64414 as crate::Model>::info(),
+                addr: self.m64414.addr,
+                len: self.m64414.len,
+            });
+        }
+        if self.m64415.addr != 0 {
+            v.push(crate::DiscoveredModel {
+                info: <model64415::Model64415 as crate::Model>::info(),
+                addr: self.m64415.addr,
+                len: self.m64415.len,
+            });
+        }
+        v
+    }
     /// Set address and length of the given model.
     ///
     /// This method is used by the model discovery.
