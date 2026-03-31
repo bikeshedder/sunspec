@@ -7,7 +7,7 @@ use sunspec::{
 fn test_model712() {
     #[rustfmt::skip]
     let data = &[
-        0,              // Ena
+        0,              // ena
         0,              // adpt_crv_req
         1,              // adpt_crv_rslt
         6,              // n_pt
