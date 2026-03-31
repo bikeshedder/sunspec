@@ -217,71 +217,6 @@ impl Model4 {
     pub const ALM: crate::Point<Self, Alm> = crate::Point::new(57, 1, false);
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(58, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(59, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::RQ_SEQ.is_invalid(&self.rq_seq)
-            || Self::STS.is_invalid(&self.sts)
-            || Self::X.is_invalid(&self.x)
-            || Self::VAL1.is_invalid(&self.val1)
-            || Self::VAL2.is_invalid(&self.val2)
-            || Self::VAL3.is_invalid(&self.val3)
-            || Self::VAL4.is_invalid(&self.val4)
-            || Self::VAL5.is_invalid(&self.val5)
-            || Self::VAL6.is_invalid(&self.val6)
-            || Self::VAL7.is_invalid(&self.val7)
-            || Self::VAL8.is_invalid(&self.val8)
-            || Self::VAL9.is_invalid(&self.val9)
-            || Self::VAL10.is_invalid(&self.val10)
-            || Self::VAL11.is_invalid(&self.val11)
-            || Self::VAL12.is_invalid(&self.val12)
-            || Self::VAL13.is_invalid(&self.val13)
-            || Self::VAL14.is_invalid(&self.val14)
-            || Self::VAL15.is_invalid(&self.val15)
-            || Self::VAL16.is_invalid(&self.val16)
-            || Self::VAL17.is_invalid(&self.val17)
-            || Self::VAL18.is_invalid(&self.val18)
-            || Self::VAL19.is_invalid(&self.val19)
-            || Self::VAL20.is_invalid(&self.val20)
-            || Self::VAL21.is_invalid(&self.val21)
-            || Self::VAL22.is_invalid(&self.val22)
-            || Self::VAL23.is_invalid(&self.val23)
-            || Self::VAL24.is_invalid(&self.val24)
-            || Self::VAL25.is_invalid(&self.val25)
-            || Self::VAL26.is_invalid(&self.val26)
-            || Self::VAL27.is_invalid(&self.val27)
-            || Self::VAL28.is_invalid(&self.val28)
-            || Self::VAL29.is_invalid(&self.val29)
-            || Self::VAL30.is_invalid(&self.val30)
-            || Self::VAL31.is_invalid(&self.val31)
-            || Self::VAL32.is_invalid(&self.val32)
-            || Self::VAL33.is_invalid(&self.val33)
-            || Self::VAL34.is_invalid(&self.val34)
-            || Self::VAL35.is_invalid(&self.val35)
-            || Self::VAL36.is_invalid(&self.val36)
-            || Self::VAL37.is_invalid(&self.val37)
-            || Self::VAL38.is_invalid(&self.val38)
-            || Self::VAL39.is_invalid(&self.val39)
-            || Self::VAL40.is_invalid(&self.val40)
-            || Self::VAL41.is_invalid(&self.val41)
-            || Self::VAL42.is_invalid(&self.val42)
-            || Self::VAL43.is_invalid(&self.val43)
-            || Self::VAL44.is_invalid(&self.val44)
-            || Self::VAL45.is_invalid(&self.val45)
-            || Self::VAL46.is_invalid(&self.val46)
-            || Self::VAL47.is_invalid(&self.val47)
-            || Self::VAL48.is_invalid(&self.val48)
-            || Self::VAL49.is_invalid(&self.val49)
-            || Self::VAL50.is_invalid(&self.val50)
-            || Self::TS.is_invalid(&self.ts)
-            || Self::MS.is_invalid(&self.ms)
-            || Self::SEQ.is_invalid(&self.seq)
-            || Self::ALM.is_invalid(&self.alm)
-            || Self::ALG.is_invalid(&self.alg)
-            || Self::N.is_invalid(&self.n)
-            || self
-                .repeating
-                .iter()
-                .any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Model4 {
     const LEN: u16 = 60;
@@ -497,9 +432,6 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::DS.is_invalid(&self.ds)
-    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -539,12 +471,6 @@ impl crate::Model for Model4 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

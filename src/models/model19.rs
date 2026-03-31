@@ -53,11 +53,6 @@ impl Model19 {
     pub const AUTH: crate::Point<Self, Option<Auth>> = crate::Point::new(10, 1, false);
     pub const USR_NAM: crate::Point<Self, Option<String>> = crate::Point::new(11, 12, false);
     pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(23, 6, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::RTE.is_invalid(&self.rte)
-            || Self::BITS.is_invalid(&self.bits)
-            || Self::PTY.is_invalid(&self.pty)
-    }
 }
 impl crate::Group for Model19 {
     const LEN: u16 = 30;
@@ -252,12 +247,6 @@ impl crate::Model for Model19 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

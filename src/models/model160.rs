@@ -31,9 +31,6 @@ impl Mppt {
     pub const EVT: crate::Point<Self, Option<Evt>> = crate::Point::new(4, 2, false);
     pub const N: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
     pub const TMS_PER: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        self.module.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Mppt {
     const LEN: u16 = 8;
@@ -130,9 +127,6 @@ impl Module {
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
     pub const DC_ST: crate::Point<Self, Option<ModuleDcSt>> = crate::Point::new(17, 1, false);
     pub const DC_EVT: crate::Point<Self, Option<ModuleDcEvt>> = crate::Point::new(18, 2, false);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Module {
     const LEN: u16 = 20;
@@ -285,12 +279,6 @@ impl crate::Model for Mppt {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

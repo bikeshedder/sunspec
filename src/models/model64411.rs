@@ -260,19 +260,6 @@ impl AcSimInterface {
     pub const HZ_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(1393, 1, false);
     pub const V_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(1394, 1, false);
     pub const THD_SF: crate::Point<Self, i16> = crate::Point::new(1395, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::PROF_RSLT.is_invalid(&self.prof_rslt)
-            || Self::N_PROF.is_invalid(&self.n_prof)
-            || Self::N_PT.is_invalid(&self.n_pt)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::A_SF.is_invalid(&self.a_sf)
-            || Self::TMS_SF.is_invalid(&self.tms_sf)
-            || Self::HZ_SF.is_invalid(&self.hz_sf)
-            || Self::HZ_SLEW_SF.is_invalid(&self.hz_slew_sf)
-            || Self::V_SLEW_SF.is_invalid(&self.v_slew_sf)
-            || Self::THD_SF.is_invalid(&self.thd_sf)
-            || self.prof.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for AcSimInterface {
     const LEN: u16 = 1396;
@@ -566,10 +553,6 @@ pub struct Prof {
 impl Prof {
     pub const NAME: crate::Point<Self, Option<String>> = crate::Point::new(0, 32, true);
     pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(32, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::ACT_PT.is_invalid(&self.act_pt)
-            || self.pt.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Prof {
     const LEN: u16 = 33;
@@ -654,9 +637,6 @@ impl Pt {
     pub const PHASE_ANGLE_A: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const PHASE_ANGLE_B: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
     pub const PHASE_ANGLE_C: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Pt {
     const LEN: u16 = 8;
@@ -698,12 +678,6 @@ impl crate::Model for AcSimInterface {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

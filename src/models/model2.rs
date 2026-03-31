@@ -60,13 +60,6 @@ impl Aggregator {
     pub const CTL: crate::Point<Self, Option<Ctl>> = crate::Point::new(9, 1, false);
     pub const CTL_VND: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
     pub const CTL_VL: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::AID.is_invalid(&self.aid)
-            || Self::N.is_invalid(&self.n)
-            || Self::UN.is_invalid(&self.un)
-            || Self::ST.is_invalid(&self.st)
-            || Self::EVT.is_invalid(&self.evt)
-    }
 }
 impl crate::Group for Aggregator {
     const LEN: u16 = 14;
@@ -250,12 +243,6 @@ impl crate::Model for Aggregator {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

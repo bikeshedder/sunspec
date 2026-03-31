@@ -307,34 +307,6 @@ impl Battery {
     pub const A_SF: crate::Point<Self, i16> = crate::Point::new(59, 1, false);
     pub const A_MAX_SF: crate::Point<Self, i16> = crate::Point::new(60, 1, false);
     pub const W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(61, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::AH_RTG.is_invalid(&self.ah_rtg)
-            || Self::WH_RTG.is_invalid(&self.wh_rtg)
-            || Self::W_CHA_RTE_MAX.is_invalid(&self.w_cha_rte_max)
-            || Self::W_DIS_CHA_RTE_MAX.is_invalid(&self.w_dis_cha_rte_max)
-            || Self::SOC.is_invalid(&self.soc)
-            || Self::LOC_REM_CTL.is_invalid(&self.loc_rem_ctl)
-            || Self::ALM_RST.is_invalid(&self.alm_rst)
-            || Self::TYP.is_invalid(&self.typ)
-            || Self::STATE.is_invalid(&self.state)
-            || Self::EVT1.is_invalid(&self.evt1)
-            || Self::EVT2.is_invalid(&self.evt2)
-            || Self::EVT_VND1.is_invalid(&self.evt_vnd1)
-            || Self::EVT_VND2.is_invalid(&self.evt_vnd2)
-            || Self::V.is_invalid(&self.v)
-            || Self::A.is_invalid(&self.a)
-            || Self::W.is_invalid(&self.w)
-            || Self::SET_OP.is_invalid(&self.set_op)
-            || Self::SET_INV_STATE.is_invalid(&self.set_inv_state)
-            || Self::AH_RTG_SF.is_invalid(&self.ah_rtg_sf)
-            || Self::WH_RTG_SF.is_invalid(&self.wh_rtg_sf)
-            || Self::W_CHA_DIS_CHA_MAX_SF.is_invalid(&self.w_cha_dis_cha_max_sf)
-            || Self::SOC_SF.is_invalid(&self.soc_sf)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::CELL_V_SF.is_invalid(&self.cell_v_sf)
-            || Self::A_SF.is_invalid(&self.a_sf)
-            || Self::A_MAX_SF.is_invalid(&self.a_max_sf)
-    }
 }
 impl crate::Group for Battery {
     const LEN: u16 = 62;
@@ -886,12 +858,6 @@ impl crate::Model for Battery {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

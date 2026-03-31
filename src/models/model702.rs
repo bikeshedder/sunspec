@@ -287,9 +287,6 @@ impl DerCapacity {
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(47, 1, false);
     pub const A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(48, 1, false);
     pub const S_SF: crate::Point<Self, Option<i16>> = crate::Point::new(49, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for DerCapacity {
     const LEN: u16 = 50;
@@ -521,12 +518,6 @@ impl crate::Model for DerCapacity {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

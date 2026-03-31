@@ -170,14 +170,6 @@ impl Settings {
     pub const PF_MIN_SF: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
     pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
     pub const ECP_NOM_HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::W_MAX.is_invalid(&self.w_max)
-            || Self::V_REF.is_invalid(&self.v_ref)
-            || Self::V_REF_OFS.is_invalid(&self.v_ref_ofs)
-            || Self::W_MAX_SF.is_invalid(&self.w_max_sf)
-            || Self::V_REF_SF.is_invalid(&self.v_ref_sf)
-            || Self::V_REF_OFS_SF.is_invalid(&self.v_ref_ofs_sf)
-    }
 }
 impl crate::Group for Settings {
     const LEN: u16 = 30;
@@ -347,12 +339,6 @@ impl crate::Model for Settings {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

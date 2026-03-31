@@ -147,25 +147,6 @@ impl Nameplate {
     pub const MAX_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
     pub const MAX_DIS_CHA_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(23, 1, false);
     pub const MAX_DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::DER_TYP.is_invalid(&self.der_typ)
-            || Self::W_RTG.is_invalid(&self.w_rtg)
-            || Self::W_RTG_SF.is_invalid(&self.w_rtg_sf)
-            || Self::VA_RTG.is_invalid(&self.va_rtg)
-            || Self::VA_RTG_SF.is_invalid(&self.va_rtg_sf)
-            || Self::V_AR_RTG_Q1.is_invalid(&self.v_ar_rtg_q1)
-            || Self::V_AR_RTG_Q2.is_invalid(&self.v_ar_rtg_q2)
-            || Self::V_AR_RTG_Q3.is_invalid(&self.v_ar_rtg_q3)
-            || Self::V_AR_RTG_Q4.is_invalid(&self.v_ar_rtg_q4)
-            || Self::V_AR_RTG_SF.is_invalid(&self.v_ar_rtg_sf)
-            || Self::A_RTG.is_invalid(&self.a_rtg)
-            || Self::A_RTG_SF.is_invalid(&self.a_rtg_sf)
-            || Self::PF_RTG_Q1.is_invalid(&self.pf_rtg_q1)
-            || Self::PF_RTG_Q2.is_invalid(&self.pf_rtg_q2)
-            || Self::PF_RTG_Q3.is_invalid(&self.pf_rtg_q3)
-            || Self::PF_RTG_Q4.is_invalid(&self.pf_rtg_q4)
-            || Self::PF_RTG_SF.is_invalid(&self.pf_rtg_sf)
-    }
 }
 impl crate::Group for Nameplate {
     const LEN: u16 = 26;
@@ -250,12 +231,6 @@ impl crate::Model for Nameplate {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

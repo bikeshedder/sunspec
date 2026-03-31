@@ -17,7 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update `strum` to version `0.27`
 - Parsing is now more permissive for enum points: unknown or non-compliant values are preserved as `Invalid(raw)` instead of causing decode failure.
-- `Model::parse` now reports invalid required point data via `ParseError::InvalidPointData` while preserving access to the decoded model.
 
 ## [0.8.0] - 2024-12-10
 

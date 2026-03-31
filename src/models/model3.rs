@@ -209,69 +209,6 @@ impl Model3 {
     pub const ROLE: crate::Point<Self, u16> = crate::Point::new(55, 1, true);
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(56, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(57, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::X.is_invalid(&self.x)
-            || Self::OFF1.is_invalid(&self.off1)
-            || Self::OFF2.is_invalid(&self.off2)
-            || Self::OFF3.is_invalid(&self.off3)
-            || Self::OFF4.is_invalid(&self.off4)
-            || Self::OFF5.is_invalid(&self.off5)
-            || Self::OFF6.is_invalid(&self.off6)
-            || Self::OFF7.is_invalid(&self.off7)
-            || Self::OFF8.is_invalid(&self.off8)
-            || Self::OFF9.is_invalid(&self.off9)
-            || Self::OFF10.is_invalid(&self.off10)
-            || Self::OFF11.is_invalid(&self.off11)
-            || Self::OFF12.is_invalid(&self.off12)
-            || Self::OFF13.is_invalid(&self.off13)
-            || Self::OFF14.is_invalid(&self.off14)
-            || Self::OFF15.is_invalid(&self.off15)
-            || Self::OFF16.is_invalid(&self.off16)
-            || Self::OFF17.is_invalid(&self.off17)
-            || Self::OFF18.is_invalid(&self.off18)
-            || Self::OFF19.is_invalid(&self.off19)
-            || Self::OFF20.is_invalid(&self.off20)
-            || Self::OFF21.is_invalid(&self.off21)
-            || Self::OFF22.is_invalid(&self.off22)
-            || Self::OFF23.is_invalid(&self.off23)
-            || Self::OFF24.is_invalid(&self.off24)
-            || Self::OFF25.is_invalid(&self.off25)
-            || Self::OFF26.is_invalid(&self.off26)
-            || Self::OFF27.is_invalid(&self.off27)
-            || Self::OFF28.is_invalid(&self.off28)
-            || Self::OFF29.is_invalid(&self.off29)
-            || Self::OFF30.is_invalid(&self.off30)
-            || Self::OFF31.is_invalid(&self.off31)
-            || Self::OFF32.is_invalid(&self.off32)
-            || Self::OFF33.is_invalid(&self.off33)
-            || Self::OFF34.is_invalid(&self.off34)
-            || Self::OFF35.is_invalid(&self.off35)
-            || Self::OFF36.is_invalid(&self.off36)
-            || Self::OFF37.is_invalid(&self.off37)
-            || Self::OFF38.is_invalid(&self.off38)
-            || Self::OFF39.is_invalid(&self.off39)
-            || Self::OFF40.is_invalid(&self.off40)
-            || Self::OFF41.is_invalid(&self.off41)
-            || Self::OFF42.is_invalid(&self.off42)
-            || Self::OFF43.is_invalid(&self.off43)
-            || Self::OFF44.is_invalid(&self.off44)
-            || Self::OFF45.is_invalid(&self.off45)
-            || Self::OFF46.is_invalid(&self.off46)
-            || Self::OFF47.is_invalid(&self.off47)
-            || Self::OFF48.is_invalid(&self.off48)
-            || Self::OFF49.is_invalid(&self.off49)
-            || Self::OFF50.is_invalid(&self.off50)
-            || Self::TS.is_invalid(&self.ts)
-            || Self::MS.is_invalid(&self.ms)
-            || Self::SEQ.is_invalid(&self.seq)
-            || Self::ROLE.is_invalid(&self.role)
-            || Self::ALG.is_invalid(&self.alg)
-            || Self::N.is_invalid(&self.n)
-            || self
-                .repeating
-                .iter()
-                .any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Model3 {
     const LEN: u16 = 58;
@@ -401,9 +338,6 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::DS.is_invalid(&self.ds)
-    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -443,12 +377,6 @@ impl crate::Model for Model3 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

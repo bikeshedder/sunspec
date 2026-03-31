@@ -304,100 +304,6 @@ impl Model6 {
     pub const ROLE: crate::Point<Self, u16> = crate::Point::new(86, 1, true);
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(88, 1, true);
     pub const N: crate::Point<Self, u16> = crate::Point::new(89, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::X.is_invalid(&self.x)
-            || Self::OFF.is_invalid(&self.off)
-            || Self::VAL1.is_invalid(&self.val1)
-            || Self::VAL2.is_invalid(&self.val2)
-            || Self::VAL3.is_invalid(&self.val3)
-            || Self::VAL4.is_invalid(&self.val4)
-            || Self::VAL5.is_invalid(&self.val5)
-            || Self::VAL6.is_invalid(&self.val6)
-            || Self::VAL7.is_invalid(&self.val7)
-            || Self::VAL8.is_invalid(&self.val8)
-            || Self::VAL9.is_invalid(&self.val9)
-            || Self::VAL10.is_invalid(&self.val10)
-            || Self::VAL11.is_invalid(&self.val11)
-            || Self::VAL12.is_invalid(&self.val12)
-            || Self::VAL13.is_invalid(&self.val13)
-            || Self::VAL14.is_invalid(&self.val14)
-            || Self::VAL15.is_invalid(&self.val15)
-            || Self::VAL16.is_invalid(&self.val16)
-            || Self::VAL17.is_invalid(&self.val17)
-            || Self::VAL18.is_invalid(&self.val18)
-            || Self::VAL19.is_invalid(&self.val19)
-            || Self::VAL20.is_invalid(&self.val20)
-            || Self::VAL21.is_invalid(&self.val21)
-            || Self::VAL22.is_invalid(&self.val22)
-            || Self::VAL23.is_invalid(&self.val23)
-            || Self::VAL24.is_invalid(&self.val24)
-            || Self::VAL25.is_invalid(&self.val25)
-            || Self::VAL26.is_invalid(&self.val26)
-            || Self::VAL27.is_invalid(&self.val27)
-            || Self::VAL28.is_invalid(&self.val28)
-            || Self::VAL29.is_invalid(&self.val29)
-            || Self::VAL30.is_invalid(&self.val30)
-            || Self::VAL31.is_invalid(&self.val31)
-            || Self::VAL32.is_invalid(&self.val32)
-            || Self::VAL33.is_invalid(&self.val33)
-            || Self::VAL34.is_invalid(&self.val34)
-            || Self::VAL35.is_invalid(&self.val35)
-            || Self::VAL36.is_invalid(&self.val36)
-            || Self::VAL37.is_invalid(&self.val37)
-            || Self::VAL38.is_invalid(&self.val38)
-            || Self::VAL39.is_invalid(&self.val39)
-            || Self::VAL40.is_invalid(&self.val40)
-            || Self::VAL41.is_invalid(&self.val41)
-            || Self::VAL42.is_invalid(&self.val42)
-            || Self::VAL43.is_invalid(&self.val43)
-            || Self::VAL44.is_invalid(&self.val44)
-            || Self::VAL45.is_invalid(&self.val45)
-            || Self::VAL46.is_invalid(&self.val46)
-            || Self::VAL47.is_invalid(&self.val47)
-            || Self::VAL48.is_invalid(&self.val48)
-            || Self::VAL49.is_invalid(&self.val49)
-            || Self::VAL50.is_invalid(&self.val50)
-            || Self::VAL51.is_invalid(&self.val51)
-            || Self::VAL52.is_invalid(&self.val52)
-            || Self::VAL53.is_invalid(&self.val53)
-            || Self::VAL54.is_invalid(&self.val54)
-            || Self::VAL55.is_invalid(&self.val55)
-            || Self::VAL56.is_invalid(&self.val56)
-            || Self::VAL57.is_invalid(&self.val57)
-            || Self::VAL58.is_invalid(&self.val58)
-            || Self::VAL59.is_invalid(&self.val59)
-            || Self::VAL60.is_invalid(&self.val60)
-            || Self::VAL61.is_invalid(&self.val61)
-            || Self::VAL62.is_invalid(&self.val62)
-            || Self::VAL63.is_invalid(&self.val63)
-            || Self::VAL64.is_invalid(&self.val64)
-            || Self::VAL65.is_invalid(&self.val65)
-            || Self::VAL66.is_invalid(&self.val66)
-            || Self::VAL67.is_invalid(&self.val67)
-            || Self::VAL68.is_invalid(&self.val68)
-            || Self::VAL69.is_invalid(&self.val69)
-            || Self::VAL70.is_invalid(&self.val70)
-            || Self::VAL71.is_invalid(&self.val71)
-            || Self::VAL72.is_invalid(&self.val72)
-            || Self::VAL73.is_invalid(&self.val73)
-            || Self::VAL74.is_invalid(&self.val74)
-            || Self::VAL75.is_invalid(&self.val75)
-            || Self::VAL76.is_invalid(&self.val76)
-            || Self::VAL77.is_invalid(&self.val77)
-            || Self::VAL78.is_invalid(&self.val78)
-            || Self::VAL79.is_invalid(&self.val79)
-            || Self::VAL80.is_invalid(&self.val80)
-            || Self::TS.is_invalid(&self.ts)
-            || Self::MS.is_invalid(&self.ms)
-            || Self::SEQ.is_invalid(&self.seq)
-            || Self::ROLE.is_invalid(&self.role)
-            || Self::ALG.is_invalid(&self.alg)
-            || Self::N.is_invalid(&self.n)
-            || self
-                .repeating
-                .iter()
-                .any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Model6 {
     const LEN: u16 = 90;
@@ -558,9 +464,6 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::DS.is_invalid(&self.ds)
-    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -600,12 +503,6 @@ impl crate::Model for Model6 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

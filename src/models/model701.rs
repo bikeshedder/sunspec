@@ -386,9 +386,6 @@ impl DerMeasureAc {
     pub const TOT_VARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(119, 1, false);
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(120, 1, false);
     pub const MN_ALRM_INFO: crate::Point<Self, Option<String>> = crate::Point::new(121, 32, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::AC_TYPE.is_invalid(&self.ac_type)
-    }
 }
 impl crate::Group for DerMeasureAc {
     const LEN: u16 = 153;
@@ -765,12 +762,6 @@ impl crate::Model for DerMeasureAc {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

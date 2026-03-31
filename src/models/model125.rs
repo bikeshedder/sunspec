@@ -47,11 +47,6 @@ impl Pricing {
     pub const RVT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
     pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const SIG_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::MOD_ENA.is_invalid(&self.mod_ena)
-            || Self::SIG.is_invalid(&self.sig)
-            || Self::SIG_SF.is_invalid(&self.sig_sf)
-    }
 }
 impl crate::Group for Pricing {
     const LEN: u16 = 8;
@@ -153,12 +148,6 @@ impl crate::Model for Pricing {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

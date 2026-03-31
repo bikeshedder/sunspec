@@ -58,9 +58,6 @@ impl Model16 {
     pub const DNS2: crate::Point<Self, Option<String>> = crate::Point::new(38, 8, true);
     pub const MAC: crate::Point<Self, Option<String>> = crate::Point::new(46, 4, false);
     pub const LNK_CTL: crate::Point<Self, Option<LnkCtl>> = crate::Point::new(50, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::CFG.is_invalid(&self.cfg) || Self::CTL.is_invalid(&self.ctl)
-    }
 }
 impl crate::Group for Model16 {
     const LEN: u16 = 52;
@@ -177,12 +174,6 @@ impl crate::Model for Model16 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

@@ -154,11 +154,7 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
             }
             fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
                 let (_, model) = Self::parse_group(data)?;
-                if model.has_invalid_points() {
-                    Err(crate::ParseError::InvalidPointData(crate::InvalidPointData { model }))
-                } else {
-                    Ok(model)
-                }
+                Ok(model)
             }
         }
     };
@@ -236,49 +232,7 @@ fn gen_group(
             }
         });
 
-    let point_validation_checks = points
-        .iter()
-        .filter(|point| point.has_invalid_value())
-        .map(|point| {
-            let field_name = format_ident!("{}", snake_case(&point.name));
-            let const_name = format_ident!("{}", shouty_snake_case(&point.name));
-            quote! {
-                Self::#const_name.is_invalid(&self.#field_name)
-            }
-        })
-        .collect::<Vec<_>>();
-
     let groups = group.groups.iter().collect::<Vec<_>>();
-
-    let subgroup_validation_calls = groups
-        .iter()
-        .map(|group| {
-            let field_name = format_ident!("{}", snake_case(&group.name));
-            if group.count.is_one() {
-                quote! {
-                    self.#field_name.has_invalid_points()
-                }
-            } else {
-                quote! {
-                    self.#field_name.iter().any(|group| group.has_invalid_points())
-                }
-            }
-        })
-        .collect::<Vec<_>>();
-
-    let validation_checks = point_validation_checks
-        .iter()
-        .chain(subgroup_validation_calls.iter())
-        .cloned()
-        .collect::<Vec<_>>();
-
-    let invalid_points_impl = if validation_checks.is_empty() {
-        quote! { false }
-    } else {
-        quote! {
-            #(#validation_checks)||*
-        }
-    };
 
     let group_fields = groups.iter().map(|group| {
         let field_name = format_ident!("{}", snake_case(&group.name));
@@ -328,9 +282,6 @@ fn gen_group(
         #[allow(missing_docs)]
         impl #group_name {
             #(#model_impl_consts)*
-            fn has_invalid_points(&self) -> bool {
-                #invalid_points_impl
-            }
         }
     };
 

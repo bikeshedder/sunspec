@@ -179,11 +179,6 @@ impl Model63001 {
     pub const SUNSSF_5: crate::Point<Self, Option<i16>> = crate::Point::new(130, 1, false);
     pub const SUNSSF_6: crate::Point<Self, Option<i16>> = crate::Point::new(131, 1, false);
     pub const SUNSSF_7: crate::Point<Self, Option<i16>> = crate::Point::new(132, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        self.repeating
-            .iter()
-            .any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Model63001 {
     const LEN: u16 = 134;
@@ -385,9 +380,6 @@ impl Repeating {
     pub const UINT32: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, true);
     pub const UINT32_U: crate::Point<Self, Option<u32>> = crate::Point::new(14, 2, false);
     pub const SUNSSF_9: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 18;
@@ -439,12 +431,6 @@ impl crate::Model for Model63001 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

@@ -73,12 +73,6 @@ impl TrackerController {
     pub const GLBL_ALM: crate::Point<Self, Option<GlblAlm>> = crate::Point::new(23, 1, false);
     pub const DGR_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(25, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::TYP.is_invalid(&self.typ)
-            || Self::DGR_SF.is_invalid(&self.dgr_sf)
-            || Self::N.is_invalid(&self.n)
-            || self.tracker.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for TrackerController {
     const LEN: u16 = 26;
@@ -285,9 +279,6 @@ impl Tracker {
     pub const AZ_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(18, 2, true);
     pub const CTL: crate::Point<Self, Option<TrackerCtl>> = crate::Point::new(20, 1, true);
     pub const ALM: crate::Point<Self, Option<TrackerAlm>> = crate::Point::new(21, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Tracker {
     const LEN: u16 = 22;
@@ -400,12 +391,6 @@ impl crate::Model for TrackerController {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

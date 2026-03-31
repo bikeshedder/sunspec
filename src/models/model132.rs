@@ -64,15 +64,6 @@ impl VoltWatt {
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ACT_CRV.is_invalid(&self.act_crv)
-            || Self::MOD_ENA.is_invalid(&self.mod_ena)
-            || Self::N_CRV.is_invalid(&self.n_crv)
-            || Self::N_PT.is_invalid(&self.n_pt)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::DEPT_REF_SF.is_invalid(&self.dept_ref_sf)
-            || self.curve.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for VoltWatt {
     const LEN: u16 = 10;
@@ -363,13 +354,6 @@ impl Curve {
     pub const RMP_DEC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, true);
     pub const RMP_INC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(52, 1, true);
     pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(53, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ACT_PT.is_invalid(&self.act_pt)
-            || Self::DEPT_REF.is_invalid(&self.dept_ref)
-            || Self::V1.is_invalid(&self.v1)
-            || Self::W1.is_invalid(&self.w1)
-            || Self::READ_ONLY.is_invalid(&self.read_only)
-    }
 }
 impl crate::Group for Curve {
     const LEN: u16 = 54;
@@ -531,12 +515,6 @@ impl crate::Model for VoltWatt {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

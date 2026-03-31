@@ -34,16 +34,6 @@ impl Schedule {
     pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(2, 1, true);
     pub const N_SCHD: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
     pub const N_PTS: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ACT_SCHD.is_invalid(&self.act_schd)
-            || Self::MOD_ENA.is_invalid(&self.mod_ena)
-            || Self::N_SCHD.is_invalid(&self.n_schd)
-            || Self::N_PTS.is_invalid(&self.n_pts)
-            || self
-                .repeating
-                .iter()
-                .any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Schedule {
     const LEN: u16 = 6;
@@ -292,19 +282,6 @@ impl Repeating {
     pub const WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(57, 1, true);
     pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(58, 1, true);
     pub const ACT_INDX: crate::Point<Self, u16> = crate::Point::new(59, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ACT_PTS.is_invalid(&self.act_pts)
-            || Self::STR_TMS.is_invalid(&self.str_tms)
-            || Self::REP_PER.is_invalid(&self.rep_per)
-            || Self::INTV_TYP.is_invalid(&self.intv_typ)
-            || Self::X_TYP.is_invalid(&self.x_typ)
-            || Self::X_SF.is_invalid(&self.x_sf)
-            || Self::Y_TYP.is_invalid(&self.y_typ)
-            || Self::Y_SF.is_invalid(&self.y_sf)
-            || Self::X1.is_invalid(&self.x1)
-            || Self::Y1.is_invalid(&self.y1)
-            || Self::ACT_INDX.is_invalid(&self.act_indx)
-    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 60;
@@ -573,12 +550,6 @@ impl crate::Model for Schedule {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

@@ -48,12 +48,6 @@ impl Model14 {
     pub const PORT: crate::Point<Self, u16> = crate::Point::new(27, 1, true);
     pub const USER: crate::Point<Self, Option<String>> = crate::Point::new(28, 12, true);
     pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(40, 12, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::CAP.is_invalid(&self.cap)
-            || Self::CFG.is_invalid(&self.cfg)
-            || Self::TYP.is_invalid(&self.typ)
-            || Self::PORT.is_invalid(&self.port)
-    }
 }
 impl crate::Group for Model14 {
     const LEN: u16 = 52;
@@ -128,12 +122,6 @@ impl crate::Model for Model14 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

@@ -257,9 +257,6 @@ impl DerExploitation {
         crate::Point::new(41, 1, true);
     pub const CHANGE_COMMON_MODEL_LENGTH: crate::Point<Self, Option<ChangeCommonModelLength>> =
         crate::Point::new(42, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for DerExploitation {
     const LEN: u16 = 43;
@@ -2130,12 +2127,6 @@ impl crate::Model for DerExploitation {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

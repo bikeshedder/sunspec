@@ -55,16 +55,6 @@ impl DerTripHv {
     pub const N_CRV_SET: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
     pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ENA.is_invalid(&self.ena)
-            || Self::ADPT_CRV_REQ.is_invalid(&self.adpt_crv_req)
-            || Self::ADPT_CRV_RSLT.is_invalid(&self.adpt_crv_rslt)
-            || Self::N_PT.is_invalid(&self.n_pt)
-            || Self::N_CRV_SET.is_invalid(&self.n_crv_set)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::TMS_SF.is_invalid(&self.tms_sf)
-            || self.crv.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for DerTripHv {
     const LEN: u16 = 7;
@@ -212,12 +202,6 @@ pub struct Crv {
 #[allow(missing_docs)]
 impl Crv {
     pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(0, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::READ_ONLY.is_invalid(&self.read_only)
-            || self.must_trip.has_invalid_points()
-            || self.may_trip.has_invalid_points()
-            || self.mom_cess.has_invalid_points()
-    }
 }
 impl crate::Group for Crv {
     const LEN: u16 = 1;
@@ -316,9 +300,6 @@ pub struct MustTrip {
 #[allow(missing_docs)]
 impl MustTrip {
     pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        self.pt.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for MustTrip {
     const LEN: u16 = 1;
@@ -362,9 +343,6 @@ pub struct Pt {
 impl Pt {
     pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(1, 2, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Pt {
     const LEN: u16 = 3;
@@ -411,9 +389,6 @@ pub struct MayTrip {
 #[allow(missing_docs)]
 impl MayTrip {
     pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        self.pt.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for MayTrip {
     const LEN: u16 = 1;
@@ -452,9 +427,6 @@ pub struct MomCess {
 #[allow(missing_docs)]
 impl MomCess {
     pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        self.pt.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for MomCess {
     const LEN: u16 = 1;
@@ -482,12 +454,6 @@ impl crate::Model for DerTripHv {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

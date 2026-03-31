@@ -72,9 +72,6 @@ impl DerMeasureDc {
     pub const DCW_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
     pub const DCWH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        self.prt.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for DerMeasureDc {
     const LEN: u16 = 18;
@@ -190,9 +187,6 @@ impl Prt {
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
     pub const DC_STA: crate::Point<Self, Option<PrtDcSta>> = crate::Point::new(22, 1, false);
     pub const DC_ALRM: crate::Point<Self, Option<PrtDcAlrm>> = crate::Point::new(23, 2, false);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Prt {
     const LEN: u16 = 25;
@@ -374,12 +368,6 @@ impl crate::Model for DerMeasureDc {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

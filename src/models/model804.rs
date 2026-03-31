@@ -200,30 +200,6 @@ impl LithiumIonString {
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(40, 1, false);
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
     pub const MOD_TMP_SF: crate::Point<Self, i16> = crate::Point::new(42, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::IDX.is_invalid(&self.idx)
-            || Self::N_MOD.is_invalid(&self.n_mod)
-            || Self::ST.is_invalid(&self.st)
-            || Self::SOC.is_invalid(&self.soc)
-            || Self::A.is_invalid(&self.a)
-            || Self::CELL_V_MAX.is_invalid(&self.cell_v_max)
-            || Self::CELL_V_MIN.is_invalid(&self.cell_v_min)
-            || Self::CELL_V_AVG.is_invalid(&self.cell_v_avg)
-            || Self::MOD_TMP_MAX.is_invalid(&self.mod_tmp_max)
-            || Self::MOD_TMP_MAX_MOD.is_invalid(&self.mod_tmp_max_mod)
-            || Self::MOD_TMP_MIN.is_invalid(&self.mod_tmp_min)
-            || Self::MOD_TMP_MIN_MOD.is_invalid(&self.mod_tmp_min_mod)
-            || Self::MOD_TMP_AVG.is_invalid(&self.mod_tmp_avg)
-            || Self::EVT1.is_invalid(&self.evt1)
-            || Self::SOC_SF.is_invalid(&self.soc_sf)
-            || Self::A_SF.is_invalid(&self.a_sf)
-            || Self::CELL_V_SF.is_invalid(&self.cell_v_sf)
-            || Self::MOD_TMP_SF.is_invalid(&self.mod_tmp_sf)
-            || self
-                .lithium_ion_string_module
-                .iter()
-                .any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for LithiumIonString {
     const LEN: u16 = 46;
@@ -634,15 +610,6 @@ impl LithiumIonStringModule {
     pub const MOD_CELL_TMP_MIN_CELL: crate::Point<Self, Option<u16>> =
         crate::Point::new(11, 1, false);
     pub const MOD_CELL_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::MOD_N_CELL.is_invalid(&self.mod_n_cell)
-            || Self::MOD_CELL_V_MAX.is_invalid(&self.mod_cell_v_max)
-            || Self::MOD_CELL_V_MIN.is_invalid(&self.mod_cell_v_min)
-            || Self::MOD_CELL_V_AVG.is_invalid(&self.mod_cell_v_avg)
-            || Self::MOD_CELL_TMP_MAX.is_invalid(&self.mod_cell_tmp_max)
-            || Self::MOD_CELL_TMP_MIN.is_invalid(&self.mod_cell_tmp_min)
-            || Self::MOD_CELL_TMP_AVG.is_invalid(&self.mod_cell_tmp_avg)
-    }
 }
 impl crate::Group for LithiumIonStringModule {
     const LEN: u16 = 16;
@@ -689,12 +656,6 @@ impl crate::Model for LithiumIonString {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

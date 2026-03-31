@@ -70,16 +70,6 @@ impl DerWattVar {
     pub const RVRT_CRV: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, true);
     pub const W_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ENA.is_invalid(&self.ena)
-            || Self::ADPT_CRV_REQ.is_invalid(&self.adpt_crv_req)
-            || Self::ADPT_CRV_RSLT.is_invalid(&self.adpt_crv_rslt)
-            || Self::N_PT.is_invalid(&self.n_pt)
-            || Self::N_CRV.is_invalid(&self.n_crv)
-            || Self::W_SF.is_invalid(&self.w_sf)
-            || Self::DEPT_REF_SF.is_invalid(&self.dept_ref_sf)
-            || self.crv.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for DerWattVar {
     const LEN: u16 = 12;
@@ -237,12 +227,6 @@ impl Crv {
     pub const DEPT_REF: crate::Point<Self, CrvDeptRef> = crate::Point::new(1, 1, true);
     pub const PRI: crate::Point<Self, Option<CrvPri>> = crate::Point::new(2, 1, true);
     pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(3, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ACT_PT.is_invalid(&self.act_pt)
-            || Self::DEPT_REF.is_invalid(&self.dept_ref)
-            || Self::READ_ONLY.is_invalid(&self.read_only)
-            || self.pt.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Crv {
     const LEN: u16 = 4;
@@ -433,9 +417,6 @@ pub struct Pt {
 impl Pt {
     pub const W: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, true);
     pub const VAR: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Pt {
     const LEN: u16 = 2;
@@ -471,12 +452,6 @@ impl crate::Model for DerWattVar {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

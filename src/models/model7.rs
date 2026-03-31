@@ -58,20 +58,6 @@ impl Model7 {
     pub const ALM: crate::Point<Self, Alm> = crate::Point::new(6, 1, false);
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(8, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(9, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::RQ_SEQ.is_invalid(&self.rq_seq)
-            || Self::STS.is_invalid(&self.sts)
-            || Self::TS.is_invalid(&self.ts)
-            || Self::MS.is_invalid(&self.ms)
-            || Self::SEQ.is_invalid(&self.seq)
-            || Self::ALM.is_invalid(&self.alm)
-            || Self::ALG.is_invalid(&self.alg)
-            || Self::N.is_invalid(&self.n)
-            || self
-                .repeating
-                .iter()
-                .any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Model7 {
     const LEN: u16 = 10;
@@ -240,9 +226,6 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::DS.is_invalid(&self.ds)
-    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -282,12 +265,6 @@ impl crate::Model for Model7 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

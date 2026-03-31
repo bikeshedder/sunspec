@@ -153,27 +153,6 @@ impl AcMeterSecure {
     pub const SEQ: crate::Point<Self, u16> = crate::Point::new(39, 1, false);
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(40, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(41, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::A.is_invalid(&self.a)
-            || Self::A_SF.is_invalid(&self.a_sf)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::HZ.is_invalid(&self.hz)
-            || Self::W.is_invalid(&self.w)
-            || Self::W_SF.is_invalid(&self.w_sf)
-            || Self::TOT_WH_EXP.is_invalid(&self.tot_wh_exp)
-            || Self::TOT_WH_IMP.is_invalid(&self.tot_wh_imp)
-            || Self::TOT_WH_SF.is_invalid(&self.tot_wh_sf)
-            || Self::EVT.is_invalid(&self.evt)
-            || Self::TS.is_invalid(&self.ts)
-            || Self::MS.is_invalid(&self.ms)
-            || Self::SEQ.is_invalid(&self.seq)
-            || Self::ALG.is_invalid(&self.alg)
-            || Self::N.is_invalid(&self.n)
-            || self
-                .repeating
-                .iter()
-                .any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for AcMeterSecure {
     const LEN: u16 = 42;
@@ -309,9 +288,6 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::DS.is_invalid(&self.ds)
-    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -351,12 +327,6 @@ impl crate::Model for AcMeterSecure {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

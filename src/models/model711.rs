@@ -69,16 +69,6 @@ impl DerFreqDroop {
     pub const DB_SF: crate::Point<Self, i16> = crate::Point::new(9, 1, false);
     pub const K_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
     pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ENA.is_invalid(&self.ena)
-            || Self::ADPT_CTL_REQ.is_invalid(&self.adpt_ctl_req)
-            || Self::ADPT_CTL_RSLT.is_invalid(&self.adpt_ctl_rslt)
-            || Self::N_CTL.is_invalid(&self.n_ctl)
-            || Self::DB_SF.is_invalid(&self.db_sf)
-            || Self::K_SF.is_invalid(&self.k_sf)
-            || Self::RSP_TMS_SF.is_invalid(&self.rsp_tms_sf)
-            || self.ctl.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for DerFreqDroop {
     const LEN: u16 = 12;
@@ -244,14 +234,6 @@ impl Ctl {
     pub const RSP_TMS: crate::Point<Self, u32> = crate::Point::new(6, 2, true);
     pub const P_MIN: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, true);
     pub const READ_ONLY: crate::Point<Self, CtlReadOnly> = crate::Point::new(9, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::DB_OF.is_invalid(&self.db_of)
-            || Self::DB_UF.is_invalid(&self.db_uf)
-            || Self::K_OF.is_invalid(&self.k_of)
-            || Self::K_UF.is_invalid(&self.k_uf)
-            || Self::RSP_TMS.is_invalid(&self.rsp_tms)
-            || Self::READ_ONLY.is_invalid(&self.read_only)
-    }
 }
 impl crate::Group for Ctl {
     const LEN: u16 = 10;
@@ -334,12 +316,6 @@ impl crate::Model for DerFreqDroop {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

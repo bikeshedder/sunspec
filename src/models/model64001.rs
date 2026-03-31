@@ -111,9 +111,6 @@ impl Model64001 {
     pub const S4OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(63, 1, false);
     pub const S4_VER: crate::Point<Self, Option<String>> = crate::Point::new(64, 2, false);
     pub const S4_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(66, 5, false);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Model64001 {
     const LEN: u16 = 71;
@@ -233,12 +230,6 @@ impl crate::Model for Model64001 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

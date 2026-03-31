@@ -224,72 +224,6 @@ impl Model64112 {
     pub const CC_CONFIG_DATA_LOG_CLEAR: crate::Point<Self, u16> = crate::Point::new(62, 1, false);
     pub const CC_CONFIG_DATA_LOG_CLR_COMP: crate::Point<Self, u16> =
         crate::Point::new(63, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::PORT.is_invalid(&self.port)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::C_SF.is_invalid(&self.c_sf)
-            || Self::H_SF.is_invalid(&self.h_sf)
-            || Self::P_SF.is_invalid(&self.p_sf)
-            || Self::AH_SF.is_invalid(&self.ah_sf)
-            || Self::KWH_SF.is_invalid(&self.kwh_sf)
-            || Self::CC_CONFIG_FAULT.is_invalid(&self.cc_config_fault)
-            || Self::CC_CONFIG_ABSORB_V.is_invalid(&self.cc_config_absorb_v)
-            || Self::CC_CONFIG_ABSORB_HR.is_invalid(&self.cc_config_absorb_hr)
-            || Self::CC_CONFIG_ABSORB_END_A.is_invalid(&self.cc_config_absorb_end_a)
-            || Self::CC_CONFIG_REBULK_V.is_invalid(&self.cc_config_rebulk_v)
-            || Self::CC_CONFIG_FLOAT_V.is_invalid(&self.cc_config_float_v)
-            || Self::CC_CONFIG_MAX_CHG_A.is_invalid(&self.cc_config_max_chg_a)
-            || Self::CC_CONFIG_EQUALIZE_V.is_invalid(&self.cc_config_equalize_v)
-            || Self::CC_CONFIG_EQUALIZE_HR.is_invalid(&self.cc_config_equalize_hr)
-            || Self::CC_CONFIG_AUTO_EQUALIZE.is_invalid(&self.cc_config_auto_equalize)
-            || Self::CC_CONFIG_MPPT_MODE.is_invalid(&self.cc_config_mppt_mode)
-            || Self::CC_CONFIG_SWEEP_WIDTH.is_invalid(&self.cc_config_sweep_width)
-            || Self::CC_CONFIG_SWEEP_MAX.is_invalid(&self.cc_config_sweep_max)
-            || Self::CC_CONFIG_U_PICK_DUTY_CYC.is_invalid(&self.cc_config_u_pick_duty_cyc)
-            || Self::CC_CONFIG_GRID_TIE.is_invalid(&self.cc_config_grid_tie)
-            || Self::CC_CONFIG_TEMP_COMP.is_invalid(&self.cc_config_temp_comp)
-            || Self::CC_CONFIG_TEMP_COMP_LLIMT.is_invalid(&self.cc_config_temp_comp_llimt)
-            || Self::CC_CONFIG_TEMP_COMP_HLIMT.is_invalid(&self.cc_config_temp_comp_hlimt)
-            || Self::CC_CONFIG_AUTO_RESTART.is_invalid(&self.cc_config_auto_restart)
-            || Self::CC_CONFIG_WAKEUP_VOC.is_invalid(&self.cc_config_wakeup_voc)
-            || Self::CC_CONFIG_SNOOZE_MODE_A.is_invalid(&self.cc_config_snooze_mode_a)
-            || Self::CC_CONFIG_WAKEUP_INTERVAL.is_invalid(&self.cc_config_wakeup_interval)
-            || Self::CC_CONFIG_AUX_MODE.is_invalid(&self.cc_config_aux_mode)
-            || Self::CC_CONFIG_AUX_CONTROL.is_invalid(&self.cc_config_aux_control)
-            || Self::CC_CONFIG_AUX_STATE.is_invalid(&self.cc_config_aux_state)
-            || Self::CC_CONFIG_AUX_POLARITY.is_invalid(&self.cc_config_aux_polarity)
-            || Self::CC_CONFIG_AUX_L_BATT_DISC.is_invalid(&self.cc_config_aux_l_batt_disc)
-            || Self::CC_CONFIG_AUX_L_BATT_RCON.is_invalid(&self.cc_config_aux_l_batt_rcon)
-            || Self::CC_CONFIG_AUX_L_BATT_DLY.is_invalid(&self.cc_config_aux_l_batt_dly)
-            || Self::CC_CONFIG_AUX_VENT_FAN_V.is_invalid(&self.cc_config_aux_vent_fan_v)
-            || Self::CC_CONFIG_AUX_PV_TRIGGER_V.is_invalid(&self.cc_config_aux_pv_trigger_v)
-            || Self::CC_CONFIG_AUX_PV_TRG_H_TM.is_invalid(&self.cc_config_aux_pv_trg_h_tm)
-            || Self::CC_CONFIG_AUX_NLITE_THRS_V.is_invalid(&self.cc_config_aux_nlite_thrs_v)
-            || Self::CC_CONFIG_AUX_NLITE_ON_TM.is_invalid(&self.cc_config_aux_nlite_on_tm)
-            || Self::CC_CONFIG_AUX_NLITE_ON_HIST.is_invalid(&self.cc_config_aux_nlite_on_hist)
-            || Self::CC_CONFIG_AUX_NLITE_OFF_HIST.is_invalid(&self.cc_config_aux_nlite_off_hist)
-            || Self::CC_CONFIG_AUX_ERROR_BATT_V.is_invalid(&self.cc_config_aux_error_batt_v)
-            || Self::CC_CONFIG_AUX_DIVERT_H_TIME.is_invalid(&self.cc_config_aux_divert_h_time)
-            || Self::CC_CONFIG_AUX_DIVERT_DLY_TIME.is_invalid(&self.cc_config_aux_divert_dly_time)
-            || Self::CC_CONFIG_AUX_DIVERT_REL_V.is_invalid(&self.cc_config_aux_divert_rel_v)
-            || Self::CC_CONFIG_AUX_DIVERT_HYST_V.is_invalid(&self.cc_config_aux_divert_hyst_v)
-            || Self::CC_CONFIG_MAJOR_FW_REV.is_invalid(&self.cc_config_major_fw_rev)
-            || Self::CC_CONFIG_MID_FW_REV.is_invalid(&self.cc_config_mid_fw_rev)
-            || Self::CC_CONFIG_MINOR_FW_REV.is_invalid(&self.cc_config_minor_fw_rev)
-            || Self::CC_CONFIG_DATA_LOG_DAY_OFFSET.is_invalid(&self.cc_config_data_log_day_offset)
-            || Self::CC_CONFIG_DATA_LOG_CUR_DAY_OFF.is_invalid(&self.cc_config_data_log_cur_day_off)
-            || Self::CC_CONFIG_DATA_LOG_DAILY_AH.is_invalid(&self.cc_config_data_log_daily_ah)
-            || Self::CC_CONFIG_DATA_LOG_DAILY_KWH.is_invalid(&self.cc_config_data_log_daily_kwh)
-            || Self::CC_CONFIG_DATA_LOG_MAX_OUT_A.is_invalid(&self.cc_config_data_log_max_out_a)
-            || Self::CC_CONFIG_DATA_LOG_MAX_OUT_W.is_invalid(&self.cc_config_data_log_max_out_w)
-            || Self::CC_CONFIG_DATA_LOG_ABSORB_T.is_invalid(&self.cc_config_data_log_absorb_t)
-            || Self::CC_CONFIG_DATA_LOG_FLOAT_T.is_invalid(&self.cc_config_data_log_float_t)
-            || Self::CC_CONFIG_DATA_LOG_MIN_BATT_V.is_invalid(&self.cc_config_data_log_min_batt_v)
-            || Self::CC_CONFIG_DATA_LOG_MAX_BATT_V.is_invalid(&self.cc_config_data_log_max_batt_v)
-            || Self::CC_CONFIG_DATA_LOG_MAX_INPUT_V.is_invalid(&self.cc_config_data_log_max_input_v)
-            || Self::CC_CONFIG_DATA_LOG_CLEAR.is_invalid(&self.cc_config_data_log_clear)
-            || Self::CC_CONFIG_DATA_LOG_CLR_COMP.is_invalid(&self.cc_config_data_log_clr_comp)
-    }
 }
 impl crate::Group for Model64112 {
     const LEN: u16 = 64;
@@ -810,12 +744,6 @@ impl crate::Model for Model64112 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

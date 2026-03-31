@@ -57,13 +57,6 @@ impl FreqWattParam {
     pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
     pub const HZ_STR_STOP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::W_GRA.is_invalid(&self.w_gra)
-            || Self::HZ_STR.is_invalid(&self.hz_str)
-            || Self::HZ_STOP.is_invalid(&self.hz_stop)
-            || Self::HYS_ENA.is_invalid(&self.hys_ena)
-            || Self::MOD_ENA.is_invalid(&self.mod_ena)
-    }
 }
 impl crate::Group for FreqWattParam {
     const LEN: u16 = 10;
@@ -139,12 +132,6 @@ impl crate::Model for FreqWattParam {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

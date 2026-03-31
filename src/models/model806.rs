@@ -13,13 +13,6 @@ pub struct FlowBattery {
 #[allow(missing_docs)]
 impl FlowBattery {
     pub const BAT_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::BAT_TBD.is_invalid(&self.bat_tbd)
-            || self
-                .battery_string
-                .iter()
-                .any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for FlowBattery {
     const LEN: u16 = 1;
@@ -47,9 +40,6 @@ pub struct BatteryString {
 #[allow(missing_docs)]
 impl BatteryString {
     pub const BAT_ST_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::BAT_ST_TBD.is_invalid(&self.bat_st_tbd)
-    }
 }
 impl crate::Group for BatteryString {
     const LEN: u16 = 1;
@@ -89,12 +79,6 @@ impl crate::Model for FlowBattery {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

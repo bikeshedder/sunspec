@@ -26,9 +26,6 @@ impl MiniMet {
     pub const TMP_BOM: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
     pub const TMP_AMB: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
     pub const WND_SPD: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for MiniMet {
     const LEN: u16 = 4;
@@ -54,12 +51,6 @@ impl crate::Model for MiniMet {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

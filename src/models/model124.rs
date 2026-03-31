@@ -133,14 +133,6 @@ impl StorageBasic {
     pub const STOR_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
     pub const IN_BAT_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
     pub const IN_OUT_W_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::W_CHA_MAX.is_invalid(&self.w_cha_max)
-            || Self::W_CHA_GRA.is_invalid(&self.w_cha_gra)
-            || Self::W_DIS_CHA_GRA.is_invalid(&self.w_dis_cha_gra)
-            || Self::STOR_CTL_MOD.is_invalid(&self.stor_ctl_mod)
-            || Self::W_CHA_MAX_SF.is_invalid(&self.w_cha_max_sf)
-            || Self::W_CHA_DIS_CHA_GRA_SF.is_invalid(&self.w_cha_dis_cha_gra_sf)
-    }
 }
 impl crate::Group for StorageBasic {
     const LEN: u16 = 24;
@@ -304,12 +296,6 @@ impl crate::Model for StorageBasic {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

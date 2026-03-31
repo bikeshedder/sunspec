@@ -296,19 +296,6 @@ impl AcMeterAnOrAb {
         crate::Point::new(100, 2, false);
     pub const TOT_V_ARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(102, 1, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(103, 2, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::A.is_invalid(&self.a)
-            || Self::APH_A.is_invalid(&self.aph_a)
-            || Self::A_SF.is_invalid(&self.a_sf)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::HZ.is_invalid(&self.hz)
-            || Self::W.is_invalid(&self.w)
-            || Self::W_SF.is_invalid(&self.w_sf)
-            || Self::TOT_WH_EXP.is_invalid(&self.tot_wh_exp)
-            || Self::TOT_WH_IMP.is_invalid(&self.tot_wh_imp)
-            || Self::TOT_WH_SF.is_invalid(&self.tot_wh_sf)
-            || Self::EVT.is_invalid(&self.evt)
-    }
 }
 impl crate::Group for AcMeterAnOrAb {
     const LEN: u16 = 105;
@@ -436,12 +423,6 @@ impl crate::Model for AcMeterAnOrAb {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

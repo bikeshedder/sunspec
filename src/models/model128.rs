@@ -77,13 +77,6 @@ impl ReactiveCurrent {
     pub const HOLD_TMMS: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
     pub const AR_GRA_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const V_REF_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::AR_GRA_MOD.is_invalid(&self.ar_gra_mod)
-            || Self::AR_GRA_SAG.is_invalid(&self.ar_gra_sag)
-            || Self::AR_GRA_SWELL.is_invalid(&self.ar_gra_swell)
-            || Self::MOD_ENA.is_invalid(&self.mod_ena)
-            || Self::AR_GRA_SF.is_invalid(&self.ar_gra_sf)
-    }
 }
 impl crate::Group for ReactiveCurrent {
     const LEN: u16 = 14;
@@ -178,12 +171,6 @@ impl crate::Model for ReactiveCurrent {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

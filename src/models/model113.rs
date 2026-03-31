@@ -173,22 +173,6 @@ impl InverterThreePhaseFloat {
     pub const EVT_VND2: crate::Point<Self, Option<EvtVnd2>> = crate::Point::new(54, 2, false);
     pub const EVT_VND3: crate::Point<Self, Option<EvtVnd3>> = crate::Point::new(56, 2, false);
     pub const EVT_VND4: crate::Point<Self, Option<EvtVnd4>> = crate::Point::new(58, 2, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::A.is_invalid(&self.a)
-            || Self::APH_A.is_invalid(&self.aph_a)
-            || Self::APH_B.is_invalid(&self.aph_b)
-            || Self::APH_C.is_invalid(&self.aph_c)
-            || Self::PH_VPH_A.is_invalid(&self.ph_vph_a)
-            || Self::PH_VPH_B.is_invalid(&self.ph_vph_b)
-            || Self::PH_VPH_C.is_invalid(&self.ph_vph_c)
-            || Self::W.is_invalid(&self.w)
-            || Self::HZ.is_invalid(&self.hz)
-            || Self::WH.is_invalid(&self.wh)
-            || Self::TMP_CAB.is_invalid(&self.tmp_cab)
-            || Self::ST.is_invalid(&self.st)
-            || Self::EVT1.is_invalid(&self.evt1)
-            || Self::EVT2.is_invalid(&self.evt2)
-    }
 }
 impl crate::Group for InverterThreePhaseFloat {
     const LEN: u16 = 60;
@@ -440,12 +424,6 @@ impl crate::Model for InverterThreePhaseFloat {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

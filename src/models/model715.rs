@@ -37,9 +37,6 @@ impl DerCtl {
     pub const CONTROLLER_HB: crate::Point<Self, Option<u32>> = crate::Point::new(3, 2, true);
     pub const ALARM_RESET: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const OP_CTL: crate::Point<Self, Option<OpCtl>> = crate::Point::new(6, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for DerCtl {
     const LEN: u16 = 7;
@@ -154,12 +151,6 @@ impl crate::Model for DerCtl {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

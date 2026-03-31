@@ -75,17 +75,6 @@ impl DerVoltVar {
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ENA.is_invalid(&self.ena)
-            || Self::ADPT_CRV_REQ.is_invalid(&self.adpt_crv_req)
-            || Self::ADPT_CRV_RSLT.is_invalid(&self.adpt_crv_rslt)
-            || Self::N_PT.is_invalid(&self.n_pt)
-            || Self::N_CRV.is_invalid(&self.n_crv)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::DEPT_REF_SF.is_invalid(&self.dept_ref_sf)
-            || Self::RSP_TMS_SF.is_invalid(&self.rsp_tms_sf)
-            || self.crv.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for DerVoltVar {
     const LEN: u16 = 13;
@@ -270,12 +259,6 @@ impl Crv {
     pub const V_REF_AUTO_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
     pub const RSP_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, true);
     pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(9, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ACT_PT.is_invalid(&self.act_pt)
-            || Self::DEPT_REF.is_invalid(&self.dept_ref)
-            || Self::READ_ONLY.is_invalid(&self.read_only)
-            || self.pt.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Crv {
     const LEN: u16 = 10;
@@ -519,9 +502,6 @@ pub struct Pt {
 impl Pt {
     pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const VAR: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Pt {
     const LEN: u16 = 2;
@@ -557,12 +537,6 @@ impl crate::Model for DerVoltVar {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

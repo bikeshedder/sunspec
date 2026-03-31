@@ -43,11 +43,6 @@ impl Model11 {
     pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(7, 4, true);
     pub const CTL: crate::Point<Self, Option<Ctl>> = crate::Point::new(11, 1, true);
     pub const FRC_SPD: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::SPD.is_invalid(&self.spd)
-            || Self::CFG_ST.is_invalid(&self.cfg_st)
-            || Self::ST.is_invalid(&self.st)
-    }
 }
 impl crate::Group for Model11 {
     const LEN: u16 = 13;
@@ -170,12 +165,6 @@ impl crate::Model for Model11 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

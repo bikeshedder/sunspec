@@ -109,9 +109,6 @@ impl SolarModule {
     pub const IN_V: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
     pub const IN_WH: crate::Point<Self, Option<u32>> = crate::Point::new(25, 2, false);
     pub const IN_W: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::STAT.is_invalid(&self.stat) || Self::EVT.is_invalid(&self.evt)
-    }
 }
 impl crate::Group for SolarModule {
     const LEN: u16 = 28;
@@ -280,12 +277,6 @@ impl crate::Model for SolarModule {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

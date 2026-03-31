@@ -165,27 +165,6 @@ impl FlowBatteryString {
     pub const TMP_SF: crate::Point<Self, i16> = crate::Point::new(30, 1, false);
     pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(31, 1, false);
     pub const OCV_SF: crate::Point<Self, i16> = crate::Point::new(32, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::IDX.is_invalid(&self.idx)
-            || Self::N_MOD.is_invalid(&self.n_mod)
-            || Self::N_MOD_CON.is_invalid(&self.n_mod_con)
-            || Self::MOD_V_MAX.is_invalid(&self.mod_v_max)
-            || Self::MOD_V_MIN.is_invalid(&self.mod_v_min)
-            || Self::MOD_V_AVG.is_invalid(&self.mod_v_avg)
-            || Self::TMP_MAX.is_invalid(&self.tmp_max)
-            || Self::TMP_MIN.is_invalid(&self.tmp_min)
-            || Self::TMP_AVG.is_invalid(&self.tmp_avg)
-            || Self::EVT1.is_invalid(&self.evt1)
-            || Self::EVT2.is_invalid(&self.evt2)
-            || Self::EVT_VND1.is_invalid(&self.evt_vnd1)
-            || Self::EVT_VND2.is_invalid(&self.evt_vnd2)
-            || Self::MOD_V_SF.is_invalid(&self.mod_v_sf)
-            || Self::CELL_V_SF.is_invalid(&self.cell_v_sf)
-            || Self::TMP_SF.is_invalid(&self.tmp_sf)
-            || Self::SOC_SF.is_invalid(&self.soc_sf)
-            || Self::OCV_SF.is_invalid(&self.ocv_sf)
-            || self.module.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for FlowBatteryString {
     const LEN: u16 = 34;
@@ -450,16 +429,6 @@ impl Module {
         crate::Point::new(22, 1, true);
     pub const MOD_DIS_RSN: crate::Point<Self, Option<ModuleModDisRsn>> =
         crate::Point::new(23, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::MOD_IDX.is_invalid(&self.mod_idx)
-            || Self::MOD_N_STK.is_invalid(&self.mod_n_stk)
-            || Self::MOD_ST.is_invalid(&self.mod_st)
-            || Self::MOD_SOC.is_invalid(&self.mod_soc)
-            || Self::MOD_OCV.is_invalid(&self.mod_ocv)
-            || Self::MOD_V.is_invalid(&self.mod_v)
-            || Self::MOD_EVT1.is_invalid(&self.mod_evt1)
-            || Self::MOD_EVT2.is_invalid(&self.mod_evt2)
-    }
 }
 impl crate::Group for Module {
     const LEN: u16 = 24;
@@ -841,12 +810,6 @@ impl crate::Model for FlowBatteryString {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

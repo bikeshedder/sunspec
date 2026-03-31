@@ -288,29 +288,6 @@ impl AcMeterAbcn {
         crate::Point::new(100, 2, false);
     pub const TOT_V_ARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(102, 1, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(103, 2, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::A.is_invalid(&self.a)
-            || Self::APH_A.is_invalid(&self.aph_a)
-            || Self::APH_B.is_invalid(&self.aph_b)
-            || Self::APH_C.is_invalid(&self.aph_c)
-            || Self::A_SF.is_invalid(&self.a_sf)
-            || Self::PH_V.is_invalid(&self.ph_v)
-            || Self::PH_VPH_A.is_invalid(&self.ph_vph_a)
-            || Self::PH_VPH_B.is_invalid(&self.ph_vph_b)
-            || Self::PH_VPH_C.is_invalid(&self.ph_vph_c)
-            || Self::PPV.is_invalid(&self.ppv)
-            || Self::PH_VPH_AB.is_invalid(&self.ph_vph_ab)
-            || Self::PH_VPH_BC.is_invalid(&self.ph_vph_bc)
-            || Self::PH_VPH_CA.is_invalid(&self.ph_vph_ca)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::HZ.is_invalid(&self.hz)
-            || Self::W.is_invalid(&self.w)
-            || Self::W_SF.is_invalid(&self.w_sf)
-            || Self::TOT_WH_EXP.is_invalid(&self.tot_wh_exp)
-            || Self::TOT_WH_IMP.is_invalid(&self.tot_wh_imp)
-            || Self::TOT_WH_SF.is_invalid(&self.tot_wh_sf)
-            || Self::EVT.is_invalid(&self.evt)
-    }
 }
 impl crate::Group for AcMeterAbcn {
     const LEN: u16 = 105;
@@ -444,12 +421,6 @@ impl crate::Model for AcMeterAbcn {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

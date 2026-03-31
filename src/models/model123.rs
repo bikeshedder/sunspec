@@ -135,16 +135,6 @@ impl Controls {
     pub const W_MAX_LIM_PCT_SF: crate::Point<Self, i16> = crate::Point::new(21, 1, false);
     pub const OUT_PF_SET_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
     pub const V_AR_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::CONN.is_invalid(&self.conn)
-            || Self::W_MAX_LIM_PCT.is_invalid(&self.w_max_lim_pct)
-            || Self::W_MAX_LIM_ENA.is_invalid(&self.w_max_lim_ena)
-            || Self::OUT_PF_SET.is_invalid(&self.out_pf_set)
-            || Self::OUT_PF_SET_ENA.is_invalid(&self.out_pf_set_ena)
-            || Self::V_AR_PCT_ENA.is_invalid(&self.v_ar_pct_ena)
-            || Self::W_MAX_LIM_PCT_SF.is_invalid(&self.w_max_lim_pct_sf)
-            || Self::OUT_PF_SET_SF.is_invalid(&self.out_pf_set_sf)
-    }
 }
 impl crate::Group for Controls {
     const LEN: u16 = 24;
@@ -388,12 +378,6 @@ impl crate::Model for Controls {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

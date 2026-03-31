@@ -23,9 +23,6 @@ impl Model10 {
     pub const ST: crate::Point<Self, St> = crate::Point::new(0, 1, false);
     pub const CTL: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
     pub const TYP: crate::Point<Self, Option<Typ>> = crate::Point::new(2, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        Self::ST.is_invalid(&self.st)
-    }
 }
 impl crate::Group for Model10 {
     const LEN: u16 = 4;
@@ -142,12 +139,6 @@ impl crate::Model for Model10 {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

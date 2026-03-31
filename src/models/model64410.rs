@@ -190,21 +190,6 @@ impl DcSimInterface {
     pub const P_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(65, 1, true);
     pub const I_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(66, 1, true);
     pub const PCT_SF: crate::Point<Self, i16> = crate::Point::new(67, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::ADPT_PROF_RSLT.is_invalid(&self.adpt_prof_rslt)
-            || Self::N_PT.is_invalid(&self.n_pt)
-            || Self::N_PROF.is_invalid(&self.n_prof)
-            || Self::W_SF.is_invalid(&self.w_sf)
-            || Self::V_SF.is_invalid(&self.v_sf)
-            || Self::A_SF.is_invalid(&self.a_sf)
-            || Self::G_SF.is_invalid(&self.g_sf)
-            || Self::TMS_SF.is_invalid(&self.tms_sf)
-            || Self::V_SLEW_SF.is_invalid(&self.v_slew_sf)
-            || Self::P_SLEW_SF.is_invalid(&self.p_slew_sf)
-            || Self::I_SLEW_SF.is_invalid(&self.i_slew_sf)
-            || Self::PCT_SF.is_invalid(&self.pct_sf)
-            || self.prof.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for DcSimInterface {
     const LEN: u16 = 68;
@@ -544,11 +529,6 @@ pub struct Prof {
 impl Prof {
     pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
     pub const DEPT_REF: crate::Point<Self, ProfDeptRef> = crate::Point::new(1, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        Self::ACT_PT.is_invalid(&self.act_pt)
-            || Self::DEPT_REF.is_invalid(&self.dept_ref)
-            || self.pt.iter().any(|group| group.has_invalid_points())
-    }
 }
 impl crate::Group for Prof {
     const LEN: u16 = 2;
@@ -641,9 +621,6 @@ impl Pt {
     pub const P: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
     pub const I: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
     pub const G: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for Pt {
     const LEN: u16 = 5;
@@ -682,12 +659,6 @@ impl crate::Model for DcSimInterface {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }

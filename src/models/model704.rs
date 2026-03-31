@@ -265,12 +265,6 @@ impl DerCtlAc {
     pub const W_SET_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(54, 1, false);
     pub const VAR_SET_SF: crate::Point<Self, Option<i16>> = crate::Point::new(55, 1, false);
     pub const VAR_SET_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(56, 1, false);
-    fn has_invalid_points(&self) -> bool {
-        self.pfw_inj.has_invalid_points()
-            || self.pfw_inj_rvrt.has_invalid_points()
-            || self.pfw_abs.has_invalid_points()
-            || self.pfw_abs_rvrt.has_invalid_points()
-    }
 }
 impl crate::Group for DerCtlAc {
     const LEN: u16 = 57;
@@ -1021,9 +1015,6 @@ pub struct PfwInj {
 impl PfwInj {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwInjExt>> = crate::Point::new(1, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for PfwInj {
     const LEN: u16 = 2;
@@ -1101,9 +1092,6 @@ pub struct PfwInjRvrt {
 impl PfwInjRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwInjRvrtExt>> = crate::Point::new(1, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for PfwInjRvrt {
     const LEN: u16 = 2;
@@ -1181,9 +1169,6 @@ pub struct PfwAbs {
 impl PfwAbs {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwAbsExt>> = crate::Point::new(1, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for PfwAbs {
     const LEN: u16 = 2;
@@ -1261,9 +1246,6 @@ pub struct PfwAbsRvrt {
 impl PfwAbsRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwAbsRvrtExt>> = crate::Point::new(1, 1, true);
-    fn has_invalid_points(&self) -> bool {
-        false
-    }
 }
 impl crate::Group for PfwAbsRvrt {
     const LEN: u16 = 2;
@@ -1329,12 +1311,6 @@ impl crate::Model for DerCtlAc {
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        if model.has_invalid_points() {
-            Err(crate::ParseError::InvalidPointData(
-                crate::InvalidPointData { model },
-            ))
-        } else {
-            Ok(model)
-        }
+        Ok(model)
     }
 }
