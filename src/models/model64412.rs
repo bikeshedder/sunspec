@@ -257,6 +257,9 @@ impl DerExploitation {
         crate::Point::new(41, 1, true);
     pub const CHANGE_COMMON_MODEL_LENGTH: crate::Point<Self, Option<ChangeCommonModelLength>> =
         crate::Point::new(42, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for DerExploitation {
     const LEN: u16 = 43;
@@ -317,1901 +320,1807 @@ impl DerExploitation {
 /// DA Manipulation
 ///
 /// Modify the device ID of the DER
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum DaManipulation {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for DaManipulation {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<DaManipulation> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                DaManipulation::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for DaManipulation {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for DaManipulation {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Falsify Device Identity
 ///
 /// Change the DER manufacturer and model
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum FalsifyDeviceIdentity {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for FalsifyDeviceIdentity {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<FalsifyDeviceIdentity> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                FalsifyDeviceIdentity::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for FalsifyDeviceIdentity {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for FalsifyDeviceIdentity {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas P Always Nameplate
 ///
 /// Set the DER meas to always be at nameplate power
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasPAlwaysNameplate {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasPAlwaysNameplate {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasPAlwaysNameplate> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasPAlwaysNameplate::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasPAlwaysNameplate {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasPAlwaysNameplate {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Q Always Minimum
 ///
 /// Set the DER to always be at minimum reactive power
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasQAlwaysMinimum {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasQAlwaysMinimum {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasQAlwaysMinimum> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasQAlwaysMinimum::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasQAlwaysMinimum {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasQAlwaysMinimum {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Q Always Maximum
 ///
 /// Set the DER to always be at maximum reactive power
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasQAlwaysMaximum {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasQAlwaysMaximum {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasQAlwaysMaximum> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasQAlwaysMaximum::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasQAlwaysMaximum {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasQAlwaysMaximum {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Q Always Zero
 ///
 /// Set the DER to always be at zero reactive power
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasQAlwaysZero {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasQAlwaysZero {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasQAlwaysZero> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasQAlwaysZero::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasQAlwaysZero {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasQAlwaysZero {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Zero P
 ///
 /// Set the DER to always be at zero P, Q, and S
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasZeroP {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasZeroP {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasZeroP> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasZeroP::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasZeroP {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasZeroP {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Invert Q
 ///
 /// Set the DER to reverse the Q measurement data
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasInvertQ {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasInvertQ {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasInvertQ> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasInvertQ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasInvertQ {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasInvertQ {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Low V
 ///
 /// Set the DER to always measure low voltage
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasLowV {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasLowV {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasLowV> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasLowV::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasLowV {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasLowV {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas High V
 ///
 /// Set the DER to always measure high voltage
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasHighV {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasHighV {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasHighV> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasHighV::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasHighV {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasHighV {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Low L1 V
 ///
 /// Set the DER to always measure low line 1 voltage
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasLowL1v {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasLowL1v {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasLowL1v> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasLowL1v::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasLowL1v {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasLowL1v {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas High L1 V
 ///
 /// Set the DER to always measure high line 1 voltage
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasHighL1v {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasHighL1v {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasHighL1v> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasHighL1v::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasHighL1v {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasHighL1v {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Low F
 ///
 /// Set the DER to always measure low frequency
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasLowF {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasLowF {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasLowF> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasLowF::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasLowF {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasLowF {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas High F
 ///
 /// Set the DER to always measure high frequency
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasHighF {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasHighF {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasHighF> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasHighF::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasHighF {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasHighF {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Low Amps
 ///
 /// Set the DER to always measure low current
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasLowAmps {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasLowAmps {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasLowAmps> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasLowAmps::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasLowAmps {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasLowAmps {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas High Amps
 ///
 /// Set the DER to always measure high current
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasHighAmps {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasHighAmps {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasHighAmps> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasHighAmps::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasHighAmps {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasHighAmps {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas High S
 ///
 /// Set the DER to always measure high apparent power
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasHighS {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasHighS {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasHighS> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasHighS::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasHighS {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasHighS {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Low S
 ///
 /// Set the DER to always measure low apparent power
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasLowS {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasLowS {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasLowS> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasLowS::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasLowS {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasLowS {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas High Q
 ///
 /// Set the DER to always measure high reactive power
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasHighQ {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasHighQ {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasHighQ> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasHighQ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasHighQ {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasHighQ {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Low Q
 ///
 /// Set the DER to always measure low reactive power
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasLowQ {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasLowQ {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasLowQ> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasLowQ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasLowQ {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasLowQ {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Low PF
 ///
 /// Set the DER to always measure low power factor
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasLowPf {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasLowPf {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasLowPf> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasLowPf::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasLowPf {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasLowPf {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Meas Low Reversed PF
 ///
 /// Set the DER to always measure low reversed power factor
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum MeasLowReversedPf {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for MeasLowReversedPf {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<MeasLowReversedPf> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                MeasLowReversedPf::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for MeasLowReversedPf {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for MeasLowReversedPf {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate High P
 ///
 /// Set the DER nameplate power to be high
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateHighP {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateHighP {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateHighP> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateHighP::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateHighP {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateHighP {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate Low P
 ///
 /// Set the DER nameplate power to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateLowP {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateLowP {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateLowP> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateLowP::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateLowP {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateLowP {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate High S
 ///
 /// Set the DER nameplate apparent power to be high
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateHighS {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateHighS {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateHighS> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateHighS::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateHighS {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateHighS {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate Low S
 ///
 /// Set the DER nameplate apparent power to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateLowS {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateLowS {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateLowS> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateLowS::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateLowS {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateLowS {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate High Q
 ///
 /// Set the DER nameplate reactive power to be high
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateHighQ {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateHighQ {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateHighQ> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateHighQ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateHighQ {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateHighQ {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate Low Q
 ///
 /// Set the DER nameplate reactive power to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateLowQ {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateLowQ {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateLowQ> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateLowQ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateLowQ {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateLowQ {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate High Nom V
 ///
 /// Set the DER nameplate voltage to be high
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateHighNomV {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateHighNomV {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateHighNomV> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateHighNomV::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateHighNomV {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateHighNomV {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate Low Nom V
 ///
 /// Set the DER nameplate voltage to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateLowNomV {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateLowNomV {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateLowNomV> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateLowNomV::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateLowNomV {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateLowNomV {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate Low Amps
 ///
 /// Set the DER nameplate current to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateLowAmps {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateLowAmps {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateLowAmps> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateLowAmps::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateLowAmps {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateLowAmps {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate Low Varmaxinj
 ///
 /// Set the DER nameplate VarMaxInj to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateLowVarmaxinj {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateLowVarmaxinj {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateLowVarmaxinj> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateLowVarmaxinj::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateLowVarmaxinj {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateLowVarmaxinj {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate Low Varmaxabs
 ///
 /// Set the DER nameplate VarMaxAbs to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateLowVarmaxabs {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateLowVarmaxabs {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateLowVarmaxabs> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateLowVarmaxabs::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateLowVarmaxabs {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateLowVarmaxabs {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Nameplate Low PF
 ///
 /// Set the DER nameplate power factor to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum NameplateLowPf {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for NameplateLowPf {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<NameplateLowPf> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                NameplateLowPf::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for NameplateLowPf {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for NameplateLowPf {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Settings High Nom V
 ///
 /// Set the DER settings voltage to be high
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SettingsHighNomV {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SettingsHighNomV {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SettingsHighNomV> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SettingsHighNomV::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SettingsHighNomV {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SettingsHighNomV {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Settings Low Amps
 ///
 /// Set the DER settings current to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SettingsLowAmps {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SettingsLowAmps {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SettingsLowAmps> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SettingsLowAmps::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SettingsLowAmps {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SettingsLowAmps {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Settings High P
 ///
 /// Set the DER settings power to be high
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SettingsHighP {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SettingsHighP {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SettingsHighP> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SettingsHighP::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SettingsHighP {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SettingsHighP {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Settings Low P
 ///
 /// Set the DER settings power to be low
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SettingsLowP {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SettingsLowP {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SettingsLowP> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SettingsLowP::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SettingsLowP {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SettingsLowP {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Settings High VAMax
 ///
 /// Set the DER settings VAMax to be high
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SettingsHighVaMax {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SettingsHighVaMax {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SettingsHighVaMax> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SettingsHighVaMax::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SettingsHighVaMax {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SettingsHighVaMax {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Settings High Varmaxinj
 ///
 /// Set the DER settings VarMaxInj to be high
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SettingsHighVarmaxinj {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SettingsHighVarmaxinj {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SettingsHighVarmaxinj> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SettingsHighVarmaxinj::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SettingsHighVarmaxinj {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SettingsHighVarmaxinj {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Settings High Varmaxabs
 ///
 /// Set the DER settings VarMaxAbs to be high
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SettingsHighVarmaxabs {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SettingsHighVarmaxabs {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SettingsHighVarmaxabs> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SettingsHighVarmaxabs::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SettingsHighVarmaxabs {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SettingsHighVarmaxabs {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Change Common Model ID
 ///
 /// Change the common model ID
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ChangeCommonModelId {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ChangeCommonModelId {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ChangeCommonModelId> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ChangeCommonModelId::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ChangeCommonModelId {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ChangeCommonModelId {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Change Common Model Length
 ///
 /// Change the common model length
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ChangeCommonModelLength {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
-    Off = 0,
+    Off,
     /// Data Falsification
     ///
     /// Modbus Falsification Enabled
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ChangeCommonModelLength {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ChangeCommonModelLength> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ChangeCommonModelLength::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ChangeCommonModelLength {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ChangeCommonModelLength {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for DerExploitation {
@@ -2219,8 +2128,14 @@ impl crate::Model for DerExploitation {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64412
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

@@ -62,6 +62,15 @@ impl VoltVar {
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::ACT_CRV.is_invalid(&self.act_crv)
+            || Self::MOD_ENA.is_invalid(&self.mod_ena)
+            || Self::N_CRV.is_invalid(&self.n_crv)
+            || Self::N_PT.is_invalid(&self.n_pt)
+            || Self::V_SF.is_invalid(&self.v_sf)
+            || Self::DEPT_REF_SF.is_invalid(&self.dept_ref_sf)
+            || self.curve.iter().any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for VoltVar {
     const LEN: u16 = 10;
@@ -103,21 +112,11 @@ impl crate::Value for ModEna {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<ModEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(ModEna::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for ModEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 #[allow(missing_docs)]
@@ -362,6 +361,13 @@ impl Curve {
     pub const RMP_DEC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, true);
     pub const RMP_INC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(52, 1, true);
     pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(53, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::ACT_PT.is_invalid(&self.act_pt)
+            || Self::DEPT_REF.is_invalid(&self.dept_ref)
+            || Self::V1.is_invalid(&self.v1)
+            || Self::V_AR1.is_invalid(&self.v_ar1)
+            || Self::READ_ONLY.is_invalid(&self.read_only)
+    }
 }
 impl crate::Group for Curve {
     const LEN: u16 = 54;
@@ -443,83 +449,81 @@ impl Curve {
 /// DeptRef
 ///
 /// Meaning of dependent variable: 1=%WMax 2=%VArMax 3=%VArAval.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CurveDeptRef {
     #[allow(missing_docs)]
-    WMax = 1,
+    WMax,
     #[allow(missing_docs)]
-    VArMax = 2,
+    VArMax,
     #[allow(missing_docs)]
-    VArAval = 3,
+    VArAval,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CurveDeptRef {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CurveDeptRef> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CurveDeptRef::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CurveDeptRef {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            1 => Self::WMax,
+            2 => Self::VArMax,
+            3 => Self::VArAval,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::WMax => 1,
+            Self::VArMax => 2,
+            Self::VArAval => 3,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CurveDeptRef {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// ReadOnly
 ///
 /// Boolean flag indicates if curve is read-only or can be modified.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CurveReadOnly {
     #[allow(missing_docs)]
-    Readwrite = 0,
+    Readwrite,
     #[allow(missing_docs)]
-    Readonly = 1,
+    Readonly,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CurveReadOnly {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CurveReadOnly> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CurveReadOnly::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CurveReadOnly {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Readwrite,
+            1 => Self::Readonly,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Readwrite => 0,
+            Self::Readonly => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CurveReadOnly {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for VoltVar {
@@ -527,8 +531,14 @@ impl crate::Model for VoltVar {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m126
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

@@ -1,6 +1,6 @@
 use std::{future::Future, time::Duration};
 
-use crate::{Model, ModelAddr, Models, Point, Value, SUNS_IDENTIFIER};
+use crate::{Model, ModelAddr, Models, ParseError, Point, Value, SUNS_IDENTIFIER};
 
 use super::{
     error::ModbusError, Config, DiscoveryError, DiscoveryResult, ReadModelError, ReadPointError,
@@ -78,7 +78,7 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
     ///
     /// Note: Some models are too big to be fetched in a single request
     ///       and multiple read_holding_registers calls will be issued.
-    pub async fn read_model<M: Model>(&self) -> Result<M, ReadModelError> {
+    pub async fn read_model<M: Model>(&self) -> Result<M, ReadModelError<M>> {
         let addr = M::addr(&self.models);
         read_model(
             &self.client,
@@ -257,7 +257,7 @@ async fn read_model<M: Model>(
     addr: ModelAddr<M>,
     max_read_length: u16,
     read_timeout: Option<Duration>,
-) -> Result<M, ReadModelError> {
+) -> Result<M, ReadModelError<M>> {
     let data = if addr.len <= max_read_length {
         apply_timeout(
             client.read_registers(slave_id, addr.addr, addr.len),
@@ -288,7 +288,11 @@ async fn read_model<M: Model>(
         }
         data
     };
-    Ok(M::parse(&data)?)
+    match M::parse(&data) {
+        Ok(model) => Ok(model),
+        Err(ParseError::Decode(error)) => Err(error.into()),
+        Err(ParseError::InvalidPointData(error)) => Err(error.into()),
+    }
 }
 
 /// Read data for a single point. Please note that

@@ -57,6 +57,13 @@ impl FreqWattParam {
     pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
     pub const HZ_STR_STOP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::W_GRA.is_invalid(&self.w_gra)
+            || Self::HZ_STR.is_invalid(&self.hz_str)
+            || Self::HZ_STOP.is_invalid(&self.hz_stop)
+            || Self::HYS_ENA.is_invalid(&self.hys_ena)
+            || Self::MOD_ENA.is_invalid(&self.mod_ena)
+    }
 }
 impl crate::Group for FreqWattParam {
     const LEN: u16 = 10;
@@ -95,21 +102,11 @@ impl crate::Value for HysEna {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<HysEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(HysEna::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for HysEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 bitflags::bitflags! {
@@ -128,21 +125,11 @@ impl crate::Value for ModEna {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<ModEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(ModEna::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for ModEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 impl crate::Model for FreqWattParam {
@@ -150,8 +137,14 @@ impl crate::Model for FreqWattParam {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m127
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

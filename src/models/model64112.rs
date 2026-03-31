@@ -224,6 +224,72 @@ impl Model64112 {
     pub const CC_CONFIG_DATA_LOG_CLEAR: crate::Point<Self, u16> = crate::Point::new(62, 1, false);
     pub const CC_CONFIG_DATA_LOG_CLR_COMP: crate::Point<Self, u16> =
         crate::Point::new(63, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::PORT.is_invalid(&self.port)
+            || Self::V_SF.is_invalid(&self.v_sf)
+            || Self::C_SF.is_invalid(&self.c_sf)
+            || Self::H_SF.is_invalid(&self.h_sf)
+            || Self::P_SF.is_invalid(&self.p_sf)
+            || Self::AH_SF.is_invalid(&self.ah_sf)
+            || Self::KWH_SF.is_invalid(&self.kwh_sf)
+            || Self::CC_CONFIG_FAULT.is_invalid(&self.cc_config_fault)
+            || Self::CC_CONFIG_ABSORB_V.is_invalid(&self.cc_config_absorb_v)
+            || Self::CC_CONFIG_ABSORB_HR.is_invalid(&self.cc_config_absorb_hr)
+            || Self::CC_CONFIG_ABSORB_END_A.is_invalid(&self.cc_config_absorb_end_a)
+            || Self::CC_CONFIG_REBULK_V.is_invalid(&self.cc_config_rebulk_v)
+            || Self::CC_CONFIG_FLOAT_V.is_invalid(&self.cc_config_float_v)
+            || Self::CC_CONFIG_MAX_CHG_A.is_invalid(&self.cc_config_max_chg_a)
+            || Self::CC_CONFIG_EQUALIZE_V.is_invalid(&self.cc_config_equalize_v)
+            || Self::CC_CONFIG_EQUALIZE_HR.is_invalid(&self.cc_config_equalize_hr)
+            || Self::CC_CONFIG_AUTO_EQUALIZE.is_invalid(&self.cc_config_auto_equalize)
+            || Self::CC_CONFIG_MPPT_MODE.is_invalid(&self.cc_config_mppt_mode)
+            || Self::CC_CONFIG_SWEEP_WIDTH.is_invalid(&self.cc_config_sweep_width)
+            || Self::CC_CONFIG_SWEEP_MAX.is_invalid(&self.cc_config_sweep_max)
+            || Self::CC_CONFIG_U_PICK_DUTY_CYC.is_invalid(&self.cc_config_u_pick_duty_cyc)
+            || Self::CC_CONFIG_GRID_TIE.is_invalid(&self.cc_config_grid_tie)
+            || Self::CC_CONFIG_TEMP_COMP.is_invalid(&self.cc_config_temp_comp)
+            || Self::CC_CONFIG_TEMP_COMP_LLIMT.is_invalid(&self.cc_config_temp_comp_llimt)
+            || Self::CC_CONFIG_TEMP_COMP_HLIMT.is_invalid(&self.cc_config_temp_comp_hlimt)
+            || Self::CC_CONFIG_AUTO_RESTART.is_invalid(&self.cc_config_auto_restart)
+            || Self::CC_CONFIG_WAKEUP_VOC.is_invalid(&self.cc_config_wakeup_voc)
+            || Self::CC_CONFIG_SNOOZE_MODE_A.is_invalid(&self.cc_config_snooze_mode_a)
+            || Self::CC_CONFIG_WAKEUP_INTERVAL.is_invalid(&self.cc_config_wakeup_interval)
+            || Self::CC_CONFIG_AUX_MODE.is_invalid(&self.cc_config_aux_mode)
+            || Self::CC_CONFIG_AUX_CONTROL.is_invalid(&self.cc_config_aux_control)
+            || Self::CC_CONFIG_AUX_STATE.is_invalid(&self.cc_config_aux_state)
+            || Self::CC_CONFIG_AUX_POLARITY.is_invalid(&self.cc_config_aux_polarity)
+            || Self::CC_CONFIG_AUX_L_BATT_DISC.is_invalid(&self.cc_config_aux_l_batt_disc)
+            || Self::CC_CONFIG_AUX_L_BATT_RCON.is_invalid(&self.cc_config_aux_l_batt_rcon)
+            || Self::CC_CONFIG_AUX_L_BATT_DLY.is_invalid(&self.cc_config_aux_l_batt_dly)
+            || Self::CC_CONFIG_AUX_VENT_FAN_V.is_invalid(&self.cc_config_aux_vent_fan_v)
+            || Self::CC_CONFIG_AUX_PV_TRIGGER_V.is_invalid(&self.cc_config_aux_pv_trigger_v)
+            || Self::CC_CONFIG_AUX_PV_TRG_H_TM.is_invalid(&self.cc_config_aux_pv_trg_h_tm)
+            || Self::CC_CONFIG_AUX_NLITE_THRS_V.is_invalid(&self.cc_config_aux_nlite_thrs_v)
+            || Self::CC_CONFIG_AUX_NLITE_ON_TM.is_invalid(&self.cc_config_aux_nlite_on_tm)
+            || Self::CC_CONFIG_AUX_NLITE_ON_HIST.is_invalid(&self.cc_config_aux_nlite_on_hist)
+            || Self::CC_CONFIG_AUX_NLITE_OFF_HIST.is_invalid(&self.cc_config_aux_nlite_off_hist)
+            || Self::CC_CONFIG_AUX_ERROR_BATT_V.is_invalid(&self.cc_config_aux_error_batt_v)
+            || Self::CC_CONFIG_AUX_DIVERT_H_TIME.is_invalid(&self.cc_config_aux_divert_h_time)
+            || Self::CC_CONFIG_AUX_DIVERT_DLY_TIME.is_invalid(&self.cc_config_aux_divert_dly_time)
+            || Self::CC_CONFIG_AUX_DIVERT_REL_V.is_invalid(&self.cc_config_aux_divert_rel_v)
+            || Self::CC_CONFIG_AUX_DIVERT_HYST_V.is_invalid(&self.cc_config_aux_divert_hyst_v)
+            || Self::CC_CONFIG_MAJOR_FW_REV.is_invalid(&self.cc_config_major_fw_rev)
+            || Self::CC_CONFIG_MID_FW_REV.is_invalid(&self.cc_config_mid_fw_rev)
+            || Self::CC_CONFIG_MINOR_FW_REV.is_invalid(&self.cc_config_minor_fw_rev)
+            || Self::CC_CONFIG_DATA_LOG_DAY_OFFSET.is_invalid(&self.cc_config_data_log_day_offset)
+            || Self::CC_CONFIG_DATA_LOG_CUR_DAY_OFF.is_invalid(&self.cc_config_data_log_cur_day_off)
+            || Self::CC_CONFIG_DATA_LOG_DAILY_AH.is_invalid(&self.cc_config_data_log_daily_ah)
+            || Self::CC_CONFIG_DATA_LOG_DAILY_KWH.is_invalid(&self.cc_config_data_log_daily_kwh)
+            || Self::CC_CONFIG_DATA_LOG_MAX_OUT_A.is_invalid(&self.cc_config_data_log_max_out_a)
+            || Self::CC_CONFIG_DATA_LOG_MAX_OUT_W.is_invalid(&self.cc_config_data_log_max_out_w)
+            || Self::CC_CONFIG_DATA_LOG_ABSORB_T.is_invalid(&self.cc_config_data_log_absorb_t)
+            || Self::CC_CONFIG_DATA_LOG_FLOAT_T.is_invalid(&self.cc_config_data_log_float_t)
+            || Self::CC_CONFIG_DATA_LOG_MIN_BATT_V.is_invalid(&self.cc_config_data_log_min_batt_v)
+            || Self::CC_CONFIG_DATA_LOG_MAX_BATT_V.is_invalid(&self.cc_config_data_log_max_batt_v)
+            || Self::CC_CONFIG_DATA_LOG_MAX_INPUT_V.is_invalid(&self.cc_config_data_log_max_input_v)
+            || Self::CC_CONFIG_DATA_LOG_CLEAR.is_invalid(&self.cc_config_data_log_clear)
+            || Self::CC_CONFIG_DATA_LOG_CLR_COMP.is_invalid(&self.cc_config_data_log_clr_comp)
+    }
 }
 impl crate::Group for Model64112 {
     const LEN: u16 = 64;
@@ -322,427 +388,419 @@ impl crate::Value for CcConfigFault {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<CcConfigFault> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(CcConfigFault::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for CcConfigFault {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 /// MPPT mode
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigMpptMode {
     #[allow(missing_docs)]
-    Auto = 0,
+    Auto,
     #[allow(missing_docs)]
-    UPick = 1,
+    UPick,
     #[allow(missing_docs)]
-    Wind = 2,
+    Wind,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigMpptMode {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigMpptMode> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigMpptMode::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigMpptMode {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Auto,
+            1 => Self::UPick,
+            2 => Self::Wind,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Auto => 0,
+            Self::UPick => 1,
+            Self::Wind => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigMpptMode {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Sweep Width
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigSweepWidth {
     #[allow(missing_docs)]
-    Half = 0,
+    Half,
     #[allow(missing_docs)]
-    Full = 1,
+    Full,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigSweepWidth {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigSweepWidth> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigSweepWidth::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigSweepWidth {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Half,
+            1 => Self::Full,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Half => 0,
+            Self::Full => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigSweepWidth {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Sweep Maximum
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigSweepMax {
     #[allow(missing_docs)]
-    EightyPercent = 0,
+    EightyPercent,
     #[allow(missing_docs)]
-    EightyFivePercent = 1,
+    EightyFivePercent,
     #[allow(missing_docs)]
-    NintyPercent = 2,
+    NintyPercent,
     #[allow(missing_docs)]
-    NintyNinePercent = 3,
+    NintyNinePercent,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigSweepMax {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigSweepMax> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigSweepMax::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigSweepMax {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::EightyPercent,
+            1 => Self::EightyFivePercent,
+            2 => Self::NintyPercent,
+            3 => Self::NintyNinePercent,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::EightyPercent => 0,
+            Self::EightyFivePercent => 1,
+            Self::NintyPercent => 2,
+            Self::NintyNinePercent => 3,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigSweepMax {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Grid Tie Mode
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigGridTie {
     #[allow(missing_docs)]
-    Disabled = 0,
+    Disabled,
     #[allow(missing_docs)]
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigGridTie {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigGridTie> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigGridTie::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigGridTie {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigGridTie {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Temp Comp Mode
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigTempComp {
     #[allow(missing_docs)]
-    Wide = 0,
+    Wide,
     #[allow(missing_docs)]
-    Limited = 1,
+    Limited,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigTempComp {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigTempComp> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigTempComp::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigTempComp {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Wide,
+            1 => Self::Limited,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Wide => 0,
+            Self::Limited => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigTempComp {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Auto Restart Mode
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigAutoRestart {
     #[allow(missing_docs)]
-    Off = 0,
+    Off,
     #[allow(missing_docs)]
-    Every90Minutes = 1,
+    Every90Minutes,
     #[allow(missing_docs)]
-    Every90MinutesIfAbsorbOrFloat = 2,
+    Every90MinutesIfAbsorbOrFloat,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigAutoRestart {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigAutoRestart> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigAutoRestart::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigAutoRestart {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::Every90Minutes,
+            2 => Self::Every90MinutesIfAbsorbOrFloat,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::Every90Minutes => 1,
+            Self::Every90MinutesIfAbsorbOrFloat => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigAutoRestart {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// AUX Output Mode
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigAuxMode {
     #[allow(missing_docs)]
-    Float = 0,
+    Float,
     #[allow(missing_docs)]
-    DiversionRelay = 1,
+    DiversionRelay,
     #[allow(missing_docs)]
-    DiversionSolidSt = 2,
+    DiversionSolidSt,
     #[allow(missing_docs)]
-    LowBattDisconnect = 3,
+    LowBattDisconnect,
     #[allow(missing_docs)]
-    Remote = 4,
+    Remote,
     #[allow(missing_docs)]
-    VentFan = 5,
+    VentFan,
     #[allow(missing_docs)]
-    PvTrigger = 6,
+    PvTrigger,
     #[allow(missing_docs)]
-    ErrorOutput = 7,
+    ErrorOutput,
     #[allow(missing_docs)]
-    NightLight = 8,
+    NightLight,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigAuxMode {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigAuxMode> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigAuxMode::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigAuxMode {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Float,
+            1 => Self::DiversionRelay,
+            2 => Self::DiversionSolidSt,
+            3 => Self::LowBattDisconnect,
+            4 => Self::Remote,
+            5 => Self::VentFan,
+            6 => Self::PvTrigger,
+            7 => Self::ErrorOutput,
+            8 => Self::NightLight,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Float => 0,
+            Self::DiversionRelay => 1,
+            Self::DiversionSolidSt => 2,
+            Self::LowBattDisconnect => 3,
+            Self::Remote => 4,
+            Self::VentFan => 5,
+            Self::PvTrigger => 6,
+            Self::ErrorOutput => 7,
+            Self::NightLight => 8,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigAuxMode {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// AUX Output Control
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigAuxControl {
     #[allow(missing_docs)]
-    Off = 0,
+    Off,
     #[allow(missing_docs)]
-    Auto = 1,
+    Auto,
     #[allow(missing_docs)]
-    On = 2,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigAuxControl {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigAuxControl> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigAuxControl::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigAuxControl {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::Auto,
+            2 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::Auto => 1,
+            Self::On => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigAuxControl {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// AUX Output State
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigAuxState {
     #[allow(missing_docs)]
-    Disabled = 0,
+    Disabled,
     #[allow(missing_docs)]
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigAuxState {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigAuxState> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigAuxState::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigAuxState {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigAuxState {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// AUX Output Polarity
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum CcConfigAuxPolarity {
     #[allow(missing_docs)]
-    Low = 0,
+    Low,
     #[allow(missing_docs)]
-    High = 1,
+    High,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for CcConfigAuxPolarity {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<CcConfigAuxPolarity> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                CcConfigAuxPolarity::from_repr(value)
-                    .ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for CcConfigAuxPolarity {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Low,
+            1 => Self::High,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Low => 0,
+            Self::High => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for CcConfigAuxPolarity {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for Model64112 {
@@ -750,8 +808,14 @@ impl crate::Model for Model64112 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64112
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

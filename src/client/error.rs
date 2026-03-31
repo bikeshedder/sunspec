@@ -2,7 +2,7 @@ use std::error::Error;
 
 use thiserror::Error;
 
-use crate::DecodeError;
+use crate::{DecodeError, InvalidPointData, Model};
 
 /// This error is returned if a communication fails because of a timeout
 /// or underlying modbus error.
@@ -94,7 +94,7 @@ pub enum ModbusError {
 /// This error is returned if there was an error loading the
 /// requested model.
 #[derive(Debug, Error)]
-pub enum ReadModelError {
+pub enum ReadModelError<M: Model> {
     /// Some error occured while communicating via the modbus. This
     /// error is implementation specific.
     #[error("Modbus error: {0}")]
@@ -102,9 +102,9 @@ pub enum ReadModelError {
     /// The decoding of the point data failed.
     #[error("Decode error: {0}")]
     DecodeError(#[from] DecodeError),
-    /// A point in the model is mandatory but the value is missing.
-    #[error("Missing mandatory value")]
-    MissingMandatoryValue,
+    /// The model decoded but contains invalid point data.
+    #[error(transparent)]
+    InvalidPointData(#[from] InvalidPointData<M>),
 }
 
 /// This error is returned if there was an error while

@@ -132,6 +132,17 @@ impl Model64020 {
     pub const RELAY3: crate::Point<Self, Option<u16>> = crate::Point::new(27, 1, false);
     pub const RESET_ACCUMULATORS: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1, false);
     pub const RESET: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::PROBE_TMP.is_invalid(&self.probe_tmp)
+            || Self::MAIN_TMP.is_invalid(&self.main_tmp)
+            || Self::SENSOR_V_SF.is_invalid(&self.sensor_v_sf)
+            || Self::SENSOR_A_SF.is_invalid(&self.sensor_a_sf)
+            || Self::SENSOR_HZ_SF.is_invalid(&self.sensor_hz_sf)
+            || self
+                .repeating
+                .iter()
+                .any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for Model64020 {
     const LEN: u16 = 30;
@@ -198,6 +209,9 @@ impl Repeating {
     pub const SERIAL_NUMBER: crate::Point<Self, String> = crate::Point::new(0, 9, false);
     pub const FIRMWARE: crate::Point<Self, String> = crate::Point::new(9, 6, false);
     pub const HARDWARE: crate::Point<Self, u16> = crate::Point::new(15, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::HARDWARE.is_invalid(&self.hardware)
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 16;
@@ -237,8 +251,14 @@ impl crate::Model for Model64020 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64020
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

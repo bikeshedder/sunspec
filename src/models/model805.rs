@@ -148,6 +148,25 @@ impl LithiumIonModule {
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(39, 1, false);
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(40, 1, false);
     pub const TMP_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::STR_IDX.is_invalid(&self.str_idx)
+            || Self::MOD_IDX.is_invalid(&self.mod_idx)
+            || Self::N_CELL.is_invalid(&self.n_cell)
+            || Self::V.is_invalid(&self.v)
+            || Self::CELL_V_MAX.is_invalid(&self.cell_v_max)
+            || Self::CELL_V_MIN.is_invalid(&self.cell_v_min)
+            || Self::CELL_V_AVG.is_invalid(&self.cell_v_avg)
+            || Self::CELL_TMP_MAX.is_invalid(&self.cell_tmp_max)
+            || Self::CELL_TMP_MIN.is_invalid(&self.cell_tmp_min)
+            || Self::CELL_TMP_AVG.is_invalid(&self.cell_tmp_avg)
+            || Self::V_SF.is_invalid(&self.v_sf)
+            || Self::CELL_V_SF.is_invalid(&self.cell_v_sf)
+            || Self::TMP_SF.is_invalid(&self.tmp_sf)
+            || self
+                .lithium_ion_module_cell
+                .iter()
+                .any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for LithiumIonModule {
     const LEN: u16 = 42;
@@ -214,6 +233,9 @@ impl LithiumIonModuleCell {
     pub const CELL_TMP: crate::Point<Self, i16> = crate::Point::new(1, 1, false);
     pub const CELL_ST: crate::Point<Self, Option<LithiumIonModuleCellCellSt>> =
         crate::Point::new(2, 2, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::CELL_V.is_invalid(&self.cell_v) || Self::CELL_TMP.is_invalid(&self.cell_tmp)
+    }
 }
 impl crate::Group for LithiumIonModuleCell {
     const LEN: u16 = 4;
@@ -264,21 +286,11 @@ impl crate::Value for LithiumIonModuleCellCellSt {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<LithiumIonModuleCellCellSt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(LithiumIonModuleCellCellSt::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for LithiumIonModuleCellCellSt {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 impl crate::Model for LithiumIonModule {
@@ -286,8 +298,14 @@ impl crate::Model for LithiumIonModule {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m805
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

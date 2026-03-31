@@ -133,6 +133,14 @@ impl StorageBasic {
     pub const STOR_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
     pub const IN_BAT_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
     pub const IN_OUT_W_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::W_CHA_MAX.is_invalid(&self.w_cha_max)
+            || Self::W_CHA_GRA.is_invalid(&self.w_cha_gra)
+            || Self::W_DIS_CHA_GRA.is_invalid(&self.w_dis_cha_gra)
+            || Self::STOR_CTL_MOD.is_invalid(&self.stor_ctl_mod)
+            || Self::W_CHA_MAX_SF.is_invalid(&self.w_cha_max_sf)
+            || Self::W_CHA_DIS_CHA_GRA_SF.is_invalid(&self.w_cha_dis_cha_gra_sf)
+    }
 }
 impl crate::Group for StorageBasic {
     const LEN: u16 = 24;
@@ -188,109 +196,105 @@ impl crate::Value for StorCtlMod {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<StorCtlMod> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(StorCtlMod::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for StorCtlMod {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 /// ChaSt
 ///
 /// Charge status of storage device. Enumerated value.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ChaSt {
     #[allow(missing_docs)]
-    Off = 1,
+    Off,
     #[allow(missing_docs)]
-    Empty = 2,
+    Empty,
     #[allow(missing_docs)]
-    Discharging = 3,
+    Discharging,
     #[allow(missing_docs)]
-    Charging = 4,
+    Charging,
     #[allow(missing_docs)]
-    Full = 5,
+    Full,
     #[allow(missing_docs)]
-    Holding = 6,
+    Holding,
     #[allow(missing_docs)]
-    Testing = 7,
+    Testing,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ChaSt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ChaSt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ChaSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ChaSt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            1 => Self::Off,
+            2 => Self::Empty,
+            3 => Self::Discharging,
+            4 => Self::Charging,
+            5 => Self::Full,
+            6 => Self::Holding,
+            7 => Self::Testing,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 1,
+            Self::Empty => 2,
+            Self::Discharging => 3,
+            Self::Charging => 4,
+            Self::Full => 5,
+            Self::Holding => 6,
+            Self::Testing => 7,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ChaSt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 #[allow(missing_docs)]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ChaGriSet {
     #[allow(missing_docs)]
-    Pv = 0,
+    Pv,
     #[allow(missing_docs)]
-    Grid = 1,
+    Grid,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ChaGriSet {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ChaGriSet> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ChaGriSet::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ChaGriSet {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Pv,
+            1 => Self::Grid,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Pv => 0,
+            Self::Grid => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ChaGriSet {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for StorageBasic {
@@ -298,8 +302,14 @@ impl crate::Model for StorageBasic {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m124
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

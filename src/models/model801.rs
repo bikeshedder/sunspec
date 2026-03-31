@@ -15,6 +15,9 @@ pub struct Storage {
 #[allow(missing_docs)]
 impl Storage {
     pub const DEPRECATED: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::DEPRECATED.is_invalid(&self.deprecated)
+    }
 }
 impl crate::Group for Storage {
     const LEN: u16 = 1;
@@ -35,8 +38,14 @@ impl crate::Model for Storage {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m801
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

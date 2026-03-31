@@ -26,6 +26,9 @@ impl CsipControl {
         crate::Point::new(0, 1, true);
     pub const HTTP_MSG: crate::Point<Self, Option<HttpMsg>> = crate::Point::new(1, 1, true);
     pub const COMM004_CERT: crate::Point<Self, Option<Comm004Cert>> = crate::Point::new(2, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for CsipControl {
     const LEN: u16 = 3;
@@ -46,157 +49,163 @@ impl CsipControl {
 /// LogEvent Mode Enable
 ///
 /// Enable or disable the LogEvent mode
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum LogEventEna {
     /// Disabled
     ///
     /// LogEvent Mode Disabled
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// LogEvent Mode Enabled
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for LogEventEna {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<LogEventEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                LogEventEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for LogEventEna {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for LogEventEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// HTTP Message Mode Enable
 ///
 /// Enable or disable the HTTP Message mode
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum HttpMsg {
     /// Disabled
     ///
     /// HTTP Message Mode Disabled
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// HTTP Message Mode Enabled
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for HttpMsg {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<HttpMsg> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                HttpMsg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for HttpMsg {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for HttpMsg {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// COMM-004 Certificate
 ///
 /// Select COMM-004 certificate type
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Comm004Cert {
     /// DEFAULT
     ///
     /// Default Certificate
-    DefaultCertificate = 0,
+    DefaultCertificate,
     /// COMM-004A
     ///
     /// Chain Length Two Certificate
-    Comm004a = 1,
+    Comm004a,
     /// COMM-004B
     ///
     /// Chain Length Three Certificate
-    Comm004b = 2,
+    Comm004b,
     /// COMM-004C
     ///
     /// Chain Length Four Certificate
-    Comm004c = 3,
+    Comm004c,
     /// COMM-004D
     ///
     /// Invalid MICA Extended Key Critical Value
-    Comm004d = 4,
+    Comm004d,
     /// COMM-004E
     ///
     /// Invalid MICA Name Non-Critical Value
-    Comm004e = 5,
+    Comm004e,
     /// COMM-004F
     ///
     /// Invalid MICA Policy Mapping Non-Critical Value
-    Comm004f = 6,
+    Comm004f,
     /// COMM-004G
     ///
     /// Self-signed device certificate
-    Comm004g = 7,
+    Comm004g,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Comm004Cert {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Comm004Cert> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Comm004Cert::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Comm004Cert {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::DefaultCertificate,
+            1 => Self::Comm004a,
+            2 => Self::Comm004b,
+            3 => Self::Comm004c,
+            4 => Self::Comm004d,
+            5 => Self::Comm004e,
+            6 => Self::Comm004f,
+            7 => Self::Comm004g,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::DefaultCertificate => 0,
+            Self::Comm004a => 1,
+            Self::Comm004b => 2,
+            Self::Comm004c => 3,
+            Self::Comm004d => 4,
+            Self::Comm004e => 5,
+            Self::Comm004f => 6,
+            Self::Comm004g => 7,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Comm004Cert {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for CsipControl {
@@ -204,8 +213,14 @@ impl crate::Model for CsipControl {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64415
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

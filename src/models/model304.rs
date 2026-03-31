@@ -11,7 +11,11 @@ pub struct Inclinometer {
     pub incl: Vec<Incl>,
 }
 #[allow(missing_docs)]
-impl Inclinometer {}
+impl Inclinometer {
+    fn has_invalid_points(&self) -> bool {
+        self.incl.iter().any(|group| group.has_invalid_points())
+    }
+}
 impl crate::Group for Inclinometer {
     const LEN: u16 = 0;
 }
@@ -44,6 +48,9 @@ impl Incl {
     pub const INCLX: crate::Point<Self, i32> = crate::Point::new(0, 2, false);
     pub const INCLY: crate::Point<Self, Option<i32>> = crate::Point::new(2, 2, false);
     pub const INCLZ: crate::Point<Self, Option<i32>> = crate::Point::new(4, 2, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::INCLX.is_invalid(&self.inclx)
+    }
 }
 impl crate::Group for Incl {
     const LEN: u16 = 6;
@@ -83,8 +90,14 @@ impl crate::Model for Inclinometer {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m304
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

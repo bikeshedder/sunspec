@@ -20,6 +20,14 @@ pub struct Model8 {
 impl Model8 {
     pub const FMT: crate::Point<Self, Fmt> = crate::Point::new(0, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::FMT.is_invalid(&self.fmt)
+            || Self::N.is_invalid(&self.n)
+            || self
+                .repeating
+                .iter()
+                .any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for Model8 {
     const LEN: u16 = 2;
@@ -41,43 +49,43 @@ impl Model8 {
 /// Format
 ///
 /// X.509 format of the certificate. DER or PEM.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Fmt {
     #[allow(missing_docs)]
-    None = 0,
+    None,
     #[allow(missing_docs)]
-    X509Pem = 1,
+    X509Pem,
     #[allow(missing_docs)]
-    X509Der = 2,
+    X509Der,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Fmt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Fmt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Fmt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Fmt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::None,
+            1 => Self::X509Pem,
+            2 => Self::X509Der,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::None => 0,
+            Self::X509Pem => 1,
+            Self::X509Der => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Fmt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 #[allow(missing_docs)]
@@ -92,6 +100,9 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const CERT: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::CERT.is_invalid(&self.cert)
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -129,8 +140,14 @@ impl crate::Model for Model8 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m8
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

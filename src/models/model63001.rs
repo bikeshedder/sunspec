@@ -179,6 +179,11 @@ impl Model63001 {
     pub const SUNSSF_5: crate::Point<Self, Option<i16>> = crate::Point::new(130, 1, false);
     pub const SUNSSF_6: crate::Point<Self, Option<i16>> = crate::Point::new(131, 1, false);
     pub const SUNSSF_7: crate::Point<Self, Option<i16>> = crate::Point::new(132, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        self.repeating
+            .iter()
+            .any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for Model63001 {
     const LEN: u16 = 134;
@@ -264,21 +269,11 @@ impl crate::Value for Bitfield16 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Bitfield16> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(Bitfield16::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for Bitfield16 {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 bitflags::bitflags! {
@@ -295,21 +290,11 @@ impl crate::Value for Bitfield16U {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Bitfield16U> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(Bitfield16U::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for Bitfield16U {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 bitflags::bitflags! {
@@ -326,21 +311,11 @@ impl crate::Value for Bitfield32 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Bitfield32> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Bitfield32::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Bitfield32 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -357,21 +332,11 @@ impl crate::Value for Bitfield32U {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Bitfield32U> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Bitfield32U::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Bitfield32U {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 #[allow(missing_docs)]
@@ -420,6 +385,9 @@ impl Repeating {
     pub const UINT32: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, true);
     pub const UINT32_U: crate::Point<Self, Option<u32>> = crate::Point::new(14, 2, false);
     pub const SUNSSF_9: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 18;
@@ -469,8 +437,14 @@ impl crate::Model for Model63001 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m63001
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

@@ -69,6 +69,14 @@ impl StringCombinerCurrentInput {
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, false);
     pub const IN_DCA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
     pub const IN_DC_AHR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::DCA_SF.is_invalid(&self.dca_sf)
+            || Self::DCA_MAX.is_invalid(&self.dca_max)
+            || Self::N.is_invalid(&self.n)
+            || Self::EVT.is_invalid(&self.evt)
+            || Self::DCA.is_invalid(&self.dca)
+            || self.string.iter().any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for StringCombinerCurrentInput {
     const LEN: u16 = 16;
@@ -124,21 +132,11 @@ impl crate::Value for Evt {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Evt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Evt::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Evt {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -156,21 +154,11 @@ impl crate::Value for EvtVnd {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<EvtVnd> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(EvtVnd::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for EvtVnd {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 #[allow(missing_docs)]
@@ -206,6 +194,11 @@ impl String {
         crate::Point::new(3, 2, false);
     pub const IN_DCA: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
     pub const IN_DC_AHR: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::IN_ID.is_invalid(&self.in_id)
+            || Self::IN_EVT.is_invalid(&self.in_evt)
+            || Self::IN_DCA.is_invalid(&self.in_dca)
+    }
 }
 impl crate::Group for String {
     const LEN: u16 = 8;
@@ -268,21 +261,11 @@ impl crate::Value for StringInEvt {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<StringInEvt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(StringInEvt::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for StringInEvt {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -300,21 +283,11 @@ impl crate::Value for StringInEvtVnd {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<StringInEvtVnd> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(StringInEvtVnd::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for StringInEvtVnd {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 impl crate::Model for StringCombinerCurrentInput {
@@ -322,8 +295,14 @@ impl crate::Model for StringCombinerCurrentInput {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m403
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

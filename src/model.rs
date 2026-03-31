@@ -1,16 +1,37 @@
-use std::marker::PhantomData;
+use std::{fmt::Debug, marker::PhantomData};
+
+use thiserror::Error;
 
 use crate::{DecodeError, Group, Models};
 
+/// Model data that decoded successfully but failed semantic validation.
+#[derive(Debug, Error)]
+#[error("Invalid point data")]
+pub struct InvalidPointData<T: Debug> {
+    /// The decoded model data.
+    pub model: T,
+}
+
+/// Error returned while parsing a model from registers.
+#[derive(Debug, Error)]
+pub enum ParseError<T: Debug> {
+    /// Register decoding failed before a full model value could be produced.
+    #[error(transparent)]
+    Decode(#[from] DecodeError),
+    /// The model decoded successfully but contains invalid point data.
+    #[error(transparent)]
+    InvalidPointData(InvalidPointData<T>),
+}
+
 /// Every model implements this trait which contains methods
 /// for accessing the address and parsing the model.
-pub trait Model: Sized + Group {
+pub trait Model: Sized + Group + Debug {
     /// Model ID
     const ID: u16;
     /// Get model address from discovered models struct
     fn addr(models: &Models) -> ModelAddr<Self>;
     /// Parse model data from a given u16 slice
-    fn parse(data: &[u16]) -> Result<Self, DecodeError>;
+    fn parse(data: &[u16]) -> Result<Self, ParseError<Self>>;
 }
 
 /// This structure is used to store the address of

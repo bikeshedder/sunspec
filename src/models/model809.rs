@@ -13,6 +13,10 @@ pub struct FlowBatteryStack {
 #[allow(missing_docs)]
 impl FlowBatteryStack {
     pub const STACK_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::STACK_TBD.is_invalid(&self.stack_tbd)
+            || self.cell.iter().any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for FlowBatteryStack {
     const LEN: u16 = 1;
@@ -40,6 +44,9 @@ pub struct Cell {
 #[allow(missing_docs)]
 impl Cell {
     pub const CELL_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::CELL_TBD.is_invalid(&self.cell_tbd)
+    }
 }
 impl crate::Group for Cell {
     const LEN: u16 = 1;
@@ -77,8 +84,14 @@ impl crate::Model for FlowBatteryStack {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m809
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

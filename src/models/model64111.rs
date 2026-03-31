@@ -75,6 +75,31 @@ impl Model64111 {
     pub const LIFE_TIME_MAX_OUT: crate::Point<Self, u16> = crate::Point::new(20, 1, false);
     pub const LIFE_TIME_MAX_BATT: crate::Point<Self, u16> = crate::Point::new(21, 1, false);
     pub const LIFE_TIME_MAX_VOC: crate::Point<Self, u16> = crate::Point::new(22, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::PORT.is_invalid(&self.port)
+            || Self::V_SF.is_invalid(&self.v_sf)
+            || Self::A_SF.is_invalid(&self.a_sf)
+            || Self::P_SF.is_invalid(&self.p_sf)
+            || Self::AH_SF.is_invalid(&self.ah_sf)
+            || Self::KWH_SF.is_invalid(&self.kwh_sf)
+            || Self::BATT_V.is_invalid(&self.batt_v)
+            || Self::ARRAY_V.is_invalid(&self.array_v)
+            || Self::OUTPUT_A.is_invalid(&self.output_a)
+            || Self::INPUT_A.is_invalid(&self.input_a)
+            || Self::CHARGER_ST.is_invalid(&self.charger_st)
+            || Self::OUTPUT_W.is_invalid(&self.output_w)
+            || Self::TODAY_MIN_BAT_V.is_invalid(&self.today_min_bat_v)
+            || Self::TODAY_MAX_BAT_V.is_invalid(&self.today_max_bat_v)
+            || Self::VOCV.is_invalid(&self.vocv)
+            || Self::TODAY_MAX_VOC.is_invalid(&self.today_max_voc)
+            || Self::TODAYK_WH_OUTPUT.is_invalid(&self.todayk_wh_output)
+            || Self::TODAY_AH_OUTPUT.is_invalid(&self.today_ah_output)
+            || Self::LIFE_TIME_KWH_OUT.is_invalid(&self.life_time_kwh_out)
+            || Self::LIFE_TIME_AH_OUT.is_invalid(&self.life_time_ah_out)
+            || Self::LIFE_TIME_MAX_OUT.is_invalid(&self.life_time_max_out)
+            || Self::LIFE_TIME_MAX_BATT.is_invalid(&self.life_time_max_batt)
+            || Self::LIFE_TIME_MAX_VOC.is_invalid(&self.life_time_max_voc)
+    }
 }
 impl crate::Group for Model64111 {
     const LEN: u16 = 23;
@@ -113,47 +138,51 @@ impl Model64111 {
     }
 }
 /// Operating State
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ChargerSt {
     #[allow(missing_docs)]
-    Off = 0,
+    Off,
     #[allow(missing_docs)]
-    Float = 1,
+    Float,
     #[allow(missing_docs)]
-    Bulk = 2,
+    Bulk,
     #[allow(missing_docs)]
-    Absorb = 3,
+    Absorb,
     #[allow(missing_docs)]
-    Eq = 4,
+    Eq,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ChargerSt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ChargerSt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ChargerSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ChargerSt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::Float,
+            2 => Self::Bulk,
+            3 => Self::Absorb,
+            4 => Self::Eq,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::Float => 1,
+            Self::Bulk => 2,
+            Self::Absorb => 3,
+            Self::Eq => 4,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ChargerSt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for Model64111 {
@@ -161,8 +190,14 @@ impl crate::Model for Model64111 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64111
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

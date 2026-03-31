@@ -153,6 +153,27 @@ impl AcMeterSecure {
     pub const SEQ: crate::Point<Self, u16> = crate::Point::new(39, 1, false);
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(40, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(41, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::A.is_invalid(&self.a)
+            || Self::A_SF.is_invalid(&self.a_sf)
+            || Self::V_SF.is_invalid(&self.v_sf)
+            || Self::HZ.is_invalid(&self.hz)
+            || Self::W.is_invalid(&self.w)
+            || Self::W_SF.is_invalid(&self.w_sf)
+            || Self::TOT_WH_EXP.is_invalid(&self.tot_wh_exp)
+            || Self::TOT_WH_IMP.is_invalid(&self.tot_wh_imp)
+            || Self::TOT_WH_SF.is_invalid(&self.tot_wh_sf)
+            || Self::EVT.is_invalid(&self.evt)
+            || Self::TS.is_invalid(&self.ts)
+            || Self::MS.is_invalid(&self.ms)
+            || Self::SEQ.is_invalid(&self.seq)
+            || Self::ALG.is_invalid(&self.alg)
+            || Self::N.is_invalid(&self.n)
+            || self
+                .repeating
+                .iter()
+                .any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for AcMeterSecure {
     const LEN: u16 = 42;
@@ -227,21 +248,11 @@ impl crate::Value for Evt {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Evt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Evt::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Evt {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 /// Algorithm
@@ -249,43 +260,43 @@ impl crate::Value for Option<Evt> {
 /// Algorithm used to compute the digital signature
 ///
 /// Detail: For future proof
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Alg {
     /// Detail: For test purposes only
-    None = 0,
+    None,
     #[allow(missing_docs)]
-    AesGmac64 = 1,
+    AesGmac64,
     #[allow(missing_docs)]
-    Ecc256 = 2,
+    Ecc256,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Alg {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Alg> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Alg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Alg {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::None,
+            1 => Self::AesGmac64,
+            2 => Self::Ecc256,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::None => 0,
+            Self::AesGmac64 => 1,
+            Self::Ecc256 => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Alg {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 #[allow(missing_docs)]
@@ -298,6 +309,9 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::DS.is_invalid(&self.ds)
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -335,8 +349,14 @@ impl crate::Model for AcMeterSecure {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m220
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

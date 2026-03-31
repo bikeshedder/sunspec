@@ -386,6 +386,9 @@ impl DerMeasureAc {
     pub const TOT_VARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(119, 1, false);
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(120, 1, false);
     pub const MN_ALRM_INFO: crate::Point<Self, Option<String>> = crate::Point::new(121, 32, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::AC_TYPE.is_invalid(&self.ac_type)
+    }
 }
 impl crate::Group for DerMeasureAc {
     const LEN: u16 = 153;
@@ -475,43 +478,43 @@ impl DerMeasureAc {
 /// AC wiring type.
 ///
 /// Comments: Wiring Type
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum AcType {
     /// Single Phase
-    SinglePhase = 0,
+    SinglePhase,
     /// Split Phase
-    SplitPhase = 1,
+    SplitPhase,
     /// Three Phase
-    ThreePhase = 2,
+    ThreePhase,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for AcType {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<AcType> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                AcType::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for AcType {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::SinglePhase,
+            1 => Self::SplitPhase,
+            2 => Self::ThreePhase,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::SinglePhase => 0,
+            Self::SplitPhase => 1,
+            Self::ThreePhase => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for AcType {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Operating State
@@ -519,41 +522,39 @@ impl crate::Value for Option<AcType> {
 /// Operating state of the DER.
 ///
 /// Comments: Operating State
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum St {
     /// Off
-    Off = 0,
+    Off,
     /// On
-    On = 1,
+    On,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for St {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<St> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                St::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for St {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::On,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::On => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for St {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Inverter State
@@ -561,53 +562,63 @@ impl crate::Value for Option<St> {
 /// Enumerated value.  Inverter state.
 ///
 /// Comments: Inverter State
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum InvSt {
     #[allow(missing_docs)]
-    Off = 0,
+    Off,
     #[allow(missing_docs)]
-    Sleeping = 1,
+    Sleeping,
     #[allow(missing_docs)]
-    Starting = 2,
+    Starting,
     #[allow(missing_docs)]
-    Running = 3,
+    Running,
     #[allow(missing_docs)]
-    Throttled = 4,
+    Throttled,
     #[allow(missing_docs)]
-    ShuttingDown = 5,
+    ShuttingDown,
     #[allow(missing_docs)]
-    Fault = 6,
+    Fault,
     #[allow(missing_docs)]
-    Standby = 7,
+    Standby,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for InvSt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<InvSt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                InvSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for InvSt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Off,
+            1 => Self::Sleeping,
+            2 => Self::Starting,
+            3 => Self::Running,
+            4 => Self::Throttled,
+            5 => Self::ShuttingDown,
+            6 => Self::Fault,
+            7 => Self::Standby,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 0,
+            Self::Sleeping => 1,
+            Self::Starting => 2,
+            Self::Running => 3,
+            Self::Throttled => 4,
+            Self::ShuttingDown => 5,
+            Self::Fault => 6,
+            Self::Standby => 7,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for InvSt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Grid Connection State
@@ -615,45 +626,43 @@ impl crate::Value for Option<InvSt> {
 /// Grid connection state of the DER.
 ///
 /// Comments: Grid Connection State
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ConnSt {
     /// Disconnected
     ///
     /// Disconnected from the grid.
-    Disconnected = 0,
+    Disconnected,
     /// Connected
     ///
     /// Connected to the grid.
-    Connected = 1,
+    Connected,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ConnSt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ConnSt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ConnSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ConnSt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disconnected,
+            1 => Self::Connected,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disconnected => 0,
+            Self::Connected => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ConnSt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 bitflags::bitflags! {
@@ -686,21 +695,11 @@ impl crate::Value for Alrm {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Alrm> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Alrm::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Alrm {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -722,21 +721,11 @@ impl crate::Value for DerMode {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<DerMode> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(DerMode::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for DerMode {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -762,21 +751,11 @@ impl crate::Value for ThrotSrc {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<ThrotSrc> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(ThrotSrc::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for ThrotSrc {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 impl crate::Model for DerMeasureAc {
@@ -784,8 +763,14 @@ impl crate::Model for DerMeasureAc {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m701
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

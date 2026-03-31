@@ -147,6 +147,25 @@ impl Nameplate {
     pub const MAX_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
     pub const MAX_DIS_CHA_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(23, 1, false);
     pub const MAX_DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::DER_TYP.is_invalid(&self.der_typ)
+            || Self::W_RTG.is_invalid(&self.w_rtg)
+            || Self::W_RTG_SF.is_invalid(&self.w_rtg_sf)
+            || Self::VA_RTG.is_invalid(&self.va_rtg)
+            || Self::VA_RTG_SF.is_invalid(&self.va_rtg_sf)
+            || Self::V_AR_RTG_Q1.is_invalid(&self.v_ar_rtg_q1)
+            || Self::V_AR_RTG_Q2.is_invalid(&self.v_ar_rtg_q2)
+            || Self::V_AR_RTG_Q3.is_invalid(&self.v_ar_rtg_q3)
+            || Self::V_AR_RTG_Q4.is_invalid(&self.v_ar_rtg_q4)
+            || Self::V_AR_RTG_SF.is_invalid(&self.v_ar_rtg_sf)
+            || Self::A_RTG.is_invalid(&self.a_rtg)
+            || Self::A_RTG_SF.is_invalid(&self.a_rtg_sf)
+            || Self::PF_RTG_Q1.is_invalid(&self.pf_rtg_q1)
+            || Self::PF_RTG_Q2.is_invalid(&self.pf_rtg_q2)
+            || Self::PF_RTG_Q3.is_invalid(&self.pf_rtg_q3)
+            || Self::PF_RTG_Q4.is_invalid(&self.pf_rtg_q4)
+            || Self::PF_RTG_SF.is_invalid(&self.pf_rtg_sf)
+    }
 }
 impl crate::Group for Nameplate {
     const LEN: u16 = 26;
@@ -189,41 +208,39 @@ impl Nameplate {
 /// DERTyp
 ///
 /// Type of DER device. Default value is 4 to indicate PV device.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum DerTyp {
     #[allow(missing_docs)]
-    Pv = 4,
+    Pv,
     #[allow(missing_docs)]
-    PvStor = 82,
+    PvStor,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for DerTyp {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<DerTyp> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                DerTyp::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for DerTyp {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            4 => Self::Pv,
+            82 => Self::PvStor,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Pv => 4,
+            Self::PvStor => 82,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for DerTyp {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for Nameplate {
@@ -231,8 +248,14 @@ impl crate::Model for Nameplate {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m120
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

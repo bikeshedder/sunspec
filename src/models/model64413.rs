@@ -28,6 +28,9 @@ impl PvSimCurves {
     pub const IV_LEN: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
     pub const IRR: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
     pub const IRR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        self.iv.iter().any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for PvSimCurves {
     const LEN: u16 = 3;
@@ -72,6 +75,9 @@ impl Iv {
     pub const P: crate::Point<Self, Option<f32>> = crate::Point::new(0, 2, false);
     pub const I: crate::Point<Self, Option<f32>> = crate::Point::new(2, 2, false);
     pub const V: crate::Point<Self, Option<f32>> = crate::Point::new(4, 2, false);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for Iv {
     const LEN: u16 = 6;
@@ -108,8 +114,14 @@ impl crate::Model for PvSimCurves {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64413
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

@@ -22,10 +22,10 @@
 
 pub use constants::{DEFAULT_DISCOVERY_ADDRESSES, SUNS_IDENTIFIER};
 pub use group::Group;
-pub use model::{Model, ModelAddr};
+pub use model::{InvalidPointData, Model, ModelAddr, ParseError};
 pub use models::Models;
 pub use point::Point;
-pub use value::{DecodeError, FixedSize, Value};
+pub use value::{DecodeError, EnumValue, FixedSize, Value};
 
 /// This module contains all client specific code.
 pub mod client;

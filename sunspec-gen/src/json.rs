@@ -111,6 +111,9 @@ impl Point {
     pub fn is_padding(&self) -> bool {
         self.r#type == PointType::Pad
     }
+    pub fn has_invalid_value(&self) -> bool {
+        self.mandatory == PointMandatory::M && !self.is_padding() && self.r#type.size().is_some()
+    }
 }
 
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]

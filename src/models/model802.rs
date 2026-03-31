@@ -307,6 +307,34 @@ impl Battery {
     pub const A_SF: crate::Point<Self, i16> = crate::Point::new(59, 1, false);
     pub const A_MAX_SF: crate::Point<Self, i16> = crate::Point::new(60, 1, false);
     pub const W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(61, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::AH_RTG.is_invalid(&self.ah_rtg)
+            || Self::WH_RTG.is_invalid(&self.wh_rtg)
+            || Self::W_CHA_RTE_MAX.is_invalid(&self.w_cha_rte_max)
+            || Self::W_DIS_CHA_RTE_MAX.is_invalid(&self.w_dis_cha_rte_max)
+            || Self::SOC.is_invalid(&self.soc)
+            || Self::LOC_REM_CTL.is_invalid(&self.loc_rem_ctl)
+            || Self::ALM_RST.is_invalid(&self.alm_rst)
+            || Self::TYP.is_invalid(&self.typ)
+            || Self::STATE.is_invalid(&self.state)
+            || Self::EVT1.is_invalid(&self.evt1)
+            || Self::EVT2.is_invalid(&self.evt2)
+            || Self::EVT_VND1.is_invalid(&self.evt_vnd1)
+            || Self::EVT_VND2.is_invalid(&self.evt_vnd2)
+            || Self::V.is_invalid(&self.v)
+            || Self::A.is_invalid(&self.a)
+            || Self::W.is_invalid(&self.w)
+            || Self::SET_OP.is_invalid(&self.set_op)
+            || Self::SET_INV_STATE.is_invalid(&self.set_inv_state)
+            || Self::AH_RTG_SF.is_invalid(&self.ah_rtg_sf)
+            || Self::WH_RTG_SF.is_invalid(&self.wh_rtg_sf)
+            || Self::W_CHA_DIS_CHA_MAX_SF.is_invalid(&self.w_cha_dis_cha_max_sf)
+            || Self::SOC_SF.is_invalid(&self.soc_sf)
+            || Self::V_SF.is_invalid(&self.v_sf)
+            || Self::CELL_V_SF.is_invalid(&self.cell_v_sf)
+            || Self::A_SF.is_invalid(&self.a_sf)
+            || Self::A_MAX_SF.is_invalid(&self.a_max_sf)
+    }
 }
 impl crate::Group for Battery {
     const LEN: u16 = 62;
@@ -380,51 +408,59 @@ impl Battery {
 /// Charge Status
 ///
 /// Charge status of storage device. Enumeration.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ChaSt {
     #[allow(missing_docs)]
-    Off = 1,
+    Off,
     #[allow(missing_docs)]
-    Empty = 2,
+    Empty,
     #[allow(missing_docs)]
-    Discharging = 3,
+    Discharging,
     #[allow(missing_docs)]
-    Charging = 4,
+    Charging,
     #[allow(missing_docs)]
-    Full = 5,
+    Full,
     #[allow(missing_docs)]
-    Holding = 6,
+    Holding,
     #[allow(missing_docs)]
-    Testing = 7,
+    Testing,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ChaSt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ChaSt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ChaSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ChaSt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            1 => Self::Off,
+            2 => Self::Empty,
+            3 => Self::Discharging,
+            4 => Self::Charging,
+            5 => Self::Full,
+            6 => Self::Holding,
+            7 => Self::Testing,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 1,
+            Self::Empty => 2,
+            Self::Discharging => 3,
+            Self::Charging => 4,
+            Self::Full => 5,
+            Self::Holding => 6,
+            Self::Testing => 7,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ChaSt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Control Mode
@@ -432,41 +468,39 @@ impl crate::Value for Option<ChaSt> {
 /// Battery control mode. Enumeration.
 ///
 /// Detail: Maps to DRCC.LocRemCtl in IEC 61850.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum LocRemCtl {
     /// Detail: Value of 0 matches LocRemCtl in IEC 61850.
-    Remote = 0,
+    Remote,
     /// Detail: Value of 1 matches LocRemCtl in IEC 61850.
-    Local = 1,
+    Local,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for LocRemCtl {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<LocRemCtl> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                LocRemCtl::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for LocRemCtl {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Remote,
+            1 => Self::Local,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Remote => 0,
+            Self::Local => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for LocRemCtl {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Battery Type
@@ -474,61 +508,79 @@ impl crate::Value for Option<LocRemCtl> {
 /// Type of battery. Enumeration.
 ///
 /// Detail: Maps to DBAT.BatTyp in 61850.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Typ {
     #[allow(missing_docs)]
-    NotApplicableUnknown = 0,
+    NotApplicableUnknown,
     #[allow(missing_docs)]
-    LeadAcid = 1,
+    LeadAcid,
     #[allow(missing_docs)]
-    NickelMetalHydrate = 2,
+    NickelMetalHydrate,
     #[allow(missing_docs)]
-    NickelCadmium = 3,
+    NickelCadmium,
     #[allow(missing_docs)]
-    LithiumIon = 4,
+    LithiumIon,
     #[allow(missing_docs)]
-    CarbonZinc = 5,
+    CarbonZinc,
     #[allow(missing_docs)]
-    ZincChloride = 6,
+    ZincChloride,
     #[allow(missing_docs)]
-    Alkaline = 7,
+    Alkaline,
     #[allow(missing_docs)]
-    RechargeableAlkaline = 8,
+    RechargeableAlkaline,
     #[allow(missing_docs)]
-    SodiumSulfur = 9,
+    SodiumSulfur,
     #[allow(missing_docs)]
-    Flow = 10,
+    Flow,
     #[allow(missing_docs)]
-    Other = 99,
+    Other,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Typ {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Typ> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Typ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Typ {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::NotApplicableUnknown,
+            1 => Self::LeadAcid,
+            2 => Self::NickelMetalHydrate,
+            3 => Self::NickelCadmium,
+            4 => Self::LithiumIon,
+            5 => Self::CarbonZinc,
+            6 => Self::ZincChloride,
+            7 => Self::Alkaline,
+            8 => Self::RechargeableAlkaline,
+            9 => Self::SodiumSulfur,
+            10 => Self::Flow,
+            99 => Self::Other,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::NotApplicableUnknown => 0,
+            Self::LeadAcid => 1,
+            Self::NickelMetalHydrate => 2,
+            Self::NickelCadmium => 3,
+            Self::LithiumIon => 4,
+            Self::CarbonZinc => 5,
+            Self::ZincChloride => 6,
+            Self::Alkaline => 7,
+            Self::RechargeableAlkaline => 8,
+            Self::SodiumSulfur => 9,
+            Self::Flow => 10,
+            Self::Other => 99,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Typ {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// State of the Battery Bank
@@ -536,51 +588,59 @@ impl crate::Value for Option<Typ> {
 /// State of the battery bank.  Enumeration.
 ///
 /// Detail: Must be reconciled with State in IEC 61850.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum State {
     #[allow(missing_docs)]
-    Disconnected = 1,
+    Disconnected,
     #[allow(missing_docs)]
-    Initializing = 2,
+    Initializing,
     #[allow(missing_docs)]
-    Connected = 3,
+    Connected,
     #[allow(missing_docs)]
-    Standby = 4,
+    Standby,
     #[allow(missing_docs)]
-    SocProtection = 5,
+    SocProtection,
     #[allow(missing_docs)]
-    Suspending = 6,
+    Suspending,
     #[allow(missing_docs)]
-    Fault = 99,
+    Fault,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for State {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<State> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                State::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for State {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            1 => Self::Disconnected,
+            2 => Self::Initializing,
+            3 => Self::Connected,
+            4 => Self::Standby,
+            5 => Self::SocProtection,
+            6 => Self::Suspending,
+            99 => Self::Fault,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disconnected => 1,
+            Self::Initializing => 2,
+            Self::Connected => 3,
+            Self::Standby => 4,
+            Self::SocProtection => 5,
+            Self::Suspending => 6,
+            Self::Fault => 99,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for State {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 bitflags::bitflags! {
@@ -621,21 +681,11 @@ impl crate::Value for Evt1 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Evt1> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Evt1::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Evt1 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -654,21 +704,11 @@ impl crate::Value for Evt2 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Evt2> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Evt2::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Evt2 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -685,21 +725,11 @@ impl crate::Value for EvtVnd1 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<EvtVnd1> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(EvtVnd1::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for EvtVnd1 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -716,21 +746,11 @@ impl crate::Value for EvtVnd2 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<EvtVnd2> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(EvtVnd2::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for EvtVnd2 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 /// Inverter State Request
@@ -738,83 +758,81 @@ impl crate::Value for Option<EvtVnd2> {
 /// Request from battery to start or stop the inverter.  Enumeration.
 ///
 /// Detail: Used in special states such as manual battery charging.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ReqInvState {
     #[allow(missing_docs)]
-    NoRequest = 0,
+    NoRequest,
     /// Detail: Battery is notified of inverter state change through SetInvState.
-    Start = 1,
+    Start,
     /// Detail: Battery is notified of inverter state change through SetInvState.
-    Stop = 2,
+    Stop,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ReqInvState {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ReqInvState> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ReqInvState::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ReqInvState {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::NoRequest,
+            1 => Self::Start,
+            2 => Self::Stop,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::NoRequest => 0,
+            Self::Start => 1,
+            Self::Stop => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ReqInvState {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Set Operation
 ///
 /// Instruct the battery bank to perform an operation such as connecting.  Enumeration.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SetOp {
     #[allow(missing_docs)]
-    Connect = 1,
+    Connect,
     #[allow(missing_docs)]
-    Disconnect = 2,
+    Disconnect,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SetOp {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SetOp> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SetOp::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SetOp {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            1 => Self::Connect,
+            2 => Self::Disconnect,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Connect => 1,
+            Self::Disconnect => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SetOp {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Set Inverter State
@@ -822,43 +840,43 @@ impl crate::Value for Option<SetOp> {
 /// Set the current state of the inverter.
 ///
 /// Detail: Information needed by battery for some operations.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SetInvState {
     #[allow(missing_docs)]
-    InverterStopped = 1,
+    InverterStopped,
     #[allow(missing_docs)]
-    InverterStandby = 2,
+    InverterStandby,
     #[allow(missing_docs)]
-    InverterStarted = 3,
+    InverterStarted,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SetInvState {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SetInvState> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SetInvState::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SetInvState {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            1 => Self::InverterStopped,
+            2 => Self::InverterStandby,
+            3 => Self::InverterStarted,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::InverterStopped => 1,
+            Self::InverterStandby => 2,
+            Self::InverterStarted => 3,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SetInvState {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for Battery {
@@ -866,8 +884,14 @@ impl crate::Model for Battery {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m802
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

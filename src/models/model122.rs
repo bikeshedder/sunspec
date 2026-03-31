@@ -115,6 +115,11 @@ impl Status {
     pub const RT_ST: crate::Point<Self, Option<RtSt>> = crate::Point::new(41, 1, false);
     pub const RIS: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1, false);
     pub const RIS_SF: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::PV_CONN.is_invalid(&self.pv_conn)
+            || Self::STOR_CONN.is_invalid(&self.stor_conn)
+            || Self::ECP_CONN.is_invalid(&self.ecp_conn)
+    }
 }
 impl crate::Group for Status {
     const LEN: u16 = 44;
@@ -166,21 +171,11 @@ impl crate::Value for PvConn {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<PvConn> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(PvConn::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for PvConn {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 bitflags::bitflags! {
@@ -201,21 +196,11 @@ impl crate::Value for StorConn {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<StorConn> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(StorConn::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for StorConn {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 bitflags::bitflags! {
@@ -234,21 +219,11 @@ impl crate::Value for EcpConn {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<EcpConn> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(EcpConn::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for EcpConn {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 bitflags::bitflags! {
@@ -273,21 +248,11 @@ impl crate::Value for StSetLimMsk {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<StSetLimMsk> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(StSetLimMsk::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for StSetLimMsk {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -313,21 +278,11 @@ impl crate::Value for StActCtl {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<StActCtl> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(StActCtl::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for StActCtl {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -347,21 +302,11 @@ impl crate::Value for RtSt {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<RtSt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(RtSt::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for RtSt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 impl crate::Model for Status {
@@ -369,8 +314,14 @@ impl crate::Model for Status {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m122
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

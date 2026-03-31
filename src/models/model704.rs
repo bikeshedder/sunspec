@@ -265,6 +265,12 @@ impl DerCtlAc {
     pub const W_SET_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(54, 1, false);
     pub const VAR_SET_SF: crate::Point<Self, Option<i16>> = crate::Point::new(55, 1, false);
     pub const VAR_SET_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(56, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        self.pfw_inj.has_invalid_points()
+            || self.pfw_inj_rvrt.has_invalid_points()
+            || self.pfw_abs.has_invalid_points()
+            || self.pfw_abs_rvrt.has_invalid_points()
+    }
 }
 impl crate::Group for DerCtlAc {
     const LEN: u16 = 57;
@@ -335,89 +341,85 @@ impl DerCtlAc {
 /// Power factor enable when injecting active power.
 ///
 /// Comments: Set Power Factor (when injecting active power)
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum PfwInjEna {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for PfwInjEna {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<PfwInjEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                PfwInjEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for PfwInjEna {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for PfwInjEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Power Factor Reversion Enable (W Inj)
 ///
 /// Power factor reversion timer when injecting active power enable.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum PfwInjEnaRvrt {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for PfwInjEnaRvrt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<PfwInjEnaRvrt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                PfwInjEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for PfwInjEnaRvrt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for PfwInjEnaRvrt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Power Factor Enable (W Abs) Enable
@@ -425,89 +427,85 @@ impl crate::Value for Option<PfwInjEnaRvrt> {
 /// Power factor enable when absorbing active power.
 ///
 /// Comments: Set Power Factor (when absorbing active power)
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum PfwAbsEna {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for PfwAbsEna {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<PfwAbsEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                PfwAbsEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for PfwAbsEna {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for PfwAbsEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Power Factor Reversion Enable (W Abs)
 ///
 /// Power factor reversion timer when absorbing active power enable.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum PfwAbsEnaRvrt {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for PfwAbsEnaRvrt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<PfwAbsEnaRvrt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                PfwAbsEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for PfwAbsEnaRvrt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for PfwAbsEnaRvrt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Limit Max Power Pct Enable
@@ -515,89 +513,85 @@ impl crate::Value for Option<PfwAbsEnaRvrt> {
 /// Limit maximum active power percent enable.
 ///
 /// Comments: Limit Maximum Active Power Generation
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum WMaxLimPctEna {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for WMaxLimPctEna {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<WMaxLimPctEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                WMaxLimPctEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for WMaxLimPctEna {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for WMaxLimPctEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Reversion Limit Max Power Pct Enable
 ///
 /// Reversion limit maximum active power percent value enable.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum WMaxLimPctEnaRvrt {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for WMaxLimPctEnaRvrt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<WMaxLimPctEnaRvrt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                WMaxLimPctEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for WMaxLimPctEnaRvrt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for WMaxLimPctEnaRvrt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Set Active Power Enable
@@ -605,133 +599,127 @@ impl crate::Value for Option<WMaxLimPctEnaRvrt> {
 /// Set active power enable.
 ///
 /// Comments: Set Active Power Level (may be negative for charging)
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum WSetEna {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for WSetEna {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<WSetEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                WSetEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for WSetEna {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for WSetEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Set Active Power Mode
 ///
 /// Set active power mode.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum WSetMod {
     /// Active Power As Max Percent
     ///
     /// Active power setting is percentage of maximum active power.
-    WMaxPct = 0,
+    WMaxPct,
     /// Active Power As Watts
     ///
     /// Active power setting is in watts.
-    Watts = 1,
+    Watts,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for WSetMod {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<WSetMod> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                WSetMod::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for WSetMod {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::WMaxPct,
+            1 => Self::Watts,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::WMaxPct => 0,
+            Self::Watts => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for WSetMod {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Reversion Active Power Enable
 ///
 /// Reversion active power function enable.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum WSetEnaRvrt {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for WSetEnaRvrt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<WSetEnaRvrt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                WSetEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for WSetEnaRvrt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for WSetEnaRvrt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Set Reactive Power Enable
@@ -739,281 +727,277 @@ impl crate::Value for Option<WSetEnaRvrt> {
 /// Set reactive power enable.
 ///
 /// Comments: Set Reactive Power Level
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum VarSetEna {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for VarSetEna {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<VarSetEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                VarSetEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for VarSetEna {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for VarSetEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Set Reactive Power Mode
 ///
 /// Set reactive power mode.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum VarSetMod {
     /// Reactive Power As Watt Max Pct
     ///
     /// Reactive power setting is percent of maximum active power.
-    WMaxPct = 0,
+    WMaxPct,
     /// Reactive Power As Var Max Pct
     ///
     /// Reactive power setting is percent of maximum reactive power.
-    VarMaxPct = 1,
+    VarMaxPct,
     /// Reactive Power As Var Avail Pct
     ///
     /// Reactive power setting is percent of available reactive  power.
-    VarAvailPct = 2,
+    VarAvailPct,
     /// Reactive Power As VA Max Pct
     ///
     /// Reactive power setting is percent of maximum apparent power.
-    VaMaxPct = 3,
+    VaMaxPct,
     /// Reactive Power As Vars
     ///
     /// Reactive power is in vars.
-    Vars = 4,
+    Vars,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for VarSetMod {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<VarSetMod> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                VarSetMod::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for VarSetMod {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::WMaxPct,
+            1 => Self::VarMaxPct,
+            2 => Self::VarAvailPct,
+            3 => Self::VaMaxPct,
+            4 => Self::Vars,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::WMaxPct => 0,
+            Self::VarMaxPct => 1,
+            Self::VarAvailPct => 2,
+            Self::VaMaxPct => 3,
+            Self::Vars => 4,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for VarSetMod {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Reactive Power Priority
 ///
 /// Reactive power priority.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum VarSetPri {
     /// Active Power Priority
     ///
     /// Active power priority.
-    Active = 0,
+    Active,
     /// Reactive Power Priority
     ///
     /// Reactive power priority.
-    Reactive = 1,
+    Reactive,
     /// Vendor Power Priority
     ///
     /// Power priority is vendor specific mode.
-    Vendor = 2,
+    Vendor,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for VarSetPri {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<VarSetPri> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                VarSetPri::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for VarSetPri {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Active,
+            1 => Self::Reactive,
+            2 => Self::Vendor,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Active => 0,
+            Self::Reactive => 1,
+            Self::Vendor => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for VarSetPri {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Reversion Reactive Power Enable
 ///
 /// Reversion reactive power function enable.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum VarSetEnaRvrt {
     /// Disabled
     ///
     /// Function is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Function is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for VarSetEnaRvrt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<VarSetEnaRvrt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                VarSetEnaRvrt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for VarSetEnaRvrt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for VarSetEnaRvrt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Normal Ramp Rate Reference
 ///
 /// Ramp rate reference unit for increases in active power or current during normal generation.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum WRmpRef {
     /// Max Current Ramp
     ///
     /// Ramp based on percent of max current per second.
-    AMax = 0,
+    AMax,
     /// Max Active Power Ramp
     ///
     /// Ramp based on percent of max active power per second.
-    WMax = 1,
+    WMax,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for WRmpRef {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<WRmpRef> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                WRmpRef::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for WRmpRef {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::AMax,
+            1 => Self::WMax,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::AMax => 0,
+            Self::WMax => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for WRmpRef {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Anti-Islanding Enable
 ///
 /// Anti-islanding enable.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum AntiIslEna {
     /// Disabled
     ///
     /// Anti-islanding is disabled.
-    Disabled = 0,
+    Disabled,
     /// Enabled
     ///
     /// Anti-islanding is enabled.
-    Enabled = 1,
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for AntiIslEna {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<AntiIslEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                AntiIslEna::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for AntiIslEna {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for AntiIslEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Power Factor (W Inj)
@@ -1037,6 +1021,9 @@ pub struct PfwInj {
 impl PfwInj {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwInjExt>> = crate::Point::new(1, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for PfwInj {
     const LEN: u16 = 2;
@@ -1056,45 +1043,43 @@ impl PfwInj {
 /// Power Factor Excitation (W Inj)
 ///
 /// Power factor excitation setpoint when injecting active power.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum PfwInjExt {
     /// Over-Excited
     ///
     /// Power factor over-excited excitation.
-    OverExcited = 0,
+    OverExcited,
     /// Under-Excited
     ///
     /// Power factor under-excited excitation.
-    UnderExcited = 1,
+    UnderExcited,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for PfwInjExt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<PfwInjExt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                PfwInjExt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for PfwInjExt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::OverExcited,
+            1 => Self::UnderExcited,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::OverExcited => 0,
+            Self::UnderExcited => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for PfwInjExt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Reversion Power Factor (W Inj)
@@ -1116,6 +1101,9 @@ pub struct PfwInjRvrt {
 impl PfwInjRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwInjRvrtExt>> = crate::Point::new(1, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for PfwInjRvrt {
     const LEN: u16 = 2;
@@ -1135,45 +1123,43 @@ impl PfwInjRvrt {
 /// Reversion PF Excitation (W Inj)
 ///
 /// Reversion power factor excitation setpoint when injecting active power.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum PfwInjRvrtExt {
     /// Over-Excited
     ///
     /// Power factor over-excited excitation.
-    OverExcited = 0,
+    OverExcited,
     /// Under-Excited
     ///
     /// Power factor under-excited excitation.
-    UnderExcited = 1,
+    UnderExcited,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for PfwInjRvrtExt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<PfwInjRvrtExt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                PfwInjRvrtExt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for PfwInjRvrtExt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::OverExcited,
+            1 => Self::UnderExcited,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::OverExcited => 0,
+            Self::UnderExcited => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for PfwInjRvrtExt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Power Factor (W Abs)
@@ -1195,6 +1181,9 @@ pub struct PfwAbs {
 impl PfwAbs {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwAbsExt>> = crate::Point::new(1, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for PfwAbs {
     const LEN: u16 = 2;
@@ -1214,45 +1203,43 @@ impl PfwAbs {
 /// Power Factor Excitation (W Abs)
 ///
 /// Power factor excitation setpoint when absorbing active power.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum PfwAbsExt {
     /// Over-Excited
     ///
     /// Power factor over-excited excitation.
-    OverExcited = 0,
+    OverExcited,
     /// Under-Excited
     ///
     /// Power factor under-excited excitation.
-    UnderExcited = 1,
+    UnderExcited,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for PfwAbsExt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<PfwAbsExt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                PfwAbsExt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for PfwAbsExt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::OverExcited,
+            1 => Self::UnderExcited,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::OverExcited => 0,
+            Self::UnderExcited => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for PfwAbsExt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Reversion Power Factor (W Abs)
@@ -1274,6 +1261,9 @@ pub struct PfwAbsRvrt {
 impl PfwAbsRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfwAbsRvrtExt>> = crate::Point::new(1, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for PfwAbsRvrt {
     const LEN: u16 = 2;
@@ -1293,45 +1283,43 @@ impl PfwAbsRvrt {
 /// Reversion PF Excitation (W Abs)
 ///
 /// Reversion power factor excitation setpoint when absorbing active power.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum PfwAbsRvrtExt {
     /// Over-Excited
     ///
     /// Power factor over-excited excitation.
-    OverExcited = 0,
+    OverExcited,
     /// Under-Excited
     ///
     /// Power factor under-excited excitation.
-    UnderExcited = 1,
+    UnderExcited,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for PfwAbsRvrtExt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<PfwAbsRvrtExt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                PfwAbsRvrtExt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for PfwAbsRvrtExt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::OverExcited,
+            1 => Self::UnderExcited,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::OverExcited => 0,
+            Self::UnderExcited => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for PfwAbsRvrtExt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for DerCtlAc {
@@ -1339,8 +1327,14 @@ impl crate::Model for DerCtlAc {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m704
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

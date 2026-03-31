@@ -73,6 +73,12 @@ impl TrackerController {
     pub const GLBL_ALM: crate::Point<Self, Option<GlblAlm>> = crate::Point::new(23, 1, false);
     pub const DGR_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(25, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::TYP.is_invalid(&self.typ)
+            || Self::DGR_SF.is_invalid(&self.dgr_sf)
+            || Self::N.is_invalid(&self.n)
+            || self.tracker.iter().any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for TrackerController {
     const LEN: u16 = 26;
@@ -103,51 +109,59 @@ impl TrackerController {
 /// Type
 ///
 /// Type of tracker
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Typ {
     #[allow(missing_docs)]
-    Unknown = 0,
+    Unknown,
     #[allow(missing_docs)]
-    Fixed = 1,
+    Fixed,
     #[allow(missing_docs)]
-    Horizontal = 2,
+    Horizontal,
     #[allow(missing_docs)]
-    Tilted = 3,
+    Tilted,
     #[allow(missing_docs)]
-    Azimuth = 4,
+    Azimuth,
     #[allow(missing_docs)]
-    Dual = 5,
+    Dual,
     #[allow(missing_docs)]
-    Other = 99,
+    Other,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Typ {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Typ> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Typ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Typ {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Unknown,
+            1 => Self::Fixed,
+            2 => Self::Horizontal,
+            3 => Self::Tilted,
+            4 => Self::Azimuth,
+            5 => Self::Dual,
+            99 => Self::Other,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Unknown => 0,
+            Self::Fixed => 1,
+            Self::Horizontal => 2,
+            Self::Tilted => 3,
+            Self::Azimuth => 4,
+            Self::Dual => 5,
+            Self::Other => 99,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Typ {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Global Mode
@@ -155,43 +169,43 @@ impl crate::Value for Option<Typ> {
 /// Global Control register operates on all trackers. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
 ///
 /// Detail: The global controls all trackers
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum GlblCtl {
     #[allow(missing_docs)]
-    Automatic = 0,
+    Automatic,
     #[allow(missing_docs)]
-    Manual = 1,
+    Manual,
     #[allow(missing_docs)]
-    Calibrate = 2,
+    Calibrate,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for GlblCtl {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<GlblCtl> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                GlblCtl::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for GlblCtl {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Automatic,
+            1 => Self::Manual,
+            2 => Self::Calibrate,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Automatic => 0,
+            Self::Manual => 1,
+            Self::Calibrate => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for GlblCtl {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 bitflags::bitflags! {
@@ -212,21 +226,11 @@ impl crate::Value for GlblAlm {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<GlblAlm> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(GlblAlm::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for GlblAlm {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 #[allow(missing_docs)]
@@ -281,6 +285,9 @@ impl Tracker {
     pub const AZ_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(18, 2, true);
     pub const CTL: crate::Point<Self, Option<TrackerCtl>> = crate::Point::new(20, 1, true);
     pub const ALM: crate::Point<Self, Option<TrackerAlm>> = crate::Point::new(21, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for Tracker {
     const LEN: u16 = 22;
@@ -324,43 +331,43 @@ impl Tracker {
 /// Mode
 ///
 /// Control register. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum TrackerCtl {
     #[allow(missing_docs)]
-    Automatic = 0,
+    Automatic,
     #[allow(missing_docs)]
-    Manual = 1,
+    Manual,
     #[allow(missing_docs)]
-    Calibrate = 2,
+    Calibrate,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for TrackerCtl {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<TrackerCtl> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                TrackerCtl::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for TrackerCtl {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Automatic,
+            1 => Self::Manual,
+            2 => Self::Calibrate,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Automatic => 0,
+            Self::Manual => 1,
+            Self::Calibrate => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for TrackerCtl {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 bitflags::bitflags! {
@@ -379,21 +386,11 @@ impl crate::Value for TrackerAlm {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<TrackerAlm> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(TrackerAlm::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for TrackerAlm {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 impl crate::Model for TrackerController {
@@ -401,8 +398,14 @@ impl crate::Model for TrackerController {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m601
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

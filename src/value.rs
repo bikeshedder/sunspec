@@ -8,11 +8,6 @@ use thiserror::Error;
 /// This trait contains all the conversion methods needed for
 /// working with points of the SunSpec models.
 pub trait Value: Sized {
-    // FIXME we currently don't distinguish between decode errors
-    // and not-set values. SunSpec does define special values for
-    // unsupported/unset data. To do this 100% correct we would need to
-    // wrap all primitives into some kind of value container type
-    // that disallows the use of those special values.
     /// Decode value from a given slice of u16
     fn decode(data: &[u16]) -> Result<Self, DecodeError>;
     /// Encode value into a u16 array
@@ -24,8 +19,34 @@ pub trait Value: Sized {
 pub trait FixedSize: Value + PartialEq {
     /// The size of this value
     const SIZE: u16;
-    /// The value when the point is not supported
+    /// The value when the point is not supported.
     const INVALID: Self;
+    /// Check whether the decoded value is the SunSpec invalid sentinel.
+    fn is_invalid(&self) -> bool {
+        self == &Self::INVALID
+    }
+}
+
+/// Shared conversion logic for enumerated point values.
+pub trait EnumValue: Sized + Copy {
+    /// The integer representation used on the wire.
+    type Repr: FixedSize + Copy;
+    /// The sentinel used for optional enum points.
+    const INVALID: Self::Repr;
+    /// Convert a raw representation into an enum value.
+    fn from_repr(value: Self::Repr) -> Self;
+    /// Convert an enum value into its raw representation.
+    fn to_repr(self) -> Self::Repr;
+}
+
+impl<T: EnumValue> Value for T {
+    fn decode(data: &[u16]) -> Result<Self, DecodeError> {
+        let value = T::Repr::decode(data)?;
+        Ok(T::from_repr(value))
+    }
+    fn encode(self) -> Box<[u16]> {
+        T::to_repr(self).encode()
+    }
 }
 
 impl Value for u16 {
@@ -42,7 +63,7 @@ impl Value for u16 {
 
 impl FixedSize for u16 {
     const SIZE: u16 = 1;
-    const INVALID: u16 = u16::MAX;
+    const INVALID: Self = u16::MAX;
 }
 
 impl Value for u32 {
@@ -59,7 +80,7 @@ impl Value for u32 {
 
 impl FixedSize for u32 {
     const SIZE: u16 = 2;
-    const INVALID: u32 = u32::MAX;
+    const INVALID: Self = u32::MAX;
 }
 
 impl Value for u64 {
@@ -81,7 +102,7 @@ impl Value for u64 {
 
 impl FixedSize for u64 {
     const SIZE: u16 = 4;
-    const INVALID: u64 = u64::MAX;
+    const INVALID: Self = u64::MAX;
 }
 
 impl Value for u128 {
@@ -114,7 +135,7 @@ impl Value for u128 {
 
 impl FixedSize for u128 {
     const SIZE: u16 = 8;
-    const INVALID: u128 = u128::MAX;
+    const INVALID: Self = u128::MAX;
 }
 
 impl Value for i16 {
@@ -128,7 +149,7 @@ impl Value for i16 {
 
 impl FixedSize for i16 {
     const SIZE: u16 = 1;
-    const INVALID: i16 = i16::MIN;
+    const INVALID: Self = i16::MIN;
 }
 
 impl Value for i32 {
@@ -142,7 +163,7 @@ impl Value for i32 {
 
 impl FixedSize for i32 {
     const SIZE: u16 = 2;
-    const INVALID: i32 = i32::MIN;
+    const INVALID: Self = i32::MIN;
 }
 
 impl Value for i64 {
@@ -156,7 +177,7 @@ impl Value for i64 {
 
 impl FixedSize for i64 {
     const SIZE: u16 = 4;
-    const INVALID: i64 = i64::MIN;
+    const INVALID: Self = i64::MIN;
 }
 
 impl Value for f32 {
@@ -182,7 +203,11 @@ impl Value for f32 {
 
 impl FixedSize for f32 {
     const SIZE: u16 = 2;
-    const INVALID: f32 = f32::NAN;
+    const INVALID: Self = f32::NAN;
+    fn is_invalid(&self) -> bool {
+        // NaN never compares equal, so sentinel detection must use `is_nan`.
+        self.is_nan()
+    }
 }
 
 impl Value for f64 {
@@ -214,7 +239,11 @@ impl Value for f64 {
 
 impl FixedSize for f64 {
     const SIZE: u16 = 4;
-    const INVALID: f64 = f64::NAN;
+    const INVALID: Self = f64::NAN;
+    fn is_invalid(&self) -> bool {
+        // NaN never compares equal, so sentinel detection must use `is_nan`.
+        self.is_nan()
+    }
 }
 
 fn encode_bytes(octets: &[u8]) -> Box<[u16]> {
@@ -261,7 +290,7 @@ impl Value for Ipv4Addr {
 
 impl FixedSize for Ipv4Addr {
     const SIZE: u16 = 2;
-    const INVALID: Ipv4Addr = Ipv4Addr::new(0, 0, 0, 0);
+    const INVALID: Self = Ipv4Addr::new(0, 0, 0, 0);
 }
 
 impl Value for Ipv6Addr {
@@ -278,7 +307,7 @@ impl Value for Ipv6Addr {
 
 impl FixedSize for Ipv6Addr {
     const SIZE: u16 = 8;
-    const INVALID: Ipv6Addr = Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 0);
+    const INVALID: Self = Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 impl Value for Option<String> {
@@ -305,7 +334,7 @@ impl Value for Option<String> {
 impl<T: FixedSize> Value for Option<T> {
     fn decode(data: &[u16]) -> Result<Self, DecodeError> {
         let value = T::decode(data)?;
-        Ok((value != T::INVALID).then_some(value))
+        Ok((!value.is_invalid()).then_some(value))
     }
     fn encode(self) -> Box<[u16]> {
         if let Some(value) = self {
@@ -336,6 +365,7 @@ pub enum DecodeError {
 fn test_u16() {
     assert_eq!(*0x0001i16.encode(), [0x1]);
     assert_eq!(u16::decode(&[0x1]), Ok(0x0001u16));
+    assert_eq!(u16::decode(&[0xffff]), Ok(u16::MAX));
 }
 
 #[test]
@@ -387,6 +417,7 @@ fn test_i64() {
 fn test_f32() {
     assert_eq!(*(0.5f32).encode(), [0x3f00, 0x0000]);
     assert_eq!(f32::decode(&[0x3f00, 0x0000]), Ok(0.5f32));
+    assert!(matches!(f32::decode(&[0x7fc0, 0x0000]), Ok(value) if value.is_nan()));
 }
 
 #[test]
@@ -405,4 +436,12 @@ fn test_string() {
         String::decode(&[0x7061, 0x6400, 0x0000]),
         Ok(String::from("pad"))
     );
+}
+
+#[test]
+fn test_optional_fixed_size_invalid() {
+    assert_eq!(Option::<u16>::decode(&[0xffff]), Ok(None));
+    assert_eq!(Option::<i16>::decode(&[0x8000]), Ok(None));
+    assert_eq!(Option::<Ipv4Addr>::decode(&[0x0000, 0x0000]), Ok(None));
+    assert_eq!(Option::<f32>::decode(&[0x7fc0, 0x0000]), Ok(None));
 }

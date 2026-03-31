@@ -50,6 +50,9 @@ impl ExtSettings {
     pub const CONN_RMP_DN_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const A_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
     pub const RMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for ExtSettings {
     const LEN: u16 = 8;
@@ -77,8 +80,14 @@ impl crate::Model for ExtSettings {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m145
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

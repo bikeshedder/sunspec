@@ -58,6 +58,20 @@ impl Model7 {
     pub const ALM: crate::Point<Self, Alm> = crate::Point::new(6, 1, false);
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(8, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(9, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        Self::RQ_SEQ.is_invalid(&self.rq_seq)
+            || Self::STS.is_invalid(&self.sts)
+            || Self::TS.is_invalid(&self.ts)
+            || Self::MS.is_invalid(&self.ms)
+            || Self::SEQ.is_invalid(&self.seq)
+            || Self::ALM.is_invalid(&self.alm)
+            || Self::ALG.is_invalid(&self.alg)
+            || Self::N.is_invalid(&self.n)
+            || self
+                .repeating
+                .iter()
+                .any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for Model7 {
     const LEN: u16 = 10;
@@ -85,87 +99,89 @@ impl Model7 {
 /// Status
 ///
 /// Status of last write operation
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Sts {
     #[allow(missing_docs)]
-    Success = 0,
+    Success,
     /// Detail: The signature was not valid
-    Ds = 1,
+    Ds,
     /// Detail: One or more registers were not writable by this role
-    Acl = 2,
+    Acl,
     /// Detail: Offset out of range or missing from multi-register value
-    Off = 3,
+    Off,
     /// Detail: Value is out of acceptable range
-    Val = 4,
+    Val,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Sts {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Sts> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Sts::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Sts {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Success,
+            1 => Self::Ds,
+            2 => Self::Acl,
+            3 => Self::Off,
+            4 => Self::Val,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Success => 0,
+            Self::Ds => 1,
+            Self::Acl => 2,
+            Self::Off => 3,
+            Self::Val => 4,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Sts {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Alarm
 ///
 /// Bitmask alarm code
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Alm {
     #[allow(missing_docs)]
-    None = 0,
+    None,
     /// Detail: Tampered
-    Alm = 1,
+    Alm,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Alm {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Alm> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Alm::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Alm {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::None,
+            1 => Self::Alm,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::None => 0,
+            Self::Alm => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Alm {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Algorithm
@@ -173,43 +189,43 @@ impl crate::Value for Option<Alm> {
 /// Algorithm used to compute the digital signature
 ///
 /// Detail: For future proof
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Alg {
     /// Detail: For test purposes only
-    None = 0,
+    None,
     #[allow(missing_docs)]
-    AesGmac64 = 1,
+    AesGmac64,
     #[allow(missing_docs)]
-    Ecc256 = 2,
+    Ecc256,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Alg {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Alg> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Alg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Alg {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::None,
+            1 => Self::AesGmac64,
+            2 => Self::Ecc256,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::None => 0,
+            Self::AesGmac64 => 1,
+            Self::Ecc256 => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Alg {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 #[allow(missing_docs)]
@@ -224,6 +240,9 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        Self::DS.is_invalid(&self.ds)
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -261,8 +280,14 @@ impl crate::Model for Model7 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m7
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

@@ -7,7 +7,13 @@ pub struct Model63002 {
     pub repeating: Vec<Repeating>,
 }
 #[allow(missing_docs)]
-impl Model63002 {}
+impl Model63002 {
+    fn has_invalid_points(&self) -> bool {
+        self.repeating
+            .iter()
+            .any(|group| group.has_invalid_points())
+    }
+}
 impl crate::Group for Model63002 {
     const LEN: u16 = 0;
 }
@@ -37,6 +43,9 @@ impl Repeating {
     pub const INT16_1: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
     pub const INT16_2: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
     pub const SUNSSF_2: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 4;
@@ -77,8 +86,14 @@ impl crate::Model for Model63002 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m63002
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

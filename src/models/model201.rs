@@ -296,6 +296,19 @@ impl AcMeterAnOrAb {
         crate::Point::new(100, 2, false);
     pub const TOT_V_ARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(102, 1, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(103, 2, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::A.is_invalid(&self.a)
+            || Self::APH_A.is_invalid(&self.aph_a)
+            || Self::A_SF.is_invalid(&self.a_sf)
+            || Self::V_SF.is_invalid(&self.v_sf)
+            || Self::HZ.is_invalid(&self.hz)
+            || Self::W.is_invalid(&self.w)
+            || Self::W_SF.is_invalid(&self.w_sf)
+            || Self::TOT_WH_EXP.is_invalid(&self.tot_wh_exp)
+            || Self::TOT_WH_IMP.is_invalid(&self.tot_wh_imp)
+            || Self::TOT_WH_SF.is_invalid(&self.tot_wh_sf)
+            || Self::EVT.is_invalid(&self.evt)
+    }
 }
 impl crate::Group for AcMeterAnOrAb {
     const LEN: u16 = 105;
@@ -409,21 +422,11 @@ impl crate::Value for Evt {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Evt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Evt::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Evt {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 impl crate::Model for AcMeterAnOrAb {
@@ -431,8 +434,14 @@ impl crate::Model for AcMeterAnOrAb {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m201
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

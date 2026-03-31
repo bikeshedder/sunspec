@@ -323,6 +323,103 @@ impl Model9 {
     pub const ROLE: crate::Point<Self, u16> = crate::Point::new(89, 1, true);
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(90, 1, true);
     pub const N: crate::Point<Self, u16> = crate::Point::new(91, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        Self::CERT_UID.is_invalid(&self.cert_uid)
+            || Self::CERT_ROLE.is_invalid(&self.cert_role)
+            || Self::FMT.is_invalid(&self.fmt)
+            || Self::TYP.is_invalid(&self.typ)
+            || Self::TOT_LN.is_invalid(&self.tot_ln)
+            || Self::FRG_LN.is_invalid(&self.frg_ln)
+            || Self::FRG1.is_invalid(&self.frg1)
+            || Self::FRG2.is_invalid(&self.frg2)
+            || Self::FRG3.is_invalid(&self.frg3)
+            || Self::FRG4.is_invalid(&self.frg4)
+            || Self::FRG5.is_invalid(&self.frg5)
+            || Self::FRG6.is_invalid(&self.frg6)
+            || Self::FRG7.is_invalid(&self.frg7)
+            || Self::FRG8.is_invalid(&self.frg8)
+            || Self::FRG9.is_invalid(&self.frg9)
+            || Self::FRG10.is_invalid(&self.frg10)
+            || Self::FRG11.is_invalid(&self.frg11)
+            || Self::FRG12.is_invalid(&self.frg12)
+            || Self::FRG13.is_invalid(&self.frg13)
+            || Self::FRG14.is_invalid(&self.frg14)
+            || Self::FRG15.is_invalid(&self.frg15)
+            || Self::FRG16.is_invalid(&self.frg16)
+            || Self::FRG17.is_invalid(&self.frg17)
+            || Self::FRG18.is_invalid(&self.frg18)
+            || Self::FRG19.is_invalid(&self.frg19)
+            || Self::FRG20.is_invalid(&self.frg20)
+            || Self::FRG21.is_invalid(&self.frg21)
+            || Self::FRG22.is_invalid(&self.frg22)
+            || Self::FRG23.is_invalid(&self.frg23)
+            || Self::FRG24.is_invalid(&self.frg24)
+            || Self::FRG25.is_invalid(&self.frg25)
+            || Self::FRG26.is_invalid(&self.frg26)
+            || Self::FRG27.is_invalid(&self.frg27)
+            || Self::FRG28.is_invalid(&self.frg28)
+            || Self::FRG29.is_invalid(&self.frg29)
+            || Self::FRG30.is_invalid(&self.frg30)
+            || Self::FRG31.is_invalid(&self.frg31)
+            || Self::FRG32.is_invalid(&self.frg32)
+            || Self::FRG33.is_invalid(&self.frg33)
+            || Self::FRG34.is_invalid(&self.frg34)
+            || Self::FRG35.is_invalid(&self.frg35)
+            || Self::FRG36.is_invalid(&self.frg36)
+            || Self::FRG37.is_invalid(&self.frg37)
+            || Self::FRG38.is_invalid(&self.frg38)
+            || Self::FRG39.is_invalid(&self.frg39)
+            || Self::FRG40.is_invalid(&self.frg40)
+            || Self::FRG41.is_invalid(&self.frg41)
+            || Self::FRG42.is_invalid(&self.frg42)
+            || Self::FRG43.is_invalid(&self.frg43)
+            || Self::FRG44.is_invalid(&self.frg44)
+            || Self::FRG45.is_invalid(&self.frg45)
+            || Self::FRG46.is_invalid(&self.frg46)
+            || Self::FRG47.is_invalid(&self.frg47)
+            || Self::FRG48.is_invalid(&self.frg48)
+            || Self::FRG49.is_invalid(&self.frg49)
+            || Self::FRG50.is_invalid(&self.frg50)
+            || Self::FRG51.is_invalid(&self.frg51)
+            || Self::FRG52.is_invalid(&self.frg52)
+            || Self::FRG53.is_invalid(&self.frg53)
+            || Self::FRG54.is_invalid(&self.frg54)
+            || Self::FRG55.is_invalid(&self.frg55)
+            || Self::FRG56.is_invalid(&self.frg56)
+            || Self::FRG57.is_invalid(&self.frg57)
+            || Self::FRG58.is_invalid(&self.frg58)
+            || Self::FRG59.is_invalid(&self.frg59)
+            || Self::FRG60.is_invalid(&self.frg60)
+            || Self::FRG61.is_invalid(&self.frg61)
+            || Self::FRG62.is_invalid(&self.frg62)
+            || Self::FRG63.is_invalid(&self.frg63)
+            || Self::FRG64.is_invalid(&self.frg64)
+            || Self::FRG65.is_invalid(&self.frg65)
+            || Self::FRG66.is_invalid(&self.frg66)
+            || Self::FRG67.is_invalid(&self.frg67)
+            || Self::FRG68.is_invalid(&self.frg68)
+            || Self::FRG69.is_invalid(&self.frg69)
+            || Self::FRG70.is_invalid(&self.frg70)
+            || Self::FRG71.is_invalid(&self.frg71)
+            || Self::FRG72.is_invalid(&self.frg72)
+            || Self::FRG73.is_invalid(&self.frg73)
+            || Self::FRG74.is_invalid(&self.frg74)
+            || Self::FRG75.is_invalid(&self.frg75)
+            || Self::FRG78.is_invalid(&self.frg78)
+            || Self::FRG79.is_invalid(&self.frg79)
+            || Self::FRG80.is_invalid(&self.frg80)
+            || Self::TS.is_invalid(&self.ts)
+            || Self::MS.is_invalid(&self.ms)
+            || Self::SEQ.is_invalid(&self.seq)
+            || Self::UID.is_invalid(&self.uid)
+            || Self::ROLE.is_invalid(&self.role)
+            || Self::ALG.is_invalid(&self.alg)
+            || Self::N.is_invalid(&self.n)
+            || self
+                .repeating
+                .iter()
+                .any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for Model9 {
     const LEN: u16 = 92;
@@ -433,89 +530,93 @@ impl Model9 {
 /// Format
 ///
 /// Format of this certificate
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Fmt {
     #[allow(missing_docs)]
-    None = 0,
+    None,
     #[allow(missing_docs)]
-    X509Pem = 1,
+    X509Pem,
     #[allow(missing_docs)]
-    X509Der = 2,
+    X509Der,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Fmt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Fmt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Fmt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Fmt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::None,
+            1 => Self::X509Pem,
+            2 => Self::X509Der,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::None => 0,
+            Self::X509Pem => 1,
+            Self::X509Der => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Fmt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Type
 ///
 /// Type of this certificate
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Typ {
     #[allow(missing_docs)]
-    DevKeyPair = 0,
+    DevKeyPair,
     #[allow(missing_docs)]
-    DevSharedKey = 1,
+    DevSharedKey,
     #[allow(missing_docs)]
-    OperatorPub = 2,
+    OperatorPub,
     #[allow(missing_docs)]
-    OperatorShared = 3,
+    OperatorShared,
     #[allow(missing_docs)]
-    CaPub = 4,
+    CaPub,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Typ {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Typ> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Typ::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Typ {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::DevKeyPair,
+            1 => Self::DevSharedKey,
+            2 => Self::OperatorPub,
+            3 => Self::OperatorShared,
+            4 => Self::CaPub,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::DevKeyPair => 0,
+            Self::DevSharedKey => 1,
+            Self::OperatorPub => 2,
+            Self::OperatorShared => 3,
+            Self::CaPub => 4,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Typ {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// Algorithm
@@ -523,43 +624,43 @@ impl crate::Value for Option<Typ> {
 /// Algorithm used to compute the digital signature
 ///
 /// Detail: For future proof
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Alg {
     /// Detail: For test purposes only
-    None = 0,
+    None,
     #[allow(missing_docs)]
-    AesGmac64 = 1,
+    AesGmac64,
     #[allow(missing_docs)]
-    Ecc256 = 2,
+    Ecc256,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Alg {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Alg> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Alg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Alg {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::None,
+            1 => Self::AesGmac64,
+            2 => Self::Ecc256,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::None => 0,
+            Self::AesGmac64 => 1,
+            Self::Ecc256 => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Alg {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 #[allow(missing_docs)]
@@ -572,6 +673,9 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const CERT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        Self::CERT.is_invalid(&self.cert)
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -609,8 +713,14 @@ impl crate::Model for Model9 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m9
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

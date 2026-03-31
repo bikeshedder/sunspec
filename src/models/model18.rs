@@ -33,6 +33,9 @@ impl Model18 {
     pub const APN: crate::Point<Self, Option<String>> = crate::Point::new(6, 4, true);
     pub const NUM: crate::Point<Self, Option<String>> = crate::Point::new(10, 6, true);
     pub const PIN: crate::Point<Self, Option<String>> = crate::Point::new(16, 6, true);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for Model18 {
     const LEN: u16 = 22;
@@ -57,8 +60,14 @@ impl crate::Model for Model18 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m18
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

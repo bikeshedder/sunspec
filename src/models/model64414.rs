@@ -41,6 +41,9 @@ impl DerSimControls {
     pub const GRID_VOLTAGE_B: crate::Point<Self, Option<f32>> = crate::Point::new(80, 2, true);
     pub const GRID_VOLTAGE_C: crate::Point<Self, Option<f32>> = crate::Point::new(82, 2, true);
     pub const GRID_FREQUENCY: crate::Point<Self, Option<f32>> = crate::Point::new(84, 2, true);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for DerSimControls {
     const LEN: u16 = 86;
@@ -69,8 +72,14 @@ impl crate::Model for DerSimControls {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64414
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

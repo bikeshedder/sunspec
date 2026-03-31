@@ -31,6 +31,9 @@ impl Mppt {
     pub const EVT: crate::Point<Self, Option<Evt>> = crate::Point::new(4, 2, false);
     pub const N: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
     pub const TMS_PER: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        self.module.iter().any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for Mppt {
     const LEN: u16 = 8;
@@ -83,21 +86,11 @@ impl crate::Value for Evt {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Evt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Evt::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Evt {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 #[allow(missing_docs)]
@@ -137,6 +130,9 @@ impl Module {
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
     pub const DC_ST: crate::Point<Self, Option<ModuleDcSt>> = crate::Point::new(17, 1, false);
     pub const DC_EVT: crate::Point<Self, Option<ModuleDcEvt>> = crate::Point::new(18, 2, false);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for Module {
     const LEN: u16 = 20;
@@ -179,57 +175,71 @@ impl Module {
     }
 }
 /// Operating State
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ModuleDcSt {
     #[allow(missing_docs)]
-    Off = 1,
+    Off,
     #[allow(missing_docs)]
-    Sleeping = 2,
+    Sleeping,
     #[allow(missing_docs)]
-    Starting = 3,
+    Starting,
     #[allow(missing_docs)]
-    Mppt = 4,
+    Mppt,
     #[allow(missing_docs)]
-    Throttled = 5,
+    Throttled,
     #[allow(missing_docs)]
-    ShuttingDown = 6,
+    ShuttingDown,
     #[allow(missing_docs)]
-    Fault = 7,
+    Fault,
     #[allow(missing_docs)]
-    Standby = 8,
+    Standby,
     #[allow(missing_docs)]
-    Test = 9,
+    Test,
     #[allow(missing_docs)]
-    Reserved10 = 10,
+    Reserved10,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ModuleDcSt {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ModuleDcSt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ModuleDcSt::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ModuleDcSt {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            1 => Self::Off,
+            2 => Self::Sleeping,
+            3 => Self::Starting,
+            4 => Self::Mppt,
+            5 => Self::Throttled,
+            6 => Self::ShuttingDown,
+            7 => Self::Fault,
+            8 => Self::Standby,
+            9 => Self::Test,
+            10 => Self::Reserved10,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Off => 1,
+            Self::Sleeping => 2,
+            Self::Starting => 3,
+            Self::Mppt => 4,
+            Self::Throttled => 5,
+            Self::ShuttingDown => 6,
+            Self::Fault => 7,
+            Self::Standby => 8,
+            Self::Test => 9,
+            Self::Reserved10 => 10,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ModuleDcSt {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 bitflags::bitflags! {
@@ -261,21 +271,11 @@ impl crate::Value for ModuleDcEvt {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<ModuleDcEvt> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(ModuleDcEvt::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for ModuleDcEvt {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 impl crate::Model for Mppt {
@@ -283,8 +283,14 @@ impl crate::Model for Mppt {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m160
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

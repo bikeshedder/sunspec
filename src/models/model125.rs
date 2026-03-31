@@ -47,6 +47,11 @@ impl Pricing {
     pub const RVT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
     pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const SIG_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::MOD_ENA.is_invalid(&self.mod_ena)
+            || Self::SIG.is_invalid(&self.sig)
+            || Self::SIG_SF.is_invalid(&self.sig_sf)
+    }
 }
 impl crate::Group for Pricing {
     const LEN: u16 = 8;
@@ -84,67 +89,61 @@ impl crate::Value for ModEna {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<ModEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(ModEna::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for ModEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 /// SigType
 ///
 /// Meaning of the pricing signal. When a Price schedule is used, type must match the schedule range variable description.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum SigType {
     #[allow(missing_docs)]
-    Unknown = 0,
+    Unknown,
     #[allow(missing_docs)]
-    Absolute = 1,
+    Absolute,
     #[allow(missing_docs)]
-    Relative = 2,
+    Relative,
     #[allow(missing_docs)]
-    Multiplier = 3,
+    Multiplier,
     #[allow(missing_docs)]
-    Level = 4,
+    Level,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for SigType {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<SigType> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                SigType::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for SigType {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Unknown,
+            1 => Self::Absolute,
+            2 => Self::Relative,
+            3 => Self::Multiplier,
+            4 => Self::Level,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Unknown => 0,
+            Self::Absolute => 1,
+            Self::Relative => 2,
+            Self::Multiplier => 3,
+            Self::Level => 4,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for SigType {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for Pricing {
@@ -152,8 +151,14 @@ impl crate::Model for Pricing {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m125
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

@@ -152,9 +152,13 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
             fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
                 models.#m_name
             }
-            fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+            fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
                 let (_, model) = Self::parse_group(data)?;
-                Ok(model)
+                if model.has_invalid_points() {
+                    Err(crate::ParseError::InvalidPointData(crate::InvalidPointData { model }))
+                } else {
+                    Ok(model)
+                }
             }
         }
     };
@@ -232,7 +236,49 @@ fn gen_group(
             }
         });
 
+    let point_validation_checks = points
+        .iter()
+        .filter(|point| point.has_invalid_value())
+        .map(|point| {
+            let field_name = format_ident!("{}", snake_case(&point.name));
+            let const_name = format_ident!("{}", shouty_snake_case(&point.name));
+            quote! {
+                Self::#const_name.is_invalid(&self.#field_name)
+            }
+        })
+        .collect::<Vec<_>>();
+
     let groups = group.groups.iter().collect::<Vec<_>>();
+
+    let subgroup_validation_calls = groups
+        .iter()
+        .map(|group| {
+            let field_name = format_ident!("{}", snake_case(&group.name));
+            if group.count.is_one() {
+                quote! {
+                    self.#field_name.has_invalid_points()
+                }
+            } else {
+                quote! {
+                    self.#field_name.iter().any(|group| group.has_invalid_points())
+                }
+            }
+        })
+        .collect::<Vec<_>>();
+
+    let validation_checks = point_validation_checks
+        .iter()
+        .chain(subgroup_validation_calls.iter())
+        .cloned()
+        .collect::<Vec<_>>();
+
+    let invalid_points_impl = if validation_checks.is_empty() {
+        quote! { false }
+    } else {
+        quote! {
+            #(#validation_checks)||*
+        }
+    };
 
     let group_fields = groups.iter().map(|group| {
         let field_name = format_ident!("{}", snake_case(&group.name));
@@ -282,6 +328,9 @@ fn gen_group(
         #[allow(missing_docs)]
         impl #group_name {
             #(#model_impl_consts)*
+            fn has_invalid_points(&self) -> bool {
+                #invalid_points_impl
+            }
         }
     };
 
@@ -633,6 +682,15 @@ fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
     };
     let variants = point.symbols.iter().map(|symbol| {
         let variant_name = format_ident!("{}", upper_camel_case(&symbol.name));
+        let variant_doc = doc_to_ts(&symbol.doc.to_doc_string());
+        quote! {
+            #variant_doc
+            #variant_name,
+        }
+        .into_token_stream()
+    });
+    let from_repr_arms = point.symbols.iter().map(|symbol| {
+        let variant_name = format_ident!("{}", upper_camel_case(&symbol.name));
         let variant_value = match point.r#type {
             PointType::Enum16 => {
                 Literal::u16_unsuffixed(symbol.value.as_u64().unwrap().try_into().unwrap())
@@ -642,46 +700,56 @@ fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
             }
             _ => unimplemented!(),
         };
-        let variant_doc = doc_to_ts(&symbol.doc.to_doc_string());
         quote! {
-            #variant_doc
-            #variant_name = #variant_value,
+            #variant_value => Self::#variant_name,
         }
-        .into_token_stream()
+    });
+    let to_repr_arms = point.symbols.iter().map(|symbol| {
+        let variant_name = format_ident!("{}", upper_camel_case(&symbol.name));
+        let variant_value = match point.r#type {
+            PointType::Enum16 => {
+                Literal::u16_unsuffixed(symbol.value.as_u64().unwrap().try_into().unwrap())
+            }
+            PointType::Enum32 => {
+                Literal::u32_unsuffixed(symbol.value.as_u64().unwrap().try_into().unwrap())
+            }
+            _ => unimplemented!(),
+        };
+        quote! {
+            Self::#variant_name => #variant_value,
+        }
     });
     let doc = doc_to_ts(&point.doc.to_doc_string());
     quote!(
         #doc
-        #[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+        #[derive(Copy, Clone, Debug, Eq, PartialEq)]
         #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-        #[repr(#repr)]
         pub enum #name {
             #(#variants)*
+            /// Raw enum value not defined by the SunSpec model.
+            Invalid(#repr),
         }
-        impl crate::Value for #name {
-            fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-                let value = #repr::decode(data)?;
-                Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-            }
-            fn encode(self) -> Box<[u16]> {
-                (self as #repr).encode()
-            }
-        }
-        impl crate::Value for Option<#name> {
-            fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-                let value = #repr::decode(data)?;
-                if value != #invalid {
-                    Ok(Some(#name::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?))
-                } else {
-                    Ok(None)
+        impl crate::EnumValue for #name {
+            type Repr = #repr;
+            const INVALID: Self::Repr = #invalid;
+            fn from_repr(value: Self::Repr) -> Self {
+                match value {
+                    #(#from_repr_arms)*
+                    value => Self::Invalid(value),
                 }
             }
-            fn encode(self) -> Box<[u16]> {
-                if let Some(value) = self {
-                    value.encode()
-                } else {
-                    #invalid.encode()
+            fn to_repr(self) -> Self::Repr {
+                match self {
+                    #(#to_repr_arms)*
+                    Self::Invalid(value) => value,
                 }
+            }
+        }
+        impl crate::FixedSize for #name {
+            const SIZE: u16 = #size;
+            const INVALID: Self = Self::Invalid(#invalid);
+            fn is_invalid(&self) -> bool {
+                matches!(self, Self::Invalid(_))
             }
         }
     )
@@ -731,21 +799,11 @@ fn gen_bitfield(point: &Point, prefix: &str) -> TokenStream {
                 self.bits().encode()
             }
         }
-        impl crate::Value for Option<#name> {
-            fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-                let value = #repr::decode(data)?;
-                if value != #invalid {
-                    Ok(Some(#name::from_bits_retain(value)))
-                } else {
-                    Ok(None)
-                }
-            }
-            fn encode(self) -> Box<[u16]> {
-                if let Some(value) = self {
-                    value.encode()
-                } else {
-                    #invalid.encode()
-                }
+        impl crate::FixedSize for #name {
+            const SIZE: u16 = #size;
+            const INVALID: Self = Self::from_bits_retain(#invalid);
+            fn is_invalid(&self) -> bool {
+                self.bits() == #invalid
             }
         }
     }

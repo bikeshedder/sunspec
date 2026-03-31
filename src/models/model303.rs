@@ -11,7 +11,11 @@ pub struct BomTemp {
     pub temp: Vec<Temp>,
 }
 #[allow(missing_docs)]
-impl BomTemp {}
+impl BomTemp {
+    fn has_invalid_points(&self) -> bool {
+        self.temp.iter().any(|group| group.has_invalid_points())
+    }
+}
 impl crate::Group for BomTemp {
     const LEN: u16 = 0;
 }
@@ -34,6 +38,9 @@ pub struct Temp {
 #[allow(missing_docs)]
 impl Temp {
     pub const TMP_BOM: crate::Point<Self, i16> = crate::Point::new(0, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::TMP_BOM.is_invalid(&self.tmp_bom)
+    }
 }
 impl crate::Group for Temp {
     const LEN: u16 = 1;
@@ -71,8 +78,14 @@ impl crate::Model for BomTemp {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m303
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

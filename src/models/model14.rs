@@ -48,6 +48,12 @@ impl Model14 {
     pub const PORT: crate::Point<Self, u16> = crate::Point::new(27, 1, true);
     pub const USER: crate::Point<Self, Option<String>> = crate::Point::new(28, 12, true);
     pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(40, 12, true);
+    fn has_invalid_points(&self) -> bool {
+        Self::CAP.is_invalid(&self.cap)
+            || Self::CFG.is_invalid(&self.cfg)
+            || Self::TYP.is_invalid(&self.typ)
+            || Self::PORT.is_invalid(&self.port)
+    }
 }
 impl crate::Group for Model14 {
     const LEN: u16 = 52;
@@ -87,21 +93,11 @@ impl crate::Value for Cap {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Cap> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(Cap::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for Cap {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 bitflags::bitflags! {
@@ -118,21 +114,11 @@ impl crate::Value for Typ {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Typ> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(Typ::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for Typ {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 impl crate::Model for Model14 {
@@ -140,8 +126,14 @@ impl crate::Model for Model14 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m14
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

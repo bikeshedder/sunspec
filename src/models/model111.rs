@@ -167,6 +167,18 @@ impl InverterSinglePhaseFloat {
     pub const EVT_VND2: crate::Point<Self, Option<EvtVnd2>> = crate::Point::new(54, 2, false);
     pub const EVT_VND3: crate::Point<Self, Option<EvtVnd3>> = crate::Point::new(56, 2, false);
     pub const EVT_VND4: crate::Point<Self, Option<EvtVnd4>> = crate::Point::new(58, 2, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::A.is_invalid(&self.a)
+            || Self::APH_A.is_invalid(&self.aph_a)
+            || Self::PH_VPH_A.is_invalid(&self.ph_vph_a)
+            || Self::W.is_invalid(&self.w)
+            || Self::HZ.is_invalid(&self.hz)
+            || Self::WH.is_invalid(&self.wh)
+            || Self::TMP_CAB.is_invalid(&self.tmp_cab)
+            || Self::ST.is_invalid(&self.st)
+            || Self::EVT1.is_invalid(&self.evt1)
+            || Self::EVT2.is_invalid(&self.evt2)
+    }
 }
 impl crate::Group for InverterSinglePhaseFloat {
     const LEN: u16 = 60;
@@ -215,53 +227,63 @@ impl InverterSinglePhaseFloat {
 /// Operating State
 ///
 /// Enumerated value.  Operating state
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum St {
     #[allow(missing_docs)]
-    GgOff = 1,
+    GgOff,
     #[allow(missing_docs)]
-    GgSleeping = 2,
+    GgSleeping,
     #[allow(missing_docs)]
-    GgStarting = 3,
+    GgStarting,
     #[allow(missing_docs)]
-    GgMppt = 4,
+    GgMppt,
     #[allow(missing_docs)]
-    GgThrottled = 5,
+    GgThrottled,
     #[allow(missing_docs)]
-    GgShuttingDown = 6,
+    GgShuttingDown,
     #[allow(missing_docs)]
-    GgFault = 7,
+    GgFault,
     #[allow(missing_docs)]
-    GgStandby = 8,
+    GgStandby,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for St {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<St> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                St::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for St {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            1 => Self::GgOff,
+            2 => Self::GgSleeping,
+            3 => Self::GgStarting,
+            4 => Self::GgMppt,
+            5 => Self::GgThrottled,
+            6 => Self::GgShuttingDown,
+            7 => Self::GgFault,
+            8 => Self::GgStandby,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::GgOff => 1,
+            Self::GgSleeping => 2,
+            Self::GgStarting => 3,
+            Self::GgMppt => 4,
+            Self::GgThrottled => 5,
+            Self::GgShuttingDown => 6,
+            Self::GgFault => 7,
+            Self::GgStandby => 8,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for St {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 bitflags::bitflags! {
@@ -289,21 +311,11 @@ impl crate::Value for Evt1 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Evt1> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Evt1::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Evt1 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -320,21 +332,11 @@ impl crate::Value for Evt2 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<Evt2> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(Evt2::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for Evt2 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -351,21 +353,11 @@ impl crate::Value for EvtVnd1 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<EvtVnd1> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(EvtVnd1::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for EvtVnd1 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -382,21 +374,11 @@ impl crate::Value for EvtVnd2 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<EvtVnd2> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(EvtVnd2::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for EvtVnd2 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -413,21 +395,11 @@ impl crate::Value for EvtVnd3 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<EvtVnd3> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(EvtVnd3::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for EvtVnd3 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -444,21 +416,11 @@ impl crate::Value for EvtVnd4 {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<EvtVnd4> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(EvtVnd4::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for EvtVnd4 {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 impl crate::Model for InverterSinglePhaseFloat {
@@ -466,8 +428,14 @@ impl crate::Model for InverterSinglePhaseFloat {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m111
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

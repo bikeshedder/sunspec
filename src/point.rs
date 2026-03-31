@@ -1,7 +1,7 @@
 use std::marker::PhantomData;
 
 use crate::{
-    value::{DecodeError, Value},
+    value::{DecodeError, FixedSize, Value},
     Group,
 };
 
@@ -36,5 +36,12 @@ impl<G: Group, T: Value> Point<G, T> {
             .ok_or(DecodeError::OutOfBounds)?;
         let value = T::decode(slice)?;
         Ok(value)
+    }
+}
+
+impl<G: Group, T: FixedSize> Point<G, T> {
+    /// Check whether a decoded point value is invalid.
+    pub fn is_invalid(&self, value: &T) -> bool {
+        value.is_invalid()
     }
 }

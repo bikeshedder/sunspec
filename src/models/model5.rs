@@ -299,6 +299,99 @@ impl Model5 {
     pub const ROLE: crate::Point<Self, u16> = crate::Point::new(85, 1, true);
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(86, 1, true);
     pub const N: crate::Point<Self, u16> = crate::Point::new(87, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        Self::X.is_invalid(&self.x)
+            || Self::OFF1.is_invalid(&self.off1)
+            || Self::VAL1.is_invalid(&self.val1)
+            || Self::OFF2.is_invalid(&self.off2)
+            || Self::VAL2.is_invalid(&self.val2)
+            || Self::OFF3.is_invalid(&self.off3)
+            || Self::VAL3.is_invalid(&self.val3)
+            || Self::OFF4.is_invalid(&self.off4)
+            || Self::VAL4.is_invalid(&self.val4)
+            || Self::OFF5.is_invalid(&self.off5)
+            || Self::VAL5.is_invalid(&self.val5)
+            || Self::OFF6.is_invalid(&self.off6)
+            || Self::VAL6.is_invalid(&self.val6)
+            || Self::OFF7.is_invalid(&self.off7)
+            || Self::VAL7.is_invalid(&self.val7)
+            || Self::OFF8.is_invalid(&self.off8)
+            || Self::VAL8.is_invalid(&self.val8)
+            || Self::OFF9.is_invalid(&self.off9)
+            || Self::VAL9.is_invalid(&self.val9)
+            || Self::OFF10.is_invalid(&self.off10)
+            || Self::VAL10.is_invalid(&self.val10)
+            || Self::OFF11.is_invalid(&self.off11)
+            || Self::VAL11.is_invalid(&self.val11)
+            || Self::OFF12.is_invalid(&self.off12)
+            || Self::VAL12.is_invalid(&self.val12)
+            || Self::OFF13.is_invalid(&self.off13)
+            || Self::VAL13.is_invalid(&self.val13)
+            || Self::OFF14.is_invalid(&self.off14)
+            || Self::VAL14.is_invalid(&self.val14)
+            || Self::OFF15.is_invalid(&self.off15)
+            || Self::VAL15.is_invalid(&self.val15)
+            || Self::OFF16.is_invalid(&self.off16)
+            || Self::VAL16.is_invalid(&self.val16)
+            || Self::OFF17.is_invalid(&self.off17)
+            || Self::VAL17.is_invalid(&self.val17)
+            || Self::OFF18.is_invalid(&self.off18)
+            || Self::VAL18.is_invalid(&self.val18)
+            || Self::OFF19.is_invalid(&self.off19)
+            || Self::VAL19.is_invalid(&self.val19)
+            || Self::OFF20.is_invalid(&self.off20)
+            || Self::VAL20.is_invalid(&self.val20)
+            || Self::OFF21.is_invalid(&self.off21)
+            || Self::VAL21.is_invalid(&self.val21)
+            || Self::OFF22.is_invalid(&self.off22)
+            || Self::VAL22.is_invalid(&self.val22)
+            || Self::OFF23.is_invalid(&self.off23)
+            || Self::VAL23.is_invalid(&self.val23)
+            || Self::OFF24.is_invalid(&self.off24)
+            || Self::VAL24.is_invalid(&self.val24)
+            || Self::OFF25.is_invalid(&self.off25)
+            || Self::VAL25.is_invalid(&self.val25)
+            || Self::OFF26.is_invalid(&self.off26)
+            || Self::VAL26.is_invalid(&self.val26)
+            || Self::OFF27.is_invalid(&self.off27)
+            || Self::VAL27.is_invalid(&self.val27)
+            || Self::OFF28.is_invalid(&self.off28)
+            || Self::VAL28.is_invalid(&self.val28)
+            || Self::OFF29.is_invalid(&self.off29)
+            || Self::VAL29.is_invalid(&self.val29)
+            || Self::OFF30.is_invalid(&self.off30)
+            || Self::VAL30.is_invalid(&self.val30)
+            || Self::OFF31.is_invalid(&self.off31)
+            || Self::VAL31.is_invalid(&self.val31)
+            || Self::OFF32.is_invalid(&self.off32)
+            || Self::VAL32.is_invalid(&self.val32)
+            || Self::OFF33.is_invalid(&self.off33)
+            || Self::VAL33.is_invalid(&self.val33)
+            || Self::OFF34.is_invalid(&self.off34)
+            || Self::VAL34.is_invalid(&self.val34)
+            || Self::OFF35.is_invalid(&self.off35)
+            || Self::VAL35.is_invalid(&self.val35)
+            || Self::OFF36.is_invalid(&self.off36)
+            || Self::VAL36.is_invalid(&self.val36)
+            || Self::OFF37.is_invalid(&self.off37)
+            || Self::VAL37.is_invalid(&self.val37)
+            || Self::OFF38.is_invalid(&self.off38)
+            || Self::VAL38.is_invalid(&self.val38)
+            || Self::OFF39.is_invalid(&self.off39)
+            || Self::VAL39.is_invalid(&self.val39)
+            || Self::OFF40.is_invalid(&self.off40)
+            || Self::VAL40.is_invalid(&self.val40)
+            || Self::TS.is_invalid(&self.ts)
+            || Self::MS.is_invalid(&self.ms)
+            || Self::SEQ.is_invalid(&self.seq)
+            || Self::ROLE.is_invalid(&self.role)
+            || Self::ALG.is_invalid(&self.alg)
+            || Self::N.is_invalid(&self.n)
+            || self
+                .repeating
+                .iter()
+                .any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for Model5 {
     const LEN: u16 = 88;
@@ -407,43 +500,43 @@ impl Model5 {
 /// Algorithm used to compute the digital signature
 ///
 /// Detail: For future proof
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum Alg {
     /// Detail: For test purposes only
-    None = 0,
+    None,
     #[allow(missing_docs)]
-    AesGmac64 = 1,
+    AesGmac64,
     #[allow(missing_docs)]
-    Ecc256 = 2,
+    Ecc256,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for Alg {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<Alg> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                Alg::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for Alg {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::None,
+            1 => Self::AesGmac64,
+            2 => Self::Ecc256,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::None => 0,
+            Self::AesGmac64 => 1,
+            Self::Ecc256 => 2,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for Alg {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 #[allow(missing_docs)]
@@ -458,6 +551,9 @@ pub struct Repeating {
 #[allow(missing_docs)]
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
+    fn has_invalid_points(&self) -> bool {
+        Self::DS.is_invalid(&self.ds)
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
@@ -495,8 +591,14 @@ impl crate::Model for Model5 {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m5
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

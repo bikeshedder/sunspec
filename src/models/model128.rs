@@ -77,6 +77,13 @@ impl ReactiveCurrent {
     pub const HOLD_TMMS: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
     pub const AR_GRA_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const V_REF_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::AR_GRA_MOD.is_invalid(&self.ar_gra_mod)
+            || Self::AR_GRA_SAG.is_invalid(&self.ar_gra_sag)
+            || Self::AR_GRA_SWELL.is_invalid(&self.ar_gra_swell)
+            || Self::MOD_ENA.is_invalid(&self.mod_ena)
+            || Self::AR_GRA_SF.is_invalid(&self.ar_gra_sf)
+    }
 }
 impl crate::Group for ReactiveCurrent {
     const LEN: u16 = 14;
@@ -107,41 +114,39 @@ impl ReactiveCurrent {
 /// ArGraMod
 ///
 /// Indicates if gradients trend toward zero at the edges of the deadband or trend toward zero at the center of the deadband.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum ArGraMod {
     #[allow(missing_docs)]
-    Edge = 0,
+    Edge,
     #[allow(missing_docs)]
-    Center = 1,
+    Center,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for ArGraMod {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<ArGraMod> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                ArGraMod::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for ArGraMod {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Edge,
+            1 => Self::Center,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Edge => 0,
+            Self::Center => 1,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for ArGraMod {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 bitflags::bitflags! {
@@ -159,21 +164,11 @@ impl crate::Value for ModEna {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<ModEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(ModEna::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for ModEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 impl crate::Model for ReactiveCurrent {
@@ -181,8 +176,14 @@ impl crate::Model for ReactiveCurrent {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m128
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

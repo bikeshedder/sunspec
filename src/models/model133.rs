@@ -34,6 +34,16 @@ impl Schedule {
     pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(2, 1, true);
     pub const N_SCHD: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
     pub const N_PTS: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::ACT_SCHD.is_invalid(&self.act_schd)
+            || Self::MOD_ENA.is_invalid(&self.mod_ena)
+            || Self::N_SCHD.is_invalid(&self.n_schd)
+            || Self::N_PTS.is_invalid(&self.n_pts)
+            || self
+                .repeating
+                .iter()
+                .any(|group| group.has_invalid_points())
+    }
 }
 impl crate::Group for Schedule {
     const LEN: u16 = 6;
@@ -86,21 +96,11 @@ impl crate::Value for ActSchd {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<ActSchd> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u32::decode(data)?;
-        if value != 4294967295u32 {
-            Ok(Some(ActSchd::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            4294967295u32.encode()
-        }
+impl crate::FixedSize for ActSchd {
+    const SIZE: u16 = 2u16;
+    const INVALID: Self = Self::from_bits_retain(4294967295u32);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 4294967295u32
     }
 }
 bitflags::bitflags! {
@@ -118,21 +118,11 @@ impl crate::Value for ModEna {
         self.bits().encode()
     }
 }
-impl crate::Value for Option<ModEna> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535u16 {
-            Ok(Some(ModEna::from_bits_retain(value)))
-        } else {
-            Ok(None)
-        }
-    }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535u16.encode()
-        }
+impl crate::FixedSize for ModEna {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::from_bits_retain(65535u16);
+    fn is_invalid(&self) -> bool {
+        self.bits() == 65535u16
     }
 }
 #[allow(missing_docs)]
@@ -302,6 +292,19 @@ impl Repeating {
     pub const WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(57, 1, true);
     pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(58, 1, true);
     pub const ACT_INDX: crate::Point<Self, u16> = crate::Point::new(59, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        Self::ACT_PTS.is_invalid(&self.act_pts)
+            || Self::STR_TMS.is_invalid(&self.str_tms)
+            || Self::REP_PER.is_invalid(&self.rep_per)
+            || Self::INTV_TYP.is_invalid(&self.intv_typ)
+            || Self::X_TYP.is_invalid(&self.x_typ)
+            || Self::X_SF.is_invalid(&self.x_sf)
+            || Self::Y_TYP.is_invalid(&self.y_typ)
+            || Self::Y_SF.is_invalid(&self.y_sf)
+            || Self::X1.is_invalid(&self.x1)
+            || Self::Y1.is_invalid(&self.y1)
+            || Self::ACT_INDX.is_invalid(&self.act_indx)
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 60;
@@ -368,163 +371,199 @@ impl Repeating {
 /// SchdTyp
 ///
 /// The repetition frequency for time-based schedules: no repeat=0
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum RepeatingIntvTyp {
     #[allow(missing_docs)]
-    Onetime = 0,
+    Onetime,
     #[allow(missing_docs)]
-    Daily = 1,
+    Daily,
     #[allow(missing_docs)]
-    Weekly = 2,
+    Weekly,
     #[allow(missing_docs)]
-    Monthly = 3,
+    Monthly,
     #[allow(missing_docs)]
-    Weekday = 4,
+    Weekday,
     #[allow(missing_docs)]
-    Holiday = 5,
+    Holiday,
     #[allow(missing_docs)]
-    Weekend = 6,
+    Weekend,
     #[allow(missing_docs)]
-    Yearly = 7,
+    Yearly,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for RepeatingIntvTyp {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<RepeatingIntvTyp> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                RepeatingIntvTyp::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for RepeatingIntvTyp {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Onetime,
+            1 => Self::Daily,
+            2 => Self::Weekly,
+            3 => Self::Monthly,
+            4 => Self::Weekday,
+            5 => Self::Holiday,
+            6 => Self::Weekend,
+            7 => Self::Yearly,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Onetime => 0,
+            Self::Daily => 1,
+            Self::Weekly => 2,
+            Self::Monthly => 3,
+            Self::Weekday => 4,
+            Self::Holiday => 5,
+            Self::Weekend => 6,
+            Self::Yearly => 7,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for RepeatingIntvTyp {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// XTyp
 ///
 /// The meaning of the X-values in the array.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum RepeatingXTyp {
     #[allow(missing_docs)]
-    Unset = 0,
+    Unset,
     #[allow(missing_docs)]
-    Time = 1,
+    Time,
     #[allow(missing_docs)]
-    Temp = 2,
+    Temp,
     #[allow(missing_docs)]
-    Price = 3,
+    Price,
     #[allow(missing_docs)]
-    Other = 99,
+    Other,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for RepeatingXTyp {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<RepeatingXTyp> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                RepeatingXTyp::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for RepeatingXTyp {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Unset,
+            1 => Self::Time,
+            2 => Self::Temp,
+            3 => Self::Price,
+            99 => Self::Other,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Unset => 0,
+            Self::Time => 1,
+            Self::Temp => 2,
+            Self::Price => 3,
+            Self::Other => 99,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for RepeatingXTyp {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 /// YTyp
 ///
 /// The meaning of the Y-values in the array.
-#[derive(Copy, Clone, Debug, Eq, PartialEq, strum::FromRepr)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-#[repr(u16)]
 pub enum RepeatingYTyp {
     #[allow(missing_docs)]
-    Unset = 0,
+    Unset,
     #[allow(missing_docs)]
-    WMax = 1,
+    WMax,
     #[allow(missing_docs)]
-    Rsrvd2 = 2,
+    Rsrvd2,
     #[allow(missing_docs)]
-    Pf = 3,
+    Pf,
     #[allow(missing_docs)]
-    Rsrvd4 = 4,
+    Rsrvd4,
     #[allow(missing_docs)]
-    WattPrice = 5,
+    WattPrice,
     #[allow(missing_docs)]
-    VarPrice = 6,
+    VarPrice,
     #[allow(missing_docs)]
-    Rsrvd7 = 7,
+    Rsrvd7,
     #[allow(missing_docs)]
-    VoltVarArray = 8,
+    VoltVarArray,
     #[allow(missing_docs)]
-    WChaGra = 9,
+    WChaGra,
     #[allow(missing_docs)]
-    WDisChaGra = 10,
+    WDisChaGra,
     #[allow(missing_docs)]
-    VArAval = 11,
+    VArAval,
     #[allow(missing_docs)]
-    Schedule = 12,
+    Schedule,
     #[allow(missing_docs)]
-    Other = 99,
+    Other,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
 }
-impl crate::Value for RepeatingYTyp {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        Self::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)
-    }
-    fn encode(self) -> Box<[u16]> {
-        (self as u16).encode()
-    }
-}
-impl crate::Value for Option<RepeatingYTyp> {
-    fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
-        let value = u16::decode(data)?;
-        if value != 65535 {
-            Ok(Some(
-                RepeatingYTyp::from_repr(value).ok_or(crate::DecodeError::InvalidEnumValue)?,
-            ))
-        } else {
-            Ok(None)
+impl crate::EnumValue for RepeatingYTyp {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Unset,
+            1 => Self::WMax,
+            2 => Self::Rsrvd2,
+            3 => Self::Pf,
+            4 => Self::Rsrvd4,
+            5 => Self::WattPrice,
+            6 => Self::VarPrice,
+            7 => Self::Rsrvd7,
+            8 => Self::VoltVarArray,
+            9 => Self::WChaGra,
+            10 => Self::WDisChaGra,
+            11 => Self::VArAval,
+            12 => Self::Schedule,
+            99 => Self::Other,
+            value => Self::Invalid(value),
         }
     }
-    fn encode(self) -> Box<[u16]> {
-        if let Some(value) = self {
-            value.encode()
-        } else {
-            65535.encode()
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Unset => 0,
+            Self::WMax => 1,
+            Self::Rsrvd2 => 2,
+            Self::Pf => 3,
+            Self::Rsrvd4 => 4,
+            Self::WattPrice => 5,
+            Self::VarPrice => 6,
+            Self::Rsrvd7 => 7,
+            Self::VoltVarArray => 8,
+            Self::WChaGra => 9,
+            Self::WDisChaGra => 10,
+            Self::VArAval => 11,
+            Self::Schedule => 12,
+            Self::Other => 99,
+            Self::Invalid(value) => value,
         }
+    }
+}
+impl crate::FixedSize for RepeatingYTyp {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
     }
 }
 impl crate::Model for Schedule {
@@ -532,8 +571,14 @@ impl crate::Model for Schedule {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m133
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }

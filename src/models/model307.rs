@@ -47,6 +47,9 @@ impl BaseMet {
     pub const ELEC_FLD: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
     pub const SUR_WET: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
     pub const SOIL_WET: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
+    fn has_invalid_points(&self) -> bool {
+        false
+    }
 }
 impl crate::Group for BaseMet {
     const LEN: u16 = 11;
@@ -77,8 +80,14 @@ impl crate::Model for BaseMet {
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m307
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::DecodeError> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
         let (_, model) = Self::parse_group(data)?;
-        Ok(model)
+        if model.has_invalid_points() {
+            Err(crate::ParseError::InvalidPointData(
+                crate::InvalidPointData { model },
+            ))
+        } else {
+            Ok(model)
+        }
     }
 }
