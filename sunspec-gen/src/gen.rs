@@ -790,7 +790,6 @@ fn rust_type(point: &Point, prefix: &str) -> TokenStream {
         PointType::Float32 => quote! { f32 },
         PointType::Float64 => quote! { f64 },
         PointType::String => quote! { String },
-        PointType::Sf => quote! { i16 }, // FIXME is this type correct?
         PointType::Pad => unimplemented!(),
         PointType::Ipaddr => quote! { std::net::Ipv4Addr },
         PointType::Ipv6addr => quote! { std::net::Ipv6Addr },
