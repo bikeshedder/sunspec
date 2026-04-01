@@ -155,7 +155,7 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
     };
     let mut state = GenState::default();
     let group = gen_group(
-        &model,
+        model,
         &model.group,
         &count_point_names,
         has_counts,
@@ -321,7 +321,7 @@ fn gen_group(
         let field_name = format_ident!("{}", snake_case(count_field_name));
         let point = find_point(&xmodel.group, count_field_name)
             .unwrap_or_else(|| panic!("missing root count point: {}", count_field_name));
-        let field_type = rust_type(point, &String::new());
+        let field_type = rust_type(point, "");
         quote! {
             #field_name: #field_type,
         }
