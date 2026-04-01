@@ -10,12 +10,12 @@ pub const DEFAULT_WRITE_TIMEOUT: Duration = Duration::from_secs(1);
 
 /// Modbus defines that a maximum of 125 registers can be read
 /// in a single request. See 6.4, Page 16:
-/// See: https://modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf
+/// See: <https://modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf>
 pub const DEFAULT_MAX_READ_LENGTH: u16 = 125;
 
 /// Modbus defines that a maximum 123 registers can be written
 /// in a single request. See 6.12, Page 30:
-/// https://modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf
+/// <https://modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf>
 pub const DEFAULT_MAX_WRITE_LENGTH: u16 = 123;
 
 /// Client configuration
