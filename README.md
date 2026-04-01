@@ -34,7 +34,7 @@ in a safe and convenient way.
 | -------------- | ----------------------------- | ------------------------- | ------- |
 | `tokio`        | Enable tokio-based timeouts   | `tokio`, `tokio/time`     | yes     |
 | `tokio-modbus` | Enable `tokio-modbus` support | `tokio-modbus`, `tokio`   | yes     |
-| `serde`        | Enable `serde` support        | `serde`, `bitflags/serde` | yes     |
+| `serde`        | Enable `serde` support        | `serde`, `bitflags/serde` | no      |
 | `all-models`   | Enable all generated models   | `model1`, `model2`, ...   | yes     |
 | `model<X>`     | Enable generated model `X`    | _none_                    | yes     |
 
