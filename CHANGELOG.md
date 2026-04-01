@@ -12,11 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for nested and repeating groups
 - Add `examples/model712` showing how to read model 712 from a device
+- Add Cargo feature flags for each generated model plus an `all-models` feature
 
 ### Changed
 
-- Update `strum` to version `0.27`
+- Update `strum` to version `0.28`
 - Parsing is now more permissive for enum points: unknown or non-compliant values are preserved as `Invalid(raw)` instead of causing decode failure.
+
+### Fixed
+
+- `tokio-modbus` now implies the `tokio` feature
+- timeout support is now feature gated by the `tokio` feature
 
 ## [0.8.0] - 2024-12-10
 
