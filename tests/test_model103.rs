@@ -1,3 +1,5 @@
+#![cfg(feature = "model103")]
+
 use sunspec::{
     models::model103::{Model103, St},
     Model,

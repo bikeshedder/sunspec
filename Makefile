@@ -12,5 +12,5 @@ update_models:
 
 gen_models:
 	rm -f src/models/*.rs
-	(cd sunspec-gen && cargo run ../models/json ../src/models)
+	(cd sunspec-gen && cargo run ../models/json ../src/models ../Cargo.toml)
 	cargo fmt -- src/models/*.rs

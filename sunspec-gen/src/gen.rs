@@ -7,7 +7,10 @@ use proc_macro2::{Literal, TokenStream};
 use quote::{format_ident, quote, ToTokens};
 use thiserror::Error;
 
-use crate::json::{Group, GroupCount, Model, Point, PointAccess, PointMandatory, PointType};
+use crate::{
+    json::{Group, GroupCount, Model, Point, PointAccess, PointMandatory, PointType},
+    manifest::model_feature_name,
+};
 
 /// This fixes sunspec identifiers which contains things like
 /// `SoC` and `SoH` which causes heck to transform them to `so_c`
@@ -55,7 +58,9 @@ struct GenState {
 pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError> {
     let modules = models.iter().map(|model| {
         let module_identifier = format_ident!("model{}", model.id);
+        let model_feature = Literal::string(&model_feature_name(model.id));
         quote! {
+            #[cfg(feature = #model_feature)]
             pub mod #module_identifier;
         }
     });
@@ -64,53 +69,63 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
         let model_module = format_ident!("model{}", model.id);
         let model_struct = format_ident!("Model{}", model.id);
         let model_doc = doc_to_ts(model.group.doc.label.as_deref().unwrap_or_default());
+        let model_feature = Literal::string(&model_feature_name(model.id));
         quote! {
+            #[cfg(feature = #model_feature)]
             #model_doc
             pub #field_name: crate::ModelAddr<#model_module::#model_struct>,
         }
     });
     let models_struct = quote! {
-        /// This struct contains the addresses of all discovered models.
+        /// This struct contains the addresses of all discovered models enabled via Cargo features.
         #[derive(Debug, Default)]
         #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
         pub struct Models {
             #(#models_fields)*
         }
     };
-    let models_len = models.len();
     let supported_model_ids_code = models.iter().map(|model| {
         let field_name = format_ident!("m{}", model.id);
         let model_id = Literal::u16_unsuffixed(model.id);
+        let model_feature = Literal::string(&model_feature_name(model.id));
         quote! {
-            if self.#field_name.addr != 0 {
-                v.push(#model_id);
+            #[cfg(feature = #model_feature)]
+            {
+                if self.#field_name.addr != 0 {
+                    v.push(#model_id);
+                }
             }
         }
     });
     let set_addr_code = models.iter().map(|model| {
         let field_name = format_ident!("m{}", model.id);
         let model_id = Literal::u16_unsuffixed(model.id);
+        let model_feature = Literal::string(&model_feature_name(model.id));
         quote! {
-            #model_id => self.#field_name.set_addr(addr, len),
+            #[cfg(feature = #model_feature)]
+            #model_id => {
+                self.#field_name.set_addr(_addr, _len);
+                true
+            },
         }
     });
     let models_impl = quote! {
         impl Models {
             /// Returns a list of all supported model ids
             pub fn supported_model_ids(&self) -> Vec<u16> {
-                let mut v = Vec::with_capacity(#models_len);
+                #[allow(unused_mut)]
+                let mut v = Vec::new();
                 #(#supported_model_ids_code)*
                 v
             }
             /// Set address and length of the given model.
             ///
             /// This method is used by the model discovery.
-            pub fn set_addr(&mut self, model_id: u16, addr: u16, len: u16) -> bool {
+            pub fn set_addr(&mut self, model_id: u16, _addr: u16, _len: u16) -> bool {
                 match model_id {
                     #(#set_addr_code)*
-                    _ => { return false; }
+                    _ => false,
                 }
-                true
             }
         }
     };

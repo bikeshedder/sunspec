@@ -1,3 +1,5 @@
+#![cfg(feature = "model712")]
+
 use sunspec::{
     models::model712::{self, Model712},
     Model,

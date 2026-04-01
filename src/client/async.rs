@@ -338,11 +338,20 @@ async fn apply_timeout<T>(
     fut: impl Future<Output = Result<T, ModbusError>>,
     timeout: Option<Duration>,
 ) -> Result<T, ModbusError> {
-    if let Some(timeout) = timeout {
-        tokio::time::timeout(timeout, fut)
-            .await
-            .map_err(|_| ModbusError::Timeout)?
-    } else {
+    #[cfg(feature = "tokio")]
+    {
+        if let Some(timeout) = timeout {
+            tokio::time::timeout(timeout, fut)
+                .await
+                .map_err(|_| ModbusError::Timeout)?
+        } else {
+            fut.await
+        }
+    }
+
+    #[cfg(not(feature = "tokio"))]
+    {
+        let _ = timeout;
         fut.await
     }
 }

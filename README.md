@@ -27,10 +27,13 @@ in a safe and convenient way.
 
 ## Features
 
-| Feature | Description                   | Extra dependencies           | Default |
-| ------- | ----------------------------- | ---------------------------- | ------- |
-| `tokio` | Enable `tokio_modbus` support | `tokio-modbus`, `tokio/time` | yes     |
-| `serde` | Enable `serde` support        | `serde`, `bitflags/serde`    | yes     |
+| Feature        | Description                   | Extra dependencies        | Default |
+| -------------- | ----------------------------- | ------------------------- | ------- |
+| `tokio`        | Enable tokio-based timeouts   | `tokio`, `tokio/time`     | yes     |
+| `tokio-modbus` | Enable `tokio-modbus` support | `tokio-modbus`, `tokio`   | yes     |
+| `serde`        | Enable `serde` support        | `serde`, `bitflags/serde` | yes     |
+| `all-models`   | Enable all generated models   | `model1`, `model2`, ...   | yes     |
+| `model<X>`     | Enable generated model `X`    | _none_                    | yes     |
 
 ## Examples
 
@@ -103,6 +106,8 @@ How does this crate differ from crates like `tokio-sunspec`, `sunspec-models`, `
   points individually.
 
 - All public types are documented. Even the generated models.
+
+- Full support for nested and repeating groups.
 
 ## License
 

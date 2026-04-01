@@ -1,3 +1,5 @@
+#![cfg(feature = "model1")]
+
 use sunspec::{models::model1::Model1, Model};
 
 #[test]
