@@ -21,7 +21,7 @@ pub const DEFAULT_MAX_WRITE_LENGTH: u16 = 123;
 /// Client configuration
 #[derive(Debug, Clone)]
 pub struct Config {
-    /// Addresses to check for the SunS identifier (default: [0, 40000, 50000])
+    /// Addresses to check for the SunS identifier (default: [40000, 0, 50000])
     ///
     /// Some devices don't work according to the specification and don't respond
     /// anything on address 0.
