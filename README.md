@@ -15,8 +15,10 @@ in a safe and convenient way.
 - [x] Panic free
 - [x] All communication is abstracted via traits making it runtime agnostic
 - [x] Supports Modbus TCP and RTU (via [tokio-modbus](https://crates.io/crates/tokio-modbus)).
+- [x] `tokio-modbus` is optional. Custom transports can implement the client trait directly.
 - [x] Implements "Device Information Model Discovery" as
   defined in the SunSpec specification.
+- [x] Compile-time model selection via Cargo features
 - [x] Fully typed models generated from the JSON files contained in the
   [SunSpec models repository](https://github.com/sunspec/models/)
 - [x] Fully typed enums
@@ -24,6 +26,7 @@ in a safe and convenient way.
 - [x] Fully documented. Even the generated models.
 - [x] Reading of complete models in a single request.
 - [x] Supports nested and repeating groups.
+- [x] Unknown or unsupported models are reported during discovery.
 
 ## Features
 
@@ -35,9 +38,21 @@ in a safe and convenient way.
 | `all-models`   | Enable all generated models   | `model1`, `model2`, ...   | yes     |
 | `model<X>`     | Enable generated model `X`    | _none_                    | yes     |
 
+If you only need a small subset of models, disable default features and opt in
+to the features and specific models you need:
+
+```toml
+[dependencies]
+sunspec = { version = "...", default-features = false, features = ["tokio-modbus", "model1", "model103"] }
+```
+
 ## Examples
 
 The `examples` directory in the code repository contains the unabridged code.
+
+- `examples/readme`: minimal end-to-end example used in this README
+- `examples/model103`: reading a common inverter model from a device
+- `examples/model712`: reading a model with nested and repeating groups
 
 ### Example code for accessing data from a three phase inverter using the model 103
 
@@ -108,6 +123,43 @@ How does this crate differ from crates like `tokio-sunspec`, `sunspec-models`, `
 - All public types are documented. Even the generated models.
 
 - Full support for nested and repeating groups.
+
+How do I reduce compile times or binary size?
+
+- Disable default features and enable only the features you need.
+- This is is useful if you interact only with a small number of models.
+
+Do I have to use `tokio-modbus`?
+
+- No. `tokio-modbus` is just the bundled transport adapter.
+- You can provide your own transport by implementing the async client trait and
+  constructing an `AsyncClient` with it.
+- The separate `tokio` feature only controls tokio-based timeout handling.
+
+What happens if a device exposes models this crate does not know?
+
+- Discovery still succeeds.
+- Known models are stored in `device.models`.
+- Unknown model ids, addresses, and lengths are returned in `device.unknown_models`.
+
+Can I scan for all slave IDs on a bus?
+
+- Yes. `AsyncClient::devices()` probes slave ids `0..=255` and returns every
+  device that responds with a valid SunSpec header.
+- If you already know the slave id, use `AsyncClient::device(slave_id)` instead.
+
+How do discovery addresses and timeouts work?
+
+- The default discovery addresses are `[40000, 0, 50000]`.
+- That order avoids unnecessary timeouts on devices that do not behave well at
+  address `0`.
+- You can override discovery addresses and read/write timeouts via `Config`.
+
+How are large models handled?
+
+- Models larger than the Modbus single-request limit are read in chunks and then
+  decoded as one typed model value.
+- Nested groups and repeating groups are handled by the generated model code.
 
 ## License
 
