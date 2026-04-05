@@ -54,6 +54,73 @@ impl Model19 {
     pub const USR_NAM: crate::Point<Self, Option<String>> = crate::Point::new(11, 12, false);
     pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(23, 6, false);
 }
+static MODEL19_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "nam",
+        label: "Name",
+        description: "Interface name",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rte",
+        label: "Rate",
+        description: "Interface baud rate in bits per second",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "bits",
+        label: "Bits",
+        description: "Number of data bits per character",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pty",
+        label: "Parity",
+        description: "Bitmask value.  Parity setting",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dup",
+        label: "Duplex",
+        description: "Enumerated value.  Duplex mode",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "flw",
+        label: "Flow Control",
+        description: "Flow Control Method",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "auth",
+        label: "Authentication",
+        description: "Enumerated value.  Authentication method",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "usr_nam",
+        label: "Username",
+        description: "Username for authentication",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pw",
+        label: "Password",
+        description: "Password for authentication",
+        kind: crate::FieldKind::Point,
+    },
+];
+static MODEL19_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_19",
+    label: "PPP Link",
+    description: "Include this model to configure a Point-to-Point Protocol link",
+    fields: MODEL19_FIELDS,
+};
+impl crate::GroupMeta for Model19 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL19_GROUP_INFO
+    }
+}
 impl crate::Group for Model19 {
     const LEN: u16 = 30;
 }
@@ -244,6 +311,10 @@ impl crate::FixedSize for Auth {
 }
 impl crate::Model for Model19 {
     const ID: u16 = 19;
+    const NAME: &'static str = "model_19";
+    const LABEL: &'static str = "PPP Link";
+    const DESCRIPTION: &'static str =
+        "Include this model to configure a Point-to-Point Protocol link";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m19
     }

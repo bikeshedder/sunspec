@@ -97,6 +97,20 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
             }
         }
     });
+    let discovered_models_code = models.iter().map(|model| {
+        let field_name = format_ident!("m{}", model.id);
+        let model_module = format_ident!("model{}", model.id);
+        let model_struct = format_ident!("Model{}", model.id);
+        quote! {
+            if self.#field_name.addr != 0 {
+                v.push(crate::DiscoveredModel {
+                    info: <#model_module::#model_struct as crate::Model>::info(),
+                    addr: self.#field_name.addr,
+                    len: self.#field_name.len,
+                });
+            }
+        }
+    });
     let set_addr_code = models.iter().map(|model| {
         let field_name = format_ident!("m{}", model.id);
         let model_id = Literal::u16_unsuffixed(model.id);
@@ -116,6 +130,12 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
                 #[allow(unused_mut)]
                 let mut v = Vec::new();
                 #(#supported_model_ids_code)*
+                v
+            }
+            /// Returns all discovered models together with their static metadata.
+            pub fn discovered_models(&self) -> Vec<crate::DiscoveredModel> {
+                let mut v = Vec::with_capacity(#models_len);
+                #(#discovered_models_code)*
                 v
             }
             /// Set address and length of the given model.
@@ -141,6 +161,10 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
     let model_name = format_ident!("Model{}", model.id);
     let m_name = format_ident!("m{}", model.id);
     let model_id = Literal::u16_unsuffixed(model.id);
+    let model_name_lit = Literal::string(&model.group.name);
+    let model_label_lit = Literal::string(model.group.doc.label.as_deref().unwrap_or_default());
+    let model_description_lit =
+        Literal::string(model.group.doc.desc.as_deref().unwrap_or_default());
     let group_name = group_ident(&model.group);
     let count_point_names = find_count_points(model);
     let has_counts = !count_point_names.is_empty();
@@ -164,6 +188,9 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
     let trait_impl = quote! {
         impl crate::Model for #group_name {
             const ID: u16 = #model_id;
+            const NAME: &'static str = #model_name_lit;
+            const LABEL: &'static str = #model_label_lit;
+            const DESCRIPTION: &'static str = #model_description_lit;
             fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
                 models.#m_name
             }
@@ -205,6 +232,11 @@ fn gen_group(
         .insert(group_name_string.clone(), group_signature);
     let group_doc = doc_to_ts(&group.doc.to_doc_string());
     let group_name = format_ident!("{}", group_name_string);
+    let group_info_static = format_ident!("{}_GROUP_INFO", shouty_snake_case(&group_name_string));
+    let group_fields_static = format_ident!("{}_FIELDS", shouty_snake_case(&group_name_string));
+    let group_name_lit = Literal::string(&group.name);
+    let group_label_lit = Literal::string(group.doc.label.as_deref().unwrap_or(&group.name));
+    let group_description_lit = Literal::string(group.doc.desc.as_deref().unwrap_or_default());
     let point_type_prefix = if is_root {
         String::new()
     } else {
@@ -248,6 +280,45 @@ fn gen_group(
         });
 
     let groups = group.groups.iter().collect::<Vec<_>>();
+
+    let point_field_infos = points
+        .iter()
+        .filter(|point| !point.is_padding())
+        .map(|point| {
+            let field_name_lit = Literal::string(&snake_case(&point.name));
+            let field_label_lit =
+                Literal::string(point.doc.label.as_deref().unwrap_or(&point.name));
+            let field_description_lit =
+                Literal::string(point.doc.desc.as_deref().unwrap_or_default());
+            quote! {
+                crate::FieldInfo {
+                    name: #field_name_lit,
+                    label: #field_label_lit,
+                    description: #field_description_lit,
+                    kind: crate::FieldKind::Point,
+                }
+            }
+        });
+
+    let group_field_infos = groups.iter().map(|group| {
+        let field_name_lit = Literal::string(&snake_case(&group.name));
+        let field_label_lit = Literal::string(group.doc.label.as_deref().unwrap_or(&group.name));
+        let field_description_lit = Literal::string(group.doc.desc.as_deref().unwrap_or_default());
+        let group_type = group_ident(group);
+        let field_kind = if group.count.is_one() {
+            quote! { crate::FieldKind::Group(<#group_type as crate::GroupMeta>::group_info) }
+        } else {
+            quote! { crate::FieldKind::RepeatingGroup(<#group_type as crate::GroupMeta>::group_info) }
+        };
+        quote! {
+            crate::FieldInfo {
+                name: #field_name_lit,
+                label: #field_label_lit,
+                description: #field_description_lit,
+                kind: #field_kind,
+            }
+        }
+    });
 
     let group_fields = groups.iter().map(|group| {
         let field_name = format_ident!("{}", snake_case(&group.name));
@@ -297,6 +368,26 @@ fn gen_group(
         #[allow(missing_docs)]
         impl #group_name {
             #(#model_impl_consts)*
+        }
+    };
+
+    let group_meta_impl = quote! {
+        static #group_fields_static: &[crate::FieldInfo] = &[
+            #(#point_field_infos,)*
+            #(#group_field_infos,)*
+        ];
+
+        static #group_info_static: crate::GroupInfo = crate::GroupInfo {
+            name: #group_name_lit,
+            label: #group_label_lit,
+            description: #group_description_lit,
+            fields: #group_fields_static,
+        };
+
+        impl crate::GroupMeta for #group_name {
+            fn group_info() -> &'static crate::GroupInfo {
+                &#group_info_static
+            }
         }
     };
 
@@ -483,6 +574,7 @@ fn gen_group(
         #counts_struct
         #model_struct
         #model_impl
+        #group_meta_impl
         #trait_impl
         #extra
     })

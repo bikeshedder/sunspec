@@ -261,6 +261,314 @@ impl AcSimInterface {
     pub const V_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(1394, 1, false);
     pub const THD_SF: crate::Point<Self, i16> = crate::Point::new(1395, 1, false);
 }
+static AC_SIM_INTERFACE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "phases",
+        label: "Active Phases",
+        description: "Set the number of active phases for the power supply",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "phase_angle",
+        label: "Phase Angle",
+        description: "Phase angle (deg) between phases. 0 for signle phase, 120 for two phase, 120 for three phase.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_nom",
+        label: "Nominal Voltage",
+        description: "Nominal L-N Voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_max",
+        label: "Maximum Voltage",
+        description: "Maximum Voltage Protection Level",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_max",
+        label: "Maximum Current",
+        description: "Maximum Current Protection Level",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "freq",
+        label: "Frequency",
+        description: "Frequency Setpoint",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "output",
+        label: "Output State",
+        description: "AC Output State",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "relay",
+        label: "Relay State",
+        description: "AC Relay State",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "regen",
+        label: "Regeneration State",
+        description: "Regeneration State",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_set",
+        label: "Voltage Setpoint",
+        description: "Voltage Setpoint (all phases)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_set_a",
+        label: "Voltage Setpoint Phase A",
+        description: "Voltage Setpoint Phase A",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_set_b",
+        label: "Voltage Setpoint Phase B",
+        description: "Voltage Setpoint Phase B",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_set_c",
+        label: "Voltage Setpoint Phase C",
+        description: "Voltage Setpoint Phase C",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "freq_slew",
+        label: "Frequency Slew Rate",
+        description: "Frequency Slew Rate",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_slew",
+        label: "Voltage Slew Rate",
+        description: "Voltage Slew Rate",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va",
+        label: "Measured Voltage Phase A",
+        description: "Measured Voltage Phase A",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vb",
+        label: "Measured Voltage Phase B",
+        description: "Measured Voltage Phase B",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vc",
+        label: "Measured Voltage Phase C",
+        description: "Measured Voltage Phase C",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz",
+        label: "Measured Frequency",
+        description: "Measured Frequency",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ia",
+        label: "Measured Current Phase A",
+        description: "Measured Current Phase A",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ib",
+        label: "Measured Current Phase B",
+        description: "Measured Current Phase B",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ic",
+        label: "Measured Current Phase C",
+        description: "Measured Current Phase C",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_har_a",
+        label: "Voltage Harmonics Phase A",
+        description: "Voltage Harmonics Pct, Phase A (comma seperated string for harmonics 1-50)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_har_b",
+        label: "Voltage Harmonics Phase B",
+        description: "Voltage Harmonics Pct, Phase B (comma seperated string for harmonics 1-50)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_har_c",
+        label: "Voltage Harmonics Phase C",
+        description: "Voltage Harmonics Pct, Phase C (comma seperated string for harmonics 1-50)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_har_a",
+        label: "Current Harmonics Phase A",
+        description: "Current Harmonics Pct, Phase A (comma seperated string for harmonics 1-50)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_har_b",
+        label: "Current Harmonics Phase B",
+        description: "Current Harmonics Pct, Phase B (comma seperated string for harmonics 1-50)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_har_c",
+        label: "Current Harmonics Phase C",
+        description: "Current Harmonics Pct, Phase C (comma seperated string for harmonics 1-50)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_int_har_a",
+        label: "Current Interharmonics Phase A",
+        description: "Current Interharmonics Pct, Phase A (comma seperated string for interharmonics 1-50)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_int_har_b",
+        label: "Current Interharmonics Phase B",
+        description: "Current Interharmonics Pct, Phase B (comma seperated string for interharmonics 1-50)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_int_har_c",
+        label: "Current Interharmonics Phase C",
+        description: "Current Interharmonics Pct, Phase C (comma seperated string for interharmonics 1-50)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_thd_a",
+        label: "Voltage THD Phase A",
+        description: "Voltage THD Phase A",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_thd_b",
+        label: "Voltage THD Phase B",
+        description: "Voltage THD Phase B",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_thd_c",
+        label: "Voltage THD Phase C",
+        description: "Voltage THD Phase C",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_thd_a",
+        label: "Current THD Phase A",
+        description: "Current THD Phase A",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_thd_b",
+        label: "Current THD Phase B",
+        description: "Current THD Phase B",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "i_thd_c",
+        label: "Current THD Phase C",
+        description: "Current THD Phase C",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ena_prof",
+        label: "Enable Profile",
+        description: "Start/Stop the AC Profile",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "prof_rslt",
+        label: "Profile Result",
+        description: "Result of last profile operation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_prof",
+        label: "Stored Profile Count",
+        description: "Number of stored profiles supported.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_pt",
+        label: "Max Profile Point Count",
+        description: "Max profile points in the profiles.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "Voltage Scale Factor",
+        description: "Scale factor for voltage points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_sf",
+        label: "Current Scale Factor",
+        description: "Scale factor for current points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms_sf",
+        label: "Time Scale Factor",
+        description: "Scale factor for time points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_sf",
+        label: "Frequency Scale Factor",
+        description: "Scale factor for frequency points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_slew_sf",
+        label: "Frequency Slew Rate Scale Factor",
+        description: "Scale factor for frequency slew rate.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_slew_sf",
+        label: "Voltage Slew Rate Scale Factor",
+        description: "Scale factor for voltage slew rate.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "thd_sf",
+        label: "THD Scale Factor",
+        description: "Scale factor for THD values.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "prof",
+        label: "Stored AC Profiles",
+        description: "Stored AC profile sets.",
+        kind: crate::FieldKind::RepeatingGroup(<Prof as crate::GroupMeta>::group_info),
+    },
+];
+static AC_SIM_INTERFACE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "ACSimInterface",
+    label: "AC Simulator Control Interface",
+    description:
+        "A generic AC simulator/power supply control interface for DER electrical testing.",
+    fields: AC_SIM_INTERFACE_FIELDS,
+};
+impl crate::GroupMeta for AcSimInterface {
+    fn group_info() -> &'static crate::GroupInfo {
+        &AC_SIM_INTERFACE_GROUP_INFO
+    }
+}
 impl crate::Group for AcSimInterface {
     const LEN: u16 = 1396;
 }
@@ -556,6 +864,37 @@ impl Prof {
     pub const NAME: crate::Point<Self, Option<String>> = crate::Point::new(0, 32, true);
     pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(32, 1, true);
 }
+static PROF_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "name",
+        label: "Profile Name",
+        description: "Profile name.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "act_pt",
+        label: "Active Points",
+        description: "Number of active points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pt",
+        label: "Stored AC Profile Points",
+        description: "Stored AC profile points.",
+        kind: crate::FieldKind::RepeatingGroup(<Pt as crate::GroupMeta>::group_info),
+    },
+];
+static PROF_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "Prof",
+    label: "Stored AC Profiles",
+    description: "Stored AC profile sets.",
+    fields: PROF_FIELDS,
+};
+impl crate::GroupMeta for Prof {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PROF_GROUP_INFO
+    }
+}
 impl crate::Group for Prof {
     const LEN: u16 = 33;
 }
@@ -642,6 +981,67 @@ impl Pt {
     pub const PHASE_ANGLE_B: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
     pub const PHASE_ANGLE_C: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
 }
+static PT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "tms",
+        label: "Profile Time",
+        description: "Profile time.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va",
+        label: "Voltage Point",
+        description: "Profile voltage phase A point in Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vb",
+        label: "Voltage Point Phase B",
+        description: "Profile voltage phase B point in Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "vc",
+        label: "Voltage Point Phase C",
+        description: "Profile voltage phase C point in Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz",
+        label: "Frequency Point",
+        description: "Profile frequency point in Hz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "phase_angle_a",
+        label: "Phase Angle A",
+        description: "Profile phase A angle in degrees.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "phase_angle_b",
+        label: "Phase Angle B",
+        description: "Profile phase B angle in degrees.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "phase_angle_c",
+        label: "Phase Angle C",
+        description: "Profile phase C angle in degrees.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static PT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "Pt",
+    label: "Stored AC Profile Points",
+    description: "Stored AC profile points.",
+    fields: PT_FIELDS,
+};
+impl crate::GroupMeta for Pt {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PT_GROUP_INFO
+    }
+}
 impl crate::Group for Pt {
     const LEN: u16 = 8;
 }
@@ -679,6 +1079,10 @@ impl Pt {
 }
 impl crate::Model for AcSimInterface {
     const ID: u16 = 64411;
+    const NAME: &'static str = "ACSimInterface";
+    const LABEL: &'static str = "AC Simulator Control Interface";
+    const DESCRIPTION: &'static str =
+        "A generic AC simulator/power supply control interface for DER electrical testing.";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64411
     }

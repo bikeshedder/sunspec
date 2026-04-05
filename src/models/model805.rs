@@ -149,6 +149,183 @@ impl LithiumIonModule {
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(40, 1, false);
     pub const TMP_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
 }
+static LITHIUM_ION_MODULE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "str_idx",
+        label: "String Index",
+        description: "Index of the string containing the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_idx",
+        label: "Module Index",
+        description: "Index of the module within the string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_cell",
+        label: "Module Cell Count",
+        description: "Count of all cells in the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc",
+        label: "Module SoC",
+        description: "Module state of charge, expressed as a percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "do_d",
+        label: "Depth of Discharge",
+        description: "Depth of discharge for the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soh",
+        label: "Module SoH",
+        description: "Module state of health, expressed as a percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_cyc",
+        label: "Cycle Count",
+        description: "Count of cycles executed.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v",
+        label: "Module Voltage",
+        description: "Voltage of the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_max",
+        label: "Max Cell Voltage",
+        description: "Maximum voltage for all cells in the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_max_cell",
+        label: "Max Cell Voltage Cell",
+        description: "Cell with the maximum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_min",
+        label: "Min Cell Voltage",
+        description: "Minimum voltage for all cells in the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_min_cell",
+        label: "Min Cell Voltage Cell",
+        description: "Cell with the minimum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_avg",
+        label: "Average Cell Voltage",
+        description: "Average voltage for all cells in the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_tmp_max",
+        label: "Max Cell Temperature",
+        description: "Maximum temperature for all cells in the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_tmp_max_cell",
+        label: "Max Cell Temperature Cell",
+        description: "Cell with the maximum cell temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_tmp_min",
+        label: "Min Cell Temperature",
+        description: "Minimum temperature for all cells in the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_tmp_min_cell",
+        label: "Min Cell Temperature Cell",
+        description: "Cell with the minimum cell temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_tmp_avg",
+        label: "Average Cell Temperature",
+        description: "Average temperature for all cells in the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_cell_bal",
+        label: "Balanced Cell Count",
+        description: "Number of cells currently being balanced in the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sn",
+        label: "Serial Number",
+        description: "Serial number for the module.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc_sf",
+        label: "SoC_SF",
+        description: "Scale factor for module state of charge.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soh_sf",
+        label: "SoH_SF",
+        description: "Scale factor for module state of health.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "do_d_sf",
+        label: "DoD_SF",
+        description: "Scale factor for module depth of discharge.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "Scale factor for module voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_sf",
+        label: "CellV_SF",
+        description: "Scale factor for cell voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_sf",
+        label: "Tmp_SF",
+        description: "Scale factor for module temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "lithium_ion_module_cell",
+        label: "lithium-ion-module-cell",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(
+            <LithiumIonModuleCell as crate::GroupMeta>::group_info,
+        ),
+    },
+];
+static LITHIUM_ION_MODULE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "lithium-ion-module",
+    label: "Lithium-Ion Module Model",
+    description: "",
+    fields: LITHIUM_ION_MODULE_FIELDS,
+};
+impl crate::GroupMeta for LithiumIonModule {
+    fn group_info() -> &'static crate::GroupInfo {
+        &LITHIUM_ION_MODULE_GROUP_INFO
+    }
+}
 impl crate::Group for LithiumIonModule {
     const LEN: u16 = 42;
 }
@@ -217,6 +394,37 @@ impl LithiumIonModuleCell {
     pub const CELL_ST: crate::Point<Self, Option<LithiumIonModuleCellCellSt>> =
         crate::Point::new(2, 2, false);
 }
+static LITHIUM_ION_MODULE_CELL_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "cell_v",
+        label: "Cell Voltage",
+        description: "Cell terminal voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_tmp",
+        label: "Cell Temperature",
+        description: "Cell temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_st",
+        label: "Cell Status",
+        description: "Status of the cell.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static LITHIUM_ION_MODULE_CELL_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "lithium-ion-module-cell",
+    label: "lithium-ion-module-cell",
+    description: "",
+    fields: LITHIUM_ION_MODULE_CELL_FIELDS,
+};
+impl crate::GroupMeta for LithiumIonModuleCell {
+    fn group_info() -> &'static crate::GroupInfo {
+        &LITHIUM_ION_MODULE_CELL_GROUP_INFO
+    }
+}
 impl crate::Group for LithiumIonModuleCell {
     const LEN: u16 = 4;
 }
@@ -277,6 +485,9 @@ impl crate::FixedSize for LithiumIonModuleCellCellSt {
 }
 impl crate::Model for LithiumIonModule {
     const ID: u16 = 805;
+    const NAME: &'static str = "lithium-ion-module";
+    const LABEL: &'static str = "Lithium-Ion Module Model";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m805
     }

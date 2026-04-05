@@ -116,6 +116,139 @@ impl Status {
     pub const RIS: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1, false);
     pub const RIS_SF: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
 }
+static STATUS_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "pv_conn",
+        label: "PVConn",
+        description: "PV inverter present/available status. Enumerated value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "stor_conn",
+        label: "StorConn",
+        description: "Storage inverter present/available status. Enumerated value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ecp_conn",
+        label: "ECPConn",
+        description: "ECP connection status: disconnected=0  connected=1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "act_wh",
+        label: "ActWh",
+        description: "AC lifetime active (real) energy output.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "act_v_ah",
+        label: "ActVAh",
+        description: "AC lifetime apparent energy output.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "act_v_arh_q1",
+        label: "ActVArhQ1",
+        description: "AC lifetime reactive energy output in quadrant 1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "act_v_arh_q2",
+        label: "ActVArhQ2",
+        description: "AC lifetime reactive energy output in quadrant 2.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "act_v_arh_q3",
+        label: "ActVArhQ3",
+        description: "AC lifetime negative energy output  in quadrant 3.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "act_v_arh_q4",
+        label: "ActVArhQ4",
+        description: "AC lifetime reactive energy output  in quadrant 4.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_aval",
+        label: "VArAval",
+        description: "Amount of VARs available without impacting watts output.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar_aval_sf",
+        label: "VArAval_SF",
+        description: "Scale factor for available VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_aval",
+        label: "WAval",
+        description: "Amount of Watts available.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_aval_sf",
+        label: "WAval_SF",
+        description: "Scale factor for available Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "st_set_lim_msk",
+        label: "StSetLimMsk",
+        description: "Bit Mask indicating setpoint limit(s) reached.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "st_act_ctl",
+        label: "StActCtl",
+        description: "Bit Mask indicating which inverter controls are currently active.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tm_src",
+        label: "TmSrc",
+        description: "Source of time synchronization.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms",
+        label: "Tms",
+        description: "Seconds since 01-01-2000 00:00 UTC",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rt_st",
+        label: "RtSt",
+        description: "Bit Mask indicating active ride-through status.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ris",
+        label: "Ris",
+        description: "Isolation resistance.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ris_sf",
+        label: "Ris_SF",
+        description: "Scale factor for isolation resistance.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static STATUS_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "status",
+    label: "Measurements_Status",
+    description: "Inverter Controls Extended Measurements and Status ",
+    fields: STATUS_FIELDS,
+};
+impl crate::GroupMeta for Status {
+    fn group_info() -> &'static crate::GroupInfo {
+        &STATUS_GROUP_INFO
+    }
+}
 impl crate::Group for Status {
     const LEN: u16 = 44;
 }
@@ -308,6 +441,9 @@ impl crate::FixedSize for RtSt {
 }
 impl crate::Model for Status {
     const ID: u16 = 122;
+    const NAME: &'static str = "status";
+    const LABEL: &'static str = "Measurements_Status";
+    const DESCRIPTION: &'static str = "Inverter Controls Extended Measurements and Status ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m122
     }

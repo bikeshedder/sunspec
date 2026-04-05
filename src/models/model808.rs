@@ -14,6 +14,31 @@ pub struct FlowBatteryModule {
 impl FlowBatteryModule {
     pub const MODULE_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+static FLOW_BATTERY_MODULE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "module_tbd",
+        label: "Module Points To Be Determined",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "stack",
+        label: "stack",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Stack as crate::GroupMeta>::group_info),
+    },
+];
+static FLOW_BATTERY_MODULE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "flow_battery_module",
+    label: "Flow Battery Module Model",
+    description: "",
+    fields: FLOW_BATTERY_MODULE_FIELDS,
+};
+impl crate::GroupMeta for FlowBatteryModule {
+    fn group_info() -> &'static crate::GroupInfo {
+        &FLOW_BATTERY_MODULE_GROUP_INFO
+    }
+}
 impl crate::Group for FlowBatteryModule {
     const LEN: u16 = 1;
 }
@@ -42,6 +67,23 @@ pub struct Stack {
 #[allow(missing_docs)]
 impl Stack {
     pub const STACK_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+}
+static STACK_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "stack_tbd",
+    label: "Stack Points To Be Determined",
+    description: "",
+    kind: crate::FieldKind::Point,
+}];
+static STACK_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "stack",
+    label: "stack",
+    description: "",
+    fields: STACK_FIELDS,
+};
+impl crate::GroupMeta for Stack {
+    fn group_info() -> &'static crate::GroupInfo {
+        &STACK_GROUP_INFO
+    }
 }
 impl crate::Group for Stack {
     const LEN: u16 = 1;
@@ -78,6 +120,9 @@ impl Stack {
 }
 impl crate::Model for FlowBatteryModule {
     const ID: u16 = 808;
+    const NAME: &'static str = "flow_battery_module";
+    const LABEL: &'static str = "Flow Battery Module Model";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m808
     }

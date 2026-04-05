@@ -308,6 +308,355 @@ impl Battery {
     pub const A_MAX_SF: crate::Point<Self, i16> = crate::Point::new(60, 1, false);
     pub const W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(61, 1, false);
 }
+static BATTERY_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "ah_rtg",
+        label: "Nameplate Charge Capacity",
+        description: "Nameplate charge capacity in amp-hours.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wh_rtg",
+        label: "Nameplate Energy Capacity",
+        description: "Nameplate energy capacity in DC watt-hours.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_cha_rte_max",
+        label: "Nameplate Max Charge Rate",
+        description: "Maximum rate of energy transfer into the storage device in DC watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_dis_cha_rte_max",
+        label: "Nameplate Max Discharge Rate",
+        description: "Maximum rate of energy transfer out of the storage device in DC watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dis_cha_rte",
+        label: "Self Discharge Rate",
+        description: "Self discharge rate.  Percentage of capacity (WHRtg) discharged per day.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc_max",
+        label: "Nameplate Max SoC",
+        description: "Manufacturer maximum state of charge, expressed as a percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc_min",
+        label: "Nameplate Min SoC",
+        description: "Manufacturer minimum state of charge, expressed as a percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc_rsv_max",
+        label: "Max Reserve Percent",
+        description: "Setpoint for maximum reserve for storage as a percentage of the nominal maximum storage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc_rsv_min",
+        label: "Min Reserve Percent",
+        description: "Setpoint for minimum reserve for storage as a percentage of the nominal maximum storage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc",
+        label: "State of Charge",
+        description: "State of charge, expressed as a percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "do_d",
+        label: "Depth of Discharge",
+        description: "Depth of discharge, expressed as a percentage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soh",
+        label: "State of Health",
+        description: "Percentage of battery life remaining.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_cyc",
+        label: "Cycle Count",
+        description: "Number of cycles executed in the battery.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cha_st",
+        label: "Charge Status",
+        description: "Charge status of storage device. Enumeration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "loc_rem_ctl",
+        label: "Control Mode",
+        description: "Battery control mode. Enumeration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hb",
+        label: "Battery Heartbeat",
+        description: "Value is incremented every second with periodic resets to zero.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctrl_hb",
+        label: "Controller Heartbeat",
+        description: "Value is incremented every second with periodic resets to zero.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alm_rst",
+        label: "Alarm Reset",
+        description: "Used to reset any latched alarms.  1 = Reset.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "typ",
+        label: "Battery Type",
+        description: "Type of battery. Enumeration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "state",
+        label: "State of the Battery Bank",
+        description: "State of the battery bank.  Enumeration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "state_vnd",
+        label: "Vendor Battery Bank State",
+        description: "Vendor specific battery bank state.  Enumeration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "warr_dt",
+        label: "Warranty Date",
+        description: "Date the device warranty expires.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt1",
+        label: "Battery Event 1 Bitfield",
+        description: "Alarms and warnings.  Bit flags.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt2",
+        label: "Battery Event 2 Bitfield",
+        description: "Alarms and warnings.  Bit flags.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd1",
+        label: "Vendor Event Bitfield 1",
+        description: "Vendor defined events.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd2",
+        label: "Vendor Event Bitfield 2",
+        description: "Vendor defined events.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v",
+        label: "External Battery Voltage",
+        description: "DC Bus Voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_max",
+        label: "Max Battery Voltage",
+        description: "Instantaneous maximum battery voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_min",
+        label: "Min Battery Voltage",
+        description: "Instantaneous minimum battery voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_max",
+        label: "Max Cell Voltage",
+        description: "Maximum voltage for all cells in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_max_str",
+        label: "Max Cell Voltage String",
+        description: "String containing the cell with maximum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_max_mod",
+        label: "Max Cell Voltage Module",
+        description: "Module containing the cell with maximum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_min",
+        label: "Min Cell Voltage",
+        description: "Minimum voltage for all cells in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_min_str",
+        label: "Min Cell Voltage String",
+        description: "String containing the cell with minimum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_min_mod",
+        label: "Min Cell Voltage Module",
+        description: "Module containing the cell with minimum voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_avg",
+        label: "Average Cell Voltage",
+        description: "Average cell voltage for all cells in the bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a",
+        label: "Total DC Current",
+        description: "Total DC current flowing to/from the battery bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_cha_max",
+        label: "Max Charge Current",
+        description: "Instantaneous maximum DC charge current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_dis_cha_max",
+        label: "Max Discharge Current",
+        description: "Instantaneous maximum DC discharge current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w",
+        label: "Total Power",
+        description: "Total power flowing to/from the battery bank.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "req_inv_state",
+        label: "Inverter State Request",
+        description: "Request from battery to start or stop the inverter.  Enumeration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "req_w",
+        label: "Battery Power Request",
+        description: "AC Power requested by battery.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "set_op",
+        label: "Set Operation",
+        description: "Instruct the battery bank to perform an operation such as connecting.  Enumeration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "set_inv_state",
+        label: "Set Inverter State",
+        description: "Set the current state of the inverter.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ah_rtg_sf",
+        label: "AHRtg_SF",
+        description: "Scale factor for charge capacity.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wh_rtg_sf",
+        label: "WHRtg_SF",
+        description: "Scale factor for energy capacity.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_cha_dis_cha_max_sf",
+        label: "WChaDisChaMax_SF",
+        description: "Scale factor for maximum charge and discharge rate.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dis_cha_rte_sf",
+        label: "DisChaRte_SF",
+        description: "Scale factor for self discharge rate.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soc_sf",
+        label: "SoC_SF",
+        description: "Scale factor for state of charge values.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "do_d_sf",
+        label: "DoD_SF",
+        description: "Scale factor for depth of discharge.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soh_sf",
+        label: "SoH_SF",
+        description: "Scale factor for state of health.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "Scale factor for DC bus voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell_v_sf",
+        label: "CellV_SF",
+        description: "Scale factor for cell voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_sf",
+        label: "A_SF",
+        description: "Scale factor for DC current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_max_sf",
+        label: "AMax_SF",
+        description: "Scale factor for instantaneous DC charge/discharge current.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_sf",
+        label: "W_SF",
+        description: "Scale factor for AC power request.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static BATTERY_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "battery",
+    label: "Battery Base Model",
+    description: "",
+    fields: BATTERY_FIELDS,
+};
+impl crate::GroupMeta for Battery {
+    fn group_info() -> &'static crate::GroupInfo {
+        &BATTERY_GROUP_INFO
+    }
+}
 impl crate::Group for Battery {
     const LEN: u16 = 62;
 }
@@ -855,6 +1204,9 @@ impl crate::FixedSize for SetInvState {
 }
 impl crate::Model for Battery {
     const ID: u16 = 802;
+    const NAME: &'static str = "battery";
+    const LABEL: &'static str = "Battery Base Model";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m802
     }

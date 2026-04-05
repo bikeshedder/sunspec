@@ -4,6 +4,30 @@ use thiserror::Error;
 
 use crate::{DecodeError, Group, Models};
 
+/// Static metadata for a generated SunSpec model type.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct ModelInfo {
+    /// SunSpec model ID.
+    pub id: u16,
+    /// Stable model name from the source JSON.
+    pub name: &'static str,
+    /// Human-readable model label.
+    pub label: &'static str,
+    /// Human-readable model description.
+    pub description: &'static str,
+}
+
+/// A discovered model together with its static metadata.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct DiscoveredModel {
+    /// Static metadata for the discovered model.
+    pub info: ModelInfo,
+    /// The discovered address of this model.
+    pub addr: u16,
+    /// The discovered length of this model.
+    pub len: u16,
+}
+
 /// Model data that decoded successfully but failed semantic validation.
 #[derive(Debug, Error)]
 #[error("Invalid point data")]
@@ -28,10 +52,25 @@ pub enum ParseError<T: Debug> {
 pub trait Model: Sized + Group + Debug {
     /// Model ID
     const ID: u16;
+    /// Stable model name from the source JSON.
+    const NAME: &'static str;
+    /// Human-readable model label.
+    const LABEL: &'static str;
+    /// Human-readable model description.
+    const DESCRIPTION: &'static str;
     /// Get model address from discovered models struct
     fn addr(models: &Models) -> ModelAddr<Self>;
     /// Parse model data from a given u16 slice
     fn parse(data: &[u16]) -> Result<Self, ParseError<Self>>;
+    /// Static metadata for this model type.
+    fn info() -> ModelInfo {
+        ModelInfo {
+            id: Self::ID,
+            name: Self::NAME,
+            label: Self::LABEL,
+            description: Self::DESCRIPTION,
+        }
+    }
 }
 
 /// This structure is used to store the address of

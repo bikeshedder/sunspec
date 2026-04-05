@@ -58,6 +58,73 @@ impl FreqWattParam {
     pub const HZ_STR_STOP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
 }
+static FREQ_WATT_PARAM_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "w_gra",
+        label: "WGra",
+        description: "The slope of the reduction in the maximum allowed watts output as a function of frequency.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_str",
+        label: "HzStr",
+        description: "The frequency deviation from nominal frequency (ECPNomHz) at which a snapshot of the instantaneous power output is taken to act as the CAPPED power level (PM) and above which reduction in power output occurs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_stop",
+        label: "HzStop",
+        description: "The frequency deviation from nominal frequency (ECPNomHz) at which curtailed power output may return to normal and the cap on the power level value is removed.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hys_ena",
+        label: "HysEna",
+        description: "Enable hysteresis",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_ena",
+        label: "ModEna",
+        description: "Is Parameterized Frequency-Watt control active.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_stop_w_gra",
+        label: "HzStopWGra",
+        description: "The maximum time-based rate of change at which power output returns to normal after having been capped by an over frequency event.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_gra_sf",
+        label: "WGra_SF",
+        description: "Scale factor for output gradient.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_str_stop_sf",
+        label: "HzStrStop_SF",
+        description: "Scale factor for frequency deviations.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_inc_dec_sf",
+        label: "RmpIncDec_SF",
+        description: "Scale factor for increment and decrement ramps.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static FREQ_WATT_PARAM_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "freq_watt_param",
+    label: "Freq-Watt Param",
+    description: "Parameterized Frequency-Watt ",
+    fields: FREQ_WATT_PARAM_FIELDS,
+};
+impl crate::GroupMeta for FreqWattParam {
+    fn group_info() -> &'static crate::GroupInfo {
+        &FREQ_WATT_PARAM_GROUP_INFO
+    }
+}
 impl crate::Group for FreqWattParam {
     const LEN: u16 = 10;
 }
@@ -129,6 +196,9 @@ impl crate::FixedSize for ModEna {
 }
 impl crate::Model for FreqWattParam {
     const ID: u16 = 127;
+    const NAME: &'static str = "freq_watt_param";
+    const LABEL: &'static str = "Freq-Watt Param";
+    const DESCRIPTION: &'static str = "Parameterized Frequency-Watt ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m127
     }

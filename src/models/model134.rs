@@ -65,6 +65,85 @@ impl FreqWatt {
     pub const W_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
 }
+static FREQ_WATT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_crv",
+        label: "ActCrv",
+        description: "Index of active curve. 0=no active curve.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_ena",
+        label: "ModEna",
+        description: "Is curve-based Frequency-Watt control active.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "win_tms",
+        label: "WinTms",
+        description: "Time window for freq-watt change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_tms",
+        label: "RvrtTms",
+        description: "Timeout period for freq-watt curve selection.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_tms",
+        label: "RmpTms",
+        description: "Ramp time for moving from current mode to new mode.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_crv",
+        label: "NCrv",
+        description: "Number of curves supported (recommend min. 4).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_pt",
+        label: "NPt",
+        description: "Number of curve points supported (maximum of 20).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_sf",
+        label: "Hz_SF",
+        description: "Scale factor for frequency.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_sf",
+        label: "W_SF",
+        description: "Scale factor for percent WRef.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_inc_dec_sf",
+        label: "RmpIncDec_SF",
+        description: "Scale factor for increment and decrement ramps.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "curve",
+        label: "curve",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Curve as crate::GroupMeta>::group_info),
+    },
+];
+static FREQ_WATT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "freq_watt",
+    label: "Freq-Watt Crv",
+    description: "Curve-Based Frequency-Watt ",
+    fields: FREQ_WATT_FIELDS,
+};
+impl crate::GroupMeta for FreqWatt {
+    fn group_info() -> &'static crate::GroupInfo {
+        &FREQ_WATT_GROUP_INFO
+    }
+}
 impl crate::Group for FreqWatt {
     const LEN: u16 = 10;
 }
@@ -378,6 +457,325 @@ impl Curve {
     pub const W_REF_STOP_HZ: crate::Point<Self, Option<u16>> = crate::Point::new(56, 1, true);
     pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(57, 1, false);
 }
+static CURVE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_pt",
+        label: "ActPt",
+        description: "Number of active points in array.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz1",
+        label: "Hz1",
+        description: "Point 1 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w1",
+        label: "W1",
+        description: "Point 1 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz2",
+        label: "Hz2",
+        description: "Point 2 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w2",
+        label: "W2",
+        description: "Point 2 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz3",
+        label: "Hz3",
+        description: "Point 3 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w3",
+        label: "W3",
+        description: "Point 3 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz4",
+        label: "Hz4",
+        description: "Point 4 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w4",
+        label: "W4",
+        description: "Point 4 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz5",
+        label: "Hz5",
+        description: "Point 5 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w5",
+        label: "W5",
+        description: "Point 5 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz6",
+        label: "Hz6",
+        description: "Point 6 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w6",
+        label: "W6",
+        description: "Point 6 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz7",
+        label: "Hz7",
+        description: "Point 7 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w7",
+        label: "W7",
+        description: "Point 7 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz8",
+        label: "Hz8",
+        description: "Point 8 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w8",
+        label: "W8",
+        description: "Point 8 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz9",
+        label: "Hz9",
+        description: "Point 9 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w9",
+        label: "W9",
+        description: "Point 9 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz10",
+        label: "Hz10",
+        description: "Point 10 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w10",
+        label: "W10",
+        description: "Point 10 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz11",
+        label: "Hz11",
+        description: "Point 11 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w11",
+        label: "W11",
+        description: "Point 11 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz12",
+        label: "Hz12",
+        description: "Point 12 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w12",
+        label: "W12",
+        description: "Point 12 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz13",
+        label: "Hz13",
+        description: "Point 13 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w13",
+        label: "W13",
+        description: "Point 13 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz14",
+        label: "Hz14",
+        description: "Point 14 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w14",
+        label: "W14",
+        description: "Point 14 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz15",
+        label: "Hz15",
+        description: "Point 15 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w15",
+        label: "W15",
+        description: "Point 15 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz16",
+        label: "Hz16",
+        description: "Point 16 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w16",
+        label: "W16",
+        description: "Point 16 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz17",
+        label: "Hz17",
+        description: "Point 17 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w17",
+        label: "W17",
+        description: "Point 17 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz18",
+        label: "Hz18",
+        description: "Point 18 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w18",
+        label: "W18",
+        description: "Point 18 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz19",
+        label: "Hz19",
+        description: "Point 19 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w19",
+        label: "W19",
+        description: "Point 19 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz20",
+        label: "Hz20",
+        description: "Point 20 Hertz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w20",
+        label: "W20",
+        description: "Point 20 Watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "crv_nam",
+        label: "CrvNam",
+        description: "Optional description for curve. (Max 16 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_pt1_tms",
+        label: "RmpPT1Tms",
+        description: "The time of the PT1 in seconds (time to accomplish a change of 95%).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_dec_tmm",
+        label: "RmpDecTmm",
+        description: "The maximum rate at which the power value may be reduced in response to changes in the frequency value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_inc_tmm",
+        label: "RmpIncTmm",
+        description: "The maximum rate at which the power value may be increased in response to changes in the frequency value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_rs_up",
+        label: "RmpRsUp",
+        description: "The maximum rate at which the power may be increased after releasing the frozen value of snap shot function. ",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "snpt_w",
+        label: "SnptW",
+        description: "1=enable snapshot/capture mode",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_ref",
+        label: "WRef",
+        description: "Reference active power (default = WMax).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_ref_str_hz",
+        label: "WRefStrHz",
+        description: "Frequency deviation from nominal frequency at the time of the snapshot to start constraining power output.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_ref_stop_hz",
+        label: "WRefStopHz",
+        description: "Frequency deviation from nominal frequency at which to release the power output.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "read_only",
+        label: "ReadOnly",
+        description: "Enumerated value indicates if curve is read-only or can be modified.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static CURVE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "curve",
+    label: "curve",
+    description: "",
+    fields: CURVE_FIELDS,
+};
+impl crate::GroupMeta for Curve {
+    fn group_info() -> &'static crate::GroupInfo {
+        &CURVE_GROUP_INFO
+    }
+}
 impl crate::Group for Curve {
     const LEN: u16 = 58;
 }
@@ -522,6 +920,9 @@ impl crate::FixedSize for CurveReadOnly {
 }
 impl crate::Model for FreqWatt {
     const ID: u16 = 134;
+    const NAME: &'static str = "freq_watt";
+    const LABEL: &'static str = "Freq-Watt Crv";
+    const DESCRIPTION: &'static str = "Curve-Based Frequency-Watt ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m134
     }

@@ -64,6 +64,91 @@ impl StringCombinerCurrent {
     pub const DCV: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, false);
 }
+static STRING_COMBINER_CURRENT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "dca_sf",
+        label: "DCA_SF",
+        description: "Current scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_ahr_sf",
+        label: "DCAhr_SF",
+        description: "Amp-hour scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcv_sf",
+        label: "DCV_SF",
+        description: "Voltage scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dca_max",
+        label: "Rating",
+        description: "Maximum DC Current Rating",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n",
+        label: "N",
+        description: "Number of Inputs",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt",
+        label: "Event",
+        description: "Bitmask value.  Events",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt_vnd",
+        label: "Vendor Event",
+        description: "Bitmask value.  Vendor defined events",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dca",
+        label: "Amps",
+        description: "Total measured current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_ahr",
+        label: "Amp-hours",
+        description: "Total metered Amp-hours",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcv",
+        label: "Voltage",
+        description: "Output Voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp",
+        label: "Temp",
+        description: "Internal operating temperature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "string",
+        label: "string",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<String as crate::GroupMeta>::group_info),
+    },
+];
+static STRING_COMBINER_CURRENT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "string_combiner_current",
+    label: "String Combiner (Current)",
+    description: "A basic string combiner",
+    fields: STRING_COMBINER_CURRENT_FIELDS,
+};
+impl crate::GroupMeta for StringCombinerCurrent {
+    fn group_info() -> &'static crate::GroupInfo {
+        &STRING_COMBINER_CURRENT_GROUP_INFO
+    }
+}
 impl crate::Group for StringCombinerCurrent {
     const LEN: u16 = 14;
 }
@@ -181,6 +266,49 @@ impl String {
     pub const IN_DCA: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
     pub const IN_DC_AHR: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2, false);
 }
+static STRING_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "in_id",
+        label: "ID",
+        description: "Uniquely identifies this input set",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_evt",
+        label: "Input Event",
+        description: "String Input Event Flags",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_evt_vnd",
+        label: "Input Event Vendor",
+        description: "String Input Vendor Event Flags",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_dca",
+        label: "Amps",
+        description: "String Input Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "in_dc_ahr",
+        label: "Amp-hours",
+        description: "String Input Amp-Hours",
+        kind: crate::FieldKind::Point,
+    },
+];
+static STRING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "string",
+    label: "string",
+    description: "",
+    fields: STRING_FIELDS,
+};
+impl crate::GroupMeta for String {
+    fn group_info() -> &'static crate::GroupInfo {
+        &STRING_GROUP_INFO
+    }
+}
 impl crate::Group for String {
     const LEN: u16 = 8;
 }
@@ -275,6 +403,9 @@ impl crate::FixedSize for StringInEvtVnd {
 }
 impl crate::Model for StringCombinerCurrent {
     const ID: u16 = 401;
+    const NAME: &'static str = "string_combiner_current";
+    const LABEL: &'static str = "String Combiner (Current)";
+    const DESCRIPTION: &'static str = "A basic string combiner";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m401
     }

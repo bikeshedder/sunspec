@@ -12,6 +12,23 @@ pub struct BomTemp {
 }
 #[allow(missing_docs)]
 impl BomTemp {}
+static BOM_TEMP_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "temp",
+    label: "temp",
+    description: "",
+    kind: crate::FieldKind::RepeatingGroup(<Temp as crate::GroupMeta>::group_info),
+}];
+static BOM_TEMP_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "bom_temp",
+    label: "Back of Module Temperature Model",
+    description: "Include to support variable number of  back of module temperature measurements",
+    fields: BOM_TEMP_FIELDS,
+};
+impl crate::GroupMeta for BomTemp {
+    fn group_info() -> &'static crate::GroupInfo {
+        &BOM_TEMP_GROUP_INFO
+    }
+}
 impl crate::Group for BomTemp {
     const LEN: u16 = 0;
 }
@@ -36,6 +53,23 @@ pub struct Temp {
 #[allow(missing_docs)]
 impl Temp {
     pub const TMP_BOM: crate::Point<Self, i16> = crate::Point::new(0, 1, false);
+}
+static TEMP_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "tmp_bom",
+    label: "Temp",
+    description: "Back of module temperature measurement",
+    kind: crate::FieldKind::Point,
+}];
+static TEMP_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "temp",
+    label: "temp",
+    description: "",
+    fields: TEMP_FIELDS,
+};
+impl crate::GroupMeta for Temp {
+    fn group_info() -> &'static crate::GroupInfo {
+        &TEMP_GROUP_INFO
+    }
 }
 impl crate::Group for Temp {
     const LEN: u16 = 1;
@@ -72,6 +106,10 @@ impl Temp {
 }
 impl crate::Model for BomTemp {
     const ID: u16 = 303;
+    const NAME: &'static str = "bom_temp";
+    const LABEL: &'static str = "Back of Module Temperature Model";
+    const DESCRIPTION: &'static str =
+        "Include to support variable number of  back of module temperature measurements";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m303
     }

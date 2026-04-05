@@ -218,6 +218,379 @@ impl Model4 {
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(58, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(59, 1, false);
 }
+static MODEL4_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "rq_seq",
+        label: "Request Sequence",
+        description: "Sequence number from the request",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sts",
+        label: "Status",
+        description: "Status of last read operation",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x",
+        label: "X",
+        description: "Number of values from the request",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val1",
+        label: "Value1",
+        description: "Copy of value from register Off1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val2",
+        label: "Val2",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val3",
+        label: "Val3",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val4",
+        label: "Val4",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val5",
+        label: "Val5",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val6",
+        label: "Val6",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val7",
+        label: "Val7",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val8",
+        label: "Val8",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val9",
+        label: "Val9",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val10",
+        label: "Val10",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val11",
+        label: "Val11",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val12",
+        label: "Val12",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val13",
+        label: "Val13",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val14",
+        label: "Val14",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val15",
+        label: "Val15",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val16",
+        label: "Val16",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val17",
+        label: "Val17",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val18",
+        label: "Val18",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val19",
+        label: "Val19",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val20",
+        label: "Val20",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val21",
+        label: "Val21",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val22",
+        label: "Val22",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val23",
+        label: "Val23",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val24",
+        label: "Val24",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val25",
+        label: "Val25",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val26",
+        label: "Val26",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val27",
+        label: "Val27",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val28",
+        label: "Val28",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val29",
+        label: "Val29",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val30",
+        label: "Val30",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val31",
+        label: "Val31",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val32",
+        label: "Val32",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val33",
+        label: "Val33",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val34",
+        label: "Val34",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val35",
+        label: "Val35",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val36",
+        label: "Val36",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val37",
+        label: "Val37",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val38",
+        label: "Val38",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val39",
+        label: "Val39",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val40",
+        label: "Val40",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val41",
+        label: "Val41",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val42",
+        label: "Val42",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val43",
+        label: "Val43",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val44",
+        label: "Val44",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val45",
+        label: "Val45",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val46",
+        label: "Val46",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val47",
+        label: "Val47",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val48",
+        label: "Val48",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val49",
+        label: "Val49",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "val50",
+        label: "Val50",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ts",
+        label: "Timestamp",
+        description: "Timestamp value is the number of seconds since January 1, 2000",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ms",
+        label: "Milliseconds",
+        description: "Millisecond counter 0-999",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "seq",
+        label: "Sequence",
+        description: "Sequence number of response",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alm",
+        label: "Alarm",
+        description: "Bitmask alarm code",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alg",
+        label: "Algorithm",
+        description: "Algorithm used to compute the digital signature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n",
+        label: "N",
+        description: "Number of registers comprising the digital signature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Repeating as crate::GroupMeta>::group_info),
+    },
+];
+static MODEL4_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_4",
+    label: "Secure Dataset Read Response",
+    description: "Compute a digital signature over a specified set of data registers",
+    fields: MODEL4_FIELDS,
+};
+impl crate::GroupMeta for Model4 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL4_GROUP_INFO
+    }
+}
 impl crate::Group for Model4 {
     const LEN: u16 = 60;
 }
@@ -435,6 +808,23 @@ pub struct Repeating {
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+static REPEATING_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "ds",
+    label: "DS",
+    description: "Digital Signature",
+    kind: crate::FieldKind::Point,
+}];
+static REPEATING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    fields: REPEATING_FIELDS,
+};
+impl crate::GroupMeta for Repeating {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REPEATING_GROUP_INFO
+    }
+}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
 }
@@ -470,6 +860,10 @@ impl Repeating {
 }
 impl crate::Model for Model4 {
     const ID: u16 = 4;
+    const NAME: &'static str = "model_4";
+    const LABEL: &'static str = "Secure Dataset Read Response";
+    const DESCRIPTION: &'static str =
+        "Compute a digital signature over a specified set of data registers";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m4
     }

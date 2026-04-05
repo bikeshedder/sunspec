@@ -21,6 +21,37 @@ impl Model8 {
     pub const FMT: crate::Point<Self, Fmt> = crate::Point::new(0, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
 }
+static MODEL8_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "fmt",
+        label: "Format",
+        description: "X.509 format of the certificate. DER or PEM.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n",
+        label: "N",
+        description: "Number of registers to follow for the certificate",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Repeating as crate::GroupMeta>::group_info),
+    },
+];
+static MODEL8_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_8",
+    label: "Get Device Security Certificate",
+    description: "Security model for PKI",
+    fields: MODEL8_FIELDS,
+};
+impl crate::GroupMeta for Model8 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL8_GROUP_INFO
+    }
+}
 impl crate::Group for Model8 {
     const LEN: u16 = 2;
 }
@@ -95,6 +126,23 @@ pub struct Repeating {
 impl Repeating {
     pub const CERT: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+static REPEATING_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "cert",
+    label: "Cert",
+    description: "X.509 Certificate of the device",
+    kind: crate::FieldKind::Point,
+}];
+static REPEATING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    fields: REPEATING_FIELDS,
+};
+impl crate::GroupMeta for Repeating {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REPEATING_GROUP_INFO
+    }
+}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
 }
@@ -130,6 +178,9 @@ impl Repeating {
 }
 impl crate::Model for Model8 {
     const ID: u16 = 8;
+    const NAME: &'static str = "model_8";
+    const LABEL: &'static str = "Get Device Security Certificate";
+    const DESCRIPTION: &'static str = "Security model for PKI";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m8
     }

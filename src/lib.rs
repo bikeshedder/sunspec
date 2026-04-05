@@ -21,8 +21,8 @@
 )]
 
 pub use constants::{DEFAULT_DISCOVERY_ADDRESSES, SUNS_IDENTIFIER};
-pub use group::Group;
-pub use model::{InvalidPointData, Model, ModelAddr, ParseError};
+pub use group::{FieldInfo, FieldKind, Group, GroupInfo, GroupMeta};
+pub use model::{DiscoveredModel, InvalidPointData, Model, ModelAddr, ModelInfo, ParseError};
 pub use models::Models;
 pub use point::Point;
 pub use value::{DecodeError, EnumValue, FixedSize, Value};

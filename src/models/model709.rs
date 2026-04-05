@@ -56,6 +56,67 @@ impl DerTripLf {
     pub const HZ_SF: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
     pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
 }
+static DER_TRIP_LF_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "ena",
+        label: "DER Trip LF Module Enable",
+        description: "DER low frequency trip control enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "adpt_crv_req",
+        label: "Adopt Curve Request",
+        description: "Index of curve points to adopt. First curve index is 1.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "adpt_crv_rslt",
+        label: "Adopt Curve Result",
+        description: "Result of last adopt curve operation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_pt",
+        label: "Number Of Points",
+        description: "Number of curve points supported.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_crv_set",
+        label: "Stored Curve Count",
+        description: "Number of stored curves supported.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_sf",
+        label: "Frequency Scale Factor",
+        description: "Scale factor for curve frequency points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms_sf",
+        label: "Time Point Scale Factor",
+        description: "Scale factor for curve time points.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "crv",
+        label: "Stored Curves",
+        description: "Stored curve sets.",
+        kind: crate::FieldKind::RepeatingGroup(<Crv as crate::GroupMeta>::group_info),
+    },
+];
+static DER_TRIP_LF_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERTripLF",
+    label: "DER Trip LF",
+    description: "DER low frequency trip model.",
+    fields: DER_TRIP_LF_FIELDS,
+};
+impl crate::GroupMeta for DerTripLf {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_TRIP_LF_GROUP_INFO
+    }
+}
 impl crate::Group for DerTripLf {
     const LEN: u16 = 7;
 }
@@ -205,6 +266,43 @@ pub struct Crv {
 impl Crv {
     pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(0, 1, false);
 }
+static CRV_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "read_only",
+        label: "Curve Access",
+        description: "Curve read-write access.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "must_trip",
+        label: "Must Trip Curve",
+        description: "Stored must trip curve.",
+        kind: crate::FieldKind::Group(<MustTrip as crate::GroupMeta>::group_info),
+    },
+    crate::FieldInfo {
+        name: "may_trip",
+        label: "May Trip Curve",
+        description: "Stored may trip curve.",
+        kind: crate::FieldKind::Group(<MayTrip as crate::GroupMeta>::group_info),
+    },
+    crate::FieldInfo {
+        name: "mom_cess",
+        label: "Momentary Cessation Curve",
+        description: "Stored momentary cessation curve.",
+        kind: crate::FieldKind::Group(<MomCess as crate::GroupMeta>::group_info),
+    },
+];
+static CRV_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "Crv",
+    label: "Stored Curves",
+    description: "Stored curve sets.",
+    fields: CRV_FIELDS,
+};
+impl crate::GroupMeta for Crv {
+    fn group_info() -> &'static crate::GroupInfo {
+        &CRV_GROUP_INFO
+    }
+}
 impl crate::Group for Crv {
     const LEN: u16 = 1;
 }
@@ -305,6 +403,31 @@ pub struct MustTrip {
 impl MustTrip {
     pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
 }
+static MUST_TRIP_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_pt",
+        label: "Number Of Active Points",
+        description: "Number of active points in must trip curve.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pt",
+        label: "Must Trip Curve Points",
+        description: "Must trip curve points.",
+        kind: crate::FieldKind::RepeatingGroup(<Pt as crate::GroupMeta>::group_info),
+    },
+];
+static MUST_TRIP_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "MustTrip",
+    label: "Must Trip Curve",
+    description: "Stored must trip curve.",
+    fields: MUST_TRIP_FIELDS,
+};
+impl crate::GroupMeta for MustTrip {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MUST_TRIP_GROUP_INFO
+    }
+}
 impl crate::Group for MustTrip {
     const LEN: u16 = 1;
 }
@@ -349,6 +472,31 @@ pub struct Pt {
 impl Pt {
     pub const HZ: crate::Point<Self, Option<u32>> = crate::Point::new(0, 2, true);
     pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(2, 2, true);
+}
+static PT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "hz",
+        label: "Frequency Point",
+        description: "Curve frequency point.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms",
+        label: "Time Point",
+        description: "Curve time point in seconds.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static PT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "Pt",
+    label: "Must Trip Curve Points",
+    description: "Must trip curve points.",
+    fields: PT_FIELDS,
+};
+impl crate::GroupMeta for Pt {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PT_GROUP_INFO
+    }
 }
 impl crate::Group for Pt {
     const LEN: u16 = 4;
@@ -398,6 +546,31 @@ pub struct MayTrip {
 impl MayTrip {
     pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
 }
+static MAY_TRIP_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_pt",
+        label: "Number Of Active Points",
+        description: "Number of active points in may trip curve.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pt",
+        label: "May Trip Curve Points",
+        description: "May trip curve points.",
+        kind: crate::FieldKind::RepeatingGroup(<Pt as crate::GroupMeta>::group_info),
+    },
+];
+static MAY_TRIP_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "MayTrip",
+    label: "May Trip Curve",
+    description: "Stored may trip curve.",
+    fields: MAY_TRIP_FIELDS,
+};
+impl crate::GroupMeta for MayTrip {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MAY_TRIP_GROUP_INFO
+    }
+}
 impl crate::Group for MayTrip {
     const LEN: u16 = 1;
 }
@@ -438,6 +611,31 @@ pub struct MomCess {
 impl MomCess {
     pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
 }
+static MOM_CESS_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_pt",
+        label: "Number Of Active Points",
+        description: "Number of active points in the momentary cessation curve.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pt",
+        label: "Mom Cessation Curve Points",
+        description: "Momentary cessation curve points.",
+        kind: crate::FieldKind::RepeatingGroup(<Pt as crate::GroupMeta>::group_info),
+    },
+];
+static MOM_CESS_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "MomCess",
+    label: "Momentary Cessation Curve",
+    description: "Stored momentary cessation curve.",
+    fields: MOM_CESS_FIELDS,
+};
+impl crate::GroupMeta for MomCess {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MOM_CESS_GROUP_INFO
+    }
+}
 impl crate::Group for MomCess {
     const LEN: u16 = 1;
 }
@@ -461,6 +659,9 @@ impl MomCess {
 }
 impl crate::Model for DerTripLf {
     const ID: u16 = 709;
+    const NAME: &'static str = "DERTripLF";
+    const LABEL: &'static str = "DER Trip LF";
+    const DESCRIPTION: &'static str = "DER low frequency trip model.";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m709
     }

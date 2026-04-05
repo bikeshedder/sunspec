@@ -154,6 +154,211 @@ impl AcMeterSecure {
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(40, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(41, 1, false);
 }
+static AC_METER_SECURE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "a",
+        label: "Amps",
+        description: "Total AC Current",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_sf",
+        label: "A_SF",
+        description: "Current scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ph_v",
+        label: "Voltage",
+        description: "Average phase or line voltage",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "Voltage scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz",
+        label: "Hz",
+        description: "Frequency",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "hz_sf",
+        label: "Hz_SF",
+        description: "Frequency scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w",
+        label: "Watts",
+        description: "Total Real Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_sf",
+        label: "W_SF",
+        description: "Real Power scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va",
+        label: "VA",
+        description: "AC Apparent Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_sf",
+        label: "VA_SF",
+        description: "Apparent Power scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var",
+        label: "VAR",
+        description: "Reactive Power",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_sf",
+        label: "VAR_SF",
+        description: "Reactive Power scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf",
+        label: "PF",
+        description: "Power Factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_sf",
+        label: "PF_SF",
+        description: "Power Factor scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_exp",
+        label: "Total Watt-hours Exported",
+        description: "Total Real Energy Exported",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_imp",
+        label: "Total Watt-hours Imported",
+        description: "Total Real Energy Imported",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_wh_sf",
+        label: "TotWh_SF",
+        description: "Real Energy scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_exp",
+        label: "Total VA-hours Exported",
+        description: "Total Apparent Energy Exported",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_imp",
+        label: "Total VA-hours Imported",
+        description: "Total Apparent Energy Imported",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_ah_sf",
+        label: "TotVAh_SF",
+        description: "Apparent Energy scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q1",
+        label: "Total VAR-hours Imported Q1",
+        description: "Total Reactive Energy Imported Quadrant 1",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_imp_q2",
+        label: "Total VAr-hours Imported Q2",
+        description: "Total Reactive Power Imported Quadrant 2",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q3",
+        label: "Total VAr-hours Exported Q3",
+        description: "Total Reactive Power Exported Quadrant 3",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_exp_q4",
+        label: "Total VAr-hours Exported Q4",
+        description: "Total Reactive Power Exported Quadrant 4",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_v_arh_sf",
+        label: "TotVArh_SF",
+        description: "Reactive Energy scale factor",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "evt",
+        label: "Events",
+        description: "Meter Event Flags",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ts",
+        label: "Timestamp",
+        description: "Timestamp value is the number of seconds since January 1, 2000",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ms",
+        label: "Milliseconds",
+        description: "Millisecond counter 0-999",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "seq",
+        label: "Sequence",
+        description: "Sequence number of request",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alg",
+        label: "Algorithm",
+        description: "Algorithm used to compute the digital signature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n",
+        label: "N",
+        description: "Number of registers comprising the digital signature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Repeating as crate::GroupMeta>::group_info),
+    },
+];
+static AC_METER_SECURE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "ac_meter_secure",
+    label: "Secure AC Meter Selected Readings",
+    description: "Include this model for secure metering",
+    fields: AC_METER_SECURE_FIELDS,
+};
+impl crate::GroupMeta for AcMeterSecure {
+    fn group_info() -> &'static crate::GroupInfo {
+        &AC_METER_SECURE_GROUP_INFO
+    }
+}
 impl crate::Group for AcMeterSecure {
     const LEN: u16 = 42;
 }
@@ -291,6 +496,23 @@ pub struct Repeating {
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+static REPEATING_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "ds",
+    label: "DS",
+    description: "",
+    kind: crate::FieldKind::Point,
+}];
+static REPEATING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    fields: REPEATING_FIELDS,
+};
+impl crate::GroupMeta for Repeating {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REPEATING_GROUP_INFO
+    }
+}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
 }
@@ -326,6 +548,9 @@ impl Repeating {
 }
 impl crate::Model for AcMeterSecure {
     const ID: u16 = 220;
+    const NAME: &'static str = "ac_meter_secure";
+    const LABEL: &'static str = "Secure AC Meter Selected Readings";
+    const DESCRIPTION: &'static str = "Include this model for secure metering";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m220
     }

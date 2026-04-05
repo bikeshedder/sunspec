@@ -73,6 +73,91 @@ impl DerMeasureDc {
     pub const DCWH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
 }
+static DER_MEASURE_DC_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "prt_alrms",
+        label: "Port Alarms",
+        description: "Bitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_prt",
+        label: "Number Of Ports",
+        description: "Number of DC ports.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dca",
+        label: "DC Current",
+        description: "Total DC current for all ports.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcw",
+        label: "DC Power",
+        description: "Total DC power for all ports.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_wh_inj",
+        label: "DC Energy Injected",
+        description: "Total cumulative DC energy injected for all ports.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_wh_abs",
+        label: "DC Energy Absorbed",
+        description: "Total cumulative DC energy absorbed for all ports.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dca_sf",
+        label: "DC Current Scale Factor",
+        description: "DC current scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcv_sf",
+        label: "DC Voltage Scale Factor",
+        description: "DC voltage scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcw_sf",
+        label: "DC Power Scale Factor",
+        description: "DC power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcwh_sf",
+        label: "DC Energy Scale Factor",
+        description: "DC energy scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp_sf",
+        label: "Temperature Scale Factor",
+        description: "Temperature Scale Factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "prt",
+        label: "Prt",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Prt as crate::GroupMeta>::group_info),
+    },
+];
+static DER_MEASURE_DC_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERMeasureDC",
+    label: "DER DC Measurement",
+    description: "DER DC measurement.",
+    fields: DER_MEASURE_DC_FIELDS,
+};
+impl crate::GroupMeta for DerMeasureDc {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_MEASURE_DC_GROUP_INFO
+    }
+}
 impl crate::Group for DerMeasureDc {
     const LEN: u16 = 18;
 }
@@ -189,6 +274,85 @@ impl Prt {
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
     pub const DC_STA: crate::Point<Self, Option<PrtDcSta>> = crate::Point::new(22, 1, false);
     pub const DC_ALRM: crate::Point<Self, Option<PrtDcAlrm>> = crate::Point::new(23, 2, false);
+}
+static PRT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "prt_typ",
+        label: "Port Type",
+        description: "Port type.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "id",
+        label: "Port ID",
+        description: "Port ID.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "id_str",
+        label: "Port ID String",
+        description: "Port ID string.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dca",
+        label: "DC Current",
+        description: "DC current for the port.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcv",
+        label: "DC Voltage",
+        description: "DC voltage for the port.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dcw",
+        label: "DC Power",
+        description: "DC power for the port.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_wh_inj",
+        label: "DC Energy Injected",
+        description: "Total cumulative DC energy injected for the port.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_wh_abs",
+        label: "DC Energy Absorbed",
+        description: "Total cumulative DC energy absorbed for the port.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp",
+        label: "DC Port Temperature",
+        description: "DC port temperature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_sta",
+        label: "DC Port Status",
+        description: "DC port status.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dc_alrm",
+        label: "DC Port Alarm",
+        description: "DC port alarm.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static PRT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "Prt",
+    label: "Prt",
+    description: "",
+    fields: PRT_FIELDS,
+};
+impl crate::GroupMeta for Prt {
+    fn group_info() -> &'static crate::GroupInfo {
+        &PRT_GROUP_INFO
+    }
 }
 impl crate::Group for Prt {
     const LEN: u16 = 25;
@@ -367,6 +531,9 @@ impl crate::FixedSize for PrtDcAlrm {
 }
 impl crate::Model for DerMeasureDc {
     const ID: u16 = 714;
+    const NAME: &'static str = "DERMeasureDC";
+    const LABEL: &'static str = "DER DC Measurement";
+    const DESCRIPTION: &'static str = "DER DC measurement.";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m714
     }

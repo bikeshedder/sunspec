@@ -14,6 +14,31 @@ pub struct FlowBatteryStack {
 impl FlowBatteryStack {
     pub const STACK_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+static FLOW_BATTERY_STACK_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "stack_tbd",
+        label: "Stack Points To Be Determined",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cell",
+        label: "cell",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Cell as crate::GroupMeta>::group_info),
+    },
+];
+static FLOW_BATTERY_STACK_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "flow_battery_stack",
+    label: "Flow Battery Stack Model",
+    description: "",
+    fields: FLOW_BATTERY_STACK_FIELDS,
+};
+impl crate::GroupMeta for FlowBatteryStack {
+    fn group_info() -> &'static crate::GroupInfo {
+        &FLOW_BATTERY_STACK_GROUP_INFO
+    }
+}
 impl crate::Group for FlowBatteryStack {
     const LEN: u16 = 1;
 }
@@ -42,6 +67,23 @@ pub struct Cell {
 #[allow(missing_docs)]
 impl Cell {
     pub const CELL_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+}
+static CELL_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "cell_tbd",
+    label: "Cell Points To Be Determined",
+    description: "",
+    kind: crate::FieldKind::Point,
+}];
+static CELL_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "cell",
+    label: "cell",
+    description: "",
+    fields: CELL_FIELDS,
+};
+impl crate::GroupMeta for Cell {
+    fn group_info() -> &'static crate::GroupInfo {
+        &CELL_GROUP_INFO
+    }
 }
 impl crate::Group for Cell {
     const LEN: u16 = 1;
@@ -78,6 +120,9 @@ impl Cell {
 }
 impl crate::Model for FlowBatteryStack {
     const ID: u16 = 809;
+    const NAME: &'static str = "flow_battery_stack";
+    const LABEL: &'static str = "Flow Battery Stack Model";
+    const DESCRIPTION: &'static str = "";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m809
     }

@@ -70,6 +70,85 @@ impl DerFreqDroop {
     pub const K_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
     pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
 }
+static DER_FREQ_DROOP_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "ena",
+        label: "DER Frequency Droop Module Enable",
+        description: "DER Frequency-Watt (Frequency-Droop) control enable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "adpt_ctl_req",
+        label: "Set Active Control Request",
+        description: "Set active control. 0 = No active control.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "adpt_ctl_rslt",
+        label: "Set Active Control Result",
+        description: "Result of last set active control operation.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_ctl",
+        label: "Stored Control Count",
+        description: "Number of stored controls supported.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_tms",
+        label: "Reversion Timeout",
+        description: "Reversion time in seconds.  0 = No reversion time.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_rem",
+        label: "Reversion Time Left",
+        description: "Reversion time remaining in seconds.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_ctl",
+        label: "Reversion Control",
+        description: "Default control after reversion timeout.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "db_sf",
+        label: "Deadband Scale Factor",
+        description: "Deadband scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "k_sf",
+        label: "Frequency Change Scale Factor",
+        description: "Frequency change scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rsp_tms_sf",
+        label: "Open-Loop Scale Factor",
+        description: "Open loop response time scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctl",
+        label: "Stored Controls",
+        description: "Stored control sets.",
+        kind: crate::FieldKind::RepeatingGroup(<Ctl as crate::GroupMeta>::group_info),
+    },
+];
+static DER_FREQ_DROOP_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERFreqDroop",
+    label: "DER Frequency Droop",
+    description: "DER Frequency Droop model.",
+    fields: DER_FREQ_DROOP_FIELDS,
+};
+impl crate::GroupMeta for DerFreqDroop {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_FREQ_DROOP_GROUP_INFO
+    }
+}
 impl crate::Group for DerFreqDroop {
     const LEN: u16 = 12;
 }
@@ -237,6 +316,61 @@ impl Ctl {
     pub const P_MIN: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, true);
     pub const READ_ONLY: crate::Point<Self, CtlReadOnly> = crate::Point::new(9, 1, false);
 }
+static CTL_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "db_of",
+        label: "Over-Frequency Deadband",
+        description: "The deadband value for over-frequency conditions in Hz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "db_uf",
+        label: "Under-Frequency Deadband",
+        description: "The deadband value for under-frequency conditions in Hz.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "k_of",
+        label: "Over-Frequency Change Ratio",
+        description: "Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "k_uf",
+        label: "Under-Frequency Change Ratio",
+        description: "Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rsp_tms",
+        label: "Open-Loop Response Time",
+        description: "The open-loop response time in seconds.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "p_min",
+        label: "Minimum Active Power",
+        description: "The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "read_only",
+        label: "Control Access",
+        description: "Control read-write access.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static CTL_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "Ctl",
+    label: "Stored Controls",
+    description: "Stored control sets.",
+    fields: CTL_FIELDS,
+};
+impl crate::GroupMeta for Ctl {
+    fn group_info() -> &'static crate::GroupInfo {
+        &CTL_GROUP_INFO
+    }
+}
 impl crate::Group for Ctl {
     const LEN: u16 = 10;
 }
@@ -315,6 +449,9 @@ impl crate::FixedSize for CtlReadOnly {
 }
 impl crate::Model for DerFreqDroop {
     const ID: u16 = 711;
+    const NAME: &'static str = "DERFreqDroop";
+    const LABEL: &'static str = "DER Frequency Droop";
+    const DESCRIPTION: &'static str = "DER Frequency Droop model.";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m711
     }

@@ -48,6 +48,85 @@ impl BaseMet {
     pub const SUR_WET: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
     pub const SOIL_WET: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
 }
+static BASE_MET_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "tmp_amb",
+        label: "Ambient Temperature",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rh",
+        label: "Relative Humidity",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pres",
+        label: "Barometric Pressure",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wnd_spd",
+        label: "Wind Speed",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "wnd_dir",
+        label: "Wind Direction",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rain",
+        label: "Rainfall",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "snw",
+        label: "Snow Depth",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ppt",
+        label: "Precipitation Type",
+        description: "\u{a0}Precipitation Type (WMO 4680 SYNOP code reference)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "elec_fld",
+        label: "Electric Field",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sur_wet",
+        label: "Surface Wetness",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "soil_wet",
+        label: "Soil Wetness",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+];
+static BASE_MET_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "base_met",
+    label: "Base Met",
+    description: "Base Meteorological Model",
+    fields: BASE_MET_FIELDS,
+};
+impl crate::GroupMeta for BaseMet {
+    fn group_info() -> &'static crate::GroupInfo {
+        &BASE_MET_GROUP_INFO
+    }
+}
 impl crate::Group for BaseMet {
     const LEN: u16 = 11;
 }
@@ -76,6 +155,9 @@ impl BaseMet {
 }
 impl crate::Model for BaseMet {
     const ID: u16 = 307;
+    const NAME: &'static str = "base_met";
+    const LABEL: &'static str = "Base Met";
+    const DESCRIPTION: &'static str = "Base Meteorological Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m307
     }

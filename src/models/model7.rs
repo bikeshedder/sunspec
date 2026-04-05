@@ -59,6 +59,73 @@ impl Model7 {
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(8, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(9, 1, true);
 }
+static MODEL7_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "rq_seq",
+        label: "Request Sequence",
+        description: "Sequence number from the request",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "sts",
+        label: "Status",
+        description: "Status of last write operation",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ts",
+        label: "Timestamp",
+        description: "Timestamp value is the number of seconds since January 1, 2000",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ms",
+        label: "Milliseconds",
+        description: "Millisecond counter 0-999",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "seq",
+        label: "Sequence",
+        description: "Sequence number of response",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alm",
+        label: "Alarm",
+        description: "Bitmask alarm code",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alg",
+        label: "Algorithm",
+        description: "Algorithm used to compute the digital signature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n",
+        label: "N",
+        description: "Number of registers comprising the digital signature.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Repeating as crate::GroupMeta>::group_info),
+    },
+];
+static MODEL7_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_7",
+    label: "Secure Write Response Model (DRAFT 1)",
+    description: "Include a digital signature over the response",
+    fields: MODEL7_FIELDS,
+};
+impl crate::GroupMeta for Model7 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL7_GROUP_INFO
+    }
+}
 impl crate::Group for Model7 {
     const LEN: u16 = 10;
 }
@@ -229,6 +296,23 @@ pub struct Repeating {
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
 }
+static REPEATING_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "ds",
+    label: "DS",
+    description: "Digital Signature",
+    kind: crate::FieldKind::Point,
+}];
+static REPEATING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    fields: REPEATING_FIELDS,
+};
+impl crate::GroupMeta for Repeating {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REPEATING_GROUP_INFO
+    }
+}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
 }
@@ -264,6 +348,9 @@ impl Repeating {
 }
 impl crate::Model for Model7 {
     const ID: u16 = 7;
+    const NAME: &'static str = "model_7";
+    const LABEL: &'static str = "Secure Write Response Model (DRAFT 1)";
+    const DESCRIPTION: &'static str = "Include a digital signature over the response";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m7
     }

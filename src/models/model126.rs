@@ -63,6 +63,85 @@ impl VoltVar {
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
 }
+static VOLT_VAR_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_crv",
+        label: "ActCrv",
+        description: "Index of active curve. 0=no active curve.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_ena",
+        label: "ModEna",
+        description: "Is Volt-VAR control active.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "win_tms",
+        label: "WinTms",
+        description: "Time window for volt-VAR change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_tms",
+        label: "RvrtTms",
+        description: "Timeout period for volt-VAR curve selection.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_tms",
+        label: "RmpTms",
+        description: "The time of the PT1 in seconds (time to accomplish a change of 95%).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_crv",
+        label: "NCrv",
+        description: "Number of curves supported (recommend 4).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_pt",
+        label: "NPt",
+        description: "Number of curve points supported (maximum of 20).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "Scale factor for percent VRef.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dept_ref_sf",
+        label: "DeptRef_SF",
+        description: "scale factor for dependent variable.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_inc_dec_sf",
+        label: "RmpIncDec_SF",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "curve",
+        label: "curve",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Curve as crate::GroupMeta>::group_info),
+    },
+];
+static VOLT_VAR_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "volt_var",
+    label: "Static Volt-VAR",
+    description: "Static Volt-VAR Arrays ",
+    fields: VOLT_VAR_FIELDS,
+};
+impl crate::GroupMeta for VoltVar {
+    fn group_info() -> &'static crate::GroupInfo {
+        &VOLT_VAR_GROUP_INFO
+    }
+}
 impl crate::Group for VoltVar {
     const LEN: u16 = 10;
 }
@@ -355,6 +434,301 @@ impl Curve {
     pub const RMP_INC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(52, 1, true);
     pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(53, 1, false);
 }
+static CURVE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_pt",
+        label: "ActPt",
+        description: "Number of active points in array.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dept_ref",
+        label: "DeptRef",
+        description: "Meaning of dependent variable: 1=%WMax 2=%VArMax 3=%VArAval.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v1",
+        label: "V1",
+        description: "Point 1 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar1",
+        label: "VAr1",
+        description: "Point 1 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v2",
+        label: "V2",
+        description: "Point 2 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar2",
+        label: "VAr2",
+        description: "Point 2 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v3",
+        label: "V3",
+        description: "Point 3 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar3",
+        label: "VAr3",
+        description: "Point 3 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v4",
+        label: "V4",
+        description: "Point 4 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar4",
+        label: "VAr4",
+        description: "Point 4 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v5",
+        label: "V5",
+        description: "Point 5 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar5",
+        label: "VAr5",
+        description: "Point 5 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v6",
+        label: "V6",
+        description: "Point 6 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar6",
+        label: "VAr6",
+        description: "Point 6 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v7",
+        label: "V7",
+        description: "Point 7 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar7",
+        label: "VAr7",
+        description: "Point 7 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v8",
+        label: "V8",
+        description: "Point 8 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar8",
+        label: "VAr8",
+        description: "Point 8 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v9",
+        label: "V9",
+        description: "Point 9 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar9",
+        label: "VAr9",
+        description: "Point 9 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v10",
+        label: "V10",
+        description: "Point 10 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar10",
+        label: "VAr10",
+        description: "Point 10 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v11",
+        label: "V11",
+        description: "Point 11 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar11",
+        label: "VAr11",
+        description: "Point 11 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v12",
+        label: "V12",
+        description: "Point 12 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar12",
+        label: "VAr12",
+        description: "Point 12 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v13",
+        label: "V13",
+        description: "Point 13 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar13",
+        label: "VAr13",
+        description: "Point 13 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v14",
+        label: "V14",
+        description: "Point 14 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar14",
+        label: "VAr14",
+        description: "Point 14 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v15",
+        label: "V15",
+        description: "Point 15 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar15",
+        label: "VAr15",
+        description: "Point 15 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v16",
+        label: "V16",
+        description: "Point 16 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar16",
+        label: "VAr16",
+        description: "Point 16 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v17",
+        label: "V17",
+        description: "Point 17 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar17",
+        label: "VAr17",
+        description: "Point 17 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v18",
+        label: "V18",
+        description: "Point 18 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar18",
+        label: "VAr18",
+        description: "Point 18 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v19",
+        label: "V19",
+        description: "Point 19 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar19",
+        label: "VAr19",
+        description: "Point 19 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v20",
+        label: "V20",
+        description: "Point 20 Volts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_ar20",
+        label: "VAr20",
+        description: "Point 20 VARs.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "crv_nam",
+        label: "CrvNam",
+        description: "Optional description for curve. (Max 16 chars)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_tms",
+        label: "RmpTms",
+        description: "The time of the PT1 in seconds (time to accomplish a change of 95%).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_dec_tmm",
+        label: "RmpDecTmm",
+        description: "The maximum rate at which the VAR value may be reduced in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_inc_tmm",
+        label: "RmpIncTmm",
+        description: "The maximum rate at which the VAR value may be increased in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "read_only",
+        label: "ReadOnly",
+        description: "Boolean flag indicates if curve is read-only or can be modified.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static CURVE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "curve",
+    label: "curve",
+    description: "",
+    fields: CURVE_FIELDS,
+};
+impl crate::GroupMeta for Curve {
+    fn group_info() -> &'static crate::GroupInfo {
+        &CURVE_GROUP_INFO
+    }
+}
 impl crate::Group for Curve {
     const LEN: u16 = 54;
 }
@@ -516,6 +890,9 @@ impl crate::FixedSize for CurveReadOnly {
 }
 impl crate::Model for VoltVar {
     const ID: u16 = 126;
+    const NAME: &'static str = "volt_var";
+    const LABEL: &'static str = "Static Volt-VAR";
+    const DESCRIPTION: &'static str = "Static Volt-VAR Arrays ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m126
     }

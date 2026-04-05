@@ -35,6 +35,49 @@ impl Schedule {
     pub const N_SCHD: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
     pub const N_PTS: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
 }
+static SCHEDULE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_schd",
+        label: "ActSchd",
+        description: "Bitfield of active schedules",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_ena",
+        label: "ModEna",
+        description: "Is basic scheduling active.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_schd",
+        label: "NSchd",
+        description: "Number of schedules supported (recommend min. 4, max 32)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_pts",
+        label: "NPts",
+        description: "Number of schedule entries supported (maximum of 10).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Repeating as crate::GroupMeta>::group_info),
+    },
+];
+static SCHEDULE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "schedule",
+    label: "Basic Scheduling",
+    description: "Basic Scheduling ",
+    fields: SCHEDULE_FIELDS,
+};
+impl crate::GroupMeta for Schedule {
+    fn group_info() -> &'static crate::GroupInfo {
+        &SCHEDULE_GROUP_INFO
+    }
+}
 impl crate::Group for Schedule {
     const LEN: u16 = 6;
 }
@@ -284,6 +327,211 @@ impl Repeating {
     pub const WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(57, 1, true);
     pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(58, 1, true);
     pub const ACT_INDX: crate::Point<Self, u16> = crate::Point::new(59, 1, false);
+}
+static REPEATING_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_pts",
+        label: "ActPts",
+        description: "Number of active entries in schedule.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "str_tms",
+        label: "StrTms",
+        description: "Schedule start in seconds since 2000 JAN 01 00:00:00 UTC.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rep_per",
+        label: "RepPer",
+        description: "The repetition count for time-based schedules (0=repeat forever)",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "intv_typ",
+        label: "SchdTyp",
+        description: "The repetition frequency for time-based schedules: no repeat=0",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x_typ",
+        label: "XTyp",
+        description: "The meaning of the X-values in the array. ",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x_sf",
+        label: "X_SF",
+        description: "Scale factor for schedule range values.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y_typ",
+        label: "YTyp",
+        description: "The meaning of the Y-values in the array.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y_sf",
+        label: "Y_SF",
+        description: "Scale factor for schedule target values.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x1",
+        label: "X1",
+        description: "Entry 1 range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y1",
+        label: "Y1",
+        description: "Entry 1 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x2",
+        label: "X2",
+        description: "Entry 2 range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y2",
+        label: "Y2",
+        description: "Entry 2 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x3",
+        label: "X3",
+        description: "Entry 3 range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y3",
+        label: "Y3",
+        description: "Entry 3 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x4",
+        label: "X4",
+        description: "Entry 4 range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y4",
+        label: "Y4",
+        description: "Entry 4 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x5",
+        label: "X5",
+        description: "Entry 15range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y5",
+        label: "Y5",
+        description: "Entry 5 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x6",
+        label: "X6",
+        description: "Entry 6 range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y6",
+        label: "Y6",
+        description: "Entry 6 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x7",
+        label: "X7",
+        description: "Entry 7 range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y7",
+        label: "Y7",
+        description: "Entry 7 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x8",
+        label: "X8",
+        description: "Entry 8 range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y8",
+        label: "Y8",
+        description: "Entry 8 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x9",
+        label: "X9",
+        description: "Entry 9 range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y9",
+        label: "Y9",
+        description: "Entry 9 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "x10",
+        label: "X10",
+        description: "Entry 10 range.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "y10",
+        label: "Y10",
+        description: "Entry 10 target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nam",
+        label: "Nam",
+        description: "Optional description for schedule.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "win_tms",
+        label: "WinTms",
+        description: "Time window for schedule entry change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_tms",
+        label: "RmpTms",
+        description: "Ramp time for moving from current target to new target.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "act_indx",
+        label: "ActIndx",
+        description: "Index of active entry in the active schedule.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static REPEATING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    fields: REPEATING_FIELDS,
+};
+impl crate::GroupMeta for Repeating {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REPEATING_GROUP_INFO
+    }
 }
 impl crate::Group for Repeating {
     const LEN: u16 = 60;
@@ -549,6 +797,9 @@ impl crate::FixedSize for RepeatingYTyp {
 }
 impl crate::Model for Schedule {
     const ID: u16 = 133;
+    const NAME: &'static str = "schedule";
+    const LABEL: &'static str = "Basic Scheduling";
+    const DESCRIPTION: &'static str = "Basic Scheduling ";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m133
     }

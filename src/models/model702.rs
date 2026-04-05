@@ -288,6 +288,313 @@ impl DerCapacity {
     pub const A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(48, 1, false);
     pub const S_SF: crate::Point<Self, Option<i16>> = crate::Point::new(49, 1, false);
 }
+static DER_CAPACITY_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "w_max_rtg",
+        label: "Active Power Max Rating",
+        description: "Maximum active power rating at unity power factor in watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_ovr_ext_rtg",
+        label: "Active Power (Over-Excited) Rating",
+        description: "Active power rating at specified over-excited power factor in watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_ovr_ext_rtg_pf",
+        label: "Specified Over-Excited PF",
+        description: "Specified over-excited power factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_und_ext_rtg",
+        label: "Active Power (Under-Excited) Rating",
+        description: "Active power rating at specified under-excited power factor in watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_und_ext_rtg_pf",
+        label: "Specified Under-Excited PF",
+        description: "Specified under-excited power factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_max_rtg",
+        label: "Apparent Power Max Rating",
+        description: "Maximum apparent power rating in voltamperes.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_max_inj_rtg",
+        label: "Reactive Power Injected Rating",
+        description: "Maximum injected reactive power rating in vars.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_max_abs_rtg",
+        label: "Reactive Power Absorbed Rating",
+        description: "Maximum absorbed reactive power rating in vars.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_cha_rte_max_rtg",
+        label: "Charge Rate Max Rating",
+        description: "Maximum active power charge rate in watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_dis_cha_rte_max_rtg",
+        label: "Discharge Rate Max Rating",
+        description: "Maximum active power discharge rate in watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_cha_rte_max_rtg",
+        label: "Charge Rate Max VA Rating",
+        description: "Maximum apparent power charge rate in voltamperes.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_dis_cha_rte_max_rtg",
+        label: "Discharge Rate Max VA Rating",
+        description: "Maximum apparent power discharge rate in voltamperes.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_nom_rtg",
+        label: "AC Voltage Nominal Rating",
+        description: "AC voltage nominal rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_max_rtg",
+        label: "AC Voltage Max Rating",
+        description: "AC voltage maximum rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_min_rtg",
+        label: "AC Voltage Min Rating",
+        description: "AC voltage minimum rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_max_rtg",
+        label: "AC Current Max Rating",
+        description: "AC current maximum rating in amps.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_ovr_ext_rtg",
+        label: "PF Over-Excited Rating (Unused)",
+        description: "Unused. Please use WOvrExtRtgPF.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_und_ext_rtg",
+        label: "PF Under-Excited Rating (Unused)",
+        description: "Unused. Please use WUndExtRtgPF.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "react_suscept_rtg",
+        label: "Reactive Susceptance",
+        description: "Reactive susceptance that remains connected to the Area EPS in the cease to energize and trip state.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "nor_op_cat_rtg",
+        label: "Normal Operating Category",
+        description: "Normal operating performance category as specified in IEEE 1547-2018.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "abn_op_cat_rtg",
+        label: "Abnormal Operating Category",
+        description: "Abnormal operating performance category as specified in IEEE 1547-2018.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ctrl_modes",
+        label: "Supported Control Modes",
+        description: "Supported control mode functions.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int_island_cat_rtg",
+        label: "Intentional Island Categories",
+        description: "Intentional island categories.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max",
+        label: "Active Power Max Setting",
+        description: "Maximum active power setting used to adjust maximum active power setting.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_ovr_ext",
+        label: "Active Power (Over-Excited) Setting",
+        description: "Active power setting at specified over-excited power factor in watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_ovr_ext_pf",
+        label: "Specified Over-Excited PF",
+        description: "Specified over-excited power factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_max_und_ext",
+        label: "Active Power (Under-Excited) Setting",
+        description: "Active power setting at specified under-excited power factor in watts.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_und_ext_pf",
+        label: "Specified Under-Excited PF",
+        description: "Specified under-excited power factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_max",
+        label: "Apparent Power Max Setting",
+        description: "Maximum apparent power setting used to adjust maximum apparent power rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_max_inj",
+        label: "Reactive Power Injected Setting",
+        description: "Maximum injected reactive power setting used to adjust maximum injected reactive power rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_max_abs",
+        label: "Reactive Power Absorbed Setting",
+        description: "Maximum absorbed reactive power setting used to adjust maximum absorbed reactive power rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_cha_rte_max",
+        label: "Charge Rate Max Setting",
+        description: "Maximum active power charge rate setting used to adjust maximum active power charge rate rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_dis_cha_rte_max",
+        label: "Discharge Rate Max Setting",
+        description: "Maximum active power discharge rate setting used to adjust maximum active power discharge rate rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_cha_rte_max",
+        label: "Charge Rate Max VA Setting",
+        description: "Maximum apparent power charge rate setting used to adjust maximum apparent power charge rate rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_dis_cha_rte_max",
+        label: "Discharge Rate Max VA Setting",
+        description: "Maximum apparent power discharge rate setting used to adjust maximum apparent power discharge rate rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_nom",
+        label: "Nominal AC Voltage Setting",
+        description: "Nominal AC voltage setting.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_max",
+        label: "AC Voltage Max Setting",
+        description: "AC voltage maximum setting used to adjust AC voltage maximum rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_min",
+        label: "AC Voltage Min Setting",
+        description: "AC voltage minimum setting used to adjust AC voltage minimum rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_max",
+        label: "AC Current Max Setting",
+        description: "Maximum AC current setting used to adjust maximum AC current rating.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_ovr_ext",
+        label: "PF Over-Excited Setting (Unused)",
+        description: "Unused. Please use WOvrExtPF.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_und_ext",
+        label: "PF Under-Excited Setting (Unused)",
+        description: "Unused. Please use WUndExtPF.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "int_island_cat",
+        label: "Intentional Island Categories",
+        description: "Intentional island categories.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "w_sf",
+        label: "Active Power Scale Factor",
+        description: "Active power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "pf_sf",
+        label: "Power Factor Scale Factor",
+        description: "Power factor scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "va_sf",
+        label: "Apparent Power Scale Factor",
+        description: "Apparent power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "var_sf",
+        label: "Reactive Power Scale Factor",
+        description: "Reactive power scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "Voltage Scale Factor",
+        description: "Voltage scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a_sf",
+        label: "Current Scale Factor",
+        description: "Current scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "s_sf",
+        label: "Susceptance Scale Factor",
+        description: "Susceptance scale factor.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static DER_CAPACITY_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "DERCapacity",
+    label: "DER Capacity",
+    description: "DER capacity model.",
+    fields: DER_CAPACITY_FIELDS,
+};
+impl crate::GroupMeta for DerCapacity {
+    fn group_info() -> &'static crate::GroupInfo {
+        &DER_CAPACITY_GROUP_INFO
+    }
+}
 impl crate::Group for DerCapacity {
     const LEN: u16 = 50;
 }
@@ -515,6 +822,9 @@ impl crate::FixedSize for IntIslandCat {
 }
 impl crate::Model for DerCapacity {
     const ID: u16 = 702;
+    const NAME: &'static str = "DERCapacity";
+    const LABEL: &'static str = "DER Capacity";
+    const DESCRIPTION: &'static str = "DER capacity model.";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m702
     }

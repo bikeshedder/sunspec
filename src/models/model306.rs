@@ -31,6 +31,43 @@ impl RefPoint {
     pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
     pub const TMP: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
 }
+static REF_POINT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "ghi",
+        label: "GHI",
+        description: "Global Horizontal Irradiance",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "a",
+        label: "Amps",
+        description: "Current measurement at reference point",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v",
+        label: "Voltage",
+        description: "Voltage  measurement at reference point",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tmp",
+        label: "Temperature",
+        description: "Temperature measurement at reference point",
+        kind: crate::FieldKind::Point,
+    },
+];
+static REF_POINT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "ref_point",
+    label: "Reference Point Model",
+    description: "Include to support a standard reference point",
+    fields: REF_POINT_FIELDS,
+};
+impl crate::GroupMeta for RefPoint {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REF_POINT_GROUP_INFO
+    }
+}
 impl crate::Group for RefPoint {
     const LEN: u16 = 4;
 }
@@ -52,6 +89,9 @@ impl RefPoint {
 }
 impl crate::Model for RefPoint {
     const ID: u16 = 306;
+    const NAME: &'static str = "ref_point";
+    const LABEL: &'static str = "Reference Point Model";
+    const DESCRIPTION: &'static str = "Include to support a standard reference point";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m306
     }

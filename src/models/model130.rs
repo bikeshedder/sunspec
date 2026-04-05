@@ -66,6 +66,79 @@ impl Hvrt {
     pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
 }
+static HVRT_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_crv",
+        label: "ActCrv",
+        description: "Index of active curve. 0=no active curve.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "mod_ena",
+        label: "ModEna",
+        description: "HVRT control mode. Enable active curve.  Bitfield value.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "win_tms",
+        label: "WinTms",
+        description: "Time window for HVRT change.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rvrt_tms",
+        label: "RvrtTms",
+        description: "Timeout period for HVRT curve selection.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "rmp_tms",
+        label: "RmpTms",
+        description: "Ramp time for moving from current mode to new mode.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_crv",
+        label: "NCrv",
+        description: "Number of curves supported (recommend 4).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n_pt",
+        label: "NPt",
+        description: "Number of curve points supported (maximum of 20).",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms_sf",
+        label: "Tms_SF",
+        description: "Scale factor for duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v_sf",
+        label: "V_SF",
+        description: "Scale factor for percent VRef.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "curve",
+        label: "curve",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Curve as crate::GroupMeta>::group_info),
+    },
+];
+static HVRT_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "hvrt",
+    label: "HVRTD",
+    description: "HVRT Must Disconnect",
+    fields: HVRT_FIELDS,
+};
+impl crate::GroupMeta for Hvrt {
+    fn group_info() -> &'static crate::GroupInfo {
+        &HVRT_GROUP_INFO
+    }
+}
 impl crate::Group for Hvrt {
     const LEN: u16 = 10;
 }
@@ -338,6 +411,277 @@ impl Curve {
     pub const CRV_NAM: crate::Point<Self, Option<String>> = crate::Point::new(41, 8, true);
     pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(49, 1, false);
 }
+static CURVE_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "act_pt",
+        label: "ActPt",
+        description: "Number of active points in array.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms1",
+        label: "Tms1",
+        description: "Point 1 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v1",
+        label: "V1",
+        description: "Point 1 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms2",
+        label: "Tms2",
+        description: "Point 2 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v2",
+        label: "V2",
+        description: "Point 2 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms3",
+        label: "Tms3",
+        description: "Point 3 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v3",
+        label: "V3",
+        description: "Point 3 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms4",
+        label: "Tms4",
+        description: "Point 4 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v4",
+        label: "V4",
+        description: "Point 4 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms5",
+        label: "Tms5",
+        description: "Point 5 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v5",
+        label: "V5",
+        description: "Point 5 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms6",
+        label: "Tms6",
+        description: "Point 6 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v6",
+        label: "V6",
+        description: "Point 6 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms7",
+        label: "Tms7",
+        description: "Point 7 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v7",
+        label: "V7",
+        description: "Point 7 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms8",
+        label: "Tms8",
+        description: "Point 8 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v8",
+        label: "V8",
+        description: "Point 8 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms9",
+        label: "Tms9",
+        description: "Point 9 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v9",
+        label: "V9",
+        description: "Point 9 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms10",
+        label: "Tms10",
+        description: "Point 10 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v10",
+        label: "V10",
+        description: "Point 10 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms11",
+        label: "Tms11",
+        description: "Point 11 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v11",
+        label: "V11",
+        description: "Point 11 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms12",
+        label: "Tms12",
+        description: "Point 12 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v12",
+        label: "V12",
+        description: "Point 12 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms13",
+        label: "Tms13",
+        description: "Point 13 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v13",
+        label: "V13",
+        description: "Point 13 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms14",
+        label: "Tms14",
+        description: "Point 14 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v14",
+        label: "V14",
+        description: "Point 14 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms15",
+        label: "Tms15",
+        description: "Point 15 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v15",
+        label: "V15",
+        description: "Point 15 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms16",
+        label: "Tms16",
+        description: "Point 16 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v16",
+        label: "V16",
+        description: "Point 16 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms17",
+        label: "Tms17",
+        description: "Point 17 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v17",
+        label: "V17",
+        description: "Point 17 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms18",
+        label: "Tms18",
+        description: "Point 18 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v18",
+        label: "V18",
+        description: "Point 18 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms19",
+        label: "Tms19",
+        description: "Point 19 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v19",
+        label: "V19",
+        description: "Point 19 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tms20",
+        label: "Tms20",
+        description: "Point 20 must disconnect duration.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "v20",
+        label: "V20",
+        description: "Point 20 must disconnect voltage.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "crv_nam",
+        label: "CrvNam",
+        description: "Optional description for curve.",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "read_only",
+        label: "ReadOnly",
+        description: "Enumerated value indicates if curve is read-only or can be modified.",
+        kind: crate::FieldKind::Point,
+    },
+];
+static CURVE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "curve",
+    label: "curve",
+    description: "",
+    fields: CURVE_FIELDS,
+};
+impl crate::GroupMeta for Curve {
+    fn group_info() -> &'static crate::GroupInfo {
+        &CURVE_GROUP_INFO
+    }
+}
 impl crate::Group for Curve {
     const LEN: u16 = 50;
 }
@@ -453,6 +797,9 @@ impl crate::FixedSize for CurveReadOnly {
 }
 impl crate::Model for Hvrt {
     const ID: u16 = 130;
+    const NAME: &'static str = "hvrt";
+    const LABEL: &'static str = "HVRTD";
+    const DESCRIPTION: &'static str = "HVRT Must Disconnect";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m130
     }

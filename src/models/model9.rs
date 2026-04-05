@@ -324,6 +324,571 @@ impl Model9 {
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(90, 1, true);
     pub const N: crate::Point<Self, u16> = crate::Point::new(91, 1, true);
 }
+static MODEL9_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "cert_uid",
+        label: "Cert_UID",
+        description: "User ID for this certificate",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "cert_role",
+        label: "Cert_Role",
+        description: "Role for this certificate",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "fmt",
+        label: "Format",
+        description: "Format of this certificate",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "typ",
+        label: "Type",
+        description: "Type of this certificate",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "tot_ln",
+        label: "Total Length",
+        description: "Total Length of the Certificate",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg_ln",
+        label: "Fragment length",
+        description: "Length of this fragment",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg1",
+        label: "Frag1",
+        description: "First word of this fragment",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg2",
+        label: "Frg2",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg3",
+        label: "Frg3",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg4",
+        label: "Frg4",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg5",
+        label: "Frg5",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg6",
+        label: "Frg6",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg7",
+        label: "Frg7",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg8",
+        label: "Frg8",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg9",
+        label: "Frg9",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg10",
+        label: "Frg10",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg11",
+        label: "Frg11",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg12",
+        label: "Frg12",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg13",
+        label: "Frg13",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg14",
+        label: "Frg14",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg15",
+        label: "Frg15",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg16",
+        label: "Frg16",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg17",
+        label: "Frg17",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg18",
+        label: "Frg18",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg19",
+        label: "Frg19",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg20",
+        label: "Frg20",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg21",
+        label: "Frg21",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg22",
+        label: "Frg22",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg23",
+        label: "Frg23",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg24",
+        label: "Frg24",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg25",
+        label: "Frg25",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg26",
+        label: "Frg26",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg27",
+        label: "Frg27",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg28",
+        label: "Frg28",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg29",
+        label: "Frg29",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg30",
+        label: "Frg30",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg31",
+        label: "Frg31",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg32",
+        label: "Frg32",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg33",
+        label: "Frg33",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg34",
+        label: "Frg34",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg35",
+        label: "Frg35",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg36",
+        label: "Frg36",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg37",
+        label: "Frg37",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg38",
+        label: "Frg38",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg39",
+        label: "Frg39",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg40",
+        label: "Frg40",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg41",
+        label: "Frg41",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg42",
+        label: "Frg42",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg43",
+        label: "Frg43",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg44",
+        label: "Frg44",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg45",
+        label: "Frg45",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg46",
+        label: "Frg46",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg47",
+        label: "Frg47",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg48",
+        label: "Frg48",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg49",
+        label: "Frg49",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg50",
+        label: "Frg50",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg51",
+        label: "Frg51",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg52",
+        label: "Frg52",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg53",
+        label: "Frg53",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg54",
+        label: "Frg54",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg55",
+        label: "Frg55",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg56",
+        label: "Frg56",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg57",
+        label: "Frg57",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg58",
+        label: "Frg58",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg59",
+        label: "Frg59",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg60",
+        label: "Frg60",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg61",
+        label: "Frg61",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg62",
+        label: "Frg62",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg63",
+        label: "Frg63",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg64",
+        label: "Frg64",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg65",
+        label: "Frg65",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg66",
+        label: "Frg66",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg67",
+        label: "Frg67",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg68",
+        label: "Frg68",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg69",
+        label: "Frg69",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg70",
+        label: "Frg70",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg71",
+        label: "Frg71",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg72",
+        label: "Frg72",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg73",
+        label: "Frg73",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg74",
+        label: "Frg74",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg75",
+        label: "Frg75",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg78",
+        label: "Frg78",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg79",
+        label: "Frg79",
+        description: "",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "frg80",
+        label: "Frag80",
+        description: "Last word of this fragment",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ts",
+        label: "Timestamp",
+        description: "Timestamp value is the number of seconds since January 1, 2000",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "ms",
+        label: "Milliseconds",
+        description: "Millisecond counter 0-999",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "seq",
+        label: "Sequence",
+        description: "Sequence number of request",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "uid",
+        label: "UID",
+        description: "User ID for the request signature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "role",
+        label: "Role",
+        description: "Signing key used 0-5",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "alg",
+        label: "Algorithm",
+        description: "Algorithm used to compute the digital signature",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "n",
+        label: "N",
+        description: "Number of registers to follow for the certificate",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        kind: crate::FieldKind::RepeatingGroup(<Repeating as crate::GroupMeta>::group_info),
+    },
+];
+static MODEL9_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "model_9",
+    label: "Set Operator Security Certificate",
+    description: "Security model for PKI",
+    fields: MODEL9_FIELDS,
+};
+impl crate::GroupMeta for Model9 {
+    fn group_info() -> &'static crate::GroupInfo {
+        &MODEL9_GROUP_INFO
+    }
+}
 impl crate::Group for Model9 {
     const LEN: u16 = 92;
 }
@@ -579,6 +1144,23 @@ pub struct Repeating {
 impl Repeating {
     pub const CERT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
 }
+static REPEATING_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "cert",
+    label: "Cert",
+    description: "",
+    kind: crate::FieldKind::Point,
+}];
+static REPEATING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    fields: REPEATING_FIELDS,
+};
+impl crate::GroupMeta for Repeating {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REPEATING_GROUP_INFO
+    }
+}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
 }
@@ -614,6 +1196,9 @@ impl Repeating {
 }
 impl crate::Model for Model9 {
     const ID: u16 = 9;
+    const NAME: &'static str = "model_9";
+    const LABEL: &'static str = "Set Operator Security Certificate";
+    const DESCRIPTION: &'static str = "Security model for PKI";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m9
     }

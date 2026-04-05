@@ -12,6 +12,23 @@ pub struct Irradiance {
 }
 #[allow(missing_docs)]
 impl Irradiance {}
+static IRRADIANCE_FIELDS: &[crate::FieldInfo] = &[crate::FieldInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    kind: crate::FieldKind::RepeatingGroup(<Repeating as crate::GroupMeta>::group_info),
+}];
+static IRRADIANCE_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "irradiance",
+    label: "Irradiance Model",
+    description: "Include to support various irradiance measurements",
+    fields: IRRADIANCE_FIELDS,
+};
+impl crate::GroupMeta for Irradiance {
+    fn group_info() -> &'static crate::GroupInfo {
+        &IRRADIANCE_GROUP_INFO
+    }
+}
 impl crate::Group for Irradiance {
     const LEN: u16 = 0;
 }
@@ -57,6 +74,49 @@ impl Repeating {
     pub const DNI: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
     pub const OTI: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
 }
+static REPEATING_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "ghi",
+        label: "GHI",
+        description: "Global Horizontal Irradiance",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "poai",
+        label: "POAI",
+        description: "Plane-of-Array Irradiance",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dfi",
+        label: "DFI",
+        description: "Diffuse Irradiance",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "dni",
+        label: "DNI",
+        description: "Direct Normal Irradiance",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "oti",
+        label: "OTI",
+        description: "Other Irradiance",
+        kind: crate::FieldKind::Point,
+    },
+];
+static REPEATING_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "repeating",
+    label: "repeating",
+    description: "",
+    fields: REPEATING_FIELDS,
+};
+impl crate::GroupMeta for Repeating {
+    fn group_info() -> &'static crate::GroupInfo {
+        &REPEATING_GROUP_INFO
+    }
+}
 impl crate::Group for Repeating {
     const LEN: u16 = 5;
 }
@@ -96,6 +156,9 @@ impl Repeating {
 }
 impl crate::Model for Irradiance {
     const ID: u16 = 302;
+    const NAME: &'static str = "irradiance";
+    const LABEL: &'static str = "Irradiance Model";
+    const DESCRIPTION: &'static str = "Include to support various irradiance measurements";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m302
     }

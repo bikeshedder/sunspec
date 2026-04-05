@@ -27,6 +27,37 @@ impl CsipControl {
     pub const HTTP_MSG: crate::Point<Self, Option<HttpMsg>> = crate::Point::new(1, 1, true);
     pub const COMM004_CERT: crate::Point<Self, Option<Comm004Cert>> = crate::Point::new(2, 1, true);
 }
+static CSIP_CONTROL_FIELDS: &[crate::FieldInfo] = &[
+    crate::FieldInfo {
+        name: "log_event_ena",
+        label: "LogEvent Mode Enable",
+        description: "Enable or disable the LogEvent mode",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "http_msg",
+        label: "HTTP Message Mode Enable",
+        description: "Enable or disable the HTTP Message mode",
+        kind: crate::FieldKind::Point,
+    },
+    crate::FieldInfo {
+        name: "comm004_cert",
+        label: "COMM-004 Certificate",
+        description: "Select COMM-004 certificate type",
+        kind: crate::FieldKind::Point,
+    },
+];
+static CSIP_CONTROL_GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+    name: "CSIPControl",
+    label: "CSIP Client Control",
+    description: "CSIP Client Control for Alarms and Error tests",
+    fields: CSIP_CONTROL_FIELDS,
+};
+impl crate::GroupMeta for CsipControl {
+    fn group_info() -> &'static crate::GroupInfo {
+        &CSIP_CONTROL_GROUP_INFO
+    }
+}
 impl crate::Group for CsipControl {
     const LEN: u16 = 3;
 }
@@ -209,6 +240,9 @@ impl crate::FixedSize for Comm004Cert {
 }
 impl crate::Model for CsipControl {
     const ID: u16 = 64415;
+    const NAME: &'static str = "CSIPControl";
+    const LABEL: &'static str = "CSIP Client Control";
+    const DESCRIPTION: &'static str = "CSIP Client Control for Alarms and Error tests";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64415
     }
