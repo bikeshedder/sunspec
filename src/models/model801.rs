@@ -4,7 +4,7 @@ pub type Model801 = Storage;
 /// Energy Storage Base Model (DEPRECATED)
 ///
 /// This model has been deprecated.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Storage {
     /// Deprecated Model

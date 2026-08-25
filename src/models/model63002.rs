@@ -1,6 +1,6 @@
 //! SunSpec Test Model 2
 /// SunSpec Test Model 2
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model63002 {
     #[allow(missing_docs)]
@@ -21,7 +21,7 @@ impl Model63002 {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     #[allow(missing_docs)]

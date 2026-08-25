@@ -223,7 +223,7 @@ pub mod model809;
 #[cfg(feature = "model9")]
 pub mod model9;
 /// This struct contains the addresses of all discovered models enabled via Cargo features.
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Models {
     #[cfg(feature = "model1")]
@@ -1808,6 +1808,682 @@ impl Models {
                 true
             }
             _ => false,
+        }
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    fn assert_impl_clone<T: Clone>() {}
+    fn assert_impl_partial_eq<T: PartialEq>() {}
+    fn assert_impl_eq<T: Eq>() {}
+    /// Every model must implement `Clone` and `PartialEq`. Models
+    /// without floating point values must implement `Eq`, too.
+    #[test]
+    fn models_implement_clone_and_eq() {
+        assert_impl_clone::<Models>();
+        assert_impl_partial_eq::<Models>();
+        assert_impl_eq::<Models>();
+        #[cfg(feature = "model1")]
+        {
+            assert_impl_clone::<model1::Model1>();
+            assert_impl_partial_eq::<model1::Model1>();
+            assert_impl_eq::<model1::Model1>();
+        }
+        #[cfg(feature = "model2")]
+        {
+            assert_impl_clone::<model2::Model2>();
+            assert_impl_partial_eq::<model2::Model2>();
+            assert_impl_eq::<model2::Model2>();
+        }
+        #[cfg(feature = "model3")]
+        {
+            assert_impl_clone::<model3::Model3>();
+            assert_impl_partial_eq::<model3::Model3>();
+            assert_impl_eq::<model3::Model3>();
+        }
+        #[cfg(feature = "model4")]
+        {
+            assert_impl_clone::<model4::Model4>();
+            assert_impl_partial_eq::<model4::Model4>();
+            assert_impl_eq::<model4::Model4>();
+        }
+        #[cfg(feature = "model5")]
+        {
+            assert_impl_clone::<model5::Model5>();
+            assert_impl_partial_eq::<model5::Model5>();
+            assert_impl_eq::<model5::Model5>();
+        }
+        #[cfg(feature = "model6")]
+        {
+            assert_impl_clone::<model6::Model6>();
+            assert_impl_partial_eq::<model6::Model6>();
+            assert_impl_eq::<model6::Model6>();
+        }
+        #[cfg(feature = "model7")]
+        {
+            assert_impl_clone::<model7::Model7>();
+            assert_impl_partial_eq::<model7::Model7>();
+            assert_impl_eq::<model7::Model7>();
+        }
+        #[cfg(feature = "model8")]
+        {
+            assert_impl_clone::<model8::Model8>();
+            assert_impl_partial_eq::<model8::Model8>();
+            assert_impl_eq::<model8::Model8>();
+        }
+        #[cfg(feature = "model9")]
+        {
+            assert_impl_clone::<model9::Model9>();
+            assert_impl_partial_eq::<model9::Model9>();
+            assert_impl_eq::<model9::Model9>();
+        }
+        #[cfg(feature = "model10")]
+        {
+            assert_impl_clone::<model10::Model10>();
+            assert_impl_partial_eq::<model10::Model10>();
+            assert_impl_eq::<model10::Model10>();
+        }
+        #[cfg(feature = "model11")]
+        {
+            assert_impl_clone::<model11::Model11>();
+            assert_impl_partial_eq::<model11::Model11>();
+            assert_impl_eq::<model11::Model11>();
+        }
+        #[cfg(feature = "model12")]
+        {
+            assert_impl_clone::<model12::Model12>();
+            assert_impl_partial_eq::<model12::Model12>();
+            assert_impl_eq::<model12::Model12>();
+        }
+        #[cfg(feature = "model13")]
+        {
+            assert_impl_clone::<model13::Model13>();
+            assert_impl_partial_eq::<model13::Model13>();
+            assert_impl_eq::<model13::Model13>();
+        }
+        #[cfg(feature = "model14")]
+        {
+            assert_impl_clone::<model14::Model14>();
+            assert_impl_partial_eq::<model14::Model14>();
+            assert_impl_eq::<model14::Model14>();
+        }
+        #[cfg(feature = "model15")]
+        {
+            assert_impl_clone::<model15::Model15>();
+            assert_impl_partial_eq::<model15::Model15>();
+            assert_impl_eq::<model15::Model15>();
+        }
+        #[cfg(feature = "model16")]
+        {
+            assert_impl_clone::<model16::Model16>();
+            assert_impl_partial_eq::<model16::Model16>();
+            assert_impl_eq::<model16::Model16>();
+        }
+        #[cfg(feature = "model17")]
+        {
+            assert_impl_clone::<model17::Model17>();
+            assert_impl_partial_eq::<model17::Model17>();
+            assert_impl_eq::<model17::Model17>();
+        }
+        #[cfg(feature = "model18")]
+        {
+            assert_impl_clone::<model18::Model18>();
+            assert_impl_partial_eq::<model18::Model18>();
+            assert_impl_eq::<model18::Model18>();
+        }
+        #[cfg(feature = "model19")]
+        {
+            assert_impl_clone::<model19::Model19>();
+            assert_impl_partial_eq::<model19::Model19>();
+            assert_impl_eq::<model19::Model19>();
+        }
+        #[cfg(feature = "model101")]
+        {
+            assert_impl_clone::<model101::Model101>();
+            assert_impl_partial_eq::<model101::Model101>();
+            assert_impl_eq::<model101::Model101>();
+        }
+        #[cfg(feature = "model102")]
+        {
+            assert_impl_clone::<model102::Model102>();
+            assert_impl_partial_eq::<model102::Model102>();
+            assert_impl_eq::<model102::Model102>();
+        }
+        #[cfg(feature = "model103")]
+        {
+            assert_impl_clone::<model103::Model103>();
+            assert_impl_partial_eq::<model103::Model103>();
+            assert_impl_eq::<model103::Model103>();
+        }
+        #[cfg(feature = "model111")]
+        {
+            assert_impl_clone::<model111::Model111>();
+            assert_impl_partial_eq::<model111::Model111>();
+        }
+        #[cfg(feature = "model112")]
+        {
+            assert_impl_clone::<model112::Model112>();
+            assert_impl_partial_eq::<model112::Model112>();
+        }
+        #[cfg(feature = "model113")]
+        {
+            assert_impl_clone::<model113::Model113>();
+            assert_impl_partial_eq::<model113::Model113>();
+        }
+        #[cfg(feature = "model120")]
+        {
+            assert_impl_clone::<model120::Model120>();
+            assert_impl_partial_eq::<model120::Model120>();
+            assert_impl_eq::<model120::Model120>();
+        }
+        #[cfg(feature = "model121")]
+        {
+            assert_impl_clone::<model121::Model121>();
+            assert_impl_partial_eq::<model121::Model121>();
+            assert_impl_eq::<model121::Model121>();
+        }
+        #[cfg(feature = "model122")]
+        {
+            assert_impl_clone::<model122::Model122>();
+            assert_impl_partial_eq::<model122::Model122>();
+            assert_impl_eq::<model122::Model122>();
+        }
+        #[cfg(feature = "model123")]
+        {
+            assert_impl_clone::<model123::Model123>();
+            assert_impl_partial_eq::<model123::Model123>();
+            assert_impl_eq::<model123::Model123>();
+        }
+        #[cfg(feature = "model124")]
+        {
+            assert_impl_clone::<model124::Model124>();
+            assert_impl_partial_eq::<model124::Model124>();
+            assert_impl_eq::<model124::Model124>();
+        }
+        #[cfg(feature = "model125")]
+        {
+            assert_impl_clone::<model125::Model125>();
+            assert_impl_partial_eq::<model125::Model125>();
+            assert_impl_eq::<model125::Model125>();
+        }
+        #[cfg(feature = "model126")]
+        {
+            assert_impl_clone::<model126::Model126>();
+            assert_impl_partial_eq::<model126::Model126>();
+            assert_impl_eq::<model126::Model126>();
+        }
+        #[cfg(feature = "model127")]
+        {
+            assert_impl_clone::<model127::Model127>();
+            assert_impl_partial_eq::<model127::Model127>();
+            assert_impl_eq::<model127::Model127>();
+        }
+        #[cfg(feature = "model128")]
+        {
+            assert_impl_clone::<model128::Model128>();
+            assert_impl_partial_eq::<model128::Model128>();
+            assert_impl_eq::<model128::Model128>();
+        }
+        #[cfg(feature = "model129")]
+        {
+            assert_impl_clone::<model129::Model129>();
+            assert_impl_partial_eq::<model129::Model129>();
+            assert_impl_eq::<model129::Model129>();
+        }
+        #[cfg(feature = "model130")]
+        {
+            assert_impl_clone::<model130::Model130>();
+            assert_impl_partial_eq::<model130::Model130>();
+            assert_impl_eq::<model130::Model130>();
+        }
+        #[cfg(feature = "model131")]
+        {
+            assert_impl_clone::<model131::Model131>();
+            assert_impl_partial_eq::<model131::Model131>();
+            assert_impl_eq::<model131::Model131>();
+        }
+        #[cfg(feature = "model132")]
+        {
+            assert_impl_clone::<model132::Model132>();
+            assert_impl_partial_eq::<model132::Model132>();
+            assert_impl_eq::<model132::Model132>();
+        }
+        #[cfg(feature = "model133")]
+        {
+            assert_impl_clone::<model133::Model133>();
+            assert_impl_partial_eq::<model133::Model133>();
+            assert_impl_eq::<model133::Model133>();
+        }
+        #[cfg(feature = "model134")]
+        {
+            assert_impl_clone::<model134::Model134>();
+            assert_impl_partial_eq::<model134::Model134>();
+            assert_impl_eq::<model134::Model134>();
+        }
+        #[cfg(feature = "model135")]
+        {
+            assert_impl_clone::<model135::Model135>();
+            assert_impl_partial_eq::<model135::Model135>();
+            assert_impl_eq::<model135::Model135>();
+        }
+        #[cfg(feature = "model136")]
+        {
+            assert_impl_clone::<model136::Model136>();
+            assert_impl_partial_eq::<model136::Model136>();
+            assert_impl_eq::<model136::Model136>();
+        }
+        #[cfg(feature = "model137")]
+        {
+            assert_impl_clone::<model137::Model137>();
+            assert_impl_partial_eq::<model137::Model137>();
+            assert_impl_eq::<model137::Model137>();
+        }
+        #[cfg(feature = "model138")]
+        {
+            assert_impl_clone::<model138::Model138>();
+            assert_impl_partial_eq::<model138::Model138>();
+            assert_impl_eq::<model138::Model138>();
+        }
+        #[cfg(feature = "model139")]
+        {
+            assert_impl_clone::<model139::Model139>();
+            assert_impl_partial_eq::<model139::Model139>();
+            assert_impl_eq::<model139::Model139>();
+        }
+        #[cfg(feature = "model140")]
+        {
+            assert_impl_clone::<model140::Model140>();
+            assert_impl_partial_eq::<model140::Model140>();
+            assert_impl_eq::<model140::Model140>();
+        }
+        #[cfg(feature = "model141")]
+        {
+            assert_impl_clone::<model141::Model141>();
+            assert_impl_partial_eq::<model141::Model141>();
+            assert_impl_eq::<model141::Model141>();
+        }
+        #[cfg(feature = "model142")]
+        {
+            assert_impl_clone::<model142::Model142>();
+            assert_impl_partial_eq::<model142::Model142>();
+            assert_impl_eq::<model142::Model142>();
+        }
+        #[cfg(feature = "model143")]
+        {
+            assert_impl_clone::<model143::Model143>();
+            assert_impl_partial_eq::<model143::Model143>();
+            assert_impl_eq::<model143::Model143>();
+        }
+        #[cfg(feature = "model144")]
+        {
+            assert_impl_clone::<model144::Model144>();
+            assert_impl_partial_eq::<model144::Model144>();
+            assert_impl_eq::<model144::Model144>();
+        }
+        #[cfg(feature = "model145")]
+        {
+            assert_impl_clone::<model145::Model145>();
+            assert_impl_partial_eq::<model145::Model145>();
+            assert_impl_eq::<model145::Model145>();
+        }
+        #[cfg(feature = "model160")]
+        {
+            assert_impl_clone::<model160::Model160>();
+            assert_impl_partial_eq::<model160::Model160>();
+            assert_impl_eq::<model160::Model160>();
+        }
+        #[cfg(feature = "model201")]
+        {
+            assert_impl_clone::<model201::Model201>();
+            assert_impl_partial_eq::<model201::Model201>();
+            assert_impl_eq::<model201::Model201>();
+        }
+        #[cfg(feature = "model202")]
+        {
+            assert_impl_clone::<model202::Model202>();
+            assert_impl_partial_eq::<model202::Model202>();
+            assert_impl_eq::<model202::Model202>();
+        }
+        #[cfg(feature = "model203")]
+        {
+            assert_impl_clone::<model203::Model203>();
+            assert_impl_partial_eq::<model203::Model203>();
+            assert_impl_eq::<model203::Model203>();
+        }
+        #[cfg(feature = "model204")]
+        {
+            assert_impl_clone::<model204::Model204>();
+            assert_impl_partial_eq::<model204::Model204>();
+            assert_impl_eq::<model204::Model204>();
+        }
+        #[cfg(feature = "model211")]
+        {
+            assert_impl_clone::<model211::Model211>();
+            assert_impl_partial_eq::<model211::Model211>();
+        }
+        #[cfg(feature = "model212")]
+        {
+            assert_impl_clone::<model212::Model212>();
+            assert_impl_partial_eq::<model212::Model212>();
+        }
+        #[cfg(feature = "model213")]
+        {
+            assert_impl_clone::<model213::Model213>();
+            assert_impl_partial_eq::<model213::Model213>();
+        }
+        #[cfg(feature = "model214")]
+        {
+            assert_impl_clone::<model214::Model214>();
+            assert_impl_partial_eq::<model214::Model214>();
+        }
+        #[cfg(feature = "model220")]
+        {
+            assert_impl_clone::<model220::Model220>();
+            assert_impl_partial_eq::<model220::Model220>();
+            assert_impl_eq::<model220::Model220>();
+        }
+        #[cfg(feature = "model302")]
+        {
+            assert_impl_clone::<model302::Model302>();
+            assert_impl_partial_eq::<model302::Model302>();
+            assert_impl_eq::<model302::Model302>();
+        }
+        #[cfg(feature = "model303")]
+        {
+            assert_impl_clone::<model303::Model303>();
+            assert_impl_partial_eq::<model303::Model303>();
+            assert_impl_eq::<model303::Model303>();
+        }
+        #[cfg(feature = "model304")]
+        {
+            assert_impl_clone::<model304::Model304>();
+            assert_impl_partial_eq::<model304::Model304>();
+            assert_impl_eq::<model304::Model304>();
+        }
+        #[cfg(feature = "model305")]
+        {
+            assert_impl_clone::<model305::Model305>();
+            assert_impl_partial_eq::<model305::Model305>();
+            assert_impl_eq::<model305::Model305>();
+        }
+        #[cfg(feature = "model306")]
+        {
+            assert_impl_clone::<model306::Model306>();
+            assert_impl_partial_eq::<model306::Model306>();
+            assert_impl_eq::<model306::Model306>();
+        }
+        #[cfg(feature = "model307")]
+        {
+            assert_impl_clone::<model307::Model307>();
+            assert_impl_partial_eq::<model307::Model307>();
+            assert_impl_eq::<model307::Model307>();
+        }
+        #[cfg(feature = "model308")]
+        {
+            assert_impl_clone::<model308::Model308>();
+            assert_impl_partial_eq::<model308::Model308>();
+            assert_impl_eq::<model308::Model308>();
+        }
+        #[cfg(feature = "model401")]
+        {
+            assert_impl_clone::<model401::Model401>();
+            assert_impl_partial_eq::<model401::Model401>();
+            assert_impl_eq::<model401::Model401>();
+        }
+        #[cfg(feature = "model402")]
+        {
+            assert_impl_clone::<model402::Model402>();
+            assert_impl_partial_eq::<model402::Model402>();
+            assert_impl_eq::<model402::Model402>();
+        }
+        #[cfg(feature = "model403")]
+        {
+            assert_impl_clone::<model403::Model403>();
+            assert_impl_partial_eq::<model403::Model403>();
+            assert_impl_eq::<model403::Model403>();
+        }
+        #[cfg(feature = "model404")]
+        {
+            assert_impl_clone::<model404::Model404>();
+            assert_impl_partial_eq::<model404::Model404>();
+            assert_impl_eq::<model404::Model404>();
+        }
+        #[cfg(feature = "model501")]
+        {
+            assert_impl_clone::<model501::Model501>();
+            assert_impl_partial_eq::<model501::Model501>();
+        }
+        #[cfg(feature = "model502")]
+        {
+            assert_impl_clone::<model502::Model502>();
+            assert_impl_partial_eq::<model502::Model502>();
+            assert_impl_eq::<model502::Model502>();
+        }
+        #[cfg(feature = "model601")]
+        {
+            assert_impl_clone::<model601::Model601>();
+            assert_impl_partial_eq::<model601::Model601>();
+            assert_impl_eq::<model601::Model601>();
+        }
+        #[cfg(feature = "model701")]
+        {
+            assert_impl_clone::<model701::Model701>();
+            assert_impl_partial_eq::<model701::Model701>();
+            assert_impl_eq::<model701::Model701>();
+        }
+        #[cfg(feature = "model702")]
+        {
+            assert_impl_clone::<model702::Model702>();
+            assert_impl_partial_eq::<model702::Model702>();
+            assert_impl_eq::<model702::Model702>();
+        }
+        #[cfg(feature = "model703")]
+        {
+            assert_impl_clone::<model703::Model703>();
+            assert_impl_partial_eq::<model703::Model703>();
+            assert_impl_eq::<model703::Model703>();
+        }
+        #[cfg(feature = "model704")]
+        {
+            assert_impl_clone::<model704::Model704>();
+            assert_impl_partial_eq::<model704::Model704>();
+            assert_impl_eq::<model704::Model704>();
+        }
+        #[cfg(feature = "model705")]
+        {
+            assert_impl_clone::<model705::Model705>();
+            assert_impl_partial_eq::<model705::Model705>();
+            assert_impl_eq::<model705::Model705>();
+        }
+        #[cfg(feature = "model706")]
+        {
+            assert_impl_clone::<model706::Model706>();
+            assert_impl_partial_eq::<model706::Model706>();
+            assert_impl_eq::<model706::Model706>();
+        }
+        #[cfg(feature = "model707")]
+        {
+            assert_impl_clone::<model707::Model707>();
+            assert_impl_partial_eq::<model707::Model707>();
+            assert_impl_eq::<model707::Model707>();
+        }
+        #[cfg(feature = "model708")]
+        {
+            assert_impl_clone::<model708::Model708>();
+            assert_impl_partial_eq::<model708::Model708>();
+            assert_impl_eq::<model708::Model708>();
+        }
+        #[cfg(feature = "model709")]
+        {
+            assert_impl_clone::<model709::Model709>();
+            assert_impl_partial_eq::<model709::Model709>();
+            assert_impl_eq::<model709::Model709>();
+        }
+        #[cfg(feature = "model710")]
+        {
+            assert_impl_clone::<model710::Model710>();
+            assert_impl_partial_eq::<model710::Model710>();
+            assert_impl_eq::<model710::Model710>();
+        }
+        #[cfg(feature = "model711")]
+        {
+            assert_impl_clone::<model711::Model711>();
+            assert_impl_partial_eq::<model711::Model711>();
+            assert_impl_eq::<model711::Model711>();
+        }
+        #[cfg(feature = "model712")]
+        {
+            assert_impl_clone::<model712::Model712>();
+            assert_impl_partial_eq::<model712::Model712>();
+            assert_impl_eq::<model712::Model712>();
+        }
+        #[cfg(feature = "model713")]
+        {
+            assert_impl_clone::<model713::Model713>();
+            assert_impl_partial_eq::<model713::Model713>();
+            assert_impl_eq::<model713::Model713>();
+        }
+        #[cfg(feature = "model714")]
+        {
+            assert_impl_clone::<model714::Model714>();
+            assert_impl_partial_eq::<model714::Model714>();
+            assert_impl_eq::<model714::Model714>();
+        }
+        #[cfg(feature = "model715")]
+        {
+            assert_impl_clone::<model715::Model715>();
+            assert_impl_partial_eq::<model715::Model715>();
+            assert_impl_eq::<model715::Model715>();
+        }
+        #[cfg(feature = "model801")]
+        {
+            assert_impl_clone::<model801::Model801>();
+            assert_impl_partial_eq::<model801::Model801>();
+            assert_impl_eq::<model801::Model801>();
+        }
+        #[cfg(feature = "model802")]
+        {
+            assert_impl_clone::<model802::Model802>();
+            assert_impl_partial_eq::<model802::Model802>();
+            assert_impl_eq::<model802::Model802>();
+        }
+        #[cfg(feature = "model803")]
+        {
+            assert_impl_clone::<model803::Model803>();
+            assert_impl_partial_eq::<model803::Model803>();
+            assert_impl_eq::<model803::Model803>();
+        }
+        #[cfg(feature = "model804")]
+        {
+            assert_impl_clone::<model804::Model804>();
+            assert_impl_partial_eq::<model804::Model804>();
+            assert_impl_eq::<model804::Model804>();
+        }
+        #[cfg(feature = "model805")]
+        {
+            assert_impl_clone::<model805::Model805>();
+            assert_impl_partial_eq::<model805::Model805>();
+            assert_impl_eq::<model805::Model805>();
+        }
+        #[cfg(feature = "model806")]
+        {
+            assert_impl_clone::<model806::Model806>();
+            assert_impl_partial_eq::<model806::Model806>();
+            assert_impl_eq::<model806::Model806>();
+        }
+        #[cfg(feature = "model807")]
+        {
+            assert_impl_clone::<model807::Model807>();
+            assert_impl_partial_eq::<model807::Model807>();
+            assert_impl_eq::<model807::Model807>();
+        }
+        #[cfg(feature = "model808")]
+        {
+            assert_impl_clone::<model808::Model808>();
+            assert_impl_partial_eq::<model808::Model808>();
+            assert_impl_eq::<model808::Model808>();
+        }
+        #[cfg(feature = "model809")]
+        {
+            assert_impl_clone::<model809::Model809>();
+            assert_impl_partial_eq::<model809::Model809>();
+            assert_impl_eq::<model809::Model809>();
+        }
+        #[cfg(feature = "model63001")]
+        {
+            assert_impl_clone::<model63001::Model63001>();
+            assert_impl_partial_eq::<model63001::Model63001>();
+        }
+        #[cfg(feature = "model63002")]
+        {
+            assert_impl_clone::<model63002::Model63002>();
+            assert_impl_partial_eq::<model63002::Model63002>();
+            assert_impl_eq::<model63002::Model63002>();
+        }
+        #[cfg(feature = "model64001")]
+        {
+            assert_impl_clone::<model64001::Model64001>();
+            assert_impl_partial_eq::<model64001::Model64001>();
+            assert_impl_eq::<model64001::Model64001>();
+        }
+        #[cfg(feature = "model64020")]
+        {
+            assert_impl_clone::<model64020::Model64020>();
+            assert_impl_partial_eq::<model64020::Model64020>();
+            assert_impl_eq::<model64020::Model64020>();
+        }
+        #[cfg(feature = "model64101")]
+        {
+            assert_impl_clone::<model64101::Model64101>();
+            assert_impl_partial_eq::<model64101::Model64101>();
+            assert_impl_eq::<model64101::Model64101>();
+        }
+        #[cfg(feature = "model64111")]
+        {
+            assert_impl_clone::<model64111::Model64111>();
+            assert_impl_partial_eq::<model64111::Model64111>();
+            assert_impl_eq::<model64111::Model64111>();
+        }
+        #[cfg(feature = "model64112")]
+        {
+            assert_impl_clone::<model64112::Model64112>();
+            assert_impl_partial_eq::<model64112::Model64112>();
+            assert_impl_eq::<model64112::Model64112>();
+        }
+        #[cfg(feature = "model64410")]
+        {
+            assert_impl_clone::<model64410::Model64410>();
+            assert_impl_partial_eq::<model64410::Model64410>();
+            assert_impl_eq::<model64410::Model64410>();
+        }
+        #[cfg(feature = "model64411")]
+        {
+            assert_impl_clone::<model64411::Model64411>();
+            assert_impl_partial_eq::<model64411::Model64411>();
+            assert_impl_eq::<model64411::Model64411>();
+        }
+        #[cfg(feature = "model64412")]
+        {
+            assert_impl_clone::<model64412::Model64412>();
+            assert_impl_partial_eq::<model64412::Model64412>();
+            assert_impl_eq::<model64412::Model64412>();
+        }
+        #[cfg(feature = "model64413")]
+        {
+            assert_impl_clone::<model64413::Model64413>();
+            assert_impl_partial_eq::<model64413::Model64413>();
+        }
+        #[cfg(feature = "model64414")]
+        {
+            assert_impl_clone::<model64414::Model64414>();
+            assert_impl_partial_eq::<model64414::Model64414>();
+        }
+        #[cfg(feature = "model64415")]
+        {
+            assert_impl_clone::<model64415::Model64415>();
+            assert_impl_partial_eq::<model64415::Model64415>();
+            assert_impl_eq::<model64415::Model64415>();
         }
     }
 }

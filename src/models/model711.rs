@@ -7,7 +7,7 @@ struct Counts {
 /// DER Frequency Droop
 ///
 /// DER Frequency Droop model.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerFreqDroop {
     /// DER Frequency Droop Module Enable
@@ -195,7 +195,7 @@ impl crate::FixedSize for AdptCtlRslt {
 /// Stored control sets.
 ///
 /// Comments: Stored control sets - Number of control sets contained in NCtl - The first set is read-only and indicates the current settings.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Ctl {
     /// Over-Frequency Deadband

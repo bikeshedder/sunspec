@@ -4,7 +4,7 @@ pub type Model220 = AcMeterSecure;
 /// Secure AC Meter Selected Readings
 ///
 /// Include this model for secure metering
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AcMeterSecure {
     /// Amps
@@ -281,7 +281,7 @@ impl crate::FixedSize for Alg {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     #[allow(missing_docs)]

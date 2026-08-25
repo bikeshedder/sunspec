@@ -78,7 +78,7 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
     });
     let models_struct = quote! {
         /// This struct contains the addresses of all discovered models enabled via Cargo features.
-        #[derive(Debug, Default)]
+        #[derive(Clone, Debug, Default, Eq, PartialEq)]
         #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
         pub struct Models {
             #(#models_fields)*
@@ -129,10 +129,54 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
             }
         }
     };
+    let model_trait_assertions = models.iter().map(|model| {
+        let model_module = format_ident!("model{}", model.id);
+        let model_struct = format_ident!("Model{}", model.id);
+        let model_feature = Literal::string(&model_feature_name(model.id));
+        // Deriving `Clone`/`PartialEq`/`Eq` for the root group requires all
+        // nested group structs to implement them as well. Asserting the
+        // root group is therefore enough to cover the entire model.
+        let eq_assertion = if group_has_float(&model.group) {
+            quote! {}
+        } else {
+            quote! { assert_impl_eq::<#model_module::#model_struct>(); }
+        };
+        quote! {
+            #[cfg(feature = #model_feature)]
+            {
+                assert_impl_clone::<#model_module::#model_struct>();
+                assert_impl_partial_eq::<#model_module::#model_struct>();
+                #eq_assertion
+            }
+        }
+    });
+
+    let tests = quote! {
+        #[cfg(test)]
+        mod tests {
+            use super::*;
+
+            fn assert_impl_clone<T: Clone>() {}
+            fn assert_impl_partial_eq<T: PartialEq>() {}
+            fn assert_impl_eq<T: Eq>() {}
+
+            /// Every model must implement `Clone` and `PartialEq`. Models
+            /// without floating point values must implement `Eq`, too.
+            #[test]
+            fn models_implement_clone_and_eq() {
+                assert_impl_clone::<Models>();
+                assert_impl_partial_eq::<Models>();
+                assert_impl_eq::<Models>();
+                #(#model_trait_assertions)*
+            }
+        }
+    };
+
     Ok(quote! {
         #(#modules)*
         #models_struct
         #models_impl
+        #tests
     })
 }
 
@@ -264,9 +308,17 @@ fn gen_group(
         }
     });
 
+    // `Eq` can only be derived for groups that don't contain any
+    // floating point values.
+    let eq_derive = if group_has_float(group) {
+        quote! {}
+    } else {
+        quote! { , Eq }
+    };
+
     let model_struct = quote! {
         #group_doc
-        #[derive(Debug)]
+        #[derive(Clone, Debug, PartialEq #eq_derive)]
         #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
         pub struct #group_name {
             #(#point_fields)*
@@ -779,6 +831,16 @@ fn gen_bitfield(point: &Point, prefix: &str) -> TokenStream {
             }
         }
     }
+}
+
+/// Returns `true` if the given group or any of its nested groups
+/// contains a floating point value.
+fn group_has_float(group: &Group) -> bool {
+    group
+        .points
+        .iter()
+        .any(|point| matches!(point.r#type, PointType::Float32 | PointType::Float64))
+        || group.groups.iter().any(group_has_float)
 }
 
 fn rust_type(point: &Point, prefix: &str) -> TokenStream {

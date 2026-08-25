@@ -2,7 +2,7 @@
 /// Type alias for [`LithiumIonModule`].
 pub type Model805 = LithiumIonModule;
 /// Lithium-Ion Module Model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct LithiumIonModule {
     /// String Index
@@ -194,7 +194,7 @@ impl LithiumIonModule {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct LithiumIonModuleCell {
     /// Cell Voltage

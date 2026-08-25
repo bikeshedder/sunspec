@@ -2,7 +2,7 @@
 /// Set Operator Security Certificate
 ///
 /// Security model for PKI
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model9 {
     /// Cert_UID
@@ -569,7 +569,7 @@ impl crate::FixedSize for Alg {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     #[allow(missing_docs)]

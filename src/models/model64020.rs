@@ -1,6 +1,6 @@
 //! Mersen GreenString
 /// Mersen GreenString
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model64020 {
     /// Aux 0 temperature
@@ -181,7 +181,7 @@ impl Model64020 {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     /// Serial number

@@ -6,7 +6,7 @@ pub type Model124 = StorageBasic;
 /// Basic Storage Controls
 ///
 /// Detail: Ref 3: 8.7.4.2
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct StorageBasic {
     /// WChaMax

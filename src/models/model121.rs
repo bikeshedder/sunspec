@@ -6,7 +6,7 @@ pub type Model121 = Settings;
 /// Inverter Controls Basic Settings
 ///
 /// Detail: Ref 3: 8.4.2.1, Ref 4: 17
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Settings {
     /// WMax

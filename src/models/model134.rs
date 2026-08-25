@@ -6,7 +6,7 @@ pub type Model134 = FreqWatt;
 /// Curve-Based Frequency-Watt
 ///
 /// Detail: Ref 3: 8.9.1.2, 8.9.4.2
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct FreqWatt {
     /// ActCrv
@@ -116,7 +116,7 @@ impl crate::FixedSize for ModEna {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Curve {
     /// ActPt

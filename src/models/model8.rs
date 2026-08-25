@@ -2,7 +2,7 @@
 /// Get Device Security Certificate
 ///
 /// Security model for PKI
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model8 {
     /// Format
@@ -83,7 +83,7 @@ impl crate::FixedSize for Fmt {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     /// Cert

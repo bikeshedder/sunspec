@@ -4,7 +4,7 @@ pub type Model213 = AcMeterAbcnFloat;
 /// wye-connect three phase (abcn) meter
 ///
 /// Detail: Float
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AcMeterAbcnFloat {
     /// Amps

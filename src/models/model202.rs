@@ -2,7 +2,7 @@
 /// Type alias for [`AcMeterAbn`].
 pub type Model202 = AcMeterAbn;
 /// split single phase (ABN) meter
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AcMeterAbn {
     /// Amps

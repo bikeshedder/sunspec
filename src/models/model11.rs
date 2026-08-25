@@ -2,7 +2,7 @@
 /// Ethernet Link Layer
 ///
 /// Include to support a wired ethernet port
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model11 {
     /// Ethernet Link Speed

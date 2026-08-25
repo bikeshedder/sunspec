@@ -6,7 +6,7 @@ pub type Model132 = VoltWatt;
 /// Volt-Watt
 ///
 /// Detail: Ref 3: 8.12.1.2
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct VoltWatt {
     /// ActCrv
@@ -115,7 +115,7 @@ impl crate::FixedSize for ModEna {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Curve {
     /// ActPt

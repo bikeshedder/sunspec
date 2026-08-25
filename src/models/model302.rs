@@ -4,7 +4,7 @@ pub type Model302 = Irradiance;
 /// Irradiance Model
 ///
 /// Include to support various irradiance measurements
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Irradiance {
     #[allow(missing_docs)]
@@ -25,7 +25,7 @@ impl Irradiance {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     /// GHI

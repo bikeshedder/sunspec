@@ -6,7 +6,7 @@ pub type Model502 = SolarModule;
 /// A solar module model supporting DC-DC converter
 ///
 /// Detail: Integer
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct SolarModule {
     /// Current scale factor

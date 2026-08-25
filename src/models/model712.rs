@@ -8,7 +8,7 @@ struct Counts {
 /// DER Watt-Var
 ///
 /// DER Watt-Var model.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerWattVar {
     /// DER Watt-Var Module Enable
@@ -197,7 +197,7 @@ impl crate::FixedSize for AdptCrvRslt {
 /// Stored curve sets.
 ///
 /// Comments: Stored curve sets - Number of curve sets contained in NCrv - The first set is read-only and indicates the current settings.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Crv {
     /// Active Points
@@ -401,7 +401,7 @@ impl crate::FixedSize for CrvReadOnly {
 /// Stored curve points.
 ///
 /// Comments: Stored curve sets - curve points for each stored curve - Number of curve points contained in NPt
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Pt {
     /// Active Power Point

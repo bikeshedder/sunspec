@@ -6,7 +6,7 @@ pub type Model501 = SolarModuleFloat;
 /// A solar module model supporting DC-DC converter
 ///
 /// Detail: Float
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct SolarModuleFloat {
     /// Status

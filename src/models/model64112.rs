@@ -1,6 +1,6 @@
 //! OutBack FM Charge Controller
 /// OutBack FM Charge Controller
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model64112 {
     /// Port Number

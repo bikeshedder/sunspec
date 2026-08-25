@@ -6,7 +6,7 @@ pub type Model120 = Nameplate;
 /// Inverter Controls Nameplate Ratings
 ///
 /// Detail: Ref 3: 8.14.3.2, Ref 4: 17
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Nameplate {
     /// DERTyp

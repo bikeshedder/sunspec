@@ -8,7 +8,7 @@ struct Counts {
 /// AC Simulator Control Interface
 ///
 /// A generic AC simulator/power supply control interface for DER electrical testing.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AcSimInterface {
     /// Active Phases
@@ -533,7 +533,7 @@ impl crate::FixedSize for ProfRslt {
 /// Stored AC profile sets.
 ///
 /// Comments: Stored AC Profile Sets - Number of profile sets = NProf
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Prof {
     /// Profile Name
@@ -595,7 +595,7 @@ impl Prof {
 /// Stored AC profile points.
 ///
 /// Comments: Stored AC Profile Sets - Profile points for each stored profile - Number of profile points contained in NPt
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Pt {
     /// Profile Time

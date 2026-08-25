@@ -1,6 +1,6 @@
 //! Basic Charge Controller
 /// Basic Charge Controller
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model64111 {
     /// Port Number

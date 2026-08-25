@@ -6,7 +6,7 @@ pub type Model131 = WattPf;
 /// Watt-Power Factor
 ///
 /// Detail: Ref 3: 8.11.1.2
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct WattPf {
     /// ActCrv
@@ -115,7 +115,7 @@ impl crate::FixedSize for ModEna {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Curve {
     /// ActPt

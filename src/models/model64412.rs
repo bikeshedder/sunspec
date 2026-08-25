@@ -4,7 +4,7 @@ pub type Model64412 = DerExploitation;
 /// DER Cyber Exploitation
 ///
 /// Operations that represent a hacked DER device
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerExploitation {
     /// DA Manipulation

@@ -6,7 +6,7 @@ pub type Model133 = Schedule;
 /// Basic Scheduling
 ///
 /// Detail: Ref 2: 2.2.8
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Schedule {
     /// ActSchd
@@ -118,7 +118,7 @@ impl crate::FixedSize for ModEna {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     /// ActPts

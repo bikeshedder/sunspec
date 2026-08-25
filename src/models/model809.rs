@@ -2,7 +2,7 @@
 /// Type alias for [`FlowBatteryStack`].
 pub type Model809 = FlowBatteryStack;
 /// Flow Battery Stack Model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct FlowBatteryStack {
     /// Stack Points To Be Determined
@@ -33,7 +33,7 @@ impl FlowBatteryStack {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Cell {
     /// Cell Points To Be Determined

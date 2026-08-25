@@ -6,7 +6,7 @@ pub type Model404 = StringCombinerAdvancedInputs;
 /// An advanced string combiner including voltage and energy measurements
 ///
 /// Detail: This model supersedes model 402
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct StringCombinerAdvancedInputs {
     /// Current scale factor
@@ -194,7 +194,7 @@ impl crate::FixedSize for EvtVnd {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct String {
     /// ID

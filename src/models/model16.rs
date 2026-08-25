@@ -2,7 +2,7 @@
 /// Simple IP Network
 ///
 /// Include this model for a simple IPv4 network stack
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model16 {
     /// Name

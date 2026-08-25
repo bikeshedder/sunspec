@@ -2,7 +2,7 @@
 /// Serial Interface
 ///
 /// Include this model for serial interface configuration support
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model17 {
     /// Name

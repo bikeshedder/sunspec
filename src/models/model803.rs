@@ -5,7 +5,7 @@ struct Counts {
     n_str: u16,
 }
 /// Lithium-Ion Battery Bank Model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct LithiumIonBank {
     /// String Count
@@ -197,7 +197,7 @@ impl LithiumIonBank {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct String {
     /// Module Count

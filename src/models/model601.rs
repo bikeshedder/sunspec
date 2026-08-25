@@ -6,7 +6,7 @@ pub type Model601 = TrackerController;
 /// Monitors and controls multiple trackers
 ///
 /// Detail: Trackers may include GPS model 305 for location information
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct TrackerController {
     /// Controller
@@ -230,7 +230,7 @@ impl crate::FixedSize for GlblAlm {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Tracker {
     /// Tracker

@@ -2,7 +2,7 @@
 /// Type alias for [`FlowBatteryString`].
 pub type Model807 = FlowBatteryString;
 /// Flow Battery String Model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct FlowBatteryString {
     /// String Index
@@ -327,7 +327,7 @@ impl crate::FixedSize for EvtVnd2 {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Module {
     /// Module Index

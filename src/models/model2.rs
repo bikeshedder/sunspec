@@ -4,7 +4,7 @@ pub type Model2 = Aggregator;
 /// Basic Aggregator
 ///
 /// Aggregates a collection of models for a given model id
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Aggregator {
     /// AID

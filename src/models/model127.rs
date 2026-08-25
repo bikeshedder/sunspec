@@ -6,7 +6,7 @@ pub type Model127 = FreqWattParam;
 /// Parameterized Frequency-Watt
 ///
 /// Detail: Ref 3: 8.9.1.2, 8.9.4.2
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct FreqWattParam {
     /// WGra

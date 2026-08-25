@@ -8,7 +8,7 @@ struct Counts {
 /// DC Simulator Control Interface
 ///
 /// A generic DC simulator/power supply control interface for DER electrical testing.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DcSimInterface {
     /// Maximum Voltage
@@ -509,7 +509,7 @@ impl crate::FixedSize for AdptProfRslt {
 /// Stored profile sets.
 ///
 /// Comments: Stored Pofile Sets - Number of profile sets = NProf - The first set is read-only and indicates the current settings.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Prof {
     /// Active Points
@@ -594,7 +594,7 @@ impl crate::FixedSize for ProfDeptRef {
 /// Stored profile points.
 ///
 /// Comments: Stored Profile Sets - Profile points for each stored profile - Number of profile points contained in NPt
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Pt {
     /// Profile Time

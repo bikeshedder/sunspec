@@ -2,7 +2,7 @@
 /// Type alias for [`AcMeterAbc`].
 pub type Model204 = AcMeterAbc;
 /// delta-connect three phase (abc) meter
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AcMeterAbc {
     /// Amps

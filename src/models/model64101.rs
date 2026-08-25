@@ -1,6 +1,6 @@
 //! Eltek Inverter Extension
 /// Eltek Inverter Extension
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model64101 {
     #[allow(missing_docs)]

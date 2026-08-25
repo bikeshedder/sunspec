@@ -1,4 +1,8 @@
-use std::{fmt::Debug, marker::PhantomData};
+use std::{
+    fmt::Debug,
+    hash::{Hash, Hasher},
+    marker::PhantomData,
+};
 
 use thiserror::Error;
 
@@ -52,6 +56,33 @@ impl<M: Model> ModelAddr<M> {
     pub fn set_addr(&mut self, addr: u16, len: u16) {
         self.addr = addr;
         self.len = len;
+    }
+}
+
+// The following impls are written manually as `#[derive(...)]` would
+// add a `M: Clone`/`M: PartialEq`/... bound which is not needed as the
+// model type is only used as a `PhantomData` marker.
+
+impl<M: Model> Clone for ModelAddr<M> {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+
+impl<M: Model> Copy for ModelAddr<M> {}
+
+impl<M: Model> PartialEq for ModelAddr<M> {
+    fn eq(&self, other: &Self) -> bool {
+        self.addr == other.addr && self.len == other.len
+    }
+}
+
+impl<M: Model> Eq for ModelAddr<M> {}
+
+impl<M: Model> Hash for ModelAddr<M> {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.addr.hash(state);
+        self.len.hash(state);
     }
 }
 

@@ -4,7 +4,7 @@ pub type Model703 = DerEnterService;
 /// Enter Service
 ///
 /// Enter service model.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerEnterService {
     /// Permit Enter Service

@@ -4,7 +4,7 @@
 /// Include a digital signature over the response
 ///
 /// Detail: Used in conjunction with a Secure Write Request
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model7 {
     /// Request Sequence
@@ -217,7 +217,7 @@ impl crate::FixedSize for Alg {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     /// DS

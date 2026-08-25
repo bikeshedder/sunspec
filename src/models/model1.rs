@@ -4,7 +4,7 @@ pub type Model1 = Common;
 /// Common
 ///
 /// All SunSpec compliant devices must include this as the first model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Common {
     /// Manufacturer

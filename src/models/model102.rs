@@ -4,7 +4,7 @@ pub type Model102 = InverterSplitPhase;
 /// Inverter (Split-Phase)
 ///
 /// Include this model for split phase inverter monitoring
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct InverterSplitPhase {
     /// Amps

@@ -2,7 +2,7 @@
 /// Communication Interface Header
 ///
 /// To be included first for a complete interface description
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model10 {
     /// Interface Status

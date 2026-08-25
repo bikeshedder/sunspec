@@ -4,7 +4,7 @@ pub type Model64415 = CsipControl;
 /// CSIP Client Control
 ///
 /// CSIP Client Control for Alarms and Error tests
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct CsipControl {
     /// LogEvent Mode Enable

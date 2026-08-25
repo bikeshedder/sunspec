@@ -4,7 +4,7 @@ pub type Model211 = AcMeterAnOrAbFloat;
 /// single phase (AN or AB) meter
 ///
 /// Detail: Float
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AcMeterAnOrAbFloat {
     /// Amps

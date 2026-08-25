@@ -1,17 +1,8 @@
 use thiserror::Error;
 
-use crate::model::{Model, ModelAddr};
 use crate::models::Models;
 
 use super::ModbusError;
-
-impl<M: Model> Copy for ModelAddr<M> {}
-
-impl<M: Model> Clone for ModelAddr<M> {
-    fn clone(&self) -> Self {
-        *self
-    }
-}
 
 /// For every discovered but unknown model to this library
 /// this structure is returned.

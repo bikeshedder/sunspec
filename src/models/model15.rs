@@ -2,7 +2,7 @@
 /// Interface Counters Model
 ///
 /// Interface counters
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model15 {
     /// Clear

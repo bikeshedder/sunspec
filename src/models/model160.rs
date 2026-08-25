@@ -2,7 +2,7 @@
 /// Type alias for [`Mppt`].
 pub type Model160 = Mppt;
 /// Multiple MPPT Inverter Extension Model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Mppt {
     /// Current Scale Factor
@@ -93,7 +93,7 @@ impl crate::FixedSize for Evt {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Module {
     /// Input ID

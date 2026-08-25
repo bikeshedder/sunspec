@@ -4,7 +4,7 @@ pub type Model308 = MiniMet;
 /// Mini Met Model
 ///
 /// Include to support a few basic measurements
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct MiniMet {
     /// GHI

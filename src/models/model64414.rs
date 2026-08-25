@@ -4,7 +4,7 @@ pub type Model64414 = DerSimControls;
 /// DER Simulation Controls
 ///
 /// Configuration parameters for the DER device simulator.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerSimControls {
     /// Time offset

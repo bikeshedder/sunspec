@@ -1,6 +1,6 @@
 //! Veris Status and Configuration
 /// Veris Status and Configuration
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model64001 {
     /// Command Code

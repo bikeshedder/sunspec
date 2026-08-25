@@ -4,7 +4,7 @@ pub type Model201 = AcMeterAnOrAb;
 /// Meter (Single Phase) single phase (AN or AB) meter
 ///
 /// Include this model for single phase (AN or AB) metering
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AcMeterAnOrAb {
     /// Amps

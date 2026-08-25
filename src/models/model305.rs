@@ -4,7 +4,7 @@ pub type Model305 = Location;
 /// GPS
 ///
 /// Include to support location measurements
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Location {
     /// Tm

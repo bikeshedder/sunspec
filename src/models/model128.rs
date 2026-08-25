@@ -6,7 +6,7 @@ pub type Model128 = ReactiveCurrent;
 /// Dynamic Reactive Current
 ///
 /// Detail: Ref 3: 8.10.1.2; Ref 4: 12
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct ReactiveCurrent {
     /// ArGraMod

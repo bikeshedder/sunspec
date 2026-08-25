@@ -4,7 +4,7 @@ pub type Model113 = InverterThreePhaseFloat;
 /// Inverter (Three Phase) FLOAT
 ///
 /// Include this model for three phase inverter monitoring using float values
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct InverterThreePhaseFloat {
     /// Amps

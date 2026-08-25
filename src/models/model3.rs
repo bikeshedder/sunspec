@@ -4,7 +4,7 @@
 /// Request a digital signature over a specified set of data registers
 ///
 /// Detail: Used in conjunction with Secure Dataset Read Response Model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model3 {
     /// X
@@ -329,7 +329,7 @@ impl crate::FixedSize for Alg {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     /// DS

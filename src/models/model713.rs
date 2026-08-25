@@ -4,7 +4,7 @@ pub type Model713 = DerStorageCapacity;
 /// DER Storage Capacity
 ///
 /// DER storage capacity.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerStorageCapacity {
     /// Energy Rating

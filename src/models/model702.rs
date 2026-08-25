@@ -4,7 +4,7 @@ pub type Model702 = DerCapacity;
 /// DER Capacity
 ///
 /// DER capacity model.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerCapacity {
     /// Active Power Max Rating

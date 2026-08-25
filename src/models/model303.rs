@@ -4,7 +4,7 @@ pub type Model303 = BomTemp;
 /// Back of Module Temperature Model
 ///
 /// Include to support variable number of  back of module temperature measurements
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct BomTemp {
     #[allow(missing_docs)]
@@ -25,7 +25,7 @@ impl BomTemp {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Temp {
     /// Temp

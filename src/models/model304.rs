@@ -4,7 +4,7 @@ pub type Model304 = Inclinometer;
 /// Inclinometer Model
 ///
 /// Include to support orientation measurements
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Inclinometer {
     #[allow(missing_docs)]
@@ -25,7 +25,7 @@ impl Inclinometer {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Incl {
     /// X

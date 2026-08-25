@@ -6,7 +6,7 @@ pub type Model126 = VoltVar;
 /// Static Volt-VAR Arrays
 ///
 /// Detail: Ref 3: 8.8.1.2
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct VoltVar {
     /// ActCrv
@@ -113,7 +113,7 @@ impl crate::FixedSize for ModEna {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Curve {
     /// ActPt

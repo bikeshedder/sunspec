@@ -5,7 +5,7 @@ struct Counts {
     n_mod: u16,
 }
 /// Lithium-Ion String Model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct LithiumIonString {
     /// String Index
@@ -539,7 +539,7 @@ impl crate::FixedSize for SetCon {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct LithiumIonStringModule {
     /// Module Cell Count

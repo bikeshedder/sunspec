@@ -6,7 +6,7 @@ pub type Model307 = BaseMet;
 /// Base Meteorological Model
 ///
 /// Detail: This model supersedes model 301
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct BaseMet {
     /// Ambient Temperature

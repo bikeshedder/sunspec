@@ -4,7 +4,7 @@ pub type Model111 = InverterSinglePhaseFloat;
 /// Inverter (Single Phase) FLOAT
 ///
 /// Include this model for single phase inverter monitoring using float values
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct InverterSinglePhaseFloat {
     /// Amps

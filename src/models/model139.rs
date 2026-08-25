@@ -6,7 +6,7 @@ pub type Model139 = Lvrtx;
 /// LVRT extended curve
 ///
 /// Detail: Ref 4: 11
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Lvrtx {
     /// ActCrv
@@ -152,7 +152,7 @@ impl crate::FixedSize for CrvType {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Curve {
     /// ActPt

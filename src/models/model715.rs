@@ -4,7 +4,7 @@ pub type Model715 = DerCtl;
 /// DERCtl
 ///
 /// DER Control
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerCtl {
     /// Control Mode

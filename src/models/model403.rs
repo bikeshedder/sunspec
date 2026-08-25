@@ -6,7 +6,7 @@ pub type Model403 = StringCombinerCurrentInput;
 /// A basic string combiner model
 ///
 /// Detail: This model supersedes model 401
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct StringCombinerCurrentInput {
     /// Current scale factor
@@ -156,7 +156,7 @@ impl crate::FixedSize for EvtVnd {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct String {
     /// ID

@@ -4,7 +4,7 @@ pub type Model306 = RefPoint;
 /// Reference Point Model
 ///
 /// Include to support a standard reference point
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct RefPoint {
     /// GHI

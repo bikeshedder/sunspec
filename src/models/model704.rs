@@ -4,7 +4,7 @@ pub type Model704 = DerCtlAc;
 /// DER AC Controls
 ///
 /// DER AC controls model.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerCtlAc {
     /// Power Factor Enable (W Inj) Enable
@@ -1001,7 +1001,7 @@ impl crate::FixedSize for AntiIslEna {
 /// Power factor setpoint when injecting active power.
 ///
 /// Comments: Power Factor Settings
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct PfwInj {
     /// Power Factor (W Inj)
@@ -1080,7 +1080,7 @@ impl crate::FixedSize for PfwInjExt {
 /// Reversion Power Factor (W Inj)
 ///
 /// Reversion power factor setpoint when injecting active power.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct PfwInjRvrt {
     /// Reversion Power Factor (W Inj)
@@ -1159,7 +1159,7 @@ impl crate::FixedSize for PfwInjRvrtExt {
 /// Power Factor (W Abs)
 ///
 /// Power factor setpoint when absorbing active power.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct PfwAbs {
     /// Power Factor (W Abs)
@@ -1238,7 +1238,7 @@ impl crate::FixedSize for PfwAbsExt {
 /// Reversion Power Factor (W Abs)
 ///
 /// Reversion power factor setpoint when absorbing active power.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct PfwAbsRvrt {
     /// Reversion Power Factor (W Abs)

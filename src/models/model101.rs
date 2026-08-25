@@ -4,7 +4,7 @@ pub type Model101 = InverterSinglePhase;
 /// Inverter (Single Phase)
 ///
 /// Include this model for single phase inverter monitoring
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct InverterSinglePhase {
     /// Amps

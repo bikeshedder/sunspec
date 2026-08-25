@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Model and group structs now derive `Clone` and `PartialEq`. Models that
+  contain no floating point values additionally derive `Eq`.
+- `ModelAddr` now implements `Clone`, `Copy`, `PartialEq`, `Eq` and `Hash`
+  regardless of the enabled features. The `Models` struct derives `Clone`,
+  `PartialEq` and `Eq`.
+
 ## [0.9.0] - 2026-04-01
 
 ### Added

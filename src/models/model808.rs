@@ -2,7 +2,7 @@
 /// Type alias for [`FlowBatteryModule`].
 pub type Model808 = FlowBatteryModule;
 /// Flow Battery Module Model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct FlowBatteryModule {
     /// Module Points To Be Determined
@@ -33,7 +33,7 @@ impl FlowBatteryModule {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Stack {
     /// Stack Points To Be Determined

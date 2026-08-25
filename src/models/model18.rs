@@ -2,7 +2,7 @@
 /// Cellular Link
 ///
 /// Include this model to support a cellular interface link
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model18 {
     /// Name

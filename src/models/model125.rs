@@ -6,7 +6,7 @@ pub type Model125 = Pricing;
 /// Pricing Signal
 ///
 /// Detail: Ref 3: 8.7.5.1; Ref 4: 6
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Pricing {
     /// ModEna

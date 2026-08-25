@@ -4,7 +4,7 @@ pub type Model212 = AcMeterAbnFloat;
 /// split single phase (ABN) meter
 ///
 /// Detail: Float
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AcMeterAbnFloat {
     /// Amps

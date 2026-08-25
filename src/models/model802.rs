@@ -2,7 +2,7 @@
 /// Type alias for [`Battery`].
 pub type Model802 = Battery;
 /// Battery Base Model
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Battery {
     /// Nameplate Charge Capacity

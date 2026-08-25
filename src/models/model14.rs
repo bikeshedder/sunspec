@@ -2,7 +2,7 @@
 /// Proxy Server
 ///
 /// Include this block to allow for a proxy server
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model14 {
     /// name

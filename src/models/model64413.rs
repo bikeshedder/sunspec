@@ -7,7 +7,7 @@ struct Counts {
 /// PV Curves
 ///
 /// Current-Voltage and Power-Voltage Profiles for PV Simulation.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct PvSimCurves {
     /// IV length
@@ -53,7 +53,7 @@ impl PvSimCurves {
     }
 }
 /// Comments: IV Curve Points
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Iv {
     /// Power

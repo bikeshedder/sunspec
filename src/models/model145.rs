@@ -4,7 +4,7 @@ pub type Model145 = ExtSettings;
 /// Extended Settings
 ///
 /// Inverter controls extended settings
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct ExtSettings {
     /// Ramp Up Rate

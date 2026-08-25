@@ -7,7 +7,7 @@ struct Counts {
 /// DER DC Measurement
 ///
 /// DER DC measurement.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerMeasureDc {
     /// Port Alarms
@@ -128,7 +128,7 @@ impl crate::FixedSize for PrtAlrms {
     }
 }
 /// Comments: DC Port
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Prt {
     /// Port Type

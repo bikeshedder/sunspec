@@ -8,7 +8,7 @@ struct Counts {
 /// DER Trip LF
 ///
 /// DER low frequency trip model.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerTripLf {
     /// DER Trip LF Module Enable
@@ -179,7 +179,7 @@ impl crate::FixedSize for AdptCrvRslt {
 /// Stored curve sets.
 ///
 /// Comments: Stored curve sets - Number of curve sets contained in NCrvSet - The first set is read-only and indicates the current settings.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Crv {
     /// Curve Access
@@ -289,7 +289,7 @@ impl crate::FixedSize for CrvReadOnly {
 /// Stored must trip curve.
 ///
 /// Comments: Stored curve set containing a Must Trip, May Trip, and Momentary Cessation Curve - Number of curve points contained in NPt
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct MustTrip {
     /// Number Of Active Points
@@ -329,7 +329,7 @@ impl MustTrip {
 /// Must Trip Curve Points
 ///
 /// Must trip curve points.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Pt {
     /// Frequency Point
@@ -382,7 +382,7 @@ impl Pt {
 /// May Trip Curve
 ///
 /// Stored may trip curve.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct MayTrip {
     /// Number Of Active Points
@@ -422,7 +422,7 @@ impl MayTrip {
 /// Momentary Cessation Curve
 ///
 /// Stored momentary cessation curve.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct MomCess {
     /// Number Of Active Points

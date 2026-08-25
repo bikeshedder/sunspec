@@ -2,7 +2,7 @@
 /// PPP Link
 ///
 /// Include this model to configure a Point-to-Point Protocol link
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model19 {
     /// Name

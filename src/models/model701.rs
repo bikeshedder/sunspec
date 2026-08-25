@@ -4,7 +4,7 @@ pub type Model701 = DerMeasureAc;
 /// DER AC Measurement
 ///
 /// DER AC measurement model.
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DerMeasureAc {
     /// AC Wiring Type

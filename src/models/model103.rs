@@ -4,7 +4,7 @@ pub type Model103 = InverterThreePhase;
 /// Inverter (Three Phase)
 ///
 /// Include this model for three phase inverter monitoring
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct InverterThreePhase {
     /// Amps

@@ -2,7 +2,7 @@
 /// IPv4
 ///
 /// Include to support an IPv4 protocol stack on this interface
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model12 {
     /// Name

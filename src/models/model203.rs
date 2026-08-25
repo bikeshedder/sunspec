@@ -2,7 +2,7 @@
 /// Type alias for [`AcMeterAbcn`].
 pub type Model203 = AcMeterAbcn;
 /// wye-connect three phase (abcn) meter
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AcMeterAbcn {
     /// Amps

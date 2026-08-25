@@ -1,6 +1,6 @@
 //! SunSpec Test Model 1
 /// SunSpec Test Model 1
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Model63001 {
     #[allow(missing_docs)]
@@ -337,7 +337,7 @@ impl crate::FixedSize for Bitfield32U {
     }
 }
 #[allow(missing_docs)]
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Repeating {
     #[allow(missing_docs)]
