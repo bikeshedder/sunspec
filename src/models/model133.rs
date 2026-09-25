@@ -543,7 +543,7 @@ pub enum RepeatingYTyp {
     #[allow(missing_docs)]
     WDisChaGra,
     #[allow(missing_docs)]
-    VArAval,
+    VarAval,
     #[allow(missing_docs)]
     Schedule,
     #[allow(missing_docs)]
@@ -567,7 +567,7 @@ impl crate::EnumValue for RepeatingYTyp {
             8 => Self::VoltVarArray,
             9 => Self::WChaGra,
             10 => Self::WDisChaGra,
-            11 => Self::VArAval,
+            11 => Self::VarAval,
             12 => Self::Schedule,
             99 => Self::Other,
             value => Self::Invalid(value),
@@ -586,7 +586,7 @@ impl crate::EnumValue for RepeatingYTyp {
             Self::VoltVarArray => 8,
             Self::WChaGra => 9,
             Self::WDisChaGra => 10,
-            Self::VArAval => 11,
+            Self::VarAval => 11,
             Self::Schedule => 12,
             Self::Other => 99,
             Self::Invalid(value) => value,

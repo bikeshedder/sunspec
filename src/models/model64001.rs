@@ -8,9 +8,9 @@ pub struct Model64001 {
     /// Hardware Revision
     pub hw_rev: Option<u16>,
     /// RS FW Revision
-    pub rsfw_rev: Option<u16>,
+    pub rs_fw_rev: Option<u16>,
     /// OS FW Revision
-    pub osfw_rev: Option<u16>,
+    pub os_fw_rev: Option<u16>,
     /// Product Revision
     pub prod_rev: Option<String>,
     /// Boot Count
@@ -26,49 +26,49 @@ pub struct Model64001 {
     /// System Configuration
     pub config: Option<Config>,
     /// LED Blink Threshold
-    pub le_dblink: Option<u16>,
+    pub led_blink: Option<u16>,
     /// LED On Threshold
-    pub le_don: Option<u16>,
+    pub led_on: Option<u16>,
     #[allow(missing_docs)]
     pub reserved: Option<u16>,
     /// Location String
     pub loc: Option<String>,
     /// Sensor 1 Unit ID
-    pub s1id: Option<u16>,
+    pub s1_id: Option<u16>,
     /// Sensor 1 Address
     pub s1_addr: Option<u16>,
     /// Sensor 1 OS Version
-    pub s1os_ver: Option<u16>,
+    pub s1_os_ver: Option<u16>,
     /// Sensor 1 Product Version
     pub s1_ver: Option<String>,
     /// Sensor 1 Serial Num
     pub s1_serial: Option<String>,
     /// Sensor 2 Unit ID
-    pub s2id: Option<u16>,
+    pub s2_id: Option<u16>,
     /// Sensor 2 Address
     pub s2_addr: Option<u16>,
     /// Sensor 2 OS Version
-    pub s2os_ver: Option<u16>,
+    pub s2_os_ver: Option<u16>,
     /// Sensor 2 Product Version
     pub s2_ver: Option<String>,
     /// Sensor 2 Serial Num
     pub s2_serial: Option<String>,
     /// Sensor 3 Unit ID
-    pub s3id: Option<u16>,
+    pub s3_id: Option<u16>,
     /// Sensor 3 Address
     pub s3_addr: Option<u16>,
     /// Sensor 3 OS Version
-    pub s3os_ver: Option<u16>,
+    pub s3_os_ver: Option<u16>,
     /// Sensor 3 Product Version
     pub s3_ver: Option<String>,
     /// Sensor 3 Serial Num
     pub s3_serial: Option<String>,
     /// Sensor 4 Unit ID
-    pub s4id: Option<u16>,
+    pub s4_id: Option<u16>,
     /// Sensor 4 Address
     pub s4_addr: Option<u16>,
     /// Sensor 4 OS Version
-    pub s4os_ver: Option<u16>,
+    pub s4_os_ver: Option<u16>,
     /// Sensor 4 Product Version
     pub s4_ver: Option<String>,
     /// Sensor 4 Serial Num
@@ -78,8 +78,8 @@ pub struct Model64001 {
 impl Model64001 {
     pub const CMD: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const HW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const RSFW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
-    pub const OSFW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
+    pub const RS_FW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
+    pub const OS_FW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
     pub const PROD_REV: crate::Point<Self, Option<String>> = crate::Point::new(4, 2, false);
     pub const BOOTS: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
     pub const SWITCH: crate::Point<Self, Option<Switch>> = crate::Point::new(7, 1, false);
@@ -87,28 +87,28 @@ impl Model64001 {
     pub const TALKING: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, false);
     pub const STATUS: crate::Point<Self, Option<Status>> = crate::Point::new(10, 1, false);
     pub const CONFIG: crate::Point<Self, Option<Config>> = crate::Point::new(11, 1, false);
-    pub const LE_DBLINK: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
-    pub const LE_DON: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
+    pub const LED_BLINK: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
+    pub const LED_ON: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
     pub const RESERVED: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, false);
     pub const LOC: crate::Point<Self, Option<String>> = crate::Point::new(15, 16, false);
-    pub const S1ID: crate::Point<Self, Option<u16>> = crate::Point::new(31, 1, false);
+    pub const S1_ID: crate::Point<Self, Option<u16>> = crate::Point::new(31, 1, false);
     pub const S1_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(32, 1, false);
-    pub const S1OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(33, 1, false);
+    pub const S1_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(33, 1, false);
     pub const S1_VER: crate::Point<Self, Option<String>> = crate::Point::new(34, 2, false);
     pub const S1_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(36, 5, false);
-    pub const S2ID: crate::Point<Self, Option<u16>> = crate::Point::new(41, 1, false);
+    pub const S2_ID: crate::Point<Self, Option<u16>> = crate::Point::new(41, 1, false);
     pub const S2_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1, false);
-    pub const S2OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(43, 1, false);
+    pub const S2_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(43, 1, false);
     pub const S2_VER: crate::Point<Self, Option<String>> = crate::Point::new(44, 2, false);
     pub const S2_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(46, 5, false);
-    pub const S3ID: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, false);
+    pub const S3_ID: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, false);
     pub const S3_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(52, 1, false);
-    pub const S3OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(53, 1, false);
+    pub const S3_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(53, 1, false);
     pub const S3_VER: crate::Point<Self, Option<String>> = crate::Point::new(54, 2, false);
     pub const S3_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(56, 5, false);
-    pub const S4ID: crate::Point<Self, Option<u16>> = crate::Point::new(61, 1, false);
+    pub const S4_ID: crate::Point<Self, Option<u16>> = crate::Point::new(61, 1, false);
     pub const S4_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(62, 1, false);
-    pub const S4OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(63, 1, false);
+    pub const S4_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(63, 1, false);
     pub const S4_VER: crate::Point<Self, Option<String>> = crate::Point::new(64, 2, false);
     pub const S4_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(66, 5, false);
 }
@@ -125,8 +125,8 @@ impl Model64001 {
             Self {
                 cmd: Self::CMD.from_data(data)?,
                 hw_rev: Self::HW_REV.from_data(data)?,
-                rsfw_rev: Self::RSFW_REV.from_data(data)?,
-                osfw_rev: Self::OSFW_REV.from_data(data)?,
+                rs_fw_rev: Self::RS_FW_REV.from_data(data)?,
+                os_fw_rev: Self::OS_FW_REV.from_data(data)?,
                 prod_rev: Self::PROD_REV.from_data(data)?,
                 boots: Self::BOOTS.from_data(data)?,
                 switch: Self::SWITCH.from_data(data)?,
@@ -134,28 +134,28 @@ impl Model64001 {
                 talking: Self::TALKING.from_data(data)?,
                 status: Self::STATUS.from_data(data)?,
                 config: Self::CONFIG.from_data(data)?,
-                le_dblink: Self::LE_DBLINK.from_data(data)?,
-                le_don: Self::LE_DON.from_data(data)?,
+                led_blink: Self::LED_BLINK.from_data(data)?,
+                led_on: Self::LED_ON.from_data(data)?,
                 reserved: Self::RESERVED.from_data(data)?,
                 loc: Self::LOC.from_data(data)?,
-                s1id: Self::S1ID.from_data(data)?,
+                s1_id: Self::S1_ID.from_data(data)?,
                 s1_addr: Self::S1_ADDR.from_data(data)?,
-                s1os_ver: Self::S1OS_VER.from_data(data)?,
+                s1_os_ver: Self::S1_OS_VER.from_data(data)?,
                 s1_ver: Self::S1_VER.from_data(data)?,
                 s1_serial: Self::S1_SERIAL.from_data(data)?,
-                s2id: Self::S2ID.from_data(data)?,
+                s2_id: Self::S2_ID.from_data(data)?,
                 s2_addr: Self::S2_ADDR.from_data(data)?,
-                s2os_ver: Self::S2OS_VER.from_data(data)?,
+                s2_os_ver: Self::S2_OS_VER.from_data(data)?,
                 s2_ver: Self::S2_VER.from_data(data)?,
                 s2_serial: Self::S2_SERIAL.from_data(data)?,
-                s3id: Self::S3ID.from_data(data)?,
+                s3_id: Self::S3_ID.from_data(data)?,
                 s3_addr: Self::S3_ADDR.from_data(data)?,
-                s3os_ver: Self::S3OS_VER.from_data(data)?,
+                s3_os_ver: Self::S3_OS_VER.from_data(data)?,
                 s3_ver: Self::S3_VER.from_data(data)?,
                 s3_serial: Self::S3_SERIAL.from_data(data)?,
-                s4id: Self::S4ID.from_data(data)?,
+                s4_id: Self::S4_ID.from_data(data)?,
                 s4_addr: Self::S4_ADDR.from_data(data)?,
-                s4os_ver: Self::S4OS_VER.from_data(data)?,
+                s4_os_ver: Self::S4_OS_VER.from_data(data)?,
                 s4_ver: Self::S4_VER.from_data(data)?,
                 s4_serial: Self::S4_SERIAL.from_data(data)?,
             },

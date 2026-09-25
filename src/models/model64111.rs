@@ -36,7 +36,7 @@ pub struct Model64111 {
     /// Today's Maximum VOC
     pub today_max_voc: u16,
     /// Today's kWh
-    pub todayk_wh_output: u16,
+    pub today_kwh_output: u16,
     /// Today's AH
     pub today_ah_output: u16,
     /// Lifetime kWh
@@ -68,7 +68,7 @@ impl Model64111 {
     pub const TODAY_MAX_BAT_V: crate::Point<Self, u16> = crate::Point::new(13, 1, false);
     pub const VOCV: crate::Point<Self, u16> = crate::Point::new(14, 1, false);
     pub const TODAY_MAX_VOC: crate::Point<Self, u16> = crate::Point::new(15, 1, false);
-    pub const TODAYK_WH_OUTPUT: crate::Point<Self, u16> = crate::Point::new(16, 1, false);
+    pub const TODAY_KWH_OUTPUT: crate::Point<Self, u16> = crate::Point::new(16, 1, false);
     pub const TODAY_AH_OUTPUT: crate::Point<Self, u16> = crate::Point::new(17, 1, false);
     pub const LIFE_TIME_KWH_OUT: crate::Point<Self, u16> = crate::Point::new(18, 1, false);
     pub const LIFE_TIME_AH_OUT: crate::Point<Self, u16> = crate::Point::new(19, 1, false);
@@ -103,7 +103,7 @@ impl Model64111 {
                 today_max_bat_v: Self::TODAY_MAX_BAT_V.from_data(data)?,
                 vocv: Self::VOCV.from_data(data)?,
                 today_max_voc: Self::TODAY_MAX_VOC.from_data(data)?,
-                todayk_wh_output: Self::TODAYK_WH_OUTPUT.from_data(data)?,
+                today_kwh_output: Self::TODAY_KWH_OUTPUT.from_data(data)?,
                 today_ah_output: Self::TODAY_AH_OUTPUT.from_data(data)?,
                 life_time_kwh_out: Self::LIFE_TIME_KWH_OUT.from_data(data)?,
                 life_time_ah_out: Self::LIFE_TIME_AH_OUT.from_data(data)?,

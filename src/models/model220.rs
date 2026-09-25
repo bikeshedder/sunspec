@@ -62,31 +62,31 @@ pub struct AcMeterSecure {
     /// Total VA-hours Exported
     ///
     /// Total Apparent Energy Exported
-    pub tot_v_ah_exp: Option<u32>,
+    pub tot_vah_exp: Option<u32>,
     /// Total VA-hours Imported
     ///
     /// Total Apparent Energy Imported
-    pub tot_v_ah_imp: Option<u32>,
+    pub tot_vah_imp: Option<u32>,
     /// Apparent Energy scale factor
-    pub tot_v_ah_sf: Option<i16>,
+    pub tot_vah_sf: Option<i16>,
     /// Total VAR-hours Imported Q1
     ///
     /// Total Reactive Energy Imported Quadrant 1
-    pub tot_v_arh_imp_q1: Option<u32>,
+    pub tot_varh_imp_q1: Option<u32>,
     /// Total VAr-hours Imported Q2
     ///
     /// Total Reactive Power Imported Quadrant 2
-    pub tot_v_arh_imp_q2: Option<u32>,
+    pub tot_varh_imp_q2: Option<u32>,
     /// Total VAr-hours Exported Q3
     ///
     /// Total Reactive Power Exported Quadrant 3
-    pub tot_v_arh_exp_q3: Option<u32>,
+    pub tot_varh_exp_q3: Option<u32>,
     /// Total VAr-hours Exported Q4
     ///
     /// Total Reactive Power Exported Quadrant 4
-    pub tot_v_arh_exp_q4: Option<u32>,
+    pub tot_varh_exp_q4: Option<u32>,
     /// Reactive Energy scale factor
-    pub tot_v_arh_sf: Option<i16>,
+    pub tot_varh_sf: Option<i16>,
     /// Events
     ///
     /// Meter Event Flags
@@ -139,14 +139,14 @@ impl AcMeterSecure {
     pub const TOT_WH_EXP: crate::Point<Self, u32> = crate::Point::new(14, 2, false);
     pub const TOT_WH_IMP: crate::Point<Self, u32> = crate::Point::new(16, 2, false);
     pub const TOT_WH_SF: crate::Point<Self, i16> = crate::Point::new(18, 1, false);
-    pub const TOT_V_AH_EXP: crate::Point<Self, Option<u32>> = crate::Point::new(19, 2, false);
-    pub const TOT_V_AH_IMP: crate::Point<Self, Option<u32>> = crate::Point::new(21, 2, false);
-    pub const TOT_V_AH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    pub const TOT_V_ARH_IMP_Q1: crate::Point<Self, Option<u32>> = crate::Point::new(24, 2, false);
-    pub const TOT_V_ARH_IMP_Q2: crate::Point<Self, Option<u32>> = crate::Point::new(26, 2, false);
-    pub const TOT_V_ARH_EXP_Q3: crate::Point<Self, Option<u32>> = crate::Point::new(28, 2, false);
-    pub const TOT_V_ARH_EXP_Q4: crate::Point<Self, Option<u32>> = crate::Point::new(30, 2, false);
-    pub const TOT_V_ARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(32, 1, false);
+    pub const TOT_VAH_EXP: crate::Point<Self, Option<u32>> = crate::Point::new(19, 2, false);
+    pub const TOT_VAH_IMP: crate::Point<Self, Option<u32>> = crate::Point::new(21, 2, false);
+    pub const TOT_VAH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
+    pub const TOT_VARH_IMP_Q1: crate::Point<Self, Option<u32>> = crate::Point::new(24, 2, false);
+    pub const TOT_VARH_IMP_Q2: crate::Point<Self, Option<u32>> = crate::Point::new(26, 2, false);
+    pub const TOT_VARH_EXP_Q3: crate::Point<Self, Option<u32>> = crate::Point::new(28, 2, false);
+    pub const TOT_VARH_EXP_Q4: crate::Point<Self, Option<u32>> = crate::Point::new(30, 2, false);
+    pub const TOT_VARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(32, 1, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(33, 2, false);
     pub const TS: crate::Point<Self, u32> = crate::Point::new(36, 2, false);
     pub const MS: crate::Point<Self, u16> = crate::Point::new(38, 1, false);
@@ -183,14 +183,14 @@ impl AcMeterSecure {
                 tot_wh_exp: Self::TOT_WH_EXP.from_data(data)?,
                 tot_wh_imp: Self::TOT_WH_IMP.from_data(data)?,
                 tot_wh_sf: Self::TOT_WH_SF.from_data(data)?,
-                tot_v_ah_exp: Self::TOT_V_AH_EXP.from_data(data)?,
-                tot_v_ah_imp: Self::TOT_V_AH_IMP.from_data(data)?,
-                tot_v_ah_sf: Self::TOT_V_AH_SF.from_data(data)?,
-                tot_v_arh_imp_q1: Self::TOT_V_ARH_IMP_Q1.from_data(data)?,
-                tot_v_arh_imp_q2: Self::TOT_V_ARH_IMP_Q2.from_data(data)?,
-                tot_v_arh_exp_q3: Self::TOT_V_ARH_EXP_Q3.from_data(data)?,
-                tot_v_arh_exp_q4: Self::TOT_V_ARH_EXP_Q4.from_data(data)?,
-                tot_v_arh_sf: Self::TOT_V_ARH_SF.from_data(data)?,
+                tot_vah_exp: Self::TOT_VAH_EXP.from_data(data)?,
+                tot_vah_imp: Self::TOT_VAH_IMP.from_data(data)?,
+                tot_vah_sf: Self::TOT_VAH_SF.from_data(data)?,
+                tot_varh_imp_q1: Self::TOT_VARH_IMP_Q1.from_data(data)?,
+                tot_varh_imp_q2: Self::TOT_VARH_IMP_Q2.from_data(data)?,
+                tot_varh_exp_q3: Self::TOT_VARH_EXP_Q3.from_data(data)?,
+                tot_varh_exp_q4: Self::TOT_VARH_EXP_Q4.from_data(data)?,
+                tot_varh_sf: Self::TOT_VARH_SF.from_data(data)?,
                 evt: Self::EVT.from_data(data)?,
                 ts: Self::TS.from_data(data)?,
                 ms: Self::MS.from_data(data)?,

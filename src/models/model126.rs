@@ -136,7 +136,7 @@ pub struct Curve {
     /// VAr1
     ///
     /// Point 1 VARs.
-    pub v_ar1: i16,
+    pub var1: i16,
     /// V2
     ///
     /// Point 2 Volts.
@@ -144,7 +144,7 @@ pub struct Curve {
     /// VAr2
     ///
     /// Point 2 VARs.
-    pub v_ar2: Option<i16>,
+    pub var2: Option<i16>,
     /// V3
     ///
     /// Point 3 Volts.
@@ -152,7 +152,7 @@ pub struct Curve {
     /// VAr3
     ///
     /// Point 3 VARs.
-    pub v_ar3: Option<i16>,
+    pub var3: Option<i16>,
     /// V4
     ///
     /// Point 4 Volts.
@@ -160,7 +160,7 @@ pub struct Curve {
     /// VAr4
     ///
     /// Point 4 VARs.
-    pub v_ar4: Option<i16>,
+    pub var4: Option<i16>,
     /// V5
     ///
     /// Point 5 Volts.
@@ -168,7 +168,7 @@ pub struct Curve {
     /// VAr5
     ///
     /// Point 5 VARs.
-    pub v_ar5: Option<i16>,
+    pub var5: Option<i16>,
     /// V6
     ///
     /// Point 6 Volts.
@@ -176,7 +176,7 @@ pub struct Curve {
     /// VAr6
     ///
     /// Point 6 VARs.
-    pub v_ar6: Option<i16>,
+    pub var6: Option<i16>,
     /// V7
     ///
     /// Point 7 Volts.
@@ -184,7 +184,7 @@ pub struct Curve {
     /// VAr7
     ///
     /// Point 7 VARs.
-    pub v_ar7: Option<i16>,
+    pub var7: Option<i16>,
     /// V8
     ///
     /// Point 8 Volts.
@@ -192,7 +192,7 @@ pub struct Curve {
     /// VAr8
     ///
     /// Point 8 VARs.
-    pub v_ar8: Option<i16>,
+    pub var8: Option<i16>,
     /// V9
     ///
     /// Point 9 Volts.
@@ -200,7 +200,7 @@ pub struct Curve {
     /// VAr9
     ///
     /// Point 9 VARs.
-    pub v_ar9: Option<i16>,
+    pub var9: Option<i16>,
     /// V10
     ///
     /// Point 10 Volts.
@@ -208,7 +208,7 @@ pub struct Curve {
     /// VAr10
     ///
     /// Point 10 VARs.
-    pub v_ar10: Option<i16>,
+    pub var10: Option<i16>,
     /// V11
     ///
     /// Point 11 Volts.
@@ -216,7 +216,7 @@ pub struct Curve {
     /// VAr11
     ///
     /// Point 11 VARs.
-    pub v_ar11: Option<i16>,
+    pub var11: Option<i16>,
     /// V12
     ///
     /// Point 12 Volts.
@@ -224,7 +224,7 @@ pub struct Curve {
     /// VAr12
     ///
     /// Point 12 VARs.
-    pub v_ar12: Option<i16>,
+    pub var12: Option<i16>,
     /// V13
     ///
     /// Point 13 Volts.
@@ -232,7 +232,7 @@ pub struct Curve {
     /// VAr13
     ///
     /// Point 13 VARs.
-    pub v_ar13: Option<i16>,
+    pub var13: Option<i16>,
     /// V14
     ///
     /// Point 14 Volts.
@@ -240,7 +240,7 @@ pub struct Curve {
     /// VAr14
     ///
     /// Point 14 VARs.
-    pub v_ar14: Option<i16>,
+    pub var14: Option<i16>,
     /// V15
     ///
     /// Point 15 Volts.
@@ -248,7 +248,7 @@ pub struct Curve {
     /// VAr15
     ///
     /// Point 15 VARs.
-    pub v_ar15: Option<i16>,
+    pub var15: Option<i16>,
     /// V16
     ///
     /// Point 16 Volts.
@@ -256,7 +256,7 @@ pub struct Curve {
     /// VAr16
     ///
     /// Point 16 VARs.
-    pub v_ar16: Option<i16>,
+    pub var16: Option<i16>,
     /// V17
     ///
     /// Point 17 Volts.
@@ -264,7 +264,7 @@ pub struct Curve {
     /// VAr17
     ///
     /// Point 17 VARs.
-    pub v_ar17: Option<i16>,
+    pub var17: Option<i16>,
     /// V18
     ///
     /// Point 18 Volts.
@@ -272,7 +272,7 @@ pub struct Curve {
     /// VAr18
     ///
     /// Point 18 VARs.
-    pub v_ar18: Option<i16>,
+    pub var18: Option<i16>,
     /// V19
     ///
     /// Point 19 Volts.
@@ -280,7 +280,7 @@ pub struct Curve {
     /// VAr19
     ///
     /// Point 19 VARs.
-    pub v_ar19: Option<i16>,
+    pub var19: Option<i16>,
     /// V20
     ///
     /// Point 20 Volts.
@@ -288,7 +288,7 @@ pub struct Curve {
     /// VAr20
     ///
     /// Point 20 VARs.
-    pub v_ar20: Option<i16>,
+    pub var20: Option<i16>,
     /// CrvNam
     ///
     /// Optional description for curve. (Max 16 chars)
@@ -315,45 +315,45 @@ impl Curve {
     pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
     pub const DEPT_REF: crate::Point<Self, CurveDeptRef> = crate::Point::new(1, 1, true);
     pub const V1: crate::Point<Self, u16> = crate::Point::new(2, 1, true);
-    pub const V_AR1: crate::Point<Self, i16> = crate::Point::new(3, 1, true);
+    pub const VAR1: crate::Point<Self, i16> = crate::Point::new(3, 1, true);
     pub const V2: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    pub const V_AR2: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, true);
+    pub const VAR2: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, true);
     pub const V3: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
-    pub const V_AR3: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, true);
+    pub const VAR3: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, true);
     pub const V4: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
-    pub const V_AR4: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, true);
+    pub const VAR4: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, true);
     pub const V5: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
-    pub const V_AR5: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, true);
+    pub const VAR5: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, true);
     pub const V6: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, true);
-    pub const V_AR6: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
+    pub const VAR6: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
     pub const V7: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, true);
-    pub const V_AR7: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, true);
+    pub const VAR7: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, true);
     pub const V8: crate::Point<Self, Option<u16>> = crate::Point::new(16, 1, true);
-    pub const V_AR8: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, true);
+    pub const VAR8: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, true);
     pub const V9: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
-    pub const V_AR9: crate::Point<Self, Option<i16>> = crate::Point::new(19, 1, true);
+    pub const VAR9: crate::Point<Self, Option<i16>> = crate::Point::new(19, 1, true);
     pub const V10: crate::Point<Self, Option<u16>> = crate::Point::new(20, 1, true);
-    pub const V_AR10: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, true);
+    pub const VAR10: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, true);
     pub const V11: crate::Point<Self, Option<u16>> = crate::Point::new(22, 1, true);
-    pub const V_AR11: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, true);
+    pub const VAR11: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, true);
     pub const V12: crate::Point<Self, Option<u16>> = crate::Point::new(24, 1, true);
-    pub const V_AR12: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, true);
+    pub const VAR12: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, true);
     pub const V13: crate::Point<Self, Option<u16>> = crate::Point::new(26, 1, true);
-    pub const V_AR13: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, true);
+    pub const VAR13: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, true);
     pub const V14: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1, true);
-    pub const V_AR14: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, true);
+    pub const VAR14: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, true);
     pub const V15: crate::Point<Self, Option<u16>> = crate::Point::new(30, 1, true);
-    pub const V_AR15: crate::Point<Self, Option<i16>> = crate::Point::new(31, 1, true);
+    pub const VAR15: crate::Point<Self, Option<i16>> = crate::Point::new(31, 1, true);
     pub const V16: crate::Point<Self, Option<u16>> = crate::Point::new(32, 1, true);
-    pub const V_AR16: crate::Point<Self, Option<i16>> = crate::Point::new(33, 1, true);
+    pub const VAR16: crate::Point<Self, Option<i16>> = crate::Point::new(33, 1, true);
     pub const V17: crate::Point<Self, Option<u16>> = crate::Point::new(34, 1, true);
-    pub const V_AR17: crate::Point<Self, Option<i16>> = crate::Point::new(35, 1, true);
+    pub const VAR17: crate::Point<Self, Option<i16>> = crate::Point::new(35, 1, true);
     pub const V18: crate::Point<Self, Option<u16>> = crate::Point::new(36, 1, true);
-    pub const V_AR18: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, true);
+    pub const VAR18: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, true);
     pub const V19: crate::Point<Self, Option<u16>> = crate::Point::new(38, 1, true);
-    pub const V_AR19: crate::Point<Self, Option<i16>> = crate::Point::new(39, 1, true);
+    pub const VAR19: crate::Point<Self, Option<i16>> = crate::Point::new(39, 1, true);
     pub const V20: crate::Point<Self, Option<u16>> = crate::Point::new(40, 1, true);
-    pub const V_AR20: crate::Point<Self, Option<i16>> = crate::Point::new(41, 1, true);
+    pub const VAR20: crate::Point<Self, Option<i16>> = crate::Point::new(41, 1, true);
     pub const CRV_NAM: crate::Point<Self, Option<String>> = crate::Point::new(42, 8, true);
     pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(50, 1, true);
     pub const RMP_DEC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, true);
@@ -374,45 +374,45 @@ impl Curve {
                 act_pt: Self::ACT_PT.from_data(data)?,
                 dept_ref: Self::DEPT_REF.from_data(data)?,
                 v1: Self::V1.from_data(data)?,
-                v_ar1: Self::V_AR1.from_data(data)?,
+                var1: Self::VAR1.from_data(data)?,
                 v2: Self::V2.from_data(data)?,
-                v_ar2: Self::V_AR2.from_data(data)?,
+                var2: Self::VAR2.from_data(data)?,
                 v3: Self::V3.from_data(data)?,
-                v_ar3: Self::V_AR3.from_data(data)?,
+                var3: Self::VAR3.from_data(data)?,
                 v4: Self::V4.from_data(data)?,
-                v_ar4: Self::V_AR4.from_data(data)?,
+                var4: Self::VAR4.from_data(data)?,
                 v5: Self::V5.from_data(data)?,
-                v_ar5: Self::V_AR5.from_data(data)?,
+                var5: Self::VAR5.from_data(data)?,
                 v6: Self::V6.from_data(data)?,
-                v_ar6: Self::V_AR6.from_data(data)?,
+                var6: Self::VAR6.from_data(data)?,
                 v7: Self::V7.from_data(data)?,
-                v_ar7: Self::V_AR7.from_data(data)?,
+                var7: Self::VAR7.from_data(data)?,
                 v8: Self::V8.from_data(data)?,
-                v_ar8: Self::V_AR8.from_data(data)?,
+                var8: Self::VAR8.from_data(data)?,
                 v9: Self::V9.from_data(data)?,
-                v_ar9: Self::V_AR9.from_data(data)?,
+                var9: Self::VAR9.from_data(data)?,
                 v10: Self::V10.from_data(data)?,
-                v_ar10: Self::V_AR10.from_data(data)?,
+                var10: Self::VAR10.from_data(data)?,
                 v11: Self::V11.from_data(data)?,
-                v_ar11: Self::V_AR11.from_data(data)?,
+                var11: Self::VAR11.from_data(data)?,
                 v12: Self::V12.from_data(data)?,
-                v_ar12: Self::V_AR12.from_data(data)?,
+                var12: Self::VAR12.from_data(data)?,
                 v13: Self::V13.from_data(data)?,
-                v_ar13: Self::V_AR13.from_data(data)?,
+                var13: Self::VAR13.from_data(data)?,
                 v14: Self::V14.from_data(data)?,
-                v_ar14: Self::V_AR14.from_data(data)?,
+                var14: Self::VAR14.from_data(data)?,
                 v15: Self::V15.from_data(data)?,
-                v_ar15: Self::V_AR15.from_data(data)?,
+                var15: Self::VAR15.from_data(data)?,
                 v16: Self::V16.from_data(data)?,
-                v_ar16: Self::V_AR16.from_data(data)?,
+                var16: Self::VAR16.from_data(data)?,
                 v17: Self::V17.from_data(data)?,
-                v_ar17: Self::V_AR17.from_data(data)?,
+                var17: Self::VAR17.from_data(data)?,
                 v18: Self::V18.from_data(data)?,
-                v_ar18: Self::V_AR18.from_data(data)?,
+                var18: Self::VAR18.from_data(data)?,
                 v19: Self::V19.from_data(data)?,
-                v_ar19: Self::V_AR19.from_data(data)?,
+                var19: Self::VAR19.from_data(data)?,
                 v20: Self::V20.from_data(data)?,
-                v_ar20: Self::V_AR20.from_data(data)?,
+                var20: Self::VAR20.from_data(data)?,
                 crv_nam: Self::CRV_NAM.from_data(data)?,
                 rmp_tms: Self::RMP_TMS.from_data(data)?,
                 rmp_dec_tmm: Self::RMP_DEC_TMM.from_data(data)?,
@@ -448,9 +448,9 @@ pub enum CurveDeptRef {
     #[allow(missing_docs)]
     WMax,
     #[allow(missing_docs)]
-    VArMax,
+    VarMax,
     #[allow(missing_docs)]
-    VArAval,
+    VarAval,
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
@@ -460,16 +460,16 @@ impl crate::EnumValue for CurveDeptRef {
     fn from_repr(value: Self::Repr) -> Self {
         match value {
             1 => Self::WMax,
-            2 => Self::VArMax,
-            3 => Self::VArAval,
+            2 => Self::VarMax,
+            3 => Self::VarAval,
             value => Self::Invalid(value),
         }
     }
     fn to_repr(self) -> Self::Repr {
         match self {
             Self::WMax => 1,
-            Self::VArMax => 2,
-            Self::VArAval => 3,
+            Self::VarMax => 2,
+            Self::VarAval => 3,
             Self::Invalid(value) => value,
         }
     }

@@ -30,7 +30,7 @@ pub struct LithiumIonModule {
     /// Depth of discharge for the module.
     ///
     /// Detail: Measurement.
-    pub do_d: Option<u16>,
+    pub dod: Option<u16>,
     /// Module SoH
     ///
     /// Module state of health, expressed as a percentage.
@@ -110,7 +110,7 @@ pub struct LithiumIonModule {
     /// Scale factor for module state of health.
     pub soh_sf: Option<i16>,
     /// Scale factor for module depth of discharge.
-    pub do_d_sf: Option<i16>,
+    pub dod_sf: Option<i16>,
     /// Scale factor for module voltage.
     pub v_sf: i16,
     /// Scale factor for cell voltage.
@@ -126,7 +126,7 @@ impl LithiumIonModule {
     pub const MOD_IDX: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
     pub const N_CELL: crate::Point<Self, u16> = crate::Point::new(2, 1, false);
     pub const SOC: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
-    pub const DO_D: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
+    pub const DOD: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
     pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
     pub const N_CYC: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2, false);
     pub const V: crate::Point<Self, u16> = crate::Point::new(8, 1, false);
@@ -144,7 +144,7 @@ impl LithiumIonModule {
     pub const SN: crate::Point<Self, Option<String>> = crate::Point::new(20, 16, false);
     pub const SOC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(36, 1, false);
     pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, false);
-    pub const DO_D_SF: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1, false);
+    pub const DOD_SF: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1, false);
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(39, 1, false);
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(40, 1, false);
     pub const TMP_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
@@ -166,7 +166,7 @@ impl LithiumIonModule {
                 mod_idx: Self::MOD_IDX.from_data(data)?,
                 n_cell: Self::N_CELL.from_data(data)?,
                 soc: Self::SOC.from_data(data)?,
-                do_d: Self::DO_D.from_data(data)?,
+                dod: Self::DOD.from_data(data)?,
                 soh: Self::SOH.from_data(data)?,
                 n_cyc: Self::N_CYC.from_data(data)?,
                 v: Self::V.from_data(data)?,
@@ -184,7 +184,7 @@ impl LithiumIonModule {
                 sn: Self::SN.from_data(data)?,
                 soc_sf: Self::SOC_SF.from_data(data)?,
                 soh_sf: Self::SOH_SF.from_data(data)?,
-                do_d_sf: Self::DO_D_SF.from_data(data)?,
+                dod_sf: Self::DOD_SF.from_data(data)?,
                 v_sf: Self::V_SF.from_data(data)?,
                 cell_v_sf: Self::CELL_V_SF.from_data(data)?,
                 tmp_sf: Self::TMP_SF.from_data(data)?,

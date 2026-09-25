@@ -32,23 +32,23 @@ pub struct Nameplate {
     /// VArRtgQ1
     ///
     /// Continuous VAR capability of the inverter in quadrant 1.
-    pub v_ar_rtg_q1: i16,
+    pub var_rtg_q1: i16,
     /// VArRtgQ2
     ///
     /// Continuous VAR capability of the inverter in quadrant 2.
-    pub v_ar_rtg_q2: i16,
+    pub var_rtg_q2: i16,
     /// VArRtgQ3
     ///
     /// Continuous VAR capability of the inverter in quadrant 3.
-    pub v_ar_rtg_q3: i16,
+    pub var_rtg_q3: i16,
     /// VArRtgQ4
     ///
     /// Continuous VAR capability of the inverter in quadrant 4.
-    pub v_ar_rtg_q4: i16,
+    pub var_rtg_q4: i16,
     /// VArRtg_SF
     ///
     /// Scale factor
-    pub v_ar_rtg_sf: i16,
+    pub var_rtg_sf: i16,
     /// ARtg
     ///
     /// Maximum RMS AC current level capability of the inverter.
@@ -127,11 +127,11 @@ impl Nameplate {
     pub const W_RTG_SF: crate::Point<Self, i16> = crate::Point::new(2, 1, false);
     pub const VA_RTG: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
     pub const VA_RTG_SF: crate::Point<Self, i16> = crate::Point::new(4, 1, false);
-    pub const V_AR_RTG_Q1: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
-    pub const V_AR_RTG_Q2: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
-    pub const V_AR_RTG_Q3: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
-    pub const V_AR_RTG_Q4: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
-    pub const V_AR_RTG_SF: crate::Point<Self, i16> = crate::Point::new(9, 1, false);
+    pub const VAR_RTG_Q1: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
+    pub const VAR_RTG_Q2: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
+    pub const VAR_RTG_Q3: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
+    pub const VAR_RTG_Q4: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
+    pub const VAR_RTG_SF: crate::Point<Self, i16> = crate::Point::new(9, 1, false);
     pub const A_RTG: crate::Point<Self, u16> = crate::Point::new(10, 1, false);
     pub const A_RTG_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const PF_RTG_Q1: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
@@ -164,11 +164,11 @@ impl Nameplate {
                 w_rtg_sf: Self::W_RTG_SF.from_data(data)?,
                 va_rtg: Self::VA_RTG.from_data(data)?,
                 va_rtg_sf: Self::VA_RTG_SF.from_data(data)?,
-                v_ar_rtg_q1: Self::V_AR_RTG_Q1.from_data(data)?,
-                v_ar_rtg_q2: Self::V_AR_RTG_Q2.from_data(data)?,
-                v_ar_rtg_q3: Self::V_AR_RTG_Q3.from_data(data)?,
-                v_ar_rtg_q4: Self::V_AR_RTG_Q4.from_data(data)?,
-                v_ar_rtg_sf: Self::V_AR_RTG_SF.from_data(data)?,
+                var_rtg_q1: Self::VAR_RTG_Q1.from_data(data)?,
+                var_rtg_q2: Self::VAR_RTG_Q2.from_data(data)?,
+                var_rtg_q3: Self::VAR_RTG_Q3.from_data(data)?,
+                var_rtg_q4: Self::VAR_RTG_Q4.from_data(data)?,
+                var_rtg_sf: Self::VAR_RTG_SF.from_data(data)?,
                 a_rtg: Self::A_RTG.from_data(data)?,
                 a_rtg_sf: Self::A_RTG_SF.from_data(data)?,
                 pf_rtg_q1: Self::PF_RTG_Q1.from_data(data)?,

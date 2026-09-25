@@ -6,13 +6,13 @@ pub type Model160 = Mppt;
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Mppt {
     /// Current Scale Factor
-    pub dca_sf: Option<i16>,
+    pub dc_a_sf: Option<i16>,
     /// Voltage Scale Factor
-    pub dcv_sf: Option<i16>,
+    pub dc_v_sf: Option<i16>,
     /// Power Scale Factor
-    pub dcw_sf: Option<i16>,
+    pub dc_w_sf: Option<i16>,
     /// Energy Scale Factor
-    pub dcwh_sf: Option<i16>,
+    pub dc_wh_sf: Option<i16>,
     /// Global Events
     pub evt: Option<Evt>,
     /// Number of Modules
@@ -24,10 +24,10 @@ pub struct Mppt {
 }
 #[allow(missing_docs)]
 impl Mppt {
-    pub const DCA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
-    pub const DCV_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
-    pub const DCW_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
-    pub const DCWH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
+    pub const DC_A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
+    pub const DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
+    pub const DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
+    pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
     pub const EVT: crate::Point<Self, Option<Evt>> = crate::Point::new(4, 2, false);
     pub const N: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
     pub const TMS_PER: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
@@ -44,10 +44,10 @@ impl Mppt {
         Ok((
             nested_data,
             Self {
-                dca_sf: Self::DCA_SF.from_data(data)?,
-                dcv_sf: Self::DCV_SF.from_data(data)?,
-                dcw_sf: Self::DCW_SF.from_data(data)?,
-                dcwh_sf: Self::DCWH_SF.from_data(data)?,
+                dc_a_sf: Self::DC_A_SF.from_data(data)?,
+                dc_v_sf: Self::DC_V_SF.from_data(data)?,
+                dc_w_sf: Self::DC_W_SF.from_data(data)?,
+                dc_wh_sf: Self::DC_WH_SF.from_data(data)?,
                 evt: Self::EVT.from_data(data)?,
                 n: Self::N.from_data(data)?,
                 tms_per: Self::TMS_PER.from_data(data)?,
@@ -134,13 +134,13 @@ pub struct Module {
     /// Input ID String
     pub id_str: Option<String>,
     /// DC Current
-    pub dca: Option<u16>,
+    pub dc_a: Option<u16>,
     /// DC Voltage
-    pub dcv: Option<u16>,
+    pub dc_v: Option<u16>,
     /// DC Power
-    pub dcw: Option<u16>,
+    pub dc_w: Option<u16>,
     /// Lifetime Energy
-    pub dcwh: Option<u32>,
+    pub dc_wh: Option<u32>,
     /// Timestamp
     pub tms: Option<u32>,
     /// Temperature
@@ -154,10 +154,10 @@ pub struct Module {
 impl Module {
     pub const ID: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
     pub const ID_STR: crate::Point<Self, Option<String>> = crate::Point::new(1, 8, false);
-    pub const DCA: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, false);
-    pub const DCV: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
-    pub const DCW: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
-    pub const DCWH: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
+    pub const DC_A: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, false);
+    pub const DC_V: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
+    pub const DC_W: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
+    pub const DC_WH: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
     pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(14, 2, false);
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
     pub const DC_ST: crate::Point<Self, Option<ModuleDcSt>> = crate::Point::new(17, 1, false);
@@ -176,10 +176,10 @@ impl Module {
             Self {
                 id: Self::ID.from_data(data)?,
                 id_str: Self::ID_STR.from_data(data)?,
-                dca: Self::DCA.from_data(data)?,
-                dcv: Self::DCV.from_data(data)?,
-                dcw: Self::DCW.from_data(data)?,
-                dcwh: Self::DCWH.from_data(data)?,
+                dc_a: Self::DC_A.from_data(data)?,
+                dc_v: Self::DC_V.from_data(data)?,
+                dc_w: Self::DC_W.from_data(data)?,
+                dc_wh: Self::DC_WH.from_data(data)?,
                 tms: Self::TMS.from_data(data)?,
                 tmp: Self::TMP.from_data(data)?,
                 dc_st: Self::DC_ST.from_data(data)?,

@@ -10,19 +10,19 @@ pub type Model404 = StringCombinerAdvancedInputs;
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct StringCombinerAdvancedInputs {
     /// Current scale factor
-    pub dca_sf: i16,
+    pub dc_a_sf: i16,
     /// Amp-hour scale factor
     pub dc_ahr_sf: Option<i16>,
     /// Voltage scale factor
-    pub dcv_sf: Option<i16>,
+    pub dc_v_sf: Option<i16>,
     /// Power scale factor
-    pub dcw_sf: Option<i16>,
+    pub dc_w_sf: Option<i16>,
     /// Energy scale factor
     pub dc_wh_sf: Option<i16>,
     /// Rating
     ///
     /// Maximum DC Current Rating
-    pub dca_max: u16,
+    pub dc_a_max: u16,
     /// N
     ///
     /// Number of Inputs
@@ -38,7 +38,7 @@ pub struct StringCombinerAdvancedInputs {
     /// Amps
     ///
     /// Total measured current
-    pub dca: i16,
+    pub dc_a: i16,
     /// Amp-hours
     ///
     /// Total metered Amp-hours
@@ -46,7 +46,7 @@ pub struct StringCombinerAdvancedInputs {
     /// Voltage
     ///
     /// Output Voltage
-    pub dcv: Option<i16>,
+    pub dc_v: Option<i16>,
     /// Temp
     ///
     /// Internal operating temperature
@@ -54,23 +54,23 @@ pub struct StringCombinerAdvancedInputs {
     /// Watts
     ///
     /// Output power
-    pub dcw: Option<i16>,
+    pub dc_w: Option<i16>,
     /// PR
     ///
     /// DC Performance ratio value
-    pub dcpr: Option<i16>,
+    pub dc_pr: Option<i16>,
     /// Watt-hours
     ///
     /// Output energy
     pub dc_wh: Option<u32>,
     /// Current scale factor for inputs
-    pub in_dca_sf: Option<i16>,
+    pub in_dc_a_sf: Option<i16>,
     /// Amp-hour scale factor for inputs
     pub in_dc_ahr_sf: Option<i16>,
     /// Voltage scale factor for inputs
-    pub in_dcv_sf: Option<i16>,
+    pub in_dc_v_sf: Option<i16>,
     /// Power scale factor for inputs
-    pub in_dcw_sf: Option<i16>,
+    pub in_dc_w_sf: Option<i16>,
     /// Energy scale factor for inputs
     pub in_dc_wh_sf: Option<i16>,
     #[allow(missing_docs)]
@@ -78,26 +78,26 @@ pub struct StringCombinerAdvancedInputs {
 }
 #[allow(missing_docs)]
 impl StringCombinerAdvancedInputs {
-    pub const DCA_SF: crate::Point<Self, i16> = crate::Point::new(0, 1, false);
+    pub const DC_A_SF: crate::Point<Self, i16> = crate::Point::new(0, 1, false);
     pub const DC_AHR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
-    pub const DCV_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
-    pub const DCW_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
+    pub const DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
+    pub const DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
     pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1, false);
-    pub const DCA_MAX: crate::Point<Self, u16> = crate::Point::new(5, 1, false);
+    pub const DC_A_MAX: crate::Point<Self, u16> = crate::Point::new(5, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(7, 2, false);
     pub const EVT_VND: crate::Point<Self, Option<EvtVnd>> = crate::Point::new(9, 2, false);
-    pub const DCA: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
+    pub const DC_A: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const DC_AHR: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
-    pub const DCV: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
+    pub const DC_V: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
-    pub const DCW: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
-    pub const DCPR: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
+    pub const DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
+    pub const DC_PR: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
     pub const DC_WH: crate::Point<Self, Option<u32>> = crate::Point::new(18, 2, false);
-    pub const IN_DCA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1, false);
+    pub const IN_DC_A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1, false);
     pub const IN_DC_AHR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
-    pub const IN_DCV_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
-    pub const IN_DCW_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
+    pub const IN_DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
+    pub const IN_DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
     pub const IN_DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
 }
 impl crate::Group for StringCombinerAdvancedInputs {
@@ -112,26 +112,26 @@ impl StringCombinerAdvancedInputs {
         Ok((
             nested_data,
             Self {
-                dca_sf: Self::DCA_SF.from_data(data)?,
+                dc_a_sf: Self::DC_A_SF.from_data(data)?,
                 dc_ahr_sf: Self::DC_AHR_SF.from_data(data)?,
-                dcv_sf: Self::DCV_SF.from_data(data)?,
-                dcw_sf: Self::DCW_SF.from_data(data)?,
+                dc_v_sf: Self::DC_V_SF.from_data(data)?,
+                dc_w_sf: Self::DC_W_SF.from_data(data)?,
                 dc_wh_sf: Self::DC_WH_SF.from_data(data)?,
-                dca_max: Self::DCA_MAX.from_data(data)?,
+                dc_a_max: Self::DC_A_MAX.from_data(data)?,
                 n: Self::N.from_data(data)?,
                 evt: Self::EVT.from_data(data)?,
                 evt_vnd: Self::EVT_VND.from_data(data)?,
-                dca: Self::DCA.from_data(data)?,
+                dc_a: Self::DC_A.from_data(data)?,
                 dc_ahr: Self::DC_AHR.from_data(data)?,
-                dcv: Self::DCV.from_data(data)?,
+                dc_v: Self::DC_V.from_data(data)?,
                 tmp: Self::TMP.from_data(data)?,
-                dcw: Self::DCW.from_data(data)?,
-                dcpr: Self::DCPR.from_data(data)?,
+                dc_w: Self::DC_W.from_data(data)?,
+                dc_pr: Self::DC_PR.from_data(data)?,
                 dc_wh: Self::DC_WH.from_data(data)?,
-                in_dca_sf: Self::IN_DCA_SF.from_data(data)?,
+                in_dc_a_sf: Self::IN_DC_A_SF.from_data(data)?,
                 in_dc_ahr_sf: Self::IN_DC_AHR_SF.from_data(data)?,
-                in_dcv_sf: Self::IN_DCV_SF.from_data(data)?,
-                in_dcw_sf: Self::IN_DCW_SF.from_data(data)?,
+                in_dc_v_sf: Self::IN_DC_V_SF.from_data(data)?,
+                in_dc_w_sf: Self::IN_DC_W_SF.from_data(data)?,
                 in_dc_wh_sf: Self::IN_DC_WH_SF.from_data(data)?,
                 string,
             },
@@ -245,7 +245,7 @@ pub struct String {
     /// Amps
     ///
     /// String Input Current
-    pub in_dca: i16,
+    pub in_dc_a: i16,
     /// Amp-hours
     ///
     /// String Input Amp-Hours
@@ -253,11 +253,11 @@ pub struct String {
     /// Voltage
     ///
     /// String Input Voltage
-    pub in_dcv: Option<i16>,
+    pub in_dc_v: Option<i16>,
     /// Watts
     ///
     /// String Input Power
-    pub in_dcw: Option<i16>,
+    pub in_dc_w: Option<i16>,
     /// Watt-hours
     ///
     /// String Input Energy
@@ -265,7 +265,7 @@ pub struct String {
     /// PR
     ///
     /// String Performance Ratio
-    pub in_dcpr: Option<u16>,
+    pub in_dc_pr: Option<u16>,
     /// N
     ///
     /// Number of modules in this input string
@@ -277,12 +277,12 @@ impl String {
     pub const IN_EVT: crate::Point<Self, StringInEvt> = crate::Point::new(1, 2, false);
     pub const IN_EVT_VND: crate::Point<Self, Option<StringInEvtVnd>> =
         crate::Point::new(3, 2, false);
-    pub const IN_DCA: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
+    pub const IN_DC_A: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
     pub const IN_DC_AHR: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2, false);
-    pub const IN_DCV: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
-    pub const IN_DCW: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
+    pub const IN_DC_V: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
+    pub const IN_DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
     pub const IN_DC_WH: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
-    pub const IN_DCPR: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
+    pub const IN_DC_PR: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
     pub const IN_N: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
 }
 impl crate::Group for String {
@@ -299,12 +299,12 @@ impl String {
                 in_id: Self::IN_ID.from_data(data)?,
                 in_evt: Self::IN_EVT.from_data(data)?,
                 in_evt_vnd: Self::IN_EVT_VND.from_data(data)?,
-                in_dca: Self::IN_DCA.from_data(data)?,
+                in_dc_a: Self::IN_DC_A.from_data(data)?,
                 in_dc_ahr: Self::IN_DC_AHR.from_data(data)?,
-                in_dcv: Self::IN_DCV.from_data(data)?,
-                in_dcw: Self::IN_DCW.from_data(data)?,
+                in_dc_v: Self::IN_DC_V.from_data(data)?,
+                in_dc_w: Self::IN_DC_W.from_data(data)?,
                 in_dc_wh: Self::IN_DC_WH.from_data(data)?,
-                in_dcpr: Self::IN_DCPR.from_data(data)?,
+                in_dc_pr: Self::IN_DC_PR.from_data(data)?,
                 in_n: Self::IN_N.from_data(data)?,
             },
         ))

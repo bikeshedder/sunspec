@@ -47,16 +47,16 @@ fn test_model103_clone_and_partial_eq() {
     #[rustfmt::skip]
     let data = &[
         1000,   // a
-        333,    // aph_a
-        333,    // aph_b
-        334,    // aph_c
+        333,    // a_ph_a
+        333,    // a_ph_b
+        334,    // a_ph_c
         65535,  // a_sf
-        4000,   // pp_vph_ab
-        4000,   // pp_vph_bc
-        4000,   // pp_vph_ca
-        2300,   // ph_vph_a
-        2300,   // ph_vph_b
-        2300,   // ph_vph_c
+        4000,   // pp_v_ph_ab
+        4000,   // pp_v_ph_bc
+        4000,   // pp_v_ph_ca
+        2300,   // ph_v_ph_a
+        2300,   // ph_v_ph_b
+        2300,   // ph_v_ph_c
         65535,  // v_sf
         5000,   // w
         0,      // w_sf
@@ -70,12 +70,12 @@ fn test_model103_clone_and_partial_eq() {
         65533,  // pf_sf
         0, 100, // wh
         0,      // wh_sf
-        0,      // dca
-        0,      // dca_sf
-        0,      // dcv
-        0,      // dcv_sf
-        0,      // dcw
-        0,      // dcw_sf
+        0,      // dc_a
+        0,      // dc_a_sf
+        0,      // dc_v
+        0,      // dc_v_sf
+        0,      // dc_w
+        0,      // dc_w_sf
         250,    // tmp_cab
         65535,  // tmp_snk
         65535,  // tmp_trns

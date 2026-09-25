@@ -66,11 +66,11 @@ pub struct DerMeasureAc {
     /// Voltage LL
     ///
     /// Line to line AC voltage as an average of active phases.
-    pub llv: Option<u16>,
+    pub ll_v: Option<u16>,
     /// Voltage LN
     ///
     /// Line to neutral AC voltage as an average of active phases.
-    pub lnv: Option<u16>,
+    pub ln_v: Option<u16>,
     /// Frequency
     ///
     /// AC frequency.
@@ -122,11 +122,11 @@ pub struct DerMeasureAc {
     /// Active power L1.
     ///
     /// Comments: L1
-    pub wl1: Option<i16>,
+    pub w_l1: Option<i16>,
     /// VA L1
     ///
     /// Apparent power L1.
-    pub val1: Option<i16>,
+    pub va_l1: Option<i16>,
     /// Var L1
     ///
     /// Reactive power L1.
@@ -134,19 +134,19 @@ pub struct DerMeasureAc {
     /// PF L1
     ///
     /// Power factor phase L1.
-    pub pfl1: Option<i16>,
+    pub pf_l1: Option<i16>,
     /// Amps L1
     ///
     /// Current phase L1.
-    pub al1: Option<i16>,
+    pub a_l1: Option<i16>,
     /// Phase Voltage L1-L2
     ///
     /// Phase voltage L1-L2.
-    pub vl1l2: Option<u16>,
+    pub v_l1_l2: Option<u16>,
     /// Phase Voltage L1-N
     ///
     /// Phase voltage L1-N.
-    pub vl1: Option<u16>,
+    pub v_l1: Option<u16>,
     /// Total Watt-Hours Inj L1
     ///
     /// Total active energy injected L1.
@@ -168,11 +168,11 @@ pub struct DerMeasureAc {
     /// Active power L2.
     ///
     /// Comments: L2
-    pub wl2: Option<i16>,
+    pub w_l2: Option<i16>,
     /// VA L2
     ///
     /// Apparent power L2.
-    pub val2: Option<i16>,
+    pub va_l2: Option<i16>,
     /// Var L2
     ///
     /// Reactive power L2.
@@ -180,19 +180,19 @@ pub struct DerMeasureAc {
     /// PF L2
     ///
     /// Power factor L2.
-    pub pfl2: Option<i16>,
+    pub pf_l2: Option<i16>,
     /// Amps L2
     ///
     /// Current L2.
-    pub al2: Option<i16>,
+    pub a_l2: Option<i16>,
     /// Phase Voltage L2-L3
     ///
     /// Phase voltage L2-L3.
-    pub vl2l3: Option<u16>,
+    pub v_l2_l3: Option<u16>,
     /// Phase Voltage L2-N
     ///
     /// Phase voltage L2-N.
-    pub vl2: Option<u16>,
+    pub v_l2: Option<u16>,
     /// Total Watt-Hours Inj L2
     ///
     /// Total active energy injected L2.
@@ -214,11 +214,11 @@ pub struct DerMeasureAc {
     /// Active power L3.
     ///
     /// Comments: L3
-    pub wl3: Option<i16>,
+    pub w_l3: Option<i16>,
     /// VA L3
     ///
     /// Apparent power L3.
-    pub val3: Option<i16>,
+    pub va_l3: Option<i16>,
     /// Var L3
     ///
     /// Reactive power L3.
@@ -226,19 +226,19 @@ pub struct DerMeasureAc {
     /// PF L3
     ///
     /// Power factor L3.
-    pub pfl3: Option<i16>,
+    pub pf_l3: Option<i16>,
     /// Amps L3
     ///
     /// Current L3.
-    pub al3: Option<i16>,
+    pub a_l3: Option<i16>,
     /// Phase Voltage L3-L1
     ///
     /// Phase voltage L3-L1.
-    pub vl3l1: Option<u16>,
+    pub v_l3_l1: Option<u16>,
     /// Phase Voltage L3-N
     ///
     /// Phase voltage L3-N.
-    pub vl3: Option<u16>,
+    pub v_l3: Option<u16>,
     /// Total Watt-Hours Inj L3
     ///
     /// Total active energy injected L3.
@@ -327,8 +327,8 @@ impl DerMeasureAc {
     pub const VAR: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
     pub const PF: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, false);
     pub const A: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
-    pub const LLV: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
-    pub const LNV: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, false);
+    pub const LL_V: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
+    pub const LN_V: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, false);
     pub const HZ: crate::Point<Self, Option<u32>> = crate::Point::new(15, 2, false);
     pub const TOT_WH_INJ: crate::Point<Self, Option<u64>> = crate::Point::new(17, 4, false);
     pub const TOT_WH_ABS: crate::Point<Self, Option<u64>> = crate::Point::new(21, 4, false);
@@ -340,35 +340,35 @@ impl DerMeasureAc {
     pub const TMP_TRNS: crate::Point<Self, Option<i16>> = crate::Point::new(36, 1, false);
     pub const TMP_SW: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, false);
     pub const TMP_OT: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1, false);
-    pub const WL1: crate::Point<Self, Option<i16>> = crate::Point::new(39, 1, false);
-    pub const VAL1: crate::Point<Self, Option<i16>> = crate::Point::new(40, 1, false);
+    pub const W_L1: crate::Point<Self, Option<i16>> = crate::Point::new(39, 1, false);
+    pub const VA_L1: crate::Point<Self, Option<i16>> = crate::Point::new(40, 1, false);
     pub const VAR_L1: crate::Point<Self, Option<i16>> = crate::Point::new(41, 1, false);
-    pub const PFL1: crate::Point<Self, Option<i16>> = crate::Point::new(42, 1, false);
-    pub const AL1: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
-    pub const VL1L2: crate::Point<Self, Option<u16>> = crate::Point::new(44, 1, false);
-    pub const VL1: crate::Point<Self, Option<u16>> = crate::Point::new(45, 1, false);
+    pub const PF_L1: crate::Point<Self, Option<i16>> = crate::Point::new(42, 1, false);
+    pub const A_L1: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
+    pub const V_L1_L2: crate::Point<Self, Option<u16>> = crate::Point::new(44, 1, false);
+    pub const V_L1: crate::Point<Self, Option<u16>> = crate::Point::new(45, 1, false);
     pub const TOT_WH_INJ_L1: crate::Point<Self, Option<u64>> = crate::Point::new(46, 4, false);
     pub const TOT_WH_ABS_L1: crate::Point<Self, Option<u64>> = crate::Point::new(50, 4, false);
     pub const TOT_VARH_INJ_L1: crate::Point<Self, Option<u64>> = crate::Point::new(54, 4, false);
     pub const TOT_VARH_ABS_L1: crate::Point<Self, Option<u64>> = crate::Point::new(58, 4, false);
-    pub const WL2: crate::Point<Self, Option<i16>> = crate::Point::new(62, 1, false);
-    pub const VAL2: crate::Point<Self, Option<i16>> = crate::Point::new(63, 1, false);
+    pub const W_L2: crate::Point<Self, Option<i16>> = crate::Point::new(62, 1, false);
+    pub const VA_L2: crate::Point<Self, Option<i16>> = crate::Point::new(63, 1, false);
     pub const VAR_L2: crate::Point<Self, Option<i16>> = crate::Point::new(64, 1, false);
-    pub const PFL2: crate::Point<Self, Option<i16>> = crate::Point::new(65, 1, false);
-    pub const AL2: crate::Point<Self, Option<i16>> = crate::Point::new(66, 1, false);
-    pub const VL2L3: crate::Point<Self, Option<u16>> = crate::Point::new(67, 1, false);
-    pub const VL2: crate::Point<Self, Option<u16>> = crate::Point::new(68, 1, false);
+    pub const PF_L2: crate::Point<Self, Option<i16>> = crate::Point::new(65, 1, false);
+    pub const A_L2: crate::Point<Self, Option<i16>> = crate::Point::new(66, 1, false);
+    pub const V_L2_L3: crate::Point<Self, Option<u16>> = crate::Point::new(67, 1, false);
+    pub const V_L2: crate::Point<Self, Option<u16>> = crate::Point::new(68, 1, false);
     pub const TOT_WH_INJ_L2: crate::Point<Self, Option<u64>> = crate::Point::new(69, 4, false);
     pub const TOT_WH_ABS_L2: crate::Point<Self, Option<u64>> = crate::Point::new(73, 4, false);
     pub const TOT_VARH_INJ_L2: crate::Point<Self, Option<u64>> = crate::Point::new(77, 4, false);
     pub const TOT_VARH_ABS_L2: crate::Point<Self, Option<u64>> = crate::Point::new(81, 4, false);
-    pub const WL3: crate::Point<Self, Option<i16>> = crate::Point::new(85, 1, false);
-    pub const VAL3: crate::Point<Self, Option<i16>> = crate::Point::new(86, 1, false);
+    pub const W_L3: crate::Point<Self, Option<i16>> = crate::Point::new(85, 1, false);
+    pub const VA_L3: crate::Point<Self, Option<i16>> = crate::Point::new(86, 1, false);
     pub const VAR_L3: crate::Point<Self, Option<i16>> = crate::Point::new(87, 1, false);
-    pub const PFL3: crate::Point<Self, Option<i16>> = crate::Point::new(88, 1, false);
-    pub const AL3: crate::Point<Self, Option<i16>> = crate::Point::new(89, 1, false);
-    pub const VL3L1: crate::Point<Self, Option<u16>> = crate::Point::new(90, 1, false);
-    pub const VL3: crate::Point<Self, Option<u16>> = crate::Point::new(91, 1, false);
+    pub const PF_L3: crate::Point<Self, Option<i16>> = crate::Point::new(88, 1, false);
+    pub const A_L3: crate::Point<Self, Option<i16>> = crate::Point::new(89, 1, false);
+    pub const V_L3_L1: crate::Point<Self, Option<u16>> = crate::Point::new(90, 1, false);
+    pub const V_L3: crate::Point<Self, Option<u16>> = crate::Point::new(91, 1, false);
     pub const TOT_WH_INJ_L3: crate::Point<Self, Option<u64>> = crate::Point::new(92, 4, false);
     pub const TOT_WH_ABS_L3: crate::Point<Self, Option<u64>> = crate::Point::new(96, 4, false);
     pub const TOT_VARH_INJ_L3: crate::Point<Self, Option<u64>> = crate::Point::new(100, 4, false);
@@ -409,8 +409,8 @@ impl DerMeasureAc {
                 var: Self::VAR.from_data(data)?,
                 pf: Self::PF.from_data(data)?,
                 a: Self::A.from_data(data)?,
-                llv: Self::LLV.from_data(data)?,
-                lnv: Self::LNV.from_data(data)?,
+                ll_v: Self::LL_V.from_data(data)?,
+                ln_v: Self::LN_V.from_data(data)?,
                 hz: Self::HZ.from_data(data)?,
                 tot_wh_inj: Self::TOT_WH_INJ.from_data(data)?,
                 tot_wh_abs: Self::TOT_WH_ABS.from_data(data)?,
@@ -422,35 +422,35 @@ impl DerMeasureAc {
                 tmp_trns: Self::TMP_TRNS.from_data(data)?,
                 tmp_sw: Self::TMP_SW.from_data(data)?,
                 tmp_ot: Self::TMP_OT.from_data(data)?,
-                wl1: Self::WL1.from_data(data)?,
-                val1: Self::VAL1.from_data(data)?,
+                w_l1: Self::W_L1.from_data(data)?,
+                va_l1: Self::VA_L1.from_data(data)?,
                 var_l1: Self::VAR_L1.from_data(data)?,
-                pfl1: Self::PFL1.from_data(data)?,
-                al1: Self::AL1.from_data(data)?,
-                vl1l2: Self::VL1L2.from_data(data)?,
-                vl1: Self::VL1.from_data(data)?,
+                pf_l1: Self::PF_L1.from_data(data)?,
+                a_l1: Self::A_L1.from_data(data)?,
+                v_l1_l2: Self::V_L1_L2.from_data(data)?,
+                v_l1: Self::V_L1.from_data(data)?,
                 tot_wh_inj_l1: Self::TOT_WH_INJ_L1.from_data(data)?,
                 tot_wh_abs_l1: Self::TOT_WH_ABS_L1.from_data(data)?,
                 tot_varh_inj_l1: Self::TOT_VARH_INJ_L1.from_data(data)?,
                 tot_varh_abs_l1: Self::TOT_VARH_ABS_L1.from_data(data)?,
-                wl2: Self::WL2.from_data(data)?,
-                val2: Self::VAL2.from_data(data)?,
+                w_l2: Self::W_L2.from_data(data)?,
+                va_l2: Self::VA_L2.from_data(data)?,
                 var_l2: Self::VAR_L2.from_data(data)?,
-                pfl2: Self::PFL2.from_data(data)?,
-                al2: Self::AL2.from_data(data)?,
-                vl2l3: Self::VL2L3.from_data(data)?,
-                vl2: Self::VL2.from_data(data)?,
+                pf_l2: Self::PF_L2.from_data(data)?,
+                a_l2: Self::A_L2.from_data(data)?,
+                v_l2_l3: Self::V_L2_L3.from_data(data)?,
+                v_l2: Self::V_L2.from_data(data)?,
                 tot_wh_inj_l2: Self::TOT_WH_INJ_L2.from_data(data)?,
                 tot_wh_abs_l2: Self::TOT_WH_ABS_L2.from_data(data)?,
                 tot_varh_inj_l2: Self::TOT_VARH_INJ_L2.from_data(data)?,
                 tot_varh_abs_l2: Self::TOT_VARH_ABS_L2.from_data(data)?,
-                wl3: Self::WL3.from_data(data)?,
-                val3: Self::VAL3.from_data(data)?,
+                w_l3: Self::W_L3.from_data(data)?,
+                va_l3: Self::VA_L3.from_data(data)?,
                 var_l3: Self::VAR_L3.from_data(data)?,
-                pfl3: Self::PFL3.from_data(data)?,
-                al3: Self::AL3.from_data(data)?,
-                vl3l1: Self::VL3L1.from_data(data)?,
-                vl3: Self::VL3.from_data(data)?,
+                pf_l3: Self::PF_L3.from_data(data)?,
+                a_l3: Self::A_L3.from_data(data)?,
+                v_l3_l1: Self::V_L3_L1.from_data(data)?,
+                v_l3: Self::V_L3.from_data(data)?,
                 tot_wh_inj_l3: Self::TOT_WH_INJ_L3.from_data(data)?,
                 tot_wh_abs_l3: Self::TOT_WH_ABS_L3.from_data(data)?,
                 tot_varh_inj_l3: Self::TOT_VARH_INJ_L3.from_data(data)?,

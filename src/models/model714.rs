@@ -23,11 +23,11 @@ pub struct DerMeasureDc {
     /// DC Current
     ///
     /// Total DC current for all ports.
-    pub dca: Option<i16>,
+    pub dc_a: Option<i16>,
     /// DC Power
     ///
     /// Total DC power for all ports.
-    pub dcw: Option<i16>,
+    pub dc_w: Option<i16>,
     /// DC Energy Injected
     ///
     /// Total cumulative DC energy injected for all ports.
@@ -39,19 +39,19 @@ pub struct DerMeasureDc {
     /// DC Current Scale Factor
     ///
     /// DC current scale factor.
-    pub dca_sf: Option<i16>,
+    pub dc_a_sf: Option<i16>,
     /// DC Voltage Scale Factor
     ///
     /// DC voltage scale factor.
-    pub dcv_sf: Option<i16>,
+    pub dc_v_sf: Option<i16>,
     /// DC Power Scale Factor
     ///
     /// DC power scale factor.
-    pub dcw_sf: Option<i16>,
+    pub dc_w_sf: Option<i16>,
     /// DC Energy Scale Factor
     ///
     /// DC energy scale factor.
-    pub dcwh_sf: Option<i16>,
+    pub dc_wh_sf: Option<i16>,
     /// Temperature Scale Factor
     ///
     /// Temperature Scale Factor.
@@ -63,14 +63,14 @@ pub struct DerMeasureDc {
 impl DerMeasureDc {
     pub const PRT_ALRMS: crate::Point<Self, Option<PrtAlrms>> = crate::Point::new(0, 2, false);
     pub const N_PRT: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
-    pub const DCA: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
-    pub const DCW: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1, false);
+    pub const DC_A: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
+    pub const DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1, false);
     pub const DC_WH_INJ: crate::Point<Self, Option<u64>> = crate::Point::new(5, 4, false);
     pub const DC_WH_ABS: crate::Point<Self, Option<u64>> = crate::Point::new(9, 4, false);
-    pub const DCA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, false);
-    pub const DCV_SF: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
-    pub const DCW_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
-    pub const DCWH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
+    pub const DC_A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, false);
+    pub const DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
+    pub const DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
+    pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
 }
 impl crate::Group for DerMeasureDc {
@@ -90,14 +90,14 @@ impl DerMeasureDc {
             Self {
                 prt_alrms: Self::PRT_ALRMS.from_data(data)?,
                 n_prt: Self::N_PRT.from_data(data)?,
-                dca: Self::DCA.from_data(data)?,
-                dcw: Self::DCW.from_data(data)?,
+                dc_a: Self::DC_A.from_data(data)?,
+                dc_w: Self::DC_W.from_data(data)?,
                 dc_wh_inj: Self::DC_WH_INJ.from_data(data)?,
                 dc_wh_abs: Self::DC_WH_ABS.from_data(data)?,
-                dca_sf: Self::DCA_SF.from_data(data)?,
-                dcv_sf: Self::DCV_SF.from_data(data)?,
-                dcw_sf: Self::DCW_SF.from_data(data)?,
-                dcwh_sf: Self::DCWH_SF.from_data(data)?,
+                dc_a_sf: Self::DC_A_SF.from_data(data)?,
+                dc_v_sf: Self::DC_V_SF.from_data(data)?,
+                dc_w_sf: Self::DC_W_SF.from_data(data)?,
+                dc_wh_sf: Self::DC_WH_SF.from_data(data)?,
                 tmp_sf: Self::TMP_SF.from_data(data)?,
                 prt,
             },
@@ -150,15 +150,15 @@ pub struct Prt {
     /// DC Current
     ///
     /// DC current for the port.
-    pub dca: Option<i16>,
+    pub dc_a: Option<i16>,
     /// DC Voltage
     ///
     /// DC voltage for the port.
-    pub dcv: Option<u16>,
+    pub dc_v: Option<u16>,
     /// DC Power
     ///
     /// DC power for the port.
-    pub dcw: Option<i16>,
+    pub dc_w: Option<i16>,
     /// DC Energy Injected
     ///
     /// Total cumulative DC energy injected for the port.
@@ -185,9 +185,9 @@ impl Prt {
     pub const PRT_TYP: crate::Point<Self, Option<PrtPrtTyp>> = crate::Point::new(0, 1, false);
     pub const ID: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
     pub const ID_STR: crate::Point<Self, Option<String>> = crate::Point::new(2, 8, false);
-    pub const DCA: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
-    pub const DCV: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
-    pub const DCW: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
+    pub const DC_A: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
+    pub const DC_V: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
+    pub const DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
     pub const DC_WH_INJ: crate::Point<Self, Option<u64>> = crate::Point::new(13, 4, false);
     pub const DC_WH_ABS: crate::Point<Self, Option<u64>> = crate::Point::new(17, 4, false);
     pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
@@ -208,9 +208,9 @@ impl Prt {
                 prt_typ: Self::PRT_TYP.from_data(data)?,
                 id: Self::ID.from_data(data)?,
                 id_str: Self::ID_STR.from_data(data)?,
-                dca: Self::DCA.from_data(data)?,
-                dcv: Self::DCV.from_data(data)?,
-                dcw: Self::DCW.from_data(data)?,
+                dc_a: Self::DC_A.from_data(data)?,
+                dc_v: Self::DC_V.from_data(data)?,
+                dc_w: Self::DC_W.from_data(data)?,
                 dc_wh_inj: Self::DC_WH_INJ.from_data(data)?,
                 dc_wh_abs: Self::DC_WH_ABS.from_data(data)?,
                 tmp: Self::TMP.from_data(data)?,

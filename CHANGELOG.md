@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update sunspec models (2026-08-20)
   - Add `subscribed_resource` and `subscription_ena` points to model 64415
   - Fix size of `DeptRef` point in model 64410
+- **Breaking:** Fix word splitting of units and acronyms in 392 generated
+  identifiers (#26). For example:
+  - Fields: `v_ar_rtg_q1` → `var_rtg_q1`, `tot_v_ah_exp` → `tot_vah_exp`,
+    `aph_a` → `a_ph_a`, `ph_vph_a` → `ph_v_ph_a`, `dca` → `dc_a`,
+    `vl1l2` → `v_l1_l2`
+  - Constants: `V_AR_RTG_Q1` → `VAR_RTG_Q1`, `APH_A` → `A_PH_A`
+  - Types: `VArAct` → `VarAct`, `PfwAbs` → `PfWAbs`
+  - Enum variants and bitflags: `VArMax` → `VarMax`, `VoltVAr` → `VoltVar`
 
 ## [0.9.1] - 2026-08-25
 

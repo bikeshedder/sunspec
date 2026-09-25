@@ -14,11 +14,11 @@ pub struct DerEnterService {
     /// Enter Service Voltage High
     ///
     /// Enter service voltage high threshold as percent of normal voltage.
-    pub esv_hi: Option<u16>,
+    pub es_v_hi: Option<u16>,
     /// Enter Service Voltage Low
     ///
     /// Enter service voltage low threshold as percent of normal voltage.
-    pub esv_lo: Option<u16>,
+    pub es_v_lo: Option<u16>,
     /// Enter Service Frequency High
     ///
     /// Enter service frequency high threshold.
@@ -55,8 +55,8 @@ pub struct DerEnterService {
 #[allow(missing_docs)]
 impl DerEnterService {
     pub const ES: crate::Point<Self, Option<Es>> = crate::Point::new(0, 1, true);
-    pub const ESV_HI: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
-    pub const ESV_LO: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
+    pub const ES_V_HI: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
+    pub const ES_V_LO: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
     pub const ES_HZ_HI: crate::Point<Self, Option<u32>> = crate::Point::new(3, 2, true);
     pub const ES_HZ_LO: crate::Point<Self, Option<u32>> = crate::Point::new(5, 2, true);
     pub const ES_DLY_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, true);
@@ -78,8 +78,8 @@ impl DerEnterService {
             nested_data,
             Self {
                 es: Self::ES.from_data(data)?,
-                esv_hi: Self::ESV_HI.from_data(data)?,
-                esv_lo: Self::ESV_LO.from_data(data)?,
+                es_v_hi: Self::ES_V_HI.from_data(data)?,
+                es_v_lo: Self::ES_V_LO.from_data(data)?,
                 es_hz_hi: Self::ES_HZ_HI.from_data(data)?,
                 es_hz_lo: Self::ES_HZ_LO.from_data(data)?,
                 es_dly_tms: Self::ES_DLY_TMS.from_data(data)?,

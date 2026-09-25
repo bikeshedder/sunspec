@@ -52,7 +52,7 @@ pub struct Battery {
     /// Depth of discharge, expressed as a percentage.
     ///
     /// Detail: Measurement.
-    pub do_d: Option<u16>,
+    pub dod: Option<u16>,
     /// State of Health
     ///
     /// Percentage of battery life remaining.
@@ -234,7 +234,7 @@ pub struct Battery {
     /// Scale factor for state of charge values.
     pub soc_sf: i16,
     /// Scale factor for depth of discharge.
-    pub do_d_sf: Option<i16>,
+    pub dod_sf: Option<i16>,
     /// Scale factor for state of health.
     pub soh_sf: Option<i16>,
     /// Scale factor for DC bus voltage.
@@ -260,7 +260,7 @@ impl Battery {
     pub const SOC_RSV_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
     pub const SOC_RSV_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
     pub const SOC: crate::Point<Self, u16> = crate::Point::new(9, 1, false);
-    pub const DO_D: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
+    pub const DOD: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
     pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
     pub const N_CYC: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
     pub const CHA_ST: crate::Point<Self, Option<ChaSt>> = crate::Point::new(14, 1, false);
@@ -300,7 +300,7 @@ impl Battery {
     pub const W_CHA_DIS_CHA_MAX_SF: crate::Point<Self, i16> = crate::Point::new(52, 1, false);
     pub const DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(53, 1, false);
     pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(54, 1, false);
-    pub const DO_D_SF: crate::Point<Self, Option<i16>> = crate::Point::new(55, 1, false);
+    pub const DOD_SF: crate::Point<Self, Option<i16>> = crate::Point::new(55, 1, false);
     pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(56, 1, false);
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(57, 1, false);
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(58, 1, false);
@@ -329,7 +329,7 @@ impl Battery {
                 soc_rsv_max: Self::SOC_RSV_MAX.from_data(data)?,
                 soc_rsv_min: Self::SOC_RSV_MIN.from_data(data)?,
                 soc: Self::SOC.from_data(data)?,
-                do_d: Self::DO_D.from_data(data)?,
+                dod: Self::DOD.from_data(data)?,
                 soh: Self::SOH.from_data(data)?,
                 n_cyc: Self::N_CYC.from_data(data)?,
                 cha_st: Self::CHA_ST.from_data(data)?,
@@ -368,7 +368,7 @@ impl Battery {
                 w_cha_dis_cha_max_sf: Self::W_CHA_DIS_CHA_MAX_SF.from_data(data)?,
                 dis_cha_rte_sf: Self::DIS_CHA_RTE_SF.from_data(data)?,
                 soc_sf: Self::SOC_SF.from_data(data)?,
-                do_d_sf: Self::DO_D_SF.from_data(data)?,
+                dod_sf: Self::DOD_SF.from_data(data)?,
                 soh_sf: Self::SOH_SF.from_data(data)?,
                 v_sf: Self::V_SF.from_data(data)?,
                 cell_v_sf: Self::CELL_V_SF.from_data(data)?,

@@ -28,31 +28,31 @@ pub struct Status {
     /// ActVAh
     ///
     /// AC lifetime apparent energy output.
-    pub act_v_ah: Option<u64>,
+    pub act_vah: Option<u64>,
     /// ActVArhQ1
     ///
     /// AC lifetime reactive energy output in quadrant 1.
-    pub act_v_arh_q1: Option<u64>,
+    pub act_varh_q1: Option<u64>,
     /// ActVArhQ2
     ///
     /// AC lifetime reactive energy output in quadrant 2.
-    pub act_v_arh_q2: Option<u64>,
+    pub act_varh_q2: Option<u64>,
     /// ActVArhQ3
     ///
     /// AC lifetime negative energy output in quadrant 3.
-    pub act_v_arh_q3: Option<u64>,
+    pub act_varh_q3: Option<u64>,
     /// ActVArhQ4
     ///
     /// AC lifetime reactive energy output in quadrant 4.
-    pub act_v_arh_q4: Option<u64>,
+    pub act_varh_q4: Option<u64>,
     /// VArAval
     ///
     /// Amount of VARs available without impacting watts output.
-    pub v_ar_aval: Option<i16>,
+    pub var_aval: Option<i16>,
     /// VArAval_SF
     ///
     /// Scale factor for available VARs.
-    pub v_ar_aval_sf: Option<i16>,
+    pub var_aval_sf: Option<i16>,
     /// WAval
     ///
     /// Amount of Watts available.
@@ -98,13 +98,13 @@ impl Status {
     pub const STOR_CONN: crate::Point<Self, StorConn> = crate::Point::new(1, 1, false);
     pub const ECP_CONN: crate::Point<Self, EcpConn> = crate::Point::new(2, 1, false);
     pub const ACT_WH: crate::Point<Self, Option<u64>> = crate::Point::new(3, 4, false);
-    pub const ACT_V_AH: crate::Point<Self, Option<u64>> = crate::Point::new(7, 4, false);
-    pub const ACT_V_ARH_Q1: crate::Point<Self, Option<u64>> = crate::Point::new(11, 4, false);
-    pub const ACT_V_ARH_Q2: crate::Point<Self, Option<u64>> = crate::Point::new(15, 4, false);
-    pub const ACT_V_ARH_Q3: crate::Point<Self, Option<u64>> = crate::Point::new(19, 4, false);
-    pub const ACT_V_ARH_Q4: crate::Point<Self, Option<u64>> = crate::Point::new(23, 4, false);
-    pub const V_AR_AVAL: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
-    pub const V_AR_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
+    pub const ACT_VAH: crate::Point<Self, Option<u64>> = crate::Point::new(7, 4, false);
+    pub const ACT_VARH_Q1: crate::Point<Self, Option<u64>> = crate::Point::new(11, 4, false);
+    pub const ACT_VARH_Q2: crate::Point<Self, Option<u64>> = crate::Point::new(15, 4, false);
+    pub const ACT_VARH_Q3: crate::Point<Self, Option<u64>> = crate::Point::new(19, 4, false);
+    pub const ACT_VARH_Q4: crate::Point<Self, Option<u64>> = crate::Point::new(23, 4, false);
+    pub const VAR_AVAL: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
+    pub const VAR_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
     pub const W_AVAL: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1, false);
     pub const W_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(30, 1, false);
     pub const ST_SET_LIM_MSK: crate::Point<Self, Option<StSetLimMsk>> =
@@ -131,13 +131,13 @@ impl Status {
                 stor_conn: Self::STOR_CONN.from_data(data)?,
                 ecp_conn: Self::ECP_CONN.from_data(data)?,
                 act_wh: Self::ACT_WH.from_data(data)?,
-                act_v_ah: Self::ACT_V_AH.from_data(data)?,
-                act_v_arh_q1: Self::ACT_V_ARH_Q1.from_data(data)?,
-                act_v_arh_q2: Self::ACT_V_ARH_Q2.from_data(data)?,
-                act_v_arh_q3: Self::ACT_V_ARH_Q3.from_data(data)?,
-                act_v_arh_q4: Self::ACT_V_ARH_Q4.from_data(data)?,
-                v_ar_aval: Self::V_AR_AVAL.from_data(data)?,
-                v_ar_aval_sf: Self::V_AR_AVAL_SF.from_data(data)?,
+                act_vah: Self::ACT_VAH.from_data(data)?,
+                act_varh_q1: Self::ACT_VARH_Q1.from_data(data)?,
+                act_varh_q2: Self::ACT_VARH_Q2.from_data(data)?,
+                act_varh_q3: Self::ACT_VARH_Q3.from_data(data)?,
+                act_varh_q4: Self::ACT_VARH_Q4.from_data(data)?,
+                var_aval: Self::VAR_AVAL.from_data(data)?,
+                var_aval_sf: Self::VAR_AVAL_SF.from_data(data)?,
                 w_aval: Self::W_AVAL.from_data(data)?,
                 w_aval_sf: Self::W_AVAL_SF.from_data(data)?,
                 st_set_lim_msk: Self::ST_SET_LIM_MSK.from_data(data)?,
@@ -260,15 +260,15 @@ bitflags::bitflags! {
         #[allow(missing_docs)]
         const VaMax = 2;
         #[allow(missing_docs)]
-        const VArAval = 4;
+        const VarAval = 4;
         #[allow(missing_docs)]
-        const VArMaxQ1 = 8;
+        const VarMaxQ1 = 8;
         #[allow(missing_docs)]
-        const VArMaxQ2 = 16;
+        const VarMaxQ2 = 16;
         #[allow(missing_docs)]
-        const VArMaxQ3 = 32;
+        const VarMaxQ3 = 32;
         #[allow(missing_docs)]
-        const VArMaxQ4 = 64;
+        const VarMaxQ4 = 64;
         #[allow(missing_docs)]
         const PfMinQ1 = 128;
         #[allow(missing_docs)]
@@ -309,7 +309,7 @@ bitflags::bitflags! {
         #[allow(missing_docs)]
         const FixedPf = 4;
         #[allow(missing_docs)]
-        const VoltVAr = 8;
+        const VoltVar = 8;
         #[allow(missing_docs)]
         const FreqWattParam = 16;
         #[allow(missing_docs)]

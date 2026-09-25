@@ -39,7 +39,7 @@ pub struct LithiumIonString {
     /// Depth of discharge for the string, expressed as a percentage.
     ///
     /// Detail: Measurement.
-    pub do_d: Option<u16>,
+    pub dod: Option<u16>,
     /// String Cycle Count
     ///
     /// Number of discharge cycles executed upon the string.
@@ -151,7 +151,7 @@ pub struct LithiumIonString {
     /// Scale factor for string state of health.
     pub soh_sf: Option<i16>,
     /// Scale factor for string depth of discharge.
-    pub do_d_sf: Option<i16>,
+    pub dod_sf: Option<i16>,
     /// Scale factor for string current.
     pub a_sf: i16,
     /// Scale factor for string voltage.
@@ -171,7 +171,7 @@ impl LithiumIonString {
     pub const CON_FAIL: crate::Point<Self, Option<ConFail>> = crate::Point::new(4, 1, false);
     pub const N_CELL_BAL: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
     pub const SOC: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
-    pub const DO_D: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
+    pub const DOD: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
     pub const N_CYC: crate::Point<Self, Option<u32>> = crate::Point::new(8, 2, false);
     pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
     pub const A: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
@@ -195,7 +195,7 @@ impl LithiumIonString {
     pub const SET_CON: crate::Point<Self, Option<SetCon>> = crate::Point::new(35, 1, true);
     pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(36, 1, false);
     pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, false);
-    pub const DO_D_SF: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1, false);
+    pub const DOD_SF: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1, false);
     pub const A_SF: crate::Point<Self, i16> = crate::Point::new(39, 1, false);
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(40, 1, false);
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
@@ -223,7 +223,7 @@ impl LithiumIonString {
                 con_fail: Self::CON_FAIL.from_data(data)?,
                 n_cell_bal: Self::N_CELL_BAL.from_data(data)?,
                 soc: Self::SOC.from_data(data)?,
-                do_d: Self::DO_D.from_data(data)?,
+                dod: Self::DOD.from_data(data)?,
                 n_cyc: Self::N_CYC.from_data(data)?,
                 soh: Self::SOH.from_data(data)?,
                 a: Self::A.from_data(data)?,
@@ -247,7 +247,7 @@ impl LithiumIonString {
                 set_con: Self::SET_CON.from_data(data)?,
                 soc_sf: Self::SOC_SF.from_data(data)?,
                 soh_sf: Self::SOH_SF.from_data(data)?,
-                do_d_sf: Self::DO_D_SF.from_data(data)?,
+                dod_sf: Self::DOD_SF.from_data(data)?,
                 a_sf: Self::A_SF.from_data(data)?,
                 v_sf: Self::V_SF.from_data(data)?,
                 cell_v_sf: Self::CELL_V_SF.from_data(data)?,

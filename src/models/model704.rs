@@ -12,37 +12,37 @@ pub struct DerCtlAc {
     /// Power factor enable when injecting active power.
     ///
     /// Comments: Set Power Factor (when injecting active power)
-    pub pfw_inj_ena: Option<PfwInjEna>,
+    pub pf_w_inj_ena: Option<PfWInjEna>,
     /// Power Factor Reversion Enable (W Inj)
     ///
     /// Power factor reversion timer when injecting active power enable.
-    pub pfw_inj_ena_rvrt: Option<PfwInjEnaRvrt>,
+    pub pf_w_inj_ena_rvrt: Option<PfWInjEnaRvrt>,
     /// PF Reversion Time (W Inj)
     ///
     /// Power factor reversion timer when injecting active power.
-    pub pfw_inj_rvrt_tms: Option<u32>,
+    pub pf_w_inj_rvrt_tms: Option<u32>,
     /// PF Reversion Time Rem (W Inj)
     ///
     /// Power factor reversion time remaining when injecting active power.
-    pub pfw_inj_rvrt_rem: Option<u32>,
+    pub pf_w_inj_rvrt_rem: Option<u32>,
     /// Power Factor Enable (W Abs) Enable
     ///
     /// Power factor enable when absorbing active power.
     ///
     /// Comments: Set Power Factor (when absorbing active power)
-    pub pfw_abs_ena: Option<PfwAbsEna>,
+    pub pf_w_abs_ena: Option<PfWAbsEna>,
     /// Power Factor Reversion Enable (W Abs)
     ///
     /// Power factor reversion timer when absorbing active power enable.
-    pub pfw_abs_ena_rvrt: Option<PfwAbsEnaRvrt>,
+    pub pf_w_abs_ena_rvrt: Option<PfWAbsEnaRvrt>,
     /// PF Reversion Time (W Abs)
     ///
     /// Power factor reversion timer when absorbing active power.
-    pub pfw_abs_rvrt_tms: Option<u32>,
+    pub pf_w_abs_rvrt_tms: Option<u32>,
     /// PF Reversion Time Rem (W Abs)
     ///
     /// Power factor reversion time remaining when absorbing active power.
-    pub pfw_abs_rvrt_rem: Option<u32>,
+    pub pf_w_abs_rvrt_rem: Option<u32>,
     /// Limit Max Power Pct Enable
     ///
     /// Limit maximum active power percent enable.
@@ -198,32 +198,32 @@ pub struct DerCtlAc {
     /// Power factor setpoint when injecting active power.
     ///
     /// Comments: Power Factor Settings
-    pub pfw_inj: PfwInj,
+    pub pf_w_inj: PfWInj,
     /// Reversion Power Factor (W Inj)
     ///
     /// Reversion power factor setpoint when injecting active power.
-    pub pfw_inj_rvrt: PfwInjRvrt,
+    pub pf_w_inj_rvrt: PfWInjRvrt,
     /// Power Factor (W Abs)
     ///
     /// Power factor setpoint when absorbing active power.
-    pub pfw_abs: PfwAbs,
+    pub pf_w_abs: PfWAbs,
     /// Reversion Power Factor (W Abs)
     ///
     /// Reversion power factor setpoint when absorbing active power.
-    pub pfw_abs_rvrt: PfwAbsRvrt,
+    pub pf_w_abs_rvrt: PfWAbsRvrt,
 }
 #[allow(missing_docs)]
 impl DerCtlAc {
-    pub const PFW_INJ_ENA: crate::Point<Self, Option<PfwInjEna>> = crate::Point::new(0, 1, true);
-    pub const PFW_INJ_ENA_RVRT: crate::Point<Self, Option<PfwInjEnaRvrt>> =
+    pub const PF_W_INJ_ENA: crate::Point<Self, Option<PfWInjEna>> = crate::Point::new(0, 1, true);
+    pub const PF_W_INJ_ENA_RVRT: crate::Point<Self, Option<PfWInjEnaRvrt>> =
         crate::Point::new(1, 1, true);
-    pub const PFW_INJ_RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(2, 2, true);
-    pub const PFW_INJ_RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(4, 2, false);
-    pub const PFW_ABS_ENA: crate::Point<Self, Option<PfwAbsEna>> = crate::Point::new(6, 1, true);
-    pub const PFW_ABS_ENA_RVRT: crate::Point<Self, Option<PfwAbsEnaRvrt>> =
+    pub const PF_W_INJ_RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(2, 2, true);
+    pub const PF_W_INJ_RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(4, 2, false);
+    pub const PF_W_ABS_ENA: crate::Point<Self, Option<PfWAbsEna>> = crate::Point::new(6, 1, true);
+    pub const PF_W_ABS_ENA_RVRT: crate::Point<Self, Option<PfWAbsEnaRvrt>> =
         crate::Point::new(7, 1, true);
-    pub const PFW_ABS_RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(8, 2, true);
-    pub const PFW_ABS_RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
+    pub const PF_W_ABS_RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(8, 2, true);
+    pub const PF_W_ABS_RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
     pub const W_MAX_LIM_PCT_ENA: crate::Point<Self, Option<WMaxLimPctEna>> =
         crate::Point::new(12, 1, true);
     pub const W_MAX_LIM_PCT: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, true);
@@ -274,21 +274,21 @@ impl DerCtlAc {
         let nested_data = data
             .get(usize::from(<Self as crate::Group>::LEN)..)
             .unwrap_or(&[]);
-        let (nested_data, pfw_inj) = PfwInj::parse_group(nested_data)?;
-        let (nested_data, pfw_inj_rvrt) = PfwInjRvrt::parse_group(nested_data)?;
-        let (nested_data, pfw_abs) = PfwAbs::parse_group(nested_data)?;
-        let (nested_data, pfw_abs_rvrt) = PfwAbsRvrt::parse_group(nested_data)?;
+        let (nested_data, pf_w_inj) = PfWInj::parse_group(nested_data)?;
+        let (nested_data, pf_w_inj_rvrt) = PfWInjRvrt::parse_group(nested_data)?;
+        let (nested_data, pf_w_abs) = PfWAbs::parse_group(nested_data)?;
+        let (nested_data, pf_w_abs_rvrt) = PfWAbsRvrt::parse_group(nested_data)?;
         Ok((
             nested_data,
             Self {
-                pfw_inj_ena: Self::PFW_INJ_ENA.from_data(data)?,
-                pfw_inj_ena_rvrt: Self::PFW_INJ_ENA_RVRT.from_data(data)?,
-                pfw_inj_rvrt_tms: Self::PFW_INJ_RVRT_TMS.from_data(data)?,
-                pfw_inj_rvrt_rem: Self::PFW_INJ_RVRT_REM.from_data(data)?,
-                pfw_abs_ena: Self::PFW_ABS_ENA.from_data(data)?,
-                pfw_abs_ena_rvrt: Self::PFW_ABS_ENA_RVRT.from_data(data)?,
-                pfw_abs_rvrt_tms: Self::PFW_ABS_RVRT_TMS.from_data(data)?,
-                pfw_abs_rvrt_rem: Self::PFW_ABS_RVRT_REM.from_data(data)?,
+                pf_w_inj_ena: Self::PF_W_INJ_ENA.from_data(data)?,
+                pf_w_inj_ena_rvrt: Self::PF_W_INJ_ENA_RVRT.from_data(data)?,
+                pf_w_inj_rvrt_tms: Self::PF_W_INJ_RVRT_TMS.from_data(data)?,
+                pf_w_inj_rvrt_rem: Self::PF_W_INJ_RVRT_REM.from_data(data)?,
+                pf_w_abs_ena: Self::PF_W_ABS_ENA.from_data(data)?,
+                pf_w_abs_ena_rvrt: Self::PF_W_ABS_ENA_RVRT.from_data(data)?,
+                pf_w_abs_rvrt_tms: Self::PF_W_ABS_RVRT_TMS.from_data(data)?,
+                pf_w_abs_rvrt_rem: Self::PF_W_ABS_RVRT_REM.from_data(data)?,
                 w_max_lim_pct_ena: Self::W_MAX_LIM_PCT_ENA.from_data(data)?,
                 w_max_lim_pct: Self::W_MAX_LIM_PCT.from_data(data)?,
                 w_max_lim_pct_rvrt: Self::W_MAX_LIM_PCT_RVRT.from_data(data)?,
@@ -324,10 +324,10 @@ impl DerCtlAc {
                 w_set_pct_sf: Self::W_SET_PCT_SF.from_data(data)?,
                 var_set_sf: Self::VAR_SET_SF.from_data(data)?,
                 var_set_pct_sf: Self::VAR_SET_PCT_SF.from_data(data)?,
-                pfw_inj,
-                pfw_inj_rvrt,
-                pfw_abs,
-                pfw_abs_rvrt,
+                pf_w_inj,
+                pf_w_inj_rvrt,
+                pf_w_abs,
+                pf_w_abs_rvrt,
             },
         ))
     }
@@ -339,7 +339,7 @@ impl DerCtlAc {
 /// Comments: Set Power Factor (when injecting active power)
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum PfwInjEna {
+pub enum PfWInjEna {
     /// Disabled
     ///
     /// Function is disabled.
@@ -351,7 +351,7 @@ pub enum PfwInjEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for PfwInjEna {
+impl crate::EnumValue for PfWInjEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -369,7 +369,7 @@ impl crate::EnumValue for PfwInjEna {
         }
     }
 }
-impl crate::FixedSize for PfwInjEna {
+impl crate::FixedSize for PfWInjEna {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -381,7 +381,7 @@ impl crate::FixedSize for PfwInjEna {
 /// Power factor reversion timer when injecting active power enable.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum PfwInjEnaRvrt {
+pub enum PfWInjEnaRvrt {
     /// Disabled
     ///
     /// Function is disabled.
@@ -393,7 +393,7 @@ pub enum PfwInjEnaRvrt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for PfwInjEnaRvrt {
+impl crate::EnumValue for PfWInjEnaRvrt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -411,7 +411,7 @@ impl crate::EnumValue for PfwInjEnaRvrt {
         }
     }
 }
-impl crate::FixedSize for PfwInjEnaRvrt {
+impl crate::FixedSize for PfWInjEnaRvrt {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -425,7 +425,7 @@ impl crate::FixedSize for PfwInjEnaRvrt {
 /// Comments: Set Power Factor (when absorbing active power)
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum PfwAbsEna {
+pub enum PfWAbsEna {
     /// Disabled
     ///
     /// Function is disabled.
@@ -437,7 +437,7 @@ pub enum PfwAbsEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for PfwAbsEna {
+impl crate::EnumValue for PfWAbsEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -455,7 +455,7 @@ impl crate::EnumValue for PfwAbsEna {
         }
     }
 }
-impl crate::FixedSize for PfwAbsEna {
+impl crate::FixedSize for PfWAbsEna {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -467,7 +467,7 @@ impl crate::FixedSize for PfwAbsEna {
 /// Power factor reversion timer when absorbing active power enable.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum PfwAbsEnaRvrt {
+pub enum PfWAbsEnaRvrt {
     /// Disabled
     ///
     /// Function is disabled.
@@ -479,7 +479,7 @@ pub enum PfwAbsEnaRvrt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for PfwAbsEnaRvrt {
+impl crate::EnumValue for PfWAbsEnaRvrt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -497,7 +497,7 @@ impl crate::EnumValue for PfwAbsEnaRvrt {
         }
     }
 }
-impl crate::FixedSize for PfwAbsEnaRvrt {
+impl crate::FixedSize for PfWAbsEnaRvrt {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -1003,7 +1003,7 @@ impl crate::FixedSize for AntiIslEna {
 /// Comments: Power Factor Settings
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct PfwInj {
+pub struct PfWInj {
     /// Power Factor (W Inj)
     ///
     /// Power factor setpoint when injecting active power.
@@ -1011,17 +1011,17 @@ pub struct PfwInj {
     /// Power Factor Excitation (W Inj)
     ///
     /// Power factor excitation setpoint when injecting active power.
-    pub ext: Option<PfwInjExt>,
+    pub ext: Option<PfWInjExt>,
 }
 #[allow(missing_docs)]
-impl PfwInj {
+impl PfWInj {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const EXT: crate::Point<Self, Option<PfwInjExt>> = crate::Point::new(1, 1, true);
+    pub const EXT: crate::Point<Self, Option<PfWInjExt>> = crate::Point::new(1, 1, true);
 }
-impl crate::Group for PfwInj {
+impl crate::Group for PfWInj {
     const LEN: u16 = 2;
 }
-impl PfwInj {
+impl PfWInj {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
         let nested_data = data
             .get(usize::from(<Self as crate::Group>::LEN)..)
@@ -1040,7 +1040,7 @@ impl PfwInj {
 /// Power factor excitation setpoint when injecting active power.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum PfwInjExt {
+pub enum PfWInjExt {
     /// Over-Excited
     ///
     /// Power factor over-excited excitation.
@@ -1052,7 +1052,7 @@ pub enum PfwInjExt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for PfwInjExt {
+impl crate::EnumValue for PfWInjExt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -1070,7 +1070,7 @@ impl crate::EnumValue for PfwInjExt {
         }
     }
 }
-impl crate::FixedSize for PfwInjExt {
+impl crate::FixedSize for PfWInjExt {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -1082,7 +1082,7 @@ impl crate::FixedSize for PfwInjExt {
 /// Reversion power factor setpoint when injecting active power.
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct PfwInjRvrt {
+pub struct PfWInjRvrt {
     /// Reversion Power Factor (W Inj)
     ///
     /// Reversion power factor setpoint when injecting active power.
@@ -1090,17 +1090,17 @@ pub struct PfwInjRvrt {
     /// Reversion PF Excitation (W Inj)
     ///
     /// Reversion power factor excitation setpoint when injecting active power.
-    pub ext: Option<PfwInjRvrtExt>,
+    pub ext: Option<PfWInjRvrtExt>,
 }
 #[allow(missing_docs)]
-impl PfwInjRvrt {
+impl PfWInjRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const EXT: crate::Point<Self, Option<PfwInjRvrtExt>> = crate::Point::new(1, 1, true);
+    pub const EXT: crate::Point<Self, Option<PfWInjRvrtExt>> = crate::Point::new(1, 1, true);
 }
-impl crate::Group for PfwInjRvrt {
+impl crate::Group for PfWInjRvrt {
     const LEN: u16 = 2;
 }
-impl PfwInjRvrt {
+impl PfWInjRvrt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
         let nested_data = data
             .get(usize::from(<Self as crate::Group>::LEN)..)
@@ -1119,7 +1119,7 @@ impl PfwInjRvrt {
 /// Reversion power factor excitation setpoint when injecting active power.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum PfwInjRvrtExt {
+pub enum PfWInjRvrtExt {
     /// Over-Excited
     ///
     /// Power factor over-excited excitation.
@@ -1131,7 +1131,7 @@ pub enum PfwInjRvrtExt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for PfwInjRvrtExt {
+impl crate::EnumValue for PfWInjRvrtExt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -1149,7 +1149,7 @@ impl crate::EnumValue for PfwInjRvrtExt {
         }
     }
 }
-impl crate::FixedSize for PfwInjRvrtExt {
+impl crate::FixedSize for PfWInjRvrtExt {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -1161,7 +1161,7 @@ impl crate::FixedSize for PfwInjRvrtExt {
 /// Power factor setpoint when absorbing active power.
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct PfwAbs {
+pub struct PfWAbs {
     /// Power Factor (W Abs)
     ///
     /// Power factor setpoint when absorbing active power.
@@ -1169,17 +1169,17 @@ pub struct PfwAbs {
     /// Power Factor Excitation (W Abs)
     ///
     /// Power factor excitation setpoint when absorbing active power.
-    pub ext: Option<PfwAbsExt>,
+    pub ext: Option<PfWAbsExt>,
 }
 #[allow(missing_docs)]
-impl PfwAbs {
+impl PfWAbs {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const EXT: crate::Point<Self, Option<PfwAbsExt>> = crate::Point::new(1, 1, true);
+    pub const EXT: crate::Point<Self, Option<PfWAbsExt>> = crate::Point::new(1, 1, true);
 }
-impl crate::Group for PfwAbs {
+impl crate::Group for PfWAbs {
     const LEN: u16 = 2;
 }
-impl PfwAbs {
+impl PfWAbs {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
         let nested_data = data
             .get(usize::from(<Self as crate::Group>::LEN)..)
@@ -1198,7 +1198,7 @@ impl PfwAbs {
 /// Power factor excitation setpoint when absorbing active power.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum PfwAbsExt {
+pub enum PfWAbsExt {
     /// Over-Excited
     ///
     /// Power factor over-excited excitation.
@@ -1210,7 +1210,7 @@ pub enum PfwAbsExt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for PfwAbsExt {
+impl crate::EnumValue for PfWAbsExt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -1228,7 +1228,7 @@ impl crate::EnumValue for PfwAbsExt {
         }
     }
 }
-impl crate::FixedSize for PfwAbsExt {
+impl crate::FixedSize for PfWAbsExt {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -1240,7 +1240,7 @@ impl crate::FixedSize for PfwAbsExt {
 /// Reversion power factor setpoint when absorbing active power.
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct PfwAbsRvrt {
+pub struct PfWAbsRvrt {
     /// Reversion Power Factor (W Abs)
     ///
     /// Reversion power factor setpoint when absorbing active power.
@@ -1248,17 +1248,17 @@ pub struct PfwAbsRvrt {
     /// Reversion PF Excitation (W Abs)
     ///
     /// Reversion power factor excitation setpoint when absorbing active power.
-    pub ext: Option<PfwAbsRvrtExt>,
+    pub ext: Option<PfWAbsRvrtExt>,
 }
 #[allow(missing_docs)]
-impl PfwAbsRvrt {
+impl PfWAbsRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const EXT: crate::Point<Self, Option<PfwAbsRvrtExt>> = crate::Point::new(1, 1, true);
+    pub const EXT: crate::Point<Self, Option<PfWAbsRvrtExt>> = crate::Point::new(1, 1, true);
 }
-impl crate::Group for PfwAbsRvrt {
+impl crate::Group for PfWAbsRvrt {
     const LEN: u16 = 2;
 }
-impl PfwAbsRvrt {
+impl PfWAbsRvrt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
         let nested_data = data
             .get(usize::from(<Self as crate::Group>::LEN)..)
@@ -1277,7 +1277,7 @@ impl PfwAbsRvrt {
 /// Reversion power factor excitation setpoint when absorbing active power.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum PfwAbsRvrtExt {
+pub enum PfWAbsRvrtExt {
     /// Over-Excited
     ///
     /// Power factor over-excited excitation.
@@ -1289,7 +1289,7 @@ pub enum PfwAbsRvrtExt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for PfwAbsRvrtExt {
+impl crate::EnumValue for PfWAbsRvrtExt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -1307,7 +1307,7 @@ impl crate::EnumValue for PfwAbsRvrtExt {
         }
     }
 }
-impl crate::FixedSize for PfwAbsRvrtExt {
+impl crate::FixedSize for PfWAbsRvrtExt {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {

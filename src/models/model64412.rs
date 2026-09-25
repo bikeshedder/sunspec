@@ -50,11 +50,11 @@ pub struct DerExploitation {
     /// Meas Low L1 V
     ///
     /// Set the DER to always measure low line 1 voltage
-    pub meas_low_l1v: Option<MeasLowL1v>,
+    pub meas_low_l1_v: Option<MeasLowL1V>,
     /// Meas High L1 V
     ///
     /// Set the DER to always measure high line 1 voltage
-    pub meas_high_l1v: Option<MeasHighL1v>,
+    pub meas_high_l1_v: Option<MeasHighL1V>,
     /// Meas Low F
     ///
     /// Set the DER to always measure low frequency
@@ -134,11 +134,11 @@ pub struct DerExploitation {
     /// Nameplate Low Varmaxinj
     ///
     /// Set the DER nameplate VarMaxInj to be low
-    pub nameplate_low_varmaxinj: Option<NameplateLowVarmaxinj>,
+    pub nameplate_low_var_max_inj: Option<NameplateLowVarMaxInj>,
     /// Nameplate Low Varmaxabs
     ///
     /// Set the DER nameplate VarMaxAbs to be low
-    pub nameplate_low_varmaxabs: Option<NameplateLowVarmaxabs>,
+    pub nameplate_low_var_max_abs: Option<NameplateLowVarMaxAbs>,
     /// Nameplate Low PF
     ///
     /// Set the DER nameplate power factor to be low
@@ -166,11 +166,11 @@ pub struct DerExploitation {
     /// Settings High Varmaxinj
     ///
     /// Set the DER settings VarMaxInj to be high
-    pub settings_high_varmaxinj: Option<SettingsHighVarmaxinj>,
+    pub settings_high_var_max_inj: Option<SettingsHighVarMaxInj>,
     /// Settings High Varmaxabs
     ///
     /// Set the DER settings VarMaxAbs to be high
-    pub settings_high_varmaxabs: Option<SettingsHighVarmaxabs>,
+    pub settings_high_var_max_abs: Option<SettingsHighVarMaxAbs>,
     /// Change Common Model ID
     ///
     /// Change the common model ID
@@ -199,8 +199,9 @@ impl DerExploitation {
         crate::Point::new(7, 1, true);
     pub const MEAS_LOW_V: crate::Point<Self, Option<MeasLowV>> = crate::Point::new(8, 1, true);
     pub const MEAS_HIGH_V: crate::Point<Self, Option<MeasHighV>> = crate::Point::new(9, 1, true);
-    pub const MEAS_LOW_L1V: crate::Point<Self, Option<MeasLowL1v>> = crate::Point::new(10, 1, true);
-    pub const MEAS_HIGH_L1V: crate::Point<Self, Option<MeasHighL1v>> =
+    pub const MEAS_LOW_L1_V: crate::Point<Self, Option<MeasLowL1V>> =
+        crate::Point::new(10, 1, true);
+    pub const MEAS_HIGH_L1_V: crate::Point<Self, Option<MeasHighL1V>> =
         crate::Point::new(11, 1, true);
     pub const MEAS_LOW_F: crate::Point<Self, Option<MeasLowF>> = crate::Point::new(12, 1, true);
     pub const MEAS_HIGH_F: crate::Point<Self, Option<MeasHighF>> = crate::Point::new(13, 1, true);
@@ -233,9 +234,9 @@ impl DerExploitation {
         crate::Point::new(29, 1, true);
     pub const NAMEPLATE_LOW_AMPS: crate::Point<Self, Option<NameplateLowAmps>> =
         crate::Point::new(30, 1, true);
-    pub const NAMEPLATE_LOW_VARMAXINJ: crate::Point<Self, Option<NameplateLowVarmaxinj>> =
+    pub const NAMEPLATE_LOW_VAR_MAX_INJ: crate::Point<Self, Option<NameplateLowVarMaxInj>> =
         crate::Point::new(31, 1, true);
-    pub const NAMEPLATE_LOW_VARMAXABS: crate::Point<Self, Option<NameplateLowVarmaxabs>> =
+    pub const NAMEPLATE_LOW_VAR_MAX_ABS: crate::Point<Self, Option<NameplateLowVarMaxAbs>> =
         crate::Point::new(32, 1, true);
     pub const NAMEPLATE_LOW_PF: crate::Point<Self, Option<NameplateLowPf>> =
         crate::Point::new(33, 1, true);
@@ -249,9 +250,9 @@ impl DerExploitation {
         crate::Point::new(37, 1, true);
     pub const SETTINGS_HIGH_VA_MAX: crate::Point<Self, Option<SettingsHighVaMax>> =
         crate::Point::new(38, 1, true);
-    pub const SETTINGS_HIGH_VARMAXINJ: crate::Point<Self, Option<SettingsHighVarmaxinj>> =
+    pub const SETTINGS_HIGH_VAR_MAX_INJ: crate::Point<Self, Option<SettingsHighVarMaxInj>> =
         crate::Point::new(39, 1, true);
-    pub const SETTINGS_HIGH_VARMAXABS: crate::Point<Self, Option<SettingsHighVarmaxabs>> =
+    pub const SETTINGS_HIGH_VAR_MAX_ABS: crate::Point<Self, Option<SettingsHighVarMaxAbs>> =
         crate::Point::new(40, 1, true);
     pub const CHANGE_COMMON_MODEL_ID: crate::Point<Self, Option<ChangeCommonModelId>> =
         crate::Point::new(41, 1, true);
@@ -279,8 +280,8 @@ impl DerExploitation {
                 meas_invert_q: Self::MEAS_INVERT_Q.from_data(data)?,
                 meas_low_v: Self::MEAS_LOW_V.from_data(data)?,
                 meas_high_v: Self::MEAS_HIGH_V.from_data(data)?,
-                meas_low_l1v: Self::MEAS_LOW_L1V.from_data(data)?,
-                meas_high_l1v: Self::MEAS_HIGH_L1V.from_data(data)?,
+                meas_low_l1_v: Self::MEAS_LOW_L1_V.from_data(data)?,
+                meas_high_l1_v: Self::MEAS_HIGH_L1_V.from_data(data)?,
                 meas_low_f: Self::MEAS_LOW_F.from_data(data)?,
                 meas_high_f: Self::MEAS_HIGH_F.from_data(data)?,
                 meas_low_amps: Self::MEAS_LOW_AMPS.from_data(data)?,
@@ -300,16 +301,16 @@ impl DerExploitation {
                 nameplate_high_nom_v: Self::NAMEPLATE_HIGH_NOM_V.from_data(data)?,
                 nameplate_low_nom_v: Self::NAMEPLATE_LOW_NOM_V.from_data(data)?,
                 nameplate_low_amps: Self::NAMEPLATE_LOW_AMPS.from_data(data)?,
-                nameplate_low_varmaxinj: Self::NAMEPLATE_LOW_VARMAXINJ.from_data(data)?,
-                nameplate_low_varmaxabs: Self::NAMEPLATE_LOW_VARMAXABS.from_data(data)?,
+                nameplate_low_var_max_inj: Self::NAMEPLATE_LOW_VAR_MAX_INJ.from_data(data)?,
+                nameplate_low_var_max_abs: Self::NAMEPLATE_LOW_VAR_MAX_ABS.from_data(data)?,
                 nameplate_low_pf: Self::NAMEPLATE_LOW_PF.from_data(data)?,
                 settings_high_nom_v: Self::SETTINGS_HIGH_NOM_V.from_data(data)?,
                 settings_low_amps: Self::SETTINGS_LOW_AMPS.from_data(data)?,
                 settings_high_p: Self::SETTINGS_HIGH_P.from_data(data)?,
                 settings_low_p: Self::SETTINGS_LOW_P.from_data(data)?,
                 settings_high_va_max: Self::SETTINGS_HIGH_VA_MAX.from_data(data)?,
-                settings_high_varmaxinj: Self::SETTINGS_HIGH_VARMAXINJ.from_data(data)?,
-                settings_high_varmaxabs: Self::SETTINGS_HIGH_VARMAXABS.from_data(data)?,
+                settings_high_var_max_inj: Self::SETTINGS_HIGH_VAR_MAX_INJ.from_data(data)?,
+                settings_high_var_max_abs: Self::SETTINGS_HIGH_VAR_MAX_ABS.from_data(data)?,
                 change_common_model_id: Self::CHANGE_COMMON_MODEL_ID.from_data(data)?,
                 change_common_model_length: Self::CHANGE_COMMON_MODEL_LENGTH.from_data(data)?,
             },
@@ -741,7 +742,7 @@ impl crate::FixedSize for MeasHighV {
 /// Set the DER to always measure low line 1 voltage
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum MeasLowL1v {
+pub enum MeasLowL1V {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
@@ -753,7 +754,7 @@ pub enum MeasLowL1v {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for MeasLowL1v {
+impl crate::EnumValue for MeasLowL1V {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -771,7 +772,7 @@ impl crate::EnumValue for MeasLowL1v {
         }
     }
 }
-impl crate::FixedSize for MeasLowL1v {
+impl crate::FixedSize for MeasLowL1V {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -783,7 +784,7 @@ impl crate::FixedSize for MeasLowL1v {
 /// Set the DER to always measure high line 1 voltage
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum MeasHighL1v {
+pub enum MeasHighL1V {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
@@ -795,7 +796,7 @@ pub enum MeasHighL1v {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for MeasHighL1v {
+impl crate::EnumValue for MeasHighL1V {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -813,7 +814,7 @@ impl crate::EnumValue for MeasHighL1v {
         }
     }
 }
-impl crate::FixedSize for MeasHighL1v {
+impl crate::FixedSize for MeasHighL1V {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -1623,7 +1624,7 @@ impl crate::FixedSize for NameplateLowAmps {
 /// Set the DER nameplate VarMaxInj to be low
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum NameplateLowVarmaxinj {
+pub enum NameplateLowVarMaxInj {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
@@ -1635,7 +1636,7 @@ pub enum NameplateLowVarmaxinj {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for NameplateLowVarmaxinj {
+impl crate::EnumValue for NameplateLowVarMaxInj {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -1653,7 +1654,7 @@ impl crate::EnumValue for NameplateLowVarmaxinj {
         }
     }
 }
-impl crate::FixedSize for NameplateLowVarmaxinj {
+impl crate::FixedSize for NameplateLowVarMaxInj {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -1665,7 +1666,7 @@ impl crate::FixedSize for NameplateLowVarmaxinj {
 /// Set the DER nameplate VarMaxAbs to be low
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum NameplateLowVarmaxabs {
+pub enum NameplateLowVarMaxAbs {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
@@ -1677,7 +1678,7 @@ pub enum NameplateLowVarmaxabs {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for NameplateLowVarmaxabs {
+impl crate::EnumValue for NameplateLowVarMaxAbs {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -1695,7 +1696,7 @@ impl crate::EnumValue for NameplateLowVarmaxabs {
         }
     }
 }
-impl crate::FixedSize for NameplateLowVarmaxabs {
+impl crate::FixedSize for NameplateLowVarMaxAbs {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -1959,7 +1960,7 @@ impl crate::FixedSize for SettingsHighVaMax {
 /// Set the DER settings VarMaxInj to be high
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum SettingsHighVarmaxinj {
+pub enum SettingsHighVarMaxInj {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
@@ -1971,7 +1972,7 @@ pub enum SettingsHighVarmaxinj {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for SettingsHighVarmaxinj {
+impl crate::EnumValue for SettingsHighVarMaxInj {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -1989,7 +1990,7 @@ impl crate::EnumValue for SettingsHighVarmaxinj {
         }
     }
 }
-impl crate::FixedSize for SettingsHighVarmaxinj {
+impl crate::FixedSize for SettingsHighVarMaxInj {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -2001,7 +2002,7 @@ impl crate::FixedSize for SettingsHighVarmaxinj {
 /// Set the DER settings VarMaxAbs to be high
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum SettingsHighVarmaxabs {
+pub enum SettingsHighVarMaxAbs {
     /// Data Unaffected
     ///
     /// Modbus Falsification Disabled
@@ -2013,7 +2014,7 @@ pub enum SettingsHighVarmaxabs {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for SettingsHighVarmaxabs {
+impl crate::EnumValue for SettingsHighVarMaxAbs {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -2031,7 +2032,7 @@ impl crate::EnumValue for SettingsHighVarmaxabs {
         }
     }
 }
-impl crate::FixedSize for SettingsHighVarmaxabs {
+impl crate::FixedSize for SettingsHighVarMaxAbs {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {

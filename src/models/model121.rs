@@ -36,19 +36,19 @@ pub struct Settings {
     /// VArMaxQ1
     ///
     /// Setting for maximum reactive power in quadrant 1. Default to VArRtgQ1.
-    pub v_ar_max_q1: Option<i16>,
+    pub var_max_q1: Option<i16>,
     /// VArMaxQ2
     ///
     /// Setting for maximum reactive power in quadrant 2. Default to VArRtgQ2.
-    pub v_ar_max_q2: Option<i16>,
+    pub var_max_q2: Option<i16>,
     /// VArMaxQ3
     ///
     /// Setting for maximum reactive power in quadrant 3. Default to VArRtgQ3.
-    pub v_ar_max_q3: Option<i16>,
+    pub var_max_q3: Option<i16>,
     /// VArMaxQ4
     ///
     /// Setting for maximum reactive power in quadrant 4. Default to VArRtgQ4.
-    pub v_ar_max_q4: Option<i16>,
+    pub var_max_q4: Option<i16>,
     /// WGra
     ///
     /// Default ramp rate of change of active power due to command or internal action.
@@ -80,7 +80,7 @@ pub struct Settings {
     /// VArAct
     ///
     /// VAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization.
-    pub v_ar_act: Option<VArAct>,
+    pub var_act: Option<VarAct>,
     /// ClcTotVA
     ///
     /// Calculation method for total apparent power. 1=vector 2=arithmetic.
@@ -120,7 +120,7 @@ pub struct Settings {
     /// VArMax_SF
     ///
     /// Scale factor for reactive power.
-    pub v_ar_max_sf: Option<i16>,
+    pub var_max_sf: Option<i16>,
     /// WGra_SF
     ///
     /// Scale factor for default ramp rate.
@@ -146,16 +146,16 @@ impl Settings {
     pub const V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
     pub const V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
     pub const VA_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
-    pub const V_AR_MAX_Q1: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, true);
-    pub const V_AR_MAX_Q2: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, true);
-    pub const V_AR_MAX_Q3: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, true);
-    pub const V_AR_MAX_Q4: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, true);
+    pub const VAR_MAX_Q1: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, true);
+    pub const VAR_MAX_Q2: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, true);
+    pub const VAR_MAX_Q3: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, true);
+    pub const VAR_MAX_Q4: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, true);
     pub const W_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
     pub const PF_MIN_Q1: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, true);
     pub const PF_MIN_Q2: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, true);
     pub const PF_MIN_Q3: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
     pub const PF_MIN_Q4: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, true);
-    pub const V_AR_ACT: crate::Point<Self, Option<VArAct>> = crate::Point::new(15, 1, true);
+    pub const VAR_ACT: crate::Point<Self, Option<VarAct>> = crate::Point::new(15, 1, true);
     pub const CLC_TOT_VA: crate::Point<Self, Option<ClcTotVa>> = crate::Point::new(16, 1, true);
     pub const MAX_RMP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, true);
     pub const ECP_NOM_HZ: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
@@ -165,7 +165,7 @@ impl Settings {
     pub const V_REF_OFS_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
     pub const V_MIN_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
     pub const VA_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
-    pub const V_AR_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, false);
+    pub const VAR_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, false);
     pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(26, 1, false);
     pub const PF_MIN_SF: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
     pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
@@ -188,16 +188,16 @@ impl Settings {
                 v_max: Self::V_MAX.from_data(data)?,
                 v_min: Self::V_MIN.from_data(data)?,
                 va_max: Self::VA_MAX.from_data(data)?,
-                v_ar_max_q1: Self::V_AR_MAX_Q1.from_data(data)?,
-                v_ar_max_q2: Self::V_AR_MAX_Q2.from_data(data)?,
-                v_ar_max_q3: Self::V_AR_MAX_Q3.from_data(data)?,
-                v_ar_max_q4: Self::V_AR_MAX_Q4.from_data(data)?,
+                var_max_q1: Self::VAR_MAX_Q1.from_data(data)?,
+                var_max_q2: Self::VAR_MAX_Q2.from_data(data)?,
+                var_max_q3: Self::VAR_MAX_Q3.from_data(data)?,
+                var_max_q4: Self::VAR_MAX_Q4.from_data(data)?,
                 w_gra: Self::W_GRA.from_data(data)?,
                 pf_min_q1: Self::PF_MIN_Q1.from_data(data)?,
                 pf_min_q2: Self::PF_MIN_Q2.from_data(data)?,
                 pf_min_q3: Self::PF_MIN_Q3.from_data(data)?,
                 pf_min_q4: Self::PF_MIN_Q4.from_data(data)?,
-                v_ar_act: Self::V_AR_ACT.from_data(data)?,
+                var_act: Self::VAR_ACT.from_data(data)?,
                 clc_tot_va: Self::CLC_TOT_VA.from_data(data)?,
                 max_rmp_rte: Self::MAX_RMP_RTE.from_data(data)?,
                 ecp_nom_hz: Self::ECP_NOM_HZ.from_data(data)?,
@@ -207,7 +207,7 @@ impl Settings {
                 v_ref_ofs_sf: Self::V_REF_OFS_SF.from_data(data)?,
                 v_min_max_sf: Self::V_MIN_MAX_SF.from_data(data)?,
                 va_max_sf: Self::VA_MAX_SF.from_data(data)?,
-                v_ar_max_sf: Self::V_AR_MAX_SF.from_data(data)?,
+                var_max_sf: Self::VAR_MAX_SF.from_data(data)?,
                 w_gra_sf: Self::W_GRA_SF.from_data(data)?,
                 pf_min_sf: Self::PF_MIN_SF.from_data(data)?,
                 max_rmp_rte_sf: Self::MAX_RMP_RTE_SF.from_data(data)?,
@@ -221,7 +221,7 @@ impl Settings {
 /// VAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum VArAct {
+pub enum VarAct {
     #[allow(missing_docs)]
     Switch,
     #[allow(missing_docs)]
@@ -229,7 +229,7 @@ pub enum VArAct {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for VArAct {
+impl crate::EnumValue for VarAct {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -247,7 +247,7 @@ impl crate::EnumValue for VArAct {
         }
     }
 }
-impl crate::FixedSize for VArAct {
+impl crate::FixedSize for VarAct {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {

@@ -14,15 +14,15 @@ pub struct AcMeterAbcnFloat {
     /// Amps PhaseA
     ///
     /// Phase A Current
-    pub aph_a: f32,
+    pub a_ph_a: f32,
     /// Amps PhaseB
     ///
     /// Phase B Current
-    pub aph_b: f32,
+    pub a_ph_b: f32,
     /// Amps PhaseC
     ///
     /// Phase C Current
-    pub aph_c: f32,
+    pub a_ph_c: f32,
     /// Voltage LN
     ///
     /// Line to Neutral AC Voltage (average of active phases)
@@ -30,31 +30,31 @@ pub struct AcMeterAbcnFloat {
     /// Phase Voltage AN
     ///
     /// Phase Voltage AN
-    pub ph_vph_a: f32,
+    pub ph_v_ph_a: f32,
     /// Phase Voltage BN
     ///
     /// Phase Voltage BN
-    pub ph_vph_b: f32,
+    pub ph_v_ph_b: f32,
     /// Phase Voltage CN
     ///
     /// Phase Voltage CN
-    pub ph_vph_c: f32,
+    pub ph_v_ph_c: f32,
     /// Voltage LL
     ///
     /// Line to Line AC Voltage (average of active phases)
-    pub ppv: f32,
+    pub pp_v: f32,
     /// Phase Voltage AB
     ///
     /// Phase Voltage AB
-    pub pp_vph_ab: f32,
+    pub pp_v_ph_ab: f32,
     /// Phase Voltage BC
     ///
     /// Phase Voltage BC
-    pub pp_vph_bc: f32,
+    pub pp_v_ph_bc: f32,
     /// Phase Voltage CA
     ///
     /// Phase Voltage CA
-    pub pp_vph_ca: f32,
+    pub pp_v_ph_ca: f32,
     /// Hz
     ///
     /// Frequency
@@ -64,41 +64,41 @@ pub struct AcMeterAbcnFloat {
     /// Total Real Power
     pub w: f32,
     /// Watts phase A
-    pub wph_a: Option<f32>,
+    pub w_ph_a: Option<f32>,
     /// Watts phase B
-    pub wph_b: Option<f32>,
+    pub w_ph_b: Option<f32>,
     /// Watts phase C
-    pub wph_c: Option<f32>,
+    pub w_ph_c: Option<f32>,
     /// VA
     ///
     /// AC Apparent Power
     pub va: Option<f32>,
     /// VA phase A
-    pub v_aph_a: Option<f32>,
+    pub va_ph_a: Option<f32>,
     /// VA phase B
-    pub v_aph_b: Option<f32>,
+    pub va_ph_b: Option<f32>,
     /// VA phase C
-    pub v_aph_c: Option<f32>,
+    pub va_ph_c: Option<f32>,
     /// VAR
     ///
     /// Reactive Power
     pub var: Option<f32>,
     /// VAR phase A
-    pub va_rph_a: Option<f32>,
+    pub var_ph_a: Option<f32>,
     /// VAR phase B
-    pub va_rph_b: Option<f32>,
+    pub var_ph_b: Option<f32>,
     /// VAR phase C
-    pub va_rph_c: Option<f32>,
+    pub var_ph_c: Option<f32>,
     /// PF
     ///
     /// Power Factor
     pub pf: Option<f32>,
     /// PF phase A
-    pub p_fph_a: Option<f32>,
+    pub pf_ph_a: Option<f32>,
     /// PF phase B
-    pub p_fph_b: Option<f32>,
+    pub pf_ph_b: Option<f32>,
     /// PF phase C
-    pub p_fph_c: Option<f32>,
+    pub pf_ph_c: Option<f32>,
     /// Total Watt-hours Exported
     ///
     /// Total Real Energy Exported
@@ -122,63 +122,63 @@ pub struct AcMeterAbcnFloat {
     /// Total VA-hours Exported
     ///
     /// Total Apparent Energy Exported
-    pub tot_v_ah_exp: Option<f32>,
+    pub tot_vah_exp: Option<f32>,
     /// Total VA-hours Exported phase A
-    pub tot_v_ah_exp_ph_a: Option<f32>,
+    pub tot_vah_exp_ph_a: Option<f32>,
     /// Total VA-hours Exported phase B
-    pub tot_v_ah_exp_ph_b: Option<f32>,
+    pub tot_vah_exp_ph_b: Option<f32>,
     /// Total VA-hours Exported phase C
-    pub tot_v_ah_exp_ph_c: Option<f32>,
+    pub tot_vah_exp_ph_c: Option<f32>,
     /// Total VA-hours Imported
     ///
     /// Total Apparent Energy Imported
-    pub tot_v_ah_imp: Option<f32>,
+    pub tot_vah_imp: Option<f32>,
     /// Total VA-hours Imported phase A
-    pub tot_v_ah_imp_ph_a: Option<f32>,
+    pub tot_vah_imp_ph_a: Option<f32>,
     /// Total VA-hours Imported phase B
-    pub tot_v_ah_imp_ph_b: Option<f32>,
+    pub tot_vah_imp_ph_b: Option<f32>,
     /// Total VA-hours Imported phase C
-    pub tot_v_ah_imp_ph_c: Option<f32>,
+    pub tot_vah_imp_ph_c: Option<f32>,
     /// Total VAR-hours Imported Q1
     ///
     /// Total Reactive Energy Imported Quadrant 1
-    pub tot_v_arh_imp_q1: Option<f32>,
+    pub tot_varh_imp_q1: Option<f32>,
     /// Total VAr-hours Imported Q1 phase A
-    pub tot_v_arh_imp_q1ph_a: Option<f32>,
+    pub tot_varh_imp_q1_ph_a: Option<f32>,
     /// Total VAr-hours Imported Q1 phase B
-    pub tot_v_arh_imp_q1ph_b: Option<f32>,
+    pub tot_varh_imp_q1_ph_b: Option<f32>,
     /// Total VAr-hours Imported Q1 phase C
-    pub tot_v_arh_imp_q1ph_c: Option<f32>,
+    pub tot_varh_imp_q1_ph_c: Option<f32>,
     /// Total VAr-hours Imported Q2
     ///
     /// Total Reactive Power Imported Quadrant 2
-    pub tot_v_arh_imp_q2: Option<f32>,
+    pub tot_varh_imp_q2: Option<f32>,
     /// Total VAr-hours Imported Q2 phase A
-    pub tot_v_arh_imp_q2ph_a: Option<f32>,
+    pub tot_varh_imp_q2_ph_a: Option<f32>,
     /// Total VAr-hours Imported Q2 phase B
-    pub tot_v_arh_imp_q2ph_b: Option<f32>,
+    pub tot_varh_imp_q2_ph_b: Option<f32>,
     /// Total VAr-hours Imported Q2 phase C
-    pub tot_v_arh_imp_q2ph_c: Option<f32>,
+    pub tot_varh_imp_q2_ph_c: Option<f32>,
     /// Total VAr-hours Exported Q3
     ///
     /// Total Reactive Power Exported Quadrant 3
-    pub tot_v_arh_exp_q3: Option<f32>,
+    pub tot_varh_exp_q3: Option<f32>,
     /// Total VAr-hours Exported Q3 phase A
-    pub tot_v_arh_exp_q3ph_a: Option<f32>,
+    pub tot_varh_exp_q3_ph_a: Option<f32>,
     /// Total VAr-hours Exported Q3 phase B
-    pub tot_v_arh_exp_q3ph_b: Option<f32>,
+    pub tot_varh_exp_q3_ph_b: Option<f32>,
     /// Total VAr-hours Exported Q3 phase C
-    pub tot_v_arh_exp_q3ph_c: Option<f32>,
+    pub tot_varh_exp_q3_ph_c: Option<f32>,
     /// Total VAr-hours Exported Q4
     ///
     /// Total Reactive Power Exported Quadrant 4
-    pub tot_v_arh_exp_q4: Option<f32>,
+    pub tot_varh_exp_q4: Option<f32>,
     /// Total VAr-hours Exported Q4 Imported phase A
-    pub tot_v_arh_exp_q4ph_a: Option<f32>,
+    pub tot_varh_exp_q4_ph_a: Option<f32>,
     /// Total VAr-hours Exported Q4 Imported phase B
-    pub tot_v_arh_exp_q4ph_b: Option<f32>,
+    pub tot_varh_exp_q4_ph_b: Option<f32>,
     /// Total VAr-hours Exported Q4 Imported phase C
-    pub tot_v_arh_exp_q4ph_c: Option<f32>,
+    pub tot_varh_exp_q4_ph_c: Option<f32>,
     /// Events
     ///
     /// Meter Event Flags
@@ -187,34 +187,34 @@ pub struct AcMeterAbcnFloat {
 #[allow(missing_docs)]
 impl AcMeterAbcnFloat {
     pub const A: crate::Point<Self, f32> = crate::Point::new(0, 2, false);
-    pub const APH_A: crate::Point<Self, f32> = crate::Point::new(2, 2, false);
-    pub const APH_B: crate::Point<Self, f32> = crate::Point::new(4, 2, false);
-    pub const APH_C: crate::Point<Self, f32> = crate::Point::new(6, 2, false);
+    pub const A_PH_A: crate::Point<Self, f32> = crate::Point::new(2, 2, false);
+    pub const A_PH_B: crate::Point<Self, f32> = crate::Point::new(4, 2, false);
+    pub const A_PH_C: crate::Point<Self, f32> = crate::Point::new(6, 2, false);
     pub const PH_V: crate::Point<Self, f32> = crate::Point::new(8, 2, false);
-    pub const PH_VPH_A: crate::Point<Self, f32> = crate::Point::new(10, 2, false);
-    pub const PH_VPH_B: crate::Point<Self, f32> = crate::Point::new(12, 2, false);
-    pub const PH_VPH_C: crate::Point<Self, f32> = crate::Point::new(14, 2, false);
-    pub const PPV: crate::Point<Self, f32> = crate::Point::new(16, 2, false);
-    pub const PP_VPH_AB: crate::Point<Self, f32> = crate::Point::new(18, 2, false);
-    pub const PP_VPH_BC: crate::Point<Self, f32> = crate::Point::new(20, 2, false);
-    pub const PP_VPH_CA: crate::Point<Self, f32> = crate::Point::new(22, 2, false);
+    pub const PH_V_PH_A: crate::Point<Self, f32> = crate::Point::new(10, 2, false);
+    pub const PH_V_PH_B: crate::Point<Self, f32> = crate::Point::new(12, 2, false);
+    pub const PH_V_PH_C: crate::Point<Self, f32> = crate::Point::new(14, 2, false);
+    pub const PP_V: crate::Point<Self, f32> = crate::Point::new(16, 2, false);
+    pub const PP_V_PH_AB: crate::Point<Self, f32> = crate::Point::new(18, 2, false);
+    pub const PP_V_PH_BC: crate::Point<Self, f32> = crate::Point::new(20, 2, false);
+    pub const PP_V_PH_CA: crate::Point<Self, f32> = crate::Point::new(22, 2, false);
     pub const HZ: crate::Point<Self, f32> = crate::Point::new(24, 2, false);
     pub const W: crate::Point<Self, f32> = crate::Point::new(26, 2, false);
-    pub const WPH_A: crate::Point<Self, Option<f32>> = crate::Point::new(28, 2, false);
-    pub const WPH_B: crate::Point<Self, Option<f32>> = crate::Point::new(30, 2, false);
-    pub const WPH_C: crate::Point<Self, Option<f32>> = crate::Point::new(32, 2, false);
+    pub const W_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(28, 2, false);
+    pub const W_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(30, 2, false);
+    pub const W_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(32, 2, false);
     pub const VA: crate::Point<Self, Option<f32>> = crate::Point::new(34, 2, false);
-    pub const V_APH_A: crate::Point<Self, Option<f32>> = crate::Point::new(36, 2, false);
-    pub const V_APH_B: crate::Point<Self, Option<f32>> = crate::Point::new(38, 2, false);
-    pub const V_APH_C: crate::Point<Self, Option<f32>> = crate::Point::new(40, 2, false);
+    pub const VA_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(36, 2, false);
+    pub const VA_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(38, 2, false);
+    pub const VA_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(40, 2, false);
     pub const VAR: crate::Point<Self, Option<f32>> = crate::Point::new(42, 2, false);
-    pub const VA_RPH_A: crate::Point<Self, Option<f32>> = crate::Point::new(44, 2, false);
-    pub const VA_RPH_B: crate::Point<Self, Option<f32>> = crate::Point::new(46, 2, false);
-    pub const VA_RPH_C: crate::Point<Self, Option<f32>> = crate::Point::new(48, 2, false);
+    pub const VAR_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(44, 2, false);
+    pub const VAR_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(46, 2, false);
+    pub const VAR_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(48, 2, false);
     pub const PF: crate::Point<Self, Option<f32>> = crate::Point::new(50, 2, false);
-    pub const P_FPH_A: crate::Point<Self, Option<f32>> = crate::Point::new(52, 2, false);
-    pub const P_FPH_B: crate::Point<Self, Option<f32>> = crate::Point::new(54, 2, false);
-    pub const P_FPH_C: crate::Point<Self, Option<f32>> = crate::Point::new(56, 2, false);
+    pub const PF_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(52, 2, false);
+    pub const PF_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(54, 2, false);
+    pub const PF_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(56, 2, false);
     pub const TOT_WH_EXP: crate::Point<Self, f32> = crate::Point::new(58, 2, false);
     pub const TOT_WH_EXP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(60, 2, false);
     pub const TOT_WH_EXP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(62, 2, false);
@@ -223,41 +223,41 @@ impl AcMeterAbcnFloat {
     pub const TOT_WH_IMP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(68, 2, false);
     pub const TOT_WH_IMP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(70, 2, false);
     pub const TOT_WH_IMP_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(72, 2, false);
-    pub const TOT_V_AH_EXP: crate::Point<Self, Option<f32>> = crate::Point::new(74, 2, false);
-    pub const TOT_V_AH_EXP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(76, 2, false);
-    pub const TOT_V_AH_EXP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(78, 2, false);
-    pub const TOT_V_AH_EXP_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(80, 2, false);
-    pub const TOT_V_AH_IMP: crate::Point<Self, Option<f32>> = crate::Point::new(82, 2, false);
-    pub const TOT_V_AH_IMP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(84, 2, false);
-    pub const TOT_V_AH_IMP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(86, 2, false);
-    pub const TOT_V_AH_IMP_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(88, 2, false);
-    pub const TOT_V_ARH_IMP_Q1: crate::Point<Self, Option<f32>> = crate::Point::new(90, 2, false);
-    pub const TOT_V_ARH_IMP_Q1PH_A: crate::Point<Self, Option<f32>> =
+    pub const TOT_VAH_EXP: crate::Point<Self, Option<f32>> = crate::Point::new(74, 2, false);
+    pub const TOT_VAH_EXP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(76, 2, false);
+    pub const TOT_VAH_EXP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(78, 2, false);
+    pub const TOT_VAH_EXP_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(80, 2, false);
+    pub const TOT_VAH_IMP: crate::Point<Self, Option<f32>> = crate::Point::new(82, 2, false);
+    pub const TOT_VAH_IMP_PH_A: crate::Point<Self, Option<f32>> = crate::Point::new(84, 2, false);
+    pub const TOT_VAH_IMP_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(86, 2, false);
+    pub const TOT_VAH_IMP_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(88, 2, false);
+    pub const TOT_VARH_IMP_Q1: crate::Point<Self, Option<f32>> = crate::Point::new(90, 2, false);
+    pub const TOT_VARH_IMP_Q1_PH_A: crate::Point<Self, Option<f32>> =
         crate::Point::new(92, 2, false);
-    pub const TOT_V_ARH_IMP_Q1PH_B: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_IMP_Q1_PH_B: crate::Point<Self, Option<f32>> =
         crate::Point::new(94, 2, false);
-    pub const TOT_V_ARH_IMP_Q1PH_C: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_IMP_Q1_PH_C: crate::Point<Self, Option<f32>> =
         crate::Point::new(96, 2, false);
-    pub const TOT_V_ARH_IMP_Q2: crate::Point<Self, Option<f32>> = crate::Point::new(98, 2, false);
-    pub const TOT_V_ARH_IMP_Q2PH_A: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_IMP_Q2: crate::Point<Self, Option<f32>> = crate::Point::new(98, 2, false);
+    pub const TOT_VARH_IMP_Q2_PH_A: crate::Point<Self, Option<f32>> =
         crate::Point::new(100, 2, false);
-    pub const TOT_V_ARH_IMP_Q2PH_B: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_IMP_Q2_PH_B: crate::Point<Self, Option<f32>> =
         crate::Point::new(102, 2, false);
-    pub const TOT_V_ARH_IMP_Q2PH_C: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_IMP_Q2_PH_C: crate::Point<Self, Option<f32>> =
         crate::Point::new(104, 2, false);
-    pub const TOT_V_ARH_EXP_Q3: crate::Point<Self, Option<f32>> = crate::Point::new(106, 2, false);
-    pub const TOT_V_ARH_EXP_Q3PH_A: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_EXP_Q3: crate::Point<Self, Option<f32>> = crate::Point::new(106, 2, false);
+    pub const TOT_VARH_EXP_Q3_PH_A: crate::Point<Self, Option<f32>> =
         crate::Point::new(108, 2, false);
-    pub const TOT_V_ARH_EXP_Q3PH_B: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_EXP_Q3_PH_B: crate::Point<Self, Option<f32>> =
         crate::Point::new(110, 2, false);
-    pub const TOT_V_ARH_EXP_Q3PH_C: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_EXP_Q3_PH_C: crate::Point<Self, Option<f32>> =
         crate::Point::new(112, 2, false);
-    pub const TOT_V_ARH_EXP_Q4: crate::Point<Self, Option<f32>> = crate::Point::new(114, 2, false);
-    pub const TOT_V_ARH_EXP_Q4PH_A: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_EXP_Q4: crate::Point<Self, Option<f32>> = crate::Point::new(114, 2, false);
+    pub const TOT_VARH_EXP_Q4_PH_A: crate::Point<Self, Option<f32>> =
         crate::Point::new(116, 2, false);
-    pub const TOT_V_ARH_EXP_Q4PH_B: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_EXP_Q4_PH_B: crate::Point<Self, Option<f32>> =
         crate::Point::new(118, 2, false);
-    pub const TOT_V_ARH_EXP_Q4PH_C: crate::Point<Self, Option<f32>> =
+    pub const TOT_VARH_EXP_Q4_PH_C: crate::Point<Self, Option<f32>> =
         crate::Point::new(120, 2, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(122, 2, false);
 }
@@ -273,34 +273,34 @@ impl AcMeterAbcnFloat {
             nested_data,
             Self {
                 a: Self::A.from_data(data)?,
-                aph_a: Self::APH_A.from_data(data)?,
-                aph_b: Self::APH_B.from_data(data)?,
-                aph_c: Self::APH_C.from_data(data)?,
+                a_ph_a: Self::A_PH_A.from_data(data)?,
+                a_ph_b: Self::A_PH_B.from_data(data)?,
+                a_ph_c: Self::A_PH_C.from_data(data)?,
                 ph_v: Self::PH_V.from_data(data)?,
-                ph_vph_a: Self::PH_VPH_A.from_data(data)?,
-                ph_vph_b: Self::PH_VPH_B.from_data(data)?,
-                ph_vph_c: Self::PH_VPH_C.from_data(data)?,
-                ppv: Self::PPV.from_data(data)?,
-                pp_vph_ab: Self::PP_VPH_AB.from_data(data)?,
-                pp_vph_bc: Self::PP_VPH_BC.from_data(data)?,
-                pp_vph_ca: Self::PP_VPH_CA.from_data(data)?,
+                ph_v_ph_a: Self::PH_V_PH_A.from_data(data)?,
+                ph_v_ph_b: Self::PH_V_PH_B.from_data(data)?,
+                ph_v_ph_c: Self::PH_V_PH_C.from_data(data)?,
+                pp_v: Self::PP_V.from_data(data)?,
+                pp_v_ph_ab: Self::PP_V_PH_AB.from_data(data)?,
+                pp_v_ph_bc: Self::PP_V_PH_BC.from_data(data)?,
+                pp_v_ph_ca: Self::PP_V_PH_CA.from_data(data)?,
                 hz: Self::HZ.from_data(data)?,
                 w: Self::W.from_data(data)?,
-                wph_a: Self::WPH_A.from_data(data)?,
-                wph_b: Self::WPH_B.from_data(data)?,
-                wph_c: Self::WPH_C.from_data(data)?,
+                w_ph_a: Self::W_PH_A.from_data(data)?,
+                w_ph_b: Self::W_PH_B.from_data(data)?,
+                w_ph_c: Self::W_PH_C.from_data(data)?,
                 va: Self::VA.from_data(data)?,
-                v_aph_a: Self::V_APH_A.from_data(data)?,
-                v_aph_b: Self::V_APH_B.from_data(data)?,
-                v_aph_c: Self::V_APH_C.from_data(data)?,
+                va_ph_a: Self::VA_PH_A.from_data(data)?,
+                va_ph_b: Self::VA_PH_B.from_data(data)?,
+                va_ph_c: Self::VA_PH_C.from_data(data)?,
                 var: Self::VAR.from_data(data)?,
-                va_rph_a: Self::VA_RPH_A.from_data(data)?,
-                va_rph_b: Self::VA_RPH_B.from_data(data)?,
-                va_rph_c: Self::VA_RPH_C.from_data(data)?,
+                var_ph_a: Self::VAR_PH_A.from_data(data)?,
+                var_ph_b: Self::VAR_PH_B.from_data(data)?,
+                var_ph_c: Self::VAR_PH_C.from_data(data)?,
                 pf: Self::PF.from_data(data)?,
-                p_fph_a: Self::P_FPH_A.from_data(data)?,
-                p_fph_b: Self::P_FPH_B.from_data(data)?,
-                p_fph_c: Self::P_FPH_C.from_data(data)?,
+                pf_ph_a: Self::PF_PH_A.from_data(data)?,
+                pf_ph_b: Self::PF_PH_B.from_data(data)?,
+                pf_ph_c: Self::PF_PH_C.from_data(data)?,
                 tot_wh_exp: Self::TOT_WH_EXP.from_data(data)?,
                 tot_wh_exp_ph_a: Self::TOT_WH_EXP_PH_A.from_data(data)?,
                 tot_wh_exp_ph_b: Self::TOT_WH_EXP_PH_B.from_data(data)?,
@@ -309,30 +309,30 @@ impl AcMeterAbcnFloat {
                 tot_wh_imp_ph_a: Self::TOT_WH_IMP_PH_A.from_data(data)?,
                 tot_wh_imp_ph_b: Self::TOT_WH_IMP_PH_B.from_data(data)?,
                 tot_wh_imp_ph_c: Self::TOT_WH_IMP_PH_C.from_data(data)?,
-                tot_v_ah_exp: Self::TOT_V_AH_EXP.from_data(data)?,
-                tot_v_ah_exp_ph_a: Self::TOT_V_AH_EXP_PH_A.from_data(data)?,
-                tot_v_ah_exp_ph_b: Self::TOT_V_AH_EXP_PH_B.from_data(data)?,
-                tot_v_ah_exp_ph_c: Self::TOT_V_AH_EXP_PH_C.from_data(data)?,
-                tot_v_ah_imp: Self::TOT_V_AH_IMP.from_data(data)?,
-                tot_v_ah_imp_ph_a: Self::TOT_V_AH_IMP_PH_A.from_data(data)?,
-                tot_v_ah_imp_ph_b: Self::TOT_V_AH_IMP_PH_B.from_data(data)?,
-                tot_v_ah_imp_ph_c: Self::TOT_V_AH_IMP_PH_C.from_data(data)?,
-                tot_v_arh_imp_q1: Self::TOT_V_ARH_IMP_Q1.from_data(data)?,
-                tot_v_arh_imp_q1ph_a: Self::TOT_V_ARH_IMP_Q1PH_A.from_data(data)?,
-                tot_v_arh_imp_q1ph_b: Self::TOT_V_ARH_IMP_Q1PH_B.from_data(data)?,
-                tot_v_arh_imp_q1ph_c: Self::TOT_V_ARH_IMP_Q1PH_C.from_data(data)?,
-                tot_v_arh_imp_q2: Self::TOT_V_ARH_IMP_Q2.from_data(data)?,
-                tot_v_arh_imp_q2ph_a: Self::TOT_V_ARH_IMP_Q2PH_A.from_data(data)?,
-                tot_v_arh_imp_q2ph_b: Self::TOT_V_ARH_IMP_Q2PH_B.from_data(data)?,
-                tot_v_arh_imp_q2ph_c: Self::TOT_V_ARH_IMP_Q2PH_C.from_data(data)?,
-                tot_v_arh_exp_q3: Self::TOT_V_ARH_EXP_Q3.from_data(data)?,
-                tot_v_arh_exp_q3ph_a: Self::TOT_V_ARH_EXP_Q3PH_A.from_data(data)?,
-                tot_v_arh_exp_q3ph_b: Self::TOT_V_ARH_EXP_Q3PH_B.from_data(data)?,
-                tot_v_arh_exp_q3ph_c: Self::TOT_V_ARH_EXP_Q3PH_C.from_data(data)?,
-                tot_v_arh_exp_q4: Self::TOT_V_ARH_EXP_Q4.from_data(data)?,
-                tot_v_arh_exp_q4ph_a: Self::TOT_V_ARH_EXP_Q4PH_A.from_data(data)?,
-                tot_v_arh_exp_q4ph_b: Self::TOT_V_ARH_EXP_Q4PH_B.from_data(data)?,
-                tot_v_arh_exp_q4ph_c: Self::TOT_V_ARH_EXP_Q4PH_C.from_data(data)?,
+                tot_vah_exp: Self::TOT_VAH_EXP.from_data(data)?,
+                tot_vah_exp_ph_a: Self::TOT_VAH_EXP_PH_A.from_data(data)?,
+                tot_vah_exp_ph_b: Self::TOT_VAH_EXP_PH_B.from_data(data)?,
+                tot_vah_exp_ph_c: Self::TOT_VAH_EXP_PH_C.from_data(data)?,
+                tot_vah_imp: Self::TOT_VAH_IMP.from_data(data)?,
+                tot_vah_imp_ph_a: Self::TOT_VAH_IMP_PH_A.from_data(data)?,
+                tot_vah_imp_ph_b: Self::TOT_VAH_IMP_PH_B.from_data(data)?,
+                tot_vah_imp_ph_c: Self::TOT_VAH_IMP_PH_C.from_data(data)?,
+                tot_varh_imp_q1: Self::TOT_VARH_IMP_Q1.from_data(data)?,
+                tot_varh_imp_q1_ph_a: Self::TOT_VARH_IMP_Q1_PH_A.from_data(data)?,
+                tot_varh_imp_q1_ph_b: Self::TOT_VARH_IMP_Q1_PH_B.from_data(data)?,
+                tot_varh_imp_q1_ph_c: Self::TOT_VARH_IMP_Q1_PH_C.from_data(data)?,
+                tot_varh_imp_q2: Self::TOT_VARH_IMP_Q2.from_data(data)?,
+                tot_varh_imp_q2_ph_a: Self::TOT_VARH_IMP_Q2_PH_A.from_data(data)?,
+                tot_varh_imp_q2_ph_b: Self::TOT_VARH_IMP_Q2_PH_B.from_data(data)?,
+                tot_varh_imp_q2_ph_c: Self::TOT_VARH_IMP_Q2_PH_C.from_data(data)?,
+                tot_varh_exp_q3: Self::TOT_VARH_EXP_Q3.from_data(data)?,
+                tot_varh_exp_q3_ph_a: Self::TOT_VARH_EXP_Q3_PH_A.from_data(data)?,
+                tot_varh_exp_q3_ph_b: Self::TOT_VARH_EXP_Q3_PH_B.from_data(data)?,
+                tot_varh_exp_q3_ph_c: Self::TOT_VARH_EXP_Q3_PH_C.from_data(data)?,
+                tot_varh_exp_q4: Self::TOT_VARH_EXP_Q4.from_data(data)?,
+                tot_varh_exp_q4_ph_a: Self::TOT_VARH_EXP_Q4_PH_A.from_data(data)?,
+                tot_varh_exp_q4_ph_b: Self::TOT_VARH_EXP_Q4_PH_B.from_data(data)?,
+                tot_varh_exp_q4_ph_c: Self::TOT_VARH_EXP_Q4_PH_C.from_data(data)?,
                 evt: Self::EVT.from_data(data)?,
             },
         ))

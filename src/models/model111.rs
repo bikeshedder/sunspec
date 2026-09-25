@@ -16,39 +16,39 @@ pub struct InverterSinglePhaseFloat {
     /// Phase A Current
     ///
     /// Detail: Connected Phase
-    pub aph_a: f32,
+    pub a_ph_a: f32,
     /// Amps PhaseB
     ///
     /// Phase B Current
-    pub aph_b: Option<f32>,
+    pub a_ph_b: Option<f32>,
     /// Amps PhaseC
     ///
     /// Phase C Current
-    pub aph_c: Option<f32>,
+    pub a_ph_c: Option<f32>,
     /// Phase Voltage AB
     ///
     /// Phase Voltage AB
-    pub pp_vph_ab: Option<f32>,
+    pub pp_v_ph_ab: Option<f32>,
     /// Phase Voltage BC
     ///
     /// Phase Voltage BC
-    pub pp_vph_bc: Option<f32>,
+    pub pp_v_ph_bc: Option<f32>,
     /// Phase Voltage CA
     ///
     /// Phase Voltage CA
-    pub pp_vph_ca: Option<f32>,
+    pub pp_v_ph_ca: Option<f32>,
     /// Phase Voltage AN
     ///
     /// Phase Voltage AN
-    pub ph_vph_a: f32,
+    pub ph_v_ph_a: f32,
     /// Phase Voltage BN
     ///
     /// Phase Voltage BN
-    pub ph_vph_b: Option<f32>,
+    pub ph_v_ph_b: Option<f32>,
     /// Phase Voltage CN
     ///
     /// Phase Voltage CN
-    pub ph_vph_c: Option<f32>,
+    pub ph_v_ph_c: Option<f32>,
     /// Watts
     ///
     /// AC Power
@@ -64,7 +64,7 @@ pub struct InverterSinglePhaseFloat {
     /// VAr
     ///
     /// AC Reactive Power
-    pub v_ar: Option<f32>,
+    pub var: Option<f32>,
     /// PF
     ///
     /// AC Power Factor
@@ -76,15 +76,15 @@ pub struct InverterSinglePhaseFloat {
     /// DC Amps
     ///
     /// DC Current
-    pub dca: Option<f32>,
+    pub dc_a: Option<f32>,
     /// DC Voltage
     ///
     /// DC Voltage
-    pub dcv: Option<f32>,
+    pub dc_v: Option<f32>,
     /// DC Watts
     ///
     /// DC Power
-    pub dcw: Option<f32>,
+    pub dc_w: Option<f32>,
     /// Cabinet Temperature
     ///
     /// Cabinet Temperature
@@ -137,24 +137,24 @@ pub struct InverterSinglePhaseFloat {
 #[allow(missing_docs)]
 impl InverterSinglePhaseFloat {
     pub const A: crate::Point<Self, f32> = crate::Point::new(0, 2, false);
-    pub const APH_A: crate::Point<Self, f32> = crate::Point::new(2, 2, false);
-    pub const APH_B: crate::Point<Self, Option<f32>> = crate::Point::new(4, 2, false);
-    pub const APH_C: crate::Point<Self, Option<f32>> = crate::Point::new(6, 2, false);
-    pub const PP_VPH_AB: crate::Point<Self, Option<f32>> = crate::Point::new(8, 2, false);
-    pub const PP_VPH_BC: crate::Point<Self, Option<f32>> = crate::Point::new(10, 2, false);
-    pub const PP_VPH_CA: crate::Point<Self, Option<f32>> = crate::Point::new(12, 2, false);
-    pub const PH_VPH_A: crate::Point<Self, f32> = crate::Point::new(14, 2, false);
-    pub const PH_VPH_B: crate::Point<Self, Option<f32>> = crate::Point::new(16, 2, false);
-    pub const PH_VPH_C: crate::Point<Self, Option<f32>> = crate::Point::new(18, 2, false);
+    pub const A_PH_A: crate::Point<Self, f32> = crate::Point::new(2, 2, false);
+    pub const A_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(4, 2, false);
+    pub const A_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(6, 2, false);
+    pub const PP_V_PH_AB: crate::Point<Self, Option<f32>> = crate::Point::new(8, 2, false);
+    pub const PP_V_PH_BC: crate::Point<Self, Option<f32>> = crate::Point::new(10, 2, false);
+    pub const PP_V_PH_CA: crate::Point<Self, Option<f32>> = crate::Point::new(12, 2, false);
+    pub const PH_V_PH_A: crate::Point<Self, f32> = crate::Point::new(14, 2, false);
+    pub const PH_V_PH_B: crate::Point<Self, Option<f32>> = crate::Point::new(16, 2, false);
+    pub const PH_V_PH_C: crate::Point<Self, Option<f32>> = crate::Point::new(18, 2, false);
     pub const W: crate::Point<Self, f32> = crate::Point::new(20, 2, false);
     pub const HZ: crate::Point<Self, f32> = crate::Point::new(22, 2, false);
     pub const VA: crate::Point<Self, Option<f32>> = crate::Point::new(24, 2, false);
-    pub const V_AR: crate::Point<Self, Option<f32>> = crate::Point::new(26, 2, false);
+    pub const VAR: crate::Point<Self, Option<f32>> = crate::Point::new(26, 2, false);
     pub const PF: crate::Point<Self, Option<f32>> = crate::Point::new(28, 2, false);
     pub const WH: crate::Point<Self, f32> = crate::Point::new(30, 2, false);
-    pub const DCA: crate::Point<Self, Option<f32>> = crate::Point::new(32, 2, false);
-    pub const DCV: crate::Point<Self, Option<f32>> = crate::Point::new(34, 2, false);
-    pub const DCW: crate::Point<Self, Option<f32>> = crate::Point::new(36, 2, false);
+    pub const DC_A: crate::Point<Self, Option<f32>> = crate::Point::new(32, 2, false);
+    pub const DC_V: crate::Point<Self, Option<f32>> = crate::Point::new(34, 2, false);
+    pub const DC_W: crate::Point<Self, Option<f32>> = crate::Point::new(36, 2, false);
     pub const TMP_CAB: crate::Point<Self, f32> = crate::Point::new(38, 2, false);
     pub const TMP_SNK: crate::Point<Self, Option<f32>> = crate::Point::new(40, 2, false);
     pub const TMP_TRNS: crate::Point<Self, Option<f32>> = crate::Point::new(42, 2, false);
@@ -180,24 +180,24 @@ impl InverterSinglePhaseFloat {
             nested_data,
             Self {
                 a: Self::A.from_data(data)?,
-                aph_a: Self::APH_A.from_data(data)?,
-                aph_b: Self::APH_B.from_data(data)?,
-                aph_c: Self::APH_C.from_data(data)?,
-                pp_vph_ab: Self::PP_VPH_AB.from_data(data)?,
-                pp_vph_bc: Self::PP_VPH_BC.from_data(data)?,
-                pp_vph_ca: Self::PP_VPH_CA.from_data(data)?,
-                ph_vph_a: Self::PH_VPH_A.from_data(data)?,
-                ph_vph_b: Self::PH_VPH_B.from_data(data)?,
-                ph_vph_c: Self::PH_VPH_C.from_data(data)?,
+                a_ph_a: Self::A_PH_A.from_data(data)?,
+                a_ph_b: Self::A_PH_B.from_data(data)?,
+                a_ph_c: Self::A_PH_C.from_data(data)?,
+                pp_v_ph_ab: Self::PP_V_PH_AB.from_data(data)?,
+                pp_v_ph_bc: Self::PP_V_PH_BC.from_data(data)?,
+                pp_v_ph_ca: Self::PP_V_PH_CA.from_data(data)?,
+                ph_v_ph_a: Self::PH_V_PH_A.from_data(data)?,
+                ph_v_ph_b: Self::PH_V_PH_B.from_data(data)?,
+                ph_v_ph_c: Self::PH_V_PH_C.from_data(data)?,
                 w: Self::W.from_data(data)?,
                 hz: Self::HZ.from_data(data)?,
                 va: Self::VA.from_data(data)?,
-                v_ar: Self::V_AR.from_data(data)?,
+                var: Self::VAR.from_data(data)?,
                 pf: Self::PF.from_data(data)?,
                 wh: Self::WH.from_data(data)?,
-                dca: Self::DCA.from_data(data)?,
-                dcv: Self::DCV.from_data(data)?,
-                dcw: Self::DCW.from_data(data)?,
+                dc_a: Self::DC_A.from_data(data)?,
+                dc_v: Self::DC_V.from_data(data)?,
+                dc_w: Self::DC_W.from_data(data)?,
                 tmp_cab: Self::TMP_CAB.from_data(data)?,
                 tmp_snk: Self::TMP_SNK.from_data(data)?,
                 tmp_trns: Self::TMP_TRNS.from_data(data)?,

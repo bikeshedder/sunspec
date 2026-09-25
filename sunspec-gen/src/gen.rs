@@ -8,31 +8,10 @@ use quote::{format_ident, quote, ToTokens};
 use thiserror::Error;
 
 use crate::{
+    ident::{shouty_snake_case, snake_case, symbol_upper_camel_case, upper_camel_case},
     json::{Group, GroupCount, Model, Point, PointAccess, PointMandatory, PointType},
     manifest::model_feature_name,
 };
-
-/// This fixes sunspec identifiers which contains things like
-/// `SoC` and `SoH` which causes heck to transform them to `so_c`
-/// and `so_h` which is not what we want.
-fn normalize_ident(s: &impl AsRef<str>) -> String {
-    s.as_ref().replace("SoC", "Soc").replace("SoH", "Soh")
-}
-
-fn snake_case(s: &impl AsRef<str>) -> String {
-    use heck::ToSnakeCase;
-    normalize_ident(s).to_snake_case()
-}
-
-fn shouty_snake_case(s: &impl AsRef<str>) -> String {
-    use heck::ToShoutySnakeCase;
-    normalize_ident(s).to_shouty_snake_case()
-}
-
-fn upper_camel_case(s: &impl AsRef<str>) -> String {
-    use heck::ToUpperCamelCase;
-    normalize_ident(s).to_upper_camel_case()
-}
 
 #[derive(Debug, Error)]
 pub enum GenModelError {
@@ -552,7 +531,7 @@ fn gen_group_fn_parse_multiple(group: &Group, model: &Model, has_counts: bool) -
     };
     let group_count = match &group.count {
         GroupCount::String(count_field_name) => {
-            let count_field = format_ident!("{}", snake_case(&count_field_name));
+            let count_field = format_ident!("{}", snake_case(count_field_name));
             if let Some(point) = find_point(&model.group, count_field_name) {
                 if point.mandatory == PointMandatory::M {
                     quote! { counts.#count_field }
@@ -694,18 +673,14 @@ fn strip_doc_fields(value: &mut serde_json::Value) {
 fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
     let size = point.r#type.size().unwrap();
     let repr = format_ident!("u{}", size * 16);
-    let name = format_ident!(
-        "{}{}",
-        upper_camel_case(&prefix),
-        upper_camel_case(&point.name)
-    );
+    let name = format_ident!("{}{}", prefix, upper_camel_case(&point.name));
     let invalid = match point.r#type {
         PointType::Enum16 => Literal::u16_unsuffixed(u16::MAX),
         PointType::Enum32 => Literal::u32_unsuffixed(u32::MAX),
         _ => unimplemented!(),
     };
     let variants = point.symbols.iter().map(|symbol| {
-        let variant_name = format_ident!("{}", upper_camel_case(&symbol.name));
+        let variant_name = format_ident!("{}", symbol_upper_camel_case(&symbol.name));
         let variant_doc = doc_to_ts(&symbol.doc.to_doc_string());
         quote! {
             #variant_doc
@@ -714,7 +689,7 @@ fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
         .into_token_stream()
     });
     let from_repr_arms = point.symbols.iter().map(|symbol| {
-        let variant_name = format_ident!("{}", upper_camel_case(&symbol.name));
+        let variant_name = format_ident!("{}", symbol_upper_camel_case(&symbol.name));
         let variant_value = match point.r#type {
             PointType::Enum16 => {
                 Literal::u16_unsuffixed(symbol.value.as_u64().unwrap().try_into().unwrap())
@@ -729,7 +704,7 @@ fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
         }
     });
     let to_repr_arms = point.symbols.iter().map(|symbol| {
-        let variant_name = format_ident!("{}", upper_camel_case(&symbol.name));
+        let variant_name = format_ident!("{}", symbol_upper_camel_case(&symbol.name));
         let variant_value = match point.r#type {
             PointType::Enum16 => {
                 Literal::u16_unsuffixed(symbol.value.as_u64().unwrap().try_into().unwrap())
@@ -782,11 +757,7 @@ fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
 fn gen_bitfield(point: &Point, prefix: &str) -> TokenStream {
     let size = point.r#type.size().unwrap();
     let repr = format_ident!("u{}", size * 16);
-    let name = format_ident!(
-        "{}{}",
-        upper_camel_case(&prefix),
-        upper_camel_case(&point.name)
-    );
+    let name = format_ident!("{}{}", prefix, upper_camel_case(&point.name));
     let invalid = match point.r#type {
         PointType::Bitfield16 => Literal::u16_suffixed(u16::MAX),
         PointType::Bitfield32 => Literal::u32_suffixed(u32::MAX),
@@ -796,7 +767,7 @@ fn gen_bitfield(point: &Point, prefix: &str) -> TokenStream {
     let doc = doc_to_ts(&point.doc.to_doc_string());
     let fields = point.symbols.iter().map(|symbol| {
         let symbol_name = symbol.name.clone();
-        let field_name = format_ident!("{}", upper_camel_case(&symbol_name));
+        let field_name = format_ident!("{}", symbol_upper_camel_case(&symbol_name));
         let bit = Literal::u64_unsuffixed(1 << symbol.value.as_u64().unwrap());
         let field_doc = doc_to_ts(&symbol.doc.to_doc_string());
         quote! {
@@ -856,27 +827,13 @@ fn rust_type(point: &Point, prefix: &str) -> TokenStream {
         PointType::Acc32 => quote! { u32 },
         PointType::Acc64 => quote! { u64 },
         PointType::Bitfield16 | PointType::Bitfield32 | PointType::Bitfield64 => {
-            let ident = format_ident!(
-                "{}",
-                format!(
-                    "{}{}",
-                    upper_camel_case(&prefix),
-                    upper_camel_case(&point.name)
-                )
-            );
+            let ident = format_ident!("{}", format!("{}{}", prefix, upper_camel_case(&point.name)));
             quote! { #ident }
         }
         PointType::Enum16 if point.symbols.is_empty() => quote! { u16 },
         PointType::Enum32 if point.symbols.is_empty() => quote! { u32 },
         PointType::Enum16 | PointType::Enum32 => {
-            let ident = format_ident!(
-                "{}",
-                format!(
-                    "{}{}",
-                    upper_camel_case(&prefix),
-                    upper_camel_case(&point.name)
-                )
-            );
+            let ident = format_ident!("{}", format!("{}{}", prefix, upper_camel_case(&point.name)));
             quote! { #ident }
         }
         PointType::Float32 => quote! { f32 },

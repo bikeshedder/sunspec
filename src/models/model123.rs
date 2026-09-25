@@ -64,35 +64,35 @@ pub struct Controls {
     /// VArWMaxPct
     ///
     /// Reactive power in percent of WMax.
-    pub v_ar_w_max_pct: Option<i16>,
+    pub var_w_max_pct: Option<i16>,
     /// VArMaxPct
     ///
     /// Reactive power in percent of VArMax.
-    pub v_ar_max_pct: Option<i16>,
+    pub var_max_pct: Option<i16>,
     /// VArAvalPct
     ///
     /// Reactive power in percent of VArAval.
-    pub v_ar_aval_pct: Option<i16>,
+    pub var_aval_pct: Option<i16>,
     /// VArPct_WinTms
     ///
     /// Time window for VAR limit change.
-    pub v_ar_pct_win_tms: Option<u16>,
+    pub var_pct_win_tms: Option<u16>,
     /// VArPct_RvrtTms
     ///
     /// Timeout period for VAR limit.
-    pub v_ar_pct_rvrt_tms: Option<u16>,
+    pub var_pct_rvrt_tms: Option<u16>,
     /// VArPct_RmpTms
     ///
     /// Ramp time for moving from current setpoint to new setpoint.
-    pub v_ar_pct_rmp_tms: Option<u16>,
+    pub var_pct_rmp_tms: Option<u16>,
     /// VArPct_Mod
     ///
     /// VAR percent limit mode.
-    pub v_ar_pct_mod: Option<VArPctMod>,
+    pub var_pct_mod: Option<VarPctMod>,
     /// VArPct_Ena
     ///
     /// Percent limit VAr enable/disable control.
-    pub v_ar_pct_ena: VArPctEna,
+    pub var_pct_ena: VarPctEna,
     /// WMaxLimPct_SF
     ///
     /// Scale factor for power output percent.
@@ -104,7 +104,7 @@ pub struct Controls {
     /// VArPct_SF
     ///
     /// Scale factor for reactive power percent.
-    pub v_ar_pct_sf: Option<i16>,
+    pub var_pct_sf: Option<i16>,
 }
 #[allow(missing_docs)]
 impl Controls {
@@ -124,17 +124,17 @@ impl Controls {
     pub const OUT_PF_SET_RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
     pub const OUT_PF_SET_RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, true);
     pub const OUT_PF_SET_ENA: crate::Point<Self, OutPfSetEna> = crate::Point::new(12, 1, true);
-    pub const V_AR_W_MAX_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
-    pub const V_AR_MAX_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, true);
-    pub const V_AR_AVAL_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, true);
-    pub const V_AR_PCT_WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(16, 1, true);
-    pub const V_AR_PCT_RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, true);
-    pub const V_AR_PCT_RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
-    pub const V_AR_PCT_MOD: crate::Point<Self, Option<VArPctMod>> = crate::Point::new(19, 1, true);
-    pub const V_AR_PCT_ENA: crate::Point<Self, VArPctEna> = crate::Point::new(20, 1, true);
+    pub const VAR_W_MAX_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
+    pub const VAR_MAX_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, true);
+    pub const VAR_AVAL_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, true);
+    pub const VAR_PCT_WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(16, 1, true);
+    pub const VAR_PCT_RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, true);
+    pub const VAR_PCT_RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
+    pub const VAR_PCT_MOD: crate::Point<Self, Option<VarPctMod>> = crate::Point::new(19, 1, true);
+    pub const VAR_PCT_ENA: crate::Point<Self, VarPctEna> = crate::Point::new(20, 1, true);
     pub const W_MAX_LIM_PCT_SF: crate::Point<Self, i16> = crate::Point::new(21, 1, false);
     pub const OUT_PF_SET_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
-    pub const V_AR_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
+    pub const VAR_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
 }
 impl crate::Group for Controls {
     const LEN: u16 = 24;
@@ -160,17 +160,17 @@ impl Controls {
                 out_pf_set_rvrt_tms: Self::OUT_PF_SET_RVRT_TMS.from_data(data)?,
                 out_pf_set_rmp_tms: Self::OUT_PF_SET_RMP_TMS.from_data(data)?,
                 out_pf_set_ena: Self::OUT_PF_SET_ENA.from_data(data)?,
-                v_ar_w_max_pct: Self::V_AR_W_MAX_PCT.from_data(data)?,
-                v_ar_max_pct: Self::V_AR_MAX_PCT.from_data(data)?,
-                v_ar_aval_pct: Self::V_AR_AVAL_PCT.from_data(data)?,
-                v_ar_pct_win_tms: Self::V_AR_PCT_WIN_TMS.from_data(data)?,
-                v_ar_pct_rvrt_tms: Self::V_AR_PCT_RVRT_TMS.from_data(data)?,
-                v_ar_pct_rmp_tms: Self::V_AR_PCT_RMP_TMS.from_data(data)?,
-                v_ar_pct_mod: Self::V_AR_PCT_MOD.from_data(data)?,
-                v_ar_pct_ena: Self::V_AR_PCT_ENA.from_data(data)?,
+                var_w_max_pct: Self::VAR_W_MAX_PCT.from_data(data)?,
+                var_max_pct: Self::VAR_MAX_PCT.from_data(data)?,
+                var_aval_pct: Self::VAR_AVAL_PCT.from_data(data)?,
+                var_pct_win_tms: Self::VAR_PCT_WIN_TMS.from_data(data)?,
+                var_pct_rvrt_tms: Self::VAR_PCT_RVRT_TMS.from_data(data)?,
+                var_pct_rmp_tms: Self::VAR_PCT_RMP_TMS.from_data(data)?,
+                var_pct_mod: Self::VAR_PCT_MOD.from_data(data)?,
+                var_pct_ena: Self::VAR_PCT_ENA.from_data(data)?,
                 w_max_lim_pct_sf: Self::W_MAX_LIM_PCT_SF.from_data(data)?,
                 out_pf_set_sf: Self::OUT_PF_SET_SF.from_data(data)?,
-                v_ar_pct_sf: Self::V_AR_PCT_SF.from_data(data)?,
+                var_pct_sf: Self::VAR_PCT_SF.from_data(data)?,
             },
         ))
     }
@@ -294,27 +294,27 @@ impl crate::FixedSize for OutPfSetEna {
 /// VAR percent limit mode.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum VArPctMod {
+pub enum VarPctMod {
     #[allow(missing_docs)]
     None,
     #[allow(missing_docs)]
     WMax,
     #[allow(missing_docs)]
-    VArMax,
+    VarMax,
     #[allow(missing_docs)]
-    VArAval,
+    VarAval,
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for VArPctMod {
+impl crate::EnumValue for VarPctMod {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
         match value {
             0 => Self::None,
             1 => Self::WMax,
-            2 => Self::VArMax,
-            3 => Self::VArAval,
+            2 => Self::VarMax,
+            3 => Self::VarAval,
             value => Self::Invalid(value),
         }
     }
@@ -322,13 +322,13 @@ impl crate::EnumValue for VArPctMod {
         match self {
             Self::None => 0,
             Self::WMax => 1,
-            Self::VArMax => 2,
-            Self::VArAval => 3,
+            Self::VarMax => 2,
+            Self::VarAval => 3,
             Self::Invalid(value) => value,
         }
     }
 }
-impl crate::FixedSize for VArPctMod {
+impl crate::FixedSize for VarPctMod {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
@@ -340,7 +340,7 @@ impl crate::FixedSize for VArPctMod {
 /// Percent limit VAr enable/disable control.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum VArPctEna {
+pub enum VarPctEna {
     #[allow(missing_docs)]
     Disabled,
     #[allow(missing_docs)]
@@ -348,7 +348,7 @@ pub enum VArPctEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
-impl crate::EnumValue for VArPctEna {
+impl crate::EnumValue for VarPctEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
     fn from_repr(value: Self::Repr) -> Self {
@@ -366,7 +366,7 @@ impl crate::EnumValue for VArPctEna {
         }
     }
 }
-impl crate::FixedSize for VArPctEna {
+impl crate::FixedSize for VarPctEna {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {
