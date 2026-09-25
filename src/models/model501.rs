@@ -11,7 +11,7 @@ pub type Model501 = SolarModuleFloat;
 pub struct SolarModuleFloat {
     /// Status
     ///
-    /// Enumerated value.  Module Status Code
+    /// Module Status Code
     pub stat: Stat,
     /// Vendor Status
     ///
@@ -19,7 +19,7 @@ pub struct SolarModuleFloat {
     pub stat_vend: Option<u16>,
     /// Events
     ///
-    /// Bitmask value.  Module Event Flags
+    /// Module Event Flags
     pub evt: Evt,
     /// Vendor Module Event Flags
     ///
@@ -132,7 +132,7 @@ impl SolarModuleFloat {
 }
 /// Status
 ///
-/// Enumerated value.  Module Status Code
+/// Module Status Code
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Stat {
@@ -203,7 +203,7 @@ impl crate::FixedSize for Stat {
 bitflags::bitflags! {
     /// Events
     ///
-    /// Bitmask value.  Module Event Flags
+    /// Module Event Flags
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Evt: u32 {

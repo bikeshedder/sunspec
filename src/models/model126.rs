@@ -43,7 +43,7 @@ pub struct VoltVar {
     pub v_sf: i16,
     /// DeptRef_SF
     ///
-    /// scale factor for dependent variable.
+    /// Scale factor for dependent variable.
     pub dept_ref_sf: i16,
     #[allow(missing_docs)]
     pub rmp_inc_dec_sf: Option<i16>,

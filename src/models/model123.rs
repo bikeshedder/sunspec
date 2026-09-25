@@ -19,7 +19,7 @@ pub struct Controls {
     pub conn_rvrt_tms: Option<u16>,
     /// Conn
     ///
-    /// Enumerated valued.  Connection control.
+    /// Connection control.
     pub conn: Conn,
     /// WMaxLimPct
     ///
@@ -39,7 +39,7 @@ pub struct Controls {
     pub w_max_lim_pct_rmp_tms: Option<u16>,
     /// WMaxLim_Ena
     ///
-    /// Enumerated valued.  Throttle enable/disable control.
+    /// Throttle enable/disable control.
     pub w_max_lim_ena: WMaxLimEna,
     /// OutPFSet
     ///
@@ -59,7 +59,7 @@ pub struct Controls {
     pub out_pf_set_rmp_tms: Option<u16>,
     /// OutPFSet_Ena
     ///
-    /// Enumerated valued.  Fixed power factor enable/disable control.
+    /// Fixed power factor enable/disable control.
     pub out_pf_set_ena: OutPfSetEna,
     /// VArWMaxPct
     ///
@@ -87,11 +87,11 @@ pub struct Controls {
     pub v_ar_pct_rmp_tms: Option<u16>,
     /// VArPct_Mod
     ///
-    /// Enumerated value. VAR percent limit mode.
+    /// VAR percent limit mode.
     pub v_ar_pct_mod: Option<VArPctMod>,
     /// VArPct_Ena
     ///
-    /// Enumerated valued.  Percent limit VAr enable/disable control.
+    /// Percent limit VAr enable/disable control.
     pub v_ar_pct_ena: VArPctEna,
     /// WMaxLimPct_SF
     ///
@@ -177,7 +177,7 @@ impl Controls {
 }
 /// Conn
 ///
-/// Enumerated valued.  Connection control.
+/// Connection control.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Conn {
@@ -215,7 +215,7 @@ impl crate::FixedSize for Conn {
 }
 /// WMaxLim_Ena
 ///
-/// Enumerated valued.  Throttle enable/disable control.
+/// Throttle enable/disable control.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum WMaxLimEna {
@@ -253,7 +253,7 @@ impl crate::FixedSize for WMaxLimEna {
 }
 /// OutPFSet_Ena
 ///
-/// Enumerated valued.  Fixed power factor enable/disable control.
+/// Fixed power factor enable/disable control.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum OutPfSetEna {
@@ -291,7 +291,7 @@ impl crate::FixedSize for OutPfSetEna {
 }
 /// VArPct_Mod
 ///
-/// Enumerated value. VAR percent limit mode.
+/// VAR percent limit mode.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum VArPctMod {
@@ -337,7 +337,7 @@ impl crate::FixedSize for VArPctMod {
 }
 /// VArPct_Ena
 ///
-/// Enumerated valued.  Percent limit VAr enable/disable control.
+/// Percent limit VAr enable/disable control.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum VArPctEna {

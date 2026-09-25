@@ -11,15 +11,15 @@ pub type Model122 = Status;
 pub struct Status {
     /// PVConn
     ///
-    /// PV inverter present/available status. Enumerated value.
+    /// PV inverter present/available status.
     pub pv_conn: PvConn,
     /// StorConn
     ///
-    /// Storage inverter present/available status. Enumerated value.
+    /// Storage inverter present/available status.
     pub stor_conn: StorConn,
     /// ECPConn
     ///
-    /// ECP connection status: disconnected=0  connected=1.
+    /// ECP connection status: disconnected=0 connected=1.
     pub ecp_conn: EcpConn,
     /// ActWh
     ///
@@ -39,11 +39,11 @@ pub struct Status {
     pub act_v_arh_q2: Option<u64>,
     /// ActVArhQ3
     ///
-    /// AC lifetime negative energy output  in quadrant 3.
+    /// AC lifetime negative energy output in quadrant 3.
     pub act_v_arh_q3: Option<u64>,
     /// ActVArhQ4
     ///
-    /// AC lifetime reactive energy output  in quadrant 4.
+    /// AC lifetime reactive energy output in quadrant 4.
     pub act_v_arh_q4: Option<u64>,
     /// VArAval
     ///
@@ -63,13 +63,13 @@ pub struct Status {
     pub w_aval_sf: Option<i16>,
     /// StSetLimMsk
     ///
-    /// Bit Mask indicating setpoint limit(s) reached.
+    /// Setpoint limit(s) reached.
     ///
     /// Detail: Bits shall be automatically cleared on read.
     pub st_set_lim_msk: Option<StSetLimMsk>,
     /// StActCtl
     ///
-    /// Bit Mask indicating which inverter controls are currently active.
+    /// Which inverter controls are currently active.
     pub st_act_ctl: Option<StActCtl>,
     /// TmSrc
     ///
@@ -81,7 +81,7 @@ pub struct Status {
     pub tms: Option<u32>,
     /// RtSt
     ///
-    /// Bit Mask indicating active ride-through status.
+    /// Active ride-through status.
     pub rt_st: Option<RtSt>,
     /// Ris
     ///
@@ -154,7 +154,7 @@ impl Status {
 bitflags::bitflags! {
     /// PVConn
     ///
-    /// PV inverter present/available status. Enumerated value.
+    /// PV inverter present/available status.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct PvConn: u16 {
@@ -187,7 +187,7 @@ impl crate::FixedSize for PvConn {
 bitflags::bitflags! {
     /// StorConn
     ///
-    /// Storage inverter present/available status. Enumerated value.
+    /// Storage inverter present/available status.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct StorConn: u16 {
@@ -220,7 +220,7 @@ impl crate::FixedSize for StorConn {
 bitflags::bitflags! {
     /// ECPConn
     ///
-    /// ECP connection status: disconnected=0  connected=1.
+    /// ECP connection status: disconnected=0 connected=1.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct EcpConn: u16 {
@@ -249,7 +249,7 @@ impl crate::FixedSize for EcpConn {
 bitflags::bitflags! {
     /// StSetLimMsk
     ///
-    /// Bit Mask indicating setpoint limit(s) reached.
+    /// Setpoint limit(s) reached.
     ///
     /// Detail: Bits shall be automatically cleared on read.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
@@ -298,7 +298,7 @@ impl crate::FixedSize for StSetLimMsk {
 bitflags::bitflags! {
     /// StActCtl
     ///
-    /// Bit Mask indicating which inverter controls are currently active.
+    /// Which inverter controls are currently active.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct StActCtl: u32 {
@@ -351,7 +351,7 @@ impl crate::FixedSize for StActCtl {
 bitflags::bitflags! {
     /// RtSt
     ///
-    /// Bit Mask indicating active ride-through status.
+    /// Active ride-through status.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct RtSt: u16 {

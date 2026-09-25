@@ -15,7 +15,7 @@ pub struct Model10 {
     pub ctl: Option<u16>,
     /// Physical Access Type
     ///
-    /// Enumerated value.  Type of physical media
+    /// Type of physical media
     pub typ: Option<Typ>,
 }
 #[allow(missing_docs)]
@@ -86,7 +86,7 @@ impl crate::FixedSize for St {
 }
 /// Physical Access Type
 ///
-/// Enumerated value.  Type of physical media
+/// Type of physical media
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Typ {

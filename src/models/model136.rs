@@ -15,7 +15,7 @@ pub struct Hfrt {
     pub act_crv: u16,
     /// ModEna
     ///
-    /// HFRT control mode. Enable active curve.  Bitfield value.
+    /// HFRT control mode. Enable active curve.
     pub mod_ena: ModEna,
     /// WinTms
     ///
@@ -95,7 +95,7 @@ impl Hfrt {
 bitflags::bitflags! {
     /// ModEna
     ///
-    /// HFRT control mode. Enable active curve.  Bitfield value.
+    /// HFRT control mode. Enable active curve.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct ModEna: u16 {
@@ -293,7 +293,7 @@ pub struct Curve {
     pub crv_nam: Option<String>,
     /// ReadOnly
     ///
-    /// Enumerated value indicates if curve is read-only or can be modified.
+    /// Curve is read-only or can be modified.
     pub read_only: CurveReadOnly,
 }
 #[allow(missing_docs)]
@@ -419,7 +419,7 @@ impl Curve {
 }
 /// ReadOnly
 ///
-/// Enumerated value indicates if curve is read-only or can be modified.
+/// Curve is read-only or can be modified.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum CurveReadOnly {

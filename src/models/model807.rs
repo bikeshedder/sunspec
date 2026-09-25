@@ -107,11 +107,11 @@ pub struct FlowBatteryString {
     pub tmp_avg: i16,
     /// String Event 1
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     pub evt1: Evt1,
     /// String Event 2
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     pub evt2: Evt2,
     /// Vendor Event Bitfield 1
     ///
@@ -215,7 +215,7 @@ impl FlowBatteryString {
 bitflags::bitflags! {
     /// String Event 1
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Evt1: u32 {
@@ -300,7 +300,7 @@ impl crate::FixedSize for Evt1 {
 bitflags::bitflags! {
     /// String Event 2
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Evt2: u32 {
@@ -440,11 +440,11 @@ pub struct Module {
     pub mod_con_st: Option<ModuleModConSt>,
     /// Module Event 1
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     pub mod_evt1: ModuleModEvt1,
     /// Module Event 2
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     pub mod_evt2: ModuleModEvt2,
     /// Connection Failure Reason
     pub mod_con_fail: Option<ModuleModConFail>,
@@ -659,7 +659,7 @@ impl crate::FixedSize for ModuleModConSt {
 bitflags::bitflags! {
     /// Module Event 1
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct ModuleModEvt1: u32 {
@@ -744,7 +744,7 @@ impl crate::FixedSize for ModuleModEvt1 {
 bitflags::bitflags! {
     /// Module Event 2
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct ModuleModEvt2: u32 {

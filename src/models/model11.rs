@@ -11,11 +11,11 @@ pub struct Model11 {
     pub spd: u16,
     /// Interface Status Flags
     ///
-    /// Bitmask values Interface flags.
+    /// Interface flags.
     pub cfg_st: CfgSt,
     /// Link State
     ///
-    /// Enumerated value. State information for this interface
+    /// State information for this interface
     pub st: St,
     /// MAC
     ///
@@ -69,7 +69,7 @@ impl Model11 {
 bitflags::bitflags! {
     /// Interface Status Flags
     ///
-    /// Bitmask values Interface flags.
+    /// Interface flags.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct CfgSt: u16 {
@@ -107,7 +107,7 @@ impl crate::FixedSize for CfgSt {
 }
 /// Link State
 ///
-/// Enumerated value. State information for this interface
+/// State information for this interface
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum St {

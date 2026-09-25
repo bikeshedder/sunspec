@@ -31,15 +31,15 @@ pub struct TrackerController {
     pub day: Option<u16>,
     /// Manual Elevation
     ///
-    /// Global manual override target position of elevation in degrees from horizontal.  Unimplemented for single axis azimuth tracker type
+    /// Global manual override target position of elevation in degrees from horizontal. Unimplemented for single axis azimuth tracker type
     pub glbl_el_ctl: Option<i32>,
     /// Manual Azimuth
     ///
-    /// Global manual override target position of azimuth in degrees from true north towards east.  Unimplemented for single axis azimuth tracker type
+    /// Global manual override target position of azimuth in degrees from true north towards east. Unimplemented for single axis azimuth tracker type
     pub glbl_az_ctl: Option<i32>,
     /// Global Mode
     ///
-    /// Global Control register operates on all trackers. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
+    /// Global Control register operates on all trackers. Normal operation is automatic. Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
     ///
     /// Detail: The global controls all trackers
     pub glbl_ctl: Option<GlblCtl>,
@@ -55,7 +55,7 @@ pub struct TrackerController {
     pub dgr_sf: i16,
     /// Trackers
     ///
-    /// Number of trackers being controlled.  Size of repeating block.
+    /// Number of trackers being controlled. Size of repeating block.
     pub n: u16,
     #[allow(missing_docs)]
     pub tracker: Vec<Tracker>,
@@ -162,7 +162,7 @@ impl crate::FixedSize for Typ {
 }
 /// Global Mode
 ///
-/// Global Control register operates on all trackers. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
+/// Global Control register operates on all trackers. Normal operation is automatic. Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
 ///
 /// Detail: The global controls all trackers
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
@@ -247,31 +247,31 @@ pub struct Tracker {
     pub id: Option<String>,
     /// Target Elevation
     ///
-    /// Auto target elevation in degrees from horizontal.  Unimplemented for single axis azimuth tracker type
+    /// Auto target elevation in degrees from horizontal. Unimplemented for single axis azimuth tracker type
     pub el_trgt: Option<i32>,
     /// Target Azimuth
     ///
-    /// Auto target azimuth  in degrees from true north towards east.  Unimplemented for single axis horizontal tracker type
+    /// Auto target azimuth in degrees from true north towards east. Unimplemented for single axis horizontal tracker type
     pub az_trgt: Option<i32>,
     /// Elevation
     ///
-    /// Actual elevation position  in degrees from horizontal.  Unimplemented for single axis azimuth tracker type
+    /// Actual elevation position in degrees from horizontal. Unimplemented for single axis azimuth tracker type
     pub el_pos: Option<i32>,
     /// Azimuth
     ///
-    /// Actual azimuth position  in degrees from true north towards east.  Unimplemented for single axis horizontal tracker type
+    /// Actual azimuth position in degrees from true north towards east. Unimplemented for single axis horizontal tracker type
     pub az_pos: Option<i32>,
     /// Manual Elevation
     ///
-    /// Manual override target position of elevation in degrees from horizontal.  Unimplemented for single axis azimuth tracker type
+    /// Manual override target position of elevation in degrees from horizontal. Unimplemented for single axis azimuth tracker type
     pub el_ctl: Option<i32>,
     /// Manual Azimuth
     ///
-    /// Manual override target position of azimuth in degrees from true north towards east.  Unimplemented for single axis azimuth tracker type
+    /// Manual override target position of azimuth in degrees from true north towards east. Unimplemented for single axis azimuth tracker type
     pub az_ctl: Option<i32>,
     /// Mode
     ///
-    /// Control register. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
+    /// Control register. Normal operation is automatic. Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
     pub ctl: Option<TrackerCtl>,
     /// Alarm
     ///
@@ -333,7 +333,7 @@ impl Tracker {
 }
 /// Mode
 ///
-/// Control register. Normal operation is automatic.  Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
+/// Control register. Normal operation is automatic. Operator can override the position by setting the ElCtl, AzCtl and enabling Manual operation. Entering calibration mode will revert to automatic operation after calibration is complete.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum TrackerCtl {

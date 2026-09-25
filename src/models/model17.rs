@@ -19,11 +19,11 @@ pub struct Model17 {
     pub bits: u16,
     /// Parity
     ///
-    /// Bitmask value.  Parity setting
+    /// Parity setting
     pub pty: Pty,
     /// Duplex
     ///
-    /// Enumerated value.  Duplex mode
+    /// Duplex mode
     pub dup: Option<Dup>,
     /// Flow Control
     ///
@@ -31,11 +31,11 @@ pub struct Model17 {
     pub flw: Option<Flw>,
     /// Interface Type
     ///
-    /// Enumerated value.  Interface type
+    /// Interface type
     pub typ: Option<Typ>,
     /// Protocol
     ///
-    /// Enumerated value. Serial protocol selection
+    /// Serial protocol selection
     pub pcol: Option<Pcol>,
 }
 #[allow(missing_docs)]
@@ -74,7 +74,7 @@ impl Model17 {
 }
 /// Parity
 ///
-/// Bitmask value.  Parity setting
+/// Parity setting
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Pty {
@@ -116,7 +116,7 @@ impl crate::FixedSize for Pty {
 }
 /// Duplex
 ///
-/// Enumerated value.  Duplex mode
+/// Duplex mode
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Dup {
@@ -196,7 +196,7 @@ impl crate::FixedSize for Flw {
 }
 /// Interface Type
 ///
-/// Enumerated value.  Interface type
+/// Interface type
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Typ {
@@ -238,7 +238,7 @@ impl crate::FixedSize for Typ {
 }
 /// Protocol
 ///
-/// Enumerated value. Serial protocol selection
+/// Serial protocol selection
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Pcol {

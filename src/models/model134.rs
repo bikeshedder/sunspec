@@ -325,7 +325,7 @@ pub struct Curve {
     pub w_ref_stop_hz: Option<u16>,
     /// ReadOnly
     ///
-    /// Enumerated value indicates if curve is read-only or can be modified.
+    /// Curve is read-only or can be modified.
     pub read_only: CurveReadOnly,
 }
 #[allow(missing_docs)]
@@ -492,7 +492,7 @@ impl crate::FixedSize for CurveSnptW {
 }
 /// ReadOnly
 ///
-/// Enumerated value indicates if curve is read-only or can be modified.
+/// Curve is read-only or can be modified.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum CurveReadOnly {

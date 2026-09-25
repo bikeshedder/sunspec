@@ -120,11 +120,11 @@ pub struct LithiumIonString {
     pub con_st: Option<ConSt>,
     /// String Event 1
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     pub evt1: Evt1,
     /// String Event 2
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     ///
     /// Detail: Reserved for future use.
     pub evt2: Option<Evt2>,
@@ -138,7 +138,7 @@ pub struct LithiumIonString {
     pub evt_vnd2: Option<EvtVnd2>,
     /// Enable/Disable String
     ///
-    /// Enables and disables the string.  Should reset to 0 upon completion.
+    /// Enables and disables the string. Should reset to 0 upon completion.
     pub set_ena: Option<u16>,
     /// Connect/Disconnect String
     ///
@@ -440,7 +440,7 @@ impl crate::FixedSize for ConSt {
 bitflags::bitflags! {
     /// String Event 1
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Evt1: u32 {
@@ -525,7 +525,7 @@ impl crate::FixedSize for Evt1 {
 bitflags::bitflags! {
     /// String Event 2
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     ///
     /// Detail: Reserved for future use.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]

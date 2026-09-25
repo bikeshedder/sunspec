@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update sunspec models (2026-08-20)
+  - Add `subscribed_resource` and `subscription_ena` points to model 64415
+  - Fix size of `DeptRef` point in model 64410
+
 ## [0.9.1] - 2026-08-25
 
 ### Added

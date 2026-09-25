@@ -272,11 +272,11 @@ pub struct String {
     pub str_con_st: Option<StringStrConSt>,
     /// String Event 1
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     pub str_evt1: StringStrEvt1,
     /// String Event 2
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     pub str_evt2: Option<StringStrEvt2>,
     /// Vendor String Event Bitfield 1
     ///
@@ -615,7 +615,7 @@ impl crate::FixedSize for StringStrConSt {
 bitflags::bitflags! {
     /// String Event 1
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct StringStrEvt1: u32 {
@@ -700,7 +700,7 @@ impl crate::FixedSize for StringStrEvt1 {
 bitflags::bitflags! {
     /// String Event 2
     ///
-    /// Alarms, warnings and status values.  Bit flags.
+    /// Alarms, warnings and status values.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct StringStrEvt2: u32 {

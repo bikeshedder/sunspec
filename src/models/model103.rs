@@ -133,7 +133,7 @@ pub struct InverterThreePhase {
     pub tmp_sf: i16,
     /// Operating State
     ///
-    /// Enumerated value.  Operating state
+    /// Operating state
     pub st: St,
     /// Vendor Operating State
     ///
@@ -141,7 +141,7 @@ pub struct InverterThreePhase {
     pub st_vnd: Option<u16>,
     /// Event1
     ///
-    /// Bitmask value. Event fields
+    /// Event fields
     pub evt1: Evt1,
     /// Event Bitfield 2
     ///
@@ -270,7 +270,7 @@ impl InverterThreePhase {
 }
 /// Operating State
 ///
-/// Enumerated value.  Operating state
+/// Operating state
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum St {
@@ -333,7 +333,7 @@ impl crate::FixedSize for St {
 bitflags::bitflags! {
     /// Event1
     ///
-    /// Bitmask value. Event fields
+    /// Event fields
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Evt1: u32 {

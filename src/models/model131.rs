@@ -305,7 +305,7 @@ pub struct Curve {
     pub rmp_inc_tmm: Option<u16>,
     /// ReadOnly
     ///
-    /// Enumerated value indicates if curve is read-only or can be modified.
+    /// Curve is read-only or can be modified.
     pub read_only: CurveReadOnly,
 }
 #[allow(missing_docs)]
@@ -437,7 +437,7 @@ impl Curve {
 }
 /// ReadOnly
 ///
-/// Enumerated value indicates if curve is read-only or can be modified.
+/// Curve is read-only or can be modified.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum CurveReadOnly {

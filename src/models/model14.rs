@@ -11,15 +11,15 @@ pub struct Model14 {
     pub nam: Option<String>,
     /// Capabilities
     ///
-    /// Bitmask value.  Proxy configuration capabilities
+    /// Proxy configuration capabilities
     pub cap: Cap,
     /// Config
     ///
-    /// Enumerated value.  Set proxy address type
+    /// Set proxy address type
     pub cfg: u16,
     /// Type
     ///
-    /// Enumerate value.  Proxy server type
+    /// Enumerate value. Proxy server type
     pub typ: Typ,
     /// Address
     ///
@@ -75,7 +75,7 @@ impl Model14 {
 bitflags::bitflags! {
     /// Capabilities
     ///
-    /// Bitmask value.  Proxy configuration capabilities
+    /// Proxy configuration capabilities
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Cap: u16 {
@@ -106,7 +106,7 @@ impl crate::FixedSize for Cap {
 bitflags::bitflags! {
     /// Type
     ///
-    /// Enumerate value.  Proxy server type
+    /// Enumerate value. Proxy server type
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Typ: u16 {

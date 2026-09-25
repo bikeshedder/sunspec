@@ -21,7 +21,7 @@ pub struct DerMeasureAc {
     pub st: Option<St>,
     /// Inverter State
     ///
-    /// Enumerated value.  Inverter state.
+    /// Inverter state.
     ///
     /// Comments: Inverter State
     pub inv_st: Option<InvSt>,
@@ -45,7 +45,7 @@ pub struct DerMeasureAc {
     ///
     /// Total active power. Active power is positive for DER generation and negative for absorption.
     ///
-    /// Comments: Scale Factors
+    /// Comments: Measurement Totals
     pub w: Option<i16>,
     /// Apparent Power
     ///
@@ -558,7 +558,7 @@ impl crate::FixedSize for St {
 }
 /// Inverter State
 ///
-/// Enumerated value.  Inverter state.
+/// Inverter state.
 ///
 /// Comments: Inverter State
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]

@@ -129,7 +129,7 @@ pub struct Curve {
     pub act_pt: u16,
     /// DeptRef
     ///
-    /// Defines the meaning of the Watts DeptRef.  1=% WMax 2=% WAvail
+    /// Defines the meaning of the Watts DeptRef. 1=% WMax 2=% WAvail
     pub dept_ref: CurveDeptRef,
     /// V1
     ///
@@ -309,7 +309,7 @@ pub struct Curve {
     pub rmp_inc_tmm: Option<u16>,
     /// ReadOnly
     ///
-    /// Enumerated value indicates if curve is read-only or can be modified.
+    /// Curve is read-only or can be modified.
     pub read_only: CurveReadOnly,
 }
 #[allow(missing_docs)]
@@ -443,7 +443,7 @@ impl Curve {
 }
 /// DeptRef
 ///
-/// Defines the meaning of the Watts DeptRef.  1=% WMax 2=% WAvail
+/// Defines the meaning of the Watts DeptRef. 1=% WMax 2=% WAvail
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum CurveDeptRef {
@@ -481,7 +481,7 @@ impl crate::FixedSize for CurveDeptRef {
 }
 /// ReadOnly
 ///
-/// Enumerated value indicates if curve is read-only or can be modified.
+/// Curve is read-only or can be modified.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum CurveReadOnly {

@@ -23,7 +23,7 @@ pub struct StorageBasic {
     pub w_dis_cha_gra: u16,
     /// StorCtl_Mod
     ///
-    /// Activate hold/discharge/charge storage control mode. Bitfield value.
+    /// Activate hold/discharge/charge storage control mode.
     pub stor_ctl_mod: StorCtlMod,
     /// VAChaMax
     ///
@@ -47,7 +47,7 @@ pub struct StorageBasic {
     pub in_bat_v: Option<u16>,
     /// ChaSt
     ///
-    /// Charge status of storage device. Enumerated value.
+    /// Charge status of storage device.
     pub cha_st: Option<ChaSt>,
     /// OutWRte
     ///
@@ -176,7 +176,7 @@ impl StorageBasic {
 bitflags::bitflags! {
     /// StorCtl_Mod
     ///
-    /// Activate hold/discharge/charge storage control mode. Bitfield value.
+    /// Activate hold/discharge/charge storage control mode.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct StorCtlMod: u16 {
@@ -204,7 +204,7 @@ impl crate::FixedSize for StorCtlMod {
 }
 /// ChaSt
 ///
-/// Charge status of storage device. Enumerated value.
+/// Charge status of storage device.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum ChaSt {

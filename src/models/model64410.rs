@@ -530,10 +530,10 @@ pub struct Prof {
 #[allow(missing_docs)]
 impl Prof {
     pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    pub const DEPT_REF: crate::Point<Self, ProfDeptRef> = crate::Point::new(1, 1, true);
+    pub const DEPT_REF: crate::Point<Self, ProfDeptRef> = crate::Point::new(1, 2, true);
 }
 impl crate::Group for Prof {
-    const LEN: u16 = 2;
+    const LEN: u16 = 3;
 }
 impl Prof {
     fn parse_group<'a>(

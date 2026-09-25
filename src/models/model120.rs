@@ -97,7 +97,7 @@ pub struct Nameplate {
     pub wh_rtg_sf: Option<i16>,
     /// AhrRtg
     ///
-    /// The usable capacity of the battery.  Maximum charge minus minimum charge from a technology capability perspective (Amp-hour capacity rating).
+    /// The usable capacity of the battery. Maximum charge minus minimum charge from a technology capability perspective (Amp-hour capacity rating).
     pub ahr_rtg: Option<u16>,
     /// AhrRtg_SF
     ///

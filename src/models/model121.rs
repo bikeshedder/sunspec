@@ -19,7 +19,7 @@ pub struct Settings {
     pub v_ref: u16,
     /// VRefOfs
     ///
-    /// Offset  from PCC to inverter.
+    /// Offset from PCC to inverter.
     pub v_ref_ofs: i16,
     /// VMax
     ///

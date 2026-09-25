@@ -19,7 +19,7 @@ pub struct SolarModule {
     pub wh_sf: Option<i16>,
     /// Status
     ///
-    /// Enumerated value.  Module Status Code
+    /// Module Status Code
     pub stat: Stat,
     /// Vendor Status
     ///
@@ -27,7 +27,7 @@ pub struct SolarModule {
     pub stat_vend: Option<u16>,
     /// Events
     ///
-    /// Bitmask value.  Module Event Flags
+    /// Module Event Flags
     pub evt: Evt,
     /// Vendor Module Event Flags
     ///
@@ -148,7 +148,7 @@ impl SolarModule {
 }
 /// Status
 ///
-/// Enumerated value.  Module Status Code
+/// Module Status Code
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Stat {
@@ -219,7 +219,7 @@ impl crate::FixedSize for Stat {
 bitflags::bitflags! {
     /// Events
     ///
-    /// Bitmask value.  Module Event Flags
+    /// Module Event Flags
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Evt: u32 {

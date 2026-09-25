@@ -7,15 +7,15 @@
 pub struct Model16 {
     /// Name
     ///
-    /// Interface name.  (8 chars)
+    /// Interface name. (8 chars)
     pub nam: Option<String>,
     /// Config
     ///
-    /// Enumerated value.  Force IPv4 configuration method
+    /// Force IPv4 configuration method
     pub cfg: Cfg,
     /// Control
     ///
-    /// Bitmask value Configure use of services
+    /// Configure use of services
     pub ctl: Ctl,
     /// Address
     ///
@@ -43,7 +43,7 @@ pub struct Model16 {
     pub mac: Option<String>,
     /// Link Control
     ///
-    /// Bitmask value.  Link control flags
+    /// Link control flags
     pub lnk_ctl: Option<LnkCtl>,
 }
 #[allow(missing_docs)]
@@ -86,7 +86,7 @@ impl Model16 {
 }
 /// Config
 ///
-/// Enumerated value.  Force IPv4 configuration method
+/// Force IPv4 configuration method
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Cfg {
@@ -125,7 +125,7 @@ impl crate::FixedSize for Cfg {
 bitflags::bitflags! {
     /// Control
     ///
-    /// Bitmask value Configure use of services
+    /// Configure use of services
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Ctl: u16 {
@@ -154,7 +154,7 @@ impl crate::FixedSize for Ctl {
 bitflags::bitflags! {
     /// Link Control
     ///
-    /// Bitmask value.  Link control flags
+    /// Link control flags
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct LnkCtl: u16 {

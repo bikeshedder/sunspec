@@ -19,6 +19,14 @@ pub struct CsipControl {
     ///
     /// Select COMM-004 certificate type
     pub comm004_cert: Option<Comm004Cert>,
+    /// Subscribed Resource URL
+    ///
+    /// The URL of the resource to subscribe to
+    pub subscribed_resource: Option<String>,
+    /// Subscribtion Enable
+    ///
+    /// Enable or disable the Subscription mode
+    pub subscription_ena: Option<SubscriptionEna>,
 }
 #[allow(missing_docs)]
 impl CsipControl {
@@ -26,9 +34,13 @@ impl CsipControl {
         crate::Point::new(0, 1, true);
     pub const HTTP_MSG: crate::Point<Self, Option<HttpMsg>> = crate::Point::new(1, 1, true);
     pub const COMM004_CERT: crate::Point<Self, Option<Comm004Cert>> = crate::Point::new(2, 1, true);
+    pub const SUBSCRIBED_RESOURCE: crate::Point<Self, Option<String>> =
+        crate::Point::new(3, 64, true);
+    pub const SUBSCRIPTION_ENA: crate::Point<Self, Option<SubscriptionEna>> =
+        crate::Point::new(67, 1, true);
 }
 impl crate::Group for CsipControl {
-    const LEN: u16 = 3;
+    const LEN: u16 = 68;
 }
 impl CsipControl {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -41,6 +53,8 @@ impl CsipControl {
                 log_event_ena: Self::LOG_EVENT_ENA.from_data(data)?,
                 http_msg: Self::HTTP_MSG.from_data(data)?,
                 comm004_cert: Self::COMM004_CERT.from_data(data)?,
+                subscribed_resource: Self::SUBSCRIBED_RESOURCE.from_data(data)?,
+                subscription_ena: Self::SUBSCRIPTION_ENA.from_data(data)?,
             },
         ))
     }
@@ -201,6 +215,48 @@ impl crate::EnumValue for Comm004Cert {
     }
 }
 impl crate::FixedSize for Comm004Cert {
+    const SIZE: u16 = 1u16;
+    const INVALID: Self = Self::Invalid(65535);
+    fn is_invalid(&self) -> bool {
+        matches!(self, Self::Invalid(_))
+    }
+}
+/// Subscribtion Enable
+///
+/// Enable or disable the Subscription mode
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum SubscriptionEna {
+    /// Disabled
+    ///
+    /// Subscription Mode Disabled
+    Disabled,
+    /// Enabled
+    ///
+    /// Subscription Mode Enabled
+    Enabled,
+    /// Raw enum value not defined by the SunSpec model.
+    Invalid(u16),
+}
+impl crate::EnumValue for SubscriptionEna {
+    type Repr = u16;
+    const INVALID: Self::Repr = 65535;
+    fn from_repr(value: Self::Repr) -> Self {
+        match value {
+            0 => Self::Disabled,
+            1 => Self::Enabled,
+            value => Self::Invalid(value),
+        }
+    }
+    fn to_repr(self) -> Self::Repr {
+        match self {
+            Self::Disabled => 0,
+            Self::Enabled => 1,
+            Self::Invalid(value) => value,
+        }
+    }
+}
+impl crate::FixedSize for SubscriptionEna {
     const SIZE: u16 = 1u16;
     const INVALID: Self = Self::Invalid(65535);
     fn is_invalid(&self) -> bool {

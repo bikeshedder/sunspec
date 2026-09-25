@@ -17,7 +17,7 @@ pub struct RefPoint {
     pub a: Option<u16>,
     /// Voltage
     ///
-    /// Voltage  measurement at reference point
+    /// Voltage measurement at reference point
     pub v: Option<u16>,
     /// Temperature
     ///

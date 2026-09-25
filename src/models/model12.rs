@@ -11,19 +11,19 @@ pub struct Model12 {
     pub nam: Option<String>,
     /// Config Status
     ///
-    /// Enumerated value.  Configuration status
+    /// Configuration status
     pub cfg_st: CfgSt,
     /// Change Status
     ///
-    /// Bitmask value.  A configuration change is pending
+    /// A configuration change is pending
     pub chg_st: ChgSt,
     /// Config Capability
     ///
-    /// Bitmask value. Identify capable sources of configuration
+    /// Identify capable sources of configuration
     pub cap: Cap,
     /// IPv4 Config
     ///
-    /// Enumerated value.  Configuration method used.
+    /// Configuration method used.
     pub cfg: Cfg,
     /// Control
     ///
@@ -116,7 +116,7 @@ impl Model12 {
 }
 /// Config Status
 ///
-/// Enumerated value.  Configuration status
+/// Configuration status
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum CfgSt {
@@ -159,7 +159,7 @@ impl crate::FixedSize for CfgSt {
 bitflags::bitflags! {
     /// Change Status
     ///
-    /// Bitmask value.  A configuration change is pending
+    /// A configuration change is pending
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct ChgSt: u16 {
@@ -186,7 +186,7 @@ impl crate::FixedSize for ChgSt {
 bitflags::bitflags! {
     /// Config Capability
     ///
-    /// Bitmask value. Identify capable sources of configuration
+    /// Identify capable sources of configuration
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Cap: u16 {
@@ -226,7 +226,7 @@ impl crate::FixedSize for Cap {
 }
 /// IPv4 Config
 ///
-/// Enumerated value.  Configuration method used.
+/// Configuration method used.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Cfg {

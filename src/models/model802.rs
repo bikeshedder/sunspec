@@ -23,7 +23,7 @@ pub struct Battery {
     pub w_dis_cha_rte_max: u16,
     /// Self Discharge Rate
     ///
-    /// Self discharge rate.  Percentage of capacity (WHRtg) discharged per day.
+    /// Self discharge rate. Percentage of capacity (WHRtg) discharged per day.
     pub dis_cha_rte: Option<u16>,
     /// Nameplate Max SoC
     ///
@@ -81,7 +81,7 @@ pub struct Battery {
     pub ctrl_hb: Option<u16>,
     /// Alarm Reset
     ///
-    /// Used to reset any latched alarms.  1 = Reset.
+    /// Used to reset any latched alarms. 1 = Reset.
     ///
     /// Detail: Battery should reset to 0 when reset is complete.
     pub alm_rst: u16,
@@ -93,13 +93,13 @@ pub struct Battery {
     pub typ: Typ,
     /// State of the Battery Bank
     ///
-    /// State of the battery bank.  Enumeration.
+    /// State of the battery bank. Enumeration.
     ///
     /// Detail: Must be reconciled with State in IEC 61850.
     pub state: State,
     /// Vendor Battery Bank State
     ///
-    /// Vendor specific battery bank state.  Enumeration.
+    /// Vendor specific battery bank state. Enumeration.
     pub state_vnd: Option<u16>,
     /// Warranty Date
     ///
@@ -109,11 +109,11 @@ pub struct Battery {
     pub warr_dt: Option<u32>,
     /// Battery Event 1 Bitfield
     ///
-    /// Alarms and warnings.  Bit flags.
+    /// Alarms and warnings.
     pub evt1: Evt1,
     /// Battery Event 2 Bitfield
     ///
-    /// Alarms and warnings.  Bit flags.
+    /// Alarms and warnings.
     ///
     /// Detail: Reserved for future use.
     pub evt2: Evt2,
@@ -203,7 +203,7 @@ pub struct Battery {
     pub w: i16,
     /// Inverter State Request
     ///
-    /// Request from battery to start or stop the inverter.  Enumeration.
+    /// Request from battery to start or stop the inverter. Enumeration.
     ///
     /// Detail: Used in special states such as manual battery charging.
     pub req_inv_state: Option<ReqInvState>,
@@ -215,7 +215,7 @@ pub struct Battery {
     pub req_w: Option<i16>,
     /// Set Operation
     ///
-    /// Instruct the battery bank to perform an operation such as connecting.  Enumeration.
+    /// Instruct the battery bank to perform an operation such as connecting. Enumeration.
     pub set_op: SetOp,
     /// Set Inverter State
     ///
@@ -559,7 +559,7 @@ impl crate::FixedSize for Typ {
 }
 /// State of the Battery Bank
 ///
-/// State of the battery bank.  Enumeration.
+/// State of the battery bank. Enumeration.
 ///
 /// Detail: Must be reconciled with State in IEC 61850.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
@@ -620,7 +620,7 @@ impl crate::FixedSize for State {
 bitflags::bitflags! {
     /// Battery Event 1 Bitfield
     ///
-    /// Alarms and warnings.  Bit flags.
+    /// Alarms and warnings.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Evt1: u32 {
@@ -705,7 +705,7 @@ impl crate::FixedSize for Evt1 {
 bitflags::bitflags! {
     /// Battery Event 2 Bitfield
     ///
-    /// Alarms and warnings.  Bit flags.
+    /// Alarms and warnings.
     ///
     /// Detail: Reserved for future use.
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
@@ -781,7 +781,7 @@ impl crate::FixedSize for EvtVnd2 {
 }
 /// Inverter State Request
 ///
-/// Request from battery to start or stop the inverter.  Enumeration.
+/// Request from battery to start or stop the inverter. Enumeration.
 ///
 /// Detail: Used in special states such as manual battery charging.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
@@ -825,7 +825,7 @@ impl crate::FixedSize for ReqInvState {
 }
 /// Set Operation
 ///
-/// Instruct the battery bank to perform an operation such as connecting.  Enumeration.
+/// Instruct the battery bank to perform an operation such as connecting. Enumeration.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum SetOp {

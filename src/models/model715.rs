@@ -27,7 +27,7 @@ pub struct DerCtl {
     pub alarm_reset: Option<u16>,
     /// Set Operation
     ///
-    /// Commands to PCS. Enumerated value.
+    /// Commands to PCS.
     pub op_ctl: Option<OpCtl>,
 }
 #[allow(missing_docs)]
@@ -102,7 +102,7 @@ impl crate::FixedSize for LocRemCtl {
 }
 /// Set Operation
 ///
-/// Commands to PCS. Enumerated value.
+/// Commands to PCS.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum OpCtl {

@@ -28,7 +28,7 @@ pub struct DerFreqDroop {
     pub n_ctl: u16,
     /// Reversion Timeout
     ///
-    /// Reversion time in seconds.  0 = No reversion time.
+    /// Reversion time in seconds. 0 = No reversion time.
     pub rvrt_tms: Option<u32>,
     /// Reversion Time Left
     ///

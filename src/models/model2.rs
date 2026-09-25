@@ -17,7 +17,7 @@ pub struct Aggregator {
     pub n: u16,
     /// UN
     ///
-    /// Update Number.  Incrementing number each time the mapping is changed.  If the number is not changed from the last reading the direct access to a specific offset will result in reading the same logical model as before.  Otherwise the entire model must be read to refresh the changes
+    /// Update Number. Incrementing number each time the mapping is changed. If the number is not changed from the last reading the direct access to a specific offset will result in reading the same logical model as before. Otherwise the entire model must be read to refresh the changes
     pub un: u16,
     /// Status
     ///

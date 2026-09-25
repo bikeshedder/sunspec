@@ -19,7 +19,7 @@ pub struct ReactiveCurrent {
     pub ar_gra_sag: u16,
     /// ArGraSwell
     ///
-    /// The gradient used to increase inductive dynamic current.  A value of 0 indicates no additional reactive current support.
+    /// The gradient used to increase inductive dynamic current. A value of 0 indicates no additional reactive current support.
     pub ar_gra_swell: u16,
     /// ModEna
     ///

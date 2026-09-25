@@ -19,11 +19,11 @@ pub struct Model19 {
     pub bits: u16,
     /// Parity
     ///
-    /// Bitmask value.  Parity setting
+    /// Parity setting
     pub pty: Pty,
     /// Duplex
     ///
-    /// Enumerated value.  Duplex mode
+    /// Duplex mode
     pub dup: Option<Dup>,
     /// Flow Control
     ///
@@ -31,7 +31,7 @@ pub struct Model19 {
     pub flw: Option<Flw>,
     /// Authentication
     ///
-    /// Enumerated value.  Authentication method
+    /// Authentication method
     pub auth: Option<Auth>,
     /// Username
     ///
@@ -80,7 +80,7 @@ impl Model19 {
 }
 /// Parity
 ///
-/// Bitmask value.  Parity setting
+/// Parity setting
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Pty {
@@ -122,7 +122,7 @@ impl crate::FixedSize for Pty {
 }
 /// Duplex
 ///
-/// Enumerated value.  Duplex mode
+/// Duplex mode
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Dup {
@@ -202,7 +202,7 @@ impl crate::FixedSize for Flw {
 }
 /// Authentication
 ///
-/// Enumerated value.  Authentication method
+/// Authentication method
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum Auth {

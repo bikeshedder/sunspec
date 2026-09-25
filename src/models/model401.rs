@@ -25,11 +25,11 @@ pub struct StringCombinerCurrent {
     pub n: u16,
     /// Event
     ///
-    /// Bitmask value.  Events
+    /// Events
     pub evt: Evt,
     /// Vendor Event
     ///
-    /// Bitmask value.  Vendor defined events
+    /// Vendor defined events
     pub evt_vnd: Option<EvtVnd>,
     /// Amps
     ///
@@ -95,7 +95,7 @@ impl StringCombinerCurrent {
 bitflags::bitflags! {
     /// Event
     ///
-    /// Bitmask value.  Events
+    /// Events
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct Evt: u32 {
@@ -158,7 +158,7 @@ impl crate::FixedSize for Evt {
 bitflags::bitflags! {
     /// Vendor Event
     ///
-    /// Bitmask value.  Vendor defined events
+    /// Vendor defined events
     #[derive(Copy, Clone, Debug, Eq, PartialEq)]
     #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
     pub struct EvtVnd: u32 {
