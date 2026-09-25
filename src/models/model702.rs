@@ -433,19 +433,41 @@ impl crate::FixedSize for AbnOpCatRtg {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Supported Control Modes"] #[doc = " "] #[doc =
-    " Supported control mode functions."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct CtrlModes : u32 { #[doc = " Limit Maximum Active Power"] const MaxW = 1; #[doc
-    = " Fixed Active Power"] const FixedW = 2; #[doc = " Fixed Reactive Power"] const
-    FixedVar = 4; #[doc = " Fixed Power Factor"] const FixedPf = 8; #[doc =
-    " Volt-Var Function"] const VoltVar = 16; #[doc = " Freq-Watt Function"] const
-    FreqWatt = 32; #[doc = " Dynamic Reactive Current Function"] const DynReactCurr = 64;
-    #[doc = " Low-Voltage Trip"] const LvTrip = 128; #[doc = " High-Voltage Trip"] const
-    HvTrip = 256; #[doc = " Watt-Var Function"] const WattVar = 512; #[doc =
-    " Volt-Watt Function"] const VoltWatt = 1024; #[doc = " Scheduling"] const Scheduled
-    = 2048; #[doc = " Low-Frequency Trip"] const LfTrip = 4096; #[doc =
-    " High-Frequency Trip"] const HfTrip = 8192; }
+    /// Supported Control Modes
+    ///
+    /// Supported control mode functions.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct CtrlModes: u32 {
+        /// Limit Maximum Active Power
+        const MaxW = 1;
+        /// Fixed Active Power
+        const FixedW = 2;
+        /// Fixed Reactive Power
+        const FixedVar = 4;
+        /// Fixed Power Factor
+        const FixedPf = 8;
+        /// Volt-Var Function
+        const VoltVar = 16;
+        /// Freq-Watt Function
+        const FreqWatt = 32;
+        /// Dynamic Reactive Current Function
+        const DynReactCurr = 64;
+        /// Low-Voltage Trip
+        const LvTrip = 128;
+        /// High-Voltage Trip
+        const HvTrip = 256;
+        /// Watt-Var Function
+        const WattVar = 512;
+        /// Volt-Watt Function
+        const VoltWatt = 1024;
+        /// Scheduling
+        const Scheduled = 2048;
+        /// Low-Frequency Trip
+        const LfTrip = 4096;
+        /// High-Frequency Trip
+        const HfTrip = 8192;
+    }
 }
 impl crate::Value for CtrlModes {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -464,13 +486,21 @@ impl crate::FixedSize for CtrlModes {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Intentional Island Categories"] #[doc = " "] #[doc =
-    " Intentional island categories."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct IntIslandCatRtg : u16 { #[doc = " Uncategorized"] const Uncategorized = 1;
-    #[doc = " Intentional Island-Capable"] const IntIslCapable = 2; #[doc =
-    " Black Start-Capable"] const BlackStartCapable = 4; #[doc = " Isochronous-Capable"]
-    const IsochCapable = 8; }
+    /// Intentional Island Categories
+    ///
+    /// Intentional island categories.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct IntIslandCatRtg: u16 {
+        /// Uncategorized
+        const Uncategorized = 1;
+        /// Intentional Island-Capable
+        const IntIslCapable = 2;
+        /// Black Start-Capable
+        const BlackStartCapable = 4;
+        /// Isochronous-Capable
+        const IsochCapable = 8;
+    }
 }
 impl crate::Value for IntIslandCatRtg {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -489,13 +519,21 @@ impl crate::FixedSize for IntIslandCatRtg {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Intentional Island Categories"] #[doc = " "] #[doc =
-    " Intentional island categories."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct IntIslandCat : u16 { #[doc = " Uncategorized"] const Uncategorized = 1; #[doc
-    = " Intentional Island-Capable"] const IntIslCapable = 2; #[doc =
-    " Black Start-Capable"] const BlackStartCapable = 4; #[doc = " Isochronous-Capable"]
-    const IsochCapable = 8; }
+    /// Intentional Island Categories
+    ///
+    /// Intentional island categories.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct IntIslandCat: u16 {
+        /// Uncategorized
+        const Uncategorized = 1;
+        /// Intentional Island-Capable
+        const IntIslCapable = 2;
+        /// Black Start-Capable
+        const BlackStartCapable = 4;
+        /// Isochronous-Capable
+        const IsochCapable = 8;
+    }
 }
 impl crate::Value for IntIslandCat {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

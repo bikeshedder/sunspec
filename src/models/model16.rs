@@ -123,11 +123,17 @@ impl crate::FixedSize for Cfg {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Control"] #[doc = " "] #[doc = " Bitmask value Configure use of services"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct Ctl : u16 {
-    #[allow(missing_docs)] const EnableDns = 1; #[allow(missing_docs)] const EnableNtp =
-    2; }
+    /// Control
+    ///
+    /// Bitmask value Configure use of services
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Ctl: u16 {
+        #[allow(missing_docs)]
+        const EnableDns = 1;
+        #[allow(missing_docs)]
+        const EnableNtp = 2;
+    }
 }
 impl crate::Value for Ctl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -146,12 +152,23 @@ impl crate::FixedSize for Ctl {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Link Control"] #[doc = " "] #[doc = " Bitmask value.  Link control flags"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct LnkCtl : u16 {
-    #[allow(missing_docs)] const Autonegotiate = 1; #[allow(missing_docs)] const
-    FullDuplex = 2; #[allow(missing_docs)] const Force10mb = 4; #[allow(missing_docs)]
-    const Force100mb = 8; #[allow(missing_docs)] const Force1gb = 16; }
+    /// Link Control
+    ///
+    /// Bitmask value.  Link control flags
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct LnkCtl: u16 {
+        #[allow(missing_docs)]
+        const Autonegotiate = 1;
+        #[allow(missing_docs)]
+        const FullDuplex = 2;
+        #[allow(missing_docs)]
+        const Force10mb = 4;
+        #[allow(missing_docs)]
+        const Force100mb = 8;
+        #[allow(missing_docs)]
+        const Force1gb = 16;
+    }
 }
 impl crate::Value for LnkCtl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

@@ -253,10 +253,14 @@ impl LithiumIonModuleCell {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Cell Status"] #[doc = " "] #[doc = " Status of the cell."] #[derive(Copy,
-    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct
-    LithiumIonModuleCellCellSt : u32 { #[allow(missing_docs)] const CellIsBalancing = 1;
+    /// Cell Status
+    ///
+    /// Status of the cell.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct LithiumIonModuleCellCellSt: u32 {
+        #[allow(missing_docs)]
+        const CellIsBalancing = 1;
     }
 }
 impl crate::Value for LithiumIonModuleCellCellSt {

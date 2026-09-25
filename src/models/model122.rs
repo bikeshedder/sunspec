@@ -152,12 +152,21 @@ impl Status {
     }
 }
 bitflags::bitflags! {
-    #[doc = " PVConn"] #[doc = " "] #[doc =
-    " PV inverter present/available status. Enumerated value."] #[derive(Copy, Clone,
-    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct PvConn : u16 { #[allow(missing_docs)] const
-    Connected = 1; #[allow(missing_docs)] const Available = 2; #[allow(missing_docs)]
-    const Operating = 4; #[allow(missing_docs)] const Test = 8; }
+    /// PVConn
+    ///
+    /// PV inverter present/available status. Enumerated value.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct PvConn: u16 {
+        #[allow(missing_docs)]
+        const Connected = 1;
+        #[allow(missing_docs)]
+        const Available = 2;
+        #[allow(missing_docs)]
+        const Operating = 4;
+        #[allow(missing_docs)]
+        const Test = 8;
+    }
 }
 impl crate::Value for PvConn {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -176,12 +185,20 @@ impl crate::FixedSize for PvConn {
     }
 }
 bitflags::bitflags! {
-    #[doc = " StorConn"] #[doc = " "] #[doc =
-    " Storage inverter present/available status. Enumerated value."] #[derive(Copy,
-    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct StorConn : u16 {
-    #[allow(missing_docs)] const Connected = 1; #[allow(missing_docs)] const Available =
-    2; #[allow(missing_docs)] const Operating = 4; #[allow(missing_docs)] const Test = 8;
+    /// StorConn
+    ///
+    /// Storage inverter present/available status. Enumerated value.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct StorConn: u16 {
+        #[allow(missing_docs)]
+        const Connected = 1;
+        #[allow(missing_docs)]
+        const Available = 2;
+        #[allow(missing_docs)]
+        const Operating = 4;
+        #[allow(missing_docs)]
+        const Test = 8;
     }
 }
 impl crate::Value for StorConn {
@@ -201,11 +218,17 @@ impl crate::FixedSize for StorConn {
     }
 }
 bitflags::bitflags! {
-    #[doc = " ECPConn"] #[doc = " "] #[doc =
-    " ECP connection status: disconnected=0  connected=1."] #[derive(Copy, Clone, Debug,
-    Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct EcpConn : u16 { #[allow(missing_docs)] const
-    Disconnected = 1; #[allow(missing_docs)] const Connected = 2; }
+    /// ECPConn
+    ///
+    /// ECP connection status: disconnected=0  connected=1.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EcpConn: u16 {
+        #[allow(missing_docs)]
+        const Disconnected = 1;
+        #[allow(missing_docs)]
+        const Connected = 2;
+    }
 }
 impl crate::Value for EcpConn {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -224,17 +247,37 @@ impl crate::FixedSize for EcpConn {
     }
 }
 bitflags::bitflags! {
-    #[doc = " StSetLimMsk"] #[doc = " "] #[doc =
-    " Bit Mask indicating setpoint limit(s) reached."] #[doc = " "] #[doc =
-    " Detail: Bits shall be automatically cleared on read."] #[derive(Copy, Clone, Debug,
-    Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct StSetLimMsk : u32 { #[allow(missing_docs)] const
-    WMax = 1; #[allow(missing_docs)] const VaMax = 2; #[allow(missing_docs)] const
-    VArAval = 4; #[allow(missing_docs)] const VArMaxQ1 = 8; #[allow(missing_docs)] const
-    VArMaxQ2 = 16; #[allow(missing_docs)] const VArMaxQ3 = 32; #[allow(missing_docs)]
-    const VArMaxQ4 = 64; #[allow(missing_docs)] const PfMinQ1 = 128;
-    #[allow(missing_docs)] const PfMinQ2 = 256; #[allow(missing_docs)] const PfMinQ3 =
-    512; #[allow(missing_docs)] const PfMinQ4 = 1024; }
+    /// StSetLimMsk
+    ///
+    /// Bit Mask indicating setpoint limit(s) reached.
+    ///
+    /// Detail: Bits shall be automatically cleared on read.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct StSetLimMsk: u32 {
+        #[allow(missing_docs)]
+        const WMax = 1;
+        #[allow(missing_docs)]
+        const VaMax = 2;
+        #[allow(missing_docs)]
+        const VArAval = 4;
+        #[allow(missing_docs)]
+        const VArMaxQ1 = 8;
+        #[allow(missing_docs)]
+        const VArMaxQ2 = 16;
+        #[allow(missing_docs)]
+        const VArMaxQ3 = 32;
+        #[allow(missing_docs)]
+        const VArMaxQ4 = 64;
+        #[allow(missing_docs)]
+        const PfMinQ1 = 128;
+        #[allow(missing_docs)]
+        const PfMinQ2 = 256;
+        #[allow(missing_docs)]
+        const PfMinQ3 = 512;
+        #[allow(missing_docs)]
+        const PfMinQ4 = 1024;
+    }
 }
 impl crate::Value for StSetLimMsk {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -253,18 +296,41 @@ impl crate::FixedSize for StSetLimMsk {
     }
 }
 bitflags::bitflags! {
-    #[doc = " StActCtl"] #[doc = " "] #[doc =
-    " Bit Mask indicating which inverter controls are currently active."] #[derive(Copy,
-    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct StActCtl : u32 {
-    #[allow(missing_docs)] const FixedW = 1; #[allow(missing_docs)] const FixedVar = 2;
-    #[allow(missing_docs)] const FixedPf = 4; #[allow(missing_docs)] const VoltVAr = 8;
-    #[allow(missing_docs)] const FreqWattParam = 16; #[allow(missing_docs)] const
-    FreqWattCurve = 32; #[allow(missing_docs)] const DynReactiveCurrent = 64;
-    #[allow(missing_docs)] const Lvrt = 128; #[allow(missing_docs)] const Hvrt = 256;
-    #[allow(missing_docs)] const WattPf = 512; #[allow(missing_docs)] const VoltWatt =
-    1024; #[allow(missing_docs)] const Scheduled = 4096; #[allow(missing_docs)] const
-    Lfrt = 8192; #[allow(missing_docs)] const Hfrt = 16384; }
+    /// StActCtl
+    ///
+    /// Bit Mask indicating which inverter controls are currently active.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct StActCtl: u32 {
+        #[allow(missing_docs)]
+        const FixedW = 1;
+        #[allow(missing_docs)]
+        const FixedVar = 2;
+        #[allow(missing_docs)]
+        const FixedPf = 4;
+        #[allow(missing_docs)]
+        const VoltVAr = 8;
+        #[allow(missing_docs)]
+        const FreqWattParam = 16;
+        #[allow(missing_docs)]
+        const FreqWattCurve = 32;
+        #[allow(missing_docs)]
+        const DynReactiveCurrent = 64;
+        #[allow(missing_docs)]
+        const Lvrt = 128;
+        #[allow(missing_docs)]
+        const Hvrt = 256;
+        #[allow(missing_docs)]
+        const WattPf = 512;
+        #[allow(missing_docs)]
+        const VoltWatt = 1024;
+        #[allow(missing_docs)]
+        const Scheduled = 4096;
+        #[allow(missing_docs)]
+        const Lfrt = 8192;
+        #[allow(missing_docs)]
+        const Hfrt = 16384;
+    }
 }
 impl crate::Value for StActCtl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -283,12 +349,21 @@ impl crate::FixedSize for StActCtl {
     }
 }
 bitflags::bitflags! {
-    #[doc = " RtSt"] #[doc = " "] #[doc =
-    " Bit Mask indicating active ride-through status."] #[derive(Copy, Clone, Debug, Eq,
-    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct RtSt : u16 { #[allow(missing_docs)] const
-    LvrtActive = 1; #[allow(missing_docs)] const HvrtActive = 2; #[allow(missing_docs)]
-    const LfrtActive = 4; #[allow(missing_docs)] const HfrtActive = 8; }
+    /// RtSt
+    ///
+    /// Bit Mask indicating active ride-through status.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct RtSt: u16 {
+        #[allow(missing_docs)]
+        const LvrtActive = 1;
+        #[allow(missing_docs)]
+        const HvrtActive = 2;
+        #[allow(missing_docs)]
+        const LfrtActive = 4;
+        #[allow(missing_docs)]
+        const HfrtActive = 8;
+    }
 }
 impl crate::Value for RtSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

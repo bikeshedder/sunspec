@@ -97,11 +97,15 @@ impl Hvrtx {
     }
 }
 bitflags::bitflags! {
-    #[doc = " ModEna"] #[doc = " "] #[doc =
-    " LVRT control mode. Enable active curve.  Bitfield value."] #[derive(Copy, Clone,
-    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct ModEna : u16 { #[allow(missing_docs)] const
-    Enabled = 1; }
+    /// ModEna
+    ///
+    /// LVRT control mode. Enable active curve.  Bitfield value.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ModEna: u16 {
+        #[allow(missing_docs)]
+        const Enabled = 1;
+    }
 }
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

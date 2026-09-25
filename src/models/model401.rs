@@ -93,21 +93,51 @@ impl StringCombinerCurrent {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Event"] #[doc = " "] #[doc = " Bitmask value.  Events"] #[derive(Copy,
-    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct Evt : u32 {
-    #[allow(missing_docs)] const LowVoltage = 1; #[allow(missing_docs)] const LowPower =
-    2; #[allow(missing_docs)] const LowEfficiency = 4; #[allow(missing_docs)] const
-    Current = 8; #[allow(missing_docs)] const Voltage = 16; #[allow(missing_docs)] const
-    Power = 32; #[allow(missing_docs)] const Pr = 64; #[allow(missing_docs)] const
-    Disconnected = 128; #[allow(missing_docs)] const FuseFault = 256;
-    #[allow(missing_docs)] const CombinerFuseFault = 512; #[allow(missing_docs)] const
-    CombinerCabinetOpen = 1024; #[allow(missing_docs)] const Temp = 2048;
-    #[allow(missing_docs)] const Groundfault = 4096; #[allow(missing_docs)] const
-    ReversedPolarity = 8192; #[allow(missing_docs)] const Incompatible = 16384;
-    #[allow(missing_docs)] const CommError = 32768; #[allow(missing_docs)] const
-    InternalError = 65536; #[allow(missing_docs)] const Theft = 131072;
-    #[allow(missing_docs)] const ArcDetected = 262144; }
+    /// Event
+    ///
+    /// Bitmask value.  Events
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Evt: u32 {
+        #[allow(missing_docs)]
+        const LowVoltage = 1;
+        #[allow(missing_docs)]
+        const LowPower = 2;
+        #[allow(missing_docs)]
+        const LowEfficiency = 4;
+        #[allow(missing_docs)]
+        const Current = 8;
+        #[allow(missing_docs)]
+        const Voltage = 16;
+        #[allow(missing_docs)]
+        const Power = 32;
+        #[allow(missing_docs)]
+        const Pr = 64;
+        #[allow(missing_docs)]
+        const Disconnected = 128;
+        #[allow(missing_docs)]
+        const FuseFault = 256;
+        #[allow(missing_docs)]
+        const CombinerFuseFault = 512;
+        #[allow(missing_docs)]
+        const CombinerCabinetOpen = 1024;
+        #[allow(missing_docs)]
+        const Temp = 2048;
+        #[allow(missing_docs)]
+        const Groundfault = 4096;
+        #[allow(missing_docs)]
+        const ReversedPolarity = 8192;
+        #[allow(missing_docs)]
+        const Incompatible = 16384;
+        #[allow(missing_docs)]
+        const CommError = 32768;
+        #[allow(missing_docs)]
+        const InternalError = 65536;
+        #[allow(missing_docs)]
+        const Theft = 131072;
+        #[allow(missing_docs)]
+        const ArcDetected = 262144;
+    }
 }
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -126,10 +156,13 @@ impl crate::FixedSize for Evt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event"] #[doc = " "] #[doc =
-    " Bitmask value.  Vendor defined events"] #[derive(Copy, Clone, Debug, Eq,
-    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct EvtVnd : u32 {}
+    /// Vendor Event
+    ///
+    /// Bitmask value.  Vendor defined events
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd: u32 {
+    }
 }
 impl crate::Value for EvtVnd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -219,21 +252,51 @@ impl String {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Input Event"] #[doc = " "] #[doc = " String Input Event Flags"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct StringInEvt : u32 {
-    #[allow(missing_docs)] const LowVoltage = 1; #[allow(missing_docs)] const LowPower =
-    2; #[allow(missing_docs)] const LowEfficiency = 4; #[allow(missing_docs)] const
-    Current = 8; #[allow(missing_docs)] const Voltage = 16; #[allow(missing_docs)] const
-    Power = 32; #[allow(missing_docs)] const Pr = 64; #[allow(missing_docs)] const
-    Disconnected = 128; #[allow(missing_docs)] const FuseFault = 256;
-    #[allow(missing_docs)] const CombinerFuseFault = 512; #[allow(missing_docs)] const
-    CombinerCabinetOpen = 1024; #[allow(missing_docs)] const Temp = 2048;
-    #[allow(missing_docs)] const Groundfault = 4096; #[allow(missing_docs)] const
-    ReversedPolarity = 8192; #[allow(missing_docs)] const Incompatible = 16384;
-    #[allow(missing_docs)] const CommError = 32768; #[allow(missing_docs)] const
-    InternalError = 65536; #[allow(missing_docs)] const Theft = 131072;
-    #[allow(missing_docs)] const ArcDetected = 262144; }
+    /// Input Event
+    ///
+    /// String Input Event Flags
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct StringInEvt: u32 {
+        #[allow(missing_docs)]
+        const LowVoltage = 1;
+        #[allow(missing_docs)]
+        const LowPower = 2;
+        #[allow(missing_docs)]
+        const LowEfficiency = 4;
+        #[allow(missing_docs)]
+        const Current = 8;
+        #[allow(missing_docs)]
+        const Voltage = 16;
+        #[allow(missing_docs)]
+        const Power = 32;
+        #[allow(missing_docs)]
+        const Pr = 64;
+        #[allow(missing_docs)]
+        const Disconnected = 128;
+        #[allow(missing_docs)]
+        const FuseFault = 256;
+        #[allow(missing_docs)]
+        const CombinerFuseFault = 512;
+        #[allow(missing_docs)]
+        const CombinerCabinetOpen = 1024;
+        #[allow(missing_docs)]
+        const Temp = 2048;
+        #[allow(missing_docs)]
+        const Groundfault = 4096;
+        #[allow(missing_docs)]
+        const ReversedPolarity = 8192;
+        #[allow(missing_docs)]
+        const Incompatible = 16384;
+        #[allow(missing_docs)]
+        const CommError = 32768;
+        #[allow(missing_docs)]
+        const InternalError = 65536;
+        #[allow(missing_docs)]
+        const Theft = 131072;
+        #[allow(missing_docs)]
+        const ArcDetected = 262144;
+    }
 }
 impl crate::Value for StringInEvt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -252,10 +315,13 @@ impl crate::FixedSize for StringInEvt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Input Event Vendor"] #[doc = " "] #[doc =
-    " String Input Vendor Event Flags"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct StringInEvtVnd : u32 {}
+    /// Input Event Vendor
+    ///
+    /// String Input Vendor Event Flags
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct StringInEvtVnd: u32 {
+    }
 }
 impl crate::Value for StringInEvtVnd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

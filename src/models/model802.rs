@@ -618,33 +618,73 @@ impl crate::FixedSize for State {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Battery Event 1 Bitfield"] #[doc = " "] #[doc =
-    " Alarms and warnings.  Bit flags."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Evt1 : u32 { #[allow(missing_docs)] const CommunicationError = 1;
-    #[allow(missing_docs)] const OverTempAlarm = 2; #[allow(missing_docs)] const
-    OverTempWarning = 4; #[allow(missing_docs)] const UnderTempAlarm = 8;
-    #[allow(missing_docs)] const UnderTempWarning = 16; #[doc = " Detail: See AChaMax."]
-    const OverChargeCurrentAlarm = 32; #[doc = " Detail: See AChaMax."] const
-    OverChargeCurrentWarning = 64; #[doc = " Detail: See ADisChaMax."] const
-    OverDischargeCurrentAlarm = 128; #[doc = " Detail: See ADisChaMax."] const
-    OverDischargeCurrentWarning = 256; #[allow(missing_docs)] const OverVoltAlarm = 512;
-    #[allow(missing_docs)] const OverVoltWarning = 1024; #[allow(missing_docs)] const
-    UnderVoltAlarm = 2048; #[allow(missing_docs)] const UnderVoltWarning = 4096;
-    #[allow(missing_docs)] const UnderSocMinAlarm = 8192; #[allow(missing_docs)] const
-    UnderSocMinWarning = 16384; #[allow(missing_docs)] const OverSocMaxAlarm = 32768;
-    #[allow(missing_docs)] const OverSocMaxWarning = 65536; #[allow(missing_docs)] const
-    VoltageImbalanceWarning = 131072; #[allow(missing_docs)] const
-    TemperatureImbalanceAlarm = 262144; #[allow(missing_docs)] const
-    TemperatureImbalanceWarning = 524288; #[allow(missing_docs)] const ContactorError =
-    1048576; #[allow(missing_docs)] const FanError = 2097152; #[allow(missing_docs)]
-    const GroundFault = 4194304; #[allow(missing_docs)] const OpenDoorError = 8388608;
-    #[allow(missing_docs)] const CurrentImbalanceWarning = 16777216; #[doc =
-    " Detail: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm =
-    33554432; #[doc = " Detail: See EvtVnd1 and EvtVnd2 for more information."] const
-    OtherWarning = 67108864; #[doc = " Detail: Do not implement."] const Reserved1 =
-    134217728; #[allow(missing_docs)] const ConfigurationAlarm = 268435456;
-    #[allow(missing_docs)] const ConfigurationWarning = 536870912; }
+    /// Battery Event 1 Bitfield
+    ///
+    /// Alarms and warnings.  Bit flags.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Evt1: u32 {
+        #[allow(missing_docs)]
+        const CommunicationError = 1;
+        #[allow(missing_docs)]
+        const OverTempAlarm = 2;
+        #[allow(missing_docs)]
+        const OverTempWarning = 4;
+        #[allow(missing_docs)]
+        const UnderTempAlarm = 8;
+        #[allow(missing_docs)]
+        const UnderTempWarning = 16;
+        /// Detail: See AChaMax.
+        const OverChargeCurrentAlarm = 32;
+        /// Detail: See AChaMax.
+        const OverChargeCurrentWarning = 64;
+        /// Detail: See ADisChaMax.
+        const OverDischargeCurrentAlarm = 128;
+        /// Detail: See ADisChaMax.
+        const OverDischargeCurrentWarning = 256;
+        #[allow(missing_docs)]
+        const OverVoltAlarm = 512;
+        #[allow(missing_docs)]
+        const OverVoltWarning = 1024;
+        #[allow(missing_docs)]
+        const UnderVoltAlarm = 2048;
+        #[allow(missing_docs)]
+        const UnderVoltWarning = 4096;
+        #[allow(missing_docs)]
+        const UnderSocMinAlarm = 8192;
+        #[allow(missing_docs)]
+        const UnderSocMinWarning = 16384;
+        #[allow(missing_docs)]
+        const OverSocMaxAlarm = 32768;
+        #[allow(missing_docs)]
+        const OverSocMaxWarning = 65536;
+        #[allow(missing_docs)]
+        const VoltageImbalanceWarning = 131072;
+        #[allow(missing_docs)]
+        const TemperatureImbalanceAlarm = 262144;
+        #[allow(missing_docs)]
+        const TemperatureImbalanceWarning = 524288;
+        #[allow(missing_docs)]
+        const ContactorError = 1048576;
+        #[allow(missing_docs)]
+        const FanError = 2097152;
+        #[allow(missing_docs)]
+        const GroundFault = 4194304;
+        #[allow(missing_docs)]
+        const OpenDoorError = 8388608;
+        #[allow(missing_docs)]
+        const CurrentImbalanceWarning = 16777216;
+        /// Detail: See EvtVnd1 and EvtVnd2 for more information.
+        const OtherAlarm = 33554432;
+        /// Detail: See EvtVnd1 and EvtVnd2 for more information.
+        const OtherWarning = 67108864;
+        /// Detail: Do not implement.
+        const Reserved1 = 134217728;
+        #[allow(missing_docs)]
+        const ConfigurationAlarm = 268435456;
+        #[allow(missing_docs)]
+        const ConfigurationWarning = 536870912;
+    }
 }
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -663,11 +703,15 @@ impl crate::FixedSize for Evt1 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Battery Event 2 Bitfield"] #[doc = " "] #[doc =
-    " Alarms and warnings.  Bit flags."] #[doc = " "] #[doc =
-    " Detail: Reserved for future use."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Evt2 : u32 {}
+    /// Battery Event 2 Bitfield
+    ///
+    /// Alarms and warnings.  Bit flags.
+    ///
+    /// Detail: Reserved for future use.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Evt2: u32 {
+    }
 }
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -686,9 +730,13 @@ impl crate::FixedSize for Evt2 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event Bitfield 1"] #[doc = " "] #[doc = " Vendor defined events."]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd1 : u32 {}
+    /// Vendor Event Bitfield 1
+    ///
+    /// Vendor defined events.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd1: u32 {
+    }
 }
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -707,9 +755,13 @@ impl crate::FixedSize for EvtVnd1 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event Bitfield 2"] #[doc = " "] #[doc = " Vendor defined events."]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd2 : u32 {}
+    /// Vendor Event Bitfield 2
+    ///
+    /// Vendor defined events.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd2: u32 {
+    }
 }
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

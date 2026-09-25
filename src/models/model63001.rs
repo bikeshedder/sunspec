@@ -253,9 +253,11 @@ impl Model63001 {
     }
 }
 bitflags::bitflags! {
-    #[allow(missing_docs)] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Bitfield16 : u16 {}
+    #[allow(missing_docs)]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Bitfield16: u16 {
+    }
 }
 impl crate::Value for Bitfield16 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -274,9 +276,11 @@ impl crate::FixedSize for Bitfield16 {
     }
 }
 bitflags::bitflags! {
-    #[allow(missing_docs)] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Bitfield16U : u16 {}
+    #[allow(missing_docs)]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Bitfield16U: u16 {
+    }
 }
 impl crate::Value for Bitfield16U {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -295,9 +299,11 @@ impl crate::FixedSize for Bitfield16U {
     }
 }
 bitflags::bitflags! {
-    #[allow(missing_docs)] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Bitfield32 : u32 {}
+    #[allow(missing_docs)]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Bitfield32: u32 {
+    }
 }
 impl crate::Value for Bitfield32 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -316,9 +322,11 @@ impl crate::FixedSize for Bitfield32 {
     }
 }
 bitflags::bitflags! {
-    #[allow(missing_docs)] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Bitfield32U : u32 {}
+    #[allow(missing_docs)]
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Bitfield32U: u32 {
+    }
 }
 impl crate::Value for Bitfield32U {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

@@ -311,9 +311,11 @@ impl Model64112 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Faults"] #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature =
-    "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub struct CcConfigFault
-    : u16 {}
+    /// Faults
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct CcConfigFault: u16 {
+    }
 }
 impl crate::Value for CcConfigFault {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

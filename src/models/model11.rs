@@ -67,14 +67,27 @@ impl Model11 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Interface Status Flags"] #[doc = " "] #[doc =
-    " Bitmask values Interface flags."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct CfgSt : u16 { #[allow(missing_docs)] const Link = 1; #[allow(missing_docs)]
-    const FullDuplex = 2; #[allow(missing_docs)] const AutoNeg1 = 4;
-    #[allow(missing_docs)] const AutoNeg2 = 8; #[allow(missing_docs)] const AutoNeg3 =
-    16; #[allow(missing_docs)] const ResetRequired = 32; #[allow(missing_docs)] const
-    HwFault = 64; }
+    /// Interface Status Flags
+    ///
+    /// Bitmask values Interface flags.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct CfgSt: u16 {
+        #[allow(missing_docs)]
+        const Link = 1;
+        #[allow(missing_docs)]
+        const FullDuplex = 2;
+        #[allow(missing_docs)]
+        const AutoNeg1 = 4;
+        #[allow(missing_docs)]
+        const AutoNeg2 = 8;
+        #[allow(missing_docs)]
+        const AutoNeg3 = 16;
+        #[allow(missing_docs)]
+        const ResetRequired = 32;
+        #[allow(missing_docs)]
+        const HwFault = 64;
+    }
 }
 impl crate::Value for CfgSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -139,10 +152,17 @@ impl crate::FixedSize for St {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Control"] #[doc = " "] #[doc = " Control flags"] #[derive(Copy, Clone,
-    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct Ctl : u16 { #[allow(missing_docs)] const Auto = 1;
-    #[allow(missing_docs)] const FullDuplex = 2; }
+    /// Control
+    ///
+    /// Control flags
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Ctl: u16 {
+        #[allow(missing_docs)]
+        const Auto = 1;
+        #[allow(missing_docs)]
+        const FullDuplex = 2;
+    }
 }
 impl crate::Value for Ctl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

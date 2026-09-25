@@ -205,13 +205,21 @@ impl crate::FixedSize for GlblCtl {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Global Alarm"] #[doc = " "] #[doc = " Global tracker alarm conditions"]
-    #[doc = " "] #[doc =
-    " Detail: Combined tracker alarm conditions.  See individual trackers for alarms"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct GlblAlm : u16 {
-    #[allow(missing_docs)] const SetPoint = 1; #[allow(missing_docs)] const ObsEl = 2;
-    #[allow(missing_docs)] const ObsAz = 4; }
+    /// Global Alarm
+    ///
+    /// Global tracker alarm conditions
+    ///
+    /// Detail: Combined tracker alarm conditions.  See individual trackers for alarms
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct GlblAlm: u16 {
+        #[allow(missing_docs)]
+        const SetPoint = 1;
+        #[allow(missing_docs)]
+        const ObsEl = 2;
+        #[allow(missing_docs)]
+        const ObsAz = 4;
+    }
 }
 impl crate::Value for GlblAlm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -366,11 +374,19 @@ impl crate::FixedSize for TrackerCtl {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Alarm"] #[doc = " "] #[doc = " Tracker alarm conditions"] #[derive(Copy,
-    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct TrackerAlm : u16 {
-    #[allow(missing_docs)] const SetPoint = 1; #[allow(missing_docs)] const ObsEl = 2;
-    #[allow(missing_docs)] const ObsAz = 4; }
+    /// Alarm
+    ///
+    /// Tracker alarm conditions
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct TrackerAlm: u16 {
+        #[allow(missing_docs)]
+        const SetPoint = 1;
+        #[allow(missing_docs)]
+        const ObsEl = 2;
+        #[allow(missing_docs)]
+        const ObsAz = 4;
+    }
 }
 impl crate::Value for TrackerAlm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

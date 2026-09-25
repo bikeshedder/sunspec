@@ -665,25 +665,51 @@ impl crate::FixedSize for ConnSt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Alarm Bitfield"] #[doc = " "] #[doc = " Active alarms for the DER."] #[doc
-    = " "] #[doc = " Comments: Alarms"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Alrm : u32 { #[doc = " Ground Fault"] const GroundFault = 1; #[doc =
-    " DC Over Voltage"] const DcOverVolt = 2; #[doc = " AC Disconnect Open"] const
-    AcDisconnect = 4; #[doc = " DC Disconnect Open"] const DcDisconnect = 8; #[doc =
-    " Grid Disconnect"] const GridDisconnect = 16; #[doc = " Cabinet Open"] const
-    CabinetOpen = 32; #[doc = " Manual Shutdown"] const ManualShutdown = 64; #[doc =
-    " Over Temperature"] const OverTemp = 128; #[doc = " Frequency Above Limit"] const
-    OverFrequency = 256; #[doc = " Frequency Under Limit"] const UnderFrequency = 512;
-    #[doc = " AC Voltage Above Limit"] const AcOverVolt = 1024; #[doc =
-    " AC Voltage Under Limit"] const AcUnderVolt = 2048; #[doc =
-    " Blown String Fuse On Input"] const BlownStringFuse = 4096; #[doc =
-    " Under Temperature"] const UnderTemp = 8192; #[doc =
-    " Generic Memory Or Communication Error (Internal)"] const MemoryLoss = 16384; #[doc
-    = " Hardware Test Failure"] const HwTestFailure = 32768; #[doc =
-    " Manufacturer Alarm"] #[doc = " "] #[doc =
-    " Manufacturer alarm, see ManAlrmInfo field for more information."] const
-    ManufacturerAlrm = 65536; }
+    /// Alarm Bitfield
+    ///
+    /// Active alarms for the DER.
+    ///
+    /// Comments: Alarms
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Alrm: u32 {
+        /// Ground Fault
+        const GroundFault = 1;
+        /// DC Over Voltage
+        const DcOverVolt = 2;
+        /// AC Disconnect Open
+        const AcDisconnect = 4;
+        /// DC Disconnect Open
+        const DcDisconnect = 8;
+        /// Grid Disconnect
+        const GridDisconnect = 16;
+        /// Cabinet Open
+        const CabinetOpen = 32;
+        /// Manual Shutdown
+        const ManualShutdown = 64;
+        /// Over Temperature
+        const OverTemp = 128;
+        /// Frequency Above Limit
+        const OverFrequency = 256;
+        /// Frequency Under Limit
+        const UnderFrequency = 512;
+        /// AC Voltage Above Limit
+        const AcOverVolt = 1024;
+        /// AC Voltage Under Limit
+        const AcUnderVolt = 2048;
+        /// Blown String Fuse On Input
+        const BlownStringFuse = 4096;
+        /// Under Temperature
+        const UnderTemp = 8192;
+        /// Generic Memory Or Communication Error (Internal)
+        const MemoryLoss = 16384;
+        /// Hardware Test Failure
+        const HwTestFailure = 32768;
+        /// Manufacturer Alarm
+        ///
+        /// Manufacturer alarm, see ManAlrmInfo field for more information.
+        const ManufacturerAlrm = 65536;
+    }
 }
 impl crate::Value for Alrm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -702,14 +728,25 @@ impl crate::FixedSize for Alrm {
     }
 }
 bitflags::bitflags! {
-    #[doc = " DER Operational Characteristics"] #[doc = " "] #[doc =
-    " Current operational characteristics of the DER."] #[derive(Copy, Clone, Debug, Eq,
-    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct DerMode : u32 { #[doc = " Grid Following"] #[doc =
-    " "] #[doc = " The DER is operating as part of a larger grid."] const GridFollowing =
-    1; #[doc = " Grid Forming"] #[doc = " "] #[doc = " The DER is providing the grid."]
-    const GridForming = 2; #[doc = " PV Output Clipped"] #[doc = " "] #[doc =
-    " The PV output is clipped."] const PvClipped = 4; }
+    /// DER Operational Characteristics
+    ///
+    /// Current operational characteristics of the DER.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct DerMode: u32 {
+        /// Grid Following
+        ///
+        /// The DER is operating as part of a larger grid.
+        const GridFollowing = 1;
+        /// Grid Forming
+        ///
+        /// The DER is providing the grid.
+        const GridForming = 2;
+        /// PV Output Clipped
+        ///
+        /// The PV output is clipped.
+        const PvClipped = 4;
+    }
 }
 impl crate::Value for DerMode {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -728,18 +765,43 @@ impl crate::FixedSize for DerMode {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Throttle Source Information"] #[doc = " "] #[doc =
-    " Active throttling source."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct ThrotSrc : u32 { #[allow(missing_docs)] const MaxW = 1; #[allow(missing_docs)]
-    const FixedW = 2; #[allow(missing_docs)] const FixedVar = 4; #[allow(missing_docs)]
-    const FixedPf = 8; #[allow(missing_docs)] const VoltVar = 16; #[allow(missing_docs)]
-    const FreqWatt = 32; #[allow(missing_docs)] const DynReactCurr = 64;
-    #[allow(missing_docs)] const Lvrt = 128; #[allow(missing_docs)] const Hvrt = 256;
-    #[allow(missing_docs)] const WattVar = 512; #[allow(missing_docs)] const VoltWatt =
-    1024; #[allow(missing_docs)] const Scheduled = 2048; #[allow(missing_docs)] const
-    Lfrt = 4096; #[allow(missing_docs)] const Hfrt = 8192; #[allow(missing_docs)] const
-    Derated = 16384; }
+    /// Throttle Source Information
+    ///
+    /// Active throttling source.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ThrotSrc: u32 {
+        #[allow(missing_docs)]
+        const MaxW = 1;
+        #[allow(missing_docs)]
+        const FixedW = 2;
+        #[allow(missing_docs)]
+        const FixedVar = 4;
+        #[allow(missing_docs)]
+        const FixedPf = 8;
+        #[allow(missing_docs)]
+        const VoltVar = 16;
+        #[allow(missing_docs)]
+        const FreqWatt = 32;
+        #[allow(missing_docs)]
+        const DynReactCurr = 64;
+        #[allow(missing_docs)]
+        const Lvrt = 128;
+        #[allow(missing_docs)]
+        const Hvrt = 256;
+        #[allow(missing_docs)]
+        const WattVar = 512;
+        #[allow(missing_docs)]
+        const VoltWatt = 1024;
+        #[allow(missing_docs)]
+        const Scheduled = 2048;
+        #[allow(missing_docs)]
+        const Lfrt = 4096;
+        #[allow(missing_docs)]
+        const Hfrt = 8192;
+        #[allow(missing_docs)]
+        const Derated = 16384;
+    }
 }
 impl crate::Value for ThrotSrc {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

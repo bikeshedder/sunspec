@@ -567,11 +567,21 @@ impl Prof {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Dependent References"] #[doc = " "] #[doc = " Profile references."]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct ProfDeptRef : u32 {
-    #[doc = " Voltage"] const Voltage = 1; #[doc = " Power"] const Power = 2; #[doc =
-    " Current"] const Current = 4; #[doc = " Irradiance"] const Irradiance = 8; }
+    /// Dependent References
+    ///
+    /// Profile references.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ProfDeptRef: u32 {
+        /// Voltage
+        const Voltage = 1;
+        /// Power
+        const Power = 2;
+        /// Current
+        const Current = 4;
+        /// Irradiance
+        const Irradiance = 8;
+    }
 }
 impl crate::Value for ProfDeptRef {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

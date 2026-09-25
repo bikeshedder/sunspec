@@ -133,23 +133,55 @@ impl crate::FixedSize for St {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Event Code"] #[doc = " "] #[doc = " Bitmask event code"] #[derive(Copy,
-    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct Evt : u32 {
-    #[allow(missing_docs)] const GroundFault = 1; #[allow(missing_docs)] const
-    InputOverVoltage = 2; #[allow(missing_docs)] const Reserved2 = 4;
-    #[allow(missing_docs)] const DcDisconnect = 8; #[allow(missing_docs)] const Reserved4
-    = 16; #[allow(missing_docs)] const Reserved5 = 32; #[allow(missing_docs)] const
-    ManualShutdown = 64; #[allow(missing_docs)] const OverTemperature = 128;
-    #[allow(missing_docs)] const Reserved8 = 256; #[allow(missing_docs)] const Reserved9
-    = 512; #[allow(missing_docs)] const Reserved10 = 1024; #[allow(missing_docs)] const
-    Reserved11 = 2048; #[allow(missing_docs)] const BlownFuse = 4096;
-    #[allow(missing_docs)] const UnderTemperature = 8192; #[allow(missing_docs)] const
-    MemoryLoss = 16384; #[allow(missing_docs)] const ArcDetection = 32768;
-    #[allow(missing_docs)] const TheftDetection = 65536; #[allow(missing_docs)] const
-    OutputOverCurrent = 131072; #[allow(missing_docs)] const OutputOverVoltage = 262144;
-    #[allow(missing_docs)] const OutputUnderVoltage = 524288; #[allow(missing_docs)]
-    const TestFailed = 1048576; }
+    /// Event Code
+    ///
+    /// Bitmask event code
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Evt: u32 {
+        #[allow(missing_docs)]
+        const GroundFault = 1;
+        #[allow(missing_docs)]
+        const InputOverVoltage = 2;
+        #[allow(missing_docs)]
+        const Reserved2 = 4;
+        #[allow(missing_docs)]
+        const DcDisconnect = 8;
+        #[allow(missing_docs)]
+        const Reserved4 = 16;
+        #[allow(missing_docs)]
+        const Reserved5 = 32;
+        #[allow(missing_docs)]
+        const ManualShutdown = 64;
+        #[allow(missing_docs)]
+        const OverTemperature = 128;
+        #[allow(missing_docs)]
+        const Reserved8 = 256;
+        #[allow(missing_docs)]
+        const Reserved9 = 512;
+        #[allow(missing_docs)]
+        const Reserved10 = 1024;
+        #[allow(missing_docs)]
+        const Reserved11 = 2048;
+        #[allow(missing_docs)]
+        const BlownFuse = 4096;
+        #[allow(missing_docs)]
+        const UnderTemperature = 8192;
+        #[allow(missing_docs)]
+        const MemoryLoss = 16384;
+        #[allow(missing_docs)]
+        const ArcDetection = 32768;
+        #[allow(missing_docs)]
+        const TheftDetection = 65536;
+        #[allow(missing_docs)]
+        const OutputOverCurrent = 131072;
+        #[allow(missing_docs)]
+        const OutputOverVoltage = 262144;
+        #[allow(missing_docs)]
+        const OutputUnderVoltage = 524288;
+        #[allow(missing_docs)]
+        const TestFailed = 1048576;
+    }
 }
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -168,9 +200,13 @@ impl crate::FixedSize for Evt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event Code"] #[doc = " "] #[doc = " Vendor specific event code"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd : u32 {}
+    /// Vendor Event Code
+    ///
+    /// Vendor specific event code
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd: u32 {
+    }
 }
 impl crate::Value for EvtVnd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

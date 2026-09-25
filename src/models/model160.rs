@@ -57,23 +57,56 @@ impl Mppt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Global Events"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Evt : u32 { #[allow(missing_docs)] const GroundFault = 1;
-    #[allow(missing_docs)] const InputOverVoltage = 2; #[allow(missing_docs)] const
-    Reserved2 = 4; #[allow(missing_docs)] const DcDisconnect = 8; #[allow(missing_docs)]
-    const Reserved4 = 16; #[allow(missing_docs)] const CabinetOpen = 32;
-    #[allow(missing_docs)] const ManualShutdown = 64; #[allow(missing_docs)] const
-    OverTemp = 128; #[allow(missing_docs)] const Reserved8 = 256; #[allow(missing_docs)]
-    const Reserved9 = 512; #[allow(missing_docs)] const Reserved10 = 1024;
-    #[allow(missing_docs)] const Reserved11 = 2048; #[allow(missing_docs)] const
-    BlownFuse = 4096; #[allow(missing_docs)] const UnderTemp = 8192;
-    #[allow(missing_docs)] const MemoryLoss = 16384; #[allow(missing_docs)] const
-    ArcDetection = 32768; #[allow(missing_docs)] const Reserved16 = 65536;
-    #[allow(missing_docs)] const Reserved17 = 131072; #[allow(missing_docs)] const
-    Reserved18 = 262144; #[allow(missing_docs)] const Reserved19 = 524288;
-    #[allow(missing_docs)] const TestFailed = 1048576; #[allow(missing_docs)] const
-    InputUnderVoltage = 2097152; #[allow(missing_docs)] const InputOverCurrent = 4194304;
+    /// Global Events
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Evt: u32 {
+        #[allow(missing_docs)]
+        const GroundFault = 1;
+        #[allow(missing_docs)]
+        const InputOverVoltage = 2;
+        #[allow(missing_docs)]
+        const Reserved2 = 4;
+        #[allow(missing_docs)]
+        const DcDisconnect = 8;
+        #[allow(missing_docs)]
+        const Reserved4 = 16;
+        #[allow(missing_docs)]
+        const CabinetOpen = 32;
+        #[allow(missing_docs)]
+        const ManualShutdown = 64;
+        #[allow(missing_docs)]
+        const OverTemp = 128;
+        #[allow(missing_docs)]
+        const Reserved8 = 256;
+        #[allow(missing_docs)]
+        const Reserved9 = 512;
+        #[allow(missing_docs)]
+        const Reserved10 = 1024;
+        #[allow(missing_docs)]
+        const Reserved11 = 2048;
+        #[allow(missing_docs)]
+        const BlownFuse = 4096;
+        #[allow(missing_docs)]
+        const UnderTemp = 8192;
+        #[allow(missing_docs)]
+        const MemoryLoss = 16384;
+        #[allow(missing_docs)]
+        const ArcDetection = 32768;
+        #[allow(missing_docs)]
+        const Reserved16 = 65536;
+        #[allow(missing_docs)]
+        const Reserved17 = 131072;
+        #[allow(missing_docs)]
+        const Reserved18 = 262144;
+        #[allow(missing_docs)]
+        const Reserved19 = 524288;
+        #[allow(missing_docs)]
+        const TestFailed = 1048576;
+        #[allow(missing_docs)]
+        const InputUnderVoltage = 2097152;
+        #[allow(missing_docs)]
+        const InputOverCurrent = 4194304;
     }
 }
 impl crate::Value for Evt {
@@ -241,23 +274,56 @@ impl crate::FixedSize for ModuleDcSt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Module Events"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct ModuleDcEvt : u32 { #[allow(missing_docs)] const GroundFault = 1;
-    #[allow(missing_docs)] const InputOverVoltage = 2; #[allow(missing_docs)] const
-    Reserved2 = 4; #[allow(missing_docs)] const DcDisconnect = 8; #[allow(missing_docs)]
-    const Reserved4 = 16; #[allow(missing_docs)] const CabinetOpen = 32;
-    #[allow(missing_docs)] const ManualShutdown = 64; #[allow(missing_docs)] const
-    OverTemp = 128; #[allow(missing_docs)] const Reserved8 = 256; #[allow(missing_docs)]
-    const Reserved9 = 512; #[allow(missing_docs)] const Reserved10 = 1024;
-    #[allow(missing_docs)] const Reserved11 = 2048; #[allow(missing_docs)] const
-    BlownFuse = 4096; #[allow(missing_docs)] const UnderTemp = 8192;
-    #[allow(missing_docs)] const MemoryLoss = 16384; #[allow(missing_docs)] const
-    ArcDetection = 32768; #[allow(missing_docs)] const Reserved16 = 65536;
-    #[allow(missing_docs)] const Reserved17 = 131072; #[allow(missing_docs)] const
-    Reserved18 = 262144; #[allow(missing_docs)] const Reserved19 = 524288;
-    #[allow(missing_docs)] const TestFailed = 1048576; #[allow(missing_docs)] const
-    InputUnderVoltage = 2097152; #[allow(missing_docs)] const InputOverCurrent = 4194304;
+    /// Module Events
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ModuleDcEvt: u32 {
+        #[allow(missing_docs)]
+        const GroundFault = 1;
+        #[allow(missing_docs)]
+        const InputOverVoltage = 2;
+        #[allow(missing_docs)]
+        const Reserved2 = 4;
+        #[allow(missing_docs)]
+        const DcDisconnect = 8;
+        #[allow(missing_docs)]
+        const Reserved4 = 16;
+        #[allow(missing_docs)]
+        const CabinetOpen = 32;
+        #[allow(missing_docs)]
+        const ManualShutdown = 64;
+        #[allow(missing_docs)]
+        const OverTemp = 128;
+        #[allow(missing_docs)]
+        const Reserved8 = 256;
+        #[allow(missing_docs)]
+        const Reserved9 = 512;
+        #[allow(missing_docs)]
+        const Reserved10 = 1024;
+        #[allow(missing_docs)]
+        const Reserved11 = 2048;
+        #[allow(missing_docs)]
+        const BlownFuse = 4096;
+        #[allow(missing_docs)]
+        const UnderTemp = 8192;
+        #[allow(missing_docs)]
+        const MemoryLoss = 16384;
+        #[allow(missing_docs)]
+        const ArcDetection = 32768;
+        #[allow(missing_docs)]
+        const Reserved16 = 65536;
+        #[allow(missing_docs)]
+        const Reserved17 = 131072;
+        #[allow(missing_docs)]
+        const Reserved18 = 262144;
+        #[allow(missing_docs)]
+        const Reserved19 = 524288;
+        #[allow(missing_docs)]
+        const TestFailed = 1048576;
+        #[allow(missing_docs)]
+        const InputUnderVoltage = 2097152;
+        #[allow(missing_docs)]
+        const InputOverCurrent = 4194304;
     }
 }
 impl crate::Value for ModuleDcEvt {

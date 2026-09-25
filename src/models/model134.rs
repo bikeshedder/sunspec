@@ -93,11 +93,15 @@ impl FreqWatt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " ModEna"] #[doc = " "] #[doc =
-    " Is curve-based Frequency-Watt control active."] #[derive(Copy, Clone, Debug, Eq,
-    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct ModEna : u16 { #[allow(missing_docs)] const
-    Enabled = 1; }
+    /// ModEna
+    ///
+    /// Is curve-based Frequency-Watt control active.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ModEna: u16 {
+        #[allow(missing_docs)]
+        const Enabled = 1;
+    }
 }
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -462,9 +466,13 @@ impl Curve {
     }
 }
 bitflags::bitflags! {
-    #[doc = " SnptW"] #[doc = " "] #[doc = " 1=enable snapshot/capture mode"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct CurveSnptW : u16 {}
+    /// SnptW
+    ///
+    /// 1=enable snapshot/capture mode
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct CurveSnptW: u16 {
+    }
 }
 impl crate::Value for CurveSnptW {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

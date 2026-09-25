@@ -157,11 +157,15 @@ impl crate::FixedSize for CfgSt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Change Status"] #[doc = " "] #[doc =
-    " Bitmask value.  A configuration change is pending"] #[derive(Copy, Clone, Debug,
-    Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct ChgSt : u16 { #[allow(missing_docs)] const Pending
-    = 1; }
+    /// Change Status
+    ///
+    /// Bitmask value.  A configuration change is pending
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ChgSt: u16 {
+        #[allow(missing_docs)]
+        const Pending = 1;
+    }
 }
 impl crate::Value for ChgSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -180,14 +184,29 @@ impl crate::FixedSize for ChgSt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Config Capability"] #[doc = " "] #[doc =
-    " Bitmask value. Identify capable sources of configuration"] #[derive(Copy, Clone,
-    Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct Cap : u16 { #[allow(missing_docs)] const Dhcp = 1;
-    #[allow(missing_docs)] const Bootp = 2; #[allow(missing_docs)] const Zeroconf = 4;
-    #[allow(missing_docs)] const Dns = 8; #[allow(missing_docs)] const CfgSettable = 16;
-    #[allow(missing_docs)] const HwConfig = 32; #[allow(missing_docs)] const NtpClient =
-    64; #[allow(missing_docs)] const ResetRequired = 128; }
+    /// Config Capability
+    ///
+    /// Bitmask value. Identify capable sources of configuration
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Cap: u16 {
+        #[allow(missing_docs)]
+        const Dhcp = 1;
+        #[allow(missing_docs)]
+        const Bootp = 2;
+        #[allow(missing_docs)]
+        const Zeroconf = 4;
+        #[allow(missing_docs)]
+        const Dns = 8;
+        #[allow(missing_docs)]
+        const CfgSettable = 16;
+        #[allow(missing_docs)]
+        const HwConfig = 32;
+        #[allow(missing_docs)]
+        const NtpClient = 64;
+        #[allow(missing_docs)]
+        const ResetRequired = 128;
+    }
 }
 impl crate::Value for Cap {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

@@ -57,27 +57,75 @@ impl Schedule {
     }
 }
 bitflags::bitflags! {
-    #[doc = " ActSchd"] #[doc = " "] #[doc = " Bitfield of active schedules"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct ActSchd : u32 {
-    #[allow(missing_docs)] const Sched1 = 1; #[allow(missing_docs)] const Sched2 = 2;
-    #[allow(missing_docs)] const Sched3 = 4; #[allow(missing_docs)] const Sched4 = 8;
-    #[allow(missing_docs)] const Sched5 = 16; #[allow(missing_docs)] const Sched6 = 32;
-    #[allow(missing_docs)] const Sched7 = 64; #[allow(missing_docs)] const Sched8 = 128;
-    #[allow(missing_docs)] const Sched9 = 256; #[allow(missing_docs)] const Sched10 =
-    512; #[allow(missing_docs)] const Sched12 = 1024; #[allow(missing_docs)] const
-    Sched13 = 2048; #[allow(missing_docs)] const Sched14 = 4096; #[allow(missing_docs)]
-    const Sched15 = 8192; #[allow(missing_docs)] const Sched16 = 16384;
-    #[allow(missing_docs)] const Sched17 = 32768; #[allow(missing_docs)] const Sched18 =
-    65536; #[allow(missing_docs)] const Sched19 = 131072; #[allow(missing_docs)] const
-    Sched20 = 262144; #[allow(missing_docs)] const Sched21 = 524288;
-    #[allow(missing_docs)] const Sched22 = 2097152; #[allow(missing_docs)] const Sched23
-    = 4194304; #[allow(missing_docs)] const Sched24 = 8388608; #[allow(missing_docs)]
-    const Sched25 = 16777216; #[allow(missing_docs)] const Sched26 = 33554432;
-    #[allow(missing_docs)] const Sched27 = 67108864; #[allow(missing_docs)] const Sched28
-    = 134217728; #[allow(missing_docs)] const Sched29 = 268435456; #[allow(missing_docs)]
-    const Sched30 = 536870912; #[allow(missing_docs)] const Sched31 = 1073741824;
-    #[allow(missing_docs)] const Sched32 = 2147483648; }
+    /// ActSchd
+    ///
+    /// Bitfield of active schedules
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ActSchd: u32 {
+        #[allow(missing_docs)]
+        const Sched1 = 1;
+        #[allow(missing_docs)]
+        const Sched2 = 2;
+        #[allow(missing_docs)]
+        const Sched3 = 4;
+        #[allow(missing_docs)]
+        const Sched4 = 8;
+        #[allow(missing_docs)]
+        const Sched5 = 16;
+        #[allow(missing_docs)]
+        const Sched6 = 32;
+        #[allow(missing_docs)]
+        const Sched7 = 64;
+        #[allow(missing_docs)]
+        const Sched8 = 128;
+        #[allow(missing_docs)]
+        const Sched9 = 256;
+        #[allow(missing_docs)]
+        const Sched10 = 512;
+        #[allow(missing_docs)]
+        const Sched12 = 1024;
+        #[allow(missing_docs)]
+        const Sched13 = 2048;
+        #[allow(missing_docs)]
+        const Sched14 = 4096;
+        #[allow(missing_docs)]
+        const Sched15 = 8192;
+        #[allow(missing_docs)]
+        const Sched16 = 16384;
+        #[allow(missing_docs)]
+        const Sched17 = 32768;
+        #[allow(missing_docs)]
+        const Sched18 = 65536;
+        #[allow(missing_docs)]
+        const Sched19 = 131072;
+        #[allow(missing_docs)]
+        const Sched20 = 262144;
+        #[allow(missing_docs)]
+        const Sched21 = 524288;
+        #[allow(missing_docs)]
+        const Sched22 = 2097152;
+        #[allow(missing_docs)]
+        const Sched23 = 4194304;
+        #[allow(missing_docs)]
+        const Sched24 = 8388608;
+        #[allow(missing_docs)]
+        const Sched25 = 16777216;
+        #[allow(missing_docs)]
+        const Sched26 = 33554432;
+        #[allow(missing_docs)]
+        const Sched27 = 67108864;
+        #[allow(missing_docs)]
+        const Sched28 = 134217728;
+        #[allow(missing_docs)]
+        const Sched29 = 268435456;
+        #[allow(missing_docs)]
+        const Sched30 = 536870912;
+        #[allow(missing_docs)]
+        const Sched31 = 1073741824;
+        #[allow(missing_docs)]
+        const Sched32 = 2147483648;
+    }
 }
 impl crate::Value for ActSchd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -96,10 +144,15 @@ impl crate::FixedSize for ActSchd {
     }
 }
 bitflags::bitflags! {
-    #[doc = " ModEna"] #[doc = " "] #[doc = " Is basic scheduling active."]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct ModEna : u16 {
-    #[allow(missing_docs)] const Enabled = 1; }
+    /// ModEna
+    ///
+    /// Is basic scheduling active.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ModEna: u16 {
+        #[allow(missing_docs)]
+        const Enabled = 1;
+    }
 }
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

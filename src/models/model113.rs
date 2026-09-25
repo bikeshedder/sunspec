@@ -283,20 +283,45 @@ impl crate::FixedSize for St {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Event1"] #[doc = " "] #[doc = " Bitmask value. Event fields"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct Evt1 : u32 {
-    #[allow(missing_docs)] const GroundFault = 1; #[allow(missing_docs)] const DcOverVolt
-    = 2; #[allow(missing_docs)] const AcDisconnect = 4; #[allow(missing_docs)] const
-    DcDisconnect = 8; #[allow(missing_docs)] const GridDisconnect = 16;
-    #[allow(missing_docs)] const CabinetOpen = 32; #[allow(missing_docs)] const
-    ManualShutdown = 64; #[allow(missing_docs)] const OverTemp = 128;
-    #[allow(missing_docs)] const OverFrequency = 256; #[allow(missing_docs)] const
-    UnderFrequency = 512; #[allow(missing_docs)] const AcOverVolt = 1024;
-    #[allow(missing_docs)] const AcUnderVolt = 2048; #[allow(missing_docs)] const
-    BlownStringFuse = 4096; #[allow(missing_docs)] const UnderTemp = 8192;
-    #[allow(missing_docs)] const MemoryLoss = 16384; #[allow(missing_docs)] const
-    HwTestFailure = 32768; }
+    /// Event1
+    ///
+    /// Bitmask value. Event fields
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Evt1: u32 {
+        #[allow(missing_docs)]
+        const GroundFault = 1;
+        #[allow(missing_docs)]
+        const DcOverVolt = 2;
+        #[allow(missing_docs)]
+        const AcDisconnect = 4;
+        #[allow(missing_docs)]
+        const DcDisconnect = 8;
+        #[allow(missing_docs)]
+        const GridDisconnect = 16;
+        #[allow(missing_docs)]
+        const CabinetOpen = 32;
+        #[allow(missing_docs)]
+        const ManualShutdown = 64;
+        #[allow(missing_docs)]
+        const OverTemp = 128;
+        #[allow(missing_docs)]
+        const OverFrequency = 256;
+        #[allow(missing_docs)]
+        const UnderFrequency = 512;
+        #[allow(missing_docs)]
+        const AcOverVolt = 1024;
+        #[allow(missing_docs)]
+        const AcUnderVolt = 2048;
+        #[allow(missing_docs)]
+        const BlownStringFuse = 4096;
+        #[allow(missing_docs)]
+        const UnderTemp = 8192;
+        #[allow(missing_docs)]
+        const MemoryLoss = 16384;
+        #[allow(missing_docs)]
+        const HwTestFailure = 32768;
+    }
 }
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -315,9 +340,13 @@ impl crate::FixedSize for Evt1 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Event Bitfield 2"] #[doc = " "] #[doc = " Reserved for future use"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct Evt2 : u32 {}
+    /// Event Bitfield 2
+    ///
+    /// Reserved for future use
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Evt2: u32 {
+    }
 }
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -336,9 +365,13 @@ impl crate::FixedSize for Evt2 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event Bitfield 1"] #[doc = " "] #[doc = " Vendor defined events"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd1 : u32 {}
+    /// Vendor Event Bitfield 1
+    ///
+    /// Vendor defined events
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd1: u32 {
+    }
 }
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -357,9 +390,13 @@ impl crate::FixedSize for EvtVnd1 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event Bitfield 2"] #[doc = " "] #[doc = " Vendor defined events"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd2 : u32 {}
+    /// Vendor Event Bitfield 2
+    ///
+    /// Vendor defined events
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd2: u32 {
+    }
 }
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -378,9 +415,13 @@ impl crate::FixedSize for EvtVnd2 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event Bitfield 3"] #[doc = " "] #[doc = " Vendor defined events"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd3 : u32 {}
+    /// Vendor Event Bitfield 3
+    ///
+    /// Vendor defined events
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd3: u32 {
+    }
 }
 impl crate::Value for EvtVnd3 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -399,9 +440,13 @@ impl crate::FixedSize for EvtVnd3 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event Bitfield 4"] #[doc = " "] #[doc = " Vendor defined events"]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd4 : u32 {}
+    /// Vendor Event Bitfield 4
+    ///
+    /// Vendor defined events
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd4: u32 {
+    }
 }
 impl crate::Value for EvtVnd4 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

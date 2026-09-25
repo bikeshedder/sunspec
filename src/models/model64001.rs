@@ -163,9 +163,11 @@ impl Model64001 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " DIP Switches"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Switch : u16 {}
+    /// DIP Switches
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Switch: u16 {
+    }
 }
 impl crate::Value for Switch {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -184,9 +186,11 @@ impl crate::FixedSize for Switch {
     }
 }
 bitflags::bitflags! {
-    #[doc = " System Status"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Status : u16 {}
+    /// System Status
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Status: u16 {
+    }
 }
 impl crate::Value for Status {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -205,9 +209,11 @@ impl crate::FixedSize for Status {
     }
 }
 bitflags::bitflags! {
-    #[doc = " System Configuration"] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Config : u16 {}
+    /// System Configuration
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Config: u16 {
+    }
 }
 impl crate::Value for Config {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

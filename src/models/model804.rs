@@ -258,12 +258,17 @@ impl LithiumIonString {
     }
 }
 bitflags::bitflags! {
-    #[doc = " String Status"] #[doc = " "] #[doc = " Current status of the string."]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct St : u32 {
-    #[allow(missing_docs)] const StringEnabled = 1; #[doc =
-    " Detail: If string has multiple contactors, indicates that all contactors are closed."]
-    const ContactorStatus = 2; }
+    /// String Status
+    ///
+    /// Current status of the string.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct St: u32 {
+        #[allow(missing_docs)]
+        const StringEnabled = 1;
+        /// Detail: If string has multiple contactors, indicates that all contactors are closed.
+        const ContactorStatus = 2;
+    }
 }
 impl crate::Value for St {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -346,30 +351,75 @@ impl crate::FixedSize for ConFail {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Contactor Status"] #[doc = " "] #[doc =
-    " Status of the contactor(s) for the string."] #[derive(Copy, Clone, Debug, Eq,
-    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct ConSt : u32 { #[allow(missing_docs)] const
-    Contactor0 = 1; #[allow(missing_docs)] const Contactor1 = 2; #[allow(missing_docs)]
-    const Contactor2 = 4; #[allow(missing_docs)] const Contactor3 = 8;
-    #[allow(missing_docs)] const Contactor4 = 16; #[allow(missing_docs)] const Contactor5
-    = 32; #[allow(missing_docs)] const Contactor6 = 64; #[allow(missing_docs)] const
-    Contactor7 = 128; #[allow(missing_docs)] const Contactor8 = 256;
-    #[allow(missing_docs)] const Contactor9 = 512; #[allow(missing_docs)] const
-    Contactor10 = 1024; #[allow(missing_docs)] const Contactor11 = 2048;
-    #[allow(missing_docs)] const Contactor12 = 4096; #[allow(missing_docs)] const
-    Contactor13 = 8192; #[allow(missing_docs)] const Contactor14 = 16384;
-    #[allow(missing_docs)] const Contactor15 = 32768; #[allow(missing_docs)] const
-    Contactor16 = 65536; #[allow(missing_docs)] const Contactor17 = 131072;
-    #[allow(missing_docs)] const Contactor18 = 262144; #[allow(missing_docs)] const
-    Contactor19 = 524288; #[allow(missing_docs)] const Contactor20 = 1048576;
-    #[allow(missing_docs)] const Contactor21 = 2097152; #[allow(missing_docs)] const
-    Contactor22 = 4194304; #[allow(missing_docs)] const Contactor23 = 8388608;
-    #[allow(missing_docs)] const Contactor24 = 16777216; #[allow(missing_docs)] const
-    Contactor25 = 33554432; #[allow(missing_docs)] const Contactor26 = 67108864;
-    #[allow(missing_docs)] const Contactor27 = 134217728; #[allow(missing_docs)] const
-    Contactor28 = 268435456; #[allow(missing_docs)] const Contactor29 = 536870912;
-    #[allow(missing_docs)] const Contactor30 = 1073741824; }
+    /// Contactor Status
+    ///
+    /// Status of the contactor(s) for the string.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ConSt: u32 {
+        #[allow(missing_docs)]
+        const Contactor0 = 1;
+        #[allow(missing_docs)]
+        const Contactor1 = 2;
+        #[allow(missing_docs)]
+        const Contactor2 = 4;
+        #[allow(missing_docs)]
+        const Contactor3 = 8;
+        #[allow(missing_docs)]
+        const Contactor4 = 16;
+        #[allow(missing_docs)]
+        const Contactor5 = 32;
+        #[allow(missing_docs)]
+        const Contactor6 = 64;
+        #[allow(missing_docs)]
+        const Contactor7 = 128;
+        #[allow(missing_docs)]
+        const Contactor8 = 256;
+        #[allow(missing_docs)]
+        const Contactor9 = 512;
+        #[allow(missing_docs)]
+        const Contactor10 = 1024;
+        #[allow(missing_docs)]
+        const Contactor11 = 2048;
+        #[allow(missing_docs)]
+        const Contactor12 = 4096;
+        #[allow(missing_docs)]
+        const Contactor13 = 8192;
+        #[allow(missing_docs)]
+        const Contactor14 = 16384;
+        #[allow(missing_docs)]
+        const Contactor15 = 32768;
+        #[allow(missing_docs)]
+        const Contactor16 = 65536;
+        #[allow(missing_docs)]
+        const Contactor17 = 131072;
+        #[allow(missing_docs)]
+        const Contactor18 = 262144;
+        #[allow(missing_docs)]
+        const Contactor19 = 524288;
+        #[allow(missing_docs)]
+        const Contactor20 = 1048576;
+        #[allow(missing_docs)]
+        const Contactor21 = 2097152;
+        #[allow(missing_docs)]
+        const Contactor22 = 4194304;
+        #[allow(missing_docs)]
+        const Contactor23 = 8388608;
+        #[allow(missing_docs)]
+        const Contactor24 = 16777216;
+        #[allow(missing_docs)]
+        const Contactor25 = 33554432;
+        #[allow(missing_docs)]
+        const Contactor26 = 67108864;
+        #[allow(missing_docs)]
+        const Contactor27 = 134217728;
+        #[allow(missing_docs)]
+        const Contactor28 = 268435456;
+        #[allow(missing_docs)]
+        const Contactor29 = 536870912;
+        #[allow(missing_docs)]
+        const Contactor30 = 1073741824;
+    }
 }
 impl crate::Value for ConSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -388,34 +438,73 @@ impl crate::FixedSize for ConSt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " String Event 1"] #[doc = " "] #[doc =
-    " Alarms, warnings and status values.  Bit flags."] #[derive(Copy, Clone, Debug, Eq,
-    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct Evt1 : u32 { #[allow(missing_docs)] const
-    CommunicationError = 1; #[allow(missing_docs)] const OverTempAlarm = 2;
-    #[allow(missing_docs)] const OverTempWarning = 4; #[allow(missing_docs)] const
-    UnderTempAlarm = 8; #[allow(missing_docs)] const UnderTempWarning = 16; #[doc =
-    " Detail: See AChaMax in model S 802."] const OverChargeCurrentAlarm = 32; #[doc =
-    " Detail: See AChaMax in model S 802."] const OverChargeCurrentWarning = 64; #[doc =
-    " Detail: See ADisChaMax in model S 802."] const OverDischargeCurrentAlarm = 128;
-    #[doc = " Detail: See ADisChaMax in model S 802."] const OverDischargeCurrentWarning
-    = 256; #[allow(missing_docs)] const OverVoltAlarm = 512; #[allow(missing_docs)] const
-    OverVoltWarning = 1024; #[allow(missing_docs)] const UnderVoltAlarm = 2048;
-    #[allow(missing_docs)] const UnderVoltWarning = 4096; #[allow(missing_docs)] const
-    UnderSocMinAlarm = 8192; #[allow(missing_docs)] const UnderSocMinWarning = 16384;
-    #[allow(missing_docs)] const OverSocMaxAlarm = 32768; #[allow(missing_docs)] const
-    OverSocMaxWarning = 65536; #[allow(missing_docs)] const VoltageImbalanceWarning =
-    131072; #[allow(missing_docs)] const TemperatureImbalanceAlarm = 262144;
-    #[allow(missing_docs)] const TemperatureImbalanceWarning = 524288;
-    #[allow(missing_docs)] const ContactorError = 1048576; #[allow(missing_docs)] const
-    FanError = 2097152; #[allow(missing_docs)] const GroundFault = 4194304;
-    #[allow(missing_docs)] const OpenDoorError = 8388608; #[doc =
-    " Detail: Do not implement."] const Reserved1 = 16777216; #[doc =
-    " Detail: See EvtVnd1 and EvtVnd2 for more information."] const OtherAlarm =
-    33554432; #[doc = " Detail: See EvtVnd1 and EvtVnd2 for more information."] const
-    OtherWarning = 67108864; #[doc = " Detail: Do not implement."] const Reserved2 =
-    134217728; #[allow(missing_docs)] const ConfigurationAlarm = 268435456;
-    #[allow(missing_docs)] const ConfigurationWarning = 536870912; }
+    /// String Event 1
+    ///
+    /// Alarms, warnings and status values.  Bit flags.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Evt1: u32 {
+        #[allow(missing_docs)]
+        const CommunicationError = 1;
+        #[allow(missing_docs)]
+        const OverTempAlarm = 2;
+        #[allow(missing_docs)]
+        const OverTempWarning = 4;
+        #[allow(missing_docs)]
+        const UnderTempAlarm = 8;
+        #[allow(missing_docs)]
+        const UnderTempWarning = 16;
+        /// Detail: See AChaMax in model S 802.
+        const OverChargeCurrentAlarm = 32;
+        /// Detail: See AChaMax in model S 802.
+        const OverChargeCurrentWarning = 64;
+        /// Detail: See ADisChaMax in model S 802.
+        const OverDischargeCurrentAlarm = 128;
+        /// Detail: See ADisChaMax in model S 802.
+        const OverDischargeCurrentWarning = 256;
+        #[allow(missing_docs)]
+        const OverVoltAlarm = 512;
+        #[allow(missing_docs)]
+        const OverVoltWarning = 1024;
+        #[allow(missing_docs)]
+        const UnderVoltAlarm = 2048;
+        #[allow(missing_docs)]
+        const UnderVoltWarning = 4096;
+        #[allow(missing_docs)]
+        const UnderSocMinAlarm = 8192;
+        #[allow(missing_docs)]
+        const UnderSocMinWarning = 16384;
+        #[allow(missing_docs)]
+        const OverSocMaxAlarm = 32768;
+        #[allow(missing_docs)]
+        const OverSocMaxWarning = 65536;
+        #[allow(missing_docs)]
+        const VoltageImbalanceWarning = 131072;
+        #[allow(missing_docs)]
+        const TemperatureImbalanceAlarm = 262144;
+        #[allow(missing_docs)]
+        const TemperatureImbalanceWarning = 524288;
+        #[allow(missing_docs)]
+        const ContactorError = 1048576;
+        #[allow(missing_docs)]
+        const FanError = 2097152;
+        #[allow(missing_docs)]
+        const GroundFault = 4194304;
+        #[allow(missing_docs)]
+        const OpenDoorError = 8388608;
+        /// Detail: Do not implement.
+        const Reserved1 = 16777216;
+        /// Detail: See EvtVnd1 and EvtVnd2 for more information.
+        const OtherAlarm = 33554432;
+        /// Detail: See EvtVnd1 and EvtVnd2 for more information.
+        const OtherWarning = 67108864;
+        /// Detail: Do not implement.
+        const Reserved2 = 134217728;
+        #[allow(missing_docs)]
+        const ConfigurationAlarm = 268435456;
+        #[allow(missing_docs)]
+        const ConfigurationWarning = 536870912;
+    }
 }
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -434,11 +523,15 @@ impl crate::FixedSize for Evt1 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " String Event 2"] #[doc = " "] #[doc =
-    " Alarms, warnings and status values.  Bit flags."] #[doc = " "] #[doc =
-    " Detail: Reserved for future use."] #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))] pub
-    struct Evt2 : u32 {}
+    /// String Event 2
+    ///
+    /// Alarms, warnings and status values.  Bit flags.
+    ///
+    /// Detail: Reserved for future use.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct Evt2: u32 {
+    }
 }
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -457,9 +550,13 @@ impl crate::FixedSize for Evt2 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event Bitfield 1"] #[doc = " "] #[doc = " Vendor defined events."]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd1 : u32 {}
+    /// Vendor Event Bitfield 1
+    ///
+    /// Vendor defined events.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd1: u32 {
+    }
 }
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -478,9 +575,13 @@ impl crate::FixedSize for EvtVnd1 {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Vendor Event Bitfield 2"] #[doc = " "] #[doc = " Vendor defined events."]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct EvtVnd2 : u32 {}
+    /// Vendor Event Bitfield 2
+    ///
+    /// Vendor defined events.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct EvtVnd2: u32 {
+    }
 }
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

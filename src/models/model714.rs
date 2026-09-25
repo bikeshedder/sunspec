@@ -105,11 +105,15 @@ impl DerMeasureDc {
     }
 }
 bitflags::bitflags! {
-    #[doc = " Port Alarms"] #[doc = " "] #[doc =
-    " Bitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port."]
-    #[doc = " "] #[doc = " Comments: DC General"] #[derive(Copy, Clone, Debug, Eq,
-    PartialEq)] #[cfg_attr(feature = "serde", derive(::serde::Serialize,
-    ::serde::Deserialize))] pub struct PrtAlrms : u32 {}
+    /// Port Alarms
+    ///
+    /// Bitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port.
+    ///
+    /// Comments: DC General
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct PrtAlrms: u32 {
+    }
 }
 impl crate::Value for PrtAlrms {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
@@ -335,19 +339,41 @@ impl crate::FixedSize for PrtDcSta {
     }
 }
 bitflags::bitflags! {
-    #[doc = " DC Port Alarm"] #[doc = " "] #[doc = " DC port alarm."] #[derive(Copy,
-    Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct PrtDcAlrm : u32 { #[doc
-    = " Ground Fault"] const GroundFault = 1; #[doc = " Input Over Voltage"] const
-    InputOverVoltage = 2; #[doc = " DC Disconnect"] const DcDisconnect = 8; #[doc =
-    " Cabinet Open"] const CabinetOpen = 32; #[doc = " Manual Shutdown"] const
-    ManualShutdown = 64; #[doc = " Over Temperature"] const OverTemp = 128; #[doc =
-    " Blown Fuse"] const BlownFuse = 4096; #[doc = " Under Temperature"] const UnderTemp
-    = 8192; #[doc = " Memory Loss"] const MemoryLoss = 16384; #[doc = " Arc Detection"]
-    const ArcDetection = 32768; #[doc = " Reserved"] const Reserved = 524288; #[doc =
-    " Test Failed"] const TestFailed = 1048576; #[doc = " Under Voltage"] const
-    InputUnderVoltage = 2097152; #[doc = " Over Current"] const InputOverCurrent =
-    4194304; }
+    /// DC Port Alarm
+    ///
+    /// DC port alarm.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct PrtDcAlrm: u32 {
+        /// Ground Fault
+        const GroundFault = 1;
+        /// Input Over Voltage
+        const InputOverVoltage = 2;
+        /// DC Disconnect
+        const DcDisconnect = 8;
+        /// Cabinet Open
+        const CabinetOpen = 32;
+        /// Manual Shutdown
+        const ManualShutdown = 64;
+        /// Over Temperature
+        const OverTemp = 128;
+        /// Blown Fuse
+        const BlownFuse = 4096;
+        /// Under Temperature
+        const UnderTemp = 8192;
+        /// Memory Loss
+        const MemoryLoss = 16384;
+        /// Arc Detection
+        const ArcDetection = 32768;
+        /// Reserved
+        const Reserved = 524288;
+        /// Test Failed
+        const TestFailed = 1048576;
+        /// Under Voltage
+        const InputUnderVoltage = 2097152;
+        /// Over Current
+        const InputOverCurrent = 4194304;
+    }
 }
 impl crate::Value for PrtDcAlrm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

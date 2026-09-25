@@ -93,10 +93,15 @@ impl VoltWatt {
     }
 }
 bitflags::bitflags! {
-    #[doc = " ModEna"] #[doc = " "] #[doc = " Is Volt-Watt control active."]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct ModEna : u16 {
-    #[allow(missing_docs)] const Enabled = 1; }
+    /// ModEna
+    ///
+    /// Is Volt-Watt control active.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct ModEna: u16 {
+        #[allow(missing_docs)]
+        const Enabled = 1;
+    }
 }
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {

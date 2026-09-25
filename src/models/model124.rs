@@ -174,11 +174,16 @@ impl StorageBasic {
     }
 }
 bitflags::bitflags! {
-    #[doc = " StorCtl_Mod"] #[doc = " "] #[doc =
-    " Activate hold/discharge/charge storage control mode. Bitfield value."]
-    #[derive(Copy, Clone, Debug, Eq, PartialEq)] #[cfg_attr(feature = "serde",
-    derive(::serde::Serialize, ::serde::Deserialize))] pub struct StorCtlMod : u16 {
-    #[allow(missing_docs)] const Charge = 1; #[allow(missing_docs)] const DiScharge = 2;
+    /// StorCtl_Mod
+    ///
+    /// Activate hold/discharge/charge storage control mode. Bitfield value.
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+    pub struct StorCtlMod: u16 {
+        #[allow(missing_docs)]
+        const Charge = 1;
+        #[allow(missing_docs)]
+        const DiScharge = 2;
     }
 }
 impl crate::Value for StorCtlMod {
