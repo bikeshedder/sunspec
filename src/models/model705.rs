@@ -76,6 +76,7 @@ impl DerVoltVar {
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
 }
+impl crate::sealed::Sealed for DerVoltVar {}
 impl crate::Group for DerVoltVar {
     const LEN: u16 = 13;
 }
@@ -125,6 +126,7 @@ pub enum Ena {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Ena {}
 impl crate::EnumValue for Ena {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -171,6 +173,7 @@ pub enum AdptCrvRslt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for AdptCrvRslt {}
 impl crate::EnumValue for AdptCrvRslt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -262,6 +265,7 @@ impl Crv {
     pub const RSP_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, true);
     pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(9, 1, false);
 }
+impl crate::sealed::Sealed for Crv {}
 impl crate::Group for Crv {
     const LEN: u16 = 10;
 }
@@ -320,6 +324,7 @@ pub enum CrvDeptRef {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CrvDeptRef {}
 impl crate::EnumValue for CrvDeptRef {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -370,6 +375,7 @@ pub enum CrvPri {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CrvPri {}
 impl crate::EnumValue for CrvPri {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -414,6 +420,7 @@ pub enum CrvVRefAutoEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CrvVRefAutoEna {}
 impl crate::EnumValue for CrvVRefAutoEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -456,6 +463,7 @@ pub enum CrvReadOnly {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CrvReadOnly {}
 impl crate::EnumValue for CrvReadOnly {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -507,6 +515,7 @@ impl Pt {
     pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const VAR: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
 }
+impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {
     const LEN: u16 = 2;
 }

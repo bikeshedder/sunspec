@@ -201,6 +201,7 @@ impl LithiumIonString {
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
     pub const MOD_TMP_SF: crate::Point<Self, i16> = crate::Point::new(42, 1, false);
 }
+impl crate::sealed::Sealed for LithiumIonString {}
 impl crate::Group for LithiumIonString {
     const LEN: u16 = 46;
 }
@@ -270,6 +271,7 @@ bitflags::bitflags! {
         const ContactorStatus = 2;
     }
 }
+impl crate::sealed::Sealed for St {}
 impl crate::Value for St {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -311,6 +313,7 @@ pub enum ConFail {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ConFail {}
 impl crate::EnumValue for ConFail {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -421,6 +424,7 @@ bitflags::bitflags! {
         const Contactor30 = 1073741824;
     }
 }
+impl crate::sealed::Sealed for ConSt {}
 impl crate::Value for ConSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -506,6 +510,7 @@ bitflags::bitflags! {
         const ConfigurationWarning = 536870912;
     }
 }
+impl crate::sealed::Sealed for Evt1 {}
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -533,6 +538,7 @@ bitflags::bitflags! {
     pub struct Evt2: u32 {
     }
 }
+impl crate::sealed::Sealed for Evt2 {}
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -558,6 +564,7 @@ bitflags::bitflags! {
     pub struct EvtVnd1: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd1 {}
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -583,6 +590,7 @@ bitflags::bitflags! {
     pub struct EvtVnd2: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd2 {}
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -614,6 +622,7 @@ pub enum SetCon {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SetCon {}
 impl crate::EnumValue for SetCon {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -714,6 +723,7 @@ impl LithiumIonStringModule {
         crate::Point::new(11, 1, false);
     pub const MOD_CELL_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
 }
+impl crate::sealed::Sealed for LithiumIonStringModule {}
 impl crate::Group for LithiumIonStringModule {
     const LEN: u16 = 16;
 }

@@ -78,6 +78,7 @@ impl ReactiveCurrent {
     pub const AR_GRA_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
     pub const V_REF_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
 }
+impl crate::sealed::Sealed for ReactiveCurrent {}
 impl crate::Group for ReactiveCurrent {
     const LEN: u16 = 14;
 }
@@ -119,6 +120,7 @@ pub enum ArGraMod {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ArGraMod {}
 impl crate::EnumValue for ArGraMod {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -155,6 +157,7 @@ bitflags::bitflags! {
         const Enabled = 1;
     }
 }
+impl crate::sealed::Sealed for ModEna {}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

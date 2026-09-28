@@ -66,6 +66,7 @@ impl DerEnterService {
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
     pub const HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
 }
+impl crate::sealed::Sealed for DerEnterService {}
 impl crate::Group for DerEnterService {
     const LEN: u16 = 17;
 }
@@ -105,6 +106,7 @@ pub enum Es {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Es {}
 impl crate::EnumValue for Es {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

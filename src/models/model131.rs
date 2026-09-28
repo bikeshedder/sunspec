@@ -65,6 +65,7 @@ impl WattPf {
     pub const PF_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
 }
+impl crate::sealed::Sealed for WattPf {}
 impl crate::Group for WattPf {
     const LEN: u16 = 10;
 }
@@ -103,6 +104,7 @@ bitflags::bitflags! {
         const Enabled = 1;
     }
 }
+impl crate::sealed::Sealed for ModEna {}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -357,6 +359,7 @@ impl Curve {
     pub const RMP_INC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, true);
     pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(52, 1, false);
 }
+impl crate::sealed::Sealed for Curve {}
 impl crate::Group for Curve {
     const LEN: u16 = 54;
 }
@@ -448,6 +451,7 @@ pub enum CurveReadOnly {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CurveReadOnly {}
 impl crate::EnumValue for CurveReadOnly {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

@@ -34,6 +34,7 @@ impl Model18 {
     pub const NUM: crate::Point<Self, Option<String>> = crate::Point::new(10, 6, true);
     pub const PIN: crate::Point<Self, Option<String>> = crate::Point::new(16, 6, true);
 }
+impl crate::sealed::Sealed for Model18 {}
 impl crate::Group for Model18 {
     const LEN: u16 = 22;
 }

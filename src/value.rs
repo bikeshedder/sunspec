@@ -5,9 +5,13 @@ use std::{
 
 use thiserror::Error;
 
+use crate::sealed::Sealed;
+
 /// This trait contains all the conversion methods needed for
 /// working with points of the SunSpec models.
-pub trait Value: Sized {
+///
+/// This trait is sealed and cannot be implemented outside of this crate.
+pub trait Value: Sealed + Sized {
     /// Decode value from a given slice of u16
     fn decode(data: &[u16]) -> Result<Self, DecodeError>;
     /// Encode value into a u16 array
@@ -16,7 +20,9 @@ pub trait Value: Sized {
 
 /// This trait marks points with a fixed size. All non-string
 /// values are actually fixed size.
-pub trait FixedSize: Value + PartialEq {
+///
+/// This trait is sealed and cannot be implemented outside of this crate.
+pub trait FixedSize: Sealed + Value + PartialEq {
     /// The size of this value
     const SIZE: u16;
     /// The value when the point is not supported.
@@ -28,7 +34,9 @@ pub trait FixedSize: Value + PartialEq {
 }
 
 /// Shared conversion logic for enumerated point values.
-pub trait EnumValue: Sized + Copy {
+///
+/// This trait is sealed and cannot be implemented outside of this crate.
+pub trait EnumValue: Sealed + Sized + Copy {
     /// The integer representation used on the wire.
     type Repr: FixedSize + Copy;
     /// The sentinel used for optional enum points.
@@ -38,6 +46,21 @@ pub trait EnumValue: Sized + Copy {
     /// Convert an enum value into its raw representation.
     fn to_repr(self) -> Self::Repr;
 }
+
+impl Sealed for u16 {}
+impl Sealed for u32 {}
+impl Sealed for u64 {}
+impl Sealed for u128 {}
+impl Sealed for i16 {}
+impl Sealed for i32 {}
+impl Sealed for i64 {}
+impl Sealed for f32 {}
+impl Sealed for f64 {}
+impl Sealed for String {}
+impl Sealed for Ipv4Addr {}
+impl Sealed for Ipv6Addr {}
+impl Sealed for Option<String> {}
+impl<T: FixedSize> Sealed for Option<T> {}
 
 impl<T: EnumValue> Value for T {
     fn decode(data: &[u16]) -> Result<Self, DecodeError> {

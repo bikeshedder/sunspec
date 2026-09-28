@@ -225,6 +225,7 @@ impl Model64112 {
     pub const CC_CONFIG_DATA_LOG_CLR_COMP: crate::Point<Self, u16> =
         crate::Point::new(63, 1, false);
 }
+impl crate::sealed::Sealed for Model64112 {}
 impl crate::Group for Model64112 {
     const LEN: u16 = 64;
 }
@@ -317,6 +318,7 @@ bitflags::bitflags! {
     pub struct CcConfigFault: u16 {
     }
 }
+impl crate::sealed::Sealed for CcConfigFault {}
 impl crate::Value for CcConfigFault {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -346,6 +348,7 @@ pub enum CcConfigMpptMode {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigMpptMode {}
 impl crate::EnumValue for CcConfigMpptMode {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -384,6 +387,7 @@ pub enum CcConfigSweepWidth {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigSweepWidth {}
 impl crate::EnumValue for CcConfigSweepWidth {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -424,6 +428,7 @@ pub enum CcConfigSweepMax {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigSweepMax {}
 impl crate::EnumValue for CcConfigSweepMax {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -464,6 +469,7 @@ pub enum CcConfigGridTie {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigGridTie {}
 impl crate::EnumValue for CcConfigGridTie {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -500,6 +506,7 @@ pub enum CcConfigTempComp {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigTempComp {}
 impl crate::EnumValue for CcConfigTempComp {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -538,6 +545,7 @@ pub enum CcConfigAutoRestart {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigAutoRestart {}
 impl crate::EnumValue for CcConfigAutoRestart {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -590,6 +598,7 @@ pub enum CcConfigAuxMode {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigAuxMode {}
 impl crate::EnumValue for CcConfigAuxMode {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -642,6 +651,7 @@ pub enum CcConfigAuxControl {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigAuxControl {}
 impl crate::EnumValue for CcConfigAuxControl {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -680,6 +690,7 @@ pub enum CcConfigAuxState {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigAuxState {}
 impl crate::EnumValue for CcConfigAuxState {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -716,6 +727,7 @@ pub enum CcConfigAuxPolarity {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CcConfigAuxPolarity {}
 impl crate::EnumValue for CcConfigAuxPolarity {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

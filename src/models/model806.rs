@@ -14,6 +14,7 @@ pub struct FlowBattery {
 impl FlowBattery {
     pub const BAT_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for FlowBattery {}
 impl crate::Group for FlowBattery {
     const LEN: u16 = 1;
 }
@@ -43,6 +44,7 @@ pub struct BatteryString {
 impl BatteryString {
     pub const BAT_ST_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for BatteryString {}
 impl crate::Group for BatteryString {
     const LEN: u16 = 1;
 }

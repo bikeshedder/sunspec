@@ -6,7 +6,7 @@ use std::{
 
 use thiserror::Error;
 
-use crate::{AnyModel, DecodeError, Group, ModelInfo, Models};
+use crate::{sealed::Sealed, AnyModel, DecodeError, Group, ModelInfo, Models};
 
 /// Model data that decoded successfully but failed semantic validation.
 #[derive(Debug, Error)]
@@ -44,7 +44,9 @@ impl<T: Debug> ParseError<T> {
 
 /// Every model implements this trait which contains methods
 /// for accessing the address and parsing the model.
-pub trait Model: Sized + Group + Debug + Into<AnyModel> {
+///
+/// This trait is sealed and cannot be implemented outside of this crate.
+pub trait Model: Sealed + Sized + Group + Debug + Into<AnyModel> {
     /// Model ID
     const ID: u16;
     /// Name of the model as defined by the SunSpec specification

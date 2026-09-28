@@ -49,6 +49,7 @@ impl Model14 {
     pub const USER: crate::Point<Self, Option<String>> = crate::Point::new(28, 12, true);
     pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(40, 12, true);
 }
+impl crate::sealed::Sealed for Model14 {}
 impl crate::Group for Model14 {
     const LEN: u16 = 52;
 }
@@ -87,6 +88,7 @@ bitflags::bitflags! {
         const Ipv6Proxy = 4;
     }
 }
+impl crate::sealed::Sealed for Cap {}
 impl crate::Value for Cap {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -112,6 +114,7 @@ bitflags::bitflags! {
     pub struct Typ: u16 {
     }
 }
+impl crate::sealed::Sealed for Typ {}
 impl crate::Value for Typ {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

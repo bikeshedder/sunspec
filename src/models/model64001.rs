@@ -112,6 +112,7 @@ impl Model64001 {
     pub const S4_VER: crate::Point<Self, Option<String>> = crate::Point::new(64, 2, false);
     pub const S4_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(66, 5, false);
 }
+impl crate::sealed::Sealed for Model64001 {}
 impl crate::Group for Model64001 {
     const LEN: u16 = 71;
 }
@@ -169,6 +170,7 @@ bitflags::bitflags! {
     pub struct Switch: u16 {
     }
 }
+impl crate::sealed::Sealed for Switch {}
 impl crate::Value for Switch {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -192,6 +194,7 @@ bitflags::bitflags! {
     pub struct Status: u16 {
     }
 }
+impl crate::sealed::Sealed for Status {}
 impl crate::Value for Status {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -215,6 +218,7 @@ bitflags::bitflags! {
     pub struct Config: u16 {
     }
 }
+impl crate::sealed::Sealed for Config {}
 impl crate::Value for Config {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

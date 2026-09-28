@@ -12,6 +12,7 @@ pub struct Inclinometer {
 }
 #[allow(missing_docs)]
 impl Inclinometer {}
+impl crate::sealed::Sealed for Inclinometer {}
 impl crate::Group for Inclinometer {
     const LEN: u16 = 0;
 }
@@ -47,6 +48,7 @@ impl Incl {
     pub const INCLY: crate::Point<Self, Option<i32>> = crate::Point::new(2, 2, false);
     pub const INCLZ: crate::Point<Self, Option<i32>> = crate::Point::new(4, 2, false);
 }
+impl crate::sealed::Sealed for Incl {}
 impl crate::Group for Incl {
     const LEN: u16 = 6;
 }

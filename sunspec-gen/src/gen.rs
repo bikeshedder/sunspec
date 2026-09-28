@@ -553,6 +553,7 @@ fn gen_group(
         }
     };
     let trait_impl = quote! {
+        impl crate::sealed::Sealed for #group_name {}
         impl crate::Group for #group_name {
             const LEN: u16 = #group_len;
         }
@@ -804,6 +805,7 @@ fn gen_enum(point: &Point, prefix: &str) -> TokenStream {
             /// Raw enum value not defined by the SunSpec model.
             Invalid(#repr),
         }
+        impl crate::sealed::Sealed for #name {}
         impl crate::EnumValue for #name {
             type Repr = #repr;
             const INVALID: Self::Repr = #invalid;
@@ -861,6 +863,7 @@ fn gen_bitfield(point: &Point, prefix: &str) -> TokenStream {
                 #(#fields)*
             }
         }
+        impl crate::sealed::Sealed for #name {}
         impl crate::Value for #name {
             fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
                 let value = #repr::decode(data)?;

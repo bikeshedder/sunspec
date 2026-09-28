@@ -134,6 +134,7 @@ impl StorageBasic {
     pub const IN_BAT_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
     pub const IN_OUT_W_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
 }
+impl crate::sealed::Sealed for StorageBasic {}
 impl crate::Group for StorageBasic {
     const LEN: u16 = 24;
 }
@@ -186,6 +187,7 @@ bitflags::bitflags! {
         const DiScharge = 2;
     }
 }
+impl crate::sealed::Sealed for StorCtlMod {}
 impl crate::Value for StorCtlMod {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -225,6 +227,7 @@ pub enum ChaSt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ChaSt {}
 impl crate::EnumValue for ChaSt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -271,6 +274,7 @@ pub enum ChaGriSet {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ChaGriSet {}
 impl crate::EnumValue for ChaGriSet {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

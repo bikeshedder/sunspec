@@ -136,6 +136,7 @@ impl Controls {
     pub const OUT_PF_SET_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
     pub const VAR_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
 }
+impl crate::sealed::Sealed for Controls {}
 impl crate::Group for Controls {
     const LEN: u16 = 24;
 }
@@ -188,6 +189,7 @@ pub enum Conn {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Conn {}
 impl crate::EnumValue for Conn {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -226,6 +228,7 @@ pub enum WMaxLimEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for WMaxLimEna {}
 impl crate::EnumValue for WMaxLimEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -264,6 +267,7 @@ pub enum OutPfSetEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for OutPfSetEna {}
 impl crate::EnumValue for OutPfSetEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -306,6 +310,7 @@ pub enum VarPctMod {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for VarPctMod {}
 impl crate::EnumValue for VarPctMod {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -348,6 +353,7 @@ pub enum VarPctEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for VarPctEna {}
 impl crate::EnumValue for VarPctEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

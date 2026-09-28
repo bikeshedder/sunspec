@@ -48,6 +48,7 @@ impl Pricing {
     pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const SIG_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
 }
+impl crate::sealed::Sealed for Pricing {}
 impl crate::Group for Pricing {
     const LEN: u16 = 8;
 }
@@ -81,6 +82,7 @@ bitflags::bitflags! {
         const Enable = 1;
     }
 }
+impl crate::sealed::Sealed for ModEna {}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -116,6 +118,7 @@ pub enum SigType {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SigType {}
 impl crate::EnumValue for SigType {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

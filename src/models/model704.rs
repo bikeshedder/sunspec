@@ -266,6 +266,7 @@ impl DerCtlAc {
     pub const VAR_SET_SF: crate::Point<Self, Option<i16>> = crate::Point::new(55, 1, false);
     pub const VAR_SET_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(56, 1, false);
 }
+impl crate::sealed::Sealed for DerCtlAc {}
 impl crate::Group for DerCtlAc {
     const LEN: u16 = 57;
 }
@@ -351,6 +352,7 @@ pub enum PfWInjEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PfWInjEna {}
 impl crate::EnumValue for PfWInjEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -393,6 +395,7 @@ pub enum PfWInjEnaRvrt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PfWInjEnaRvrt {}
 impl crate::EnumValue for PfWInjEnaRvrt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -437,6 +440,7 @@ pub enum PfWAbsEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PfWAbsEna {}
 impl crate::EnumValue for PfWAbsEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -479,6 +483,7 @@ pub enum PfWAbsEnaRvrt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PfWAbsEnaRvrt {}
 impl crate::EnumValue for PfWAbsEnaRvrt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -523,6 +528,7 @@ pub enum WMaxLimPctEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for WMaxLimPctEna {}
 impl crate::EnumValue for WMaxLimPctEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -565,6 +571,7 @@ pub enum WMaxLimPctEnaRvrt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for WMaxLimPctEnaRvrt {}
 impl crate::EnumValue for WMaxLimPctEnaRvrt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -609,6 +616,7 @@ pub enum WSetEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for WSetEna {}
 impl crate::EnumValue for WSetEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -651,6 +659,7 @@ pub enum WSetMod {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for WSetMod {}
 impl crate::EnumValue for WSetMod {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -693,6 +702,7 @@ pub enum WSetEnaRvrt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for WSetEnaRvrt {}
 impl crate::EnumValue for WSetEnaRvrt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -737,6 +747,7 @@ pub enum VarSetEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for VarSetEna {}
 impl crate::EnumValue for VarSetEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -791,6 +802,7 @@ pub enum VarSetMod {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for VarSetMod {}
 impl crate::EnumValue for VarSetMod {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -843,6 +855,7 @@ pub enum VarSetPri {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for VarSetPri {}
 impl crate::EnumValue for VarSetPri {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -887,6 +900,7 @@ pub enum VarSetEnaRvrt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for VarSetEnaRvrt {}
 impl crate::EnumValue for VarSetEnaRvrt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -929,6 +943,7 @@ pub enum WRmpRef {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for WRmpRef {}
 impl crate::EnumValue for WRmpRef {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -971,6 +986,7 @@ pub enum AntiIslEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for AntiIslEna {}
 impl crate::EnumValue for AntiIslEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1018,6 +1034,7 @@ impl PfWInj {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfWInjExt>> = crate::Point::new(1, 1, true);
 }
+impl crate::sealed::Sealed for PfWInj {}
 impl crate::Group for PfWInj {
     const LEN: u16 = 2;
 }
@@ -1052,6 +1069,7 @@ pub enum PfWInjExt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PfWInjExt {}
 impl crate::EnumValue for PfWInjExt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1097,6 +1115,7 @@ impl PfWInjRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfWInjRvrtExt>> = crate::Point::new(1, 1, true);
 }
+impl crate::sealed::Sealed for PfWInjRvrt {}
 impl crate::Group for PfWInjRvrt {
     const LEN: u16 = 2;
 }
@@ -1131,6 +1150,7 @@ pub enum PfWInjRvrtExt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PfWInjRvrtExt {}
 impl crate::EnumValue for PfWInjRvrtExt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1176,6 +1196,7 @@ impl PfWAbs {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfWAbsExt>> = crate::Point::new(1, 1, true);
 }
+impl crate::sealed::Sealed for PfWAbs {}
 impl crate::Group for PfWAbs {
     const LEN: u16 = 2;
 }
@@ -1210,6 +1231,7 @@ pub enum PfWAbsExt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PfWAbsExt {}
 impl crate::EnumValue for PfWAbsExt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1255,6 +1277,7 @@ impl PfWAbsRvrt {
     pub const PF: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const EXT: crate::Point<Self, Option<PfWAbsRvrtExt>> = crate::Point::new(1, 1, true);
 }
+impl crate::sealed::Sealed for PfWAbsRvrt {}
 impl crate::Group for PfWAbsRvrt {
     const LEN: u16 = 2;
 }
@@ -1289,6 +1312,7 @@ pub enum PfWAbsRvrtExt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PfWAbsRvrtExt {}
 impl crate::EnumValue for PfWAbsRvrtExt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

@@ -29,6 +29,7 @@ impl PvSimCurves {
     pub const IRR: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
     pub const IRR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
 }
+impl crate::sealed::Sealed for PvSimCurves {}
 impl crate::Group for PvSimCurves {
     const LEN: u16 = 3;
 }
@@ -75,6 +76,7 @@ impl Iv {
     pub const I: crate::Point<Self, Option<f32>> = crate::Point::new(2, 2, false);
     pub const V: crate::Point<Self, Option<f32>> = crate::Point::new(4, 2, false);
 }
+impl crate::sealed::Sealed for Iv {}
 impl crate::Group for Iv {
     const LEN: u16 = 6;
 }

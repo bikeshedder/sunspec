@@ -66,6 +66,7 @@ impl Hvrtc {
     pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
 }
+impl crate::sealed::Sealed for Hvrtc {}
 impl crate::Group for Hvrtc {
     const LEN: u16 = 10;
 }
@@ -103,6 +104,7 @@ bitflags::bitflags! {
         const Enabled = 1;
     }
 }
+impl crate::sealed::Sealed for ModEna {}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -342,6 +344,7 @@ impl Curve {
     pub const CRV_NAM: crate::Point<Self, Option<String>> = crate::Point::new(41, 8, true);
     pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(49, 1, false);
 }
+impl crate::sealed::Sealed for Curve {}
 impl crate::Group for Curve {
     const LEN: u16 = 50;
 }
@@ -430,6 +433,7 @@ pub enum CurveReadOnly {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CurveReadOnly {}
 impl crate::EnumValue for CurveReadOnly {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

@@ -41,6 +41,7 @@ impl Location {
     pub const LONG: crate::Point<Self, Option<i32>> = crate::Point::new(32, 2, false);
     pub const ALT: crate::Point<Self, Option<i32>> = crate::Point::new(34, 2, false);
 }
+impl crate::sealed::Sealed for Location {}
 impl crate::Group for Location {
     const LEN: u16 = 36;
 }

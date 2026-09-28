@@ -43,6 +43,7 @@ impl Common {
     pub const SN: crate::Point<Self, String> = crate::Point::new(48, 16, false);
     pub const DA: crate::Point<Self, Option<u16>> = crate::Point::new(64, 1, true);
 }
+impl crate::sealed::Sealed for Common {}
 impl crate::Group for Common {
     const LEN: u16 = 66;
 }

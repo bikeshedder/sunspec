@@ -37,4 +37,5 @@ mod model;
 /// This module contains all the genererated SunSpec models.
 pub mod models;
 mod point;
+mod sealed;
 mod value;

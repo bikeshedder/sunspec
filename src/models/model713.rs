@@ -48,6 +48,7 @@ impl DerStorageCapacity {
     pub const WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, false);
     pub const PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
 }
+impl crate::sealed::Sealed for DerStorageCapacity {}
 impl crate::Group for DerStorageCapacity {
     const LEN: u16 = 7;
 }
@@ -91,6 +92,7 @@ pub enum Sta {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Sta {}
 impl crate::EnumValue for Sta {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

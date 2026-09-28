@@ -73,6 +73,7 @@ impl DerMeasureDc {
     pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
 }
+impl crate::sealed::Sealed for DerMeasureDc {}
 impl crate::Group for DerMeasureDc {
     const LEN: u16 = 18;
 }
@@ -115,6 +116,7 @@ bitflags::bitflags! {
     pub struct PrtAlrms: u32 {
     }
 }
+impl crate::sealed::Sealed for PrtAlrms {}
 impl crate::Value for PrtAlrms {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -194,6 +196,7 @@ impl Prt {
     pub const DC_STA: crate::Point<Self, Option<PrtDcSta>> = crate::Point::new(22, 1, false);
     pub const DC_ALRM: crate::Point<Self, Option<PrtDcAlrm>> = crate::Point::new(23, 2, false);
 }
+impl crate::sealed::Sealed for Prt {}
 impl crate::Group for Prt {
     const LEN: u16 = 25;
 }
@@ -257,6 +260,7 @@ pub enum PrtPrtTyp {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PrtPrtTyp {}
 impl crate::EnumValue for PrtPrtTyp {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -309,6 +313,7 @@ pub enum PrtDcSta {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for PrtDcSta {}
 impl crate::EnumValue for PrtDcSta {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -375,6 +380,7 @@ bitflags::bitflags! {
         const InputOverCurrent = 4194304;
     }
 }
+impl crate::sealed::Sealed for PrtDcAlrm {}
 impl crate::Value for PrtDcAlrm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

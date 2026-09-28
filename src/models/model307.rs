@@ -48,6 +48,7 @@ impl BaseMet {
     pub const SUR_WET: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
     pub const SOIL_WET: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
 }
+impl crate::sealed::Sealed for BaseMet {}
 impl crate::Group for BaseMet {
     const LEN: u16 = 11;
 }

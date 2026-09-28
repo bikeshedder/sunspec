@@ -21,6 +21,7 @@ impl Model8 {
     pub const FMT: crate::Point<Self, Fmt> = crate::Point::new(0, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
 }
+impl crate::sealed::Sealed for Model8 {}
 impl crate::Group for Model8 {
     const LEN: u16 = 2;
 }
@@ -55,6 +56,7 @@ pub enum Fmt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Fmt {}
 impl crate::EnumValue for Fmt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -95,6 +97,7 @@ pub struct Repeating {
 impl Repeating {
     pub const CERT: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
 }

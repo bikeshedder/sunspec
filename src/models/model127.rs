@@ -58,6 +58,7 @@ impl FreqWattParam {
     pub const HZ_STR_STOP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
     pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
 }
+impl crate::sealed::Sealed for FreqWattParam {}
 impl crate::Group for FreqWattParam {
     const LEN: u16 = 10;
 }
@@ -93,6 +94,7 @@ bitflags::bitflags! {
         const Enabled = 1;
     }
 }
+impl crate::sealed::Sealed for HysEna {}
 impl crate::Value for HysEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -120,6 +122,7 @@ bitflags::bitflags! {
         const Enabled = 1;
     }
 }
+impl crate::sealed::Sealed for ModEna {}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

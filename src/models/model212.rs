@@ -261,6 +261,7 @@ impl AcMeterAbnFloat {
         crate::Point::new(120, 2, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(122, 2, false);
 }
+impl crate::sealed::Sealed for AcMeterAbnFloat {}
 impl crate::Group for AcMeterAbnFloat {
     const LEN: u16 = 124;
 }
@@ -405,6 +406,7 @@ bitflags::bitflags! {
         const MEventOem15 = 1073741824;
     }
 }
+impl crate::sealed::Sealed for Evt {}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

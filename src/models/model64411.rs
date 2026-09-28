@@ -261,6 +261,7 @@ impl AcSimInterface {
     pub const V_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(1394, 1, false);
     pub const THD_SF: crate::Point<Self, i16> = crate::Point::new(1395, 1, false);
 }
+impl crate::sealed::Sealed for AcSimInterface {}
 impl crate::Group for AcSimInterface {
     const LEN: u16 = 1396;
 }
@@ -343,6 +344,7 @@ pub enum Output {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Output {}
 impl crate::EnumValue for Output {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -381,6 +383,7 @@ pub enum Relay {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Relay {}
 impl crate::EnumValue for Relay {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -419,6 +422,7 @@ pub enum Regen {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Regen {}
 impl crate::EnumValue for Regen {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -459,6 +463,7 @@ pub enum EnaProf {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for EnaProf {}
 impl crate::EnumValue for EnaProf {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -501,6 +506,7 @@ pub enum ProfRslt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ProfRslt {}
 impl crate::EnumValue for ProfRslt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -556,6 +562,7 @@ impl Prof {
     pub const NAME: crate::Point<Self, Option<String>> = crate::Point::new(0, 32, true);
     pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(32, 1, true);
 }
+impl crate::sealed::Sealed for Prof {}
 impl crate::Group for Prof {
     const LEN: u16 = 33;
 }
@@ -642,6 +649,7 @@ impl Pt {
     pub const PHASE_ANGLE_B: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
     pub const PHASE_ANGLE_C: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
 }
+impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {
     const LEN: u16 = 8;
 }

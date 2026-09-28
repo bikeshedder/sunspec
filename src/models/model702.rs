@@ -288,6 +288,7 @@ impl DerCapacity {
     pub const A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(48, 1, false);
     pub const S_SF: crate::Point<Self, Option<i16>> = crate::Point::new(49, 1, false);
 }
+impl crate::sealed::Sealed for DerCapacity {}
 impl crate::Group for DerCapacity {
     const LEN: u16 = 50;
 }
@@ -365,6 +366,7 @@ pub enum NorOpCatRtg {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NorOpCatRtg {}
 impl crate::EnumValue for NorOpCatRtg {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -405,6 +407,7 @@ pub enum AbnOpCatRtg {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for AbnOpCatRtg {}
 impl crate::EnumValue for AbnOpCatRtg {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -469,6 +472,7 @@ bitflags::bitflags! {
         const HfTrip = 8192;
     }
 }
+impl crate::sealed::Sealed for CtrlModes {}
 impl crate::Value for CtrlModes {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -502,6 +506,7 @@ bitflags::bitflags! {
         const IsochCapable = 8;
     }
 }
+impl crate::sealed::Sealed for IntIslandCatRtg {}
 impl crate::Value for IntIslandCatRtg {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -535,6 +540,7 @@ bitflags::bitflags! {
         const IsochCapable = 8;
     }
 }
+impl crate::sealed::Sealed for IntIslandCat {}
 impl crate::Value for IntIslandCat {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

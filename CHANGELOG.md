@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Breaking:** Seal the `Model`, `DynModel`, `Group`, `Value`, `FixedSize`
+  and `EnumValue` traits. They were never meant to be implemented outside of
+  this crate, which allows extending them without further breaking changes.
 - `ModelAddr`, `ReadModelError` and `InvalidPointData` no longer require
   `M: Model`
 - Update sunspec models (2026-08-20)

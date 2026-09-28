@@ -70,6 +70,7 @@ impl DerFreqDroop {
     pub const K_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
     pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
 }
+impl crate::sealed::Sealed for DerFreqDroop {}
 impl crate::Group for DerFreqDroop {
     const LEN: u16 = 12;
 }
@@ -117,6 +118,7 @@ pub enum Ena {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Ena {}
 impl crate::EnumValue for Ena {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -163,6 +165,7 @@ pub enum AdptCtlRslt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for AdptCtlRslt {}
 impl crate::EnumValue for AdptCtlRslt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -237,6 +240,7 @@ impl Ctl {
     pub const P_MIN: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, true);
     pub const READ_ONLY: crate::Point<Self, CtlReadOnly> = crate::Point::new(9, 1, false);
 }
+impl crate::sealed::Sealed for Ctl {}
 impl crate::Group for Ctl {
     const LEN: u16 = 10;
 }
@@ -288,6 +292,7 @@ pub enum CtlReadOnly {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CtlReadOnly {}
 impl crate::EnumValue for CtlReadOnly {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

@@ -297,6 +297,7 @@ impl AcMeterAnOrAb {
     pub const TOT_VARH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(102, 1, false);
     pub const EVT: crate::Point<Self, Evt> = crate::Point::new(103, 2, false);
 }
+impl crate::sealed::Sealed for AcMeterAnOrAb {}
 impl crate::Group for AcMeterAnOrAb {
     const LEN: u16 = 105;
 }
@@ -435,6 +436,7 @@ bitflags::bitflags! {
         const Oem15 = 1073741824;
     }
 }
+impl crate::sealed::Sealed for Evt {}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

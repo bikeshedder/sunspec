@@ -56,6 +56,7 @@ impl DerTripLv {
     pub const V_SF: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
     pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
 }
+impl crate::sealed::Sealed for DerTripLv {}
 impl crate::Group for DerTripLv {
     const LEN: u16 = 7;
 }
@@ -101,6 +102,7 @@ pub enum Ena {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Ena {}
 impl crate::EnumValue for Ena {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -147,6 +149,7 @@ pub enum AdptCrvRslt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for AdptCrvRslt {}
 impl crate::EnumValue for AdptCrvRslt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -205,6 +208,7 @@ pub struct Crv {
 impl Crv {
     pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for Crv {}
 impl crate::Group for Crv {
     const LEN: u16 = 1;
 }
@@ -259,6 +263,7 @@ pub enum CrvReadOnly {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CrvReadOnly {}
 impl crate::EnumValue for CrvReadOnly {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -305,6 +310,7 @@ pub struct MustTrip {
 impl MustTrip {
     pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
 }
+impl crate::sealed::Sealed for MustTrip {}
 impl crate::Group for MustTrip {
     const LEN: u16 = 1;
 }
@@ -350,6 +356,7 @@ impl Pt {
     pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
     pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(1, 2, true);
 }
+impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {
     const LEN: u16 = 3;
 }
@@ -398,6 +405,7 @@ pub struct MayTrip {
 impl MayTrip {
     pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
 }
+impl crate::sealed::Sealed for MayTrip {}
 impl crate::Group for MayTrip {
     const LEN: u16 = 1;
 }
@@ -438,6 +446,7 @@ pub struct MomCess {
 impl MomCess {
     pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
 }
+impl crate::sealed::Sealed for MomCess {}
 impl crate::Group for MomCess {
     const LEN: u16 = 1;
 }

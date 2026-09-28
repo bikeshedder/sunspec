@@ -100,6 +100,7 @@ impl StringCombinerAdvancedInputs {
     pub const IN_DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
     pub const IN_DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
 }
+impl crate::sealed::Sealed for StringCombinerAdvancedInputs {}
 impl crate::Group for StringCombinerAdvancedInputs {
     const LEN: u16 = 25;
 }
@@ -185,6 +186,7 @@ bitflags::bitflags! {
         const ArcDetected = 262144;
     }
 }
+impl crate::sealed::Sealed for Evt {}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -210,6 +212,7 @@ bitflags::bitflags! {
     pub struct EvtVnd: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd {}
 impl crate::Value for EvtVnd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -285,6 +288,7 @@ impl String {
     pub const IN_DC_PR: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
     pub const IN_N: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
 }
+impl crate::sealed::Sealed for String {}
 impl crate::Group for String {
     const LEN: u16 = 14;
 }
@@ -374,6 +378,7 @@ bitflags::bitflags! {
         const ArcDetected = 262144;
     }
 }
+impl crate::sealed::Sealed for StringInEvt {}
 impl crate::Value for StringInEvt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -399,6 +404,7 @@ bitflags::bitflags! {
     pub struct StringInEvtVnd: u32 {
     }
 }
+impl crate::sealed::Sealed for StringInEvtVnd {}
 impl crate::Value for StringInEvtVnd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

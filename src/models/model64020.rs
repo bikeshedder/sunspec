@@ -133,6 +133,7 @@ impl Model64020 {
     pub const RESET_ACCUMULATORS: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1, false);
     pub const RESET: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1, false);
 }
+impl crate::sealed::Sealed for Model64020 {}
 impl crate::Group for Model64020 {
     const LEN: u16 = 30;
 }
@@ -201,6 +202,7 @@ impl Repeating {
     pub const FIRMWARE: crate::Point<Self, String> = crate::Point::new(9, 6, false);
     pub const HARDWARE: crate::Point<Self, u16> = crate::Point::new(15, 1, false);
 }
+impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 16;
 }

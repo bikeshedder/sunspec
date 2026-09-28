@@ -38,6 +38,7 @@ impl DerCtl {
     pub const ALARM_RESET: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
     pub const OP_CTL: crate::Point<Self, Option<OpCtl>> = crate::Point::new(6, 1, true);
 }
+impl crate::sealed::Sealed for DerCtl {}
 impl crate::Group for DerCtl {
     const LEN: u16 = 7;
 }
@@ -75,6 +76,7 @@ pub enum LocRemCtl {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for LocRemCtl {}
 impl crate::EnumValue for LocRemCtl {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -117,6 +119,7 @@ pub enum OpCtl {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for OpCtl {}
 impl crate::EnumValue for OpCtl {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

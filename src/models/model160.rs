@@ -32,6 +32,7 @@ impl Mppt {
     pub const N: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
     pub const TMS_PER: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
 }
+impl crate::sealed::Sealed for Mppt {}
 impl crate::Group for Mppt {
     const LEN: u16 = 8;
 }
@@ -109,6 +110,7 @@ bitflags::bitflags! {
         const InputOverCurrent = 4194304;
     }
 }
+impl crate::sealed::Sealed for Evt {}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -163,6 +165,7 @@ impl Module {
     pub const DC_ST: crate::Point<Self, Option<ModuleDcSt>> = crate::Point::new(17, 1, false);
     pub const DC_EVT: crate::Point<Self, Option<ModuleDcEvt>> = crate::Point::new(18, 2, false);
 }
+impl crate::sealed::Sealed for Module {}
 impl crate::Group for Module {
     const LEN: u16 = 20;
 }
@@ -232,6 +235,7 @@ pub enum ModuleDcSt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ModuleDcSt {}
 impl crate::EnumValue for ModuleDcSt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -326,6 +330,7 @@ bitflags::bitflags! {
         const InputOverCurrent = 4194304;
     }
 }
+impl crate::sealed::Sealed for ModuleDcEvt {}
 impl crate::Value for ModuleDcEvt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

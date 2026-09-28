@@ -387,6 +387,7 @@ impl DerMeasureAc {
     pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(120, 1, false);
     pub const MN_ALRM_INFO: crate::Point<Self, Option<String>> = crate::Point::new(121, 32, false);
 }
+impl crate::sealed::Sealed for DerMeasureAc {}
 impl crate::Group for DerMeasureAc {
     const LEN: u16 = 153;
 }
@@ -489,6 +490,7 @@ pub enum AcType {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for AcType {}
 impl crate::EnumValue for AcType {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -531,6 +533,7 @@ pub enum St {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for St {}
 impl crate::EnumValue for St {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -583,6 +586,7 @@ pub enum InvSt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for InvSt {}
 impl crate::EnumValue for InvSt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -639,6 +643,7 @@ pub enum ConnSt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ConnSt {}
 impl crate::EnumValue for ConnSt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -711,6 +716,7 @@ bitflags::bitflags! {
         const ManufacturerAlrm = 65536;
     }
 }
+impl crate::sealed::Sealed for Alrm {}
 impl crate::Value for Alrm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -748,6 +754,7 @@ bitflags::bitflags! {
         const PvClipped = 4;
     }
 }
+impl crate::sealed::Sealed for DerMode {}
 impl crate::Value for DerMode {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -803,6 +810,7 @@ bitflags::bitflags! {
         const Derated = 16384;
     }
 }
+impl crate::sealed::Sealed for ThrotSrc {}
 impl crate::Value for ThrotSrc {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

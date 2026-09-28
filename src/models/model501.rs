@@ -98,6 +98,7 @@ impl SolarModuleFloat {
     pub const IN_WH: crate::Point<Self, Option<f32>> = crate::Point::new(27, 2, false);
     pub const IN_W: crate::Point<Self, Option<f32>> = crate::Point::new(29, 2, false);
 }
+impl crate::sealed::Sealed for SolarModuleFloat {}
 impl crate::Group for SolarModuleFloat {
     const LEN: u16 = 31;
 }
@@ -159,6 +160,7 @@ pub enum Stat {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Stat {}
 impl crate::EnumValue for Stat {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -251,6 +253,7 @@ bitflags::bitflags! {
         const TestFailed = 1048576;
     }
 }
+impl crate::sealed::Sealed for Evt {}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -276,6 +279,7 @@ bitflags::bitflags! {
     pub struct EvtVend: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVend {}
 impl crate::Value for EvtVend {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

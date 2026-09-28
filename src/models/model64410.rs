@@ -191,6 +191,7 @@ impl DcSimInterface {
     pub const I_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(66, 1, true);
     pub const PCT_SF: crate::Point<Self, i16> = crate::Point::new(67, 1, true);
 }
+impl crate::sealed::Sealed for DcSimInterface {}
 impl crate::Group for DcSimInterface {
     const LEN: u16 = 68;
 }
@@ -263,6 +264,7 @@ pub enum Mode {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Mode {}
 impl crate::EnumValue for Mode {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -305,6 +307,7 @@ pub enum Ena {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Ena {}
 impl crate::EnumValue for Ena {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -347,6 +350,7 @@ pub enum Reset {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Reset {}
 impl crate::EnumValue for Reset {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -389,6 +393,7 @@ pub enum En50530 {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for En50530 {}
 impl crate::EnumValue for En50530 {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -431,6 +436,7 @@ pub enum EnaProf {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for EnaProf {}
 impl crate::EnumValue for EnaProf {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -477,6 +483,7 @@ pub enum AdptProfRslt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for AdptProfRslt {}
 impl crate::EnumValue for AdptProfRslt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -532,6 +539,7 @@ impl Prof {
     pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
     pub const DEPT_REF: crate::Point<Self, ProfDeptRef> = crate::Point::new(1, 2, true);
 }
+impl crate::sealed::Sealed for Prof {}
 impl crate::Group for Prof {
     const LEN: u16 = 3;
 }
@@ -583,6 +591,7 @@ bitflags::bitflags! {
         const Irradiance = 8;
     }
 }
+impl crate::sealed::Sealed for ProfDeptRef {}
 impl crate::Value for ProfDeptRef {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -636,6 +645,7 @@ impl Pt {
     pub const I: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
     pub const G: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
 }
+impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {
     const LEN: u16 = 5;
 }

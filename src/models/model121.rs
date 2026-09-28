@@ -171,6 +171,7 @@ impl Settings {
     pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
     pub const ECP_NOM_HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, false);
 }
+impl crate::sealed::Sealed for Settings {}
 impl crate::Group for Settings {
     const LEN: u16 = 30;
 }
@@ -229,6 +230,7 @@ pub enum VarAct {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for VarAct {}
 impl crate::EnumValue for VarAct {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -267,6 +269,7 @@ pub enum ClcTotVa {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ClcTotVa {}
 impl crate::EnumValue for ClcTotVa {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -307,6 +310,7 @@ pub enum ConnPh {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ConnPh {}
 impl crate::EnumValue for ConnPh {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

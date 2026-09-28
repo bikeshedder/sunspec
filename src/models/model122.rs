@@ -116,6 +116,7 @@ impl Status {
     pub const RIS: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1, false);
     pub const RIS_SF: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
 }
+impl crate::sealed::Sealed for Status {}
 impl crate::Group for Status {
     const LEN: u16 = 44;
 }
@@ -168,6 +169,7 @@ bitflags::bitflags! {
         const Test = 8;
     }
 }
+impl crate::sealed::Sealed for PvConn {}
 impl crate::Value for PvConn {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -201,6 +203,7 @@ bitflags::bitflags! {
         const Test = 8;
     }
 }
+impl crate::sealed::Sealed for StorConn {}
 impl crate::Value for StorConn {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -230,6 +233,7 @@ bitflags::bitflags! {
         const Connected = 2;
     }
 }
+impl crate::sealed::Sealed for EcpConn {}
 impl crate::Value for EcpConn {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -279,6 +283,7 @@ bitflags::bitflags! {
         const PfMinQ4 = 1024;
     }
 }
+impl crate::sealed::Sealed for StSetLimMsk {}
 impl crate::Value for StSetLimMsk {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -332,6 +337,7 @@ bitflags::bitflags! {
         const Hfrt = 16384;
     }
 }
+impl crate::sealed::Sealed for StActCtl {}
 impl crate::Value for StActCtl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -365,6 +371,7 @@ bitflags::bitflags! {
         const HfrtActive = 8;
     }
 }
+impl crate::sealed::Sealed for RtSt {}
 impl crate::Value for RtSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

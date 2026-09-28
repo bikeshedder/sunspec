@@ -6,7 +6,7 @@ use std::{
 
 use thiserror::Error;
 
-use crate::{models::MODELS, AnyModel, Model, ModelAddr, Models, ParseError};
+use crate::{models::MODELS, sealed::Sealed, AnyModel, Model, ModelAddr, Models, ParseError};
 
 /// Information about a model which is known at runtime.
 ///
@@ -129,7 +129,9 @@ pub struct ModelNotFound(pub String);
 /// Object safe part of the [`Model`] trait. It is implemented by all
 /// models and used by [`AnyModel::as_dyn`] to provide methods which
 /// work with any model.
-pub trait DynModel: Debug {
+///
+/// This trait is sealed and cannot be implemented outside of this crate.
+pub trait DynModel: Sealed + Debug {
     /// Returns information about this model.
     fn info(&self) -> &'static ModelInfo;
 }

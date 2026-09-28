@@ -308,6 +308,7 @@ impl Battery {
     pub const A_MAX_SF: crate::Point<Self, i16> = crate::Point::new(60, 1, false);
     pub const W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(61, 1, false);
 }
+impl crate::sealed::Sealed for Battery {}
 impl crate::Group for Battery {
     const LEN: u16 = 62;
 }
@@ -402,6 +403,7 @@ pub enum ChaSt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ChaSt {}
 impl crate::EnumValue for ChaSt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -452,6 +454,7 @@ pub enum LocRemCtl {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for LocRemCtl {}
 impl crate::EnumValue for LocRemCtl {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -512,6 +515,7 @@ pub enum Typ {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Typ {}
 impl crate::EnumValue for Typ {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -582,6 +586,7 @@ pub enum State {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for State {}
 impl crate::EnumValue for State {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -686,6 +691,7 @@ bitflags::bitflags! {
         const ConfigurationWarning = 536870912;
     }
 }
+impl crate::sealed::Sealed for Evt1 {}
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -713,6 +719,7 @@ bitflags::bitflags! {
     pub struct Evt2: u32 {
     }
 }
+impl crate::sealed::Sealed for Evt2 {}
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -738,6 +745,7 @@ bitflags::bitflags! {
     pub struct EvtVnd1: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd1 {}
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -763,6 +771,7 @@ bitflags::bitflags! {
     pub struct EvtVnd2: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd2 {}
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -796,6 +805,7 @@ pub enum ReqInvState {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ReqInvState {}
 impl crate::EnumValue for ReqInvState {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -836,6 +846,7 @@ pub enum SetOp {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SetOp {}
 impl crate::EnumValue for SetOp {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -878,6 +889,7 @@ pub enum SetInvState {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SetInvState {}
 impl crate::EnumValue for SetInvState {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

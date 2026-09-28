@@ -49,6 +49,7 @@ impl Model17 {
     pub const TYP: crate::Point<Self, Option<Typ>> = crate::Point::new(10, 1, false);
     pub const PCOL: crate::Point<Self, Option<Pcol>> = crate::Point::new(11, 1, false);
 }
+impl crate::sealed::Sealed for Model17 {}
 impl crate::Group for Model17 {
     const LEN: u16 = 12;
 }
@@ -87,6 +88,7 @@ pub enum Pty {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Pty {}
 impl crate::EnumValue for Pty {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -127,6 +129,7 @@ pub enum Dup {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Dup {}
 impl crate::EnumValue for Dup {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -167,6 +170,7 @@ pub enum Flw {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Flw {}
 impl crate::EnumValue for Flw {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -209,6 +213,7 @@ pub enum Typ {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Typ {}
 impl crate::EnumValue for Typ {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -251,6 +256,7 @@ pub enum Pcol {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Pcol {}
 impl crate::EnumValue for Pcol {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

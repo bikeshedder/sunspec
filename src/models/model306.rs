@@ -31,6 +31,7 @@ impl RefPoint {
     pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
     pub const TMP: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
 }
+impl crate::sealed::Sealed for RefPoint {}
 impl crate::Group for RefPoint {
     const LEN: u16 = 4;
 }

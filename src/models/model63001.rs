@@ -180,6 +180,7 @@ impl Model63001 {
     pub const SUNSSF_6: crate::Point<Self, Option<i16>> = crate::Point::new(131, 1, false);
     pub const SUNSSF_7: crate::Point<Self, Option<i16>> = crate::Point::new(132, 1, false);
 }
+impl crate::sealed::Sealed for Model63001 {}
 impl crate::Group for Model63001 {
     const LEN: u16 = 134;
 }
@@ -259,6 +260,7 @@ bitflags::bitflags! {
     pub struct Bitfield16: u16 {
     }
 }
+impl crate::sealed::Sealed for Bitfield16 {}
 impl crate::Value for Bitfield16 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -282,6 +284,7 @@ bitflags::bitflags! {
     pub struct Bitfield16U: u16 {
     }
 }
+impl crate::sealed::Sealed for Bitfield16U {}
 impl crate::Value for Bitfield16U {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -305,6 +308,7 @@ bitflags::bitflags! {
     pub struct Bitfield32: u32 {
     }
 }
+impl crate::sealed::Sealed for Bitfield32 {}
 impl crate::Value for Bitfield32 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -328,6 +332,7 @@ bitflags::bitflags! {
     pub struct Bitfield32U: u32 {
     }
 }
+impl crate::sealed::Sealed for Bitfield32U {}
 impl crate::Value for Bitfield32U {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -391,6 +396,7 @@ impl Repeating {
     pub const UINT32_U: crate::Point<Self, Option<u32>> = crate::Point::new(14, 2, false);
     pub const SUNSSF_9: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
 }
+impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 18;
 }

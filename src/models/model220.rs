@@ -154,6 +154,7 @@ impl AcMeterSecure {
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(40, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(41, 1, false);
 }
+impl crate::sealed::Sealed for AcMeterSecure {}
 impl crate::Group for AcMeterSecure {
     const LEN: u16 = 42;
 }
@@ -253,6 +254,7 @@ bitflags::bitflags! {
         const Oem15 = 1073741824;
     }
 }
+impl crate::sealed::Sealed for Evt {}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -286,6 +288,7 @@ pub enum Alg {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Alg {}
 impl crate::EnumValue for Alg {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -324,6 +327,7 @@ pub struct Repeating {
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
 }

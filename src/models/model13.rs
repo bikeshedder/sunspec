@@ -84,6 +84,7 @@ impl Model13 {
     pub const DOM_NAM: crate::Point<Self, Option<String>> = crate::Point::new(149, 12, true);
     pub const HOST_NAM: crate::Point<Self, Option<String>> = crate::Point::new(161, 12, true);
 }
+impl crate::sealed::Sealed for Model13 {}
 impl crate::Group for Model13 {
     const LEN: u16 = 174;
 }
@@ -129,6 +130,7 @@ pub enum CfgSt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CfgSt {}
 impl crate::EnumValue for CfgSt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -167,6 +169,7 @@ bitflags::bitflags! {
         const Pending = 1;
     }
 }
+impl crate::sealed::Sealed for ChgSt {}
 impl crate::Value for ChgSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -208,6 +211,7 @@ bitflags::bitflags! {
         const ResetRequired = 128;
     }
 }
+impl crate::sealed::Sealed for Cap {}
 impl crate::Value for Cap {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -241,6 +245,7 @@ pub enum Cfg {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Cfg {}
 impl crate::EnumValue for Cfg {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -283,6 +288,7 @@ pub enum Ctl {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Ctl {}
 impl crate::EnumValue for Ctl {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

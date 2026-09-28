@@ -42,6 +42,7 @@ impl DerSimControls {
     pub const GRID_VOLTAGE_C: crate::Point<Self, Option<f32>> = crate::Point::new(82, 2, true);
     pub const GRID_FREQUENCY: crate::Point<Self, Option<f32>> = crate::Point::new(84, 2, true);
 }
+impl crate::sealed::Sealed for DerSimControls {}
 impl crate::Group for DerSimControls {
     const LEN: u16 = 86;
 }

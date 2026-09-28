@@ -35,6 +35,7 @@ impl Schedule {
     pub const N_SCHD: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
     pub const N_PTS: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
 }
+impl crate::sealed::Sealed for Schedule {}
 impl crate::Group for Schedule {
     const LEN: u16 = 6;
 }
@@ -127,6 +128,7 @@ bitflags::bitflags! {
         const Sched32 = 2147483648;
     }
 }
+impl crate::sealed::Sealed for ActSchd {}
 impl crate::Value for ActSchd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -154,6 +156,7 @@ bitflags::bitflags! {
         const Enabled = 1;
     }
 }
+impl crate::sealed::Sealed for ModEna {}
 impl crate::Value for ModEna {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -338,6 +341,7 @@ impl Repeating {
     pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(58, 1, true);
     pub const ACT_INDX: crate::Point<Self, u16> = crate::Point::new(59, 1, false);
 }
+impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 60;
 }
@@ -427,6 +431,7 @@ pub enum RepeatingIntvTyp {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for RepeatingIntvTyp {}
 impl crate::EnumValue for RepeatingIntvTyp {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -483,6 +488,7 @@ pub enum RepeatingXTyp {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for RepeatingXTyp {}
 impl crate::EnumValue for RepeatingXTyp {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -551,6 +557,7 @@ pub enum RepeatingYTyp {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for RepeatingYTyp {}
 impl crate::EnumValue for RepeatingYTyp {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

@@ -16,6 +16,7 @@ pub struct Storage {
 impl Storage {
     pub const DEPRECATED: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for Storage {}
 impl crate::Group for Storage {
     const LEN: u16 = 1;
 }

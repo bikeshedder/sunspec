@@ -44,6 +44,7 @@ impl Model11 {
     pub const CTL: crate::Point<Self, Option<Ctl>> = crate::Point::new(11, 1, true);
     pub const FRC_SPD: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, true);
 }
+impl crate::sealed::Sealed for Model11 {}
 impl crate::Group for Model11 {
     const LEN: u16 = 13;
 }
@@ -89,6 +90,7 @@ bitflags::bitflags! {
         const HwFault = 64;
     }
 }
+impl crate::sealed::Sealed for CfgSt {}
 impl crate::Value for CfgSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -122,6 +124,7 @@ pub enum St {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for St {}
 impl crate::EnumValue for St {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -164,6 +167,7 @@ bitflags::bitflags! {
         const FullDuplex = 2;
     }
 }
+impl crate::sealed::Sealed for Ctl {}
 impl crate::Value for Ctl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

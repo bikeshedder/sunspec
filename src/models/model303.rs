@@ -12,6 +12,7 @@ pub struct BomTemp {
 }
 #[allow(missing_docs)]
 impl BomTemp {}
+impl crate::sealed::Sealed for BomTemp {}
 impl crate::Group for BomTemp {
     const LEN: u16 = 0;
 }
@@ -37,6 +38,7 @@ pub struct Temp {
 impl Temp {
     pub const TMP_BOM: crate::Point<Self, i16> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for Temp {}
 impl crate::Group for Temp {
     const LEN: u16 = 1;
 }

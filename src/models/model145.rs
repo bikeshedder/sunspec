@@ -51,6 +51,7 @@ impl ExtSettings {
     pub const A_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
     pub const RMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
 }
+impl crate::sealed::Sealed for ExtSettings {}
 impl crate::Group for ExtSettings {
     const LEN: u16 = 8;
 }

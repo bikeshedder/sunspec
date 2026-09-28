@@ -69,6 +69,7 @@ impl Model15 {
     pub const OUT_DSC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(19, 2, false);
     pub const OUT_ERR_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(21, 2, false);
 }
+impl crate::sealed::Sealed for Model15 {}
 impl crate::Group for Model15 {
     const LEN: u16 = 24;
 }

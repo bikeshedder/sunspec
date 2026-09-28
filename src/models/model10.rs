@@ -24,6 +24,7 @@ impl Model10 {
     pub const CTL: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
     pub const TYP: crate::Point<Self, Option<Typ>> = crate::Point::new(2, 1, false);
 }
+impl crate::sealed::Sealed for Model10 {}
 impl crate::Group for Model10 {
     const LEN: u16 = 4;
 }
@@ -57,6 +58,7 @@ pub enum St {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for St {}
 impl crate::EnumValue for St {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -103,6 +105,7 @@ pub enum Typ {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Typ {}
 impl crate::EnumValue for Typ {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

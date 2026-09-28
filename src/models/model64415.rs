@@ -39,6 +39,7 @@ impl CsipControl {
     pub const SUBSCRIPTION_ENA: crate::Point<Self, Option<SubscriptionEna>> =
         crate::Point::new(67, 1, true);
 }
+impl crate::sealed::Sealed for CsipControl {}
 impl crate::Group for CsipControl {
     const LEN: u16 = 68;
 }
@@ -76,6 +77,7 @@ pub enum LogEventEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for LogEventEna {}
 impl crate::EnumValue for LogEventEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -118,6 +120,7 @@ pub enum HttpMsg {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for HttpMsg {}
 impl crate::EnumValue for HttpMsg {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -184,6 +187,7 @@ pub enum Comm004Cert {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Comm004Cert {}
 impl crate::EnumValue for Comm004Cert {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -238,6 +242,7 @@ pub enum SubscriptionEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SubscriptionEna {}
 impl crate::EnumValue for SubscriptionEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

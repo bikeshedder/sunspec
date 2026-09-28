@@ -204,6 +204,7 @@ impl InverterSinglePhase {
     pub const EVT_VND3: crate::Point<Self, Option<EvtVnd3>> = crate::Point::new(46, 2, false);
     pub const EVT_VND4: crate::Point<Self, Option<EvtVnd4>> = crate::Point::new(48, 2, false);
 }
+impl crate::sealed::Sealed for InverterSinglePhase {}
 impl crate::Group for InverterSinglePhase {
     const LEN: u16 = 50;
 }
@@ -287,6 +288,7 @@ pub enum St {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for St {}
 impl crate::EnumValue for St {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -365,6 +367,7 @@ bitflags::bitflags! {
         const HwTestFailure = 32768;
     }
 }
+impl crate::sealed::Sealed for Evt1 {}
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -390,6 +393,7 @@ bitflags::bitflags! {
     pub struct Evt2: u32 {
     }
 }
+impl crate::sealed::Sealed for Evt2 {}
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -415,6 +419,7 @@ bitflags::bitflags! {
     pub struct EvtVnd1: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd1 {}
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -440,6 +445,7 @@ bitflags::bitflags! {
     pub struct EvtVnd2: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd2 {}
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -465,6 +471,7 @@ bitflags::bitflags! {
     pub struct EvtVnd3: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd3 {}
 impl crate::Value for EvtVnd3 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -490,6 +497,7 @@ bitflags::bitflags! {
     pub struct EvtVnd4: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd4 {}
 impl crate::Value for EvtVnd4 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

@@ -150,6 +150,7 @@ impl LithiumIonBank {
     pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
     pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, false);
 }
+impl crate::sealed::Sealed for LithiumIonBank {}
 impl crate::Group for LithiumIonBank {
     const LEN: u16 = 26;
 }
@@ -331,6 +332,7 @@ impl String {
     pub const STR_SET_CON: crate::Point<Self, Option<StringStrSetCon>> =
         crate::Point::new(29, 1, true);
 }
+impl crate::sealed::Sealed for String {}
 impl crate::Group for String {
     const LEN: u16 = 32;
 }
@@ -395,6 +397,7 @@ bitflags::bitflags! {
         const ContactorStatus = 2;
     }
 }
+impl crate::sealed::Sealed for StringStrSt {}
 impl crate::Value for StringStrSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -436,6 +439,7 @@ pub enum StringStrConFail {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for StringStrConFail {}
 impl crate::EnumValue for StringStrConFail {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -494,6 +498,7 @@ pub enum StringStrDisRsn {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for StringStrDisRsn {}
 impl crate::EnumValue for StringStrDisRsn {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -596,6 +601,7 @@ bitflags::bitflags! {
         const Contactor30 = 1073741824;
     }
 }
+impl crate::sealed::Sealed for StringStrConSt {}
 impl crate::Value for StringStrConSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -681,6 +687,7 @@ bitflags::bitflags! {
         const ConfigurationWarning = 536870912;
     }
 }
+impl crate::sealed::Sealed for StringStrEvt1 {}
 impl crate::Value for StringStrEvt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -706,6 +713,7 @@ bitflags::bitflags! {
     pub struct StringStrEvt2: u32 {
     }
 }
+impl crate::sealed::Sealed for StringStrEvt2 {}
 impl crate::Value for StringStrEvt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -731,6 +739,7 @@ bitflags::bitflags! {
     pub struct StringStrEvtVnd1: u32 {
     }
 }
+impl crate::sealed::Sealed for StringStrEvtVnd1 {}
 impl crate::Value for StringStrEvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -756,6 +765,7 @@ bitflags::bitflags! {
     pub struct StringStrEvtVnd2: u32 {
     }
 }
+impl crate::sealed::Sealed for StringStrEvtVnd2 {}
 impl crate::Value for StringStrEvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -785,6 +795,7 @@ pub enum StringStrSetEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for StringStrSetEna {}
 impl crate::EnumValue for StringStrSetEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -823,6 +834,7 @@ pub enum StringStrSetCon {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for StringStrSetCon {}
 impl crate::EnumValue for StringStrSetCon {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

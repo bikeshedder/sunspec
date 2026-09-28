@@ -148,6 +148,7 @@ impl Nameplate {
     pub const MAX_DIS_CHA_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(23, 1, false);
     pub const MAX_DIS_CHA_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
 }
+impl crate::sealed::Sealed for Nameplate {}
 impl crate::Group for Nameplate {
     const LEN: u16 = 26;
 }
@@ -201,6 +202,7 @@ pub enum DerTyp {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for DerTyp {}
 impl crate::EnumValue for DerTyp {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

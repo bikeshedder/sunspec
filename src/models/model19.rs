@@ -54,6 +54,7 @@ impl Model19 {
     pub const USR_NAM: crate::Point<Self, Option<String>> = crate::Point::new(11, 12, false);
     pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(23, 6, false);
 }
+impl crate::sealed::Sealed for Model19 {}
 impl crate::Group for Model19 {
     const LEN: u16 = 30;
 }
@@ -93,6 +94,7 @@ pub enum Pty {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Pty {}
 impl crate::EnumValue for Pty {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -133,6 +135,7 @@ pub enum Dup {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Dup {}
 impl crate::EnumValue for Dup {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -173,6 +176,7 @@ pub enum Flw {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Flw {}
 impl crate::EnumValue for Flw {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -215,6 +219,7 @@ pub enum Auth {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Auth {}
 impl crate::EnumValue for Auth {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

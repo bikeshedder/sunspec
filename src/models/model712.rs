@@ -71,6 +71,7 @@ impl DerWattVar {
     pub const W_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
     pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
 }
+impl crate::sealed::Sealed for DerWattVar {}
 impl crate::Group for DerWattVar {
     const LEN: u16 = 12;
 }
@@ -119,6 +120,7 @@ pub enum Ena {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Ena {}
 impl crate::EnumValue for Ena {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -165,6 +167,7 @@ pub enum AdptCrvRslt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for AdptCrvRslt {}
 impl crate::EnumValue for AdptCrvRslt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -230,6 +233,7 @@ impl Crv {
     pub const PRI: crate::Point<Self, Option<CrvPri>> = crate::Point::new(2, 1, true);
     pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(3, 1, false);
 }
+impl crate::sealed::Sealed for Crv {}
 impl crate::Group for Crv {
     const LEN: u16 = 4;
 }
@@ -283,6 +287,7 @@ pub enum CrvDeptRef {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CrvDeptRef {}
 impl crate::EnumValue for CrvDeptRef {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -329,6 +334,7 @@ pub enum CrvPri {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CrvPri {}
 impl crate::EnumValue for CrvPri {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -371,6 +377,7 @@ pub enum CrvReadOnly {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for CrvReadOnly {}
 impl crate::EnumValue for CrvReadOnly {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -422,6 +429,7 @@ impl Pt {
     pub const W: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, true);
     pub const VAR: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
 }
+impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {
     const LEN: u16 = 2;
 }

@@ -29,6 +29,7 @@ impl Model64101 {
     pub const ELTEK_RPS_COS_PHI_REF: crate::Point<Self, Option<i16>> =
         crate::Point::new(6, 1, false);
 }
+impl crate::sealed::Sealed for Model64101 {}
 impl crate::Group for Model64101 {
     const LEN: u16 = 7;
 }

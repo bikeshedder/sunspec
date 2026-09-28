@@ -259,6 +259,7 @@ impl DerExploitation {
     pub const CHANGE_COMMON_MODEL_LENGTH: crate::Point<Self, Option<ChangeCommonModelLength>> =
         crate::Point::new(42, 1, true);
 }
+impl crate::sealed::Sealed for DerExploitation {}
 impl crate::Group for DerExploitation {
     const LEN: u16 = 43;
 }
@@ -334,6 +335,7 @@ pub enum DaManipulation {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for DaManipulation {}
 impl crate::EnumValue for DaManipulation {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -376,6 +378,7 @@ pub enum FalsifyDeviceIdentity {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for FalsifyDeviceIdentity {}
 impl crate::EnumValue for FalsifyDeviceIdentity {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -418,6 +421,7 @@ pub enum MeasPAlwaysNameplate {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasPAlwaysNameplate {}
 impl crate::EnumValue for MeasPAlwaysNameplate {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -460,6 +464,7 @@ pub enum MeasQAlwaysMinimum {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasQAlwaysMinimum {}
 impl crate::EnumValue for MeasQAlwaysMinimum {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -502,6 +507,7 @@ pub enum MeasQAlwaysMaximum {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasQAlwaysMaximum {}
 impl crate::EnumValue for MeasQAlwaysMaximum {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -544,6 +550,7 @@ pub enum MeasQAlwaysZero {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasQAlwaysZero {}
 impl crate::EnumValue for MeasQAlwaysZero {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -586,6 +593,7 @@ pub enum MeasZeroP {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasZeroP {}
 impl crate::EnumValue for MeasZeroP {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -628,6 +636,7 @@ pub enum MeasInvertQ {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasInvertQ {}
 impl crate::EnumValue for MeasInvertQ {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -670,6 +679,7 @@ pub enum MeasLowV {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasLowV {}
 impl crate::EnumValue for MeasLowV {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -712,6 +722,7 @@ pub enum MeasHighV {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasHighV {}
 impl crate::EnumValue for MeasHighV {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -754,6 +765,7 @@ pub enum MeasLowL1V {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasLowL1V {}
 impl crate::EnumValue for MeasLowL1V {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -796,6 +808,7 @@ pub enum MeasHighL1V {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasHighL1V {}
 impl crate::EnumValue for MeasHighL1V {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -838,6 +851,7 @@ pub enum MeasLowF {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasLowF {}
 impl crate::EnumValue for MeasLowF {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -880,6 +894,7 @@ pub enum MeasHighF {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasHighF {}
 impl crate::EnumValue for MeasHighF {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -922,6 +937,7 @@ pub enum MeasLowAmps {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasLowAmps {}
 impl crate::EnumValue for MeasLowAmps {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -964,6 +980,7 @@ pub enum MeasHighAmps {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasHighAmps {}
 impl crate::EnumValue for MeasHighAmps {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1006,6 +1023,7 @@ pub enum MeasHighS {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasHighS {}
 impl crate::EnumValue for MeasHighS {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1048,6 +1066,7 @@ pub enum MeasLowS {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasLowS {}
 impl crate::EnumValue for MeasLowS {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1090,6 +1109,7 @@ pub enum MeasHighQ {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasHighQ {}
 impl crate::EnumValue for MeasHighQ {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1132,6 +1152,7 @@ pub enum MeasLowQ {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasLowQ {}
 impl crate::EnumValue for MeasLowQ {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1174,6 +1195,7 @@ pub enum MeasLowPf {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasLowPf {}
 impl crate::EnumValue for MeasLowPf {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1216,6 +1238,7 @@ pub enum MeasLowReversedPf {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for MeasLowReversedPf {}
 impl crate::EnumValue for MeasLowReversedPf {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1258,6 +1281,7 @@ pub enum NameplateHighP {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateHighP {}
 impl crate::EnumValue for NameplateHighP {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1300,6 +1324,7 @@ pub enum NameplateLowP {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateLowP {}
 impl crate::EnumValue for NameplateLowP {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1342,6 +1367,7 @@ pub enum NameplateHighS {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateHighS {}
 impl crate::EnumValue for NameplateHighS {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1384,6 +1410,7 @@ pub enum NameplateLowS {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateLowS {}
 impl crate::EnumValue for NameplateLowS {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1426,6 +1453,7 @@ pub enum NameplateHighQ {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateHighQ {}
 impl crate::EnumValue for NameplateHighQ {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1468,6 +1496,7 @@ pub enum NameplateLowQ {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateLowQ {}
 impl crate::EnumValue for NameplateLowQ {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1510,6 +1539,7 @@ pub enum NameplateHighNomV {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateHighNomV {}
 impl crate::EnumValue for NameplateHighNomV {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1552,6 +1582,7 @@ pub enum NameplateLowNomV {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateLowNomV {}
 impl crate::EnumValue for NameplateLowNomV {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1594,6 +1625,7 @@ pub enum NameplateLowAmps {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateLowAmps {}
 impl crate::EnumValue for NameplateLowAmps {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1636,6 +1668,7 @@ pub enum NameplateLowVarMaxInj {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateLowVarMaxInj {}
 impl crate::EnumValue for NameplateLowVarMaxInj {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1678,6 +1711,7 @@ pub enum NameplateLowVarMaxAbs {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateLowVarMaxAbs {}
 impl crate::EnumValue for NameplateLowVarMaxAbs {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1720,6 +1754,7 @@ pub enum NameplateLowPf {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for NameplateLowPf {}
 impl crate::EnumValue for NameplateLowPf {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1762,6 +1797,7 @@ pub enum SettingsHighNomV {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SettingsHighNomV {}
 impl crate::EnumValue for SettingsHighNomV {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1804,6 +1840,7 @@ pub enum SettingsLowAmps {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SettingsLowAmps {}
 impl crate::EnumValue for SettingsLowAmps {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1846,6 +1883,7 @@ pub enum SettingsHighP {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SettingsHighP {}
 impl crate::EnumValue for SettingsHighP {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1888,6 +1926,7 @@ pub enum SettingsLowP {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SettingsLowP {}
 impl crate::EnumValue for SettingsLowP {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1930,6 +1969,7 @@ pub enum SettingsHighVaMax {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SettingsHighVaMax {}
 impl crate::EnumValue for SettingsHighVaMax {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -1972,6 +2012,7 @@ pub enum SettingsHighVarMaxInj {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SettingsHighVarMaxInj {}
 impl crate::EnumValue for SettingsHighVarMaxInj {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -2014,6 +2055,7 @@ pub enum SettingsHighVarMaxAbs {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for SettingsHighVarMaxAbs {}
 impl crate::EnumValue for SettingsHighVarMaxAbs {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -2056,6 +2098,7 @@ pub enum ChangeCommonModelId {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ChangeCommonModelId {}
 impl crate::EnumValue for ChangeCommonModelId {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -2098,6 +2141,7 @@ pub enum ChangeCommonModelLength {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ChangeCommonModelLength {}
 impl crate::EnumValue for ChangeCommonModelLength {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

@@ -210,6 +210,7 @@ impl Model3 {
     pub const ALG: crate::Point<Self, Alg> = crate::Point::new(56, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(57, 1, false);
 }
+impl crate::sealed::Sealed for Model3 {}
 impl crate::Group for Model3 {
     const LEN: u16 = 58;
 }
@@ -301,6 +302,7 @@ pub enum Alg {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Alg {}
 impl crate::EnumValue for Alg {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -341,6 +343,7 @@ pub struct Repeating {
 impl Repeating {
     pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
 }

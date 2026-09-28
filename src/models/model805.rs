@@ -149,6 +149,7 @@ impl LithiumIonModule {
     pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(40, 1, false);
     pub const TMP_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
 }
+impl crate::sealed::Sealed for LithiumIonModule {}
 impl crate::Group for LithiumIonModule {
     const LEN: u16 = 42;
 }
@@ -217,6 +218,7 @@ impl LithiumIonModuleCell {
     pub const CELL_ST: crate::Point<Self, Option<LithiumIonModuleCellCellSt>> =
         crate::Point::new(2, 2, false);
 }
+impl crate::sealed::Sealed for LithiumIonModuleCell {}
 impl crate::Group for LithiumIonModuleCell {
     const LEN: u16 = 4;
 }
@@ -263,6 +265,7 @@ bitflags::bitflags! {
         const CellIsBalancing = 1;
     }
 }
+impl crate::sealed::Sealed for LithiumIonModuleCellCellSt {}
 impl crate::Value for LithiumIonModuleCellCellSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;

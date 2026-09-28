@@ -8,6 +8,7 @@ pub struct Model63002 {
 }
 #[allow(missing_docs)]
 impl Model63002 {}
+impl crate::sealed::Sealed for Model63002 {}
 impl crate::Group for Model63002 {
     const LEN: u16 = 0;
 }
@@ -40,6 +41,7 @@ impl Repeating {
     pub const INT16_2: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
     pub const SUNSSF_2: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
 }
+impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 4;
 }

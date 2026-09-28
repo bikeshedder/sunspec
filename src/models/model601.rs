@@ -74,6 +74,7 @@ impl TrackerController {
     pub const DGR_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
     pub const N: crate::Point<Self, u16> = crate::Point::new(25, 1, false);
 }
+impl crate::sealed::Sealed for TrackerController {}
 impl crate::Group for TrackerController {
     const LEN: u16 = 26;
 }
@@ -125,6 +126,7 @@ pub enum Typ {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Typ {}
 impl crate::EnumValue for Typ {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -177,6 +179,7 @@ pub enum GlblCtl {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for GlblCtl {}
 impl crate::EnumValue for GlblCtl {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -221,6 +224,7 @@ bitflags::bitflags! {
         const ObsAz = 4;
     }
 }
+impl crate::sealed::Sealed for GlblAlm {}
 impl crate::Value for GlblAlm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -290,6 +294,7 @@ impl Tracker {
     pub const CTL: crate::Point<Self, Option<TrackerCtl>> = crate::Point::new(20, 1, true);
     pub const ALM: crate::Point<Self, Option<TrackerAlm>> = crate::Point::new(21, 1, false);
 }
+impl crate::sealed::Sealed for Tracker {}
 impl crate::Group for Tracker {
     const LEN: u16 = 22;
 }
@@ -346,6 +351,7 @@ pub enum TrackerCtl {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for TrackerCtl {}
 impl crate::EnumValue for TrackerCtl {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -388,6 +394,7 @@ bitflags::bitflags! {
         const ObsAz = 4;
     }
 }
+impl crate::sealed::Sealed for TrackerAlm {}
 impl crate::Value for TrackerAlm {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;

@@ -166,6 +166,7 @@ impl FlowBatteryString {
     pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(31, 1, false);
     pub const OCV_SF: crate::Point<Self, i16> = crate::Point::new(32, 1, false);
 }
+impl crate::sealed::Sealed for FlowBatteryString {}
 impl crate::Group for FlowBatteryString {
     const LEN: u16 = 34;
 }
@@ -281,6 +282,7 @@ bitflags::bitflags! {
         const ConfigurationWarning = 536870912;
     }
 }
+impl crate::sealed::Sealed for Evt1 {}
 impl crate::Value for Evt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -318,6 +320,7 @@ bitflags::bitflags! {
         const LowFlowWarning = 32;
     }
 }
+impl crate::sealed::Sealed for Evt2 {}
 impl crate::Value for Evt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -343,6 +346,7 @@ bitflags::bitflags! {
     pub struct EvtVnd1: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd1 {}
 impl crate::Value for EvtVnd1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -368,6 +372,7 @@ bitflags::bitflags! {
     pub struct EvtVnd2: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd2 {}
 impl crate::Value for EvtVnd2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -490,6 +495,7 @@ impl Module {
     pub const MOD_DIS_RSN: crate::Point<Self, Option<ModuleModDisRsn>> =
         crate::Point::new(23, 1, false);
 }
+impl crate::sealed::Sealed for Module {}
 impl crate::Group for Module {
     const LEN: u16 = 24;
 }
@@ -555,6 +561,7 @@ bitflags::bitflags! {
         const ContactorStatus = 2;
     }
 }
+impl crate::sealed::Sealed for ModuleModSt {}
 impl crate::Value for ModuleModSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -640,6 +647,7 @@ bitflags::bitflags! {
         const Contactor30 = 1073741824;
     }
 }
+impl crate::sealed::Sealed for ModuleModConSt {}
 impl crate::Value for ModuleModConSt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -725,6 +733,7 @@ bitflags::bitflags! {
         const ModuleConfigurationWarning = 536870912;
     }
 }
+impl crate::sealed::Sealed for ModuleModEvt1 {}
 impl crate::Value for ModuleModEvt1 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -762,6 +771,7 @@ bitflags::bitflags! {
         const LowFlowWarning = 32;
     }
 }
+impl crate::sealed::Sealed for ModuleModEvt2 {}
 impl crate::Value for ModuleModEvt2 {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -803,6 +813,7 @@ pub enum ModuleModConFail {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ModuleModConFail {}
 impl crate::EnumValue for ModuleModConFail {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -855,6 +866,7 @@ pub enum ModuleModSetEna {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ModuleModSetEna {}
 impl crate::EnumValue for ModuleModSetEna {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -893,6 +905,7 @@ pub enum ModuleModSetCon {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ModuleModSetCon {}
 impl crate::EnumValue for ModuleModSetCon {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -937,6 +950,7 @@ pub enum ModuleModDisRsn {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ModuleModDisRsn {}
 impl crate::EnumValue for ModuleModDisRsn {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

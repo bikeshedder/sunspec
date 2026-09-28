@@ -76,6 +76,7 @@ impl Model64111 {
     pub const LIFE_TIME_MAX_BATT: crate::Point<Self, u16> = crate::Point::new(21, 1, false);
     pub const LIFE_TIME_MAX_VOC: crate::Point<Self, u16> = crate::Point::new(22, 1, false);
 }
+impl crate::sealed::Sealed for Model64111 {}
 impl crate::Group for Model64111 {
     const LEN: u16 = 23;
 }
@@ -131,6 +132,7 @@ pub enum ChargerSt {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for ChargerSt {}
 impl crate::EnumValue for ChargerSt {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

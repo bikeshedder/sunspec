@@ -14,6 +14,7 @@ pub struct FlowBatteryModule {
 impl FlowBatteryModule {
     pub const MODULE_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for FlowBatteryModule {}
 impl crate::Group for FlowBatteryModule {
     const LEN: u16 = 1;
 }
@@ -43,6 +44,7 @@ pub struct Stack {
 impl Stack {
     pub const STACK_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
 }
+impl crate::sealed::Sealed for Stack {}
 impl crate::Group for Stack {
     const LEN: u16 = 1;
 }

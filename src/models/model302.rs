@@ -12,6 +12,7 @@ pub struct Irradiance {
 }
 #[allow(missing_docs)]
 impl Irradiance {}
+impl crate::sealed::Sealed for Irradiance {}
 impl crate::Group for Irradiance {
     const LEN: u16 = 0;
 }
@@ -57,6 +58,7 @@ impl Repeating {
     pub const DNI: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
     pub const OTI: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
 }
+impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 5;
 }

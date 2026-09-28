@@ -61,6 +61,7 @@ impl Aggregator {
     pub const CTL_VND: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
     pub const CTL_VL: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
 }
+impl crate::sealed::Sealed for Aggregator {}
 impl crate::Group for Aggregator {
     const LEN: u16 = 14;
 }
@@ -103,6 +104,7 @@ pub enum St {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for St {}
 impl crate::EnumValue for St {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -183,6 +185,7 @@ bitflags::bitflags! {
         const TestFailed = 1048576;
     }
 }
+impl crate::sealed::Sealed for Evt {}
 impl crate::Value for Evt {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -208,6 +211,7 @@ bitflags::bitflags! {
     pub struct EvtVnd: u32 {
     }
 }
+impl crate::sealed::Sealed for EvtVnd {}
 impl crate::Value for EvtVnd {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u32::decode(data)?;
@@ -243,6 +247,7 @@ pub enum Ctl {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Ctl {}
 impl crate::EnumValue for Ctl {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;

@@ -59,6 +59,7 @@ impl Model16 {
     pub const MAC: crate::Point<Self, Option<String>> = crate::Point::new(46, 4, false);
     pub const LNK_CTL: crate::Point<Self, Option<LnkCtl>> = crate::Point::new(50, 1, true);
 }
+impl crate::sealed::Sealed for Model16 {}
 impl crate::Group for Model16 {
     const LEN: u16 = 52;
 }
@@ -97,6 +98,7 @@ pub enum Cfg {
     /// Raw enum value not defined by the SunSpec model.
     Invalid(u16),
 }
+impl crate::sealed::Sealed for Cfg {}
 impl crate::EnumValue for Cfg {
     type Repr = u16;
     const INVALID: Self::Repr = 65535;
@@ -135,6 +137,7 @@ bitflags::bitflags! {
         const EnableNtp = 2;
     }
 }
+impl crate::sealed::Sealed for Ctl {}
 impl crate::Value for Ctl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
@@ -170,6 +173,7 @@ bitflags::bitflags! {
         const Force1gb = 16;
     }
 }
+impl crate::sealed::Sealed for LnkCtl {}
 impl crate::Value for LnkCtl {
     fn decode(data: &[u16]) -> Result<Self, crate::DecodeError> {
         let value = u16::decode(data)?;
