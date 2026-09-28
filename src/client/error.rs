@@ -2,7 +2,7 @@ use std::error::Error;
 
 use thiserror::Error;
 
-use crate::{DecodeError, InvalidPointData, Model};
+use crate::{DecodeError, InvalidPointData, Model, ParseError};
 
 /// This error is returned if a communication fails because of a timeout
 /// or underlying modbus error.
@@ -105,6 +105,15 @@ pub enum ReadModelError<M: Model> {
     /// The model decoded but contains invalid point data.
     #[error(transparent)]
     InvalidPointData(#[from] InvalidPointData<M>),
+}
+
+impl<M: Model> From<ParseError<M>> for ReadModelError<M> {
+    fn from(error: ParseError<M>) -> Self {
+        match error {
+            ParseError::Decode(error) => error.into(),
+            ParseError::InvalidPointData(error) => error.into(),
+        }
+    }
 }
 
 /// This error is returned if there was an error while

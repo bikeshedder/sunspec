@@ -1,6 +1,6 @@
 use std::{future::Future, time::Duration};
 
-use crate::{Model, ModelAddr, Models, ParseError, Point, Value, SUNS_IDENTIFIER};
+use crate::{Model, ModelAddr, Models, Point, Value, SUNS_IDENTIFIER};
 
 use super::{
     error::ModbusError, Config, DiscoveryError, DiscoveryResult, ReadModelError, ReadPointError,
@@ -79,11 +79,17 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
     /// Note: Some models are too big to be fetched in a single request
     ///       and multiple read_holding_registers calls will be issued.
     pub async fn read_model<M: Model>(&self) -> Result<M, ReadModelError<M>> {
-        let addr = M::addr(&self.models);
-        read_model(
+        let data = self.read_registers(M::addr(&self.models)).await?;
+        Ok(M::parse(&data)?)
+    }
+    /// Read the registers of the given model address using the
+    /// configured chunk size and timeout.
+    async fn read_registers<M: Model>(&self, addr: ModelAddr<M>) -> Result<Vec<u16>, ModbusError> {
+        read_registers_chunked(
             &self.client,
             self.slave_id,
-            addr,
+            addr.addr,
+            addr.len,
             self.config.max_read_length,
             self.config.read_timeout,
         )
@@ -247,52 +253,41 @@ async fn discover_models(
     })
 }
 
-/// Read model data from modbus
-///
-/// Note: Some models are too big to be fetched in a single request
-///       and multiple read_holding_registers calls will be issued.
-async fn read_model<M: Model>(
+/// Read registers from modbus. If `len` exceeds `max_read_length`
+/// multiple read_holding_registers calls will be issued.
+async fn read_registers_chunked(
     client: &impl AsyncModbusClient,
     slave_id: u8,
-    addr: ModelAddr<M>,
+    addr: u16,
+    len: u16,
     max_read_length: u16,
     read_timeout: Option<Duration>,
-) -> Result<M, ReadModelError<M>> {
-    let data = if addr.len <= max_read_length {
-        apply_timeout(
-            client.read_registers(slave_id, addr.addr, addr.len),
+) -> Result<Vec<u16>, ModbusError> {
+    if len <= max_read_length {
+        return apply_timeout(client.read_registers(slave_id, addr, len), read_timeout).await;
+    }
+    let mut data: Vec<u16> = Vec::with_capacity(len.into());
+    let begin = addr;
+    let start = addr + len;
+    let ranges = (begin..start)
+        .step_by(max_read_length as usize)
+        .map(|x| x..((x + max_read_length).min(start)));
+    for range in ranges {
+        let chunk = apply_timeout(
+            client.read_registers(
+                slave_id,
+                range.start,
+                range
+                    .len()
+                    .try_into()
+                    .expect("read_holding_registers returned the wrong amount of words"),
+            ),
             read_timeout,
         )
-        .await?
-    } else {
-        let mut data: Vec<u16> = Vec::with_capacity(addr.len.into());
-        let begin = addr.addr;
-        let start = addr.addr + addr.len;
-        let ranges = (begin..start)
-            .step_by(max_read_length as usize)
-            .map(|x| x..((x + max_read_length).min(start)));
-        for range in ranges {
-            let chunk = apply_timeout(
-                client.read_registers(
-                    slave_id,
-                    range.start,
-                    range
-                        .len()
-                        .try_into()
-                        .expect("read_holding_registers returned the wrong amount of words"),
-                ),
-                read_timeout,
-            )
-            .await?;
-            data.extend(chunk);
-        }
-        data
-    };
-    match M::parse(&data) {
-        Ok(model) => Ok(model),
-        Err(ParseError::Decode(error)) => Err(error.into()),
-        Err(ParseError::InvalidPointData(error)) => Err(error.into()),
+        .await?;
+        data.extend(chunk);
     }
+    Ok(data)
 }
 
 /// Read data for a single point. Please note that
