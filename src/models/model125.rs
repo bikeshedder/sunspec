@@ -147,8 +147,15 @@ impl crate::FixedSize for SigType {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Pricing> for crate::AnyModel {
+    fn from(model: Pricing) -> Self {
+        Self::M125(model)
+    }
+}
 impl crate::Model for Pricing {
     const ID: u16 = 125;
+    const NAME: &'static str = "pricing";
+    const LABEL: &'static str = "Pricing";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m125
     }

@@ -74,8 +74,15 @@ impl ExtSettings {
         ))
     }
 }
+impl From<ExtSettings> for crate::AnyModel {
+    fn from(model: ExtSettings) -> Self {
+        Self::M145(model)
+    }
+}
 impl crate::Model for ExtSettings {
     const ID: u16 = 145;
+    const NAME: &'static str = "ext_settings";
+    const LABEL: &'static str = "Extended Settings";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m145
     }

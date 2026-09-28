@@ -118,8 +118,15 @@ impl crate::FixedSize for Sta {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<DerStorageCapacity> for crate::AnyModel {
+    fn from(model: DerStorageCapacity) -> Self {
+        Self::M713(model)
+    }
+}
 impl crate::Model for DerStorageCapacity {
     const ID: u16 = 713;
+    const NAME: &'static str = "DERStorageCapacity";
+    const LABEL: &'static str = "DER Storage Capacity";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m713
     }

@@ -510,8 +510,15 @@ impl crate::FixedSize for EvtVnd4 {
         self.bits() == 4294967295u32
     }
 }
+impl From<InverterSplitPhase> for crate::AnyModel {
+    fn from(model: InverterSplitPhase) -> Self {
+        Self::M102(model)
+    }
+}
 impl crate::Model for InverterSplitPhase {
     const ID: u16 = 102;
+    const NAME: &'static str = "inverter_split_phase";
+    const LABEL: &'static str = "Inverter (Split-Phase)";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m102
     }

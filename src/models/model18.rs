@@ -54,8 +54,15 @@ impl Model18 {
         ))
     }
 }
+impl From<Model18> for crate::AnyModel {
+    fn from(model: Model18) -> Self {
+        Self::M18(model)
+    }
+}
 impl crate::Model for Model18 {
     const ID: u16 = 18;
+    const NAME: &'static str = "model_18";
+    const LABEL: &'static str = "Cellular Link";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m18
     }

@@ -8,8 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add support for working with models only known at runtime (#11):
+  - `ModelInfo` with the id, name and label of a model. It is available via
+    `Model::INFO`, `ModelInfo::by_id` and `str::parse` (accepting e.g.
+    `"103"`, `"m103"` or `"inverter_three_phase"`).
+  - `MODELS` listing all models enabled via Cargo features
+  - `AnyModel` enum containing any model. With the `serde` feature enabled it
+    is serialized with an internal `"model"` tag containing the model name.
+  - `DynModel` trait providing access to model information via
+    `AnyModel::as_dyn`
+  - `AsyncDevice::read_any_model`
+  - `Model::NAME`, `Model::LABEL` and `Model::INFO` constants
+
 ### Changed
 
+- `ModelAddr`, `ReadModelError` and `InvalidPointData` no longer require
+  `M: Model`
 - Update sunspec models (2026-08-20)
   - Add `subscribed_resource` and `subscription_ena` points to model 64415
   - Fix size of `DeptRef` point in model 64410

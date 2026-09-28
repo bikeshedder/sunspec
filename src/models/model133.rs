@@ -600,8 +600,15 @@ impl crate::FixedSize for RepeatingYTyp {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Schedule> for crate::AnyModel {
+    fn from(model: Schedule) -> Self {
+        Self::M133(model)
+    }
+}
 impl crate::Model for Schedule {
     const ID: u16 = 133;
+    const NAME: &'static str = "schedule";
+    const LABEL: &'static str = "Basic Scheduling";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m133
     }

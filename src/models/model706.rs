@@ -407,8 +407,15 @@ impl Pt {
         Ok((data, groups))
     }
 }
+impl From<DerVoltWatt> for crate::AnyModel {
+    fn from(model: DerVoltWatt) -> Self {
+        Self::M706(model)
+    }
+}
 impl crate::Model for DerVoltWatt {
     const ID: u16 = 706;
+    const NAME: &'static str = "DERVoltWatt";
+    const LABEL: &'static str = "DER Volt-Watt";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m706
     }

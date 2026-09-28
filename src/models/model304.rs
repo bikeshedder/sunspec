@@ -82,8 +82,15 @@ impl Incl {
         Ok((data, groups))
     }
 }
+impl From<Inclinometer> for crate::AnyModel {
+    fn from(model: Inclinometer) -> Self {
+        Self::M304(model)
+    }
+}
 impl crate::Model for Inclinometer {
     const ID: u16 = 304;
+    const NAME: &'static str = "inclinometer";
+    const LABEL: &'static str = "Inclinometer Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m304
     }

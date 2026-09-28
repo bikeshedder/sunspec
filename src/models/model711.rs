@@ -313,8 +313,15 @@ impl crate::FixedSize for CtlReadOnly {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<DerFreqDroop> for crate::AnyModel {
+    fn from(model: DerFreqDroop) -> Self {
+        Self::M711(model)
+    }
+}
 impl crate::Model for DerFreqDroop {
     const ID: u16 = 711;
+    const NAME: &'static str = "DERFreqDroop";
+    const LABEL: &'static str = "DER Frequency Droop";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m711
     }

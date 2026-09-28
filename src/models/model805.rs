@@ -279,8 +279,15 @@ impl crate::FixedSize for LithiumIonModuleCellCellSt {
         self.bits() == 4294967295u32
     }
 }
+impl From<LithiumIonModule> for crate::AnyModel {
+    fn from(model: LithiumIonModule) -> Self {
+        Self::M805(model)
+    }
+}
 impl crate::Model for LithiumIonModule {
     const ID: u16 = 805;
+    const NAME: &'static str = "lithium-ion-module";
+    const LABEL: &'static str = "Lithium-Ion Module Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m805
     }

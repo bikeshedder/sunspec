@@ -551,8 +551,15 @@ impl crate::FixedSize for IntIslandCat {
         self.bits() == 65535u16
     }
 }
+impl From<DerCapacity> for crate::AnyModel {
+    fn from(model: DerCapacity) -> Self {
+        Self::M702(model)
+    }
+}
 impl crate::Model for DerCapacity {
     const ID: u16 = 702;
+    const NAME: &'static str = "DERCapacity";
+    const LABEL: &'static str = "DER Capacity";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m702
     }

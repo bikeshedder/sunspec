@@ -20,13 +20,15 @@
     unused_results
 )]
 
+pub use any_model::{DynModel, ModelInfo, ModelNotFound};
 pub use constants::{DEFAULT_DISCOVERY_ADDRESSES, SUNS_IDENTIFIER};
 pub use group::Group;
 pub use model::{InvalidPointData, Model, ModelAddr, ParseError};
-pub use models::Models;
+pub use models::{AnyModel, Models, MODELS};
 pub use point::Point;
 pub use value::{DecodeError, EnumValue, FixedSize, Value};
 
+mod any_model;
 /// This module contains all client specific code.
 pub mod client;
 mod constants;

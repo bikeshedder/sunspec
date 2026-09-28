@@ -373,8 +373,15 @@ impl crate::FixedSize for VarPctEna {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Controls> for crate::AnyModel {
+    fn from(model: Controls) -> Self {
+        Self::M123(model)
+    }
+}
 impl crate::Model for Controls {
     const ID: u16 = 123;
+    const NAME: &'static str = "controls";
+    const LABEL: &'static str = "Immediate Controls";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m123
     }

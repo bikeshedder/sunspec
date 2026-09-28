@@ -96,8 +96,15 @@ impl Model15 {
         ))
     }
 }
+impl From<Model15> for crate::AnyModel {
+    fn from(model: Model15) -> Self {
+        Self::M15(model)
+    }
+}
 impl crate::Model for Model15 {
     const ID: u16 = 15;
+    const NAME: &'static str = "model_15";
+    const LABEL: &'static str = "Interface Counters Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m15
     }

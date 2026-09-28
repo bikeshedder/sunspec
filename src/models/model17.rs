@@ -278,8 +278,15 @@ impl crate::FixedSize for Pcol {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Model17> for crate::AnyModel {
+    fn from(model: Model17) -> Self {
+        Self::M17(model)
+    }
+}
 impl crate::Model for Model17 {
     const ID: u16 = 17;
+    const NAME: &'static str = "model_17";
+    const LABEL: &'static str = "Serial Interface";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m17
     }

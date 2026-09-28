@@ -64,8 +64,15 @@ impl Common {
         ))
     }
 }
+impl From<Common> for crate::AnyModel {
+    fn from(model: Common) -> Self {
+        Self::M1(model)
+    }
+}
 impl crate::Model for Common {
     const ID: u16 = 1;
+    const NAME: &'static str = "common";
+    const LABEL: &'static str = "Common";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m1
     }

@@ -231,8 +231,15 @@ impl crate::FixedSize for Config {
         self.bits() == 65535u16
     }
 }
+impl From<Model64001> for crate::AnyModel {
+    fn from(model: Model64001) -> Self {
+        Self::M64001(model)
+    }
+}
 impl crate::Model for Model64001 {
     const ID: u16 = 64001;
+    const NAME: &'static str = "model_64001";
+    const LABEL: &'static str = "Veris Status and Configuration";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64001
     }

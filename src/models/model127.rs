@@ -136,8 +136,15 @@ impl crate::FixedSize for ModEna {
         self.bits() == 65535u16
     }
 }
+impl From<FreqWattParam> for crate::AnyModel {
+    fn from(model: FreqWattParam) -> Self {
+        Self::M127(model)
+    }
+}
 impl crate::Model for FreqWattParam {
     const ID: u16 = 127;
+    const NAME: &'static str = "freq_watt_param";
+    const LABEL: &'static str = "Freq-Watt Param";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m127
     }

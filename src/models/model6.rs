@@ -500,8 +500,15 @@ impl Repeating {
         Ok((data, groups))
     }
 }
+impl From<Model6> for crate::AnyModel {
+    fn from(model: Model6) -> Self {
+        Self::M6(model)
+    }
+}
 impl crate::Model for Model6 {
     const ID: u16 = 6;
+    const NAME: &'static str = "model_6";
+    const LABEL: &'static str = "Secure Write Sequential Request";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m6
     }

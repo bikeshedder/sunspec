@@ -74,8 +74,15 @@ impl BaseMet {
         ))
     }
 }
+impl From<BaseMet> for crate::AnyModel {
+    fn from(model: BaseMet) -> Self {
+        Self::M307(model)
+    }
+}
 impl crate::Model for BaseMet {
     const ID: u16 = 307;
+    const NAME: &'static str = "base_met";
+    const LABEL: &'static str = "Base Met";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m307
     }

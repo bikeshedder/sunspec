@@ -819,8 +819,15 @@ impl crate::FixedSize for ThrotSrc {
         self.bits() == 4294967295u32
     }
 }
+impl From<DerMeasureAc> for crate::AnyModel {
+    fn from(model: DerMeasureAc) -> Self {
+        Self::M701(model)
+    }
+}
 impl crate::Model for DerMeasureAc {
     const ID: u16 = 701;
+    const NAME: &'static str = "DERMeasureAC";
+    const LABEL: &'static str = "DER AC Measurement";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m701
     }

@@ -263,8 +263,15 @@ impl crate::FixedSize for SubscriptionEna {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<CsipControl> for crate::AnyModel {
+    fn from(model: CsipControl) -> Self {
+        Self::M64415(model)
+    }
+}
 impl crate::Model for CsipControl {
     const ID: u16 = 64415;
+    const NAME: &'static str = "CSIPControl";
+    const LABEL: &'static str = "CSIP Client Control";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64415
     }

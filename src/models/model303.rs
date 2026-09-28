@@ -70,8 +70,15 @@ impl Temp {
         Ok((data, groups))
     }
 }
+impl From<BomTemp> for crate::AnyModel {
+    fn from(model: BomTemp) -> Self {
+        Self::M303(model)
+    }
+}
 impl crate::Model for BomTemp {
     const ID: u16 = 303;
+    const NAME: &'static str = "bom_temp";
+    const LABEL: &'static str = "Back of Module Temperature Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m303
     }

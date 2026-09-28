@@ -668,8 +668,15 @@ impl Pt {
         Ok((data, groups))
     }
 }
+impl From<DcSimInterface> for crate::AnyModel {
+    fn from(model: DcSimInterface) -> Self {
+        Self::M64410(model)
+    }
+}
 impl crate::Model for DcSimInterface {
     const ID: u16 = 64410;
+    const NAME: &'static str = "DCSimInterface";
+    const LABEL: &'static str = "DC Simulator Control Interface";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64410
     }

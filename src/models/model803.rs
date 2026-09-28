@@ -848,8 +848,15 @@ impl crate::FixedSize for StringStrSetCon {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<LithiumIonBank> for crate::AnyModel {
+    fn from(model: LithiumIonBank) -> Self {
+        Self::M803(model)
+    }
+}
 impl crate::Model for LithiumIonBank {
     const ID: u16 = 803;
+    const NAME: &'static str = "lithium_ion_bank";
+    const LABEL: &'static str = "Lithium-Ion Battery Bank Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m803
     }

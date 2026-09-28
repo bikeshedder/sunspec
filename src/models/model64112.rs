@@ -741,8 +741,15 @@ impl crate::FixedSize for CcConfigAuxPolarity {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Model64112> for crate::AnyModel {
+    fn from(model: Model64112) -> Self {
+        Self::M64112(model)
+    }
+}
 impl crate::Model for Model64112 {
     const ID: u16 = 64112;
+    const NAME: &'static str = "model_64112";
+    const LABEL: &'static str = "OutBack FM Charge Controller";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64112
     }

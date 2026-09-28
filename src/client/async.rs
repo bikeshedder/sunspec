@@ -1,6 +1,6 @@
 use std::{future::Future, time::Duration};
 
-use crate::{Model, ModelAddr, Models, Point, Value, SUNS_IDENTIFIER};
+use crate::{AnyModel, Model, ModelAddr, ModelInfo, Models, Point, Value, SUNS_IDENTIFIER};
 
 use super::{
     error::ModbusError, Config, DiscoveryError, DiscoveryResult, ReadModelError, ReadPointError,
@@ -84,7 +84,7 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
     }
     /// Read the registers of the given model address using the
     /// configured chunk size and timeout.
-    async fn read_registers<M: Model>(&self, addr: ModelAddr<M>) -> Result<Vec<u16>, ModbusError> {
+    async fn read_registers<M>(&self, addr: ModelAddr<M>) -> Result<Vec<u16>, ModbusError> {
         read_registers_chunked(
             &self.client,
             self.slave_id,
@@ -94,6 +94,18 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
             self.config.read_timeout,
         )
         .await
+    }
+    /// Read model data from modbus for a model that is only known
+    /// at runtime.
+    ///
+    /// Note: Some models are too big to be fetched in a single request
+    ///       and multiple read_holding_registers calls will be issued.
+    pub async fn read_any_model(
+        &self,
+        model: &ModelInfo,
+    ) -> Result<AnyModel, ReadModelError<AnyModel>> {
+        let data = self.read_registers(model.addr(&self.models)).await?;
+        Ok(model.parse(&data)?)
     }
     /// Read data for a single point. Please note that
     /// `read_model` is more efficient when loading multiple

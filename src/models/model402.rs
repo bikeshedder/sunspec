@@ -394,8 +394,15 @@ impl crate::FixedSize for StringEvtVnd {
         self.bits() == 4294967295u32
     }
 }
+impl From<StringCombinerAdvanced> for crate::AnyModel {
+    fn from(model: StringCombinerAdvanced) -> Self {
+        Self::M402(model)
+    }
+}
 impl crate::Model for StringCombinerAdvanced {
     const ID: u16 = 402;
+    const NAME: &'static str = "string_combiner_advanced";
+    const LABEL: &'static str = "String Combiner (Advanced)";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m402
     }

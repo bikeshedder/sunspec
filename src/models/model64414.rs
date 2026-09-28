@@ -66,8 +66,15 @@ impl DerSimControls {
         ))
     }
 }
+impl From<DerSimControls> for crate::AnyModel {
+    fn from(model: DerSimControls) -> Self {
+        Self::M64414(model)
+    }
+}
 impl crate::Model for DerSimControls {
     const ID: u16 = 64414;
+    const NAME: &'static str = "DERSimControls";
+    const LABEL: &'static str = "DER Simulation Controls";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64414
     }

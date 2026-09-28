@@ -1314,8 +1314,15 @@ impl crate::FixedSize for PfWAbsRvrtExt {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<DerCtlAc> for crate::AnyModel {
+    fn from(model: DerCtlAc) -> Self {
+        Self::M704(model)
+    }
+}
 impl crate::Model for DerCtlAc {
     const ID: u16 = 704;
+    const NAME: &'static str = "DERCtlAC";
+    const LABEL: &'static str = "DER AC Controls";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m704
     }

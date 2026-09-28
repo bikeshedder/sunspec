@@ -50,8 +50,15 @@ impl RefPoint {
         ))
     }
 }
+impl From<RefPoint> for crate::AnyModel {
+    fn from(model: RefPoint) -> Self {
+        Self::M306(model)
+    }
+}
 impl crate::Model for RefPoint {
     const ID: u16 = 306;
+    const NAME: &'static str = "ref_point";
+    const LABEL: &'static str = "Reference Point Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m306
     }

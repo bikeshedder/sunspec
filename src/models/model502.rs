@@ -308,8 +308,15 @@ impl crate::FixedSize for EvtVend {
         self.bits() == 4294967295u32
     }
 }
+impl From<SolarModule> for crate::AnyModel {
+    fn from(model: SolarModule) -> Self {
+        Self::M502(model)
+    }
+}
 impl crate::Model for SolarModule {
     const ID: u16 = 502;
+    const NAME: &'static str = "solar_module";
+    const LABEL: &'static str = "Solar Module";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m502
     }

@@ -130,8 +130,15 @@ impl crate::FixedSize for Es {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<DerEnterService> for crate::AnyModel {
+    fn from(model: DerEnterService) -> Self {
+        Self::M703(model)
+    }
+}
 impl crate::Model for DerEnterService {
     const ID: u16 = 703;
+    const NAME: &'static str = "DEREnterService";
+    const LABEL: &'static str = "Enter Service";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m703
     }

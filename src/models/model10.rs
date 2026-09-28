@@ -134,8 +134,15 @@ impl crate::FixedSize for Typ {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Model10> for crate::AnyModel {
+    fn from(model: Model10) -> Self {
+        Self::M10(model)
+    }
+}
 impl crate::Model for Model10 {
     const ID: u16 = 10;
+    const NAME: &'static str = "model_10";
+    const LABEL: &'static str = "Communication Interface Header";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m10
     }

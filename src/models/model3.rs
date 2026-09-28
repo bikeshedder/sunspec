@@ -374,8 +374,15 @@ impl Repeating {
         Ok((data, groups))
     }
 }
+impl From<Model3> for crate::AnyModel {
+    fn from(model: Model3) -> Self {
+        Self::M3(model)
+    }
+}
 impl crate::Model for Model3 {
     const ID: u16 = 3;
+    const NAME: &'static str = "model_3";
+    const LABEL: &'static str = "Secure Dataset Read Request";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m3
     }

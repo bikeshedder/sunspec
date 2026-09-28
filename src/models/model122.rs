@@ -381,8 +381,15 @@ impl crate::FixedSize for RtSt {
         self.bits() == 65535u16
     }
 }
+impl From<Status> for crate::AnyModel {
+    fn from(model: Status) -> Self {
+        Self::M122(model)
+    }
+}
 impl crate::Model for Status {
     const ID: u16 = 122;
+    const NAME: &'static str = "status";
+    const LABEL: &'static str = "Measurements_Status";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m122
     }

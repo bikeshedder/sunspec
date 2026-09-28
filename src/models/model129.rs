@@ -455,8 +455,15 @@ impl crate::FixedSize for CurveReadOnly {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Lvrt> for crate::AnyModel {
+    fn from(model: Lvrt) -> Self {
+        Self::M129(model)
+    }
+}
 impl crate::Model for Lvrt {
     const ID: u16 = 129;
+    const NAME: &'static str = "lvrt";
+    const LABEL: &'static str = "LVRTD";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m129
     }

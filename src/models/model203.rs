@@ -459,8 +459,15 @@ impl crate::FixedSize for Evt {
         self.bits() == 4294967295u32
     }
 }
+impl From<AcMeterAbcn> for crate::AnyModel {
+    fn from(model: AcMeterAbcn) -> Self {
+        Self::M203(model)
+    }
+}
 impl crate::Model for AcMeterAbcn {
     const ID: u16 = 203;
+    const NAME: &'static str = "ac_meter_abcn";
+    const LABEL: &'static str = "wye-connect three phase (abcn) meter";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m203
     }

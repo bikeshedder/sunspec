@@ -421,8 +421,15 @@ impl crate::FixedSize for Evt {
         self.bits() == 4294967295u32
     }
 }
+impl From<AcMeterAbnFloat> for crate::AnyModel {
+    fn from(model: AcMeterAbnFloat) -> Self {
+        Self::M212(model)
+    }
+}
 impl crate::Model for AcMeterAbnFloat {
     const ID: u16 = 212;
+    const NAME: &'static str = "ac_meter_abn_float";
+    const LABEL: &'static str = "split single phase (ABN) meter";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m212
     }

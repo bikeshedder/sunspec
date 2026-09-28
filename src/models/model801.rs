@@ -32,8 +32,15 @@ impl Storage {
         ))
     }
 }
+impl From<Storage> for crate::AnyModel {
+    fn from(model: Storage) -> Self {
+        Self::M801(model)
+    }
+}
 impl crate::Model for Storage {
     const ID: u16 = 801;
+    const NAME: &'static str = "storage";
+    const LABEL: &'static str = "Energy Storage Base Model (DEPRECATED)";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m801
     }

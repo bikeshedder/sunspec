@@ -180,8 +180,15 @@ impl crate::FixedSize for Ctl {
         self.bits() == 65535u16
     }
 }
+impl From<Model11> for crate::AnyModel {
+    fn from(model: Model11) -> Self {
+        Self::M11(model)
+    }
+}
 impl crate::Model for Model11 {
     const ID: u16 = 11;
+    const NAME: &'static str = "model_11";
+    const LABEL: &'static str = "Ethernet Link Layer";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m11
     }

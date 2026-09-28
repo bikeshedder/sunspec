@@ -128,8 +128,15 @@ impl Repeating {
         Ok((data, groups))
     }
 }
+impl From<Model8> for crate::AnyModel {
+    fn from(model: Model8) -> Self {
+        Self::M8(model)
+    }
+}
 impl crate::Model for Model8 {
     const ID: u16 = 8;
+    const NAME: &'static str = "model_8";
+    const LABEL: &'static str = "Get Device Security Certificate";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m8
     }

@@ -459,8 +459,15 @@ impl MomCess {
         ))
     }
 }
+impl From<DerTripLv> for crate::AnyModel {
+    fn from(model: DerTripLv) -> Self {
+        Self::M707(model)
+    }
+}
 impl crate::Model for DerTripLv {
     const ID: u16 = 707;
+    const NAME: &'static str = "DERTripLV";
+    const LABEL: &'static str = "DER Trip LV";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m707
     }

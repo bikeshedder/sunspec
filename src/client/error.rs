@@ -1,8 +1,8 @@
-use std::error::Error;
+use std::{error::Error, fmt::Debug};
 
 use thiserror::Error;
 
-use crate::{DecodeError, InvalidPointData, Model, ParseError};
+use crate::{DecodeError, InvalidPointData, ParseError};
 
 /// This error is returned if a communication fails because of a timeout
 /// or underlying modbus error.
@@ -94,7 +94,7 @@ pub enum ModbusError {
 /// This error is returned if there was an error loading the
 /// requested model.
 #[derive(Debug, Error)]
-pub enum ReadModelError<M: Model> {
+pub enum ReadModelError<M: Debug> {
     /// Some error occured while communicating via the modbus. This
     /// error is implementation specific.
     #[error("Modbus error: {0}")]
@@ -107,7 +107,7 @@ pub enum ReadModelError<M: Model> {
     InvalidPointData(#[from] InvalidPointData<M>),
 }
 
-impl<M: Model> From<ParseError<M>> for ReadModelError<M> {
+impl<M: Debug> From<ParseError<M>> for ReadModelError<M> {
     fn from(error: ParseError<M>) -> Self {
         match error {
             ParseError::Decode(error) => error.into(),

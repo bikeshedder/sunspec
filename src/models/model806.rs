@@ -76,8 +76,15 @@ impl BatteryString {
         Ok((data, groups))
     }
 }
+impl From<FlowBattery> for crate::AnyModel {
+    fn from(model: FlowBattery) -> Self {
+        Self::M806(model)
+    }
+}
 impl crate::Model for FlowBattery {
     const ID: u16 = 806;
+    const NAME: &'static str = "flow_battery";
+    const LABEL: &'static str = "Flow Battery Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m806
     }

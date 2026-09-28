@@ -88,6 +88,68 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
             },
         }
     });
+    let model_infos = models.iter().map(|model| {
+        let model_module = format_ident!("model{}", model.id);
+        let model_struct = format_ident!("Model{}", model.id);
+        let model_feature = Literal::string(&model_feature_name(model.id));
+        quote! {
+            #[cfg(feature = #model_feature)]
+            &<#model_module::#model_struct as crate::Model>::INFO,
+        }
+    });
+    let models_list = quote! {
+        /// Information about all models enabled via Cargo features, sorted by id.
+        pub static MODELS: &[&crate::ModelInfo] = &[
+            #(#model_infos)*
+        ];
+    };
+    let any_model_variants = models.iter().map(|model| {
+        let variant = format_ident!("M{}", model.id);
+        let model_module = format_ident!("model{}", model.id);
+        let model_struct = format_ident!("Model{}", model.id);
+        let model_doc = doc_to_ts(model.group.doc.label.as_deref().unwrap_or_default());
+        let model_feature = Literal::string(&model_feature_name(model.id));
+        let name_literal = Literal::string(&model.group.name);
+        quote! {
+            #[cfg(feature = #model_feature)]
+            #model_doc
+            #[cfg_attr(feature = "serde", serde(rename = #name_literal))]
+            #variant(#model_module::#model_struct),
+        }
+    });
+    let as_dyn_arms = models.iter().map(|model| {
+        let variant = format_ident!("M{}", model.id);
+        let model_feature = Literal::string(&model_feature_name(model.id));
+        quote! {
+            #[cfg(feature = #model_feature)]
+            Self::#variant(ref model) => model,
+        }
+    });
+    let any_model = quote! {
+        /// Data of any model enabled via Cargo features.
+        ///
+        /// This is useful when the model to be read is only known at runtime,
+        /// e.g. when it was selected via [`ModelInfo`](crate::ModelInfo).
+        #[derive(Clone, Debug, PartialEq)]
+        #[cfg_attr(
+            feature = "serde",
+            derive(::serde::Serialize, ::serde::Deserialize),
+            serde(tag = "model")
+        )]
+        #[non_exhaustive]
+        #[allow(clippy::large_enum_variant)]
+        pub enum AnyModel {
+            #(#any_model_variants)*
+        }
+        impl AnyModel {
+            /// Returns the contained model as trait object.
+            pub fn as_dyn(&self) -> &dyn crate::DynModel {
+                match *self {
+                    #(#as_dyn_arms)*
+                }
+            }
+        }
+    };
     let models_impl = quote! {
         impl Models {
             /// Returns a list of all supported model ids
@@ -146,6 +208,8 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
                 assert_impl_clone::<Models>();
                 assert_impl_partial_eq::<Models>();
                 assert_impl_eq::<Models>();
+                assert_impl_clone::<AnyModel>();
+                assert_impl_partial_eq::<AnyModel>();
                 #(#model_trait_assertions)*
             }
         }
@@ -155,6 +219,8 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
         #(#modules)*
         #models_struct
         #models_impl
+        #models_list
+        #any_model
         #tests
     })
 }
@@ -164,6 +230,8 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
     let model_name = format_ident!("Model{}", model.id);
     let m_name = format_ident!("m{}", model.id);
     let model_id = Literal::u16_unsuffixed(model.id);
+    let name_literal = Literal::string(&model.group.name);
+    let label_literal = Literal::string(model.group.doc.label.as_deref().unwrap_or_default());
     let group_name = group_ident(&model.group);
     let count_point_names = find_count_points(model);
     let has_counts = !count_point_names.is_empty();
@@ -184,9 +252,17 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
         has_counts,
         &mut state,
     )?;
+    let variant = format_ident!("M{}", model.id);
     let trait_impl = quote! {
+        impl From<#group_name> for crate::AnyModel {
+            fn from(model: #group_name) -> Self {
+                Self::#variant(model)
+            }
+        }
         impl crate::Model for #group_name {
             const ID: u16 = #model_id;
+            const NAME: &'static str = #name_literal;
+            const LABEL: &'static str = #label_literal;
             fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
                 models.#m_name
             }

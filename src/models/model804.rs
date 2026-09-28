@@ -754,8 +754,15 @@ impl LithiumIonStringModule {
         Ok((data, groups))
     }
 }
+impl From<LithiumIonString> for crate::AnyModel {
+    fn from(model: LithiumIonString) -> Self {
+        Self::M804(model)
+    }
+}
 impl crate::Model for LithiumIonString {
     const ID: u16 = 804;
+    const NAME: &'static str = "lithium_ion_string";
+    const LABEL: &'static str = "Lithium-Ion String Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m804
     }

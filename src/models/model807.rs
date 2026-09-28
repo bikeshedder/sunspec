@@ -968,8 +968,15 @@ impl crate::FixedSize for ModuleModDisRsn {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<FlowBatteryString> for crate::AnyModel {
+    fn from(model: FlowBatteryString) -> Self {
+        Self::M807(model)
+    }
+}
 impl crate::Model for FlowBatteryString {
     const ID: u16 = 807;
+    const NAME: &'static str = "flow_battery_string";
+    const LABEL: &'static str = "Flow Battery String Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m807
     }

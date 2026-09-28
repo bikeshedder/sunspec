@@ -342,8 +342,15 @@ impl crate::FixedSize for ModuleDcEvt {
         self.bits() == 4294967295u32
     }
 }
+impl From<Mppt> for crate::AnyModel {
+    fn from(model: Mppt) -> Self {
+        Self::M160(model)
+    }
+}
 impl crate::Model for Mppt {
     const ID: u16 = 160;
+    const NAME: &'static str = "mppt";
+    const LABEL: &'static str = "Multiple MPPT Inverter Extension Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m160
     }

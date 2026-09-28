@@ -296,8 +296,15 @@ impl crate::FixedSize for ChaGriSet {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<StorageBasic> for crate::AnyModel {
+    fn from(model: StorageBasic) -> Self {
+        Self::M124(model)
+    }
+}
 impl crate::Model for StorageBasic {
     const ID: u16 = 124;
+    const NAME: &'static str = "storage_basic";
+    const LABEL: &'static str = "Storage";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m124
     }

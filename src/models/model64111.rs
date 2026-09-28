@@ -162,8 +162,15 @@ impl crate::FixedSize for ChargerSt {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Model64111> for crate::AnyModel {
+    fn from(model: Model64111) -> Self {
+        Self::M64111(model)
+    }
+}
 impl crate::Model for Model64111 {
     const ID: u16 = 64111;
+    const NAME: &'static str = "model_64111";
+    const LABEL: &'static str = "Basic Charge Controller";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64111
     }

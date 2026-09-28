@@ -51,8 +51,15 @@ impl Model64101 {
         ))
     }
 }
+impl From<Model64101> for crate::AnyModel {
+    fn from(model: Model64101) -> Self {
+        Self::M64101(model)
+    }
+}
 impl crate::Model for Model64101 {
     const ID: u16 = 64101;
+    const NAME: &'static str = "model_64101";
+    const LABEL: &'static str = "Eltek Inverter Extension";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64101
     }

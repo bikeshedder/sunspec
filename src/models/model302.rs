@@ -94,8 +94,15 @@ impl Repeating {
         Ok((data, groups))
     }
 }
+impl From<Irradiance> for crate::AnyModel {
+    fn from(model: Irradiance) -> Self {
+        Self::M302(model)
+    }
+}
 impl crate::Model for Irradiance {
     const ID: u16 = 302;
+    const NAME: &'static str = "irradiance";
+    const LABEL: &'static str = "Irradiance Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m302
     }

@@ -2123,8 +2123,15 @@ impl crate::FixedSize for ChangeCommonModelLength {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<DerExploitation> for crate::AnyModel {
+    fn from(model: DerExploitation) -> Self {
+        Self::M64412(model)
+    }
+}
 impl crate::Model for DerExploitation {
     const ID: u16 = 64412;
+    const NAME: &'static str = "DERExploitation";
+    const LABEL: &'static str = "DER Cyber Exploitation";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64412
     }

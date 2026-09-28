@@ -458,8 +458,15 @@ impl crate::FixedSize for EvtVnd4 {
         self.bits() == 4294967295u32
     }
 }
+impl From<InverterSinglePhaseFloat> for crate::AnyModel {
+    fn from(model: InverterSinglePhaseFloat) -> Self {
+        Self::M111(model)
+    }
+}
 impl crate::Model for InverterSinglePhaseFloat {
     const ID: u16 = 111;
+    const NAME: &'static str = "inverter_single_phase_float";
+    const LABEL: &'static str = "Inverter (Single Phase) FLOAT";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m111
     }

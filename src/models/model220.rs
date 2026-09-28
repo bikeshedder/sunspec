@@ -357,8 +357,15 @@ impl Repeating {
         Ok((data, groups))
     }
 }
+impl From<AcMeterSecure> for crate::AnyModel {
+    fn from(model: AcMeterSecure) -> Self {
+        Self::M220(model)
+    }
+}
 impl crate::Model for AcMeterSecure {
     const ID: u16 = 220;
+    const NAME: &'static str = "ac_meter_secure";
+    const LABEL: &'static str = "Secure AC Meter Selected Readings";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m220
     }

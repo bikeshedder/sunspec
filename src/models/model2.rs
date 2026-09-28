@@ -274,8 +274,15 @@ impl crate::FixedSize for Ctl {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Aggregator> for crate::AnyModel {
+    fn from(model: Aggregator) -> Self {
+        Self::M2(model)
+    }
+}
 impl crate::Model for Aggregator {
     const ID: u16 = 2;
+    const NAME: &'static str = "aggregator";
+    const LABEL: &'static str = "Basic Aggregator";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m2
     }

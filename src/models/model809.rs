@@ -76,8 +76,15 @@ impl Cell {
         Ok((data, groups))
     }
 }
+impl From<FlowBatteryStack> for crate::AnyModel {
+    fn from(model: FlowBatteryStack) -> Self {
+        Self::M809(model)
+    }
+}
 impl crate::Model for FlowBatteryStack {
     const ID: u16 = 809;
+    const NAME: &'static str = "flow_battery_stack";
+    const LABEL: &'static str = "Flow Battery Stack Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m809
     }

@@ -242,8 +242,15 @@ impl crate::FixedSize for Auth {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Model19> for crate::AnyModel {
+    fn from(model: Model19) -> Self {
+        Self::M19(model)
+    }
+}
 impl crate::Model for Model19 {
     const ID: u16 = 19;
+    const NAME: &'static str = "model_19";
+    const LABEL: &'static str = "PPP Link";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m19
     }

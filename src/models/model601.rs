@@ -404,8 +404,15 @@ impl crate::FixedSize for TrackerAlm {
         self.bits() == 65535u16
     }
 }
+impl From<TrackerController> for crate::AnyModel {
+    fn from(model: TrackerController) -> Self {
+        Self::M601(model)
+    }
+}
 impl crate::Model for TrackerController {
     const ID: u16 = 601;
+    const NAME: &'static str = "tracker_controller";
+    const LABEL: &'static str = "Tracker Controller DRAFT 2";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m601
     }

@@ -146,8 +146,15 @@ impl crate::FixedSize for OpCtl {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<DerCtl> for crate::AnyModel {
+    fn from(model: DerCtl) -> Self {
+        Self::M715(model)
+    }
+}
 impl crate::Model for DerCtl {
     const ID: u16 = 715;
+    const NAME: &'static str = "DERCtl";
+    const LABEL: &'static str = "DERCtl";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m715
     }

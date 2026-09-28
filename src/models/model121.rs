@@ -334,8 +334,15 @@ impl crate::FixedSize for ConnPh {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Settings> for crate::AnyModel {
+    fn from(model: Settings) -> Self {
+        Self::M121(model)
+    }
+}
 impl crate::Model for Settings {
     const ID: u16 = 121;
+    const NAME: &'static str = "settings";
+    const LABEL: &'static str = "Basic Settings";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m121
     }

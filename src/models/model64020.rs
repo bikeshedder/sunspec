@@ -236,8 +236,15 @@ impl Repeating {
         Ok((data, groups))
     }
 }
+impl From<Model64020> for crate::AnyModel {
+    fn from(model: Model64020) -> Self {
+        Self::M64020(model)
+    }
+}
 impl crate::Model for Model64020 {
     const ID: u16 = 64020;
+    const NAME: &'static str = "model_64020";
+    const LABEL: &'static str = "Mersen GreenString";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64020
     }

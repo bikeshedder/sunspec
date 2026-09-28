@@ -62,8 +62,15 @@ impl Location {
         ))
     }
 }
+impl From<Location> for crate::AnyModel {
+    fn from(model: Location) -> Self {
+        Self::M305(model)
+    }
+}
 impl crate::Model for Location {
     const ID: u16 = 305;
+    const NAME: &'static str = "location";
+    const LABEL: &'static str = "GPS";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m305
     }

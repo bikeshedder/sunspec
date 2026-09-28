@@ -46,8 +46,15 @@ impl MiniMet {
         ))
     }
 }
+impl From<MiniMet> for crate::AnyModel {
+    fn from(model: MiniMet) -> Self {
+        Self::M308(model)
+    }
+}
 impl crate::Model for MiniMet {
     const ID: u16 = 308;
+    const NAME: &'static str = "mini_met";
+    const LABEL: &'static str = "Mini Met Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m308
     }

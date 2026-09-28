@@ -455,8 +455,15 @@ impl crate::FixedSize for CurveReadOnly {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Hvrtc> for crate::AnyModel {
+    fn from(model: Hvrtc) -> Self {
+        Self::M138(model)
+    }
+}
 impl crate::Model for Hvrtc {
     const ID: u16 = 138;
+    const NAME: &'static str = "hvrtc";
+    const LABEL: &'static str = "HVRTC";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m138
     }

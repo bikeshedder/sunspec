@@ -186,8 +186,15 @@ impl crate::FixedSize for LnkCtl {
         self.bits() == 65535u16
     }
 }
+impl From<Model16> for crate::AnyModel {
+    fn from(model: Model16) -> Self {
+        Self::M16(model)
+    }
+}
 impl crate::Model for Model16 {
     const ID: u16 = 16;
+    const NAME: &'static str = "model_16";
+    const LABEL: &'static str = "Simple IP Network";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m16
     }

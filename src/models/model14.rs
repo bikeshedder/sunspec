@@ -128,8 +128,15 @@ impl crate::FixedSize for Typ {
         self.bits() == 65535u16
     }
 }
+impl From<Model14> for crate::AnyModel {
+    fn from(model: Model14) -> Self {
+        Self::M14(model)
+    }
+}
 impl crate::Model for Model14 {
     const ID: u16 = 14;
+    const NAME: &'static str = "model_14";
+    const LABEL: &'static str = "Proxy Server";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m14
     }

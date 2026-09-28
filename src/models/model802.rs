@@ -905,8 +905,15 @@ impl crate::FixedSize for SetInvState {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Battery> for crate::AnyModel {
+    fn from(model: Battery) -> Self {
+        Self::M802(model)
+    }
+}
 impl crate::Model for Battery {
     const ID: u16 = 802;
+    const NAME: &'static str = "battery";
+    const LABEL: &'static str = "Battery Base Model";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m802
     }

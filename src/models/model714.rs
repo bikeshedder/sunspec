@@ -391,8 +391,15 @@ impl crate::FixedSize for PrtDcAlrm {
         self.bits() == 4294967295u32
     }
 }
+impl From<DerMeasureDc> for crate::AnyModel {
+    fn from(model: DerMeasureDc) -> Self {
+        Self::M714(model)
+    }
+}
 impl crate::Model for DerMeasureDc {
     const ID: u16 = 714;
+    const NAME: &'static str = "DERMeasureDC";
+    const LABEL: &'static str = "DER DC Measurement";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m714
     }

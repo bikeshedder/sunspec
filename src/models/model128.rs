@@ -171,8 +171,15 @@ impl crate::FixedSize for ModEna {
         self.bits() == 65535u16
     }
 }
+impl From<ReactiveCurrent> for crate::AnyModel {
+    fn from(model: ReactiveCurrent) -> Self {
+        Self::M128(model)
+    }
+}
 impl crate::Model for ReactiveCurrent {
     const ID: u16 = 128;
+    const NAME: &'static str = "reactive_current";
+    const LABEL: &'static str = "Dynamic Reactive Current";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m128
     }

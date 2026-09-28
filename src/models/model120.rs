@@ -226,8 +226,15 @@ impl crate::FixedSize for DerTyp {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Nameplate> for crate::AnyModel {
+    fn from(model: Nameplate) -> Self {
+        Self::M120(model)
+    }
+}
 impl crate::Model for Nameplate {
     const ID: u16 = 120;
+    const NAME: &'static str = "nameplate";
+    const LABEL: &'static str = "Nameplate";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m120
     }

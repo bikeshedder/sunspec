@@ -308,8 +308,15 @@ impl crate::FixedSize for Ctl {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<Model13> for crate::AnyModel {
+    fn from(model: Model13) -> Self {
+        Self::M13(model)
+    }
+}
 impl crate::Model for Model13 {
     const ID: u16 = 13;
+    const NAME: &'static str = "model_13";
+    const LABEL: &'static str = "IPv6";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m13
     }

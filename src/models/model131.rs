@@ -473,8 +473,15 @@ impl crate::FixedSize for CurveReadOnly {
         matches!(self, Self::Invalid(_))
     }
 }
+impl From<WattPf> for crate::AnyModel {
+    fn from(model: WattPf) -> Self {
+        Self::M131(model)
+    }
+}
 impl crate::Model for WattPf {
     const ID: u16 = 131;
+    const NAME: &'static str = "watt_pf";
+    const LABEL: &'static str = "Watt-PF";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m131
     }

@@ -107,8 +107,15 @@ impl Iv {
         Ok((data, groups))
     }
 }
+impl From<PvSimCurves> for crate::AnyModel {
+    fn from(model: PvSimCurves) -> Self {
+        Self::M64413(model)
+    }
+}
 impl crate::Model for PvSimCurves {
     const ID: u16 = 64413;
+    const NAME: &'static str = "PVSimCurves";
+    const LABEL: &'static str = "PV Curves";
     fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
         models.m64413
     }
