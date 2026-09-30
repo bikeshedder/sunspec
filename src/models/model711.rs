@@ -75,7 +75,7 @@ impl crate::Group for DerFreqDroop {
     const LEN: u16 = 12;
 }
 impl DerFreqDroop {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(12..).unwrap_or(&[]);
         let counts = Counts {
             n_ctl: Self::N_CTL.from_data(data)?,
@@ -243,7 +243,7 @@ impl crate::Group for Ctl {
     const LEN: u16 = 10;
 }
 impl Ctl {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(10..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -261,12 +261,12 @@ impl Ctl {
     fn parse_multiple<'a>(
         data: &'a [u16],
         counts: &Counts,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+    ) -> Result<(&'a [u16], Vec<Self>), crate::ParseError> {
         let (data, groups) =
             (0..counts.n_ctl).try_fold((data, Vec::new()), |(data, mut groups), _| {
                 let (data, group) = Ctl::parse_group(data)?;
                 groups.push(group);
-                Ok::<_, crate::DecodeError>((data, groups))
+                Ok::<_, crate::ParseError>((data, groups))
             })?;
         Ok((data, groups))
     }
@@ -326,7 +326,7 @@ impl crate::Model for DerFreqDroop {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m711
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

@@ -25,7 +25,7 @@ pub struct ModelInfo {
     /// e.g. `"Inverter (Three Phase)"`.
     pub label: &'static str,
     addr: fn(&Models) -> Option<ModelAddr<AnyModel>>,
-    parse: fn(&[u16]) -> Result<AnyModel, ParseError<AnyModel>>,
+    parse: fn(&[u16]) -> Result<AnyModel, ParseError>,
 }
 
 impl ModelInfo {
@@ -53,8 +53,7 @@ impl ModelInfo {
         (self.addr)(models)
     }
     /// Parse model data.
-    #[allow(clippy::result_large_err)]
-    pub fn parse(&self, data: &[u16]) -> Result<AnyModel, ParseError<AnyModel>> {
+    pub fn parse(&self, data: &[u16]) -> Result<AnyModel, ParseError> {
         (self.parse)(data)
     }
 }
@@ -63,11 +62,8 @@ fn addr_of<M: Model>(models: &Models) -> Option<ModelAddr<AnyModel>> {
     M::addr(models).map(ModelAddr::cast)
 }
 
-#[allow(clippy::result_large_err)]
-fn parse_any<M: Model>(data: &[u16]) -> Result<AnyModel, ParseError<AnyModel>> {
-    M::parse(data)
-        .map(Into::into)
-        .map_err(|e| e.map_model(Into::into))
+fn parse_any<M: Model>(data: &[u16]) -> Result<AnyModel, ParseError> {
+    M::parse(data).map(Into::into)
 }
 
 impl Debug for ModelInfo {

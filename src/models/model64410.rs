@@ -196,7 +196,7 @@ impl crate::Group for DcSimInterface {
     const LEN: u16 = 68;
 }
 impl DcSimInterface {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(68..).unwrap_or(&[]);
         let counts = Counts {
             n_pt: Self::N_PT.from_data(data)?,
@@ -545,7 +545,7 @@ impl Prof {
     fn parse_group<'a>(
         data: &'a [u16],
         counts: &Counts,
-    ) -> Result<(&'a [u16], Self), crate::DecodeError> {
+    ) -> Result<(&'a [u16], Self), crate::ParseError> {
         let nested_data = data.get(3..).unwrap_or(&[]);
         let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
@@ -560,12 +560,12 @@ impl Prof {
     fn parse_multiple<'a>(
         data: &'a [u16],
         counts: &Counts,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+    ) -> Result<(&'a [u16], Vec<Self>), crate::ParseError> {
         let (data, groups) =
             (0..counts.n_prof).try_fold((data, Vec::new()), |(data, mut groups), _| {
                 let (data, group) = Prof::parse_group(data, counts)?;
                 groups.push(group);
-                Ok::<_, crate::DecodeError>((data, groups))
+                Ok::<_, crate::ParseError>((data, groups))
             })?;
         Ok((data, groups))
     }
@@ -646,7 +646,7 @@ impl crate::Group for Pt {
     const LEN: u16 = 5;
 }
 impl Pt {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(5..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -662,12 +662,12 @@ impl Pt {
     fn parse_multiple<'a>(
         data: &'a [u16],
         counts: &Counts,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+    ) -> Result<(&'a [u16], Vec<Self>), crate::ParseError> {
         let (data, groups) =
             (0..counts.n_pt).try_fold((data, Vec::new()), |(data, mut groups), _| {
                 let (data, group) = Pt::parse_group(data)?;
                 groups.push(group);
-                Ok::<_, crate::DecodeError>((data, groups))
+                Ok::<_, crate::ParseError>((data, groups))
             })?;
         Ok((data, groups))
     }
@@ -684,7 +684,7 @@ impl crate::Model for DcSimInterface {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m64410
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

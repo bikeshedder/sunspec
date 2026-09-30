@@ -23,7 +23,7 @@
 pub use any_model::{DynModel, ModelInfo, ModelNotFound};
 pub use constants::{DEFAULT_DISCOVERY_ADDRESSES, SUNS_IDENTIFIER};
 pub use group::Group;
-pub use model::{InvalidPointData, Model, ModelAddr, ParseError};
+pub use model::{Model, ModelAddr, ParseError};
 pub use models::{AnyModel, Models, MODELS};
 pub use point::Point;
 pub use value::{DecodeError, EnumValue, FixedSize, Value};

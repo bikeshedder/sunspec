@@ -26,7 +26,7 @@ impl crate::Group for Model8 {
     const LEN: u16 = 2;
 }
 impl Model8 {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(2..).unwrap_or(&[]);
         let (nested_data, repeating) = Repeating::parse_multiple(nested_data)?;
         Ok((
@@ -100,7 +100,7 @@ impl crate::Group for Repeating {
     const LEN: u16 = 1;
 }
 impl Repeating {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(1..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -109,20 +109,20 @@ impl Repeating {
             },
         ))
     }
-    fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+    fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::ParseError> {
         let group_len = usize::from(<Repeating as crate::Group>::LEN);
         if group_len == 0 {
             return Ok((data, Vec::new()));
         }
         if data.len() % group_len != 0 {
-            return Err(crate::DecodeError::OutOfBounds);
+            return Err(crate::ParseError::InvalidGroupLength);
         }
         let group_count = data.len() / group_len;
         let (data, groups) =
             (0..group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
                 let (data, group) = Repeating::parse_group(data)?;
                 groups.push(group);
-                Ok::<_, crate::DecodeError>((data, groups))
+                Ok::<_, crate::ParseError>((data, groups))
             })?;
         Ok((data, groups))
     }
@@ -139,7 +139,7 @@ impl crate::Model for Model8 {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m8
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

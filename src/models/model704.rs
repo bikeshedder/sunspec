@@ -275,7 +275,7 @@ impl crate::Group for DerCtlAc {
         + <PfWAbsRvrt as crate::Group>::LEN;
 }
 impl DerCtlAc {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(57..).unwrap_or(&[]);
         let (nested_data, pf_w_inj) = PfWInj::parse_group(nested_data)?;
         let (nested_data, pf_w_inj_rvrt) = PfWInjRvrt::parse_group(nested_data)?;
@@ -1041,7 +1041,7 @@ impl crate::Group for PfWInj {
     const LEN: u16 = 2;
 }
 impl PfWInj {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(2..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -1120,7 +1120,7 @@ impl crate::Group for PfWInjRvrt {
     const LEN: u16 = 2;
 }
 impl PfWInjRvrt {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(2..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -1199,7 +1199,7 @@ impl crate::Group for PfWAbs {
     const LEN: u16 = 2;
 }
 impl PfWAbs {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(2..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -1278,7 +1278,7 @@ impl crate::Group for PfWAbsRvrt {
     const LEN: u16 = 2;
 }
 impl PfWAbsRvrt {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(2..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -1344,7 +1344,7 @@ impl crate::Model for DerCtlAc {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m704
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

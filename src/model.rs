@@ -9,38 +9,20 @@ use thiserror::Error;
 
 use crate::{sealed::Sealed, AnyModel, DecodeError, Group, ModelInfo, Models};
 
-/// Model data that decoded successfully but failed semantic validation.
-#[derive(Debug, Error)]
-#[error("Invalid point data")]
-pub struct InvalidPointData<T: Debug> {
-    /// The decoded model data.
-    pub model: T,
-}
-
 /// Error returned while parsing a model from registers.
-#[derive(Debug, Error)]
-pub enum ParseError<T: Debug> {
-    /// Register decoding failed before a full model value could be produced.
+#[derive(Debug, Error, Eq, PartialEq)]
+pub enum ParseError {
+    /// The data ended before all points and groups of the model were
+    /// read.
+    #[error("Model data too short")]
+    TooShort,
+    /// The data of a repeating group is not a multiple of the group
+    /// length.
+    #[error("Invalid length of repeating group")]
+    InvalidGroupLength,
+    /// A point value could not be decoded.
     #[error(transparent)]
     Decode(#[from] DecodeError),
-    /// The model decoded successfully but contains invalid point data.
-    #[error(transparent)]
-    InvalidPointData(InvalidPointData<T>),
-}
-
-impl<T: Debug> ParseError<T> {
-    /// Convert the model contained in this error using the given function.
-    ///
-    /// This is used to convert the error of a specific model into the
-    /// error of [`AnyModel`].
-    pub fn map_model<U: Debug>(self, f: impl FnOnce(T) -> U) -> ParseError<U> {
-        match self {
-            Self::Decode(error) => ParseError::Decode(error),
-            Self::InvalidPointData(InvalidPointData { model }) => {
-                ParseError::InvalidPointData(InvalidPointData { model: f(model) })
-            }
-        }
-    }
 }
 
 /// Every model implements this trait which contains methods
@@ -60,7 +42,7 @@ pub trait Model: Sealed + Sized + Group + Debug + Into<AnyModel> {
     /// if the model was not discovered.
     fn addr(models: &Models) -> Option<ModelAddr<Self>>;
     /// Parse model data from a given u16 slice
-    fn parse(data: &[u16]) -> Result<Self, ParseError<Self>>;
+    fn parse(data: &[u16]) -> Result<Self, ParseError>;
 }
 
 /// This structure is used to store the address of

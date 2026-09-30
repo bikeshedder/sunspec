@@ -246,7 +246,7 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
             fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
                 models.#m_name
             }
-            fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+            fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
                 let (_, model) = Self::parse_group(data)?;
                 Ok(model)
             }
@@ -506,7 +506,7 @@ fn gen_group(
     let parse_group_needs_counts = group_parse_group_needs_counts(group, has_counts);
     let parse_group = if is_root {
         quote! {
-            fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+            fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
                 #nested_data_init
                 #counts_init
                 #(#parse_groups)*
@@ -522,7 +522,7 @@ fn gen_group(
     } else {
         if parse_group_needs_counts {
             quote! {
-                fn parse_group<'a>(data: &'a [u16], counts: &Counts) -> Result<(&'a [u16], Self), crate::DecodeError> {
+                fn parse_group<'a>(data: &'a [u16], counts: &Counts) -> Result<(&'a [u16], Self), crate::ParseError> {
                     #nested_data_init
                     #(#parse_groups)*
                     Ok((
@@ -536,7 +536,7 @@ fn gen_group(
             }
         } else {
             quote! {
-                fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+                fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
                     #nested_data_init
                     #(#parse_groups)*
                     Ok((
@@ -624,19 +624,19 @@ fn gen_group_fn_parse_multiple(group: &Group, model: &Model, has_counts: bool) -
     };
     if group.count.is_zero() {
         return quote! {
-            fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+            fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::ParseError> {
                 let group_len = usize::from(<#group_name as crate::Group>::LEN);
                 if group_len == 0 {
                     return Ok((data, Vec::new()));
                 }
                 if data.len() % group_len != 0 {
-                    return Err(crate::DecodeError::OutOfBounds);
+                    return Err(crate::ParseError::InvalidGroupLength);
                 }
                 let group_count = data.len() / group_len;
                 let (data, groups) = (0..group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
                     let (data, group) = #group_name::parse_group(data)?;
                     groups.push(group);
-                    Ok::<_, crate::DecodeError>((data, groups))
+                    Ok::<_, crate::ParseError>((data, groups))
                 })?;
                 Ok((data, groups))
             }
@@ -644,22 +644,22 @@ fn gen_group_fn_parse_multiple(group: &Group, model: &Model, has_counts: bool) -
     }
     if parse_multiple_needs_counts {
         quote! {
-            fn parse_multiple<'a>(data: &'a[u16], counts: &#model_name) -> Result<(&'a[u16], Vec<Self>), crate::DecodeError> {
+            fn parse_multiple<'a>(data: &'a[u16], counts: &#model_name) -> Result<(&'a[u16], Vec<Self>), crate::ParseError> {
                 let (data, groups) = (0..#group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
                     let (data, group) = #parse_group_call_with_counts;
                     groups.push(group);
-                    Ok::<_, crate::DecodeError>((data, groups))
+                    Ok::<_, crate::ParseError>((data, groups))
                 })?;
                 Ok((data, groups))
             }
         }
     } else {
         quote! {
-            fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::DecodeError> {
+            fn parse_multiple(data: &[u16]) -> Result<(&[u16], Vec<Self>), crate::ParseError> {
                 let (data, groups) = (0..#group_count).try_fold((data, Vec::new()), |(data, mut groups), _| {
                     let (data, group) = #group_name::parse_group(data)?;
                     groups.push(group);
-                    Ok::<_, crate::DecodeError>((data, groups))
+                    Ok::<_, crate::ParseError>((data, groups))
                 })?;
                 Ok((data, groups))
             }

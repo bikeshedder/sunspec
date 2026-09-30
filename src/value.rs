@@ -75,7 +75,7 @@ impl<T: EnumValue> Value for T {
 impl Value for u16 {
     fn decode(data: &[u16]) -> Result<Self, DecodeError> {
         let &[w0] = data else {
-            return Err(DecodeError::OutOfBounds);
+            return Err(DecodeError::InvalidLength);
         };
         Ok(w0)
     }
@@ -92,7 +92,7 @@ impl FixedSize for u16 {
 impl Value for u32 {
     fn decode(words: &[u16]) -> Result<Self, DecodeError> {
         let &[w1, w0] = words else {
-            return Err(DecodeError::OutOfBounds);
+            return Err(DecodeError::InvalidLength);
         };
         Ok((w1 as u32) << 16 | w0 as u32)
     }
@@ -109,7 +109,7 @@ impl FixedSize for u32 {
 impl Value for u64 {
     fn decode(data: &[u16]) -> Result<Self, DecodeError> {
         let &[w3, w2, w1, w0] = data else {
-            return Err(DecodeError::OutOfBounds);
+            return Err(DecodeError::InvalidLength);
         };
         Ok((w3 as u64) << 0x30 | (w2 as u64) << 0x20 | (w1 as u64) << 0x10 | w0 as u64)
     }
@@ -131,7 +131,7 @@ impl FixedSize for u64 {
 impl Value for u128 {
     fn decode(words: &[u16]) -> Result<Self, DecodeError> {
         let &[w7, w6, w5, w4, w3, w2, w1, w0] = words else {
-            return Err(DecodeError::OutOfBounds);
+            return Err(DecodeError::InvalidLength);
         };
         Ok((w7 as u128) << 0x70
             | (w6 as u128) << 0x60
@@ -206,7 +206,7 @@ impl FixedSize for i64 {
 impl Value for f32 {
     fn decode(data: &[u16]) -> Result<Self, DecodeError> {
         let &[w1, w0] = data else {
-            return Err(DecodeError::OutOfBounds);
+            return Err(DecodeError::InvalidLength);
         };
         Ok(f32::from_be_bytes([
             (w1 >> 8) as u8,
@@ -236,7 +236,7 @@ impl FixedSize for f32 {
 impl Value for f64 {
     fn decode(data: &[u16]) -> Result<Self, DecodeError> {
         let &[w3, w2, w1, w0] = data else {
-            return Err(DecodeError::OutOfBounds);
+            return Err(DecodeError::InvalidLength);
         };
         Ok(f64::from_be_bytes([
             (w3 >> 8) as u8,
@@ -297,7 +297,7 @@ impl Value for String {
 impl Value for Ipv4Addr {
     fn decode(data: &[u16]) -> Result<Self, DecodeError> {
         let &[w1, w0] = data else {
-            return Err(DecodeError::OutOfBounds);
+            return Err(DecodeError::InvalidLength);
         };
         Ok(Ipv4Addr::new(
             (w1 >> 8) as u8,
@@ -319,7 +319,7 @@ impl FixedSize for Ipv4Addr {
 impl Value for Ipv6Addr {
     fn decode(data: &[u16]) -> Result<Self, DecodeError> {
         let &[a, b, c, d, e, f, g, h] = data else {
-            return Err(DecodeError::OutOfBounds);
+            return Err(DecodeError::InvalidLength);
         };
         Ok(Ipv6Addr::new(a, b, c, d, e, f, g, h))
     }
@@ -372,10 +372,10 @@ impl<T: FixedSize> Value for Option<T> {
 /// the value of a given point.
 #[derive(Debug, Error, Eq, PartialEq)]
 pub enum DecodeError {
-    /// The value could not be decoded because the given data was not large
-    /// enough.
-    #[error("Out of bounds")]
-    OutOfBounds,
+    /// The given data does not have the length required by the value
+    /// type.
+    #[error("Invalid length")]
+    InvalidLength,
     /// The given data was not valid UTF-8
     #[error("Invalid UTF-8 data")]
     Utf8(#[from] FromUtf8Error),

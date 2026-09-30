@@ -48,7 +48,7 @@ impl crate::Group for Common {
     const LEN: u16 = 66;
 }
 impl Common {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(66..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -75,7 +75,7 @@ impl crate::Model for Common {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m1
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

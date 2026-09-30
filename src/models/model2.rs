@@ -66,7 +66,7 @@ impl crate::Group for Aggregator {
     const LEN: u16 = 14;
 }
 impl Aggregator {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(14..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -289,7 +289,7 @@ impl crate::Model for Aggregator {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m2
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

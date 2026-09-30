@@ -155,7 +155,7 @@ impl crate::Group for LithiumIonBank {
     const LEN: u16 = 26;
 }
 impl LithiumIonBank {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(26..).unwrap_or(&[]);
         let counts = Counts {
             n_str: Self::N_STR.from_data(data)?,
@@ -335,7 +335,7 @@ impl crate::Group for String {
     const LEN: u16 = 32;
 }
 impl String {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(32..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -370,12 +370,12 @@ impl String {
     fn parse_multiple<'a>(
         data: &'a [u16],
         counts: &Counts,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+    ) -> Result<(&'a [u16], Vec<Self>), crate::ParseError> {
         let (data, groups) =
             (0..counts.n_str).try_fold((data, Vec::new()), |(data, mut groups), _| {
                 let (data, group) = String::parse_group(data)?;
                 groups.push(group);
-                Ok::<_, crate::DecodeError>((data, groups))
+                Ok::<_, crate::ParseError>((data, groups))
             })?;
         Ok((data, groups))
     }
@@ -868,7 +868,7 @@ impl crate::Model for LithiumIonBank {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m803
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

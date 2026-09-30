@@ -1,8 +1,8 @@
 use std::marker::PhantomData;
 
 use crate::{
-    value::{DecodeError, FixedSize, Value},
-    Group,
+    value::{FixedSize, Value},
+    Group, ParseError,
 };
 
 /// Definition of a point
@@ -29,11 +29,11 @@ impl<G: Group, T: Value> Point<G, T> {
             point_type: PhantomData,
         }
     }
-    /// Parse value from given data
-    pub fn from_data(&self, data: &[u16]) -> Result<T, DecodeError> {
+    /// Parse the value of this point from the data of its group
+    pub fn from_data(&self, data: &[u16]) -> Result<T, ParseError> {
         let slice = data
             .get(self.offset as usize..(self.offset as usize + self.length as usize))
-            .ok_or(DecodeError::OutOfBounds)?;
+            .ok_or(ParseError::TooShort)?;
         let value = T::decode(slice)?;
         Ok(value)
     }

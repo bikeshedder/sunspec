@@ -1,8 +1,7 @@
 use std::{fmt::Debug, future::Future, num::NonZeroU16, time::Duration};
 
 use crate::{
-    AnyModel, DecodeError, Model, ModelAddr, ModelInfo, Models, ParseError, Point, Value,
-    SUNS_IDENTIFIER,
+    AnyModel, Model, ModelAddr, ModelInfo, Models, ParseError, Point, Value, SUNS_IDENTIFIER,
 };
 
 use super::{
@@ -81,16 +80,16 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
     ///
     /// Note: Some models are too big to be fetched in a single request
     ///       and multiple read_holding_registers calls will be issued.
-    pub async fn read_model<M: Model>(&self) -> Result<M, ReadModelError<M>> {
+    pub async fn read_model<M: Model>(&self) -> Result<M, ReadModelError> {
         self.read_and_parse_model(&M::INFO, M::parse).await
     }
     /// Read the registers of the given model using the configured chunk
     /// size and timeout and parse them using the given function.
-    async fn read_and_parse_model<M: Debug>(
+    async fn read_and_parse_model<M>(
         &self,
         model: &ModelInfo,
-        parse: impl FnOnce(&[u16]) -> Result<M, ParseError<M>>,
-    ) -> Result<M, ReadModelError<M>> {
+        parse: impl FnOnce(&[u16]) -> Result<M, ParseError>,
+    ) -> Result<M, ReadModelError> {
         let addr = model
             .addr(&self.models)
             .ok_or(ReadModelError::ModelNotDiscovered { model_id: model.id })?;
@@ -104,7 +103,7 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
         )
         .await?;
         parse(&data).map_err(|error| match error {
-            ParseError::Decode(DecodeError::OutOfBounds) => ReadModelError::ModelTooShort {
+            ParseError::TooShort => ReadModelError::ModelTooShort {
                 model_id: model.id,
                 len: addr.len(),
             },
@@ -116,11 +115,7 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
     ///
     /// Note: Some models are too big to be fetched in a single request
     ///       and multiple read_holding_registers calls will be issued.
-    #[allow(clippy::result_large_err)]
-    pub async fn read_any_model(
-        &self,
-        model: &ModelInfo,
-    ) -> Result<AnyModel, ReadModelError<AnyModel>> {
+    pub async fn read_any_model(&self, model: &ModelInfo) -> Result<AnyModel, ReadModelError> {
         self.read_and_parse_model(model, |data| model.parse(data))
             .await
     }

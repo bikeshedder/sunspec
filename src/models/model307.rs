@@ -53,7 +53,7 @@ impl crate::Group for BaseMet {
     const LEN: u16 = 11;
 }
 impl BaseMet {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(11..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -85,7 +85,7 @@ impl crate::Model for BaseMet {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m307
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

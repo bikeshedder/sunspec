@@ -89,7 +89,7 @@ impl crate::Group for Model12 {
     const LEN: u16 = 98;
 }
 impl Model12 {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(98..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -324,7 +324,7 @@ impl crate::Model for Model12 {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m12
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

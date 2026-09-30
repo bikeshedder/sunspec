@@ -78,7 +78,7 @@ impl crate::Group for DerMeasureDc {
     const LEN: u16 = 18;
 }
 impl DerMeasureDc {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(18..).unwrap_or(&[]);
         let counts = Counts {
             n_prt: Self::N_PRT.from_data(data)?,
@@ -199,7 +199,7 @@ impl crate::Group for Prt {
     const LEN: u16 = 25;
 }
 impl Prt {
-    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
+    fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::ParseError> {
         let nested_data = data.get(25..).unwrap_or(&[]);
         Ok((
             nested_data,
@@ -221,13 +221,13 @@ impl Prt {
     fn parse_multiple<'a>(
         data: &'a [u16],
         counts: &Counts,
-    ) -> Result<(&'a [u16], Vec<Self>), crate::DecodeError> {
+    ) -> Result<(&'a [u16], Vec<Self>), crate::ParseError> {
         let (data, groups) = (0..counts.n_prt.unwrap_or_default()).try_fold(
             (data, Vec::new()),
             |(data, mut groups), _| {
                 let (data, group) = Prt::parse_group(data)?;
                 groups.push(group);
-                Ok::<_, crate::DecodeError>((data, groups))
+                Ok::<_, crate::ParseError>((data, groups))
             },
         )?;
         Ok((data, groups))
@@ -405,7 +405,7 @@ impl crate::Model for DerMeasureDc {
     fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m714
     }
-    fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
+    fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
     }

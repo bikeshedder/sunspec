@@ -28,8 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Breaking:** Seal the `Model`, `DynModel`, `Group`, `Value`, `FixedSize`
   and `EnumValue` traits. They were never meant to be implemented outside of
   this crate, which allows extending them without further breaking changes.
-- `ModelAddr`, `ReadModelError` and `InvalidPointData` no longer require
-  `M: Model`
+- `ModelAddr` no longer requires `M: Model`
 - Update sunspec models (2026-08-20)
   - Add `subscribed_resource` and `subscription_ena` points to model 64415
   - Fix size of `DeptRef` point in model 64410
@@ -45,10 +44,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   an address of `0`. The fields of `Models` are now `Option<ModelAddr<_>>`.
 - **Breaking:** The fields of `ModelAddr` are private. Use the `addr()` and
   `len()` methods instead.
+- **Breaking:** Parsing incomplete model data returns
+  `ParseError::TooShort` or `ParseError::InvalidGroupLength` instead of
+  `DecodeError::OutOfBounds`. `ReadModelError::DecodeError` was replaced by
+  `ReadModelError::Parse`.
+- **Breaking:** Rename `DecodeError::OutOfBounds` to
+  `DecodeError::InvalidLength`. It is returned if the data does not have the
+  length required by the value type.
 
 ### Removed
 
 - **Breaking:** `Models::supported_model_ids` in favor of `Models::iter`
+- **Breaking:** `InvalidPointData`, which was no longer used since point
+  validation was removed. `ParseError` and `ReadModelError` no longer have a
+  type parameter.
 
 ### Fixed
 
