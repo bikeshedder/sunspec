@@ -263,4 +263,5 @@ members = [
     "examples/readme",
     "examples/model103",
     "examples/model712",
+    "examples/tls",
 ]

@@ -53,6 +53,7 @@ The `examples` directory in the code repository contains the unabridged code.
 - `examples/readme`: minimal end-to-end example used in this README
 - `examples/model103`: reading a common inverter model from a device
 - `examples/model712`: reading a model with nested and repeating groups
+- `examples/tls`: connecting to a device via Modbus/TCP Security (TLS)
 
 ### Example code for accessing data from a three phase inverter using the model 103
 
