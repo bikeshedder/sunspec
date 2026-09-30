@@ -142,6 +142,21 @@ impl<M: Model> DynModel for M {
     }
 }
 
+impl Models {
+    /// Returns an iterator over all discovered models which are enabled
+    /// via Cargo features, sorted by id.
+    ///
+    /// Each item contains the model information and its address which
+    /// can be passed to
+    /// [`AsyncDevice::read_any_model`](crate::client::AsyncDevice::read_any_model).
+    pub fn iter(&self) -> impl Iterator<Item = (&'static ModelInfo, ModelAddr<AnyModel>)> + '_ {
+        MODELS
+            .iter()
+            .map(|&info| (info, info.addr(self)))
+            .filter(|(_, addr)| addr.addr != 0)
+    }
+}
+
 impl AnyModel {
     /// Returns information about the contained model.
     pub fn info(&self) -> &'static ModelInfo {

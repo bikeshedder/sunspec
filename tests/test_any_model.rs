@@ -106,6 +106,11 @@ fn test_read_any_model() {
     assert_eq!((addr.addr, addr.len), (40004, 66));
     assert_eq!(Model103::INFO.addr(&device.models).addr, 0);
 
+    let discovered = device.models.iter().collect::<Vec<_>>();
+    assert_eq!(discovered.len(), 1);
+    assert_eq!(discovered[0].0, info);
+    assert_eq!(discovered[0].1, addr);
+
     let any_model = block_on(device.read_any_model(info)).unwrap();
     let model = block_on(device.read_model::<Model1>()).unwrap();
     assert_eq!(any_model.info(), &Model1::INFO);

@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `DynModel` trait providing access to model information via
     `AnyModel::as_dyn`
   - `AsyncDevice::read_any_model`
+  - `Models::iter` returning all discovered models
   - `Model::NAME`, `Model::LABEL` and `Model::INFO` constants
 
 ### Changed
