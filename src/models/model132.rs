@@ -71,9 +71,7 @@ impl crate::Group for VoltWatt {
 }
 impl VoltWatt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(10..).unwrap_or(&[]);
         let (nested_data, curve) = Curve::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -370,9 +368,7 @@ impl crate::Group for Curve {
 }
 impl Curve {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(54..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -531,7 +527,7 @@ impl crate::Model for VoltWatt {
     const ID: u16 = 132;
     const NAME: &'static str = "volt_watt";
     const LABEL: &'static str = "Volt-Watt";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m132
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

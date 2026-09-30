@@ -24,7 +24,7 @@ pub struct ModelInfo {
     /// Label of the model as defined by the SunSpec specification,
     /// e.g. `"Inverter (Three Phase)"`.
     pub label: &'static str,
-    addr: fn(&Models) -> ModelAddr<AnyModel>,
+    addr: fn(&Models) -> Option<ModelAddr<AnyModel>>,
     parse: fn(&[u16]) -> Result<AnyModel, ParseError<AnyModel>>,
 }
 
@@ -48,9 +48,8 @@ impl ModelInfo {
             .map(|index| MODELS[index])
     }
     /// Returns the address of this model in the given discovered
-    /// models. An address of `0` indicates that the model was not
-    /// discovered.
-    pub fn addr(&self, models: &Models) -> ModelAddr<AnyModel> {
+    /// models or `None` if the model was not discovered.
+    pub fn addr(&self, models: &Models) -> Option<ModelAddr<AnyModel>> {
         (self.addr)(models)
     }
     /// Parse model data.
@@ -60,8 +59,8 @@ impl ModelInfo {
     }
 }
 
-fn addr_of<M: Model>(models: &Models) -> ModelAddr<AnyModel> {
-    M::addr(models).cast()
+fn addr_of<M: Model>(models: &Models) -> Option<ModelAddr<AnyModel>> {
+    M::addr(models).map(ModelAddr::cast)
 }
 
 #[allow(clippy::result_large_err)]
@@ -146,14 +145,13 @@ impl Models {
     /// Returns an iterator over all discovered models which are enabled
     /// via Cargo features, sorted by id.
     ///
-    /// Each item contains the model information and its address which
-    /// can be passed to
-    /// [`AsyncDevice::read_any_model`](crate::client::AsyncDevice::read_any_model).
+    /// Each item contains the model information, which can be passed to
+    /// [`AsyncDevice::read_any_model`](crate::client::AsyncDevice::read_any_model),
+    /// and the address of the model.
     pub fn iter(&self) -> impl Iterator<Item = (&'static ModelInfo, ModelAddr<AnyModel>)> + '_ {
         MODELS
             .iter()
-            .map(|&info| (info, info.addr(self)))
-            .filter(|(_, addr)| addr.addr != 0)
+            .filter_map(|&info| Some((info, info.addr(self)?)))
     }
 }
 

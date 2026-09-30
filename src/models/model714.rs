@@ -79,9 +79,7 @@ impl crate::Group for DerMeasureDc {
 }
 impl DerMeasureDc {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(18..).unwrap_or(&[]);
         let counts = Counts {
             n_prt: Self::N_PRT.from_data(data)?,
         };
@@ -202,9 +200,7 @@ impl crate::Group for Prt {
 }
 impl Prt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(25..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -406,7 +402,7 @@ impl crate::Model for DerMeasureDc {
     const ID: u16 = 714;
     const NAME: &'static str = "DERMeasureDC";
     const LABEL: &'static str = "DER DC Measurement";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m714
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

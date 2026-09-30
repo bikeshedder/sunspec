@@ -303,9 +303,7 @@ impl crate::Group for AcMeterAnOrAb {
 }
 impl AcMeterAnOrAb {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(105..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -462,7 +460,7 @@ impl crate::Model for AcMeterAnOrAb {
     const ID: u16 = 201;
     const NAME: &'static str = "ac_meter_an_or_ab";
     const LABEL: &'static str = "Meter (Single Phase) single phase (AN or AB) meter";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m201
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

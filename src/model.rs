@@ -2,6 +2,7 @@ use std::{
     fmt::Debug,
     hash::{Hash, Hasher},
     marker::PhantomData,
+    num::NonZeroU16,
 };
 
 use thiserror::Error;
@@ -55,8 +56,9 @@ pub trait Model: Sealed + Sized + Group + Debug + Into<AnyModel> {
     const LABEL: &'static str;
     /// Information about this model which is also available at runtime
     const INFO: ModelInfo = ModelInfo::of::<Self>();
-    /// Get model address from discovered models struct
-    fn addr(models: &Models) -> ModelAddr<Self>;
+    /// Get model address from discovered models struct. Returns `None`
+    /// if the model was not discovered.
+    fn addr(models: &Models) -> Option<ModelAddr<Self>>;
     /// Parse model data from a given u16 slice
     fn parse(data: &[u16]) -> Result<Self, ParseError<Self>>;
 }
@@ -70,19 +72,37 @@ pub trait Model: Sealed + Sized + Group + Debug + Into<AnyModel> {
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct ModelAddr<M> {
-    /// The discovered address of this model.
-    pub addr: u16,
-    /// The discovered length of this model. A length of
-    /// 0 indicates that the model is unsupported.
-    pub len: u16,
+    // A model can never start at address 0 as it is always preceded by
+    // the SunS identifier. Using `NonZeroU16` makes
+    // `Option<ModelAddr<M>>` the same size as `ModelAddr<M>`.
+    addr: NonZeroU16,
+    len: u16,
     model: PhantomData<M>,
 }
 
 impl<M> ModelAddr<M> {
-    /// Set the address of a discovered model
-    pub fn set_addr(&mut self, addr: u16, len: u16) {
-        self.addr = addr;
-        self.len = len;
+    /// Create the address of a discovered model
+    // Only used by the generated `Models::set_addr`, which is empty when
+    // no models are enabled via Cargo features.
+    #[allow(dead_code)]
+    pub(crate) const fn new(addr: NonZeroU16, len: u16) -> Self {
+        Self {
+            addr,
+            len,
+            model: PhantomData,
+        }
+    }
+    /// The discovered address of the first register following the
+    /// model id and length registers.
+    pub const fn addr(&self) -> u16 {
+        self.addr.get()
+    }
+    /// The discovered length of the model. This is the number of
+    /// registers following the model id and length registers.
+    // This is not a collection, so `is_empty` would make no sense.
+    #[allow(clippy::len_without_is_empty)]
+    pub const fn len(&self) -> u16 {
+        self.len
     }
     /// Change the model type of this address.
     pub(crate) fn cast<N>(self) -> ModelAddr<N> {
@@ -118,15 +138,5 @@ impl<M> Hash for ModelAddr<M> {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.addr.hash(state);
         self.len.hash(state);
-    }
-}
-
-impl<M> Default for ModelAddr<M> {
-    fn default() -> Self {
-        Self {
-            addr: Default::default(),
-            len: Default::default(),
-            model: Default::default(),
-        }
     }
 }

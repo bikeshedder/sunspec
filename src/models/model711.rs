@@ -76,9 +76,7 @@ impl crate::Group for DerFreqDroop {
 }
 impl DerFreqDroop {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(12..).unwrap_or(&[]);
         let counts = Counts {
             n_ctl: Self::N_CTL.from_data(data)?,
         };
@@ -246,9 +244,7 @@ impl crate::Group for Ctl {
 }
 impl Ctl {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(10..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -327,7 +323,7 @@ impl crate::Model for DerFreqDroop {
     const ID: u16 = 711;
     const NAME: &'static str = "DERFreqDroop";
     const LABEL: &'static str = "DER Frequency Droop";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m711
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

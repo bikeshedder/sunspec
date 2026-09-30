@@ -64,9 +64,7 @@ impl crate::Group for FreqWattParam {
 }
 impl FreqWattParam {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(10..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -148,7 +146,7 @@ impl crate::Model for FreqWattParam {
     const ID: u16 = 127;
     const NAME: &'static str = "freq_watt_param";
     const LABEL: &'static str = "Freq-Watt Param";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m127
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

@@ -102,9 +102,9 @@ fn test_read_any_model() {
     let device = block_on(client.device(1)).unwrap();
 
     let info: &ModelInfo = "common".parse().unwrap();
-    let addr = info.addr(&device.models);
-    assert_eq!((addr.addr, addr.len), (40004, 66));
-    assert_eq!(Model103::INFO.addr(&device.models).addr, 0);
+    let addr = info.addr(&device.models).unwrap();
+    assert_eq!((addr.addr(), addr.len()), (40004, 66));
+    assert_eq!(Model103::INFO.addr(&device.models), None);
 
     let discovered = device.models.iter().collect::<Vec<_>>();
     assert_eq!(discovered.len(), 1);

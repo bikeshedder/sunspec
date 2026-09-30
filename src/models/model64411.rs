@@ -267,9 +267,7 @@ impl crate::Group for AcSimInterface {
 }
 impl AcSimInterface {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(1396..).unwrap_or(&[]);
         let counts = Counts {
             n_prof: Self::N_PROF.from_data(data)?,
             n_pt: Self::N_PT.from_data(data)?,
@@ -571,9 +569,7 @@ impl Prof {
         data: &'a [u16],
         counts: &Counts,
     ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(33..).unwrap_or(&[]);
         let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
             nested_data,
@@ -655,9 +651,7 @@ impl crate::Group for Pt {
 }
 impl Pt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(8..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -694,7 +688,7 @@ impl crate::Model for AcSimInterface {
     const ID: u16 = 64411;
     const NAME: &'static str = "ACSimInterface";
     const LABEL: &'static str = "AC Simulator Control Interface";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m64411
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

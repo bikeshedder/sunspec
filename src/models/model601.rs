@@ -80,9 +80,7 @@ impl crate::Group for TrackerController {
 }
 impl TrackerController {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(26..).unwrap_or(&[]);
         let (nested_data, tracker) = Tracker::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -300,9 +298,7 @@ impl crate::Group for Tracker {
 }
 impl Tracker {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(22..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -420,7 +416,7 @@ impl crate::Model for TrackerController {
     const ID: u16 = 601;
     const NAME: &'static str = "tracker_controller";
     const LABEL: &'static str = "Tracker Controller DRAFT 2";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m601
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

@@ -18,9 +18,7 @@ impl crate::Group for BomTemp {
 }
 impl BomTemp {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data;
         let (nested_data, temp) = Temp::parse_multiple(nested_data)?;
         Ok((nested_data, Self { temp }))
     }
@@ -44,9 +42,7 @@ impl crate::Group for Temp {
 }
 impl Temp {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(1..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -81,7 +77,7 @@ impl crate::Model for BomTemp {
     const ID: u16 = 303;
     const NAME: &'static str = "bom_temp";
     const LABEL: &'static str = "Back of Module Temperature Model";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m303
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

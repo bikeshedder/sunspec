@@ -62,9 +62,7 @@ impl crate::Group for DerTripLf {
 }
 impl DerTripLf {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(7..).unwrap_or(&[]);
         let counts = Counts {
             n_pt: Self::N_PT.from_data(data)?,
             n_crv_set: Self::N_CRV_SET.from_data(data)?,
@@ -210,16 +208,17 @@ impl Crv {
 }
 impl crate::sealed::Sealed for Crv {}
 impl crate::Group for Crv {
-    const LEN: u16 = 1;
+    const LEN: u16 = 1
+        + <MustTrip as crate::Group>::LEN
+        + <MayTrip as crate::Group>::LEN
+        + <MomCess as crate::Group>::LEN;
 }
 impl Crv {
     fn parse_group<'a>(
         data: &'a [u16],
         counts: &Counts,
     ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(1..).unwrap_or(&[]);
         let (nested_data, must_trip) = MustTrip::parse_group(nested_data, counts)?;
         let (nested_data, may_trip) = MayTrip::parse_group(nested_data, counts)?;
         let (nested_data, mom_cess) = MomCess::parse_group(nested_data, counts)?;
@@ -319,9 +318,7 @@ impl MustTrip {
         data: &'a [u16],
         counts: &Counts,
     ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(1..).unwrap_or(&[]);
         let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
             nested_data,
@@ -362,9 +359,7 @@ impl crate::Group for Pt {
 }
 impl Pt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(4..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -414,9 +409,7 @@ impl MayTrip {
         data: &'a [u16],
         counts: &Counts,
     ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(1..).unwrap_or(&[]);
         let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
             nested_data,
@@ -455,9 +448,7 @@ impl MomCess {
         data: &'a [u16],
         counts: &Counts,
     ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(1..).unwrap_or(&[]);
         let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
             nested_data,
@@ -477,7 +468,7 @@ impl crate::Model for DerTripLf {
     const ID: u16 = 709;
     const NAME: &'static str = "DERTripLF";
     const LABEL: &'static str = "DER Trip LF";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m709
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

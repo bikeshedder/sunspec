@@ -76,9 +76,7 @@ impl crate::Group for StringCombinerCurrentInput {
 }
 impl StringCombinerCurrentInput {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(16..).unwrap_or(&[]);
         let (nested_data, string) = String::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -231,9 +229,7 @@ impl crate::Group for String {
 }
 impl String {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(8..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -362,7 +358,7 @@ impl crate::Model for StringCombinerCurrentInput {
     const ID: u16 = 403;
     const NAME: &'static str = "string_combiner_current_input";
     const LABEL: &'static str = "String Combiner (Current)";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m403
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

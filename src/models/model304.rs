@@ -18,9 +18,7 @@ impl crate::Group for Inclinometer {
 }
 impl Inclinometer {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data;
         let (nested_data, incl) = Incl::parse_multiple(nested_data)?;
         Ok((nested_data, Self { incl }))
     }
@@ -54,9 +52,7 @@ impl crate::Group for Incl {
 }
 impl Incl {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(6..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -93,7 +89,7 @@ impl crate::Model for Inclinometer {
     const ID: u16 = 304;
     const NAME: &'static str = "inclinometer";
     const LABEL: &'static str = "Inclinometer Model";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m304
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

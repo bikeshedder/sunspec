@@ -268,13 +268,15 @@ impl DerCtlAc {
 }
 impl crate::sealed::Sealed for DerCtlAc {}
 impl crate::Group for DerCtlAc {
-    const LEN: u16 = 57;
+    const LEN: u16 = 57
+        + <PfWInj as crate::Group>::LEN
+        + <PfWInjRvrt as crate::Group>::LEN
+        + <PfWAbs as crate::Group>::LEN
+        + <PfWAbsRvrt as crate::Group>::LEN;
 }
 impl DerCtlAc {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(57..).unwrap_or(&[]);
         let (nested_data, pf_w_inj) = PfWInj::parse_group(nested_data)?;
         let (nested_data, pf_w_inj_rvrt) = PfWInjRvrt::parse_group(nested_data)?;
         let (nested_data, pf_w_abs) = PfWAbs::parse_group(nested_data)?;
@@ -1040,9 +1042,7 @@ impl crate::Group for PfWInj {
 }
 impl PfWInj {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(2..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -1121,9 +1121,7 @@ impl crate::Group for PfWInjRvrt {
 }
 impl PfWInjRvrt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(2..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -1202,9 +1200,7 @@ impl crate::Group for PfWAbs {
 }
 impl PfWAbs {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(2..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -1283,9 +1279,7 @@ impl crate::Group for PfWAbsRvrt {
 }
 impl PfWAbsRvrt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(2..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -1347,7 +1341,7 @@ impl crate::Model for DerCtlAc {
     const ID: u16 = 704;
     const NAME: &'static str = "DERCtlAC";
     const LABEL: &'static str = "DER AC Controls";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m704
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

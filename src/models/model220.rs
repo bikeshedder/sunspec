@@ -160,9 +160,7 @@ impl crate::Group for AcMeterSecure {
 }
 impl AcMeterSecure {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(42..).unwrap_or(&[]);
         let (nested_data, repeating) = Repeating::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -333,9 +331,7 @@ impl crate::Group for Repeating {
 }
 impl Repeating {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(1..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -370,7 +366,7 @@ impl crate::Model for AcMeterSecure {
     const ID: u16 = 220;
     const NAME: &'static str = "ac_meter_secure";
     const LABEL: &'static str = "Secure AC Meter Selected Readings";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m220
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

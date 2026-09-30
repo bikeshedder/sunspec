@@ -118,9 +118,7 @@ impl crate::Group for Model64001 {
 }
 impl Model64001 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(71..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -244,7 +242,7 @@ impl crate::Model for Model64001 {
     const ID: u16 = 64001;
     const NAME: &'static str = "model_64001";
     const LABEL: &'static str = "Veris Status and Configuration";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m64001
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

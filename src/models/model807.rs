@@ -172,9 +172,7 @@ impl crate::Group for FlowBatteryString {
 }
 impl FlowBatteryString {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(34..).unwrap_or(&[]);
         let (nested_data, module) = Module::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -501,9 +499,7 @@ impl crate::Group for Module {
 }
 impl Module {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(24..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -991,7 +987,7 @@ impl crate::Model for FlowBatteryString {
     const ID: u16 = 807;
     const NAME: &'static str = "flow_battery_string";
     const LABEL: &'static str = "Flow Battery String Model";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m807
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

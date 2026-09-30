@@ -2,6 +2,8 @@
 ///
 /// This trait is sealed and cannot be implemented outside of this crate.
 pub trait Group: crate::sealed::Sealed + Sized {
-    /// Group length (without nested and repeating groups)
+    /// Length of this group including nested groups. Repeating groups
+    /// whose count is not fixed are not included, so for groups
+    /// containing them this is the minimum length.
     const LEN: u16;
 }

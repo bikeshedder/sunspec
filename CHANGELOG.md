@@ -41,6 +41,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Constants: `V_AR_RTG_Q1` → `VAR_RTG_Q1`, `APH_A` → `A_PH_A`
   - Types: `VArAct` → `VarAct`, `PfwAbs` → `PfWAbs`
   - Enum variants and bitflags: `VArMax` → `VarMax`, `VoltVAr` → `VoltVar`
+- **Breaking:** Models which were not discovered are now `None` instead of
+  an address of `0`. The fields of `Models` are now `Option<ModelAddr<_>>`.
+- **Breaking:** The fields of `ModelAddr` are private. Use the `addr()` and
+  `len()` methods instead.
+
+### Fixed
+
+- Reading or writing a point of a model which was not discovered no longer
+  accesses an arbitrary register at the start of the device's address space
+  and returns a `ModelNotDiscovered` error instead. Points outside of the
+  discovered model length return a `PointOutOfBounds` error.
+- Reading a model which was not discovered returns a `ModelNotDiscovered`
+  error. Reading a model which is too short to contain all points returns a
+  `ModelTooShort` error.
 
 ## [0.9.1] - 2026-08-25
 

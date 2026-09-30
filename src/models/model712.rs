@@ -77,9 +77,7 @@ impl crate::Group for DerWattVar {
 }
 impl DerWattVar {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(12..).unwrap_or(&[]);
         let counts = Counts {
             n_pt: Self::N_PT.from_data(data)?,
             n_crv: Self::N_CRV.from_data(data)?,
@@ -242,9 +240,7 @@ impl Crv {
         data: &'a [u16],
         counts: &Counts,
     ) -> Result<(&'a [u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(4..).unwrap_or(&[]);
         let (nested_data, pt) = Pt::parse_multiple(nested_data, counts)?;
         Ok((
             nested_data,
@@ -435,9 +431,7 @@ impl crate::Group for Pt {
 }
 impl Pt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(2..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -468,7 +462,7 @@ impl crate::Model for DerWattVar {
     const ID: u16 = 712;
     const NAME: &'static str = "DERWattVar";
     const LABEL: &'static str = "DER Watt-Var";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m712
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

@@ -176,9 +176,7 @@ impl crate::Group for InverterSplitPhaseFloat {
 }
 impl InverterSplitPhaseFloat {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(60..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -477,7 +475,7 @@ impl crate::Model for InverterSplitPhaseFloat {
     const ID: u16 = 112;
     const NAME: &'static str = "inverter_split_phase_float";
     const LABEL: &'static str = "Inverter (Split Phase) FLOAT";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m112
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

@@ -18,9 +18,7 @@ impl crate::Group for Irradiance {
 }
 impl Irradiance {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data;
         let (nested_data, repeating) = Repeating::parse_multiple(nested_data)?;
         Ok((nested_data, Self { repeating }))
     }
@@ -64,9 +62,7 @@ impl crate::Group for Repeating {
 }
 impl Repeating {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(5..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -105,7 +101,7 @@ impl crate::Model for Irradiance {
     const ID: u16 = 302;
     const NAME: &'static str = "irradiance";
     const LABEL: &'static str = "Irradiance Model";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m302
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

@@ -95,6 +95,21 @@ pub enum ModbusError {
 /// requested model.
 #[derive(Debug, Error)]
 pub enum ReadModelError<M: Debug> {
+    /// The model was not found during model discovery.
+    #[error("Model {model_id} not discovered")]
+    ModelNotDiscovered {
+        /// ID of the requested model
+        model_id: u16,
+    },
+    /// The discovered model is too short to contain all points of the
+    /// model definition.
+    #[error("Model {model_id} too short: discovered length {len}")]
+    ModelTooShort {
+        /// ID of the requested model
+        model_id: u16,
+        /// Length of the discovered model
+        len: u16,
+    },
     /// Some error occured while communicating via the modbus. This
     /// error is implementation specific.
     #[error("Modbus error: {0}")]
@@ -120,6 +135,15 @@ impl<M: Debug> From<ParseError<M>> for ReadModelError<M> {
 /// reading data from a point.
 #[derive(Debug, Error)]
 pub enum ReadPointError {
+    /// The model was not found during model discovery.
+    #[error("Model {model_id} not discovered")]
+    ModelNotDiscovered {
+        /// ID of the requested model
+        model_id: u16,
+    },
+    /// The point lies outside of the discovered model length.
+    #[error("Point outside of the discovered model")]
+    PointOutOfBounds,
     /// Communication error.
     #[error("Modbus error: {0}")]
     Modbus(#[from] ModbusError),
@@ -135,6 +159,15 @@ pub enum ReadPointError {
 /// writing data to a point.
 #[derive(Debug, Error)]
 pub enum WritePointError {
+    /// The model was not found during model discovery.
+    #[error("Model {model_id} not discovered")]
+    ModelNotDiscovered {
+        /// ID of the requested model
+        model_id: u16,
+    },
+    /// The point lies outside of the discovered model length.
+    #[error("Point outside of the discovered model")]
+    PointOutOfBounds,
     /// Communication error.
     #[error("Modbus error: {0}")]
     Modbus(#[from] ModbusError),

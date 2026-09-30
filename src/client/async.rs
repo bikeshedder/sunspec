@@ -1,6 +1,9 @@
-use std::{future::Future, time::Duration};
+use std::{fmt::Debug, future::Future, num::NonZeroU16, time::Duration};
 
-use crate::{AnyModel, Model, ModelAddr, ModelInfo, Models, Point, Value, SUNS_IDENTIFIER};
+use crate::{
+    AnyModel, DecodeError, Model, ModelAddr, ModelInfo, Models, ParseError, Point, Value,
+    SUNS_IDENTIFIER,
+};
 
 use super::{
     error::ModbusError, Config, DiscoveryError, DiscoveryResult, ReadModelError, ReadPointError,
@@ -79,33 +82,47 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
     /// Note: Some models are too big to be fetched in a single request
     ///       and multiple read_holding_registers calls will be issued.
     pub async fn read_model<M: Model>(&self) -> Result<M, ReadModelError<M>> {
-        let data = self.read_registers(M::addr(&self.models)).await?;
-        Ok(M::parse(&data)?)
+        self.read_and_parse_model(&M::INFO, M::parse).await
     }
-    /// Read the registers of the given model address using the
-    /// configured chunk size and timeout.
-    async fn read_registers<M>(&self, addr: ModelAddr<M>) -> Result<Vec<u16>, ModbusError> {
-        read_registers_chunked(
+    /// Read the registers of the given model using the configured chunk
+    /// size and timeout and parse them using the given function.
+    async fn read_and_parse_model<M: Debug>(
+        &self,
+        model: &ModelInfo,
+        parse: impl FnOnce(&[u16]) -> Result<M, ParseError<M>>,
+    ) -> Result<M, ReadModelError<M>> {
+        let addr = model
+            .addr(&self.models)
+            .ok_or(ReadModelError::ModelNotDiscovered { model_id: model.id })?;
+        let data = read_registers_chunked(
             &self.client,
             self.slave_id,
-            addr.addr,
-            addr.len,
+            addr.addr(),
+            addr.len(),
             self.config.max_read_length,
             self.config.read_timeout,
         )
-        .await
+        .await?;
+        parse(&data).map_err(|error| match error {
+            ParseError::Decode(DecodeError::OutOfBounds) => ReadModelError::ModelTooShort {
+                model_id: model.id,
+                len: addr.len(),
+            },
+            error => error.into(),
+        })
     }
     /// Read model data from modbus for a model that is only known
     /// at runtime.
     ///
     /// Note: Some models are too big to be fetched in a single request
     ///       and multiple read_holding_registers calls will be issued.
+    #[allow(clippy::result_large_err)]
     pub async fn read_any_model(
         &self,
         model: &ModelInfo,
     ) -> Result<AnyModel, ReadModelError<AnyModel>> {
-        let data = self.read_registers(model.addr(&self.models)).await?;
-        Ok(model.parse(&data)?)
+        self.read_and_parse_model(model, |data| model.parse(data))
+            .await
     }
     /// Read data for a single point. Please note that
     /// `read_model` is more efficient when loading multiple
@@ -114,7 +131,11 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
         &self,
         point: Point<M, T>,
     ) -> Result<T, ReadPointError> {
-        let model_addr = M::addr(&self.models);
+        let model_addr =
+            M::addr(&self.models).ok_or(ReadPointError::ModelNotDiscovered { model_id: M::ID })?;
+        if !point_in_model(&point, model_addr) {
+            return Err(ReadPointError::PointOutOfBounds);
+        }
         read_point(
             &self.client,
             self.slave_id,
@@ -130,7 +151,11 @@ impl<C: AsyncModbusClient> AsyncDevice<C> {
         point: Point<M, T>,
         value: T,
     ) -> Result<(), WritePointError> {
-        let model_addr = M::addr(&self.models);
+        let model_addr =
+            M::addr(&self.models).ok_or(WritePointError::ModelNotDiscovered { model_id: M::ID })?;
+        if !point_in_model(&point, model_addr) {
+            return Err(WritePointError::PointOutOfBounds);
+        }
         write_point(
             &self.client,
             self.slave_id,
@@ -246,8 +271,12 @@ async fn discover_models(
 
         model_count += 1;
 
-        addr = addr.checked_add(2).ok_or(DiscoveryError::AddressOverflow)?;
-        if !models.set_addr(model_id, addr, len) {
+        let model_addr = addr
+            .checked_add(2)
+            .and_then(NonZeroU16::new)
+            .ok_or(DiscoveryError::AddressOverflow)?;
+        addr = model_addr.get();
+        if !models.set_addr(model_id, model_addr, len) {
             unknown_models.push(UnknownModel {
                 id: model_id,
                 addr,
@@ -313,7 +342,7 @@ async fn read_point<M: Model, T: Value>(
     read_timeout: Option<Duration>,
 ) -> Result<T, ReadPointError> {
     let data = apply_timeout(
-        client.read_registers(slave_id, model_addr.addr + point.offset, point.length),
+        client.read_registers(slave_id, model_addr.addr() + point.offset, point.length),
         read_timeout,
     )
     .await?;
@@ -334,11 +363,16 @@ async fn write_point<M: Model, T: Value>(
         return Err(WritePointError::ValueTooLarge);
     }
     apply_timeout(
-        client.write_registers(slave_id, model_addr.addr + point.offset, &data),
+        client.write_registers(slave_id, model_addr.addr() + point.offset, &data),
         write_timeout,
     )
     .await?;
     Ok(())
+}
+
+/// Check whether the point lies within the discovered model length.
+fn point_in_model<M: Model, T: Value>(point: &Point<M, T>, model_addr: ModelAddr<M>) -> bool {
+    u32::from(point.offset) + u32::from(point.length) <= u32::from(model_addr.len())
 }
 
 async fn apply_timeout<T>(

@@ -52,7 +52,7 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
         quote! {
             #[cfg(feature = #model_feature)]
             #model_doc
-            pub #field_name: crate::ModelAddr<#model_module::#model_struct>,
+            pub #field_name: Option<crate::ModelAddr<#model_module::#model_struct>>,
         }
     });
     let models_struct = quote! {
@@ -70,7 +70,7 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
         quote! {
             #[cfg(feature = #model_feature)]
             {
-                if self.#field_name.addr != 0 {
+                if self.#field_name.is_some() {
                     v.push(#model_id);
                 }
             }
@@ -83,7 +83,7 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
         quote! {
             #[cfg(feature = #model_feature)]
             #model_id => {
-                self.#field_name.set_addr(_addr, _len);
+                self.#field_name = Some(crate::ModelAddr::new(_addr, _len));
                 true
             },
         }
@@ -162,7 +162,7 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
             /// Set address and length of the given model.
             ///
             /// This method is used by the model discovery.
-            pub fn set_addr(&mut self, model_id: u16, _addr: u16, _len: u16) -> bool {
+            pub fn set_addr(&mut self, model_id: u16, _addr: std::num::NonZeroU16, _len: u16) -> bool {
                 match model_id {
                     #(#set_addr_code)*
                     _ => false,
@@ -263,7 +263,7 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
             const ID: u16 = #model_id;
             const NAME: &'static str = #name_literal;
             const LABEL: &'static str = #label_literal;
-            fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+            fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
                 models.#m_name
             }
             fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
@@ -493,7 +493,31 @@ fn gen_group(
         }
     });
 
-    let group_len = Literal::u16_unsuffixed(points.iter().map(|point| point.size).sum());
+    // Length of the points of this group. Nested groups start right after
+    // them.
+    let points_len: u16 = points.iter().map(|point| point.size).sum();
+    let nested_data_init = if points_len == 0 {
+        quote! { let nested_data = data; }
+    } else {
+        let nested_offset = Literal::usize_unsuffixed(points_len.into());
+        quote! { let nested_data = data.get(#nested_offset..).unwrap_or(&[]); }
+    };
+    let points_len = Literal::u16_unsuffixed(points_len);
+    // Nested groups with a fixed count contribute to the group length.
+    // Groups whose count is read from a point or which fill the rest of
+    // the model might be empty.
+    let nested_len_terms = groups.iter().filter_map(|sub_group| {
+        let group_type = group_ident(sub_group);
+        match sub_group.count {
+            GroupCount::Integer(1) => Some(quote! { + <#group_type as crate::Group>::LEN }),
+            GroupCount::Integer(count @ 2..) => {
+                let count =
+                    Literal::u16_unsuffixed(count.try_into().expect("group count too large"));
+                Some(quote! { + #count * <#group_type as crate::Group>::LEN })
+            }
+            _ => None,
+        }
+    });
     let fn_parse_multiple = if !is_root && !group.count.is_one() {
         gen_group_fn_parse_multiple(group, xmodel, has_counts)
     } else {
@@ -503,9 +527,7 @@ fn gen_group(
     let parse_group = if is_root {
         quote! {
             fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-                let nested_data = data
-                    .get(usize::from(<Self as crate::Group>::LEN)..)
-                    .unwrap_or(&[]);
+                #nested_data_init
                 #counts_init
                 #(#parse_groups)*
                 Ok((
@@ -521,9 +543,7 @@ fn gen_group(
         if parse_group_needs_counts {
             quote! {
                 fn parse_group<'a>(data: &'a [u16], counts: &Counts) -> Result<(&'a [u16], Self), crate::DecodeError> {
-                    let nested_data = data
-                        .get(usize::from(<Self as crate::Group>::LEN)..)
-                        .unwrap_or(&[]);
+                    #nested_data_init
                     #(#parse_groups)*
                     Ok((
                         nested_data,
@@ -537,9 +557,7 @@ fn gen_group(
         } else {
             quote! {
                 fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-                    let nested_data = data
-                        .get(usize::from(<Self as crate::Group>::LEN)..)
-                        .unwrap_or(&[]);
+                    #nested_data_init
                     #(#parse_groups)*
                     Ok((
                         nested_data,
@@ -555,7 +573,7 @@ fn gen_group(
     let trait_impl = quote! {
         impl crate::sealed::Sealed for #group_name {}
         impl crate::Group for #group_name {
-            const LEN: u16 = #group_len;
+            const LEN: u16 = #points_len #(#nested_len_terms)*;
         }
         impl #group_name {
             #parse_group

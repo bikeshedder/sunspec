@@ -314,9 +314,7 @@ impl crate::Group for Battery {
 }
 impl Battery {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(62..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -926,7 +924,7 @@ impl crate::Model for Battery {
     const ID: u16 = 802;
     const NAME: &'static str = "battery";
     const LABEL: &'static str = "Battery Base Model";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m802
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

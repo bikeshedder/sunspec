@@ -47,9 +47,7 @@ impl crate::Group for Location {
 }
 impl Location {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(36..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -72,7 +70,7 @@ impl crate::Model for Location {
     const ID: u16 = 305;
     const NAME: &'static str = "location";
     const LABEL: &'static str = "GPS";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m305
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

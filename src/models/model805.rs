@@ -155,9 +155,7 @@ impl crate::Group for LithiumIonModule {
 }
 impl LithiumIonModule {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(42..).unwrap_or(&[]);
         let (nested_data, lithium_ion_module_cell) =
             LithiumIonModuleCell::parse_multiple(nested_data)?;
         Ok((
@@ -224,9 +222,7 @@ impl crate::Group for LithiumIonModuleCell {
 }
 impl LithiumIonModuleCell {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(4..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -291,7 +287,7 @@ impl crate::Model for LithiumIonModule {
     const ID: u16 = 805;
     const NAME: &'static str = "lithium-ion-module";
     const LABEL: &'static str = "Lithium-Ion Module Model";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m805
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

@@ -75,9 +75,7 @@ impl crate::Group for Hfrtx {
 }
 impl Hfrtx {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(10..).unwrap_or(&[]);
         let (nested_data, curve) = Curve::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -387,9 +385,7 @@ impl crate::Group for Curve {
 }
 impl Curve {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(50..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -505,7 +501,7 @@ impl crate::Model for Hfrtx {
     const ID: u16 = 144;
     const NAME: &'static str = "hfrtx";
     const LABEL: &'static str = "HFRTX";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m144
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

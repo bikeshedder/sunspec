@@ -72,9 +72,7 @@ impl crate::Group for Lvrtc {
 }
 impl Lvrtc {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(10..).unwrap_or(&[]);
         let (nested_data, curve) = Curve::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -350,9 +348,7 @@ impl crate::Group for Curve {
 }
 impl Curve {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(50..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -468,7 +464,7 @@ impl crate::Model for Lvrtc {
     const ID: u16 = 137;
     const NAME: &'static str = "lvrtc";
     const LABEL: &'static str = "LVRTC";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m137
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

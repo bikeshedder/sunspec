@@ -45,9 +45,7 @@ impl crate::Group for CsipControl {
 }
 impl CsipControl {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(68..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -277,7 +275,7 @@ impl crate::Model for CsipControl {
     const ID: u16 = 64415;
     const NAME: &'static str = "CSIPControl";
     const LABEL: &'static str = "CSIP Client Control";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m64415
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {

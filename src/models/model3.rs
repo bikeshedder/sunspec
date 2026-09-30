@@ -216,9 +216,7 @@ impl crate::Group for Model3 {
 }
 impl Model3 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(58..).unwrap_or(&[]);
         let (nested_data, repeating) = Repeating::parse_multiple(nested_data)?;
         Ok((
             nested_data,
@@ -349,9 +347,7 @@ impl crate::Group for Repeating {
 }
 impl Repeating {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
-        let nested_data = data
-            .get(usize::from(<Self as crate::Group>::LEN)..)
-            .unwrap_or(&[]);
+        let nested_data = data.get(1..).unwrap_or(&[]);
         Ok((
             nested_data,
             Self {
@@ -386,7 +382,7 @@ impl crate::Model for Model3 {
     const ID: u16 = 3;
     const NAME: &'static str = "model_3";
     const LABEL: &'static str = "Secure Dataset Read Request";
-    fn addr(models: &crate::Models) -> crate::ModelAddr<Self> {
+    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
         models.m3
     }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError<Self>> {
