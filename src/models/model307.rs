@@ -51,6 +51,79 @@ impl BaseMet {
 impl crate::sealed::Sealed for BaseMet {}
 impl crate::Group for BaseMet {
     const LEN: u16 = 11;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "base_met",
+        label: "Base Met",
+        description: "Base Meteorological Model",
+        fields: &[
+            crate::FieldInfo {
+                name: "tmp_amb",
+                label: "Ambient Temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rh",
+                label: "Relative Humidity",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pres",
+                label: "Barometric Pressure",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "wnd_spd",
+                label: "Wind Speed",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "wnd_dir",
+                label: "Wind Direction",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rain",
+                label: "Rainfall",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "snw",
+                label: "Snow Depth",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ppt",
+                label: "Precipitation Type",
+                description: "Precipitation Type (WMO 4680 SYNOP code reference)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "elec_fld",
+                label: "Electric Field",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sur_wet",
+                label: "Surface Wetness",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "soil_wet",
+                label: "Soil Wetness",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl BaseMet {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

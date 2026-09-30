@@ -44,6 +44,49 @@ impl Location {
 impl crate::sealed::Sealed for Location {}
 impl crate::Group for Location {
     const LEN: u16 = 36;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "location",
+        label: "GPS",
+        description: "Include to support location measurements",
+        fields: &[
+            crate::FieldInfo {
+                name: "tm",
+                label: "Tm",
+                description: "UTC 24 hour time stamp to millisecond hhmmss.sssZ format",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "date",
+                label: "Date",
+                description: "UTC Date string YYYYMMDD format",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "loc",
+                label: "Location",
+                description: "Location string (40 chars max)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "lat",
+                label: "Lat",
+                description: "Latitude with seven degrees of precision",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "long",
+                label: "Long",
+                description: "Longitude with seven degrees of precision",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "alt",
+                label: "Altitude",
+                description: "Altitude measurement in meters",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Location {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

@@ -64,6 +64,73 @@ impl Aggregator {
 impl crate::sealed::Sealed for Aggregator {}
 impl crate::Group for Aggregator {
     const LEN: u16 = 14;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "aggregator",
+        label: "Basic Aggregator",
+        description: "Aggregates a collection of models for a given model id",
+        fields: &[
+            crate::FieldInfo {
+                name: "aid",
+                label: "AID",
+                description: "Aggregated model id",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n",
+                label: "N",
+                description: "Number of aggregated models",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "un",
+                label: "UN",
+                description: "Update Number. Incrementing number each time the mapping is changed. If the number is not changed from the last reading the direct access to a specific offset will result in reading the same logical model as before. Otherwise the entire model must be read to refresh the changes",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "st",
+                label: "Status",
+                description: "Enumerated status code",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "st_vnd",
+                label: "Vendor Status",
+                description: "Vendor specific status code",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt",
+                label: "Event Code",
+                description: "Bitmask event code",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt_vnd",
+                label: "Vendor Event Code",
+                description: "Vendor specific event code",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl",
+                label: "Control",
+                description: "Control register for all aggregated devices",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl_vnd",
+                label: "Vendor Control",
+                description: "Vendor control register for all aggregated devices",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl_vl",
+                label: "Control Value",
+                description: "Numerical value used as a parameter to the control",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Aggregator {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

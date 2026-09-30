@@ -87,6 +87,105 @@ impl Model13 {
 impl crate::sealed::Sealed for Model13 {}
 impl crate::Group for Model13 {
     const LEN: u16 = 174;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_13",
+        label: "IPv6",
+        description: "Include to support an IPv6 protocol stack on this interface",
+        fields: &[
+            crate::FieldInfo {
+                name: "nam",
+                label: "Name",
+                description: "Interface name",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cfg_st",
+                label: "Config Status",
+                description: "Configuration status",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "chg_st",
+                label: "Change Status",
+                description: "A configuration change is pending",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cap",
+                label: "Config Capability",
+                description: "Identify capable sources of configuration",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cfg",
+                label: "IPv6 Config",
+                description: "Configuration method used.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl",
+                label: "Control",
+                description: "Configure use of services",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "addr",
+                label: "IP",
+                description: "IPv6 numeric address as a dotted string xxxx.xxxx.xxxx.xxxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cidr",
+                label: "CIDR",
+                description: "Classless Inter-Domain Routing Number",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "gw",
+                label: "Gateway",
+                description: "IPv6 numeric address as a dotted string xxxx.xxxx.xxxx.xxxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dns1",
+                label: "DNS1",
+                description: "IPv6 numeric DNS address as a dotted string xxxx.xxxx.xxxx.xxxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dns2",
+                label: "DNS2",
+                description: "IPv6 numeric DNS address as a dotted string xxxx.xxxx.xxxx.xxxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ntp1",
+                label: "NTP1",
+                description:
+                    "IPv6 numeric NTP address as a name or dotted string xxxx.xxxx.xxxx.xxxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ntp2",
+                label: "NTP2",
+                description:
+                    "IPv6 numeric NTP address as a name or dotted string xxxx.xxxx.xxxx.xxxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dom_nam",
+                label: "Domain",
+                description: "Domain name (24 chars max)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "host_nam",
+                label: "Host Name",
+                description: "Host name (24 chars max)",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model13 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

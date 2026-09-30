@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     `AnyModel::as_dyn`
   - `AsyncDevice::read_any_model`
   - `Model::NAME`, `Model::LABEL` and `Model::INFO` constants
+  - `GroupInfo` and `FieldInfo` with the name, label and description of
+    groups and their points and nested groups. They are available via
+    `Group::GROUP_INFO` and `ModelInfo::group`.
 
 ### Changed
 

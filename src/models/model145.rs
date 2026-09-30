@@ -54,6 +54,61 @@ impl ExtSettings {
 impl crate::sealed::Sealed for ExtSettings {}
 impl crate::Group for ExtSettings {
     const LEN: u16 = 8;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "ext_settings",
+        label: "Extended Settings",
+        description: "Inverter controls extended settings ",
+        fields: &[
+            crate::FieldInfo {
+                name: "nom_rmp_up_rte",
+                label: "Ramp Up Rate",
+                description: "Ramp up rate as a percentage of max current.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "nom_rmp_dn_rte",
+                label: "NomRmpDnRte",
+                description: "Ramp down rate as a percentage of max current.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "emg_rmp_up_rte",
+                label: "Emergency Ramp Up Rate",
+                description: "Emergency ramp up rate as a percentage of max current.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "emg_rmp_dn_rte",
+                label: "Emergency Ramp Down Rate",
+                description: "Emergency ramp down rate as a percentage of max current.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "conn_rmp_up_rte",
+                label: "Connect Ramp Up Rate",
+                description: "Connect ramp up rate as a percentage of max current.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "conn_rmp_dn_rte",
+                label: "Connect Ramp Down Rate",
+                description: "Connect ramp down rate as a percentage of max current.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "a_gra",
+                label: "Default Ramp Rate",
+                description: "Ramp rate specified in percent of max current.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rmp_sf",
+                label: "Ramp Rate Scale Factor",
+                description: "Ramp Rate Scale Factor",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl ExtSettings {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

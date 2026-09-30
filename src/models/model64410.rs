@@ -194,6 +194,224 @@ impl DcSimInterface {
 impl crate::sealed::Sealed for DcSimInterface {}
 impl crate::Group for DcSimInterface {
     const LEN: u16 = 68;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "DCSimInterface",
+        label: "DC Simulator Control Interface",
+        description:
+            "A generic DC simulator/power supply control interface for DER electrical testing.",
+        fields: &[
+            crate::FieldInfo {
+                name: "v_max_lim",
+                label: "Maximum Voltage",
+                description: "Upper Voltage Protection Limit",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "p_max_lim",
+                label: "Maximum Power",
+                description: "Upper Power Protection Limit",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "i_max_lim",
+                label: "Maximum Current",
+                description: "Upper Current Protection Limit",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "mode",
+                label: "CV or CC Mode",
+                description: "Constant Voltage (CV) or Constant Current (CC) Mode",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ena",
+                label: "Power On/Off",
+                description: "Power On/Off",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "reset",
+                label: "Reset Device",
+                description: "Reset Device",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v_set",
+                label: "Voltage Setpoint",
+                description: "Voltage Setpoint",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "p_set",
+                label: "Power Setpoint",
+                description: "Power Setpoint",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "i_set",
+                label: "Current Setpoint",
+                description: "Current Setpoint",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "en50530",
+                label: "EN50530 Mode",
+                description: "EN50530 Mode - Enable or disable EN50530 profile mode",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "vmpp",
+                label: "EN50530 MPP Voltage",
+                description: "EN50530 MPP Voltage",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pmpp",
+                label: "EN50530 MPP Power",
+                description: "EN50530 MPP Power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "g_set",
+                label: "Irradiance Setpoint",
+                description: "Irradiance Setpoint",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v_slew_rate",
+                label: "Voltage Slew Rate",
+                description: "Voltage Slew Rate",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "p_slew_rate",
+                label: "Power Slew Rate",
+                description: "Power Slew Rate",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "i_slew_rate",
+                label: "Current Slew Rate",
+                description: "Current Slew Rate",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ena_prof",
+                label: "Enable Profile",
+                description: "Start/Stop the Profile",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "adpt_prof_req",
+                label: "Profile Adoption Request",
+                description: "Index of profile points to adopt. First curve index is 1.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "adpt_prof_rslt",
+                label: "Adopt Profile Result",
+                description: "Result of last adopt profile operation.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v",
+                label: "Measured Voltage",
+                description: "Measured Voltage",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "p",
+                label: "Measured Power",
+                description: "Measured Power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "i",
+                label: "Measured Current",
+                description: "Measured Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "errors",
+                label: "Errors",
+                description: "Error States",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_pt",
+                label: "Number Of Points",
+                description: "Number of profile points supported.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_prof",
+                label: "Stored Profile Count",
+                description: "Number of stored profiles supported.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "w_sf",
+                label: "Power Scale Factor",
+                description: "Scale factor for power points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v_sf",
+                label: "Voltage Scale Factor",
+                description: "Scale factor for voltage points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "a_sf",
+                label: "Current Scale Factor",
+                description: "Scale factor for current points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "g_sf",
+                label: "Irradiance Scale Factor",
+                description: "Scale factor for irradiance.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms_sf",
+                label: "Time Scale Factor",
+                description: "Scale factor for time points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v_slew_sf",
+                label: "Voltage Slew Rate Scale Factor",
+                description: "Scale factor for voltage slew rate.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "p_slew_sf",
+                label: "Power Slew Rate Scale Factor",
+                description: "Scale factor for power slew rate.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "i_slew_sf",
+                label: "Current Slew Rate Scale Factor",
+                description: "Scale factor for current slew rate.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pct_sf",
+                label: "Percent Scale Factor",
+                description: "Scale factor for percentages.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "prof",
+                label: "Stored Profiles",
+                description: "Stored profile sets.",
+                kind: crate::FieldKind::RepeatingGroup(&<Prof as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl DcSimInterface {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -542,6 +760,31 @@ impl Prof {
 impl crate::sealed::Sealed for Prof {}
 impl crate::Group for Prof {
     const LEN: u16 = 3;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "Prof",
+        label: "Stored Profiles",
+        description: "Stored profile sets.",
+        fields: &[
+            crate::FieldInfo {
+                name: "act_pt",
+                label: "Active Points",
+                description: "Number of active points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dept_ref",
+                label: "Dependent References",
+                description: "Profile references.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pt",
+                label: "Stored Profile Points",
+                description: "Stored profile points.",
+                kind: crate::FieldKind::RepeatingGroup(&<Pt as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl Prof {
     fn parse_group<'a>(
@@ -648,6 +891,43 @@ impl Pt {
 impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {
     const LEN: u16 = 5;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "Pt",
+        label: "Stored Profile Points",
+        description: "Stored profile points.",
+        fields: &[
+            crate::FieldInfo {
+                name: "tms",
+                label: "Profile Time",
+                description: "Profile time.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v",
+                label: "Voltage Point",
+                description: "Profile voltage point in Volts.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "p",
+                label: "Power Point",
+                description: "Profile power point in Watts.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "i",
+                label: "Current Point",
+                description: "Profile current point in Amps.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "g",
+                label: "Irradiance Point",
+                description: "Profile irradiance point as percentage.",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Pt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

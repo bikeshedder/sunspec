@@ -67,6 +67,85 @@ impl StringCombinerCurrent {
 impl crate::sealed::Sealed for StringCombinerCurrent {}
 impl crate::Group for StringCombinerCurrent {
     const LEN: u16 = 14;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "string_combiner_current",
+        label: "String Combiner (Current)",
+        description: "A basic string combiner",
+        fields: &[
+            crate::FieldInfo {
+                name: "dc_a_sf",
+                label: "DCA_SF",
+                description: "Current scale factor",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_ahr_sf",
+                label: "DCAhr_SF",
+                description: "Amp-hour scale factor",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_v_sf",
+                label: "DCV_SF",
+                description: "Voltage scale factor",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_a_max",
+                label: "Rating",
+                description: "Maximum DC Current Rating",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n",
+                label: "N",
+                description: "Number of Inputs",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt",
+                label: "Event",
+                description: "Events",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt_vnd",
+                label: "Vendor Event",
+                description: "Vendor defined events",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_a",
+                label: "Amps",
+                description: "Total measured current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_ahr",
+                label: "Amp-hours",
+                description: "Total metered Amp-hours",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_v",
+                label: "Voltage",
+                description: "Output Voltage",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp",
+                label: "Temp",
+                description: "Internal operating temperature",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "string",
+                label: "string",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<String as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl StringCombinerCurrent {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -220,6 +299,43 @@ impl String {
 impl crate::sealed::Sealed for String {}
 impl crate::Group for String {
     const LEN: u16 = 8;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "string",
+        label: "string",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "in_id",
+                label: "ID",
+                description: "Uniquely identifies this input set",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_evt",
+                label: "Input Event",
+                description: "String Input Event Flags",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_evt_vnd",
+                label: "Input Event Vendor",
+                description: "String Input Vendor Event Flags",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_dc_a",
+                label: "Amps",
+                description: "String Input Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_dc_ahr",
+                label: "Amp-hours",
+                description: "String Input Amp-Hours",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl String {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

@@ -11,6 +11,17 @@ impl Model63002 {}
 impl crate::sealed::Sealed for Model63002 {}
 impl crate::Group for Model63002 {
     const LEN: u16 = 0;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_63002",
+        label: "SunSpec Test Model 2",
+        description: "",
+        fields: &[crate::FieldInfo {
+            name: "repeating",
+            label: "repeating",
+            description: "",
+            kind: crate::FieldKind::RepeatingGroup(&<Repeating as crate::Group>::GROUP_INFO),
+        }],
+    };
 }
 impl Model63002 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -44,6 +55,37 @@ impl Repeating {
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 4;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "sunssf_1",
+                label: "sunssf_1",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "int16_1",
+                label: "int16_1",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "int16_2",
+                label: "int16_2",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sunssf_2",
+                label: "sunssf_2",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Repeating {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

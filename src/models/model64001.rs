@@ -115,6 +115,223 @@ impl Model64001 {
 impl crate::sealed::Sealed for Model64001 {}
 impl crate::Group for Model64001 {
     const LEN: u16 = 71;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_64001",
+        label: "Veris Status and Configuration",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "cmd",
+                label: "Command Code",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hw_rev",
+                label: "Hardware Revision",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rs_fw_rev",
+                label: "RS FW Revision",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "os_fw_rev",
+                label: "OS FW Revision",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "prod_rev",
+                label: "Product Revision",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "boots",
+                label: "Boot Count",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "switch",
+                label: "DIP Switches",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensors",
+                label: "Num Detected Sensors",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "talking",
+                label: "Num Communicating Sensors",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "status",
+                label: "System Status",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "config",
+                label: "System Configuration",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "led_blink",
+                label: "LED Blink Threshold",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "led_on",
+                label: "LED On Threshold",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "reserved",
+                label: "Reserved",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "loc",
+                label: "Location String",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s1_id",
+                label: "Sensor 1 Unit ID",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s1_addr",
+                label: "Sensor 1 Address",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s1_os_ver",
+                label: "Sensor 1 OS Version",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s1_ver",
+                label: "Sensor 1 Product Version",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s1_serial",
+                label: "Sensor 1 Serial Num",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s2_id",
+                label: "Sensor 2 Unit ID",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s2_addr",
+                label: "Sensor 2 Address",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s2_os_ver",
+                label: "Sensor 2 OS Version",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s2_ver",
+                label: "Sensor 2 Product Version",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s2_serial",
+                label: "Sensor 2 Serial Num",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s3_id",
+                label: "Sensor 3 Unit ID",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s3_addr",
+                label: "Sensor 3 Address",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s3_os_ver",
+                label: "Sensor 3 OS Version",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s3_ver",
+                label: "Sensor 3 Product Version",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s3_serial",
+                label: "Sensor 3 Serial Num",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s4_id",
+                label: "Sensor 4 Unit ID",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s4_addr",
+                label: "Sensor 4 Address",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s4_os_ver",
+                label: "Sensor 4 OS Version",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s4_ver",
+                label: "Sensor 4 Product Version",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "s4_serial",
+                label: "Sensor 4 Serial Num",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model64001 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

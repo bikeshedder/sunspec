@@ -35,6 +35,61 @@ impl Mppt {
 impl crate::sealed::Sealed for Mppt {}
 impl crate::Group for Mppt {
     const LEN: u16 = 8;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "mppt",
+        label: "Multiple MPPT Inverter Extension Model",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "dc_a_sf",
+                label: "Current Scale Factor",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_v_sf",
+                label: "Voltage Scale Factor",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_w_sf",
+                label: "Power Scale Factor",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_wh_sf",
+                label: "Energy Scale Factor",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt",
+                label: "Global Events",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n",
+                label: "Number of Modules",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms_per",
+                label: "Timestamp Period",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "module",
+                label: "module",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<Module as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl Mppt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -168,6 +223,73 @@ impl Module {
 impl crate::sealed::Sealed for Module {}
 impl crate::Group for Module {
     const LEN: u16 = 20;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "module",
+        label: "module",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "id",
+                label: "Input ID",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "id_str",
+                label: "Input ID String",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_a",
+                label: "DC Current",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_v",
+                label: "DC Voltage",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_w",
+                label: "DC Power",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_wh",
+                label: "Lifetime Energy",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms",
+                label: "Timestamp",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp",
+                label: "Temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_st",
+                label: "Operating State",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_evt",
+                label: "Module Events",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Module {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

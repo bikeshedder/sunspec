@@ -72,6 +72,79 @@ impl Lvrtx {
 impl crate::sealed::Sealed for Lvrtx {}
 impl crate::Group for Lvrtx {
     const LEN: u16 = 10;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "lvrtx",
+        label: "LVRTX",
+        description: "LVRT extended curve",
+        fields: &[
+            crate::FieldInfo {
+                name: "act_crv",
+                label: "ActCrv",
+                description: "Index of active curve. 0=no active curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "mod_ena",
+                label: "ModEna",
+                description: "LVRT control mode. Enable active curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "win_tms",
+                label: "WinTms",
+                description: "Time window for LVRT change.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rvrt_tms",
+                label: "RvrtTms",
+                description: "Timeout period for LVRT curve selection.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rmp_tms",
+                label: "RmpTms",
+                description: "Ramp time for moving from current mode to new mode.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_crv",
+                label: "NCrv",
+                description: "Number of curves supported (recommend 4).",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_pt",
+                label: "NPt",
+                description: "Number of curve points supported (maximum of 20).",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms_sf",
+                label: "Tms_SF",
+                description: "Scale factor for duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v_sf",
+                label: "V_SF",
+                description: "Scale factor for percent VRef.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "crv_type",
+                label: "CrvType",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "curve",
+                label: "curve",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<Curve as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl Lvrtx {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -384,6 +457,271 @@ impl Curve {
 impl crate::sealed::Sealed for Curve {}
 impl crate::Group for Curve {
     const LEN: u16 = 50;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "curve",
+        label: "curve",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "act_pt",
+                label: "ActPt",
+                description: "Number of active points in array.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms1",
+                label: "Tms1",
+                description: "Point 1 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v1",
+                label: "V1",
+                description: "Point 1 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms2",
+                label: "Tms2",
+                description: "Point 2 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v2",
+                label: "V2",
+                description: "Point 2 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms3",
+                label: "Tms3",
+                description: "Point 3 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v3",
+                label: "V3",
+                description: "Point 3 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms4",
+                label: "Tms4",
+                description: "Point 4 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v4",
+                label: "V4",
+                description: "Point 4 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms5",
+                label: "Tms5",
+                description: "Point 5 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v5",
+                label: "V5",
+                description: "Point 5 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms6",
+                label: "Tms6",
+                description: "Point 6 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v6",
+                label: "V6",
+                description: "Point 6 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms7",
+                label: "Tms7",
+                description: "Point 7 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v7",
+                label: "V7",
+                description: "Point 7 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms8",
+                label: "Tms8",
+                description: "Point 8 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v8",
+                label: "V8",
+                description: "Point 8 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms9",
+                label: "Tms9",
+                description: "Point 9 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v9",
+                label: "V9",
+                description: "Point 9 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms10",
+                label: "Tms10",
+                description: "Point 10 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v10",
+                label: "V10",
+                description: "Point 10 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms11",
+                label: "Tms11",
+                description: "Point 11 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v11",
+                label: "V11",
+                description: "Point 11 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms12",
+                label: "Tms12",
+                description: "Point 12 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v12",
+                label: "V12",
+                description: "Point 12 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms13",
+                label: "Tms13",
+                description: "Point 13 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v13",
+                label: "V13",
+                description: "Point 13 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms14",
+                label: "Tms14",
+                description: "Point 14 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v14",
+                label: "V14",
+                description: "Point 14 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms15",
+                label: "Tms15",
+                description: "Point 15 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v15",
+                label: "V15",
+                description: "Point 15 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms16",
+                label: "Tms16",
+                description: "Point 16 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v16",
+                label: "V16",
+                description: "Point 16 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms17",
+                label: "Tms17",
+                description: "Point 17 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v17",
+                label: "V17",
+                description: "Point 17 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms18",
+                label: "Tms18",
+                description: "Point 18 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v18",
+                label: "V18",
+                description: "Point 18 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms19",
+                label: "Tms19",
+                description: "Point 19 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v19",
+                label: "V19",
+                description: "Point 19 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms20",
+                label: "Tms20",
+                description: "Point 20 duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v20",
+                label: "V20",
+                description: "Point 20 voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "crv_nam",
+                label: "CrvNam",
+                description: "Optional description for curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "read_only",
+                label: "ReadOnly",
+                description: "Curve is read-only or can be modified.",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Curve {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

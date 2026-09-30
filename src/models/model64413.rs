@@ -32,6 +32,37 @@ impl PvSimCurves {
 impl crate::sealed::Sealed for PvSimCurves {}
 impl crate::Group for PvSimCurves {
     const LEN: u16 = 3;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "PVSimCurves",
+        label: "PV Curves",
+        description: "Current-Voltage and Power-Voltage Profiles for PV Simulation.",
+        fields: &[
+            crate::FieldInfo {
+                name: "iv_len",
+                label: "IV length",
+                description: "Number of points in the IV curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "irr",
+                label: "POA Irradiance",
+                description: "Plane of Array Irradiance",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "irr_sf",
+                label: "Irr_SF",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "iv",
+                label: "IV",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<Iv as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl PvSimCurves {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -79,6 +110,31 @@ impl Iv {
 impl crate::sealed::Sealed for Iv {}
 impl crate::Group for Iv {
     const LEN: u16 = 6;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "IV",
+        label: "IV",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "p",
+                label: "Power",
+                description: "Power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "i",
+                label: "Current",
+                description: "Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v",
+                label: "Voltage",
+                description: "Voltage",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Iv {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

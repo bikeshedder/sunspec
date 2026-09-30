@@ -19,6 +19,17 @@ impl Storage {
 impl crate::sealed::Sealed for Storage {}
 impl crate::Group for Storage {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "storage",
+        label: "Energy Storage Base Model (DEPRECATED)",
+        description: "This model has been deprecated.",
+        fields: &[crate::FieldInfo {
+            name: "deprecated",
+            label: "Deprecated Model",
+            description: "This model has been deprecated.",
+            kind: crate::FieldKind::Point,
+        }],
+    };
 }
 impl Storage {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

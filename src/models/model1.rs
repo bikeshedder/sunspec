@@ -46,6 +46,49 @@ impl Common {
 impl crate::sealed::Sealed for Common {}
 impl crate::Group for Common {
     const LEN: u16 = 66;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "common",
+        label: "Common",
+        description: "All SunSpec compliant devices must include this as the first model",
+        fields: &[
+            crate::FieldInfo {
+                name: "mn",
+                label: "Manufacturer",
+                description: "Well known value registered with SunSpec for compliance",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "md",
+                label: "Model",
+                description: "Manufacturer specific value (32 chars)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "opt",
+                label: "Options",
+                description: "Manufacturer specific value (16 chars)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "vr",
+                label: "Version",
+                description: "Manufacturer specific value (16 chars)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sn",
+                label: "Serial Number",
+                description: "Manufacturer specific value (32 chars)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "da",
+                label: "Device Address",
+                description: "Modbus device address",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Common {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

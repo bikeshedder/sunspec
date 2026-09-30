@@ -47,6 +47,55 @@ impl Model11 {
 impl crate::sealed::Sealed for Model11 {}
 impl crate::Group for Model11 {
     const LEN: u16 = 13;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_11",
+        label: "Ethernet Link Layer",
+        description: "Include to support a wired ethernet port",
+        fields: &[
+            crate::FieldInfo {
+                name: "spd",
+                label: "Ethernet Link Speed",
+                description: "Interface speed in Mb/s",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cfg_st",
+                label: "Interface Status Flags",
+                description: "Interface flags.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "st",
+                label: "Link State",
+                description: "State information for this interface",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "mac",
+                label: "MAC",
+                description: "IEEE MAC address of this interface",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "nam",
+                label: "Name",
+                description: "Interface name (8 chars)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl",
+                label: "Control",
+                description: "Control flags",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "frc_spd",
+                label: "Forced Speed",
+                description: "Forced interface speed in Mb/s when AUTO is disabled",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model11 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

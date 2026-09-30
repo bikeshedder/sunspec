@@ -37,6 +37,43 @@ impl Model18 {
 impl crate::sealed::Sealed for Model18 {}
 impl crate::Group for Model18 {
     const LEN: u16 = 22;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_18",
+        label: "Cellular Link",
+        description: "Include this model to support a cellular interface link",
+        fields: &[
+            crate::FieldInfo {
+                name: "nam",
+                label: "Name",
+                description: "Interface name",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "imei",
+                label: "IMEI",
+                description: "International Mobile Equipment Identifier for the interface",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "apn",
+                label: "APN",
+                description: "Access Point Name for the interface",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "num",
+                label: "Number",
+                description: "Phone number for the interface",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pin",
+                label: "PIN",
+                description: "Personal Identification Number for the interface",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model18 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

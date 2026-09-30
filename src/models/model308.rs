@@ -30,6 +30,37 @@ impl MiniMet {
 impl crate::sealed::Sealed for MiniMet {}
 impl crate::Group for MiniMet {
     const LEN: u16 = 4;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "mini_met",
+        label: "Mini Met Model",
+        description: "Include to support a few basic measurements",
+        fields: &[
+            crate::FieldInfo {
+                name: "ghi",
+                label: "GHI",
+                description: "Global Horizontal Irradiance",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp_bom",
+                label: "Temp",
+                description: "Back of module temperature measurement",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp_amb",
+                label: "Ambient Temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "wnd_spd",
+                label: "Wind Speed",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl MiniMet {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

@@ -1,0 +1,16 @@
+[package]
+name = "sunspec-cli"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+anyhow = "1.0.91"
+clap = { version = "4.5.20", features = ["derive"] }
+color-eyre = "0.6.3"
+crossterm = "0.29"
+ratatui = "0.30"
+serde_json = "1.0"
+sunspec = { path = "..", features = ["serde"] }
+tokio = { version = "1.41.0", features = ["macros", "rt-multi-thread"] }
+tokio-modbus = "0.17"

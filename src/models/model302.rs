@@ -15,6 +15,17 @@ impl Irradiance {}
 impl crate::sealed::Sealed for Irradiance {}
 impl crate::Group for Irradiance {
     const LEN: u16 = 0;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "irradiance",
+        label: "Irradiance Model",
+        description: "Include to support various irradiance measurements",
+        fields: &[crate::FieldInfo {
+            name: "repeating",
+            label: "repeating",
+            description: "",
+            kind: crate::FieldKind::RepeatingGroup(&<Repeating as crate::Group>::GROUP_INFO),
+        }],
+    };
 }
 impl Irradiance {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -61,6 +72,43 @@ impl Repeating {
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 5;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "ghi",
+                label: "GHI",
+                description: "Global Horizontal Irradiance",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "poai",
+                label: "POAI",
+                description: "Plane-of-Array Irradiance",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dfi",
+                label: "DFI",
+                description: "Diffuse Irradiance",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dni",
+                label: "DNI",
+                description: "Direct Normal Irradiance",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "oti",
+                label: "OTI",
+                description: "Other Irradiance",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Repeating {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

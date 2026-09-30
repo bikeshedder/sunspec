@@ -34,6 +34,37 @@ impl RefPoint {
 impl crate::sealed::Sealed for RefPoint {}
 impl crate::Group for RefPoint {
     const LEN: u16 = 4;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "ref_point",
+        label: "Reference Point Model",
+        description: "Include to support a standard reference point",
+        fields: &[
+            crate::FieldInfo {
+                name: "ghi",
+                label: "GHI",
+                description: "Global Horizontal Irradiance",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "a",
+                label: "Amps",
+                description: "Current measurement at reference point",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v",
+                label: "Voltage",
+                description: "Voltage measurement at reference point",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp",
+                label: "Temperature",
+                description: "Temperature measurement at reference point",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl RefPoint {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

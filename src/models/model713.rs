@@ -51,6 +51,55 @@ impl DerStorageCapacity {
 impl crate::sealed::Sealed for DerStorageCapacity {}
 impl crate::Group for DerStorageCapacity {
     const LEN: u16 = 7;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "DERStorageCapacity",
+        label: "DER Storage Capacity",
+        description: "DER storage capacity.",
+        fields: &[
+            crate::FieldInfo {
+                name: "wh_rtg",
+                label: "Energy Rating",
+                description: "Energy rating of the DER storage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "wh_avail",
+                label: "Energy Available",
+                description: "Energy available of the DER storage (WHAvail = WHRtg * SoC * SoH)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "soc",
+                label: "State of Charge",
+                description: "State of charge of the DER storage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "soh",
+                label: "State of Health",
+                description: "State of health of the DER storage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sta",
+                label: "Status",
+                description: "Storage status.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "wh_sf",
+                label: "Energy Scale Factor",
+                description: "Scale factor for energy capacity.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pct_sf",
+                label: "Percent Scale Factor",
+                description: "Scale factor for percentage.",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl DerStorageCapacity {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

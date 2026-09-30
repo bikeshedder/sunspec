@@ -62,6 +62,73 @@ impl Model16 {
 impl crate::sealed::Sealed for Model16 {}
 impl crate::Group for Model16 {
     const LEN: u16 = 52;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_16",
+        label: "Simple IP Network",
+        description: "Include this model for a simple IPv4 network stack",
+        fields: &[
+            crate::FieldInfo {
+                name: "nam",
+                label: "Name",
+                description: "Interface name. (8 chars)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cfg",
+                label: "Config",
+                description: "Force IPv4 configuration method",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl",
+                label: "Control",
+                description: "Configure use of services",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "addr",
+                label: "Address",
+                description: "IP address",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "msk",
+                label: "Netmask",
+                description: "Netmask",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "gw",
+                label: "Gateway",
+                description: "Gateway IP address",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dns1",
+                label: "DNS1",
+                description: "32 bit IP address of DNS server",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dns2",
+                label: "DNS2",
+                description: "32 bit IP address of DNS server",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "mac",
+                label: "MAC",
+                description: "IEEE MAC address of this interface",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "lnk_ctl",
+                label: "Link Control",
+                description: "Link control flags",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model16 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

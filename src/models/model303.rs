@@ -15,6 +15,18 @@ impl BomTemp {}
 impl crate::sealed::Sealed for BomTemp {}
 impl crate::Group for BomTemp {
     const LEN: u16 = 0;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "bom_temp",
+        label: "Back of Module Temperature Model",
+        description:
+            "Include to support variable number of  back of module temperature measurements",
+        fields: &[crate::FieldInfo {
+            name: "temp",
+            label: "temp",
+            description: "",
+            kind: crate::FieldKind::RepeatingGroup(&<Temp as crate::Group>::GROUP_INFO),
+        }],
+    };
 }
 impl BomTemp {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -41,6 +53,17 @@ impl Temp {
 impl crate::sealed::Sealed for Temp {}
 impl crate::Group for Temp {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "temp",
+        label: "temp",
+        description: "",
+        fields: &[crate::FieldInfo {
+            name: "tmp_bom",
+            label: "Temp",
+            description: "Back of module temperature measurement",
+            kind: crate::FieldKind::Point,
+        }],
+    };
 }
 impl Temp {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

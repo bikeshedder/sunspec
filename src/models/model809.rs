@@ -17,6 +17,25 @@ impl FlowBatteryStack {
 impl crate::sealed::Sealed for FlowBatteryStack {}
 impl crate::Group for FlowBatteryStack {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "flow_battery_stack",
+        label: "Flow Battery Stack Model",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "stack_tbd",
+                label: "Stack Points To Be Determined",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cell",
+                label: "cell",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<Cell as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl FlowBatteryStack {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -47,6 +66,17 @@ impl Cell {
 impl crate::sealed::Sealed for Cell {}
 impl crate::Group for Cell {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "cell",
+        label: "cell",
+        description: "",
+        fields: &[crate::FieldInfo {
+            name: "cell_tbd",
+            label: "Cell Points To Be Determined",
+            description: "",
+            kind: crate::FieldKind::Point,
+        }],
+    };
 }
 impl Cell {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

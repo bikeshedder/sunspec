@@ -15,6 +15,17 @@ impl Inclinometer {}
 impl crate::sealed::Sealed for Inclinometer {}
 impl crate::Group for Inclinometer {
     const LEN: u16 = 0;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "inclinometer",
+        label: "Inclinometer Model",
+        description: "Include to support orientation measurements",
+        fields: &[crate::FieldInfo {
+            name: "incl",
+            label: "incl",
+            description: "",
+            kind: crate::FieldKind::RepeatingGroup(&<Incl as crate::Group>::GROUP_INFO),
+        }],
+    };
 }
 impl Inclinometer {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -51,6 +62,31 @@ impl Incl {
 impl crate::sealed::Sealed for Incl {}
 impl crate::Group for Incl {
     const LEN: u16 = 6;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "incl",
+        label: "incl",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "inclx",
+                label: "X",
+                description: "X-Axis inclination",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "incly",
+                label: "Y",
+                description: "Y-Axis inclination",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "inclz",
+                label: "Z",
+                description: "Z-Axis inclination",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Incl {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

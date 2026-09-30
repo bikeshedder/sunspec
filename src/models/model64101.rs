@@ -32,6 +32,55 @@ impl Model64101 {
 impl crate::sealed::Sealed for Model64101 {}
 impl crate::Group for Model64101 {
     const LEN: u16 = 7;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_64101",
+        label: "Eltek Inverter Extension",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "eltek_country_code",
+                label: "Eltek_Country_Code",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "eltek_feeding_phase",
+                label: "Eltek_Feeding_Phase",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "eltek_apd_method",
+                label: "Eltek_APD_Method",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "eltek_apd_power_ref",
+                label: "Eltek_APD_Power_Ref",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "eltek_rps_method",
+                label: "Eltek_RPS_Method",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "eltek_rps_q_ref",
+                label: "Eltek_RPS_Q_Ref",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "eltek_rps_cos_phi_ref",
+                label: "Eltek_RPS_CosPhi_Ref",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model64101 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

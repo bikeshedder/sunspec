@@ -101,6 +101,115 @@ impl SolarModuleFloat {
 impl crate::sealed::Sealed for SolarModuleFloat {}
 impl crate::Group for SolarModuleFloat {
     const LEN: u16 = 31;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "solar_module_float",
+        label: "Solar Module",
+        description: "A solar module model supporting DC-DC converter",
+        fields: &[
+            crate::FieldInfo {
+                name: "stat",
+                label: "Status",
+                description: "Module Status Code",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "stat_vend",
+                label: "Vendor Status",
+                description: "Module Vendor Status Code",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt",
+                label: "Events",
+                description: "Module Event Flags",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt_vend",
+                label: "Vendor Module Event Flags",
+                description: "Vendor specific flags",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl",
+                label: "Control",
+                description: "Module Control",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl_vend",
+                label: "Vendor Control",
+                description: "Vendor Module Control",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl_val",
+                label: "Control Value",
+                description: "Module Control Value",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms",
+                label: "Timestamp",
+                description: "Time in seconds since 2000 epoch",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_a",
+                label: "Output Current",
+                description: "Output Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_v",
+                label: "Output Voltage",
+                description: "Output Voltage",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_wh",
+                label: "Output Energy",
+                description: "Output Energy",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_w",
+                label: "Output Power",
+                description: "Output Power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp",
+                label: "Temp",
+                description: "Module Temperature",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_a",
+                label: "Input Current",
+                description: "Input Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_v",
+                label: "Input Voltage",
+                description: "Input Voltage",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_wh",
+                label: "Input Energy",
+                description: "Input Energy",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_w",
+                label: "Input Power",
+                description: "Input Power",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl SolarModuleFloat {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

@@ -41,6 +41,43 @@ impl DerCtl {
 impl crate::sealed::Sealed for DerCtl {}
 impl crate::Group for DerCtl {
     const LEN: u16 = 7;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "DERCtl",
+        label: "DERCtl",
+        description: "DER Control",
+        fields: &[
+            crate::FieldInfo {
+                name: "loc_rem_ctl",
+                label: "Control Mode",
+                description: "DER control mode. Enumeration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "der_hb",
+                label: "DER Heartbeat",
+                description: "Value is incremented every second by the DER with periodic resets to zero.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "controller_hb",
+                label: "Controller Heartbeat",
+                description: "Value is incremented every second by the controller with periodic resets to zero.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "alarm_reset",
+                label: "Alarm Reset",
+                description: "Used to reset any latched alarms. 1 = Reset.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "op_ctl",
+                label: "Set Operation",
+                description: "Commands to PCS.",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl DerCtl {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
