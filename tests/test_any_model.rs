@@ -108,8 +108,7 @@ fn test_read_any_model() {
 
     let discovered = device.models.iter().collect::<Vec<_>>();
     assert_eq!(discovered.len(), 1);
-    assert_eq!(discovered[0].0, info);
-    assert_eq!(discovered[0].1, addr);
+    assert_eq!(discovered[0], info);
 
     let any_model = block_on(device.read_any_model(info)).unwrap();
     let model = block_on(device.read_model::<Model1>()).unwrap();

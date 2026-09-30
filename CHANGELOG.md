@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `DynModel` trait providing access to model information via
     `AnyModel::as_dyn`
   - `AsyncDevice::read_any_model`
-  - `Models::iter` returning all discovered models
+  - `Models::iter` returning the `ModelInfo` of all discovered models
   - `Model::NAME`, `Model::LABEL` and `Model::INFO` constants
 
 ### Changed
@@ -45,6 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   an address of `0`. The fields of `Models` are now `Option<ModelAddr<_>>`.
 - **Breaking:** The fields of `ModelAddr` are private. Use the `addr()` and
   `len()` methods instead.
+
+### Removed
+
+- **Breaking:** `Models::supported_model_ids` in favor of `Models::iter`
 
 ### Fixed
 

@@ -145,13 +145,13 @@ impl Models {
     /// Returns an iterator over all discovered models which are enabled
     /// via Cargo features, sorted by id.
     ///
-    /// Each item contains the model information, which can be passed to
-    /// [`AsyncDevice::read_any_model`](crate::client::AsyncDevice::read_any_model),
-    /// and the address of the model.
-    pub fn iter(&self) -> impl Iterator<Item = (&'static ModelInfo, ModelAddr<AnyModel>)> + '_ {
+    /// The model information can be passed to
+    /// [`AsyncDevice::read_any_model`](crate::client::AsyncDevice::read_any_model).
+    pub fn iter(&self) -> impl Iterator<Item = &'static ModelInfo> + '_ {
         MODELS
             .iter()
-            .filter_map(|&info| Some((info, info.addr(self)?)))
+            .copied()
+            .filter(|info| info.addr(self).is_some())
     }
 }
 

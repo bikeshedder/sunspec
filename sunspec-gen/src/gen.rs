@@ -63,19 +63,6 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
             #(#models_fields)*
         }
     };
-    let supported_model_ids_code = models.iter().map(|model| {
-        let field_name = format_ident!("m{}", model.id);
-        let model_id = Literal::u16_unsuffixed(model.id);
-        let model_feature = Literal::string(&model_feature_name(model.id));
-        quote! {
-            #[cfg(feature = #model_feature)]
-            {
-                if self.#field_name.is_some() {
-                    v.push(#model_id);
-                }
-            }
-        }
-    });
     let set_addr_code = models.iter().map(|model| {
         let field_name = format_ident!("m{}", model.id);
         let model_id = Literal::u16_unsuffixed(model.id);
@@ -152,13 +139,6 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
     };
     let models_impl = quote! {
         impl Models {
-            /// Returns a list of all supported model ids
-            pub fn supported_model_ids(&self) -> Vec<u16> {
-                #[allow(unused_mut)]
-                let mut v = Vec::new();
-                #(#supported_model_ids_code)*
-                v
-            }
             /// Set address and length of the given model.
             ///
             /// This method is used by the model discovery.

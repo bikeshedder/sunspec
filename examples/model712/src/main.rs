@@ -58,9 +58,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         "Supported models: {}",
         device
             .models
-            .supported_model_ids()
             .iter()
-            .map(|id| id.to_string())
+            .map(|info| info.id.to_string())
             .join(", ")
     );
 
