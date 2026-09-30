@@ -142,6 +142,7 @@ impl Bitflags {
 fn unparse_item(item: Item) -> String {
     prettyplease::unparse(&syn::File {
         shebang: None,
+        frontmatter: None,
         attrs: Vec::new(),
         items: vec![item],
     })
