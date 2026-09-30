@@ -18,6 +18,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: rustup update nightly
       - run: rustup update 1.76 && rustup default 1.76
+      # Only the library is subject to the MSRV. Drop the workspace so
+      # sunspec-gen and the examples don't affect dependency resolution.
+      - run: sed -i '/^\[workspace\]/,/^\]/d' Cargo.toml
       - run: cargo +nightly update -Z minimal-versions
       - run: cargo check --all-features
 
