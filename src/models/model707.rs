@@ -59,6 +59,61 @@ impl DerTripLv {
 impl crate::sealed::Sealed for DerTripLv {}
 impl crate::Group for DerTripLv {
     const LEN: u16 = 7;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "DERTripLV",
+        label: "DER Trip LV",
+        description: "DER low voltage trip model.",
+        fields: &[
+            crate::FieldInfo {
+                name: "ena",
+                label: "DER Trip LV Module Enable",
+                description: "DER low voltage trip control enable.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "adpt_crv_req",
+                label: "Adopt Curve Request",
+                description: "Index of curve points to adopt. First curve index is 1.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "adpt_crv_rslt",
+                label: "Adopt Curve Result",
+                description: "Result of last adopt curve operation.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_pt",
+                label: "Number Of Points",
+                description: "Number of curve points supported.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_crv_set",
+                label: "Stored Curve Count",
+                description: "Number of stored curves supported.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v_sf",
+                label: "Voltage Scale Factor",
+                description: "Scale factor for curve voltage points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms_sf",
+                label: "Time Point Scale Factor",
+                description: "Scale factor for curve time points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "crv",
+                label: "Stored Curves",
+                description: "Stored curve sets.",
+                kind: crate::FieldKind::RepeatingGroup(&<Crv as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl DerTripLv {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -211,6 +266,37 @@ impl Crv {
 impl crate::sealed::Sealed for Crv {}
 impl crate::Group for Crv {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "Crv",
+        label: "Stored Curves",
+        description: "Stored curve sets.",
+        fields: &[
+            crate::FieldInfo {
+                name: "read_only",
+                label: "Curve Access",
+                description: "Curve read-write access.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "must_trip",
+                label: "Must Trip Curve",
+                description: "Stored must trip curve.",
+                kind: crate::FieldKind::Group(&<MustTrip as crate::Group>::GROUP_INFO),
+            },
+            crate::FieldInfo {
+                name: "may_trip",
+                label: "May Trip Curve",
+                description: "Stored may trip curve.",
+                kind: crate::FieldKind::Group(&<MayTrip as crate::Group>::GROUP_INFO),
+            },
+            crate::FieldInfo {
+                name: "mom_cess",
+                label: "Momentary Cessation Curve",
+                description: "Stored momentary cessation curve.",
+                kind: crate::FieldKind::Group(&<MomCess as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl Crv {
     fn parse_group<'a>(
@@ -313,6 +399,25 @@ impl MustTrip {
 impl crate::sealed::Sealed for MustTrip {}
 impl crate::Group for MustTrip {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "MustTrip",
+        label: "Must Trip Curve",
+        description: "Stored must trip curve.",
+        fields: &[
+            crate::FieldInfo {
+                name: "act_pt",
+                label: "Number Of Active Points",
+                description: "Number of active points in must trip curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pt",
+                label: "Must Trip Curve Points",
+                description: "Must trip curve points.",
+                kind: crate::FieldKind::RepeatingGroup(&<Pt as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl MustTrip {
     fn parse_group<'a>(
@@ -359,6 +464,25 @@ impl Pt {
 impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {
     const LEN: u16 = 3;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "Pt",
+        label: "Must Trip Curve Points",
+        description: "Must trip curve points.",
+        fields: &[
+            crate::FieldInfo {
+                name: "v",
+                label: "Voltage Point",
+                description: "Curve voltage point as percentage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms",
+                label: "Time Point",
+                description: "Curve time point in seconds.",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Pt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -408,6 +532,25 @@ impl MayTrip {
 impl crate::sealed::Sealed for MayTrip {}
 impl crate::Group for MayTrip {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "MayTrip",
+        label: "May Trip Curve",
+        description: "Stored may trip curve.",
+        fields: &[
+            crate::FieldInfo {
+                name: "act_pt",
+                label: "Number Of Active Points",
+                description: "Number of active points in may trip curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pt",
+                label: "May Trip Curve Points",
+                description: "May trip curve points.",
+                kind: crate::FieldKind::RepeatingGroup(&<Pt as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl MayTrip {
     fn parse_group<'a>(
@@ -449,6 +592,25 @@ impl MomCess {
 impl crate::sealed::Sealed for MomCess {}
 impl crate::Group for MomCess {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "MomCess",
+        label: "Momentary Cessation Curve",
+        description: "Stored momentary cessation curve.",
+        fields: &[
+            crate::FieldInfo {
+                name: "act_pt",
+                label: "Number Of Active Points",
+                description: "Number of active points in the momentary cessation curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pt",
+                label: "Mom Cessation Curve Points",
+                description: "Momentary cessation curve points.",
+                kind: crate::FieldKind::RepeatingGroup(&<Pt as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl MomCess {
     fn parse_group<'a>(

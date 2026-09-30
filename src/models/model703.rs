@@ -69,6 +69,79 @@ impl DerEnterService {
 impl crate::sealed::Sealed for DerEnterService {}
 impl crate::Group for DerEnterService {
     const LEN: u16 = 17;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "DEREnterService",
+        label: "Enter Service",
+        description: "Enter service model.",
+        fields: &[
+            crate::FieldInfo {
+                name: "es",
+                label: "Permit Enter Service",
+                description: "Permit enter service.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "es_v_hi",
+                label: "Enter Service Voltage High",
+                description: "Enter service voltage high threshold as percent of normal voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "es_v_lo",
+                label: "Enter Service Voltage Low",
+                description: "Enter service voltage low threshold as percent of normal voltage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "es_hz_hi",
+                label: "Enter Service Frequency High",
+                description: "Enter service frequency high threshold.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "es_hz_lo",
+                label: "Enter Service Frequency Low",
+                description: "Enter service frequency low threshold.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "es_dly_tms",
+                label: "Enter Service Delay Time",
+                description: "Enter service delay time in seconds.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "es_rnd_tms",
+                label: "Enter Service Random Delay",
+                description: "Enter service random delay in seconds.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "es_rmp_tms",
+                label: "Enter Service Ramp Time",
+                description: "Enter service ramp time in seconds.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "es_dly_rem_tms",
+                label: "Enter Service Delay Remaining",
+                description: "Enter service delay time remaining in seconds.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "v_sf",
+                label: "Voltage Scale Factor",
+                description: "Voltage percentage scale factor.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz_sf",
+                label: "Frequency Scale Factor",
+                description: "Frequency scale factor.",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl DerEnterService {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

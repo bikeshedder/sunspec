@@ -52,6 +52,61 @@ impl Model17 {
 impl crate::sealed::Sealed for Model17 {}
 impl crate::Group for Model17 {
     const LEN: u16 = 12;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_17",
+        label: "Serial Interface",
+        description: "Include this model for serial interface configuration support",
+        fields: &[
+            crate::FieldInfo {
+                name: "nam",
+                label: "Name",
+                description: "Interface name (8 chars)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rte",
+                label: "Rate",
+                description: "Interface baud rate in bits per second",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "bits",
+                label: "Bits",
+                description: "Number of data bits per character",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pty",
+                label: "Parity",
+                description: "Parity setting",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dup",
+                label: "Duplex",
+                description: "Duplex mode",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "flw",
+                label: "Flow Control",
+                description: "Flow Control Method",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "typ",
+                label: "Interface Type",
+                description: "Interface type",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pcol",
+                label: "Protocol",
+                description: "Serial protocol selection",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model17 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

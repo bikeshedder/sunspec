@@ -6,7 +6,9 @@ use std::{
 
 use thiserror::Error;
 
-use crate::{models::MODELS, sealed::Sealed, AnyModel, Model, ModelAddr, Models, ParseError};
+use crate::{
+    models::MODELS, sealed::Sealed, AnyModel, GroupInfo, Model, ModelAddr, Models, ParseError,
+};
 
 /// Information about a model which is known at runtime.
 ///
@@ -24,6 +26,9 @@ pub struct ModelInfo {
     /// Label of the model as defined by the SunSpec specification,
     /// e.g. `"Inverter (Three Phase)"`.
     pub label: &'static str,
+    /// Information about the root group of this model which contains
+    /// the description and the points and nested groups of this model.
+    pub group: &'static GroupInfo,
     addr: fn(&Models) -> ModelAddr<AnyModel>,
     parse: fn(&[u16]) -> Result<AnyModel, ParseError<AnyModel>>,
 }
@@ -35,6 +40,7 @@ impl ModelInfo {
             id: M::ID,
             name: M::NAME,
             label: M::LABEL,
+            group: &M::GROUP_INFO,
             addr: addr_of::<M>,
             parse: parse_any::<M>,
         }

@@ -57,6 +57,67 @@ impl Model19 {
 impl crate::sealed::Sealed for Model19 {}
 impl crate::Group for Model19 {
     const LEN: u16 = 30;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_19",
+        label: "PPP Link",
+        description: "Include this model to configure a Point-to-Point Protocol link",
+        fields: &[
+            crate::FieldInfo {
+                name: "nam",
+                label: "Name",
+                description: "Interface name",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rte",
+                label: "Rate",
+                description: "Interface baud rate in bits per second",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "bits",
+                label: "Bits",
+                description: "Number of data bits per character",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pty",
+                label: "Parity",
+                description: "Parity setting",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dup",
+                label: "Duplex",
+                description: "Duplex mode",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "flw",
+                label: "Flow Control",
+                description: "Flow Control Method",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "auth",
+                label: "Authentication",
+                description: "Authentication method",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "usr_nam",
+                label: "Username",
+                description: "Username for authentication",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pw",
+                label: "Password",
+                description: "Password for authentication",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model19 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

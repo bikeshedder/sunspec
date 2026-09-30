@@ -62,6 +62,67 @@ impl Model7 {
 impl crate::sealed::Sealed for Model7 {}
 impl crate::Group for Model7 {
     const LEN: u16 = 10;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_7",
+        label: "Secure Write Response Model (DRAFT 1)",
+        description: "Include a digital signature over the response",
+        fields: &[
+            crate::FieldInfo {
+                name: "rq_seq",
+                label: "Request Sequence",
+                description: "Sequence number from the request",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sts",
+                label: "Status",
+                description: "Status of last write operation",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ts",
+                label: "Timestamp",
+                description: "Timestamp value is the number of seconds since January 1, 2000",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ms",
+                label: "Milliseconds",
+                description: "Millisecond counter 0-999",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "seq",
+                label: "Sequence",
+                description: "Sequence number of response",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "alm",
+                label: "Alarm",
+                description: "Bitmask alarm code",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "alg",
+                label: "Algorithm",
+                description: "Algorithm used to compute the digital signature",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n",
+                label: "N",
+                description: "Number of registers comprising the digital signature.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "repeating",
+                label: "repeating",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<Repeating as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl Model7 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -236,6 +297,17 @@ impl Repeating {
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        fields: &[crate::FieldInfo {
+            name: "ds",
+            label: "DS",
+            description: "Digital Signature",
+            kind: crate::FieldKind::Point,
+        }],
+    };
 }
 impl Repeating {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

@@ -171,6 +171,199 @@ impl InverterSinglePhaseFloat {
 impl crate::sealed::Sealed for InverterSinglePhaseFloat {}
 impl crate::Group for InverterSinglePhaseFloat {
     const LEN: u16 = 60;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "inverter_single_phase_float",
+        label: "Inverter (Single Phase) FLOAT",
+        description: "Include this model for single phase inverter monitoring using float values",
+        fields: &[
+            crate::FieldInfo {
+                name: "a",
+                label: "Amps",
+                description: "AC Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "a_ph_a",
+                label: "Amps PhaseA",
+                description: "Phase A Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "a_ph_b",
+                label: "Amps PhaseB",
+                description: "Phase B Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "a_ph_c",
+                label: "Amps PhaseC",
+                description: "Phase C Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pp_v_ph_ab",
+                label: "Phase Voltage AB",
+                description: "Phase Voltage AB",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pp_v_ph_bc",
+                label: "Phase Voltage BC",
+                description: "Phase Voltage BC",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pp_v_ph_ca",
+                label: "Phase Voltage CA",
+                description: "Phase Voltage CA",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ph_v_ph_a",
+                label: "Phase Voltage AN",
+                description: "Phase Voltage AN",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ph_v_ph_b",
+                label: "Phase Voltage BN",
+                description: "Phase Voltage BN",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ph_v_ph_c",
+                label: "Phase Voltage CN",
+                description: "Phase Voltage CN",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "w",
+                label: "Watts",
+                description: "AC Power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz",
+                label: "Hz",
+                description: "Line Frequency",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "va",
+                label: "VA",
+                description: "AC Apparent Power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var",
+                label: "VAr",
+                description: "AC Reactive Power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pf",
+                label: "PF",
+                description: "AC Power Factor",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "wh",
+                label: "WattHours",
+                description: "AC Energy",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_a",
+                label: "DC Amps",
+                description: "DC Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_v",
+                label: "DC Voltage",
+                description: "DC Voltage",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_w",
+                label: "DC Watts",
+                description: "DC Power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp_cab",
+                label: "Cabinet Temperature",
+                description: "Cabinet Temperature",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp_snk",
+                label: "Heat Sink Temperature",
+                description: "Heat Sink Temperature",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp_trns",
+                label: "Transformer Temperature",
+                description: "Transformer Temperature",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp_ot",
+                label: "Other Temperature",
+                description: "Other Temperature",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "st",
+                label: "Operating State",
+                description: "Operating state",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "st_vnd",
+                label: "Vendor Operating State",
+                description: "Vendor specific operating state code",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt1",
+                label: "Event1",
+                description: "Event fields",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt2",
+                label: "Event Bitfield 2",
+                description: "Reserved for future use",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt_vnd1",
+                label: "Vendor Event Bitfield 1",
+                description: "Vendor defined events",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt_vnd2",
+                label: "Vendor Event Bitfield 2",
+                description: "Vendor defined events",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt_vnd3",
+                label: "Vendor Event Bitfield 3",
+                description: "Vendor defined events",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt_vnd4",
+                label: "Vendor Event Bitfield 4",
+                description: "Vendor defined events",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl InverterSinglePhaseFloat {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

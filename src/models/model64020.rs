@@ -136,6 +136,201 @@ impl Model64020 {
 impl crate::sealed::Sealed for Model64020 {}
 impl crate::Group for Model64020 {
     const LEN: u16 = 30;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_64020",
+        label: "Mersen GreenString",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "aux0_tmp",
+                label: "Aux 0 temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "aux1_tmp",
+                label: "Aux 1 temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "aux2_tmp",
+                label: "Aux 2 temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "aux3_tmp",
+                label: "Aux 3 temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "aux4_tmp",
+                label: "Aux 4 temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "probe_tmp",
+                label: "Probe Temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "main_tmp",
+                label: "Main Temperature",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor_v_sf",
+                label: "Voltage scale factor for the sensors",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor_a_sf",
+                label: "Current scale factor for the sensors",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor_hz_sf",
+                label: "Frequency scale factor for the sensors",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor1_voltage",
+                label: "Sensor1 Voltage",
+                description: "scale of 0-10V",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor2_voltage",
+                label: "Sensor2 Voltage",
+                description: "scale of 0-10V",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor3_voltage",
+                label: "Sensor3 Voltage",
+                description: "scale of 0-10V",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor4_voltage",
+                label: "Sensor4 Voltage",
+                description: "scale of 0-10V",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor5_voltage",
+                label: "Sensor5 Voltage",
+                description: "scale of 0-10V",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor6_voltage",
+                label: "Sensor6 Voltage",
+                description: "scale of 0-10V",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor7_voltage",
+                label: "Sensor7 Voltage",
+                description: "scale of 0-10V",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor1_current",
+                label: "Sensor1 Current",
+                description: "scale of 4-20mA",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor2_current",
+                label: "Sensor2 Current",
+                description: "in 4-20mA or 4-20mA",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor3_current",
+                label: "Sensor3 Current",
+                description: "in 4-20mA or 4-20mA",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor4_current",
+                label: "Sensor4 Current",
+                description: "in 4-20mA or 4-20mA",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor5_current",
+                label: "Sensor5 Current",
+                description: "in 4-20mA or 4-20mA",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor6_current",
+                label: "Sensor6 Current",
+                description: "in 4-20mA or 4-20mA",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor7_current",
+                label: "Sensor7 Current",
+                description: "in 4-20mA or 4-20mA",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "sensor8",
+                label: "Sensor8 frequency",
+                description: "frequency in Hz",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "relay1",
+                label: "Relay 1 state",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "relay2",
+                label: "Relay 2 state",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "relay3",
+                label: "Relay 3 state",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "reset_accumulators",
+                label: "Reset the accumulators",
+                description: "always 0 in reading, used the code 0xC0DA during the writing for resetting them",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "reset",
+                label: "Reset the system",
+                description: "always 0 in reading, used the code 0xC0DA during the writing for resetting the system",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "repeating",
+                label: "repeating",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(
+                    &<Repeating as crate::Group>::GROUP_INFO,
+                ),
+            },
+        ],
+    };
 }
 impl Model64020 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -205,6 +400,31 @@ impl Repeating {
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 16;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "serial_number",
+                label: "Serial number",
+                description: "strings of 16 characters",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "firmware",
+                label: "Firmware version",
+                description: "string of 11 characters",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hardware",
+                label: "Hardware version",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Repeating {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

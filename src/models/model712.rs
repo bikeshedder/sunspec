@@ -74,6 +74,79 @@ impl DerWattVar {
 impl crate::sealed::Sealed for DerWattVar {}
 impl crate::Group for DerWattVar {
     const LEN: u16 = 12;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "DERWattVar",
+        label: "DER Watt-Var",
+        description: "DER Watt-Var model.",
+        fields: &[
+            crate::FieldInfo {
+                name: "ena",
+                label: "DER Watt-Var Module Enable",
+                description: "DER Watt-Var control enable.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "adpt_crv_req",
+                label: "Set Active Curve Request",
+                description: "Set active curve. 0 = No active curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "adpt_crv_rslt",
+                label: "Set Active Curve Result",
+                description: "Result of last set active curve operation.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_pt",
+                label: "Number Of Points",
+                description: "Number of curve points supported.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_crv",
+                label: "Stored Curve Count",
+                description: "Number of stored curves supported.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rvrt_tms",
+                label: "Reversion Timeout",
+                description: "Reversion time in seconds. 0 = No reversion time.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rvrt_rem",
+                label: "Reversion Time Left",
+                description: "Reversion time remaining in seconds.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rvrt_crv",
+                label: "Reversion Curve",
+                description: "Default curve after reversion timeout.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "w_sf",
+                label: "Active Power Scale Factor",
+                description: "Scale factor for curve active power points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dept_ref_sf",
+                label: "Var Scale Factor",
+                description: "Scale factor for curve var points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "crv",
+                label: "Stored Curves",
+                description: "Stored curve sets.",
+                kind: crate::FieldKind::RepeatingGroup(&<Crv as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl DerWattVar {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -236,6 +309,43 @@ impl Crv {
 impl crate::sealed::Sealed for Crv {}
 impl crate::Group for Crv {
     const LEN: u16 = 4;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "Crv",
+        label: "Stored Curves",
+        description: "Stored curve sets.",
+        fields: &[
+            crate::FieldInfo {
+                name: "act_pt",
+                label: "Active Points",
+                description: "Number of active points.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dept_ref",
+                label: "Dependent Reference",
+                description: "Curve dependent reference.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pri",
+                label: "Power Priority",
+                description: "Power priority.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "read_only",
+                label: "Curve Access",
+                description: "Curve read-write access.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pt",
+                label: "Stored Curve Points",
+                description: "Stored curve points.",
+                kind: crate::FieldKind::RepeatingGroup(&<Pt as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl Crv {
     fn parse_group<'a>(
@@ -432,6 +542,25 @@ impl Pt {
 impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {
     const LEN: u16 = 2;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "Pt",
+        label: "Stored Curve Points",
+        description: "Stored curve points.",
+        fields: &[
+            crate::FieldInfo {
+                name: "w",
+                label: "Active Power Point",
+                description: "Curve active power point as percentage.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var",
+                label: "Reactive Power Point",
+                description: "Curve reactive power point as set in DeptRef point.",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Pt {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

@@ -42,6 +42,43 @@ impl CsipControl {
 impl crate::sealed::Sealed for CsipControl {}
 impl crate::Group for CsipControl {
     const LEN: u16 = 68;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "CSIPControl",
+        label: "CSIP Client Control",
+        description: "CSIP Client Control for Alarms and Error tests",
+        fields: &[
+            crate::FieldInfo {
+                name: "log_event_ena",
+                label: "LogEvent Mode Enable",
+                description: "Enable or disable the LogEvent mode",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "http_msg",
+                label: "HTTP Message Mode Enable",
+                description: "Enable or disable the HTTP Message mode",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "comm004_cert",
+                label: "COMM-004 Certificate",
+                description: "Select COMM-004 certificate type",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "subscribed_resource",
+                label: "Subscribed Resource URL",
+                description: "The URL of the resource to subscribe to",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "subscription_ena",
+                label: "Subscribtion Enable",
+                description: "Enable or disable the Subscription mode",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl CsipControl {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

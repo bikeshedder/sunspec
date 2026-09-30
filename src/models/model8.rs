@@ -24,6 +24,31 @@ impl Model8 {
 impl crate::sealed::Sealed for Model8 {}
 impl crate::Group for Model8 {
     const LEN: u16 = 2;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_8",
+        label: "Get Device Security Certificate",
+        description: "Security model for PKI",
+        fields: &[
+            crate::FieldInfo {
+                name: "fmt",
+                label: "Format",
+                description: "X.509 format of the certificate. DER or PEM.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n",
+                label: "N",
+                description: "Number of registers to follow for the certificate",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "repeating",
+                label: "repeating",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<Repeating as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl Model8 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -100,6 +125,17 @@ impl Repeating {
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        fields: &[crate::FieldInfo {
+            name: "cert",
+            label: "Cert",
+            description: "X.509 Certificate of the device",
+            kind: crate::FieldKind::Point,
+        }],
+    };
 }
 impl Repeating {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

@@ -45,6 +45,68 @@ impl DerSimControls {
 impl crate::sealed::Sealed for DerSimControls {}
 impl crate::Group for DerSimControls {
     const LEN: u16 = 86;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "DERSimControls",
+        label: "DER Simulation Controls",
+        description: "Configuration parameters for the DER device simulator.",
+        fields: &[
+            crate::FieldInfo {
+                name: "time",
+                label: "Time offset",
+                description: "Time offset for simulation formatted 'HH:MM:SS'",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "temperature",
+                label: "Temperature",
+                description: "Ambient temperature (degrees Celsius)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "grid_model_source",
+                label: "GridModelSource",
+                description: "The data source for the grid model. 'csv' or 'const'",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "irradiance_model_source",
+                label: "IrradianceModelSource",
+                description: "The data source for the irradiance model. 'csv' or 'const'",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "irradiance",
+                label: "Irradiance",
+                description:
+                    "The irradiance on the DER device (W/m^2) for the 'const' irradiance model",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "grid_voltage_a",
+                label: "GridVoltageA",
+                description: "Phase A RMS Voltage (pu) for the 'const' grid model",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "grid_voltage_b",
+                label: "GridVoltageB",
+                description: "Phase B RMS Voltage (pu) for the 'const' grid model",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "grid_voltage_c",
+                label: "GridVoltageC",
+                description: "Phase C RMS Voltage (pu) for the 'const' grid model",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "grid_frequency",
+                label: "GridFrequency",
+                description: "Grid frequency (Hz) for the 'const' grid model",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl DerSimControls {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

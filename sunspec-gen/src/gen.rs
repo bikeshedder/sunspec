@@ -348,6 +348,47 @@ fn gen_group(
 
     let groups = group.groups.iter().collect::<Vec<_>>();
 
+    let point_field_infos = points
+        .iter()
+        .filter(|point| !point.is_padding())
+        .map(|point| {
+            let name = Literal::string(&snake_case(&point.name));
+            let label = Literal::string(point.doc.label.as_deref().unwrap_or(&point.name));
+            let description = Literal::string(point.doc.desc.as_deref().unwrap_or_default());
+            quote! {
+                crate::FieldInfo {
+                    name: #name,
+                    label: #label,
+                    description: #description,
+                    kind: crate::FieldKind::Point,
+                },
+            }
+        });
+
+    let group_field_infos = groups.iter().map(|group| {
+        let name = Literal::string(&snake_case(&group.name));
+        let label = Literal::string(group.doc.label.as_deref().unwrap_or(&group.name));
+        let description = Literal::string(group.doc.desc.as_deref().unwrap_or_default());
+        let group_type = group_ident(group);
+        let kind = if group.count.is_one() {
+            quote! { Group }
+        } else {
+            quote! { RepeatingGroup }
+        };
+        quote! {
+            crate::FieldInfo {
+                name: #name,
+                label: #label,
+                description: #description,
+                kind: crate::FieldKind::#kind(&<#group_type as crate::Group>::GROUP_INFO),
+            },
+        }
+    });
+
+    let group_name_literal = Literal::string(&group.name);
+    let group_label_literal = Literal::string(group.doc.label.as_deref().unwrap_or(&group.name));
+    let group_description_literal = Literal::string(group.doc.desc.as_deref().unwrap_or_default());
+
     let group_fields = groups.iter().map(|group| {
         let field_name = format_ident!("{}", snake_case(&group.name));
         let group_type = group_ident(group);
@@ -556,6 +597,15 @@ fn gen_group(
         impl crate::sealed::Sealed for #group_name {}
         impl crate::Group for #group_name {
             const LEN: u16 = #group_len;
+            const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+                name: #group_name_literal,
+                label: #group_label_literal,
+                description: #group_description_literal,
+                fields: &[
+                    #(#point_field_infos)*
+                    #(#group_field_infos)*
+                ],
+            };
         }
         impl #group_name {
             #parse_group

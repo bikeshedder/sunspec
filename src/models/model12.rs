@@ -87,6 +87,103 @@ impl Model12 {
 impl crate::sealed::Sealed for Model12 {}
 impl crate::Group for Model12 {
     const LEN: u16 = 98;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_12",
+        label: "IPv4",
+        description: "Include to support an IPv4 protocol stack on this interface",
+        fields: &[
+            crate::FieldInfo {
+                name: "nam",
+                label: "Name",
+                description: "Interface name",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cfg_st",
+                label: "Config Status",
+                description: "Configuration status",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "chg_st",
+                label: "Change Status",
+                description: "A configuration change is pending",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cap",
+                label: "Config Capability",
+                description: "Identify capable sources of configuration",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cfg",
+                label: "IPv4 Config",
+                description: "Configuration method used.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl",
+                label: "Control",
+                description: "Configure use of services",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "addr",
+                label: "IP",
+                description: "IPv4 numeric address as a dotted string xxx.xxx.xxx.xxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "msk",
+                label: "Netmask",
+                description: "IPv4 numeric netmask as a dotted string xxx.xxx.xxx.xxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "gw",
+                label: "Gateway",
+                description: "IPv4 numeric gateway address as a dotted string xxx.xxx.xxx.xxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dns1",
+                label: "DNS1",
+                description: "IPv4 numeric DNS address as a dotted string xxx.xxx.xxx.xxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dns2",
+                label: "DNS2",
+                description: "IPv4 numeric DNS address as a dotted string xxx.xxx.xxx.xxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ntp1",
+                label: "NTP1",
+                description: "IPv4 numeric NTP address as a dotted string xxx.xxx.xxx.xxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ntp2",
+                label: "NTP2",
+                description: "IPv4 numeric NTP address as a dotted string xxx.xxx.xxx.xxx",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dom_nam",
+                label: "Domain",
+                description: "Domain name (24 chars max)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "host_nam",
+                label: "Host Name",
+                description: "Host name (24 chars max)",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model12 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

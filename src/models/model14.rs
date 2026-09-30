@@ -52,6 +52,61 @@ impl Model14 {
 impl crate::sealed::Sealed for Model14 {}
 impl crate::Group for Model14 {
     const LEN: u16 = 52;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_14",
+        label: "Proxy Server",
+        description: "Include this block to allow for a proxy server",
+        fields: &[
+            crate::FieldInfo {
+                name: "nam",
+                label: "name",
+                description: "Interface name (8 chars)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cap",
+                label: "Capabilities",
+                description: "Proxy configuration capabilities",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "cfg",
+                label: "Config",
+                description: "Set proxy address type",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "typ",
+                label: "Type",
+                description: "Enumerate value. Proxy server type",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "addr",
+                label: "Address",
+                description: "IPv4 or IPv6 proxy hostname or dotted address (40 chars)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "port",
+                label: "Port",
+                description: "Proxy port number",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "user",
+                label: "Username",
+                description: "Proxy user name",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "pw",
+                label: "Password",
+                description: "Proxy password",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model14 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

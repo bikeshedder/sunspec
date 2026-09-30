@@ -72,6 +72,85 @@ impl Model15 {
 impl crate::sealed::Sealed for Model15 {}
 impl crate::Group for Model15 {
     const LEN: u16 = 24;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_15",
+        label: "Interface Counters Model",
+        description: "Interface counters",
+        fields: &[
+            crate::FieldInfo {
+                name: "clr",
+                label: "Clear",
+                description: "Write a \"1\" to clear all counters",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_cnt",
+                label: "Input Count",
+                description: "Number of bytes received",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_uc_cnt",
+                label: "Input Unicast Count",
+                description: "Number of Unicast packets received",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_n_uc_cnt",
+                label: "Input Non-Unicast Count",
+                description: "Number of non-Unicast packets received",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_dsc_cnt",
+                label: "Input Discarded Count",
+                description: "Number of inbound packets received on the interface but discarded",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_err_cnt",
+                label: "Input Error Count",
+                description: "Number of inbound packets that contain errors (excluding discards)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_unk_cnt",
+                label: "Input Unknown Count",
+                description: "Number of inbound packets with unknown protocol",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_cnt",
+                label: "Output Count",
+                description: "Total number of bytes transmitted on this interface",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_uc_cnt",
+                label: "Output Unicast Count",
+                description: "Number of Unicast packets transmitted",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_n_uc_cnt",
+                label: "Output Non-Unicast Count",
+                description: "Number of Non-Unicast packets transmitted",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_dsc_cnt",
+                label: "Output Discarded Count",
+                description: "Number of Discarded output packets",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_err_cnt",
+                label: "Output Error Count",
+                description: "Number of outbound error packets",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model15 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

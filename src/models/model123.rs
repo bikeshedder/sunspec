@@ -139,6 +139,157 @@ impl Controls {
 impl crate::sealed::Sealed for Controls {}
 impl crate::Group for Controls {
     const LEN: u16 = 24;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "controls",
+        label: "Immediate Controls",
+        description: "Immediate Inverter Controls ",
+        fields: &[
+            crate::FieldInfo {
+                name: "conn_win_tms",
+                label: "Conn_WinTms",
+                description: "Time window for connect/disconnect.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "conn_rvrt_tms",
+                label: "Conn_RvrtTms",
+                description: "Timeout period for connect/disconnect.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "conn",
+                label: "Conn",
+                description: "Connection control.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "w_max_lim_pct",
+                label: "WMaxLimPct",
+                description: "Set power output to specified level.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "w_max_lim_pct_win_tms",
+                label: "WMaxLimPct_WinTms",
+                description: "Time window for power limit change.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "w_max_lim_pct_rvrt_tms",
+                label: "WMaxLimPct_RvrtTms",
+                description: "Timeout period for power limit.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "w_max_lim_pct_rmp_tms",
+                label: "WMaxLimPct_RmpTms",
+                description: "Ramp time for moving from current setpoint to new setpoint.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "w_max_lim_ena",
+                label: "WMaxLim_Ena",
+                description: "Throttle enable/disable control.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_pf_set",
+                label: "OutPFSet",
+                description: "Set power factor to specific value - cosine of angle.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_pf_set_win_tms",
+                label: "OutPFSet_WinTms",
+                description: "Time window for power factor change.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_pf_set_rvrt_tms",
+                label: "OutPFSet_RvrtTms",
+                description: "Timeout period for power factor.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_pf_set_rmp_tms",
+                label: "OutPFSet_RmpTms",
+                description: "Ramp time for moving from current setpoint to new setpoint.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_pf_set_ena",
+                label: "OutPFSet_Ena",
+                description: "Fixed power factor enable/disable control.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var_w_max_pct",
+                label: "VArWMaxPct",
+                description: "Reactive power in percent of WMax.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var_max_pct",
+                label: "VArMaxPct",
+                description: "Reactive power in percent of VArMax.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var_aval_pct",
+                label: "VArAvalPct",
+                description: "Reactive power in percent of VArAval.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var_pct_win_tms",
+                label: "VArPct_WinTms",
+                description: "Time window for VAR limit change.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var_pct_rvrt_tms",
+                label: "VArPct_RvrtTms",
+                description: "Timeout period for VAR limit.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var_pct_rmp_tms",
+                label: "VArPct_RmpTms",
+                description: "Ramp time for moving from current setpoint to new setpoint.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var_pct_mod",
+                label: "VArPct_Mod",
+                description: "VAR percent limit mode.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var_pct_ena",
+                label: "VArPct_Ena",
+                description: "Percent limit VAr enable/disable control.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "w_max_lim_pct_sf",
+                label: "WMaxLimPct_SF",
+                description: "Scale factor for power output percent.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "out_pf_set_sf",
+                label: "OutPFSet_SF",
+                description: "Scale factor for power factor.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "var_pct_sf",
+                label: "VArPct_SF",
+                description: "Scale factor for reactive power percent.",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Controls {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

@@ -88,6 +88,115 @@ impl StringCombinerAdvanced {
 impl crate::sealed::Sealed for StringCombinerAdvanced {}
 impl crate::Group for StringCombinerAdvanced {
     const LEN: u16 = 20;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "string_combiner_advanced",
+        label: "String Combiner (Advanced)",
+        description: "An advanced string combiner",
+        fields: &[
+            crate::FieldInfo {
+                name: "dc_a_sf",
+                label: "DCA_SF",
+                description: "Current scale factor",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_ahr_sf",
+                label: "DCAhr_SF",
+                description: "Amp-hour scale factor",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_v_sf",
+                label: "DCV_SF",
+                description: "Voltage scale factor",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_w_sf",
+                label: "DCW_SF",
+                description: "Power scale factor",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_wh_sf",
+                label: "DCWh_SF",
+                description: "Energy scale factor",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_a_max",
+                label: "Rating",
+                description: "Maximum DC Current Rating",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n",
+                label: "N",
+                description: "Number of Inputs",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt",
+                label: "Event",
+                description: "Events",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt_vnd",
+                label: "Vendor Event",
+                description: "Vendor defined events",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_a",
+                label: "Amps",
+                description: "Total measured current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_ahr",
+                label: "Amp-hours",
+                description: "Total metered Amp-hours",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_v",
+                label: "Voltage",
+                description: "Output Voltage",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tmp",
+                label: "Temp",
+                description: "Internal operating temperature",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_w",
+                label: "Watts",
+                description: "Output power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_pr",
+                label: "PR",
+                description: "DC Performance ratio value",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "dc_wh",
+                label: "Watt-hours",
+                description: "Output energy",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "string",
+                label: "string",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<String as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl StringCombinerAdvanced {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -270,6 +379,73 @@ impl String {
 impl crate::sealed::Sealed for String {}
 impl crate::Group for String {
     const LEN: u16 = 14;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "string",
+        label: "string",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "in_id",
+                label: "ID",
+                description: "Uniquely identifies this input set",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_evt",
+                label: "Input Event",
+                description: "String Input Event Flags",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "evt_vnd",
+                label: "Vendor Event",
+                description: "Vendor defined events",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_dc_a",
+                label: "Amps",
+                description: "String Input Current",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_dc_ahr",
+                label: "Amp-hours",
+                description: "String Input Amp-Hours",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_dc_v",
+                label: "Voltage",
+                description: "String Input Voltage",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_dc_w",
+                label: "Watts",
+                description: "String Input Power",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_dc_wh",
+                label: "Watt-hours",
+                description: "String Input Energy",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_dc_pr",
+                label: "PR",
+                description: "String Performance Ratio",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "in_n",
+                label: "N",
+                description: "Number of modules in this input string",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl String {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

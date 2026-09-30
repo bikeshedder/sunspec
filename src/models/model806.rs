@@ -17,6 +17,27 @@ impl FlowBattery {
 impl crate::sealed::Sealed for FlowBattery {}
 impl crate::Group for FlowBattery {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "flow_battery",
+        label: "Flow Battery Model",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "bat_tbd",
+                label: "Battery Points To Be Determined",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "battery_string",
+                label: "battery_string",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(
+                    &<BatteryString as crate::Group>::GROUP_INFO,
+                ),
+            },
+        ],
+    };
 }
 impl FlowBattery {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -47,6 +68,17 @@ impl BatteryString {
 impl crate::sealed::Sealed for BatteryString {}
 impl crate::Group for BatteryString {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "battery_string",
+        label: "battery_string",
+        description: "",
+        fields: &[crate::FieldInfo {
+            name: "bat_st_tbd",
+            label: "Battery String Points To Be Determined",
+            description: "",
+            kind: crate::FieldKind::Point,
+        }],
+    };
 }
 impl BatteryString {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

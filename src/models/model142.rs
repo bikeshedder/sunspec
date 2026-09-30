@@ -69,6 +69,73 @@ impl Hfrtc {
 impl crate::sealed::Sealed for Hfrtc {}
 impl crate::Group for Hfrtc {
     const LEN: u16 = 10;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "hfrtc",
+        label: "HFRTC",
+        description: "HFRT must remain connected",
+        fields: &[
+            crate::FieldInfo {
+                name: "act_crv",
+                label: "ActCrv",
+                description: "Index of active curve. 0=no active curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "mod_ena",
+                label: "ModEna",
+                description: "LHzRT control mode. Enable active curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "win_tms",
+                label: "WinTms",
+                description: "Time window for LFRT change.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rvrt_tms",
+                label: "RvrtTms",
+                description: "Timeout period for LFRT curve selection.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "rmp_tms",
+                label: "RmpTms",
+                description: "Ramp time for moving from current mode to new mode.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_crv",
+                label: "NCrv",
+                description: "Number of curves supported (recommend 4).",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n_pt",
+                label: "NPt",
+                description: "Number of curve points supported (maximum of 20).",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms_sf",
+                label: "Tms_SF",
+                description: "Scale factor for duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz_sf",
+                label: "Hz_SF",
+                description: "Scale factor for frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "curve",
+                label: "curve",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<Curve as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl Hfrtc {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -347,6 +414,271 @@ impl Curve {
 impl crate::sealed::Sealed for Curve {}
 impl crate::Group for Curve {
     const LEN: u16 = 50;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "curve",
+        label: "curve",
+        description: "",
+        fields: &[
+            crate::FieldInfo {
+                name: "act_pt",
+                label: "ActPt",
+                description: "Number of active points in array.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms1",
+                label: "Tms1",
+                description: "Point 1 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz1",
+                label: "Hz1",
+                description: "Point 1 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms2",
+                label: "Tms2",
+                description: "Point 2 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz2",
+                label: "Hz2",
+                description: "Point 2 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms3",
+                label: "Tms3",
+                description: "Point 3 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz3",
+                label: "Hz3",
+                description: "Point 3 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms4",
+                label: "Tms4",
+                description: "Point 4 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz4",
+                label: "Hz4",
+                description: "Point 4 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms5",
+                label: "Tms5",
+                description: "Point 5 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz5",
+                label: "Hz5",
+                description: "Point 5 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms6",
+                label: "Tms6",
+                description: "Point 6 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz6",
+                label: "Hz6",
+                description: "Point 6 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms7",
+                label: "Tms7",
+                description: "Point 7 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz7",
+                label: "Hz7",
+                description: "Point 7 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms8",
+                label: "Tms8",
+                description: "Point 8 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz8",
+                label: "Hz8",
+                description: "Point 8 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms9",
+                label: "Tms9",
+                description: "Point 9 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz9",
+                label: "Hz9",
+                description: "Point 9 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms10",
+                label: "Tms10",
+                description: "Point 10 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz10",
+                label: "Hz10",
+                description: "Point 10 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms11",
+                label: "Tms11",
+                description: "Point 11 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz11",
+                label: "Hz11",
+                description: "Point 11 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms12",
+                label: "Tms12",
+                description: "Point 12 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz12",
+                label: "Hz12",
+                description: "Point 12 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms13",
+                label: "Tms13",
+                description: "Point 13 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz13",
+                label: "Hz13",
+                description: "Point 13 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms14",
+                label: "Tms14",
+                description: "Point 14 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz14",
+                label: "Hz14",
+                description: "Point 14 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms15",
+                label: "Tms15",
+                description: "Point 15 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz15",
+                label: "Hz15",
+                description: "Point 15 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms16",
+                label: "Tms16",
+                description: "Point 16 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz16",
+                label: "Hz16",
+                description: "Point 16 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms17",
+                label: "Tms17",
+                description: "Point 17 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz17",
+                label: "Hz17",
+                description: "Point 17 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms18",
+                label: "Tms18",
+                description: "Point 18 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz18",
+                label: "Hz18",
+                description: "Point 18 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms19",
+                label: "Tms19",
+                description: "Point 19 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz19",
+                label: "Hz19",
+                description: "Point 19 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "tms20",
+                label: "Tms20",
+                description: "Point 20 must remain connected duration.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "hz20",
+                label: "Hz20",
+                description: "Point 20 must remain connected frequency.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "crv_nam",
+                label: "CrvNam",
+                description: "Optional description for curve.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "read_only",
+                label: "ReadOnly",
+                description: "Curve is read-only or can be modified.",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Curve {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

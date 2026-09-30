@@ -213,6 +213,361 @@ impl Model3 {
 impl crate::sealed::Sealed for Model3 {}
 impl crate::Group for Model3 {
     const LEN: u16 = 58;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_3",
+        label: "Secure Dataset Read Request",
+        description: "Request a digital signature over a specified set of data registers",
+        fields: &[
+            crate::FieldInfo {
+                name: "x",
+                label: "X",
+                description: "Number of registers being requested",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off1",
+                label: "Offset1",
+                description: "Offset of value to read",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off2",
+                label: "Off2",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off3",
+                label: "Off3",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off4",
+                label: "Off4",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off5",
+                label: "Off5",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off6",
+                label: "Off6",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off7",
+                label: "Off7",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off8",
+                label: "Off8",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off9",
+                label: "Off9",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off10",
+                label: "Off10",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off11",
+                label: "Off11",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off12",
+                label: "Off12",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off13",
+                label: "Off13",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off14",
+                label: "Off14",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off15",
+                label: "Off15",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off16",
+                label: "Off16",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off17",
+                label: "Off17",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off18",
+                label: "Off18",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off19",
+                label: "Off19",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off20",
+                label: "Off20",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off21",
+                label: "Off21",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off22",
+                label: "Off22",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off23",
+                label: "Off23",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off24",
+                label: "Off24",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off25",
+                label: "Off25",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off26",
+                label: "Off26",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off27",
+                label: "Off27",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off28",
+                label: "Off28",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off29",
+                label: "Off29",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off30",
+                label: "Off30",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off31",
+                label: "Off31",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off32",
+                label: "Off32",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off33",
+                label: "Off33",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off34",
+                label: "Off34",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off35",
+                label: "Off35",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off36",
+                label: "Off36",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off37",
+                label: "Off37",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off38",
+                label: "Off38",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off39",
+                label: "Off39",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off40",
+                label: "Off40",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off41",
+                label: "Off41",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off42",
+                label: "Off42",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off43",
+                label: "Off43",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off44",
+                label: "Off44",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off45",
+                label: "Off45",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off46",
+                label: "Off46",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off47",
+                label: "Off47",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off48",
+                label: "Off48",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off49",
+                label: "Off49",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "off50",
+                label: "Off50",
+                description: "",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ts",
+                label: "Timestamp",
+                description: "Timestamp value is the number of seconds since January 1, 2000",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ms",
+                label: "Milliseconds",
+                description: "Millisecond counter 0-999",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "seq",
+                label: "Sequence",
+                description: "Sequence number of request",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "role",
+                label: "Role",
+                description: "Digital Signature ID",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "alg",
+                label: "Algorithm",
+                description: "Algorithm used to compute the digital signature",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "n",
+                label: "N",
+                description: "Number of registers comprising the digital signature.",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "repeating",
+                label: "repeating",
+                description: "",
+                kind: crate::FieldKind::RepeatingGroup(&<Repeating as crate::Group>::GROUP_INFO),
+            },
+        ],
+    };
 }
 impl Model3 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
@@ -346,6 +701,17 @@ impl Repeating {
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {
     const LEN: u16 = 1;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "repeating",
+        label: "repeating",
+        description: "",
+        fields: &[crate::FieldInfo {
+            name: "ds",
+            label: "DS",
+            description: "Digital Signature",
+            kind: crate::FieldKind::Point,
+        }],
+    };
 }
 impl Repeating {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {

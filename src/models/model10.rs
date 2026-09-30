@@ -27,6 +27,31 @@ impl Model10 {
 impl crate::sealed::Sealed for Model10 {}
 impl crate::Group for Model10 {
     const LEN: u16 = 4;
+    const GROUP_INFO: crate::GroupInfo = crate::GroupInfo {
+        name: "model_10",
+        label: "Communication Interface Header",
+        description: "To be included first for a complete interface description",
+        fields: &[
+            crate::FieldInfo {
+                name: "st",
+                label: "Interface Status",
+                description: "Overall interface status",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "ctl",
+                label: "Interface Control",
+                description: "Overall interface control (TBD)",
+                kind: crate::FieldKind::Point,
+            },
+            crate::FieldInfo {
+                name: "typ",
+                label: "Physical Access Type",
+                description: "Type of physical media",
+                kind: crate::FieldKind::Point,
+            },
+        ],
+    };
 }
 impl Model10 {
     fn parse_group(data: &[u16]) -> Result<(&[u16], Self), crate::DecodeError> {
