@@ -36,17 +36,17 @@ pub struct BaseMet {
 }
 #[allow(missing_docs)]
 impl BaseMet {
-    pub const TMP_AMB: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
-    pub const RH: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
-    pub const PRES: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
-    pub const WND_SPD: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
-    pub const WND_DIR: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1, false);
-    pub const RAIN: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, false);
-    pub const SNW: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
-    pub const PPT: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
-    pub const ELEC_FLD: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
-    pub const SUR_WET: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
-    pub const SOIL_WET: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
+    pub const TMP_AMB: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1);
+    pub const RH: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1);
+    pub const PRES: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1);
+    pub const WND_SPD: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1);
+    pub const WND_DIR: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1);
+    pub const RAIN: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1);
+    pub const SNW: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1);
+    pub const PPT: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1);
+    pub const ELEC_FLD: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1);
+    pub const SUR_WET: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1);
+    pub const SOIL_WET: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1);
 }
 impl crate::sealed::Sealed for BaseMet {}
 impl crate::Group for BaseMet {

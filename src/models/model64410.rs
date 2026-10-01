@@ -156,40 +156,49 @@ pub struct DcSimInterface {
 }
 #[allow(missing_docs)]
 impl DcSimInterface {
-    pub const V_MAX_LIM: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const P_MAX_LIM: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
-    pub const I_MAX_LIM: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
-    pub const MODE: crate::Point<Self, Option<Mode>> = crate::Point::new(3, 1, true);
-    pub const ENA: crate::Point<Self, Option<Ena>> = crate::Point::new(4, 1, true);
-    pub const RESET: crate::Point<Self, Option<Reset>> = crate::Point::new(5, 1, true);
-    pub const V_SET: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
-    pub const P_SET: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
-    pub const I_SET: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
-    pub const EN50530: crate::Point<Self, Option<En50530>> = crate::Point::new(9, 1, true);
-    pub const VMPP: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
-    pub const PMPP: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, true);
-    pub const G_SET: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, true);
-    pub const V_SLEW_RATE: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, true);
-    pub const P_SLEW_RATE: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, true);
-    pub const I_SLEW_RATE: crate::Point<Self, Option<u16>> = crate::Point::new(15, 1, true);
-    pub const ENA_PROF: crate::Point<Self, Option<EnaProf>> = crate::Point::new(16, 1, true);
-    pub const ADPT_PROF_REQ: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, true);
-    pub const ADPT_PROF_RSLT: crate::Point<Self, AdptProfRslt> = crate::Point::new(18, 1, false);
-    pub const V: crate::Point<Self, Option<i32>> = crate::Point::new(19, 2, false);
-    pub const P: crate::Point<Self, Option<i32>> = crate::Point::new(21, 2, false);
-    pub const I: crate::Point<Self, Option<i32>> = crate::Point::new(23, 2, false);
-    pub const ERRORS: crate::Point<Self, Option<String>> = crate::Point::new(25, 32, false);
-    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(57, 1, false);
-    pub const N_PROF: crate::Point<Self, u16> = crate::Point::new(58, 1, false);
-    pub const W_SF: crate::Point<Self, i16> = crate::Point::new(59, 1, true);
-    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(60, 1, true);
-    pub const A_SF: crate::Point<Self, i16> = crate::Point::new(61, 1, true);
-    pub const G_SF: crate::Point<Self, i16> = crate::Point::new(62, 1, true);
-    pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(63, 1, true);
-    pub const V_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(64, 1, true);
-    pub const P_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(65, 1, true);
-    pub const I_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(66, 1, true);
-    pub const PCT_SF: crate::Point<Self, i16> = crate::Point::new(67, 1, true);
+    pub const V_MAX_LIM: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(0, 1);
+    pub const P_MAX_LIM: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(1, 1);
+    pub const I_MAX_LIM: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(2, 1);
+    pub const MODE: crate::Point<Self, Option<Mode>, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const ENA: crate::Point<Self, Option<Ena>, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const RESET: crate::Point<Self, Option<Reset>, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const V_SET: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(6, 1);
+    pub const P_SET: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(7, 1);
+    pub const I_SET: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const EN50530: crate::Point<Self, Option<En50530>, crate::ReadWrite> =
+        crate::Point::new(9, 1);
+    pub const VMPP: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(10, 1);
+    pub const PMPP: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(11, 1);
+    pub const G_SET: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(12, 1);
+    pub const V_SLEW_RATE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(13, 1);
+    pub const P_SLEW_RATE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(14, 1);
+    pub const I_SLEW_RATE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(15, 1);
+    pub const ENA_PROF: crate::Point<Self, Option<EnaProf>, crate::ReadWrite> =
+        crate::Point::new(16, 1);
+    pub const ADPT_PROF_REQ: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(17, 1);
+    pub const ADPT_PROF_RSLT: crate::Point<Self, AdptProfRslt> = crate::Point::new(18, 1);
+    pub const V: crate::Point<Self, Option<i32>> = crate::Point::new(19, 2);
+    pub const P: crate::Point<Self, Option<i32>> = crate::Point::new(21, 2);
+    pub const I: crate::Point<Self, Option<i32>> = crate::Point::new(23, 2);
+    pub const ERRORS: crate::Point<Self, Option<String>> = crate::Point::new(25, 32);
+    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(57, 1);
+    pub const N_PROF: crate::Point<Self, u16> = crate::Point::new(58, 1);
+    pub const W_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(59, 1);
+    pub const V_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(60, 1);
+    pub const A_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(61, 1);
+    pub const G_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(62, 1);
+    pub const TMS_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(63, 1);
+    pub const V_SLEW_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(64, 1);
+    pub const P_SLEW_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(65, 1);
+    pub const I_SLEW_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(66, 1);
+    pub const PCT_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(67, 1);
 }
 impl crate::sealed::Sealed for DcSimInterface {}
 impl crate::Group for DcSimInterface {
@@ -534,8 +543,8 @@ pub struct Prof {
 }
 #[allow(missing_docs)]
 impl Prof {
-    pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    pub const DEPT_REF: crate::Point<Self, ProfDeptRef> = crate::Point::new(1, 2, true);
+    pub const ACT_PT: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const DEPT_REF: crate::Point<Self, ProfDeptRef, crate::ReadWrite> = crate::Point::new(1, 2);
 }
 impl crate::sealed::Sealed for Prof {}
 impl crate::Group for Prof {
@@ -635,11 +644,11 @@ pub struct Pt {
 }
 #[allow(missing_docs)]
 impl Pt {
-    pub const TMS: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
-    pub const P: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
-    pub const I: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
-    pub const G: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
+    pub const TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const V: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const P: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const I: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const G: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(4, 1);
 }
 impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {

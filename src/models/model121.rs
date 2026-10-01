@@ -140,36 +140,49 @@ pub struct Settings {
 }
 #[allow(missing_docs)]
 impl Settings {
-    pub const W_MAX: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    pub const V_REF: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
-    pub const V_REF_OFS: crate::Point<Self, i16> = crate::Point::new(2, 1, true);
-    pub const V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
-    pub const V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    pub const VA_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
-    pub const VAR_MAX_Q1: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, true);
-    pub const VAR_MAX_Q2: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, true);
-    pub const VAR_MAX_Q3: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, true);
-    pub const VAR_MAX_Q4: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, true);
-    pub const W_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
-    pub const PF_MIN_Q1: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, true);
-    pub const PF_MIN_Q2: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, true);
-    pub const PF_MIN_Q3: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
-    pub const PF_MIN_Q4: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, true);
-    pub const VAR_ACT: crate::Point<Self, Option<VarAct>> = crate::Point::new(15, 1, true);
-    pub const CLC_TOT_VA: crate::Point<Self, Option<ClcTotVa>> = crate::Point::new(16, 1, true);
-    pub const MAX_RMP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, true);
-    pub const ECP_NOM_HZ: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
-    pub const CONN_PH: crate::Point<Self, Option<ConnPh>> = crate::Point::new(19, 1, true);
-    pub const W_MAX_SF: crate::Point<Self, i16> = crate::Point::new(20, 1, false);
-    pub const V_REF_SF: crate::Point<Self, i16> = crate::Point::new(21, 1, false);
-    pub const V_REF_OFS_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
-    pub const V_MIN_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    pub const VA_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
-    pub const VAR_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, false);
-    pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(26, 1, false);
-    pub const PF_MIN_SF: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
-    pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
-    pub const ECP_NOM_HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, false);
+    pub const W_MAX: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const V_REF: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const V_REF_OFS: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const V_MAX: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const V_MIN: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const VA_MAX: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const VAR_MAX_Q1: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(6, 1);
+    pub const VAR_MAX_Q2: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(7, 1);
+    pub const VAR_MAX_Q3: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(8, 1);
+    pub const VAR_MAX_Q4: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(9, 1);
+    pub const W_GRA: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(10, 1);
+    pub const PF_MIN_Q1: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(11, 1);
+    pub const PF_MIN_Q2: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(12, 1);
+    pub const PF_MIN_Q3: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(13, 1);
+    pub const PF_MIN_Q4: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(14, 1);
+    pub const VAR_ACT: crate::Point<Self, Option<VarAct>, crate::ReadWrite> =
+        crate::Point::new(15, 1);
+    pub const CLC_TOT_VA: crate::Point<Self, Option<ClcTotVa>, crate::ReadWrite> =
+        crate::Point::new(16, 1);
+    pub const MAX_RMP_RTE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(17, 1);
+    pub const ECP_NOM_HZ: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(18, 1);
+    pub const CONN_PH: crate::Point<Self, Option<ConnPh>, crate::ReadWrite> =
+        crate::Point::new(19, 1);
+    pub const W_MAX_SF: crate::Point<Self, i16> = crate::Point::new(20, 1);
+    pub const V_REF_SF: crate::Point<Self, i16> = crate::Point::new(21, 1);
+    pub const V_REF_OFS_SF: crate::Point<Self, i16> = crate::Point::new(22, 1);
+    pub const V_MIN_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1);
+    pub const VA_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1);
+    pub const VAR_MAX_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1);
+    pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(26, 1);
+    pub const PF_MIN_SF: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1);
+    pub const MAX_RMP_RTE_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1);
+    pub const ECP_NOM_HZ_SF: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1);
 }
 impl crate::sealed::Sealed for Settings {}
 impl crate::Group for Settings {

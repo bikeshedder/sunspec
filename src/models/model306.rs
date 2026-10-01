@@ -26,10 +26,10 @@ pub struct RefPoint {
 }
 #[allow(missing_docs)]
 impl RefPoint {
-    pub const GHI: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
-    pub const A: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
-    pub const TMP: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
+    pub const GHI: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1);
+    pub const A: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1);
+    pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1);
+    pub const TMP: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1);
 }
 impl crate::sealed::Sealed for RefPoint {}
 impl crate::Group for RefPoint {

@@ -40,13 +40,14 @@ pub struct Pricing {
 }
 #[allow(missing_docs)]
 impl Pricing {
-    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(0, 1, true);
-    pub const SIG_TYPE: crate::Point<Self, Option<SigType>> = crate::Point::new(1, 1, true);
-    pub const SIG: crate::Point<Self, i16> = crate::Point::new(2, 1, true);
-    pub const WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
-    pub const RVT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
-    pub const SIG_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
+    pub const MOD_ENA: crate::Point<Self, ModEna, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const SIG_TYPE: crate::Point<Self, Option<SigType>, crate::ReadWrite> =
+        crate::Point::new(1, 1);
+    pub const SIG: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const WIN_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const RVT_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const RMP_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const SIG_SF: crate::Point<Self, i16> = crate::Point::new(6, 1);
 }
 impl crate::sealed::Sealed for Pricing {}
 impl crate::Group for Pricing {

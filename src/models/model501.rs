@@ -80,23 +80,23 @@ pub struct SolarModuleFloat {
 }
 #[allow(missing_docs)]
 impl SolarModuleFloat {
-    pub const STAT: crate::Point<Self, Stat> = crate::Point::new(0, 1, false);
-    pub const STAT_VEND: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const EVT: crate::Point<Self, Evt> = crate::Point::new(2, 2, false);
-    pub const EVT_VEND: crate::Point<Self, Option<EvtVend>> = crate::Point::new(4, 2, false);
-    pub const CTL: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
-    pub const CTL_VEND: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, true);
-    pub const CTL_VAL: crate::Point<Self, Option<i32>> = crate::Point::new(9, 2, true);
-    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(11, 2, false);
-    pub const OUT_A: crate::Point<Self, Option<f32>> = crate::Point::new(13, 2, false);
-    pub const OUT_V: crate::Point<Self, Option<f32>> = crate::Point::new(15, 2, false);
-    pub const OUT_WH: crate::Point<Self, Option<f32>> = crate::Point::new(17, 2, false);
-    pub const OUT_W: crate::Point<Self, Option<f32>> = crate::Point::new(19, 2, false);
-    pub const TMP: crate::Point<Self, Option<f32>> = crate::Point::new(21, 2, false);
-    pub const IN_A: crate::Point<Self, Option<f32>> = crate::Point::new(23, 2, false);
-    pub const IN_V: crate::Point<Self, Option<f32>> = crate::Point::new(25, 2, false);
-    pub const IN_WH: crate::Point<Self, Option<f32>> = crate::Point::new(27, 2, false);
-    pub const IN_W: crate::Point<Self, Option<f32>> = crate::Point::new(29, 2, false);
+    pub const STAT: crate::Point<Self, Stat> = crate::Point::new(0, 1);
+    pub const STAT_VEND: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1);
+    pub const EVT: crate::Point<Self, Evt> = crate::Point::new(2, 2);
+    pub const EVT_VEND: crate::Point<Self, Option<EvtVend>> = crate::Point::new(4, 2);
+    pub const CTL: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(6, 1);
+    pub const CTL_VEND: crate::Point<Self, Option<u32>, crate::ReadWrite> = crate::Point::new(7, 2);
+    pub const CTL_VAL: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(9, 2);
+    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(11, 2);
+    pub const OUT_A: crate::Point<Self, Option<f32>> = crate::Point::new(13, 2);
+    pub const OUT_V: crate::Point<Self, Option<f32>> = crate::Point::new(15, 2);
+    pub const OUT_WH: crate::Point<Self, Option<f32>> = crate::Point::new(17, 2);
+    pub const OUT_W: crate::Point<Self, Option<f32>> = crate::Point::new(19, 2);
+    pub const TMP: crate::Point<Self, Option<f32>> = crate::Point::new(21, 2);
+    pub const IN_A: crate::Point<Self, Option<f32>> = crate::Point::new(23, 2);
+    pub const IN_V: crate::Point<Self, Option<f32>> = crate::Point::new(25, 2);
+    pub const IN_WH: crate::Point<Self, Option<f32>> = crate::Point::new(27, 2);
+    pub const IN_W: crate::Point<Self, Option<f32>> = crate::Point::new(29, 2);
 }
 impl crate::sealed::Sealed for SolarModuleFloat {}
 impl crate::Group for SolarModuleFloat {

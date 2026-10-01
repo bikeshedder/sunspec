@@ -48,15 +48,16 @@ pub struct FreqWattParam {
 }
 #[allow(missing_docs)]
 impl FreqWattParam {
-    pub const W_GRA: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    pub const HZ_STR: crate::Point<Self, i16> = crate::Point::new(1, 1, true);
-    pub const HZ_STOP: crate::Point<Self, i16> = crate::Point::new(2, 1, true);
-    pub const HYS_ENA: crate::Point<Self, HysEna> = crate::Point::new(3, 1, true);
-    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(4, 1, true);
-    pub const HZ_STOP_W_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
-    pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
-    pub const HZ_STR_STOP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
-    pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
+    pub const W_GRA: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const HZ_STR: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const HZ_STOP: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const HYS_ENA: crate::Point<Self, HysEna, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const MOD_ENA: crate::Point<Self, ModEna, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const HZ_STOP_W_GRA: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(5, 1);
+    pub const W_GRA_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1);
+    pub const HZ_STR_STOP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1);
+    pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1);
 }
 impl crate::sealed::Sealed for FreqWattParam {}
 impl crate::Group for FreqWattParam {

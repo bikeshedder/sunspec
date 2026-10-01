@@ -40,14 +40,14 @@ pub struct Model17 {
 }
 #[allow(missing_docs)]
 impl Model17 {
-    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 4, true);
-    pub const RTE: crate::Point<Self, u32> = crate::Point::new(4, 2, true);
-    pub const BITS: crate::Point<Self, u16> = crate::Point::new(6, 1, true);
-    pub const PTY: crate::Point<Self, Pty> = crate::Point::new(7, 1, true);
-    pub const DUP: crate::Point<Self, Option<Dup>> = crate::Point::new(8, 1, true);
-    pub const FLW: crate::Point<Self, Option<Flw>> = crate::Point::new(9, 1, true);
-    pub const TYP: crate::Point<Self, Option<Typ>> = crate::Point::new(10, 1, false);
-    pub const PCOL: crate::Point<Self, Option<Pcol>> = crate::Point::new(11, 1, false);
+    pub const NAM: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(0, 4);
+    pub const RTE: crate::Point<Self, u32, crate::ReadWrite> = crate::Point::new(4, 2);
+    pub const BITS: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(6, 1);
+    pub const PTY: crate::Point<Self, Pty, crate::ReadWrite> = crate::Point::new(7, 1);
+    pub const DUP: crate::Point<Self, Option<Dup>, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const FLW: crate::Point<Self, Option<Flw>, crate::ReadWrite> = crate::Point::new(9, 1);
+    pub const TYP: crate::Point<Self, Option<Typ>> = crate::Point::new(10, 1);
+    pub const PCOL: crate::Point<Self, Option<Pcol>> = crate::Point::new(11, 1);
 }
 impl crate::sealed::Sealed for Model17 {}
 impl crate::Group for Model17 {

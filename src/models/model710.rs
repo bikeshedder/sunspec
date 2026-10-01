@@ -48,13 +48,13 @@ pub struct DerTripHf {
 }
 #[allow(missing_docs)]
 impl DerTripHf {
-    pub const ENA: crate::Point<Self, Ena> = crate::Point::new(0, 1, true);
-    pub const ADPT_CRV_REQ: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
-    pub const ADPT_CRV_RSLT: crate::Point<Self, AdptCrvRslt> = crate::Point::new(2, 1, false);
-    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
-    pub const N_CRV_SET: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
-    pub const HZ_SF: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
-    pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
+    pub const ENA: crate::Point<Self, Ena, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const ADPT_CRV_REQ: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const ADPT_CRV_RSLT: crate::Point<Self, AdptCrvRslt> = crate::Point::new(2, 1);
+    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(3, 1);
+    pub const N_CRV_SET: crate::Point<Self, u16> = crate::Point::new(4, 1);
+    pub const HZ_SF: crate::Point<Self, i16> = crate::Point::new(5, 1);
+    pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(6, 1);
 }
 impl crate::sealed::Sealed for DerTripHf {}
 impl crate::Group for DerTripHf {
@@ -204,7 +204,7 @@ pub struct Crv {
 }
 #[allow(missing_docs)]
 impl Crv {
-    pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(0, 1, false);
+    pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for Crv {}
 impl crate::Group for Crv {
@@ -307,7 +307,7 @@ pub struct MustTrip {
 }
 #[allow(missing_docs)]
 impl MustTrip {
-    pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const ACT_PT: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for MustTrip {}
 impl crate::Group for MustTrip {
@@ -350,8 +350,8 @@ pub struct Pt {
 }
 #[allow(missing_docs)]
 impl Pt {
-    pub const HZ: crate::Point<Self, Option<u32>> = crate::Point::new(0, 2, true);
-    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(2, 2, true);
+    pub const HZ: crate::Point<Self, Option<u32>, crate::ReadWrite> = crate::Point::new(0, 2);
+    pub const TMS: crate::Point<Self, Option<u32>, crate::ReadWrite> = crate::Point::new(2, 2);
 }
 impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {
@@ -398,7 +398,7 @@ pub struct MayTrip {
 }
 #[allow(missing_docs)]
 impl MayTrip {
-    pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const ACT_PT: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for MayTrip {}
 impl crate::Group for MayTrip {
@@ -437,7 +437,7 @@ pub struct MomCess {
 }
 #[allow(missing_docs)]
 impl MomCess {
-    pub const ACT_PT: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
+    pub const ACT_PT: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for MomCess {}
 impl crate::Group for MomCess {

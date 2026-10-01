@@ -102,36 +102,36 @@ pub struct Model64020 {
 }
 #[allow(missing_docs)]
 impl Model64020 {
-    pub const AUX0_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
-    pub const AUX1_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
-    pub const AUX2_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
-    pub const AUX3_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
-    pub const AUX4_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1, false);
-    pub const PROBE_TMP: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
-    pub const MAIN_TMP: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
-    pub const SENSOR_V_SF: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
-    pub const SENSOR_A_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
-    pub const SENSOR_HZ_SF: crate::Point<Self, i16> = crate::Point::new(9, 1, false);
-    pub const SENSOR1_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
-    pub const SENSOR2_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, false);
-    pub const SENSOR3_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
-    pub const SENSOR4_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, false);
-    pub const SENSOR5_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
-    pub const SENSOR6_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
-    pub const SENSOR7_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
-    pub const SENSOR1_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
-    pub const SENSOR2_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1, false);
-    pub const SENSOR3_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(19, 1, false);
-    pub const SENSOR4_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1, false);
-    pub const SENSOR5_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
-    pub const SENSOR6_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
-    pub const SENSOR7_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    pub const SENSOR8: crate::Point<Self, Option<u16>> = crate::Point::new(24, 1, false);
-    pub const RELAY1: crate::Point<Self, Option<u16>> = crate::Point::new(25, 1, false);
-    pub const RELAY2: crate::Point<Self, Option<u16>> = crate::Point::new(26, 1, false);
-    pub const RELAY3: crate::Point<Self, Option<u16>> = crate::Point::new(27, 1, false);
-    pub const RESET_ACCUMULATORS: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1, false);
-    pub const RESET: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1, false);
+    pub const AUX0_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1);
+    pub const AUX1_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1);
+    pub const AUX2_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1);
+    pub const AUX3_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1);
+    pub const AUX4_TMP: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1);
+    pub const PROBE_TMP: crate::Point<Self, i16> = crate::Point::new(5, 1);
+    pub const MAIN_TMP: crate::Point<Self, i16> = crate::Point::new(6, 1);
+    pub const SENSOR_V_SF: crate::Point<Self, i16> = crate::Point::new(7, 1);
+    pub const SENSOR_A_SF: crate::Point<Self, i16> = crate::Point::new(8, 1);
+    pub const SENSOR_HZ_SF: crate::Point<Self, i16> = crate::Point::new(9, 1);
+    pub const SENSOR1_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1);
+    pub const SENSOR2_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1);
+    pub const SENSOR3_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1);
+    pub const SENSOR4_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1);
+    pub const SENSOR5_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1);
+    pub const SENSOR6_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1);
+    pub const SENSOR7_VOLTAGE: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1);
+    pub const SENSOR1_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1);
+    pub const SENSOR2_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1);
+    pub const SENSOR3_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(19, 1);
+    pub const SENSOR4_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1);
+    pub const SENSOR5_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1);
+    pub const SENSOR6_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1);
+    pub const SENSOR7_CURRENT: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1);
+    pub const SENSOR8: crate::Point<Self, Option<u16>> = crate::Point::new(24, 1);
+    pub const RELAY1: crate::Point<Self, Option<u16>> = crate::Point::new(25, 1);
+    pub const RELAY2: crate::Point<Self, Option<u16>> = crate::Point::new(26, 1);
+    pub const RELAY3: crate::Point<Self, Option<u16>> = crate::Point::new(27, 1);
+    pub const RESET_ACCUMULATORS: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1);
+    pub const RESET: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1);
 }
 impl crate::sealed::Sealed for Model64020 {}
 impl crate::Group for Model64020 {
@@ -196,9 +196,9 @@ pub struct Repeating {
 }
 #[allow(missing_docs)]
 impl Repeating {
-    pub const SERIAL_NUMBER: crate::Point<Self, String> = crate::Point::new(0, 9, false);
-    pub const FIRMWARE: crate::Point<Self, String> = crate::Point::new(9, 6, false);
-    pub const HARDWARE: crate::Point<Self, u16> = crate::Point::new(15, 1, false);
+    pub const SERIAL_NUMBER: crate::Point<Self, String> = crate::Point::new(0, 9);
+    pub const FIRMWARE: crate::Point<Self, String> = crate::Point::new(9, 6);
+    pub const HARDWARE: crate::Point<Self, u16> = crate::Point::new(15, 1);
 }
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {

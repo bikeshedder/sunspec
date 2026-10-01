@@ -24,13 +24,13 @@ pub struct Mppt {
 }
 #[allow(missing_docs)]
 impl Mppt {
-    pub const DC_A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
-    pub const DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
-    pub const DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
-    pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
-    pub const EVT: crate::Point<Self, Option<Evt>> = crate::Point::new(4, 2, false);
-    pub const N: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
-    pub const TMS_PER: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
+    pub const DC_A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1);
+    pub const DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1);
+    pub const DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1);
+    pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1);
+    pub const EVT: crate::Point<Self, Option<Evt>> = crate::Point::new(4, 2);
+    pub const N: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1);
+    pub const TMS_PER: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1);
 }
 impl crate::sealed::Sealed for Mppt {}
 impl crate::Group for Mppt {
@@ -152,16 +152,16 @@ pub struct Module {
 }
 #[allow(missing_docs)]
 impl Module {
-    pub const ID: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
-    pub const ID_STR: crate::Point<Self, Option<String>> = crate::Point::new(1, 8, false);
-    pub const DC_A: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, false);
-    pub const DC_V: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
-    pub const DC_W: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
-    pub const DC_WH: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
-    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(14, 2, false);
-    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
-    pub const DC_ST: crate::Point<Self, Option<ModuleDcSt>> = crate::Point::new(17, 1, false);
-    pub const DC_EVT: crate::Point<Self, Option<ModuleDcEvt>> = crate::Point::new(18, 2, false);
+    pub const ID: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1);
+    pub const ID_STR: crate::Point<Self, Option<String>> = crate::Point::new(1, 8);
+    pub const DC_A: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1);
+    pub const DC_V: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1);
+    pub const DC_W: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1);
+    pub const DC_WH: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2);
+    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(14, 2);
+    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1);
+    pub const DC_ST: crate::Point<Self, Option<ModuleDcSt>> = crate::Point::new(17, 1);
+    pub const DC_EVT: crate::Point<Self, Option<ModuleDcEvt>> = crate::Point::new(18, 2);
 }
 impl crate::sealed::Sealed for Module {}
 impl crate::Group for Module {

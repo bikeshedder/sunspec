@@ -64,19 +64,22 @@ pub struct ReactiveCurrent {
 }
 #[allow(missing_docs)]
 impl ReactiveCurrent {
-    pub const AR_GRA_MOD: crate::Point<Self, ArGraMod> = crate::Point::new(0, 1, true);
-    pub const AR_GRA_SAG: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
-    pub const AR_GRA_SWELL: crate::Point<Self, u16> = crate::Point::new(2, 1, true);
-    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(3, 1, true);
-    pub const FIL_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    pub const DB_V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
-    pub const DB_V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
-    pub const BLK_ZN_V: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
-    pub const HYS_BLK_ZN_V: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
-    pub const BLK_ZN_TMMS: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, true);
-    pub const HOLD_TMMS: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
-    pub const AR_GRA_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
-    pub const V_REF_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
+    pub const AR_GRA_MOD: crate::Point<Self, ArGraMod, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const AR_GRA_SAG: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const AR_GRA_SWELL: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const MOD_ENA: crate::Point<Self, ModEna, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const FIL_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const DB_V_MIN: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const DB_V_MAX: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(6, 1);
+    pub const BLK_ZN_V: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(7, 1);
+    pub const HYS_BLK_ZN_V: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(8, 1);
+    pub const BLK_ZN_TMMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(9, 1);
+    pub const HOLD_TMMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(10, 1);
+    pub const AR_GRA_SF: crate::Point<Self, i16> = crate::Point::new(11, 1);
+    pub const V_REF_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1);
 }
 impl crate::sealed::Sealed for ReactiveCurrent {}
 impl crate::Group for ReactiveCurrent {

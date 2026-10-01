@@ -34,12 +34,12 @@ pub struct Location {
 }
 #[allow(missing_docs)]
 impl Location {
-    pub const TM: crate::Point<Self, Option<String>> = crate::Point::new(0, 6, false);
-    pub const DATE: crate::Point<Self, Option<String>> = crate::Point::new(6, 4, false);
-    pub const LOC: crate::Point<Self, Option<String>> = crate::Point::new(10, 20, false);
-    pub const LAT: crate::Point<Self, Option<i32>> = crate::Point::new(30, 2, false);
-    pub const LONG: crate::Point<Self, Option<i32>> = crate::Point::new(32, 2, false);
-    pub const ALT: crate::Point<Self, Option<i32>> = crate::Point::new(34, 2, false);
+    pub const TM: crate::Point<Self, Option<String>> = crate::Point::new(0, 6);
+    pub const DATE: crate::Point<Self, Option<String>> = crate::Point::new(6, 4);
+    pub const LOC: crate::Point<Self, Option<String>> = crate::Point::new(10, 20);
+    pub const LAT: crate::Point<Self, Option<i32>> = crate::Point::new(30, 2);
+    pub const LONG: crate::Point<Self, Option<i32>> = crate::Point::new(32, 2);
+    pub const ALT: crate::Point<Self, Option<i32>> = crate::Point::new(34, 2);
 }
 impl crate::sealed::Sealed for Location {}
 impl crate::Group for Location {

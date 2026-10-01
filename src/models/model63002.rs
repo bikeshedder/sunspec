@@ -34,10 +34,10 @@ pub struct Repeating {
 }
 #[allow(missing_docs)]
 impl Repeating {
-    pub const SUNSSF_1: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
-    pub const INT16_1: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
-    pub const INT16_2: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
-    pub const SUNSSF_2: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
+    pub const SUNSSF_1: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1);
+    pub const INT16_1: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const INT16_2: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1);
+    pub const SUNSSF_2: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1);
 }
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {

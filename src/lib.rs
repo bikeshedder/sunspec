@@ -26,7 +26,7 @@ pub use discovered::{DiscoveredModel, Models};
 pub use group::Group;
 pub use model::{Model, ParseError};
 pub use models::{AnyModel, MODELS};
-pub use point::Point;
+pub use point::{Access, Point, ReadOnly, ReadWrite};
 pub use value::{DecodeError, EnumValue, FixedSize, Value};
 
 mod any_model;

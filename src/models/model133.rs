@@ -30,10 +30,10 @@ pub struct Schedule {
 }
 #[allow(missing_docs)]
 impl Schedule {
-    pub const ACT_SCHD: crate::Point<Self, ActSchd> = crate::Point::new(0, 2, true);
-    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(2, 1, true);
-    pub const N_SCHD: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
-    pub const N_PTS: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
+    pub const ACT_SCHD: crate::Point<Self, ActSchd, crate::ReadWrite> = crate::Point::new(0, 2);
+    pub const MOD_ENA: crate::Point<Self, ModEna, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const N_SCHD: crate::Point<Self, u16> = crate::Point::new(3, 1);
+    pub const N_PTS: crate::Point<Self, u16> = crate::Point::new(4, 1);
 }
 impl crate::sealed::Sealed for Schedule {}
 impl crate::Group for Schedule {
@@ -306,38 +306,39 @@ pub struct Repeating {
 }
 #[allow(missing_docs)]
 impl Repeating {
-    pub const ACT_PTS: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    pub const STR_TMS: crate::Point<Self, u32> = crate::Point::new(1, 2, true);
-    pub const REP_PER: crate::Point<Self, u16> = crate::Point::new(3, 1, true);
-    pub const INTV_TYP: crate::Point<Self, RepeatingIntvTyp> = crate::Point::new(4, 1, true);
-    pub const X_TYP: crate::Point<Self, RepeatingXTyp> = crate::Point::new(5, 1, true);
-    pub const X_SF: crate::Point<Self, i16> = crate::Point::new(6, 1, true);
-    pub const Y_TYP: crate::Point<Self, RepeatingYTyp> = crate::Point::new(7, 1, true);
-    pub const Y_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, true);
-    pub const X1: crate::Point<Self, i32> = crate::Point::new(9, 2, true);
-    pub const Y1: crate::Point<Self, i32> = crate::Point::new(11, 2, true);
-    pub const X2: crate::Point<Self, Option<i32>> = crate::Point::new(13, 2, true);
-    pub const Y2: crate::Point<Self, Option<i32>> = crate::Point::new(15, 2, true);
-    pub const X3: crate::Point<Self, Option<i32>> = crate::Point::new(17, 2, true);
-    pub const Y3: crate::Point<Self, Option<i32>> = crate::Point::new(19, 2, true);
-    pub const X4: crate::Point<Self, Option<i32>> = crate::Point::new(21, 2, true);
-    pub const Y4: crate::Point<Self, Option<i32>> = crate::Point::new(23, 2, true);
-    pub const X5: crate::Point<Self, Option<i32>> = crate::Point::new(25, 2, true);
-    pub const Y5: crate::Point<Self, Option<i32>> = crate::Point::new(27, 2, true);
-    pub const X6: crate::Point<Self, Option<i32>> = crate::Point::new(29, 2, true);
-    pub const Y6: crate::Point<Self, Option<i32>> = crate::Point::new(31, 2, true);
-    pub const X7: crate::Point<Self, Option<i32>> = crate::Point::new(33, 2, true);
-    pub const Y7: crate::Point<Self, Option<i32>> = crate::Point::new(35, 2, true);
-    pub const X8: crate::Point<Self, Option<i32>> = crate::Point::new(37, 2, true);
-    pub const Y8: crate::Point<Self, Option<i32>> = crate::Point::new(39, 2, true);
-    pub const X9: crate::Point<Self, Option<i32>> = crate::Point::new(41, 2, true);
-    pub const Y9: crate::Point<Self, Option<i32>> = crate::Point::new(43, 2, true);
-    pub const X10: crate::Point<Self, Option<i32>> = crate::Point::new(45, 2, true);
-    pub const Y10: crate::Point<Self, Option<i32>> = crate::Point::new(47, 2, true);
-    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(49, 8, true);
-    pub const WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(57, 1, true);
-    pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(58, 1, true);
-    pub const ACT_INDX: crate::Point<Self, u16> = crate::Point::new(59, 1, false);
+    pub const ACT_PTS: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const STR_TMS: crate::Point<Self, u32, crate::ReadWrite> = crate::Point::new(1, 2);
+    pub const REP_PER: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const INTV_TYP: crate::Point<Self, RepeatingIntvTyp, crate::ReadWrite> =
+        crate::Point::new(4, 1);
+    pub const X_TYP: crate::Point<Self, RepeatingXTyp, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const X_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(6, 1);
+    pub const Y_TYP: crate::Point<Self, RepeatingYTyp, crate::ReadWrite> = crate::Point::new(7, 1);
+    pub const Y_SF: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const X1: crate::Point<Self, i32, crate::ReadWrite> = crate::Point::new(9, 2);
+    pub const Y1: crate::Point<Self, i32, crate::ReadWrite> = crate::Point::new(11, 2);
+    pub const X2: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(13, 2);
+    pub const Y2: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(15, 2);
+    pub const X3: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(17, 2);
+    pub const Y3: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(19, 2);
+    pub const X4: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(21, 2);
+    pub const Y4: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(23, 2);
+    pub const X5: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(25, 2);
+    pub const Y5: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(27, 2);
+    pub const X6: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(29, 2);
+    pub const Y6: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(31, 2);
+    pub const X7: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(33, 2);
+    pub const Y7: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(35, 2);
+    pub const X8: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(37, 2);
+    pub const Y8: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(39, 2);
+    pub const X9: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(41, 2);
+    pub const Y9: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(43, 2);
+    pub const X10: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(45, 2);
+    pub const Y10: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(47, 2);
+    pub const NAM: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(49, 8);
+    pub const WIN_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(57, 1);
+    pub const RMP_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(58, 1);
+    pub const ACT_INDX: crate::Point<Self, u16> = crate::Point::new(59, 1);
 }
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {

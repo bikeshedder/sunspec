@@ -152,63 +152,63 @@ pub struct Model3 {
 }
 #[allow(missing_docs)]
 impl Model3 {
-    pub const X: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    pub const OFF1: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
-    pub const OFF2: crate::Point<Self, u16> = crate::Point::new(2, 1, true);
-    pub const OFF3: crate::Point<Self, u16> = crate::Point::new(3, 1, true);
-    pub const OFF4: crate::Point<Self, u16> = crate::Point::new(4, 1, true);
-    pub const OFF5: crate::Point<Self, u16> = crate::Point::new(5, 1, true);
-    pub const OFF6: crate::Point<Self, u16> = crate::Point::new(6, 1, true);
-    pub const OFF7: crate::Point<Self, u16> = crate::Point::new(7, 1, true);
-    pub const OFF8: crate::Point<Self, u16> = crate::Point::new(8, 1, true);
-    pub const OFF9: crate::Point<Self, u16> = crate::Point::new(9, 1, true);
-    pub const OFF10: crate::Point<Self, u16> = crate::Point::new(10, 1, true);
-    pub const OFF11: crate::Point<Self, u16> = crate::Point::new(11, 1, true);
-    pub const OFF12: crate::Point<Self, u16> = crate::Point::new(12, 1, true);
-    pub const OFF13: crate::Point<Self, u16> = crate::Point::new(13, 1, true);
-    pub const OFF14: crate::Point<Self, u16> = crate::Point::new(14, 1, true);
-    pub const OFF15: crate::Point<Self, u16> = crate::Point::new(15, 1, true);
-    pub const OFF16: crate::Point<Self, u16> = crate::Point::new(16, 1, true);
-    pub const OFF17: crate::Point<Self, u16> = crate::Point::new(17, 1, true);
-    pub const OFF18: crate::Point<Self, u16> = crate::Point::new(18, 1, true);
-    pub const OFF19: crate::Point<Self, u16> = crate::Point::new(19, 1, true);
-    pub const OFF20: crate::Point<Self, u16> = crate::Point::new(20, 1, true);
-    pub const OFF21: crate::Point<Self, u16> = crate::Point::new(21, 1, true);
-    pub const OFF22: crate::Point<Self, u16> = crate::Point::new(22, 1, true);
-    pub const OFF23: crate::Point<Self, u16> = crate::Point::new(23, 1, true);
-    pub const OFF24: crate::Point<Self, u16> = crate::Point::new(24, 1, true);
-    pub const OFF25: crate::Point<Self, u16> = crate::Point::new(25, 1, true);
-    pub const OFF26: crate::Point<Self, u16> = crate::Point::new(26, 1, true);
-    pub const OFF27: crate::Point<Self, u16> = crate::Point::new(27, 1, true);
-    pub const OFF28: crate::Point<Self, u16> = crate::Point::new(28, 1, true);
-    pub const OFF29: crate::Point<Self, u16> = crate::Point::new(29, 1, true);
-    pub const OFF30: crate::Point<Self, u16> = crate::Point::new(30, 1, true);
-    pub const OFF31: crate::Point<Self, u16> = crate::Point::new(31, 1, true);
-    pub const OFF32: crate::Point<Self, u16> = crate::Point::new(32, 1, true);
-    pub const OFF33: crate::Point<Self, u16> = crate::Point::new(33, 1, true);
-    pub const OFF34: crate::Point<Self, u16> = crate::Point::new(34, 1, true);
-    pub const OFF35: crate::Point<Self, u16> = crate::Point::new(35, 1, true);
-    pub const OFF36: crate::Point<Self, u16> = crate::Point::new(36, 1, true);
-    pub const OFF37: crate::Point<Self, u16> = crate::Point::new(37, 1, true);
-    pub const OFF38: crate::Point<Self, u16> = crate::Point::new(38, 1, true);
-    pub const OFF39: crate::Point<Self, u16> = crate::Point::new(39, 1, true);
-    pub const OFF40: crate::Point<Self, u16> = crate::Point::new(40, 1, true);
-    pub const OFF41: crate::Point<Self, u16> = crate::Point::new(41, 1, true);
-    pub const OFF42: crate::Point<Self, u16> = crate::Point::new(42, 1, true);
-    pub const OFF43: crate::Point<Self, u16> = crate::Point::new(43, 1, true);
-    pub const OFF44: crate::Point<Self, u16> = crate::Point::new(44, 1, true);
-    pub const OFF45: crate::Point<Self, u16> = crate::Point::new(45, 1, true);
-    pub const OFF46: crate::Point<Self, u16> = crate::Point::new(46, 1, true);
-    pub const OFF47: crate::Point<Self, u16> = crate::Point::new(47, 1, true);
-    pub const OFF48: crate::Point<Self, u16> = crate::Point::new(48, 1, true);
-    pub const OFF49: crate::Point<Self, u16> = crate::Point::new(49, 1, true);
-    pub const OFF50: crate::Point<Self, u16> = crate::Point::new(50, 1, true);
-    pub const TS: crate::Point<Self, u32> = crate::Point::new(51, 2, true);
-    pub const MS: crate::Point<Self, u16> = crate::Point::new(53, 1, true);
-    pub const SEQ: crate::Point<Self, u16> = crate::Point::new(54, 1, true);
-    pub const ROLE: crate::Point<Self, u16> = crate::Point::new(55, 1, true);
-    pub const ALG: crate::Point<Self, Alg> = crate::Point::new(56, 1, false);
-    pub const N: crate::Point<Self, u16> = crate::Point::new(57, 1, false);
+    pub const X: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const OFF1: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const OFF2: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const OFF3: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const OFF4: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const OFF5: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const OFF6: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(6, 1);
+    pub const OFF7: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(7, 1);
+    pub const OFF8: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const OFF9: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(9, 1);
+    pub const OFF10: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(10, 1);
+    pub const OFF11: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(11, 1);
+    pub const OFF12: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(12, 1);
+    pub const OFF13: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(13, 1);
+    pub const OFF14: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(14, 1);
+    pub const OFF15: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(15, 1);
+    pub const OFF16: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(16, 1);
+    pub const OFF17: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(17, 1);
+    pub const OFF18: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(18, 1);
+    pub const OFF19: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(19, 1);
+    pub const OFF20: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(20, 1);
+    pub const OFF21: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(21, 1);
+    pub const OFF22: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(22, 1);
+    pub const OFF23: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(23, 1);
+    pub const OFF24: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(24, 1);
+    pub const OFF25: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(25, 1);
+    pub const OFF26: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(26, 1);
+    pub const OFF27: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(27, 1);
+    pub const OFF28: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(28, 1);
+    pub const OFF29: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(29, 1);
+    pub const OFF30: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(30, 1);
+    pub const OFF31: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(31, 1);
+    pub const OFF32: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(32, 1);
+    pub const OFF33: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(33, 1);
+    pub const OFF34: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(34, 1);
+    pub const OFF35: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(35, 1);
+    pub const OFF36: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(36, 1);
+    pub const OFF37: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(37, 1);
+    pub const OFF38: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(38, 1);
+    pub const OFF39: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(39, 1);
+    pub const OFF40: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(40, 1);
+    pub const OFF41: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(41, 1);
+    pub const OFF42: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(42, 1);
+    pub const OFF43: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(43, 1);
+    pub const OFF44: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(44, 1);
+    pub const OFF45: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(45, 1);
+    pub const OFF46: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(46, 1);
+    pub const OFF47: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(47, 1);
+    pub const OFF48: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(48, 1);
+    pub const OFF49: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(49, 1);
+    pub const OFF50: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(50, 1);
+    pub const TS: crate::Point<Self, u32, crate::ReadWrite> = crate::Point::new(51, 2);
+    pub const MS: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(53, 1);
+    pub const SEQ: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(54, 1);
+    pub const ROLE: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(55, 1);
+    pub const ALG: crate::Point<Self, Alg> = crate::Point::new(56, 1);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(57, 1);
 }
 impl crate::sealed::Sealed for Model3 {}
 impl crate::Group for Model3 {
@@ -339,7 +339,7 @@ pub struct Repeating {
 }
 #[allow(missing_docs)]
 impl Repeating {
-    pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {

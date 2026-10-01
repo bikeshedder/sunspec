@@ -64,17 +64,17 @@ pub struct DerVoltVar {
 }
 #[allow(missing_docs)]
 impl DerVoltVar {
-    pub const ENA: crate::Point<Self, Ena> = crate::Point::new(0, 1, true);
-    pub const ADPT_CRV_REQ: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
-    pub const ADPT_CRV_RSLT: crate::Point<Self, AdptCrvRslt> = crate::Point::new(2, 1, false);
-    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
-    pub const N_CRV: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
-    pub const RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(5, 2, true);
-    pub const RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, false);
-    pub const RVRT_CRV: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, true);
-    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
-    pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
-    pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
+    pub const ENA: crate::Point<Self, Ena, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const ADPT_CRV_REQ: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const ADPT_CRV_RSLT: crate::Point<Self, AdptCrvRslt> = crate::Point::new(2, 1);
+    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(3, 1);
+    pub const N_CRV: crate::Point<Self, u16> = crate::Point::new(4, 1);
+    pub const RVRT_TMS: crate::Point<Self, Option<u32>, crate::ReadWrite> = crate::Point::new(5, 2);
+    pub const RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2);
+    pub const RVRT_CRV: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(9, 1);
+    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(10, 1);
+    pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(11, 1);
+    pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(12, 1);
 }
 impl crate::sealed::Sealed for DerVoltVar {}
 impl crate::Group for DerVoltVar {
@@ -252,16 +252,17 @@ pub struct Crv {
 }
 #[allow(missing_docs)]
 impl Crv {
-    pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    pub const DEPT_REF: crate::Point<Self, CrvDeptRef> = crate::Point::new(1, 1, true);
-    pub const PRI: crate::Point<Self, Option<CrvPri>> = crate::Point::new(2, 1, true);
-    pub const V_REF: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
-    pub const V_REF_AUTO: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
-    pub const V_REF_AUTO_ENA: crate::Point<Self, Option<CrvVRefAutoEna>> =
-        crate::Point::new(5, 1, true);
-    pub const V_REF_AUTO_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
-    pub const RSP_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, true);
-    pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(9, 1, false);
+    pub const ACT_PT: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const DEPT_REF: crate::Point<Self, CrvDeptRef, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const PRI: crate::Point<Self, Option<CrvPri>, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const V_REF: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const V_REF_AUTO: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1);
+    pub const V_REF_AUTO_ENA: crate::Point<Self, Option<CrvVRefAutoEna>, crate::ReadWrite> =
+        crate::Point::new(5, 1);
+    pub const V_REF_AUTO_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(6, 1);
+    pub const RSP_TMS: crate::Point<Self, Option<u32>, crate::ReadWrite> = crate::Point::new(7, 2);
+    pub const READ_ONLY: crate::Point<Self, CrvReadOnly> = crate::Point::new(9, 1);
 }
 impl crate::sealed::Sealed for Crv {}
 impl crate::Group for Crv {
@@ -508,8 +509,8 @@ pub struct Pt {
 }
 #[allow(missing_docs)]
 impl Pt {
-    pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const VAR: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, true);
+    pub const V: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const VAR: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(1, 1);
 }
 impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {

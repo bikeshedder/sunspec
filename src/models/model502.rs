@@ -88,27 +88,28 @@ pub struct SolarModule {
 }
 #[allow(missing_docs)]
 impl SolarModule {
-    pub const A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1, false);
-    pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
-    pub const W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
-    pub const WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
-    pub const STAT: crate::Point<Self, Stat> = crate::Point::new(4, 1, false);
-    pub const STAT_VEND: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
-    pub const EVT: crate::Point<Self, Evt> = crate::Point::new(6, 2, false);
-    pub const EVT_VEND: crate::Point<Self, Option<EvtVend>> = crate::Point::new(8, 2, false);
-    pub const CTL: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
-    pub const CTL_VEND: crate::Point<Self, Option<u32>> = crate::Point::new(11, 2, true);
-    pub const CTL_VAL: crate::Point<Self, Option<i32>> = crate::Point::new(13, 2, true);
-    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(15, 2, false);
-    pub const OUT_A: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
-    pub const OUT_V: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1, false);
-    pub const OUT_WH: crate::Point<Self, Option<u32>> = crate::Point::new(19, 2, false);
-    pub const OUT_PW: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
-    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
-    pub const IN_A: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    pub const IN_V: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
-    pub const IN_WH: crate::Point<Self, Option<u32>> = crate::Point::new(25, 2, false);
-    pub const IN_W: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
+    pub const A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(0, 1);
+    pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1);
+    pub const W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1);
+    pub const WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1);
+    pub const STAT: crate::Point<Self, Stat> = crate::Point::new(4, 1);
+    pub const STAT_VEND: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1);
+    pub const EVT: crate::Point<Self, Evt> = crate::Point::new(6, 2);
+    pub const EVT_VEND: crate::Point<Self, Option<EvtVend>> = crate::Point::new(8, 2);
+    pub const CTL: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(10, 1);
+    pub const CTL_VEND: crate::Point<Self, Option<u32>, crate::ReadWrite> =
+        crate::Point::new(11, 2);
+    pub const CTL_VAL: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(13, 2);
+    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(15, 2);
+    pub const OUT_A: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1);
+    pub const OUT_V: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1);
+    pub const OUT_WH: crate::Point<Self, Option<u32>> = crate::Point::new(19, 2);
+    pub const OUT_PW: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1);
+    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1);
+    pub const IN_A: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1);
+    pub const IN_V: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1);
+    pub const IN_WH: crate::Point<Self, Option<u32>> = crate::Point::new(25, 2);
+    pub const IN_W: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1);
 }
 impl crate::sealed::Sealed for SolarModule {}
 impl crate::Group for SolarModule {

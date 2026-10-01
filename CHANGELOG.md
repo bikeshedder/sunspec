@@ -65,6 +65,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Breaking:** Rename `DecodeError::OutOfBounds` to
   `DecodeError::InvalidLength`. It is returned if the data does not have the
   length required by the value type.
+- **Breaking:** Writing a read-only point is a compile error. `Point` has an
+  access type parameter (`ReadOnly` or `ReadWrite`) and
+  `ModelHandle::write_point` only accepts `ReadWrite` points. `Point::writable`
+  is a method instead of a field and `Point::new` no longer takes a
+  `writable` argument.
 - **Breaking:** Rename error variants for consistency:
   `ModbusError::IO` → `ModbusError::Io`, `DiscoveryError::ModbusError` →
   `DiscoveryError::Modbus` and `ReadPointError::DecodeError` →

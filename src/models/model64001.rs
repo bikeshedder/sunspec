@@ -76,41 +76,41 @@ pub struct Model64001 {
 }
 #[allow(missing_docs)]
 impl Model64001 {
-    pub const CMD: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const HW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const RS_FW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
-    pub const OS_FW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
-    pub const PROD_REV: crate::Point<Self, Option<String>> = crate::Point::new(4, 2, false);
-    pub const BOOTS: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
-    pub const SWITCH: crate::Point<Self, Option<Switch>> = crate::Point::new(7, 1, false);
-    pub const SENSORS: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, false);
-    pub const TALKING: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, false);
-    pub const STATUS: crate::Point<Self, Option<Status>> = crate::Point::new(10, 1, false);
-    pub const CONFIG: crate::Point<Self, Option<Config>> = crate::Point::new(11, 1, false);
-    pub const LED_BLINK: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
-    pub const LED_ON: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
-    pub const RESERVED: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, false);
-    pub const LOC: crate::Point<Self, Option<String>> = crate::Point::new(15, 16, false);
-    pub const S1_ID: crate::Point<Self, Option<u16>> = crate::Point::new(31, 1, false);
-    pub const S1_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(32, 1, false);
-    pub const S1_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(33, 1, false);
-    pub const S1_VER: crate::Point<Self, Option<String>> = crate::Point::new(34, 2, false);
-    pub const S1_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(36, 5, false);
-    pub const S2_ID: crate::Point<Self, Option<u16>> = crate::Point::new(41, 1, false);
-    pub const S2_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1, false);
-    pub const S2_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(43, 1, false);
-    pub const S2_VER: crate::Point<Self, Option<String>> = crate::Point::new(44, 2, false);
-    pub const S2_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(46, 5, false);
-    pub const S3_ID: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, false);
-    pub const S3_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(52, 1, false);
-    pub const S3_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(53, 1, false);
-    pub const S3_VER: crate::Point<Self, Option<String>> = crate::Point::new(54, 2, false);
-    pub const S3_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(56, 5, false);
-    pub const S4_ID: crate::Point<Self, Option<u16>> = crate::Point::new(61, 1, false);
-    pub const S4_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(62, 1, false);
-    pub const S4_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(63, 1, false);
-    pub const S4_VER: crate::Point<Self, Option<String>> = crate::Point::new(64, 2, false);
-    pub const S4_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(66, 5, false);
+    pub const CMD: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const HW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1);
+    pub const RS_FW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1);
+    pub const OS_FW_REV: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1);
+    pub const PROD_REV: crate::Point<Self, Option<String>> = crate::Point::new(4, 2);
+    pub const BOOTS: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1);
+    pub const SWITCH: crate::Point<Self, Option<Switch>> = crate::Point::new(7, 1);
+    pub const SENSORS: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1);
+    pub const TALKING: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1);
+    pub const STATUS: crate::Point<Self, Option<Status>> = crate::Point::new(10, 1);
+    pub const CONFIG: crate::Point<Self, Option<Config>> = crate::Point::new(11, 1);
+    pub const LED_BLINK: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1);
+    pub const LED_ON: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1);
+    pub const RESERVED: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1);
+    pub const LOC: crate::Point<Self, Option<String>> = crate::Point::new(15, 16);
+    pub const S1_ID: crate::Point<Self, Option<u16>> = crate::Point::new(31, 1);
+    pub const S1_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(32, 1);
+    pub const S1_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(33, 1);
+    pub const S1_VER: crate::Point<Self, Option<String>> = crate::Point::new(34, 2);
+    pub const S1_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(36, 5);
+    pub const S2_ID: crate::Point<Self, Option<u16>> = crate::Point::new(41, 1);
+    pub const S2_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1);
+    pub const S2_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(43, 1);
+    pub const S2_VER: crate::Point<Self, Option<String>> = crate::Point::new(44, 2);
+    pub const S2_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(46, 5);
+    pub const S3_ID: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1);
+    pub const S3_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(52, 1);
+    pub const S3_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(53, 1);
+    pub const S3_VER: crate::Point<Self, Option<String>> = crate::Point::new(54, 2);
+    pub const S3_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(56, 5);
+    pub const S4_ID: crate::Point<Self, Option<u16>> = crate::Point::new(61, 1);
+    pub const S4_ADDR: crate::Point<Self, Option<u16>> = crate::Point::new(62, 1);
+    pub const S4_OS_VER: crate::Point<Self, Option<u16>> = crate::Point::new(63, 1);
+    pub const S4_VER: crate::Point<Self, Option<String>> = crate::Point::new(64, 2);
+    pub const S4_SERIAL: crate::Point<Self, Option<String>> = crate::Point::new(66, 5);
 }
 impl crate::sealed::Sealed for Model64001 {}
 impl crate::Group for Model64001 {

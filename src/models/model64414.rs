@@ -30,17 +30,23 @@ pub struct DerSimControls {
 }
 #[allow(missing_docs)]
 impl DerSimControls {
-    pub const TIME: crate::Point<Self, Option<String>> = crate::Point::new(0, 10, false);
-    pub const TEMPERATURE: crate::Point<Self, Option<f32>> = crate::Point::new(10, 2, true);
-    pub const GRID_MODEL_SOURCE: crate::Point<Self, Option<String>> =
-        crate::Point::new(12, 32, true);
-    pub const IRRADIANCE_MODEL_SOURCE: crate::Point<Self, Option<String>> =
-        crate::Point::new(44, 32, true);
-    pub const IRRADIANCE: crate::Point<Self, Option<f32>> = crate::Point::new(76, 2, true);
-    pub const GRID_VOLTAGE_A: crate::Point<Self, Option<f32>> = crate::Point::new(78, 2, true);
-    pub const GRID_VOLTAGE_B: crate::Point<Self, Option<f32>> = crate::Point::new(80, 2, true);
-    pub const GRID_VOLTAGE_C: crate::Point<Self, Option<f32>> = crate::Point::new(82, 2, true);
-    pub const GRID_FREQUENCY: crate::Point<Self, Option<f32>> = crate::Point::new(84, 2, true);
+    pub const TIME: crate::Point<Self, Option<String>> = crate::Point::new(0, 10);
+    pub const TEMPERATURE: crate::Point<Self, Option<f32>, crate::ReadWrite> =
+        crate::Point::new(10, 2);
+    pub const GRID_MODEL_SOURCE: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(12, 32);
+    pub const IRRADIANCE_MODEL_SOURCE: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(44, 32);
+    pub const IRRADIANCE: crate::Point<Self, Option<f32>, crate::ReadWrite> =
+        crate::Point::new(76, 2);
+    pub const GRID_VOLTAGE_A: crate::Point<Self, Option<f32>, crate::ReadWrite> =
+        crate::Point::new(78, 2);
+    pub const GRID_VOLTAGE_B: crate::Point<Self, Option<f32>, crate::ReadWrite> =
+        crate::Point::new(80, 2);
+    pub const GRID_VOLTAGE_C: crate::Point<Self, Option<f32>, crate::ReadWrite> =
+        crate::Point::new(82, 2);
+    pub const GRID_FREQUENCY: crate::Point<Self, Option<f32>, crate::ReadWrite> =
+        crate::Point::new(84, 2);
 }
 impl crate::sealed::Sealed for DerSimControls {}
 impl crate::Group for DerSimControls {

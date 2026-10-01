@@ -48,16 +48,17 @@ pub struct Model16 {
 }
 #[allow(missing_docs)]
 impl Model16 {
-    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 4, true);
-    pub const CFG: crate::Point<Self, Cfg> = crate::Point::new(4, 1, false);
-    pub const CTL: crate::Point<Self, Ctl> = crate::Point::new(5, 1, true);
-    pub const ADDR: crate::Point<Self, String> = crate::Point::new(6, 8, true);
-    pub const MSK: crate::Point<Self, String> = crate::Point::new(14, 8, true);
-    pub const GW: crate::Point<Self, Option<String>> = crate::Point::new(22, 8, true);
-    pub const DNS1: crate::Point<Self, Option<String>> = crate::Point::new(30, 8, true);
-    pub const DNS2: crate::Point<Self, Option<String>> = crate::Point::new(38, 8, true);
-    pub const MAC: crate::Point<Self, Option<String>> = crate::Point::new(46, 4, false);
-    pub const LNK_CTL: crate::Point<Self, Option<LnkCtl>> = crate::Point::new(50, 1, true);
+    pub const NAM: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(0, 4);
+    pub const CFG: crate::Point<Self, Cfg> = crate::Point::new(4, 1);
+    pub const CTL: crate::Point<Self, Ctl, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const ADDR: crate::Point<Self, String, crate::ReadWrite> = crate::Point::new(6, 8);
+    pub const MSK: crate::Point<Self, String, crate::ReadWrite> = crate::Point::new(14, 8);
+    pub const GW: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(22, 8);
+    pub const DNS1: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(30, 8);
+    pub const DNS2: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(38, 8);
+    pub const MAC: crate::Point<Self, Option<String>> = crate::Point::new(46, 4);
+    pub const LNK_CTL: crate::Point<Self, Option<LnkCtl>, crate::ReadWrite> =
+        crate::Point::new(50, 1);
 }
 impl crate::sealed::Sealed for Model16 {}
 impl crate::Group for Model16 {

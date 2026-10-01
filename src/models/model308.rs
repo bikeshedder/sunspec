@@ -22,10 +22,10 @@ pub struct MiniMet {
 }
 #[allow(missing_docs)]
 impl MiniMet {
-    pub const GHI: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
-    pub const TMP_BOM: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
-    pub const TMP_AMB: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
-    pub const WND_SPD: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
+    pub const GHI: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1);
+    pub const TMP_BOM: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1);
+    pub const TMP_AMB: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1);
+    pub const WND_SPD: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1);
 }
 impl crate::sealed::Sealed for MiniMet {}
 impl crate::Group for MiniMet {

@@ -61,17 +61,17 @@ pub struct DerMeasureDc {
 }
 #[allow(missing_docs)]
 impl DerMeasureDc {
-    pub const PRT_ALRMS: crate::Point<Self, Option<PrtAlrms>> = crate::Point::new(0, 2, false);
-    pub const N_PRT: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
-    pub const DC_A: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
-    pub const DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1, false);
-    pub const DC_WH_INJ: crate::Point<Self, Option<u64>> = crate::Point::new(5, 4, false);
-    pub const DC_WH_ABS: crate::Point<Self, Option<u64>> = crate::Point::new(9, 4, false);
-    pub const DC_A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, false);
-    pub const DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
-    pub const DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
-    pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
-    pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
+    pub const PRT_ALRMS: crate::Point<Self, Option<PrtAlrms>> = crate::Point::new(0, 2);
+    pub const N_PRT: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1);
+    pub const DC_A: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1);
+    pub const DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1);
+    pub const DC_WH_INJ: crate::Point<Self, Option<u64>> = crate::Point::new(5, 4);
+    pub const DC_WH_ABS: crate::Point<Self, Option<u64>> = crate::Point::new(9, 4);
+    pub const DC_A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1);
+    pub const DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1);
+    pub const DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1);
+    pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1);
+    pub const TMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1);
 }
 impl crate::sealed::Sealed for DerMeasureDc {}
 impl crate::Group for DerMeasureDc {
@@ -182,17 +182,17 @@ pub struct Prt {
 }
 #[allow(missing_docs)]
 impl Prt {
-    pub const PRT_TYP: crate::Point<Self, Option<PrtPrtTyp>> = crate::Point::new(0, 1, false);
-    pub const ID: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const ID_STR: crate::Point<Self, Option<String>> = crate::Point::new(2, 8, false);
-    pub const DC_A: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1, false);
-    pub const DC_V: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
-    pub const DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1, false);
-    pub const DC_WH_INJ: crate::Point<Self, Option<u64>> = crate::Point::new(13, 4, false);
-    pub const DC_WH_ABS: crate::Point<Self, Option<u64>> = crate::Point::new(17, 4, false);
-    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
-    pub const DC_STA: crate::Point<Self, Option<PrtDcSta>> = crate::Point::new(22, 1, false);
-    pub const DC_ALRM: crate::Point<Self, Option<PrtDcAlrm>> = crate::Point::new(23, 2, false);
+    pub const PRT_TYP: crate::Point<Self, Option<PrtPrtTyp>> = crate::Point::new(0, 1);
+    pub const ID: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1);
+    pub const ID_STR: crate::Point<Self, Option<String>> = crate::Point::new(2, 8);
+    pub const DC_A: crate::Point<Self, Option<i16>> = crate::Point::new(10, 1);
+    pub const DC_V: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1);
+    pub const DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(12, 1);
+    pub const DC_WH_INJ: crate::Point<Self, Option<u64>> = crate::Point::new(13, 4);
+    pub const DC_WH_ABS: crate::Point<Self, Option<u64>> = crate::Point::new(17, 4);
+    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1);
+    pub const DC_STA: crate::Point<Self, Option<PrtDcSta>> = crate::Point::new(22, 1);
+    pub const DC_ALRM: crate::Point<Self, Option<PrtDcAlrm>> = crate::Point::new(23, 2);
 }
 impl crate::sealed::Sealed for Prt {}
 impl crate::Group for Prt {

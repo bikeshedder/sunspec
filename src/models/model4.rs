@@ -158,65 +158,65 @@ pub struct Model4 {
 }
 #[allow(missing_docs)]
 impl Model4 {
-    pub const RQ_SEQ: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    pub const STS: crate::Point<Self, Sts> = crate::Point::new(1, 1, false);
-    pub const X: crate::Point<Self, u16> = crate::Point::new(2, 1, false);
-    pub const VAL1: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
-    pub const VAL2: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
-    pub const VAL3: crate::Point<Self, u16> = crate::Point::new(5, 1, false);
-    pub const VAL4: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
-    pub const VAL5: crate::Point<Self, u16> = crate::Point::new(7, 1, false);
-    pub const VAL6: crate::Point<Self, u16> = crate::Point::new(8, 1, false);
-    pub const VAL7: crate::Point<Self, u16> = crate::Point::new(9, 1, false);
-    pub const VAL8: crate::Point<Self, u16> = crate::Point::new(10, 1, false);
-    pub const VAL9: crate::Point<Self, u16> = crate::Point::new(11, 1, false);
-    pub const VAL10: crate::Point<Self, u16> = crate::Point::new(12, 1, false);
-    pub const VAL11: crate::Point<Self, u16> = crate::Point::new(13, 1, false);
-    pub const VAL12: crate::Point<Self, u16> = crate::Point::new(14, 1, false);
-    pub const VAL13: crate::Point<Self, u16> = crate::Point::new(15, 1, false);
-    pub const VAL14: crate::Point<Self, u16> = crate::Point::new(16, 1, false);
-    pub const VAL15: crate::Point<Self, u16> = crate::Point::new(17, 1, false);
-    pub const VAL16: crate::Point<Self, u16> = crate::Point::new(18, 1, false);
-    pub const VAL17: crate::Point<Self, u16> = crate::Point::new(19, 1, false);
-    pub const VAL18: crate::Point<Self, u16> = crate::Point::new(20, 1, false);
-    pub const VAL19: crate::Point<Self, u16> = crate::Point::new(21, 1, false);
-    pub const VAL20: crate::Point<Self, u16> = crate::Point::new(22, 1, false);
-    pub const VAL21: crate::Point<Self, u16> = crate::Point::new(23, 1, false);
-    pub const VAL22: crate::Point<Self, u16> = crate::Point::new(24, 1, false);
-    pub const VAL23: crate::Point<Self, u16> = crate::Point::new(25, 1, false);
-    pub const VAL24: crate::Point<Self, u16> = crate::Point::new(26, 1, false);
-    pub const VAL25: crate::Point<Self, u16> = crate::Point::new(27, 1, false);
-    pub const VAL26: crate::Point<Self, u16> = crate::Point::new(28, 1, false);
-    pub const VAL27: crate::Point<Self, u16> = crate::Point::new(29, 1, false);
-    pub const VAL28: crate::Point<Self, u16> = crate::Point::new(30, 1, false);
-    pub const VAL29: crate::Point<Self, u16> = crate::Point::new(31, 1, false);
-    pub const VAL30: crate::Point<Self, u16> = crate::Point::new(32, 1, false);
-    pub const VAL31: crate::Point<Self, u16> = crate::Point::new(33, 1, false);
-    pub const VAL32: crate::Point<Self, u16> = crate::Point::new(34, 1, false);
-    pub const VAL33: crate::Point<Self, u16> = crate::Point::new(35, 1, false);
-    pub const VAL34: crate::Point<Self, u16> = crate::Point::new(36, 1, false);
-    pub const VAL35: crate::Point<Self, u16> = crate::Point::new(37, 1, false);
-    pub const VAL36: crate::Point<Self, u16> = crate::Point::new(38, 1, false);
-    pub const VAL37: crate::Point<Self, u16> = crate::Point::new(39, 1, false);
-    pub const VAL38: crate::Point<Self, u16> = crate::Point::new(40, 1, false);
-    pub const VAL39: crate::Point<Self, u16> = crate::Point::new(41, 1, false);
-    pub const VAL40: crate::Point<Self, u16> = crate::Point::new(42, 1, false);
-    pub const VAL41: crate::Point<Self, u16> = crate::Point::new(43, 1, false);
-    pub const VAL42: crate::Point<Self, u16> = crate::Point::new(44, 1, false);
-    pub const VAL43: crate::Point<Self, u16> = crate::Point::new(45, 1, false);
-    pub const VAL44: crate::Point<Self, u16> = crate::Point::new(46, 1, false);
-    pub const VAL45: crate::Point<Self, u16> = crate::Point::new(47, 1, false);
-    pub const VAL46: crate::Point<Self, u16> = crate::Point::new(48, 1, false);
-    pub const VAL47: crate::Point<Self, u16> = crate::Point::new(49, 1, false);
-    pub const VAL48: crate::Point<Self, u16> = crate::Point::new(50, 1, false);
-    pub const VAL49: crate::Point<Self, u16> = crate::Point::new(51, 1, false);
-    pub const VAL50: crate::Point<Self, u16> = crate::Point::new(52, 1, false);
-    pub const TS: crate::Point<Self, u32> = crate::Point::new(53, 2, false);
-    pub const MS: crate::Point<Self, u16> = crate::Point::new(55, 1, false);
-    pub const SEQ: crate::Point<Self, u16> = crate::Point::new(56, 1, false);
-    pub const ALM: crate::Point<Self, Alm> = crate::Point::new(57, 1, false);
-    pub const ALG: crate::Point<Self, Alg> = crate::Point::new(58, 1, false);
-    pub const N: crate::Point<Self, u16> = crate::Point::new(59, 1, false);
+    pub const RQ_SEQ: crate::Point<Self, u16> = crate::Point::new(0, 1);
+    pub const STS: crate::Point<Self, Sts> = crate::Point::new(1, 1);
+    pub const X: crate::Point<Self, u16> = crate::Point::new(2, 1);
+    pub const VAL1: crate::Point<Self, u16> = crate::Point::new(3, 1);
+    pub const VAL2: crate::Point<Self, u16> = crate::Point::new(4, 1);
+    pub const VAL3: crate::Point<Self, u16> = crate::Point::new(5, 1);
+    pub const VAL4: crate::Point<Self, u16> = crate::Point::new(6, 1);
+    pub const VAL5: crate::Point<Self, u16> = crate::Point::new(7, 1);
+    pub const VAL6: crate::Point<Self, u16> = crate::Point::new(8, 1);
+    pub const VAL7: crate::Point<Self, u16> = crate::Point::new(9, 1);
+    pub const VAL8: crate::Point<Self, u16> = crate::Point::new(10, 1);
+    pub const VAL9: crate::Point<Self, u16> = crate::Point::new(11, 1);
+    pub const VAL10: crate::Point<Self, u16> = crate::Point::new(12, 1);
+    pub const VAL11: crate::Point<Self, u16> = crate::Point::new(13, 1);
+    pub const VAL12: crate::Point<Self, u16> = crate::Point::new(14, 1);
+    pub const VAL13: crate::Point<Self, u16> = crate::Point::new(15, 1);
+    pub const VAL14: crate::Point<Self, u16> = crate::Point::new(16, 1);
+    pub const VAL15: crate::Point<Self, u16> = crate::Point::new(17, 1);
+    pub const VAL16: crate::Point<Self, u16> = crate::Point::new(18, 1);
+    pub const VAL17: crate::Point<Self, u16> = crate::Point::new(19, 1);
+    pub const VAL18: crate::Point<Self, u16> = crate::Point::new(20, 1);
+    pub const VAL19: crate::Point<Self, u16> = crate::Point::new(21, 1);
+    pub const VAL20: crate::Point<Self, u16> = crate::Point::new(22, 1);
+    pub const VAL21: crate::Point<Self, u16> = crate::Point::new(23, 1);
+    pub const VAL22: crate::Point<Self, u16> = crate::Point::new(24, 1);
+    pub const VAL23: crate::Point<Self, u16> = crate::Point::new(25, 1);
+    pub const VAL24: crate::Point<Self, u16> = crate::Point::new(26, 1);
+    pub const VAL25: crate::Point<Self, u16> = crate::Point::new(27, 1);
+    pub const VAL26: crate::Point<Self, u16> = crate::Point::new(28, 1);
+    pub const VAL27: crate::Point<Self, u16> = crate::Point::new(29, 1);
+    pub const VAL28: crate::Point<Self, u16> = crate::Point::new(30, 1);
+    pub const VAL29: crate::Point<Self, u16> = crate::Point::new(31, 1);
+    pub const VAL30: crate::Point<Self, u16> = crate::Point::new(32, 1);
+    pub const VAL31: crate::Point<Self, u16> = crate::Point::new(33, 1);
+    pub const VAL32: crate::Point<Self, u16> = crate::Point::new(34, 1);
+    pub const VAL33: crate::Point<Self, u16> = crate::Point::new(35, 1);
+    pub const VAL34: crate::Point<Self, u16> = crate::Point::new(36, 1);
+    pub const VAL35: crate::Point<Self, u16> = crate::Point::new(37, 1);
+    pub const VAL36: crate::Point<Self, u16> = crate::Point::new(38, 1);
+    pub const VAL37: crate::Point<Self, u16> = crate::Point::new(39, 1);
+    pub const VAL38: crate::Point<Self, u16> = crate::Point::new(40, 1);
+    pub const VAL39: crate::Point<Self, u16> = crate::Point::new(41, 1);
+    pub const VAL40: crate::Point<Self, u16> = crate::Point::new(42, 1);
+    pub const VAL41: crate::Point<Self, u16> = crate::Point::new(43, 1);
+    pub const VAL42: crate::Point<Self, u16> = crate::Point::new(44, 1);
+    pub const VAL43: crate::Point<Self, u16> = crate::Point::new(45, 1);
+    pub const VAL44: crate::Point<Self, u16> = crate::Point::new(46, 1);
+    pub const VAL45: crate::Point<Self, u16> = crate::Point::new(47, 1);
+    pub const VAL46: crate::Point<Self, u16> = crate::Point::new(48, 1);
+    pub const VAL47: crate::Point<Self, u16> = crate::Point::new(49, 1);
+    pub const VAL48: crate::Point<Self, u16> = crate::Point::new(50, 1);
+    pub const VAL49: crate::Point<Self, u16> = crate::Point::new(51, 1);
+    pub const VAL50: crate::Point<Self, u16> = crate::Point::new(52, 1);
+    pub const TS: crate::Point<Self, u32> = crate::Point::new(53, 2);
+    pub const MS: crate::Point<Self, u16> = crate::Point::new(55, 1);
+    pub const SEQ: crate::Point<Self, u16> = crate::Point::new(56, 1);
+    pub const ALM: crate::Point<Self, Alm> = crate::Point::new(57, 1);
+    pub const ALG: crate::Point<Self, Alg> = crate::Point::new(58, 1);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(59, 1);
 }
 impl crate::sealed::Sealed for Model4 {}
 impl crate::Group for Model4 {
@@ -435,7 +435,7 @@ pub struct Repeating {
 }
 #[allow(missing_docs)]
 impl Repeating {
-    pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const DS: crate::Point<Self, u16> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {

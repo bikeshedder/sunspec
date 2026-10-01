@@ -34,7 +34,7 @@ pub struct Temp {
 }
 #[allow(missing_docs)]
 impl Temp {
-    pub const TMP_BOM: crate::Point<Self, i16> = crate::Point::new(0, 1, false);
+    pub const TMP_BOM: crate::Point<Self, i16> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for Temp {}
 impl crate::Group for Temp {

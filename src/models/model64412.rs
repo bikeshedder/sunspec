@@ -182,82 +182,131 @@ pub struct DerExploitation {
 }
 #[allow(missing_docs)]
 impl DerExploitation {
-    pub const DA_MANIPULATION: crate::Point<Self, Option<DaManipulation>> =
-        crate::Point::new(0, 1, true);
-    pub const FALSIFY_DEVICE_IDENTITY: crate::Point<Self, Option<FalsifyDeviceIdentity>> =
-        crate::Point::new(1, 1, true);
-    pub const MEAS_P_ALWAYS_NAMEPLATE: crate::Point<Self, Option<MeasPAlwaysNameplate>> =
-        crate::Point::new(2, 1, true);
-    pub const MEAS_Q_ALWAYS_MINIMUM: crate::Point<Self, Option<MeasQAlwaysMinimum>> =
-        crate::Point::new(3, 1, true);
-    pub const MEAS_Q_ALWAYS_MAXIMUM: crate::Point<Self, Option<MeasQAlwaysMaximum>> =
-        crate::Point::new(4, 1, true);
-    pub const MEAS_Q_ALWAYS_ZERO: crate::Point<Self, Option<MeasQAlwaysZero>> =
-        crate::Point::new(5, 1, true);
-    pub const MEAS_ZERO_P: crate::Point<Self, Option<MeasZeroP>> = crate::Point::new(6, 1, true);
-    pub const MEAS_INVERT_Q: crate::Point<Self, Option<MeasInvertQ>> =
-        crate::Point::new(7, 1, true);
-    pub const MEAS_LOW_V: crate::Point<Self, Option<MeasLowV>> = crate::Point::new(8, 1, true);
-    pub const MEAS_HIGH_V: crate::Point<Self, Option<MeasHighV>> = crate::Point::new(9, 1, true);
-    pub const MEAS_LOW_L1_V: crate::Point<Self, Option<MeasLowL1V>> =
-        crate::Point::new(10, 1, true);
-    pub const MEAS_HIGH_L1_V: crate::Point<Self, Option<MeasHighL1V>> =
-        crate::Point::new(11, 1, true);
-    pub const MEAS_LOW_F: crate::Point<Self, Option<MeasLowF>> = crate::Point::new(12, 1, true);
-    pub const MEAS_HIGH_F: crate::Point<Self, Option<MeasHighF>> = crate::Point::new(13, 1, true);
-    pub const MEAS_LOW_AMPS: crate::Point<Self, Option<MeasLowAmps>> =
-        crate::Point::new(14, 1, true);
-    pub const MEAS_HIGH_AMPS: crate::Point<Self, Option<MeasHighAmps>> =
-        crate::Point::new(15, 1, true);
-    pub const MEAS_HIGH_S: crate::Point<Self, Option<MeasHighS>> = crate::Point::new(16, 1, true);
-    pub const MEAS_LOW_S: crate::Point<Self, Option<MeasLowS>> = crate::Point::new(17, 1, true);
-    pub const MEAS_HIGH_Q: crate::Point<Self, Option<MeasHighQ>> = crate::Point::new(18, 1, true);
-    pub const MEAS_LOW_Q: crate::Point<Self, Option<MeasLowQ>> = crate::Point::new(19, 1, true);
-    pub const MEAS_LOW_PF: crate::Point<Self, Option<MeasLowPf>> = crate::Point::new(20, 1, true);
-    pub const MEAS_LOW_REVERSED_PF: crate::Point<Self, Option<MeasLowReversedPf>> =
-        crate::Point::new(21, 1, true);
-    pub const NAMEPLATE_HIGH_P: crate::Point<Self, Option<NameplateHighP>> =
-        crate::Point::new(22, 1, true);
-    pub const NAMEPLATE_LOW_P: crate::Point<Self, Option<NameplateLowP>> =
-        crate::Point::new(23, 1, true);
-    pub const NAMEPLATE_HIGH_S: crate::Point<Self, Option<NameplateHighS>> =
-        crate::Point::new(24, 1, true);
-    pub const NAMEPLATE_LOW_S: crate::Point<Self, Option<NameplateLowS>> =
-        crate::Point::new(25, 1, true);
-    pub const NAMEPLATE_HIGH_Q: crate::Point<Self, Option<NameplateHighQ>> =
-        crate::Point::new(26, 1, true);
-    pub const NAMEPLATE_LOW_Q: crate::Point<Self, Option<NameplateLowQ>> =
-        crate::Point::new(27, 1, true);
-    pub const NAMEPLATE_HIGH_NOM_V: crate::Point<Self, Option<NameplateHighNomV>> =
-        crate::Point::new(28, 1, true);
-    pub const NAMEPLATE_LOW_NOM_V: crate::Point<Self, Option<NameplateLowNomV>> =
-        crate::Point::new(29, 1, true);
-    pub const NAMEPLATE_LOW_AMPS: crate::Point<Self, Option<NameplateLowAmps>> =
-        crate::Point::new(30, 1, true);
-    pub const NAMEPLATE_LOW_VAR_MAX_INJ: crate::Point<Self, Option<NameplateLowVarMaxInj>> =
-        crate::Point::new(31, 1, true);
-    pub const NAMEPLATE_LOW_VAR_MAX_ABS: crate::Point<Self, Option<NameplateLowVarMaxAbs>> =
-        crate::Point::new(32, 1, true);
-    pub const NAMEPLATE_LOW_PF: crate::Point<Self, Option<NameplateLowPf>> =
-        crate::Point::new(33, 1, true);
-    pub const SETTINGS_HIGH_NOM_V: crate::Point<Self, Option<SettingsHighNomV>> =
-        crate::Point::new(34, 1, true);
-    pub const SETTINGS_LOW_AMPS: crate::Point<Self, Option<SettingsLowAmps>> =
-        crate::Point::new(35, 1, true);
-    pub const SETTINGS_HIGH_P: crate::Point<Self, Option<SettingsHighP>> =
-        crate::Point::new(36, 1, true);
-    pub const SETTINGS_LOW_P: crate::Point<Self, Option<SettingsLowP>> =
-        crate::Point::new(37, 1, true);
-    pub const SETTINGS_HIGH_VA_MAX: crate::Point<Self, Option<SettingsHighVaMax>> =
-        crate::Point::new(38, 1, true);
-    pub const SETTINGS_HIGH_VAR_MAX_INJ: crate::Point<Self, Option<SettingsHighVarMaxInj>> =
-        crate::Point::new(39, 1, true);
-    pub const SETTINGS_HIGH_VAR_MAX_ABS: crate::Point<Self, Option<SettingsHighVarMaxAbs>> =
-        crate::Point::new(40, 1, true);
-    pub const CHANGE_COMMON_MODEL_ID: crate::Point<Self, Option<ChangeCommonModelId>> =
-        crate::Point::new(41, 1, true);
-    pub const CHANGE_COMMON_MODEL_LENGTH: crate::Point<Self, Option<ChangeCommonModelLength>> =
-        crate::Point::new(42, 1, true);
+    pub const DA_MANIPULATION: crate::Point<Self, Option<DaManipulation>, crate::ReadWrite> =
+        crate::Point::new(0, 1);
+    pub const FALSIFY_DEVICE_IDENTITY: crate::Point<
+        Self,
+        Option<FalsifyDeviceIdentity>,
+        crate::ReadWrite,
+    > = crate::Point::new(1, 1);
+    pub const MEAS_P_ALWAYS_NAMEPLATE: crate::Point<
+        Self,
+        Option<MeasPAlwaysNameplate>,
+        crate::ReadWrite,
+    > = crate::Point::new(2, 1);
+    pub const MEAS_Q_ALWAYS_MINIMUM: crate::Point<
+        Self,
+        Option<MeasQAlwaysMinimum>,
+        crate::ReadWrite,
+    > = crate::Point::new(3, 1);
+    pub const MEAS_Q_ALWAYS_MAXIMUM: crate::Point<
+        Self,
+        Option<MeasQAlwaysMaximum>,
+        crate::ReadWrite,
+    > = crate::Point::new(4, 1);
+    pub const MEAS_Q_ALWAYS_ZERO: crate::Point<Self, Option<MeasQAlwaysZero>, crate::ReadWrite> =
+        crate::Point::new(5, 1);
+    pub const MEAS_ZERO_P: crate::Point<Self, Option<MeasZeroP>, crate::ReadWrite> =
+        crate::Point::new(6, 1);
+    pub const MEAS_INVERT_Q: crate::Point<Self, Option<MeasInvertQ>, crate::ReadWrite> =
+        crate::Point::new(7, 1);
+    pub const MEAS_LOW_V: crate::Point<Self, Option<MeasLowV>, crate::ReadWrite> =
+        crate::Point::new(8, 1);
+    pub const MEAS_HIGH_V: crate::Point<Self, Option<MeasHighV>, crate::ReadWrite> =
+        crate::Point::new(9, 1);
+    pub const MEAS_LOW_L1_V: crate::Point<Self, Option<MeasLowL1V>, crate::ReadWrite> =
+        crate::Point::new(10, 1);
+    pub const MEAS_HIGH_L1_V: crate::Point<Self, Option<MeasHighL1V>, crate::ReadWrite> =
+        crate::Point::new(11, 1);
+    pub const MEAS_LOW_F: crate::Point<Self, Option<MeasLowF>, crate::ReadWrite> =
+        crate::Point::new(12, 1);
+    pub const MEAS_HIGH_F: crate::Point<Self, Option<MeasHighF>, crate::ReadWrite> =
+        crate::Point::new(13, 1);
+    pub const MEAS_LOW_AMPS: crate::Point<Self, Option<MeasLowAmps>, crate::ReadWrite> =
+        crate::Point::new(14, 1);
+    pub const MEAS_HIGH_AMPS: crate::Point<Self, Option<MeasHighAmps>, crate::ReadWrite> =
+        crate::Point::new(15, 1);
+    pub const MEAS_HIGH_S: crate::Point<Self, Option<MeasHighS>, crate::ReadWrite> =
+        crate::Point::new(16, 1);
+    pub const MEAS_LOW_S: crate::Point<Self, Option<MeasLowS>, crate::ReadWrite> =
+        crate::Point::new(17, 1);
+    pub const MEAS_HIGH_Q: crate::Point<Self, Option<MeasHighQ>, crate::ReadWrite> =
+        crate::Point::new(18, 1);
+    pub const MEAS_LOW_Q: crate::Point<Self, Option<MeasLowQ>, crate::ReadWrite> =
+        crate::Point::new(19, 1);
+    pub const MEAS_LOW_PF: crate::Point<Self, Option<MeasLowPf>, crate::ReadWrite> =
+        crate::Point::new(20, 1);
+    pub const MEAS_LOW_REVERSED_PF: crate::Point<
+        Self,
+        Option<MeasLowReversedPf>,
+        crate::ReadWrite,
+    > = crate::Point::new(21, 1);
+    pub const NAMEPLATE_HIGH_P: crate::Point<Self, Option<NameplateHighP>, crate::ReadWrite> =
+        crate::Point::new(22, 1);
+    pub const NAMEPLATE_LOW_P: crate::Point<Self, Option<NameplateLowP>, crate::ReadWrite> =
+        crate::Point::new(23, 1);
+    pub const NAMEPLATE_HIGH_S: crate::Point<Self, Option<NameplateHighS>, crate::ReadWrite> =
+        crate::Point::new(24, 1);
+    pub const NAMEPLATE_LOW_S: crate::Point<Self, Option<NameplateLowS>, crate::ReadWrite> =
+        crate::Point::new(25, 1);
+    pub const NAMEPLATE_HIGH_Q: crate::Point<Self, Option<NameplateHighQ>, crate::ReadWrite> =
+        crate::Point::new(26, 1);
+    pub const NAMEPLATE_LOW_Q: crate::Point<Self, Option<NameplateLowQ>, crate::ReadWrite> =
+        crate::Point::new(27, 1);
+    pub const NAMEPLATE_HIGH_NOM_V: crate::Point<
+        Self,
+        Option<NameplateHighNomV>,
+        crate::ReadWrite,
+    > = crate::Point::new(28, 1);
+    pub const NAMEPLATE_LOW_NOM_V: crate::Point<Self, Option<NameplateLowNomV>, crate::ReadWrite> =
+        crate::Point::new(29, 1);
+    pub const NAMEPLATE_LOW_AMPS: crate::Point<Self, Option<NameplateLowAmps>, crate::ReadWrite> =
+        crate::Point::new(30, 1);
+    pub const NAMEPLATE_LOW_VAR_MAX_INJ: crate::Point<
+        Self,
+        Option<NameplateLowVarMaxInj>,
+        crate::ReadWrite,
+    > = crate::Point::new(31, 1);
+    pub const NAMEPLATE_LOW_VAR_MAX_ABS: crate::Point<
+        Self,
+        Option<NameplateLowVarMaxAbs>,
+        crate::ReadWrite,
+    > = crate::Point::new(32, 1);
+    pub const NAMEPLATE_LOW_PF: crate::Point<Self, Option<NameplateLowPf>, crate::ReadWrite> =
+        crate::Point::new(33, 1);
+    pub const SETTINGS_HIGH_NOM_V: crate::Point<Self, Option<SettingsHighNomV>, crate::ReadWrite> =
+        crate::Point::new(34, 1);
+    pub const SETTINGS_LOW_AMPS: crate::Point<Self, Option<SettingsLowAmps>, crate::ReadWrite> =
+        crate::Point::new(35, 1);
+    pub const SETTINGS_HIGH_P: crate::Point<Self, Option<SettingsHighP>, crate::ReadWrite> =
+        crate::Point::new(36, 1);
+    pub const SETTINGS_LOW_P: crate::Point<Self, Option<SettingsLowP>, crate::ReadWrite> =
+        crate::Point::new(37, 1);
+    pub const SETTINGS_HIGH_VA_MAX: crate::Point<
+        Self,
+        Option<SettingsHighVaMax>,
+        crate::ReadWrite,
+    > = crate::Point::new(38, 1);
+    pub const SETTINGS_HIGH_VAR_MAX_INJ: crate::Point<
+        Self,
+        Option<SettingsHighVarMaxInj>,
+        crate::ReadWrite,
+    > = crate::Point::new(39, 1);
+    pub const SETTINGS_HIGH_VAR_MAX_ABS: crate::Point<
+        Self,
+        Option<SettingsHighVarMaxAbs>,
+        crate::ReadWrite,
+    > = crate::Point::new(40, 1);
+    pub const CHANGE_COMMON_MODEL_ID: crate::Point<
+        Self,
+        Option<ChangeCommonModelId>,
+        crate::ReadWrite,
+    > = crate::Point::new(41, 1);
+    pub const CHANGE_COMMON_MODEL_LENGTH: crate::Point<
+        Self,
+        Option<ChangeCommonModelLength>,
+        crate::ReadWrite,
+    > = crate::Point::new(42, 1);
 }
 impl crate::sealed::Sealed for DerExploitation {}
 impl crate::Group for DerExploitation {

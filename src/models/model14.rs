@@ -40,14 +40,15 @@ pub struct Model14 {
 }
 #[allow(missing_docs)]
 impl Model14 {
-    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 4, true);
-    pub const CAP: crate::Point<Self, Cap> = crate::Point::new(4, 1, true);
-    pub const CFG: crate::Point<Self, u16> = crate::Point::new(5, 1, true);
-    pub const TYP: crate::Point<Self, Typ> = crate::Point::new(6, 1, true);
-    pub const ADDR: crate::Point<Self, String> = crate::Point::new(7, 20, true);
-    pub const PORT: crate::Point<Self, u16> = crate::Point::new(27, 1, true);
-    pub const USER: crate::Point<Self, Option<String>> = crate::Point::new(28, 12, true);
-    pub const PW: crate::Point<Self, Option<String>> = crate::Point::new(40, 12, true);
+    pub const NAM: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(0, 4);
+    pub const CAP: crate::Point<Self, Cap, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const CFG: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const TYP: crate::Point<Self, Typ, crate::ReadWrite> = crate::Point::new(6, 1);
+    pub const ADDR: crate::Point<Self, String, crate::ReadWrite> = crate::Point::new(7, 20);
+    pub const PORT: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(27, 1);
+    pub const USER: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(28, 12);
+    pub const PW: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(40, 12);
 }
 impl crate::sealed::Sealed for Model14 {}
 impl crate::Group for Model14 {

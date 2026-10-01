@@ -212,54 +212,58 @@ pub struct AcSimInterface {
 }
 #[allow(missing_docs)]
 impl AcSimInterface {
-    pub const PHASES: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const PHASE_ANGLE: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
-    pub const V_NOM: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
-    pub const V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
-    pub const I_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    pub const FREQ: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
-    pub const OUTPUT: crate::Point<Self, Option<Output>> = crate::Point::new(6, 1, true);
-    pub const RELAY: crate::Point<Self, Option<Relay>> = crate::Point::new(7, 1, true);
-    pub const REGEN: crate::Point<Self, Option<Regen>> = crate::Point::new(8, 1, true);
-    pub const V_SET: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, true);
-    pub const V_SET_A: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
-    pub const V_SET_B: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, true);
-    pub const V_SET_C: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, true);
-    pub const FREQ_SLEW: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, true);
-    pub const V_SLEW: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, true);
-    pub const VA: crate::Point<Self, Option<i32>> = crate::Point::new(15, 2, false);
-    pub const VB: crate::Point<Self, Option<i32>> = crate::Point::new(17, 2, false);
-    pub const VC: crate::Point<Self, Option<i32>> = crate::Point::new(19, 2, false);
-    pub const HZ: crate::Point<Self, Option<i32>> = crate::Point::new(21, 2, false);
-    pub const IA: crate::Point<Self, Option<i32>> = crate::Point::new(23, 2, false);
-    pub const IB: crate::Point<Self, Option<i32>> = crate::Point::new(25, 2, false);
-    pub const IC: crate::Point<Self, Option<i32>> = crate::Point::new(27, 2, false);
-    pub const V_HAR_A: crate::Point<Self, Option<String>> = crate::Point::new(29, 150, false);
-    pub const V_HAR_B: crate::Point<Self, Option<String>> = crate::Point::new(179, 150, false);
-    pub const V_HAR_C: crate::Point<Self, Option<String>> = crate::Point::new(329, 150, false);
-    pub const I_HAR_A: crate::Point<Self, Option<String>> = crate::Point::new(479, 150, false);
-    pub const I_HAR_B: crate::Point<Self, Option<String>> = crate::Point::new(629, 150, false);
-    pub const I_HAR_C: crate::Point<Self, Option<String>> = crate::Point::new(779, 150, false);
-    pub const I_INT_HAR_A: crate::Point<Self, Option<String>> = crate::Point::new(929, 150, false);
-    pub const I_INT_HAR_B: crate::Point<Self, Option<String>> = crate::Point::new(1079, 150, false);
-    pub const I_INT_HAR_C: crate::Point<Self, Option<String>> = crate::Point::new(1229, 150, false);
-    pub const V_THD_A: crate::Point<Self, Option<u16>> = crate::Point::new(1379, 1, false);
-    pub const V_THD_B: crate::Point<Self, Option<u16>> = crate::Point::new(1380, 1, false);
-    pub const V_THD_C: crate::Point<Self, Option<u16>> = crate::Point::new(1381, 1, false);
-    pub const I_THD_A: crate::Point<Self, Option<u16>> = crate::Point::new(1382, 1, false);
-    pub const I_THD_B: crate::Point<Self, Option<u16>> = crate::Point::new(1383, 1, false);
-    pub const I_THD_C: crate::Point<Self, Option<u16>> = crate::Point::new(1384, 1, false);
-    pub const ENA_PROF: crate::Point<Self, Option<EnaProf>> = crate::Point::new(1385, 1, true);
-    pub const PROF_RSLT: crate::Point<Self, ProfRslt> = crate::Point::new(1386, 1, false);
-    pub const N_PROF: crate::Point<Self, u16> = crate::Point::new(1387, 1, false);
-    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(1388, 1, false);
-    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(1389, 1, false);
-    pub const A_SF: crate::Point<Self, i16> = crate::Point::new(1390, 1, false);
-    pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(1391, 1, false);
-    pub const HZ_SF: crate::Point<Self, i16> = crate::Point::new(1392, 1, false);
-    pub const HZ_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(1393, 1, false);
-    pub const V_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(1394, 1, false);
-    pub const THD_SF: crate::Point<Self, i16> = crate::Point::new(1395, 1, false);
+    pub const PHASES: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const PHASE_ANGLE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(1, 1);
+    pub const V_NOM: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const V_MAX: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const I_MAX: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const FREQ: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const OUTPUT: crate::Point<Self, Option<Output>, crate::ReadWrite> =
+        crate::Point::new(6, 1);
+    pub const RELAY: crate::Point<Self, Option<Relay>, crate::ReadWrite> = crate::Point::new(7, 1);
+    pub const REGEN: crate::Point<Self, Option<Regen>, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const V_SET: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(9, 1);
+    pub const V_SET_A: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(10, 1);
+    pub const V_SET_B: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(11, 1);
+    pub const V_SET_C: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(12, 1);
+    pub const FREQ_SLEW: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(13, 1);
+    pub const V_SLEW: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(14, 1);
+    pub const VA: crate::Point<Self, Option<i32>> = crate::Point::new(15, 2);
+    pub const VB: crate::Point<Self, Option<i32>> = crate::Point::new(17, 2);
+    pub const VC: crate::Point<Self, Option<i32>> = crate::Point::new(19, 2);
+    pub const HZ: crate::Point<Self, Option<i32>> = crate::Point::new(21, 2);
+    pub const IA: crate::Point<Self, Option<i32>> = crate::Point::new(23, 2);
+    pub const IB: crate::Point<Self, Option<i32>> = crate::Point::new(25, 2);
+    pub const IC: crate::Point<Self, Option<i32>> = crate::Point::new(27, 2);
+    pub const V_HAR_A: crate::Point<Self, Option<String>> = crate::Point::new(29, 150);
+    pub const V_HAR_B: crate::Point<Self, Option<String>> = crate::Point::new(179, 150);
+    pub const V_HAR_C: crate::Point<Self, Option<String>> = crate::Point::new(329, 150);
+    pub const I_HAR_A: crate::Point<Self, Option<String>> = crate::Point::new(479, 150);
+    pub const I_HAR_B: crate::Point<Self, Option<String>> = crate::Point::new(629, 150);
+    pub const I_HAR_C: crate::Point<Self, Option<String>> = crate::Point::new(779, 150);
+    pub const I_INT_HAR_A: crate::Point<Self, Option<String>> = crate::Point::new(929, 150);
+    pub const I_INT_HAR_B: crate::Point<Self, Option<String>> = crate::Point::new(1079, 150);
+    pub const I_INT_HAR_C: crate::Point<Self, Option<String>> = crate::Point::new(1229, 150);
+    pub const V_THD_A: crate::Point<Self, Option<u16>> = crate::Point::new(1379, 1);
+    pub const V_THD_B: crate::Point<Self, Option<u16>> = crate::Point::new(1380, 1);
+    pub const V_THD_C: crate::Point<Self, Option<u16>> = crate::Point::new(1381, 1);
+    pub const I_THD_A: crate::Point<Self, Option<u16>> = crate::Point::new(1382, 1);
+    pub const I_THD_B: crate::Point<Self, Option<u16>> = crate::Point::new(1383, 1);
+    pub const I_THD_C: crate::Point<Self, Option<u16>> = crate::Point::new(1384, 1);
+    pub const ENA_PROF: crate::Point<Self, Option<EnaProf>, crate::ReadWrite> =
+        crate::Point::new(1385, 1);
+    pub const PROF_RSLT: crate::Point<Self, ProfRslt> = crate::Point::new(1386, 1);
+    pub const N_PROF: crate::Point<Self, u16> = crate::Point::new(1387, 1);
+    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(1388, 1);
+    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(1389, 1);
+    pub const A_SF: crate::Point<Self, i16> = crate::Point::new(1390, 1);
+    pub const TMS_SF: crate::Point<Self, i16> = crate::Point::new(1391, 1);
+    pub const HZ_SF: crate::Point<Self, i16> = crate::Point::new(1392, 1);
+    pub const HZ_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(1393, 1);
+    pub const V_SLEW_SF: crate::Point<Self, i16> = crate::Point::new(1394, 1);
+    pub const THD_SF: crate::Point<Self, i16> = crate::Point::new(1395, 1);
 }
 impl crate::sealed::Sealed for AcSimInterface {}
 impl crate::Group for AcSimInterface {
@@ -557,8 +561,8 @@ pub struct Prof {
 }
 #[allow(missing_docs)]
 impl Prof {
-    pub const NAME: crate::Point<Self, Option<String>> = crate::Point::new(0, 32, true);
-    pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(32, 1, true);
+    pub const NAME: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(0, 32);
+    pub const ACT_PT: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(32, 1);
 }
 impl crate::sealed::Sealed for Prof {}
 impl crate::Group for Prof {
@@ -636,14 +640,17 @@ pub struct Pt {
 }
 #[allow(missing_docs)]
 impl Pt {
-    pub const TMS: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const VA: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
-    pub const VB: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
-    pub const VC: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
-    pub const HZ: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    pub const PHASE_ANGLE_A: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
-    pub const PHASE_ANGLE_B: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
-    pub const PHASE_ANGLE_C: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, true);
+    pub const TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const VA: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const VB: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const VC: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const HZ: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const PHASE_ANGLE_A: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(5, 1);
+    pub const PHASE_ANGLE_B: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(6, 1);
+    pub const PHASE_ANGLE_C: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(7, 1);
 }
 impl crate::sealed::Sealed for Pt {}
 impl crate::Group for Pt {

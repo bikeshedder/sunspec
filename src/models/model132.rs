@@ -54,16 +54,16 @@ pub struct VoltWatt {
 }
 #[allow(missing_docs)]
 impl VoltWatt {
-    pub const ACT_CRV: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    pub const MOD_ENA: crate::Point<Self, ModEna> = crate::Point::new(1, 1, true);
-    pub const WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
-    pub const RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
-    pub const RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    pub const N_CRV: crate::Point<Self, u16> = crate::Point::new(5, 1, false);
-    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
-    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(7, 1, false);
-    pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
-    pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
+    pub const ACT_CRV: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const MOD_ENA: crate::Point<Self, ModEna, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const WIN_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const RVRT_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const RMP_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const N_CRV: crate::Point<Self, u16> = crate::Point::new(5, 1);
+    pub const N_PT: crate::Point<Self, u16> = crate::Point::new(6, 1);
+    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(7, 1);
+    pub const DEPT_REF_SF: crate::Point<Self, i16> = crate::Point::new(8, 1);
+    pub const RMP_INC_DEC_SF: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1);
 }
 impl crate::sealed::Sealed for VoltWatt {}
 impl crate::Group for VoltWatt {
@@ -314,53 +314,58 @@ pub struct Curve {
 }
 #[allow(missing_docs)]
 impl Curve {
-    pub const ACT_PT: crate::Point<Self, u16> = crate::Point::new(0, 1, true);
-    pub const DEPT_REF: crate::Point<Self, CurveDeptRef> = crate::Point::new(1, 1, true);
-    pub const V1: crate::Point<Self, u16> = crate::Point::new(2, 1, true);
-    pub const W1: crate::Point<Self, i16> = crate::Point::new(3, 1, true);
-    pub const V2: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    pub const W2: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, true);
-    pub const V3: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
-    pub const W3: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, true);
-    pub const V4: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
-    pub const W4: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, true);
-    pub const V5: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
-    pub const W5: crate::Point<Self, Option<i16>> = crate::Point::new(11, 1, true);
-    pub const V6: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, true);
-    pub const W6: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
-    pub const V7: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, true);
-    pub const W7: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, true);
-    pub const V8: crate::Point<Self, Option<u16>> = crate::Point::new(16, 1, true);
-    pub const W8: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, true);
-    pub const V9: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
-    pub const W9: crate::Point<Self, Option<i16>> = crate::Point::new(19, 1, true);
-    pub const V10: crate::Point<Self, Option<u16>> = crate::Point::new(20, 1, true);
-    pub const W10: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, true);
-    pub const V11: crate::Point<Self, Option<u16>> = crate::Point::new(22, 1, true);
-    pub const W11: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, true);
-    pub const V12: crate::Point<Self, Option<u16>> = crate::Point::new(24, 1, true);
-    pub const W12: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, true);
-    pub const V13: crate::Point<Self, Option<u16>> = crate::Point::new(26, 1, true);
-    pub const W13: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, true);
-    pub const V14: crate::Point<Self, Option<u16>> = crate::Point::new(28, 1, true);
-    pub const W14: crate::Point<Self, Option<i16>> = crate::Point::new(29, 1, true);
-    pub const V15: crate::Point<Self, Option<u16>> = crate::Point::new(30, 1, true);
-    pub const W15: crate::Point<Self, Option<i16>> = crate::Point::new(31, 1, true);
-    pub const V16: crate::Point<Self, Option<u16>> = crate::Point::new(32, 1, true);
-    pub const W16: crate::Point<Self, Option<i16>> = crate::Point::new(33, 1, true);
-    pub const V17: crate::Point<Self, Option<u16>> = crate::Point::new(34, 1, true);
-    pub const W17: crate::Point<Self, Option<i16>> = crate::Point::new(35, 1, true);
-    pub const V18: crate::Point<Self, Option<u16>> = crate::Point::new(36, 1, true);
-    pub const W18: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, true);
-    pub const V19: crate::Point<Self, Option<u16>> = crate::Point::new(38, 1, true);
-    pub const W19: crate::Point<Self, Option<i16>> = crate::Point::new(39, 1, true);
-    pub const V20: crate::Point<Self, Option<u16>> = crate::Point::new(40, 1, true);
-    pub const W20: crate::Point<Self, Option<i16>> = crate::Point::new(41, 1, true);
-    pub const CRV_NAM: crate::Point<Self, Option<String>> = crate::Point::new(42, 8, true);
-    pub const RMP_PT1_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(50, 1, true);
-    pub const RMP_DEC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(51, 1, true);
-    pub const RMP_INC_TMM: crate::Point<Self, Option<u16>> = crate::Point::new(52, 1, true);
-    pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(53, 1, false);
+    pub const ACT_PT: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const DEPT_REF: crate::Point<Self, CurveDeptRef, crate::ReadWrite> =
+        crate::Point::new(1, 1);
+    pub const V1: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const W1: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const V2: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const W2: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const V3: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(6, 1);
+    pub const W3: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(7, 1);
+    pub const V4: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const W4: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(9, 1);
+    pub const V5: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(10, 1);
+    pub const W5: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(11, 1);
+    pub const V6: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(12, 1);
+    pub const W6: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(13, 1);
+    pub const V7: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(14, 1);
+    pub const W7: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(15, 1);
+    pub const V8: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(16, 1);
+    pub const W8: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(17, 1);
+    pub const V9: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(18, 1);
+    pub const W9: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(19, 1);
+    pub const V10: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(20, 1);
+    pub const W10: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(21, 1);
+    pub const V11: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(22, 1);
+    pub const W11: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(23, 1);
+    pub const V12: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(24, 1);
+    pub const W12: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(25, 1);
+    pub const V13: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(26, 1);
+    pub const W13: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(27, 1);
+    pub const V14: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(28, 1);
+    pub const W14: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(29, 1);
+    pub const V15: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(30, 1);
+    pub const W15: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(31, 1);
+    pub const V16: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(32, 1);
+    pub const W16: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(33, 1);
+    pub const V17: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(34, 1);
+    pub const W17: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(35, 1);
+    pub const V18: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(36, 1);
+    pub const W18: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(37, 1);
+    pub const V19: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(38, 1);
+    pub const W19: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(39, 1);
+    pub const V20: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(40, 1);
+    pub const W20: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(41, 1);
+    pub const CRV_NAM: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(42, 8);
+    pub const RMP_PT1_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(50, 1);
+    pub const RMP_DEC_TMM: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(51, 1);
+    pub const RMP_INC_TMM: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(52, 1);
+    pub const READ_ONLY: crate::Point<Self, CurveReadOnly> = crate::Point::new(53, 1);
 }
 impl crate::sealed::Sealed for Curve {}
 impl crate::Group for Curve {

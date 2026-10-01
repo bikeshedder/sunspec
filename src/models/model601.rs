@@ -62,17 +62,20 @@ pub struct TrackerController {
 }
 #[allow(missing_docs)]
 impl TrackerController {
-    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 8, false);
-    pub const TYP: crate::Point<Self, Typ> = crate::Point::new(8, 1, false);
-    pub const DT_LOC: crate::Point<Self, Option<String>> = crate::Point::new(9, 5, false);
-    pub const TM_LOC: crate::Point<Self, Option<String>> = crate::Point::new(14, 3, false);
-    pub const DAY: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, false);
-    pub const GLBL_EL_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(18, 2, true);
-    pub const GLBL_AZ_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(20, 2, true);
-    pub const GLBL_CTL: crate::Point<Self, Option<GlblCtl>> = crate::Point::new(22, 1, true);
-    pub const GLBL_ALM: crate::Point<Self, Option<GlblAlm>> = crate::Point::new(23, 1, false);
-    pub const DGR_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
-    pub const N: crate::Point<Self, u16> = crate::Point::new(25, 1, false);
+    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 8);
+    pub const TYP: crate::Point<Self, Typ> = crate::Point::new(8, 1);
+    pub const DT_LOC: crate::Point<Self, Option<String>> = crate::Point::new(9, 5);
+    pub const TM_LOC: crate::Point<Self, Option<String>> = crate::Point::new(14, 3);
+    pub const DAY: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1);
+    pub const GLBL_EL_CTL: crate::Point<Self, Option<i32>, crate::ReadWrite> =
+        crate::Point::new(18, 2);
+    pub const GLBL_AZ_CTL: crate::Point<Self, Option<i32>, crate::ReadWrite> =
+        crate::Point::new(20, 2);
+    pub const GLBL_CTL: crate::Point<Self, Option<GlblCtl>, crate::ReadWrite> =
+        crate::Point::new(22, 1);
+    pub const GLBL_ALM: crate::Point<Self, Option<GlblAlm>> = crate::Point::new(23, 1);
+    pub const DGR_SF: crate::Point<Self, i16> = crate::Point::new(24, 1);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(25, 1);
 }
 impl crate::sealed::Sealed for TrackerController {}
 impl crate::Group for TrackerController {
@@ -282,15 +285,16 @@ pub struct Tracker {
 }
 #[allow(missing_docs)]
 impl Tracker {
-    pub const ID: crate::Point<Self, Option<String>> = crate::Point::new(0, 8, false);
-    pub const EL_TRGT: crate::Point<Self, Option<i32>> = crate::Point::new(8, 2, false);
-    pub const AZ_TRGT: crate::Point<Self, Option<i32>> = crate::Point::new(10, 2, false);
-    pub const EL_POS: crate::Point<Self, Option<i32>> = crate::Point::new(12, 2, false);
-    pub const AZ_POS: crate::Point<Self, Option<i32>> = crate::Point::new(14, 2, false);
-    pub const EL_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(16, 2, true);
-    pub const AZ_CTL: crate::Point<Self, Option<i32>> = crate::Point::new(18, 2, true);
-    pub const CTL: crate::Point<Self, Option<TrackerCtl>> = crate::Point::new(20, 1, true);
-    pub const ALM: crate::Point<Self, Option<TrackerAlm>> = crate::Point::new(21, 1, false);
+    pub const ID: crate::Point<Self, Option<String>> = crate::Point::new(0, 8);
+    pub const EL_TRGT: crate::Point<Self, Option<i32>> = crate::Point::new(8, 2);
+    pub const AZ_TRGT: crate::Point<Self, Option<i32>> = crate::Point::new(10, 2);
+    pub const EL_POS: crate::Point<Self, Option<i32>> = crate::Point::new(12, 2);
+    pub const AZ_POS: crate::Point<Self, Option<i32>> = crate::Point::new(14, 2);
+    pub const EL_CTL: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(16, 2);
+    pub const AZ_CTL: crate::Point<Self, Option<i32>, crate::ReadWrite> = crate::Point::new(18, 2);
+    pub const CTL: crate::Point<Self, Option<TrackerCtl>, crate::ReadWrite> =
+        crate::Point::new(20, 1);
+    pub const ALM: crate::Point<Self, Option<TrackerAlm>> = crate::Point::new(21, 1);
 }
 impl crate::sealed::Sealed for Tracker {}
 impl crate::Group for Tracker {

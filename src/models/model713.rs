@@ -40,13 +40,13 @@ pub struct DerStorageCapacity {
 }
 #[allow(missing_docs)]
 impl DerStorageCapacity {
-    pub const WH_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
-    pub const WH_AVAIL: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const SOC: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
-    pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
-    pub const STA: crate::Point<Self, Option<Sta>> = crate::Point::new(4, 1, false);
-    pub const WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1, false);
-    pub const PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1, false);
+    pub const WH_RTG: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1);
+    pub const WH_AVAIL: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1);
+    pub const SOC: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1);
+    pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1);
+    pub const STA: crate::Point<Self, Option<Sta>> = crate::Point::new(4, 1);
+    pub const WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(5, 1);
+    pub const PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(6, 1);
 }
 impl crate::sealed::Sealed for DerStorageCapacity {}
 impl crate::Group for DerStorageCapacity {

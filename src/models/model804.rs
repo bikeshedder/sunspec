@@ -165,41 +165,42 @@ pub struct LithiumIonString {
 }
 #[allow(missing_docs)]
 impl LithiumIonString {
-    pub const IDX: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    pub const N_MOD: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
-    pub const ST: crate::Point<Self, St> = crate::Point::new(2, 2, false);
-    pub const CON_FAIL: crate::Point<Self, Option<ConFail>> = crate::Point::new(4, 1, false);
-    pub const N_CELL_BAL: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
-    pub const SOC: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
-    pub const DOD: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
-    pub const N_CYC: crate::Point<Self, Option<u32>> = crate::Point::new(8, 2, false);
-    pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
-    pub const A: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
-    pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
-    pub const CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(13, 1, false);
-    pub const CELL_V_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1, false);
-    pub const CELL_V_MIN: crate::Point<Self, u16> = crate::Point::new(15, 1, false);
-    pub const CELL_V_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(16, 1, false);
-    pub const CELL_V_AVG: crate::Point<Self, u16> = crate::Point::new(17, 1, false);
-    pub const MOD_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(18, 1, false);
-    pub const MOD_TMP_MAX_MOD: crate::Point<Self, u16> = crate::Point::new(19, 1, false);
-    pub const MOD_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(20, 1, false);
-    pub const MOD_TMP_MIN_MOD: crate::Point<Self, u16> = crate::Point::new(21, 1, false);
-    pub const MOD_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
-    pub const CON_ST: crate::Point<Self, Option<ConSt>> = crate::Point::new(24, 2, false);
-    pub const EVT1: crate::Point<Self, Evt1> = crate::Point::new(26, 2, false);
-    pub const EVT2: crate::Point<Self, Option<Evt2>> = crate::Point::new(28, 2, false);
-    pub const EVT_VND1: crate::Point<Self, Option<EvtVnd1>> = crate::Point::new(30, 2, false);
-    pub const EVT_VND2: crate::Point<Self, Option<EvtVnd2>> = crate::Point::new(32, 2, false);
-    pub const SET_ENA: crate::Point<Self, Option<u16>> = crate::Point::new(34, 1, true);
-    pub const SET_CON: crate::Point<Self, Option<SetCon>> = crate::Point::new(35, 1, true);
-    pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(36, 1, false);
-    pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1, false);
-    pub const DOD_SF: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1, false);
-    pub const A_SF: crate::Point<Self, i16> = crate::Point::new(39, 1, false);
-    pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(40, 1, false);
-    pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(41, 1, false);
-    pub const MOD_TMP_SF: crate::Point<Self, i16> = crate::Point::new(42, 1, false);
+    pub const IDX: crate::Point<Self, u16> = crate::Point::new(0, 1);
+    pub const N_MOD: crate::Point<Self, u16> = crate::Point::new(1, 1);
+    pub const ST: crate::Point<Self, St> = crate::Point::new(2, 2);
+    pub const CON_FAIL: crate::Point<Self, Option<ConFail>> = crate::Point::new(4, 1);
+    pub const N_CELL_BAL: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1);
+    pub const SOC: crate::Point<Self, u16> = crate::Point::new(6, 1);
+    pub const DOD: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1);
+    pub const N_CYC: crate::Point<Self, Option<u32>> = crate::Point::new(8, 2);
+    pub const SOH: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1);
+    pub const A: crate::Point<Self, i16> = crate::Point::new(11, 1);
+    pub const V: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1);
+    pub const CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(13, 1);
+    pub const CELL_V_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(14, 1);
+    pub const CELL_V_MIN: crate::Point<Self, u16> = crate::Point::new(15, 1);
+    pub const CELL_V_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(16, 1);
+    pub const CELL_V_AVG: crate::Point<Self, u16> = crate::Point::new(17, 1);
+    pub const MOD_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(18, 1);
+    pub const MOD_TMP_MAX_MOD: crate::Point<Self, u16> = crate::Point::new(19, 1);
+    pub const MOD_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(20, 1);
+    pub const MOD_TMP_MIN_MOD: crate::Point<Self, u16> = crate::Point::new(21, 1);
+    pub const MOD_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(22, 1);
+    pub const CON_ST: crate::Point<Self, Option<ConSt>> = crate::Point::new(24, 2);
+    pub const EVT1: crate::Point<Self, Evt1> = crate::Point::new(26, 2);
+    pub const EVT2: crate::Point<Self, Option<Evt2>> = crate::Point::new(28, 2);
+    pub const EVT_VND1: crate::Point<Self, Option<EvtVnd1>> = crate::Point::new(30, 2);
+    pub const EVT_VND2: crate::Point<Self, Option<EvtVnd2>> = crate::Point::new(32, 2);
+    pub const SET_ENA: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(34, 1);
+    pub const SET_CON: crate::Point<Self, Option<SetCon>, crate::ReadWrite> =
+        crate::Point::new(35, 1);
+    pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(36, 1);
+    pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(37, 1);
+    pub const DOD_SF: crate::Point<Self, Option<i16>> = crate::Point::new(38, 1);
+    pub const A_SF: crate::Point<Self, i16> = crate::Point::new(39, 1);
+    pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(40, 1);
+    pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(41, 1);
+    pub const MOD_TMP_SF: crate::Point<Self, i16> = crate::Point::new(42, 1);
 }
 impl crate::sealed::Sealed for LithiumIonString {}
 impl crate::Group for LithiumIonString {
@@ -705,21 +706,19 @@ pub struct LithiumIonStringModule {
 }
 #[allow(missing_docs)]
 impl LithiumIonStringModule {
-    pub const MOD_N_CELL: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    pub const MOD_SOC: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const MOD_SOH: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
-    pub const MOD_CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
-    pub const MOD_CELL_V_MAX_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
-    pub const MOD_CELL_V_MIN: crate::Point<Self, u16> = crate::Point::new(5, 1, false);
-    pub const MOD_CELL_V_MIN_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
-    pub const MOD_CELL_V_AVG: crate::Point<Self, u16> = crate::Point::new(7, 1, false);
-    pub const MOD_CELL_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(8, 1, false);
-    pub const MOD_CELL_TMP_MAX_CELL: crate::Point<Self, Option<u16>> =
-        crate::Point::new(9, 1, false);
-    pub const MOD_CELL_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
-    pub const MOD_CELL_TMP_MIN_CELL: crate::Point<Self, Option<u16>> =
-        crate::Point::new(11, 1, false);
-    pub const MOD_CELL_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
+    pub const MOD_N_CELL: crate::Point<Self, u16> = crate::Point::new(0, 1);
+    pub const MOD_SOC: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1);
+    pub const MOD_SOH: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1);
+    pub const MOD_CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(3, 1);
+    pub const MOD_CELL_V_MAX_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1);
+    pub const MOD_CELL_V_MIN: crate::Point<Self, u16> = crate::Point::new(5, 1);
+    pub const MOD_CELL_V_MIN_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1);
+    pub const MOD_CELL_V_AVG: crate::Point<Self, u16> = crate::Point::new(7, 1);
+    pub const MOD_CELL_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(8, 1);
+    pub const MOD_CELL_TMP_MAX_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1);
+    pub const MOD_CELL_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(10, 1);
+    pub const MOD_CELL_TMP_MIN_CELL: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1);
+    pub const MOD_CELL_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(12, 1);
 }
 impl crate::sealed::Sealed for LithiumIonStringModule {}
 impl crate::Group for LithiumIonStringModule {

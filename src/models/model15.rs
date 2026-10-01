@@ -56,18 +56,18 @@ pub struct Model15 {
 }
 #[allow(missing_docs)]
 impl Model15 {
-    pub const CLR: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const IN_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(1, 2, false);
-    pub const IN_UC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(3, 2, false);
-    pub const IN_N_UC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(5, 2, false);
-    pub const IN_DSC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2, false);
-    pub const IN_ERR_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(9, 2, false);
-    pub const IN_UNK_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(11, 2, false);
-    pub const OUT_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(13, 2, false);
-    pub const OUT_UC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(15, 2, false);
-    pub const OUT_N_UC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(17, 2, false);
-    pub const OUT_DSC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(19, 2, false);
-    pub const OUT_ERR_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(21, 2, false);
+    pub const CLR: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const IN_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(1, 2);
+    pub const IN_UC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(3, 2);
+    pub const IN_N_UC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(5, 2);
+    pub const IN_DSC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(7, 2);
+    pub const IN_ERR_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(9, 2);
+    pub const IN_UNK_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(11, 2);
+    pub const OUT_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(13, 2);
+    pub const OUT_UC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(15, 2);
+    pub const OUT_N_UC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(17, 2);
+    pub const OUT_DSC_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(19, 2);
+    pub const OUT_ERR_CNT: crate::Point<Self, Option<u32>> = crate::Point::new(21, 2);
 }
 impl crate::sealed::Sealed for Model15 {}
 impl crate::Group for Model15 {

@@ -68,21 +68,28 @@ pub struct Model13 {
 }
 #[allow(missing_docs)]
 impl Model13 {
-    pub const NAM: crate::Point<Self, Option<String>> = crate::Point::new(0, 4, true);
-    pub const CFG_ST: crate::Point<Self, CfgSt> = crate::Point::new(4, 1, false);
-    pub const CHG_ST: crate::Point<Self, ChgSt> = crate::Point::new(5, 1, false);
-    pub const CAP: crate::Point<Self, Cap> = crate::Point::new(6, 1, false);
-    pub const CFG: crate::Point<Self, Cfg> = crate::Point::new(7, 1, true);
-    pub const CTL: crate::Point<Self, Ctl> = crate::Point::new(8, 1, true);
-    pub const ADDR: crate::Point<Self, String> = crate::Point::new(9, 20, true);
-    pub const CIDR: crate::Point<Self, Option<String>> = crate::Point::new(29, 20, true);
-    pub const GW: crate::Point<Self, Option<String>> = crate::Point::new(49, 20, true);
-    pub const DNS1: crate::Point<Self, Option<String>> = crate::Point::new(69, 20, true);
-    pub const DNS2: crate::Point<Self, Option<String>> = crate::Point::new(89, 20, true);
-    pub const NTP1: crate::Point<Self, Option<String>> = crate::Point::new(109, 20, true);
-    pub const NTP2: crate::Point<Self, Option<String>> = crate::Point::new(129, 20, true);
-    pub const DOM_NAM: crate::Point<Self, Option<String>> = crate::Point::new(149, 12, true);
-    pub const HOST_NAM: crate::Point<Self, Option<String>> = crate::Point::new(161, 12, true);
+    pub const NAM: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(0, 4);
+    pub const CFG_ST: crate::Point<Self, CfgSt> = crate::Point::new(4, 1);
+    pub const CHG_ST: crate::Point<Self, ChgSt> = crate::Point::new(5, 1);
+    pub const CAP: crate::Point<Self, Cap> = crate::Point::new(6, 1);
+    pub const CFG: crate::Point<Self, Cfg, crate::ReadWrite> = crate::Point::new(7, 1);
+    pub const CTL: crate::Point<Self, Ctl, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const ADDR: crate::Point<Self, String, crate::ReadWrite> = crate::Point::new(9, 20);
+    pub const CIDR: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(29, 20);
+    pub const GW: crate::Point<Self, Option<String>, crate::ReadWrite> = crate::Point::new(49, 20);
+    pub const DNS1: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(69, 20);
+    pub const DNS2: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(89, 20);
+    pub const NTP1: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(109, 20);
+    pub const NTP2: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(129, 20);
+    pub const DOM_NAM: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(149, 12);
+    pub const HOST_NAM: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(161, 12);
 }
 impl crate::sealed::Sealed for Model13 {}
 impl crate::Group for Model13 {

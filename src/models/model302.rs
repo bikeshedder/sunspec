@@ -50,11 +50,11 @@ pub struct Repeating {
 }
 #[allow(missing_docs)]
 impl Repeating {
-    pub const GHI: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
-    pub const POAI: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const DFI: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, false);
-    pub const DNI: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
-    pub const OTI: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
+    pub const GHI: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1);
+    pub const POAI: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1);
+    pub const DFI: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1);
+    pub const DNI: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1);
+    pub const OTI: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1);
 }
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {

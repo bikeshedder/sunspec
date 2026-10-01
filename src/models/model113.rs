@@ -142,37 +142,37 @@ pub struct InverterThreePhaseFloat {
 }
 #[allow(missing_docs)]
 impl InverterThreePhaseFloat {
-    pub const A: crate::Point<Self, f32> = crate::Point::new(0, 2, false);
-    pub const A_PH_A: crate::Point<Self, f32> = crate::Point::new(2, 2, false);
-    pub const A_PH_B: crate::Point<Self, f32> = crate::Point::new(4, 2, false);
-    pub const A_PH_C: crate::Point<Self, f32> = crate::Point::new(6, 2, false);
-    pub const PP_V_PH_AB: crate::Point<Self, Option<f32>> = crate::Point::new(8, 2, false);
-    pub const PP_V_PH_BC: crate::Point<Self, Option<f32>> = crate::Point::new(10, 2, false);
-    pub const PP_V_PH_CA: crate::Point<Self, Option<f32>> = crate::Point::new(12, 2, false);
-    pub const PH_V_PH_A: crate::Point<Self, f32> = crate::Point::new(14, 2, false);
-    pub const PH_V_PH_B: crate::Point<Self, f32> = crate::Point::new(16, 2, false);
-    pub const PH_V_PH_C: crate::Point<Self, f32> = crate::Point::new(18, 2, false);
-    pub const W: crate::Point<Self, f32> = crate::Point::new(20, 2, false);
-    pub const HZ: crate::Point<Self, f32> = crate::Point::new(22, 2, false);
-    pub const VA: crate::Point<Self, Option<f32>> = crate::Point::new(24, 2, false);
-    pub const VAR: crate::Point<Self, Option<f32>> = crate::Point::new(26, 2, false);
-    pub const PF: crate::Point<Self, Option<f32>> = crate::Point::new(28, 2, false);
-    pub const WH: crate::Point<Self, f32> = crate::Point::new(30, 2, false);
-    pub const DC_A: crate::Point<Self, Option<f32>> = crate::Point::new(32, 2, false);
-    pub const DC_V: crate::Point<Self, Option<f32>> = crate::Point::new(34, 2, false);
-    pub const DC_W: crate::Point<Self, Option<f32>> = crate::Point::new(36, 2, false);
-    pub const TMP_CAB: crate::Point<Self, f32> = crate::Point::new(38, 2, false);
-    pub const TMP_SNK: crate::Point<Self, Option<f32>> = crate::Point::new(40, 2, false);
-    pub const TMP_TRNS: crate::Point<Self, Option<f32>> = crate::Point::new(42, 2, false);
-    pub const TMP_OT: crate::Point<Self, Option<f32>> = crate::Point::new(44, 2, false);
-    pub const ST: crate::Point<Self, St> = crate::Point::new(46, 1, false);
-    pub const ST_VND: crate::Point<Self, Option<u16>> = crate::Point::new(47, 1, false);
-    pub const EVT1: crate::Point<Self, Evt1> = crate::Point::new(48, 2, false);
-    pub const EVT2: crate::Point<Self, Evt2> = crate::Point::new(50, 2, false);
-    pub const EVT_VND1: crate::Point<Self, Option<EvtVnd1>> = crate::Point::new(52, 2, false);
-    pub const EVT_VND2: crate::Point<Self, Option<EvtVnd2>> = crate::Point::new(54, 2, false);
-    pub const EVT_VND3: crate::Point<Self, Option<EvtVnd3>> = crate::Point::new(56, 2, false);
-    pub const EVT_VND4: crate::Point<Self, Option<EvtVnd4>> = crate::Point::new(58, 2, false);
+    pub const A: crate::Point<Self, f32> = crate::Point::new(0, 2);
+    pub const A_PH_A: crate::Point<Self, f32> = crate::Point::new(2, 2);
+    pub const A_PH_B: crate::Point<Self, f32> = crate::Point::new(4, 2);
+    pub const A_PH_C: crate::Point<Self, f32> = crate::Point::new(6, 2);
+    pub const PP_V_PH_AB: crate::Point<Self, Option<f32>> = crate::Point::new(8, 2);
+    pub const PP_V_PH_BC: crate::Point<Self, Option<f32>> = crate::Point::new(10, 2);
+    pub const PP_V_PH_CA: crate::Point<Self, Option<f32>> = crate::Point::new(12, 2);
+    pub const PH_V_PH_A: crate::Point<Self, f32> = crate::Point::new(14, 2);
+    pub const PH_V_PH_B: crate::Point<Self, f32> = crate::Point::new(16, 2);
+    pub const PH_V_PH_C: crate::Point<Self, f32> = crate::Point::new(18, 2);
+    pub const W: crate::Point<Self, f32> = crate::Point::new(20, 2);
+    pub const HZ: crate::Point<Self, f32> = crate::Point::new(22, 2);
+    pub const VA: crate::Point<Self, Option<f32>> = crate::Point::new(24, 2);
+    pub const VAR: crate::Point<Self, Option<f32>> = crate::Point::new(26, 2);
+    pub const PF: crate::Point<Self, Option<f32>> = crate::Point::new(28, 2);
+    pub const WH: crate::Point<Self, f32> = crate::Point::new(30, 2);
+    pub const DC_A: crate::Point<Self, Option<f32>> = crate::Point::new(32, 2);
+    pub const DC_V: crate::Point<Self, Option<f32>> = crate::Point::new(34, 2);
+    pub const DC_W: crate::Point<Self, Option<f32>> = crate::Point::new(36, 2);
+    pub const TMP_CAB: crate::Point<Self, f32> = crate::Point::new(38, 2);
+    pub const TMP_SNK: crate::Point<Self, Option<f32>> = crate::Point::new(40, 2);
+    pub const TMP_TRNS: crate::Point<Self, Option<f32>> = crate::Point::new(42, 2);
+    pub const TMP_OT: crate::Point<Self, Option<f32>> = crate::Point::new(44, 2);
+    pub const ST: crate::Point<Self, St> = crate::Point::new(46, 1);
+    pub const ST_VND: crate::Point<Self, Option<u16>> = crate::Point::new(47, 1);
+    pub const EVT1: crate::Point<Self, Evt1> = crate::Point::new(48, 2);
+    pub const EVT2: crate::Point<Self, Evt2> = crate::Point::new(50, 2);
+    pub const EVT_VND1: crate::Point<Self, Option<EvtVnd1>> = crate::Point::new(52, 2);
+    pub const EVT_VND2: crate::Point<Self, Option<EvtVnd2>> = crate::Point::new(54, 2);
+    pub const EVT_VND3: crate::Point<Self, Option<EvtVnd3>> = crate::Point::new(56, 2);
+    pub const EVT_VND4: crate::Point<Self, Option<EvtVnd4>> = crate::Point::new(58, 2);
 }
 impl crate::sealed::Sealed for InverterThreePhaseFloat {}
 impl crate::Group for InverterThreePhaseFloat {

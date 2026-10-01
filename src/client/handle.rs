@@ -1,8 +1,8 @@
 use std::{fmt, marker::PhantomData};
 
 use crate::{
-    sealed::ModelKindImpl, AnyModel, DiscoveredModel, Model, ModelInfo, ModelKind, ParseError,
-    Point, Value,
+    sealed::ModelKindImpl, Access, AnyModel, DiscoveredModel, Model, ModelInfo, ModelKind,
+    ParseError, Point, ReadWrite, Value,
 };
 
 use super::{
@@ -80,7 +80,10 @@ impl<'a, C: AsyncModbusClient, M: Model> ModelHandle<'a, C, M> {
     /// Read data for a single point. Please note that
     /// [`read`](Self::read) is more efficient when loading multiple
     /// points from a single model.
-    pub async fn read_point<T: Value>(&self, point: Point<M, T>) -> Result<T, ReadPointError> {
+    pub async fn read_point<T: Value, A: Access>(
+        &self,
+        point: Point<M, T, A>,
+    ) -> Result<T, ReadPointError> {
         if !self.contains(&point) {
             return Err(ReadPointError::PointOutOfBounds);
         }
@@ -96,9 +99,37 @@ impl<'a, C: AsyncModbusClient, M: Model> ModelHandle<'a, C, M> {
         Ok(T::decode(&data)?)
     }
     /// Write data for a single point.
+    ///
+    /// Only points with [`ReadWrite`] access can be written.
+    #[cfg_attr(
+        feature = "model1",
+        doc = r#"
+```
+# use sunspec::{client::{AsyncModbusClient, ModelHandle}, models::model1::Model1};
+# async fn example<C: AsyncModbusClient>(
+#     model: ModelHandle<'_, C, Model1>,
+# ) -> Result<(), Box<dyn std::error::Error>> {
+model.write_point(Model1::DA, Some(2)).await?;
+# Ok(())
+# }
+```
+
+Writing a read-only point is a compile error:
+
+```compile_fail
+# use sunspec::{client::{AsyncModbusClient, ModelHandle}, models::model1::Model1};
+# async fn example<C: AsyncModbusClient>(
+#     model: ModelHandle<'_, C, Model1>,
+# ) -> Result<(), Box<dyn std::error::Error>> {
+model.write_point(Model1::MN, "ACME".into()).await?;
+# Ok(())
+# }
+```
+"#
+    )]
     pub async fn write_point<T: Value>(
         &self,
-        point: Point<M, T>,
+        point: Point<M, T, ReadWrite>,
         value: T,
     ) -> Result<(), WritePointError> {
         if !self.contains(&point) {
@@ -127,12 +158,12 @@ impl<'a, C: AsyncModbusClient, M: Model> ModelHandle<'a, C, M> {
         ModelHandle::new(self.device, self.model)
     }
     /// Check whether the point lies within the discovered model length.
-    fn contains<T: Value>(&self, point: &Point<M, T>) -> bool {
+    fn contains<T: Value, A: Access>(&self, point: &Point<M, T, A>) -> bool {
         u32::from(point.offset) + u32::from(point.length) <= u32::from(self.model.len())
     }
     /// The address of the given point. The point must lie within the
     /// model, see [`contains`](Self::contains).
-    fn point_addr<T: Value>(&self, point: &Point<M, T>) -> u16 {
+    fn point_addr<T: Value, A: Access>(&self, point: &Point<M, T, A>) -> u16 {
         // A discovered model always ends within the address space and
         // the point lies within the model, so this can't overflow.
         self.model.addr() + point.offset

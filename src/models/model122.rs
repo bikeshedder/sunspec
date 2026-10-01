@@ -94,27 +94,26 @@ pub struct Status {
 }
 #[allow(missing_docs)]
 impl Status {
-    pub const PV_CONN: crate::Point<Self, PvConn> = crate::Point::new(0, 1, false);
-    pub const STOR_CONN: crate::Point<Self, StorConn> = crate::Point::new(1, 1, false);
-    pub const ECP_CONN: crate::Point<Self, EcpConn> = crate::Point::new(2, 1, false);
-    pub const ACT_WH: crate::Point<Self, Option<u64>> = crate::Point::new(3, 4, false);
-    pub const ACT_VAH: crate::Point<Self, Option<u64>> = crate::Point::new(7, 4, false);
-    pub const ACT_VARH_Q1: crate::Point<Self, Option<u64>> = crate::Point::new(11, 4, false);
-    pub const ACT_VARH_Q2: crate::Point<Self, Option<u64>> = crate::Point::new(15, 4, false);
-    pub const ACT_VARH_Q3: crate::Point<Self, Option<u64>> = crate::Point::new(19, 4, false);
-    pub const ACT_VARH_Q4: crate::Point<Self, Option<u64>> = crate::Point::new(23, 4, false);
-    pub const VAR_AVAL: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1, false);
-    pub const VAR_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1, false);
-    pub const W_AVAL: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1, false);
-    pub const W_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(30, 1, false);
-    pub const ST_SET_LIM_MSK: crate::Point<Self, Option<StSetLimMsk>> =
-        crate::Point::new(31, 2, false);
-    pub const ST_ACT_CTL: crate::Point<Self, Option<StActCtl>> = crate::Point::new(33, 2, false);
-    pub const TM_SRC: crate::Point<Self, Option<String>> = crate::Point::new(35, 4, false);
-    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(39, 2, false);
-    pub const RT_ST: crate::Point<Self, Option<RtSt>> = crate::Point::new(41, 1, false);
-    pub const RIS: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1, false);
-    pub const RIS_SF: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1, false);
+    pub const PV_CONN: crate::Point<Self, PvConn> = crate::Point::new(0, 1);
+    pub const STOR_CONN: crate::Point<Self, StorConn> = crate::Point::new(1, 1);
+    pub const ECP_CONN: crate::Point<Self, EcpConn> = crate::Point::new(2, 1);
+    pub const ACT_WH: crate::Point<Self, Option<u64>> = crate::Point::new(3, 4);
+    pub const ACT_VAH: crate::Point<Self, Option<u64>> = crate::Point::new(7, 4);
+    pub const ACT_VARH_Q1: crate::Point<Self, Option<u64>> = crate::Point::new(11, 4);
+    pub const ACT_VARH_Q2: crate::Point<Self, Option<u64>> = crate::Point::new(15, 4);
+    pub const ACT_VARH_Q3: crate::Point<Self, Option<u64>> = crate::Point::new(19, 4);
+    pub const ACT_VARH_Q4: crate::Point<Self, Option<u64>> = crate::Point::new(23, 4);
+    pub const VAR_AVAL: crate::Point<Self, Option<i16>> = crate::Point::new(27, 1);
+    pub const VAR_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(28, 1);
+    pub const W_AVAL: crate::Point<Self, Option<u16>> = crate::Point::new(29, 1);
+    pub const W_AVAL_SF: crate::Point<Self, Option<i16>> = crate::Point::new(30, 1);
+    pub const ST_SET_LIM_MSK: crate::Point<Self, Option<StSetLimMsk>> = crate::Point::new(31, 2);
+    pub const ST_ACT_CTL: crate::Point<Self, Option<StActCtl>> = crate::Point::new(33, 2);
+    pub const TM_SRC: crate::Point<Self, Option<String>> = crate::Point::new(35, 4);
+    pub const TMS: crate::Point<Self, Option<u32>> = crate::Point::new(39, 2);
+    pub const RT_ST: crate::Point<Self, Option<RtSt>> = crate::Point::new(41, 1);
+    pub const RIS: crate::Point<Self, Option<u16>> = crate::Point::new(42, 1);
+    pub const RIS_SF: crate::Point<Self, Option<i16>> = crate::Point::new(43, 1);
 }
 impl crate::sealed::Sealed for Status {}
 impl crate::Group for Status {

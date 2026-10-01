@@ -52,29 +52,29 @@ pub struct Model64111 {
 }
 #[allow(missing_docs)]
 impl Model64111 {
-    pub const PORT: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(1, 1, false);
-    pub const A_SF: crate::Point<Self, i16> = crate::Point::new(2, 1, false);
-    pub const P_SF: crate::Point<Self, i16> = crate::Point::new(3, 1, false);
-    pub const AH_SF: crate::Point<Self, i16> = crate::Point::new(4, 1, false);
-    pub const KWH_SF: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
-    pub const BATT_V: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
-    pub const ARRAY_V: crate::Point<Self, u16> = crate::Point::new(7, 1, false);
-    pub const OUTPUT_A: crate::Point<Self, u16> = crate::Point::new(8, 1, false);
-    pub const INPUT_A: crate::Point<Self, u16> = crate::Point::new(9, 1, false);
-    pub const CHARGER_ST: crate::Point<Self, ChargerSt> = crate::Point::new(10, 1, false);
-    pub const OUTPUT_W: crate::Point<Self, u16> = crate::Point::new(11, 1, false);
-    pub const TODAY_MIN_BAT_V: crate::Point<Self, u16> = crate::Point::new(12, 1, false);
-    pub const TODAY_MAX_BAT_V: crate::Point<Self, u16> = crate::Point::new(13, 1, false);
-    pub const VOCV: crate::Point<Self, u16> = crate::Point::new(14, 1, false);
-    pub const TODAY_MAX_VOC: crate::Point<Self, u16> = crate::Point::new(15, 1, false);
-    pub const TODAY_KWH_OUTPUT: crate::Point<Self, u16> = crate::Point::new(16, 1, false);
-    pub const TODAY_AH_OUTPUT: crate::Point<Self, u16> = crate::Point::new(17, 1, false);
-    pub const LIFE_TIME_KWH_OUT: crate::Point<Self, u16> = crate::Point::new(18, 1, false);
-    pub const LIFE_TIME_AH_OUT: crate::Point<Self, u16> = crate::Point::new(19, 1, false);
-    pub const LIFE_TIME_MAX_OUT: crate::Point<Self, u16> = crate::Point::new(20, 1, false);
-    pub const LIFE_TIME_MAX_BATT: crate::Point<Self, u16> = crate::Point::new(21, 1, false);
-    pub const LIFE_TIME_MAX_VOC: crate::Point<Self, u16> = crate::Point::new(22, 1, false);
+    pub const PORT: crate::Point<Self, u16> = crate::Point::new(0, 1);
+    pub const V_SF: crate::Point<Self, i16> = crate::Point::new(1, 1);
+    pub const A_SF: crate::Point<Self, i16> = crate::Point::new(2, 1);
+    pub const P_SF: crate::Point<Self, i16> = crate::Point::new(3, 1);
+    pub const AH_SF: crate::Point<Self, i16> = crate::Point::new(4, 1);
+    pub const KWH_SF: crate::Point<Self, i16> = crate::Point::new(5, 1);
+    pub const BATT_V: crate::Point<Self, u16> = crate::Point::new(6, 1);
+    pub const ARRAY_V: crate::Point<Self, u16> = crate::Point::new(7, 1);
+    pub const OUTPUT_A: crate::Point<Self, u16> = crate::Point::new(8, 1);
+    pub const INPUT_A: crate::Point<Self, u16> = crate::Point::new(9, 1);
+    pub const CHARGER_ST: crate::Point<Self, ChargerSt> = crate::Point::new(10, 1);
+    pub const OUTPUT_W: crate::Point<Self, u16> = crate::Point::new(11, 1);
+    pub const TODAY_MIN_BAT_V: crate::Point<Self, u16> = crate::Point::new(12, 1);
+    pub const TODAY_MAX_BAT_V: crate::Point<Self, u16> = crate::Point::new(13, 1);
+    pub const VOCV: crate::Point<Self, u16> = crate::Point::new(14, 1);
+    pub const TODAY_MAX_VOC: crate::Point<Self, u16> = crate::Point::new(15, 1);
+    pub const TODAY_KWH_OUTPUT: crate::Point<Self, u16> = crate::Point::new(16, 1);
+    pub const TODAY_AH_OUTPUT: crate::Point<Self, u16> = crate::Point::new(17, 1);
+    pub const LIFE_TIME_KWH_OUT: crate::Point<Self, u16> = crate::Point::new(18, 1);
+    pub const LIFE_TIME_AH_OUT: crate::Point<Self, u16> = crate::Point::new(19, 1);
+    pub const LIFE_TIME_MAX_OUT: crate::Point<Self, u16> = crate::Point::new(20, 1);
+    pub const LIFE_TIME_MAX_BATT: crate::Point<Self, u16> = crate::Point::new(21, 1);
+    pub const LIFE_TIME_MAX_VOC: crate::Point<Self, u16> = crate::Point::new(22, 1);
 }
 impl crate::sealed::Sealed for Model64111 {}
 impl crate::Group for Model64111 {

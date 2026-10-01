@@ -108,33 +108,48 @@ pub struct Controls {
 }
 #[allow(missing_docs)]
 impl Controls {
-    pub const CONN_WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const CONN_RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
-    pub const CONN: crate::Point<Self, Conn> = crate::Point::new(2, 1, true);
-    pub const W_MAX_LIM_PCT: crate::Point<Self, u16> = crate::Point::new(3, 1, true);
-    pub const W_MAX_LIM_PCT_WIN_TMS: crate::Point<Self, Option<u16>> =
-        crate::Point::new(4, 1, true);
-    pub const W_MAX_LIM_PCT_RVRT_TMS: crate::Point<Self, Option<u16>> =
-        crate::Point::new(5, 1, true);
-    pub const W_MAX_LIM_PCT_RMP_TMS: crate::Point<Self, Option<u16>> =
-        crate::Point::new(6, 1, true);
-    pub const W_MAX_LIM_ENA: crate::Point<Self, WMaxLimEna> = crate::Point::new(7, 1, true);
-    pub const OUT_PF_SET: crate::Point<Self, i16> = crate::Point::new(8, 1, true);
-    pub const OUT_PF_SET_WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, true);
-    pub const OUT_PF_SET_RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, true);
-    pub const OUT_PF_SET_RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, true);
-    pub const OUT_PF_SET_ENA: crate::Point<Self, OutPfSetEna> = crate::Point::new(12, 1, true);
-    pub const VAR_W_MAX_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(13, 1, true);
-    pub const VAR_MAX_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, true);
-    pub const VAR_AVAL_PCT: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, true);
-    pub const VAR_PCT_WIN_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(16, 1, true);
-    pub const VAR_PCT_RVRT_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, true);
-    pub const VAR_PCT_RMP_TMS: crate::Point<Self, Option<u16>> = crate::Point::new(18, 1, true);
-    pub const VAR_PCT_MOD: crate::Point<Self, Option<VarPctMod>> = crate::Point::new(19, 1, true);
-    pub const VAR_PCT_ENA: crate::Point<Self, VarPctEna> = crate::Point::new(20, 1, true);
-    pub const W_MAX_LIM_PCT_SF: crate::Point<Self, i16> = crate::Point::new(21, 1, false);
-    pub const OUT_PF_SET_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
-    pub const VAR_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
+    pub const CONN_WIN_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(0, 1);
+    pub const CONN_RVRT_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(1, 1);
+    pub const CONN: crate::Point<Self, Conn, crate::ReadWrite> = crate::Point::new(2, 1);
+    pub const W_MAX_LIM_PCT: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(3, 1);
+    pub const W_MAX_LIM_PCT_WIN_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(4, 1);
+    pub const W_MAX_LIM_PCT_RVRT_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(5, 1);
+    pub const W_MAX_LIM_PCT_RMP_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(6, 1);
+    pub const W_MAX_LIM_ENA: crate::Point<Self, WMaxLimEna, crate::ReadWrite> =
+        crate::Point::new(7, 1);
+    pub const OUT_PF_SET: crate::Point<Self, i16, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const OUT_PF_SET_WIN_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(9, 1);
+    pub const OUT_PF_SET_RVRT_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(10, 1);
+    pub const OUT_PF_SET_RMP_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(11, 1);
+    pub const OUT_PF_SET_ENA: crate::Point<Self, OutPfSetEna, crate::ReadWrite> =
+        crate::Point::new(12, 1);
+    pub const VAR_W_MAX_PCT: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(13, 1);
+    pub const VAR_MAX_PCT: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(14, 1);
+    pub const VAR_AVAL_PCT: crate::Point<Self, Option<i16>, crate::ReadWrite> =
+        crate::Point::new(15, 1);
+    pub const VAR_PCT_WIN_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(16, 1);
+    pub const VAR_PCT_RVRT_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(17, 1);
+    pub const VAR_PCT_RMP_TMS: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(18, 1);
+    pub const VAR_PCT_MOD: crate::Point<Self, Option<VarPctMod>, crate::ReadWrite> =
+        crate::Point::new(19, 1);
+    pub const VAR_PCT_ENA: crate::Point<Self, VarPctEna, crate::ReadWrite> =
+        crate::Point::new(20, 1);
+    pub const W_MAX_LIM_PCT_SF: crate::Point<Self, i16> = crate::Point::new(21, 1);
+    pub const OUT_PF_SET_SF: crate::Point<Self, i16> = crate::Point::new(22, 1);
+    pub const VAR_PCT_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1);
 }
 impl crate::sealed::Sealed for Controls {}
 impl crate::Group for Controls {

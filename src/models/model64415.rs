@@ -30,14 +30,16 @@ pub struct CsipControl {
 }
 #[allow(missing_docs)]
 impl CsipControl {
-    pub const LOG_EVENT_ENA: crate::Point<Self, Option<LogEventEna>> =
-        crate::Point::new(0, 1, true);
-    pub const HTTP_MSG: crate::Point<Self, Option<HttpMsg>> = crate::Point::new(1, 1, true);
-    pub const COMM004_CERT: crate::Point<Self, Option<Comm004Cert>> = crate::Point::new(2, 1, true);
-    pub const SUBSCRIBED_RESOURCE: crate::Point<Self, Option<String>> =
-        crate::Point::new(3, 64, true);
-    pub const SUBSCRIPTION_ENA: crate::Point<Self, Option<SubscriptionEna>> =
-        crate::Point::new(67, 1, true);
+    pub const LOG_EVENT_ENA: crate::Point<Self, Option<LogEventEna>, crate::ReadWrite> =
+        crate::Point::new(0, 1);
+    pub const HTTP_MSG: crate::Point<Self, Option<HttpMsg>, crate::ReadWrite> =
+        crate::Point::new(1, 1);
+    pub const COMM004_CERT: crate::Point<Self, Option<Comm004Cert>, crate::ReadWrite> =
+        crate::Point::new(2, 1);
+    pub const SUBSCRIBED_RESOURCE: crate::Point<Self, Option<String>, crate::ReadWrite> =
+        crate::Point::new(3, 64);
+    pub const SUBSCRIPTION_ENA: crate::Point<Self, Option<SubscriptionEna>, crate::ReadWrite> =
+        crate::Point::new(67, 1);
 }
 impl crate::sealed::Sealed for CsipControl {}
 impl crate::Group for CsipControl {

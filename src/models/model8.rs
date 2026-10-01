@@ -18,8 +18,8 @@ pub struct Model8 {
 }
 #[allow(missing_docs)]
 impl Model8 {
-    pub const FMT: crate::Point<Self, Fmt> = crate::Point::new(0, 1, false);
-    pub const N: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
+    pub const FMT: crate::Point<Self, Fmt> = crate::Point::new(0, 1);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(1, 1);
 }
 impl crate::sealed::Sealed for Model8 {}
 impl crate::Group for Model8 {
@@ -93,7 +93,7 @@ pub struct Repeating {
 }
 #[allow(missing_docs)]
 impl Repeating {
-    pub const CERT: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const CERT: crate::Point<Self, u16> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for Repeating {}
 impl crate::Group for Repeating {

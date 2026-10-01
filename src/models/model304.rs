@@ -42,9 +42,9 @@ pub struct Incl {
 }
 #[allow(missing_docs)]
 impl Incl {
-    pub const INCLX: crate::Point<Self, i32> = crate::Point::new(0, 2, false);
-    pub const INCLY: crate::Point<Self, Option<i32>> = crate::Point::new(2, 2, false);
-    pub const INCLZ: crate::Point<Self, Option<i32>> = crate::Point::new(4, 2, false);
+    pub const INCLX: crate::Point<Self, i32> = crate::Point::new(0, 2);
+    pub const INCLY: crate::Point<Self, Option<i32>> = crate::Point::new(2, 2);
+    pub const INCLZ: crate::Point<Self, Option<i32>> = crate::Point::new(4, 2);
 }
 impl crate::sealed::Sealed for Incl {}
 impl crate::Group for Incl {

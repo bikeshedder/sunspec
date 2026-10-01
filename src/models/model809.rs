@@ -12,7 +12,7 @@ pub struct FlowBatteryStack {
 }
 #[allow(missing_docs)]
 impl FlowBatteryStack {
-    pub const STACK_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const STACK_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for FlowBatteryStack {}
 impl crate::Group for FlowBatteryStack {
@@ -40,7 +40,7 @@ pub struct Cell {
 }
 #[allow(missing_docs)]
 impl Cell {
-    pub const CELL_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const CELL_TBD: crate::Point<Self, u16> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for Cell {}
 impl crate::Group for Cell {

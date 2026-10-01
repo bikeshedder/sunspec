@@ -42,14 +42,20 @@ pub struct ExtSettings {
 }
 #[allow(missing_docs)]
 impl ExtSettings {
-    pub const NOM_RMP_UP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, true);
-    pub const NOM_RMP_DN_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, true);
-    pub const EMG_RMP_UP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(2, 1, true);
-    pub const EMG_RMP_DN_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, true);
-    pub const CONN_RMP_UP_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, true);
-    pub const CONN_RMP_DN_RTE: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, true);
-    pub const A_GRA: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, true);
-    pub const RMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1, false);
+    pub const NOM_RMP_UP_RTE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(0, 1);
+    pub const NOM_RMP_DN_RTE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(1, 1);
+    pub const EMG_RMP_UP_RTE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(2, 1);
+    pub const EMG_RMP_DN_RTE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(3, 1);
+    pub const CONN_RMP_UP_RTE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(4, 1);
+    pub const CONN_RMP_DN_RTE: crate::Point<Self, Option<u16>, crate::ReadWrite> =
+        crate::Point::new(5, 1);
+    pub const A_GRA: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(6, 1);
+    pub const RMP_SF: crate::Point<Self, Option<i16>> = crate::Point::new(7, 1);
 }
 impl crate::sealed::Sealed for ExtSettings {}
 impl crate::Group for ExtSettings {

@@ -59,16 +59,16 @@ pub struct DerFreqDroop {
 }
 #[allow(missing_docs)]
 impl DerFreqDroop {
-    pub const ENA: crate::Point<Self, Ena> = crate::Point::new(0, 1, true);
-    pub const ADPT_CTL_REQ: crate::Point<Self, u16> = crate::Point::new(1, 1, true);
-    pub const ADPT_CTL_RSLT: crate::Point<Self, AdptCtlRslt> = crate::Point::new(2, 1, false);
-    pub const N_CTL: crate::Point<Self, u16> = crate::Point::new(3, 1, false);
-    pub const RVRT_TMS: crate::Point<Self, Option<u32>> = crate::Point::new(4, 2, true);
-    pub const RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2, false);
-    pub const RVRT_CTL: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, true);
-    pub const DB_SF: crate::Point<Self, i16> = crate::Point::new(9, 1, false);
-    pub const K_SF: crate::Point<Self, i16> = crate::Point::new(10, 1, false);
-    pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
+    pub const ENA: crate::Point<Self, Ena, crate::ReadWrite> = crate::Point::new(0, 1);
+    pub const ADPT_CTL_REQ: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(1, 1);
+    pub const ADPT_CTL_RSLT: crate::Point<Self, AdptCtlRslt> = crate::Point::new(2, 1);
+    pub const N_CTL: crate::Point<Self, u16> = crate::Point::new(3, 1);
+    pub const RVRT_TMS: crate::Point<Self, Option<u32>, crate::ReadWrite> = crate::Point::new(4, 2);
+    pub const RVRT_REM: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2);
+    pub const RVRT_CTL: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const DB_SF: crate::Point<Self, i16> = crate::Point::new(9, 1);
+    pub const K_SF: crate::Point<Self, i16> = crate::Point::new(10, 1);
+    pub const RSP_TMS_SF: crate::Point<Self, i16> = crate::Point::new(11, 1);
 }
 impl crate::sealed::Sealed for DerFreqDroop {}
 impl crate::Group for DerFreqDroop {
@@ -230,13 +230,13 @@ pub struct Ctl {
 }
 #[allow(missing_docs)]
 impl Ctl {
-    pub const DB_OF: crate::Point<Self, u32> = crate::Point::new(0, 2, true);
-    pub const DB_UF: crate::Point<Self, u32> = crate::Point::new(2, 2, true);
-    pub const K_OF: crate::Point<Self, u16> = crate::Point::new(4, 1, true);
-    pub const K_UF: crate::Point<Self, u16> = crate::Point::new(5, 1, true);
-    pub const RSP_TMS: crate::Point<Self, u32> = crate::Point::new(6, 2, true);
-    pub const P_MIN: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, true);
-    pub const READ_ONLY: crate::Point<Self, CtlReadOnly> = crate::Point::new(9, 1, false);
+    pub const DB_OF: crate::Point<Self, u32, crate::ReadWrite> = crate::Point::new(0, 2);
+    pub const DB_UF: crate::Point<Self, u32, crate::ReadWrite> = crate::Point::new(2, 2);
+    pub const K_OF: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(4, 1);
+    pub const K_UF: crate::Point<Self, u16, crate::ReadWrite> = crate::Point::new(5, 1);
+    pub const RSP_TMS: crate::Point<Self, u32, crate::ReadWrite> = crate::Point::new(6, 2);
+    pub const P_MIN: crate::Point<Self, Option<i16>, crate::ReadWrite> = crate::Point::new(8, 1);
+    pub const READ_ONLY: crate::Point<Self, CtlReadOnly> = crate::Point::new(9, 1);
 }
 impl crate::sealed::Sealed for Ctl {}
 impl crate::Group for Ctl {

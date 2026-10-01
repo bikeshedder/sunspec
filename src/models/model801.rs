@@ -14,7 +14,7 @@ pub struct Storage {
 }
 #[allow(missing_docs)]
 impl Storage {
-    pub const DEPRECATED: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
+    pub const DEPRECATED: crate::Point<Self, u16> = crate::Point::new(0, 1);
 }
 impl crate::sealed::Sealed for Storage {}
 impl crate::Group for Storage {

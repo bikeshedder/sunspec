@@ -322,9 +322,14 @@ fn gen_group(
             let point_type = rust_type(point, &point_type_prefix);
             let len = Literal::u16_unsuffixed(point.size);
             let offset = Literal::u16_unsuffixed(offset);
-            let writable = point.access == PointAccess::RW;
-            let code = quote! {
-                pub const #point_name: crate::Point<Self, #point_type> = crate::Point::new(#offset, #len, #writable);
+            let code = if point.access == PointAccess::RW {
+                quote! {
+                    pub const #point_name: crate::Point<Self, #point_type, crate::ReadWrite> = crate::Point::new(#offset, #len);
+                }
+            } else {
+                quote! {
+                    pub const #point_name: crate::Point<Self, #point_type> = crate::Point::new(#offset, #len);
+                }
             };
             Some(code)
         });

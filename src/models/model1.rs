@@ -36,12 +36,12 @@ pub struct Common {
 }
 #[allow(missing_docs)]
 impl Common {
-    pub const MN: crate::Point<Self, String> = crate::Point::new(0, 16, false);
-    pub const MD: crate::Point<Self, String> = crate::Point::new(16, 16, false);
-    pub const OPT: crate::Point<Self, Option<String>> = crate::Point::new(32, 8, false);
-    pub const VR: crate::Point<Self, Option<String>> = crate::Point::new(40, 8, false);
-    pub const SN: crate::Point<Self, String> = crate::Point::new(48, 16, false);
-    pub const DA: crate::Point<Self, Option<u16>> = crate::Point::new(64, 1, true);
+    pub const MN: crate::Point<Self, String> = crate::Point::new(0, 16);
+    pub const MD: crate::Point<Self, String> = crate::Point::new(16, 16);
+    pub const OPT: crate::Point<Self, Option<String>> = crate::Point::new(32, 8);
+    pub const VR: crate::Point<Self, Option<String>> = crate::Point::new(40, 8);
+    pub const SN: crate::Point<Self, String> = crate::Point::new(48, 16);
+    pub const DA: crate::Point<Self, Option<u16>, crate::ReadWrite> = crate::Point::new(64, 1);
 }
 impl crate::sealed::Sealed for Common {}
 impl crate::Group for Common {

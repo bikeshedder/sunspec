@@ -78,27 +78,27 @@ pub struct StringCombinerAdvancedInputs {
 }
 #[allow(missing_docs)]
 impl StringCombinerAdvancedInputs {
-    pub const DC_A_SF: crate::Point<Self, i16> = crate::Point::new(0, 1, false);
-    pub const DC_AHR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1, false);
-    pub const DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
-    pub const DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1, false);
-    pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1, false);
-    pub const DC_A_MAX: crate::Point<Self, u16> = crate::Point::new(5, 1, false);
-    pub const N: crate::Point<Self, u16> = crate::Point::new(6, 1, false);
-    pub const EVT: crate::Point<Self, Evt> = crate::Point::new(7, 2, false);
-    pub const EVT_VND: crate::Point<Self, Option<EvtVnd>> = crate::Point::new(9, 2, false);
-    pub const DC_A: crate::Point<Self, i16> = crate::Point::new(11, 1, false);
-    pub const DC_AHR: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2, false);
-    pub const DC_V: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
-    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1, false);
-    pub const DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
-    pub const DC_PR: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1, false);
-    pub const DC_WH: crate::Point<Self, Option<u32>> = crate::Point::new(18, 2, false);
-    pub const IN_DC_A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1, false);
-    pub const IN_DC_AHR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1, false);
-    pub const IN_DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1, false);
-    pub const IN_DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    pub const IN_DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1, false);
+    pub const DC_A_SF: crate::Point<Self, i16> = crate::Point::new(0, 1);
+    pub const DC_AHR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(1, 1);
+    pub const DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1);
+    pub const DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(3, 1);
+    pub const DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(4, 1);
+    pub const DC_A_MAX: crate::Point<Self, u16> = crate::Point::new(5, 1);
+    pub const N: crate::Point<Self, u16> = crate::Point::new(6, 1);
+    pub const EVT: crate::Point<Self, Evt> = crate::Point::new(7, 2);
+    pub const EVT_VND: crate::Point<Self, Option<EvtVnd>> = crate::Point::new(9, 2);
+    pub const DC_A: crate::Point<Self, i16> = crate::Point::new(11, 1);
+    pub const DC_AHR: crate::Point<Self, Option<u32>> = crate::Point::new(12, 2);
+    pub const DC_V: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1);
+    pub const TMP: crate::Point<Self, Option<i16>> = crate::Point::new(15, 1);
+    pub const DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1);
+    pub const DC_PR: crate::Point<Self, Option<i16>> = crate::Point::new(17, 1);
+    pub const DC_WH: crate::Point<Self, Option<u32>> = crate::Point::new(18, 2);
+    pub const IN_DC_A_SF: crate::Point<Self, Option<i16>> = crate::Point::new(20, 1);
+    pub const IN_DC_AHR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(21, 1);
+    pub const IN_DC_V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(22, 1);
+    pub const IN_DC_W_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1);
+    pub const IN_DC_WH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(24, 1);
 }
 impl crate::sealed::Sealed for StringCombinerAdvancedInputs {}
 impl crate::Group for StringCombinerAdvancedInputs {
@@ -274,17 +274,16 @@ pub struct String {
 }
 #[allow(missing_docs)]
 impl String {
-    pub const IN_ID: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    pub const IN_EVT: crate::Point<Self, StringInEvt> = crate::Point::new(1, 2, false);
-    pub const IN_EVT_VND: crate::Point<Self, Option<StringInEvtVnd>> =
-        crate::Point::new(3, 2, false);
-    pub const IN_DC_A: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
-    pub const IN_DC_AHR: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2, false);
-    pub const IN_DC_V: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
-    pub const IN_DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1, false);
-    pub const IN_DC_WH: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2, false);
-    pub const IN_DC_PR: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
-    pub const IN_N: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
+    pub const IN_ID: crate::Point<Self, u16> = crate::Point::new(0, 1);
+    pub const IN_EVT: crate::Point<Self, StringInEvt> = crate::Point::new(1, 2);
+    pub const IN_EVT_VND: crate::Point<Self, Option<StringInEvtVnd>> = crate::Point::new(3, 2);
+    pub const IN_DC_A: crate::Point<Self, i16> = crate::Point::new(5, 1);
+    pub const IN_DC_AHR: crate::Point<Self, Option<u32>> = crate::Point::new(6, 2);
+    pub const IN_DC_V: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1);
+    pub const IN_DC_W: crate::Point<Self, Option<i16>> = crate::Point::new(9, 1);
+    pub const IN_DC_WH: crate::Point<Self, Option<u32>> = crate::Point::new(10, 2);
+    pub const IN_DC_PR: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1);
+    pub const IN_N: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1);
 }
 impl crate::sealed::Sealed for String {}
 impl crate::Group for String {

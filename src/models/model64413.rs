@@ -25,9 +25,9 @@ pub struct PvSimCurves {
 }
 #[allow(missing_docs)]
 impl PvSimCurves {
-    pub const IV_LEN: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1, false);
-    pub const IRR: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1, false);
-    pub const IRR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1, false);
+    pub const IV_LEN: crate::Point<Self, Option<u16>> = crate::Point::new(0, 1);
+    pub const IRR: crate::Point<Self, Option<u16>> = crate::Point::new(1, 1);
+    pub const IRR_SF: crate::Point<Self, Option<i16>> = crate::Point::new(2, 1);
 }
 impl crate::sealed::Sealed for PvSimCurves {}
 impl crate::Group for PvSimCurves {
@@ -70,9 +70,9 @@ pub struct Iv {
 }
 #[allow(missing_docs)]
 impl Iv {
-    pub const P: crate::Point<Self, Option<f32>> = crate::Point::new(0, 2, false);
-    pub const I: crate::Point<Self, Option<f32>> = crate::Point::new(2, 2, false);
-    pub const V: crate::Point<Self, Option<f32>> = crate::Point::new(4, 2, false);
+    pub const P: crate::Point<Self, Option<f32>> = crate::Point::new(0, 2);
+    pub const I: crate::Point<Self, Option<f32>> = crate::Point::new(2, 2);
+    pub const V: crate::Point<Self, Option<f32>> = crate::Point::new(4, 2);
 }
 impl crate::sealed::Sealed for Iv {}
 impl crate::Group for Iv {

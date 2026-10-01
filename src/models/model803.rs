@@ -123,32 +123,32 @@ pub struct LithiumIonBank {
 }
 #[allow(missing_docs)]
 impl LithiumIonBank {
-    pub const N_STR: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    pub const N_STR_CON: crate::Point<Self, u16> = crate::Point::new(1, 1, false);
-    pub const MOD_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(2, 1, false);
-    pub const MOD_TMP_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1, false);
-    pub const MOD_TMP_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1, false);
-    pub const MOD_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(5, 1, false);
-    pub const MOD_TMP_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1, false);
-    pub const MOD_TMP_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1, false);
-    pub const MOD_TMP_AVG: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1, false);
-    pub const STR_V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1, false);
-    pub const STR_V_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
-    pub const STR_V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1, false);
-    pub const STR_V_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1, false);
-    pub const STR_V_AVG: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1, false);
-    pub const STR_A_MAX: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1, false);
-    pub const STR_A_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(15, 1, false);
-    pub const STR_A_MIN: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1, false);
-    pub const STR_A_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1, false);
-    pub const STR_A_AVG: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1, false);
-    pub const N_CELL_BAL: crate::Point<Self, Option<u16>> = crate::Point::new(19, 1, false);
-    pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(20, 1, false);
-    pub const MOD_TMP_SF: crate::Point<Self, i16> = crate::Point::new(21, 1, false);
-    pub const A_SF: crate::Point<Self, i16> = crate::Point::new(22, 1, false);
-    pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1, false);
-    pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(24, 1, false);
-    pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1, false);
+    pub const N_STR: crate::Point<Self, u16> = crate::Point::new(0, 1);
+    pub const N_STR_CON: crate::Point<Self, u16> = crate::Point::new(1, 1);
+    pub const MOD_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(2, 1);
+    pub const MOD_TMP_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(3, 1);
+    pub const MOD_TMP_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(4, 1);
+    pub const MOD_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(5, 1);
+    pub const MOD_TMP_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(6, 1);
+    pub const MOD_TMP_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(7, 1);
+    pub const MOD_TMP_AVG: crate::Point<Self, Option<i16>> = crate::Point::new(8, 1);
+    pub const STR_V_MAX: crate::Point<Self, Option<u16>> = crate::Point::new(9, 1);
+    pub const STR_V_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1);
+    pub const STR_V_MIN: crate::Point<Self, Option<u16>> = crate::Point::new(11, 1);
+    pub const STR_V_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(12, 1);
+    pub const STR_V_AVG: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1);
+    pub const STR_A_MAX: crate::Point<Self, Option<i16>> = crate::Point::new(14, 1);
+    pub const STR_A_MAX_STR: crate::Point<Self, Option<u16>> = crate::Point::new(15, 1);
+    pub const STR_A_MIN: crate::Point<Self, Option<i16>> = crate::Point::new(16, 1);
+    pub const STR_A_MIN_STR: crate::Point<Self, Option<u16>> = crate::Point::new(17, 1);
+    pub const STR_A_AVG: crate::Point<Self, Option<i16>> = crate::Point::new(18, 1);
+    pub const N_CELL_BAL: crate::Point<Self, Option<u16>> = crate::Point::new(19, 1);
+    pub const CELL_V_SF: crate::Point<Self, i16> = crate::Point::new(20, 1);
+    pub const MOD_TMP_SF: crate::Point<Self, i16> = crate::Point::new(21, 1);
+    pub const A_SF: crate::Point<Self, i16> = crate::Point::new(22, 1);
+    pub const SOH_SF: crate::Point<Self, Option<i16>> = crate::Point::new(23, 1);
+    pub const SOC_SF: crate::Point<Self, i16> = crate::Point::new(24, 1);
+    pub const V_SF: crate::Point<Self, Option<i16>> = crate::Point::new(25, 1);
 }
 impl crate::sealed::Sealed for LithiumIonBank {}
 impl crate::Group for LithiumIonBank {
@@ -296,39 +296,32 @@ pub struct String {
 }
 #[allow(missing_docs)]
 impl String {
-    pub const STR_N_MOD: crate::Point<Self, u16> = crate::Point::new(0, 1, false);
-    pub const STR_ST: crate::Point<Self, StringStrSt> = crate::Point::new(1, 2, false);
-    pub const STR_CON_FAIL: crate::Point<Self, Option<StringStrConFail>> =
-        crate::Point::new(3, 1, false);
-    pub const STR_SOC: crate::Point<Self, u16> = crate::Point::new(4, 1, false);
-    pub const STR_SOH: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1, false);
-    pub const STR_A: crate::Point<Self, i16> = crate::Point::new(6, 1, false);
-    pub const STR_CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(7, 1, false);
-    pub const STR_CELL_V_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1, false);
-    pub const STR_CELL_V_MIN: crate::Point<Self, u16> = crate::Point::new(9, 1, false);
-    pub const STR_CELL_V_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1, false);
-    pub const STR_CELL_V_AVG: crate::Point<Self, u16> = crate::Point::new(11, 1, false);
-    pub const STR_MOD_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(12, 1, false);
-    pub const STR_MOD_TMP_MAX_MOD: crate::Point<Self, Option<u16>> =
-        crate::Point::new(13, 1, false);
-    pub const STR_MOD_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(14, 1, false);
-    pub const STR_MOD_TMP_MIN_MOD: crate::Point<Self, Option<u16>> =
-        crate::Point::new(15, 1, false);
-    pub const STR_MOD_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(16, 1, false);
-    pub const STR_DIS_RSN: crate::Point<Self, Option<StringStrDisRsn>> =
-        crate::Point::new(17, 1, false);
-    pub const STR_CON_ST: crate::Point<Self, Option<StringStrConSt>> =
-        crate::Point::new(18, 2, false);
-    pub const STR_EVT1: crate::Point<Self, StringStrEvt1> = crate::Point::new(20, 2, false);
-    pub const STR_EVT2: crate::Point<Self, Option<StringStrEvt2>> = crate::Point::new(22, 2, false);
-    pub const STR_EVT_VND1: crate::Point<Self, Option<StringStrEvtVnd1>> =
-        crate::Point::new(24, 2, false);
-    pub const STR_EVT_VND2: crate::Point<Self, Option<StringStrEvtVnd2>> =
-        crate::Point::new(26, 2, false);
-    pub const STR_SET_ENA: crate::Point<Self, Option<StringStrSetEna>> =
-        crate::Point::new(28, 1, true);
-    pub const STR_SET_CON: crate::Point<Self, Option<StringStrSetCon>> =
-        crate::Point::new(29, 1, true);
+    pub const STR_N_MOD: crate::Point<Self, u16> = crate::Point::new(0, 1);
+    pub const STR_ST: crate::Point<Self, StringStrSt> = crate::Point::new(1, 2);
+    pub const STR_CON_FAIL: crate::Point<Self, Option<StringStrConFail>> = crate::Point::new(3, 1);
+    pub const STR_SOC: crate::Point<Self, u16> = crate::Point::new(4, 1);
+    pub const STR_SOH: crate::Point<Self, Option<u16>> = crate::Point::new(5, 1);
+    pub const STR_A: crate::Point<Self, i16> = crate::Point::new(6, 1);
+    pub const STR_CELL_V_MAX: crate::Point<Self, u16> = crate::Point::new(7, 1);
+    pub const STR_CELL_V_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(8, 1);
+    pub const STR_CELL_V_MIN: crate::Point<Self, u16> = crate::Point::new(9, 1);
+    pub const STR_CELL_V_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(10, 1);
+    pub const STR_CELL_V_AVG: crate::Point<Self, u16> = crate::Point::new(11, 1);
+    pub const STR_MOD_TMP_MAX: crate::Point<Self, i16> = crate::Point::new(12, 1);
+    pub const STR_MOD_TMP_MAX_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(13, 1);
+    pub const STR_MOD_TMP_MIN: crate::Point<Self, i16> = crate::Point::new(14, 1);
+    pub const STR_MOD_TMP_MIN_MOD: crate::Point<Self, Option<u16>> = crate::Point::new(15, 1);
+    pub const STR_MOD_TMP_AVG: crate::Point<Self, i16> = crate::Point::new(16, 1);
+    pub const STR_DIS_RSN: crate::Point<Self, Option<StringStrDisRsn>> = crate::Point::new(17, 1);
+    pub const STR_CON_ST: crate::Point<Self, Option<StringStrConSt>> = crate::Point::new(18, 2);
+    pub const STR_EVT1: crate::Point<Self, StringStrEvt1> = crate::Point::new(20, 2);
+    pub const STR_EVT2: crate::Point<Self, Option<StringStrEvt2>> = crate::Point::new(22, 2);
+    pub const STR_EVT_VND1: crate::Point<Self, Option<StringStrEvtVnd1>> = crate::Point::new(24, 2);
+    pub const STR_EVT_VND2: crate::Point<Self, Option<StringStrEvtVnd2>> = crate::Point::new(26, 2);
+    pub const STR_SET_ENA: crate::Point<Self, Option<StringStrSetEna>, crate::ReadWrite> =
+        crate::Point::new(28, 1);
+    pub const STR_SET_CON: crate::Point<Self, Option<StringStrSetCon>, crate::ReadWrite> =
+        crate::Point::new(29, 1);
 }
 impl crate::sealed::Sealed for String {}
 impl crate::Group for String {
