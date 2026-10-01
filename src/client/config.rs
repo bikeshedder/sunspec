@@ -5,7 +5,7 @@ use crate::DEFAULT_DISCOVERY_ADDRESSES;
 /// Default timeout when reading registers
 pub const DEFAULT_READ_TIMEOUT: Duration = Duration::from_secs(1);
 
-/// Default timeout when reading registers
+/// Default timeout when writing registers
 pub const DEFAULT_WRITE_TIMEOUT: Duration = Duration::from_secs(1);
 
 /// Modbus defines that a maximum of 125 registers can be read

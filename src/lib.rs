@@ -36,7 +36,7 @@ mod constants;
 mod discovered;
 mod group;
 mod model;
-/// This module contains all the genererated SunSpec models.
+/// This module contains all the generated SunSpec models.
 pub mod models;
 mod point;
 mod sealed;

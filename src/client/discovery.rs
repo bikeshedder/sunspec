@@ -37,12 +37,13 @@ pub enum DiscoveryError {
     /// Communication error.
     #[error("Modbus error: {0}")]
     Modbus(#[from] ModbusError),
-    /// The Modbus slave did not provide the "SunS" header at the well known
-    /// addresses 0, 40000 or 50000.
+    /// The Modbus slave did not provide the "SunS" header at any of the
+    /// discovery addresses (see
+    /// [`Config::discovery_addresses`](super::Config::discovery_addresses)).
     #[error("SunS identifier not found")]
     SunsIdentifierNotFound,
-    /// The addresses would overflow while discovering modules. The slave
-    /// device seams to be returning garbage data.
+    /// The addresses would overflow while discovering models. The slave
+    /// device seems to be returning garbage data.
     #[error("Address overflow detected")]
     AddressOverflow,
 }

@@ -128,7 +128,7 @@ How does this crate differ from crates like `tokio-sunspec`, `sunspec-models`, `
 How do I reduce compile times or binary size?
 
 - Disable default features and enable only the features you need.
-- This is is useful if you interact only with a small number of models.
+- This is useful if you interact only with a small number of models.
 
 Do I have to use `tokio-modbus`?
 

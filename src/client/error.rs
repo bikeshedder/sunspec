@@ -8,7 +8,7 @@ use crate::{DecodeError, ParseError};
 /// or underlying modbus error.
 #[derive(Debug, Error)]
 pub enum ModbusError {
-    /// A timeout occured
+    /// A timeout occurred
     #[error("Timeout")]
     Timeout,
     /// The underlying Modbus implementation reported a protocol error, e.g.
@@ -131,7 +131,7 @@ pub enum ReadModelError {
         /// Length of the discovered model
         len: u16,
     },
-    /// Some error occured while communicating via the modbus. This
+    /// Some error occurred while communicating via the modbus. This
     /// error is implementation specific.
     #[error("Modbus error: {0}")]
     Modbus(#[from] ModbusError),
