@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add support for working with models only known at runtime (#11):
+- Add support for accessing models dynamically (#11):
   - `ModelInfo` with the id, name and label of a model. It is available via
     `Model::INFO`, `ModelInfo::by_id` and `str::parse` (accepting e.g.
     `"103"`, `"m103"` or `"inverter_three_phase"`).

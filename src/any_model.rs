@@ -12,13 +12,13 @@ use crate::{
     AnyModel, Model, ParseError,
 };
 
-/// Information about a model which is known at runtime.
+/// Information about a model.
 ///
 /// Every model provides this information via [`Model::INFO`]. All models
 /// enabled via Cargo features are listed in [`MODELS`]. Use
 /// [`ModelInfo::by_id`] or [`str::parse`] to look up a model and
-/// [`ModelInfo::parse`] to parse its data without knowing its type at
-/// compile time.
+/// [`ModelInfo::parse`] to parse its data as [`AnyModel`] for accessing
+/// it dynamically.
 pub struct ModelInfo {
     /// Model ID
     pub id: u16,

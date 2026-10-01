@@ -83,8 +83,9 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
     let any_model = quote! {
         /// Data of any model enabled via Cargo features.
         ///
-        /// This is useful when the model to be read is only known at runtime,
-        /// e.g. when it was selected via [`ModelInfo`](crate::ModelInfo).
+        /// It is used for accessing models dynamically, e.g. by tools inspecting
+        /// devices or gateways forwarding the data of all models, which don't
+        /// handle each model type separately.
         #[derive(Clone, Debug, PartialEq)]
         #[cfg_attr(
             feature = "serde",
