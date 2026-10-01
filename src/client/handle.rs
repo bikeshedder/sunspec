@@ -106,10 +106,13 @@ impl<'a, C: AsyncModbusClient, M: Model> ModelHandle<'a, C, M> {
         if !self.contains(&point) {
             return Err(WritePointError::PointOutOfBounds);
         }
-        let data = value.encode();
-        if data.len() > point.length as usize {
+        let mut data = value.encode().into_vec();
+        if data.len() > usize::from(point.length) {
             return Err(WritePointError::ValueTooLarge);
         }
+        // Strings can be shorter than the point. Pad them with zeros so
+        // no characters of the previous value remain.
+        data.resize(usize::from(point.length), 0);
         let device = self.device;
         apply_timeout(
             device

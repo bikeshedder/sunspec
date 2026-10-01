@@ -277,3 +277,47 @@ fn test_len_includes_nested_groups() {
     // 57 registers of points plus four nested groups of 2 registers each
     assert_eq!(Model704::LEN, 65);
 }
+
+#[cfg(feature = "model14")]
+#[test]
+fn test_write_string_point() {
+    use sunspec::{models::model14::Model14, Group};
+    let (device, client) = device_with_models(&[(14, vec![0; Model14::LEN.into()])]);
+    let model = device.model::<Model14>().unwrap();
+    // `ADDR` is a string of 20 registers at offset 7, `NAM` an optional
+    // string of 4 registers at offset 0.
+    let addr = 40004 + 7;
+    let padded = |data: &[u16], len: usize| {
+        let mut data = data.to_vec();
+        data.resize(len, 0);
+        data
+    };
+
+    // Strings shorter than the point are padded with zeros.
+    block_on(model.write_point(Model14::ADDR, "ab".into())).unwrap();
+    block_on(model.write_point(Model14::ADDR, "abc".into())).unwrap();
+    block_on(model.write_point(Model14::NAM, None)).unwrap();
+    assert_eq!(
+        client.take_requests(),
+        [
+            Request::Write(addr, padded(&[0x6162], 20)),
+            Request::Write(addr, padded(&[0x6162, 0x6300], 20)),
+            Request::Write(40004, vec![0; 4]),
+        ]
+    );
+
+    // Strings filling the whole point are written as they are.
+    let full = "x".repeat(40);
+    block_on(model.write_point(Model14::ADDR, full)).unwrap();
+    assert_eq!(
+        client.take_requests(),
+        [Request::Write(addr, vec![0x7878; 20])]
+    );
+
+    // Strings longer than the point are rejected.
+    assert!(matches!(
+        block_on(model.write_point(Model14::ADDR, "x".repeat(41))),
+        Err(WritePointError::ValueTooLarge)
+    ));
+    assert_eq!(client.take_requests(), []);
+}

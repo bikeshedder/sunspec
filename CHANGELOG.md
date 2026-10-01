@@ -84,6 +84,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `ModelTooShort` error.
 - All instances of a model contained multiple times are discovered. Previously
   only the last instance was accessible.
+- Writing a string which is shorter than its point pads the remaining
+  registers with zeros. Previously the characters of the previous value
+  remained in place.
 
 ## [0.9.1] - 2026-08-25
 
