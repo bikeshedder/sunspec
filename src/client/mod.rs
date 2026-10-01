@@ -7,7 +7,7 @@ mod handle;
 pub mod tokio_modbus;
 
 pub use config::{
-    Config, DEFAULT_MAX_READ_LENGTH, DEFAULT_MAX_WRITE_LENGTH, DEFAULT_READ_TIMEOUT,
+    Config, ConfigBuilder, DEFAULT_MAX_READ_LENGTH, DEFAULT_MAX_WRITE_LENGTH, DEFAULT_READ_TIMEOUT,
     DEFAULT_WRITE_TIMEOUT,
 };
 pub use discovery::{DiscoveryError, DiscoveryResult, UnknownModel};

@@ -70,6 +70,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `ModelHandle::write_point` only accepts `ReadWrite` points. `Point::writable`
   is a method instead of a field and `Point::new` no longer takes a
   `writable` argument.
+- **Breaking:** `Config`, `DiscoveryResult` and `UnknownModel` are
+  `#[non_exhaustive]` and can gain fields without a breaking change. Create a
+  `Config` via `Config::default()` or the new `Config::builder()`.
+- **Breaking:** `AsyncClient` is `#[non_exhaustive]`. Create it via
+  `AsyncClient::new`.
 - **Breaking:** Rename error variants for consistency:
   `ModbusError::IO` → `ModbusError::Io`, `DiscoveryError::ModbusError` →
   `DiscoveryError::Modbus` and `ReadPointError::DecodeError` →

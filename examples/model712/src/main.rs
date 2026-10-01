@@ -37,12 +37,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let client = AsyncClient::new(
         connect_slave(args.addr, Slave(args.device_id)).await?,
-        Config {
-            discovery_addresses: args.discovery_addresses,
-            read_timeout: (args.read_timeout != 0.0)
-                .then(|| Duration::from_secs_f32(args.read_timeout)),
-            ..Default::default()
-        },
+        Config::builder()
+            .discovery_addresses(args.discovery_addresses)
+            .read_timeout(
+                (args.read_timeout != 0.0).then(|| Duration::from_secs_f32(args.read_timeout)),
+            )
+            .build(),
     );
 
     let device = client.device(args.device_id).await?;

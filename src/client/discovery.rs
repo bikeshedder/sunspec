@@ -8,6 +8,7 @@ use super::ModbusError;
 /// this structure is returned.
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[non_exhaustive]
 pub struct UnknownModel {
     /// ID of the discovered model
     pub id: u16,
@@ -24,6 +25,7 @@ pub struct UnknownModel {
 /// to create a device without performing the discovery again.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
+#[non_exhaustive]
 pub struct DiscoveryResult {
     /// The addresses of the discovered models.
     pub models: Models,

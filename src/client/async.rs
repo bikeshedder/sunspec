@@ -8,7 +8,11 @@ use super::{
 };
 
 /// Async client
+///
+/// Devices created by this client copy its Modbus client and
+/// configuration, so both can be changed between discoveries.
 #[derive(Debug)]
+#[non_exhaustive]
 pub struct AsyncClient<C: AsyncModbusClient> {
     /// This is the actual modbus client which implements the `AsyncModbusClient` trait.
     pub client: C,

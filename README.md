@@ -192,6 +192,17 @@ How are large models handled?
   decoded as one typed model value.
 - Nested groups and repeating groups are handled by the generated model code.
 
+## Stability
+
+- The error enums (`ModbusError`, `ReadModelError`, `ReadPointError`, …) are
+  exhaustive on purpose: you can match all variants, and new variants are only
+  added in new major versions.
+- `AnyModel` is `#[non_exhaustive]` because its variants depend on the Cargo
+  features enabled by all crates in the dependency graph.
+- `AsyncClient`, `Config`, `DiscoveryResult` and `UnknownModel` can gain
+  fields in minor versions. Create them via `AsyncClient::new`,
+  `Config::default()` or `Config::builder()`.
+
 ## License
 
 Licensed under either of

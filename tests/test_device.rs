@@ -112,12 +112,11 @@ fn block_on<F: Future>(fut: F) -> F::Output {
 }
 
 fn config() -> Config {
-    Config {
-        discovery_addresses: vec![40000],
-        read_timeout: None,
-        write_timeout: None,
-        ..Config::default()
-    }
+    Config::builder()
+        .discovery_addresses(vec![40000])
+        .read_timeout(None)
+        .write_timeout(None)
+        .build()
 }
 
 /// Discover a device which provides the given models. Each model is
@@ -402,10 +401,8 @@ fn test_max_read_length() {
 #[test]
 fn test_suns_identifier_at_end_of_address_space() {
     let client = RecordingClient::new(65534, &[0x5375, 0x6e53]);
-    let config = Config {
-        discovery_addresses: vec![65534],
-        ..config()
-    };
+    let mut config = config();
+    config.discovery_addresses = vec![65534];
     assert!(matches!(
         block_on(AsyncClient::new(client, config).device(1)),
         Err(DiscoveryError::AddressOverflow)

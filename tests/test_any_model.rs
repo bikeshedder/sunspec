@@ -91,13 +91,12 @@ fn test_read_any_model() {
     data.extend(MODEL1);
     data.extend([0xFFFF, 0]);
 
-    let config = Config {
-        discovery_addresses: vec![40000],
-        read_timeout: None,
+    let config = Config::builder()
+        .discovery_addresses(vec![40000])
+        .read_timeout(None)
         // Force the model to be read in multiple chunks
-        max_read_length: 10,
-        ..Config::default()
-    };
+        .max_read_length(10)
+        .build();
     let client = AsyncClient::new(MemoryClient::new(40000, &data), config);
     let device = block_on(client.device(1)).unwrap();
 
