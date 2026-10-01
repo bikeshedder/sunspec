@@ -19,6 +19,8 @@ pub struct DiscoveredModel {
     // A model can never start at address 0 as it is always preceded by
     // the SunS identifier.
     addr: NonZeroU16,
+    // `addr + len` never exceeds `u16::MAX`. This is ensured by the model
+    // discovery and when deserializing.
     len: u16,
 }
 
@@ -73,7 +75,7 @@ impl Models {
 mod serde_impl {
     use std::num::NonZeroU16;
 
-    use crate::{ModelInfo, ModelNotFound};
+    use crate::ModelInfo;
 
     /// Serialized form of [`super::DiscoveredModel`] which contains the
     /// model id instead of the model information.
@@ -95,10 +97,16 @@ mod serde_impl {
     }
 
     impl TryFrom<DiscoveredModel> for super::DiscoveredModel {
-        type Error = ModelNotFound;
+        type Error = String;
         fn try_from(model: DiscoveredModel) -> Result<Self, Self::Error> {
-            let info =
-                ModelInfo::by_id(model.id).ok_or_else(|| ModelNotFound(model.id.to_string()))?;
+            let info = ModelInfo::by_id(model.id)
+                .ok_or_else(|| format!("Unknown model id: {}", model.id))?;
+            if model.addr.checked_add(model.len).is_none() {
+                return Err(format!(
+                    "Model {} at address {} with length {} exceeds the address space",
+                    model.id, model.addr, model.len
+                ));
+            }
             Ok(Self::new(info, model.addr, model.len))
         }
     }

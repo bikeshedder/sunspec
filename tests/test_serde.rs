@@ -63,3 +63,11 @@ fn test_serde_discovery_result() {
     assert_eq!(discovery.unknown_models[0].id, 64999);
     assert_eq!(serde_json::to_string(&discovery).unwrap(), json);
 }
+
+#[test]
+fn test_serde_models_exceeding_address_space() {
+    assert!(
+        serde_json::from_str::<sunspec::Models>(r#"[{"id":1,"addr":65500,"len":66}]"#).is_err()
+    );
+    assert!(serde_json::from_str::<sunspec::Models>(r#"[{"id":1,"addr":65469,"len":66}]"#).is_ok());
+}

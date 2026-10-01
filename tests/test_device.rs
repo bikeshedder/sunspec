@@ -10,8 +10,8 @@ use std::{
 
 use sunspec::{
     client::{
-        AsyncClient, AsyncDevice, AsyncModbusClient, Config, LookupError, ModbusError,
-        ReadModelError, ReadPointError, WritePointError,
+        AsyncClient, AsyncDevice, AsyncModbusClient, Config, DiscoveryError, LookupError,
+        ModbusError, ReadModelError, ReadPointError, WritePointError,
     },
     models::{model1::Model1, model103::Model103},
     AnyModel,
@@ -24,21 +24,31 @@ enum Request {
     Write(u16, Vec<u16>),
 }
 
+/// Number of registers returned for a read request of the given length.
+type ResponseLen = fn(u16) -> usize;
+
 /// In-memory Modbus client serving a fixed register map and recording
 /// all requests.
 #[derive(Clone, Debug)]
 struct RecordingClient {
     registers: Arc<HashMap<u16, u16>>,
     requests: Arc<Mutex<Vec<Request>>>,
+    /// Number of registers returned for a read request of the given
+    /// length. This is used to simulate misbehaving devices.
+    response_len: Arc<Mutex<Option<ResponseLen>>>,
 }
 
 impl RecordingClient {
     fn new(base: u16, data: &[u16]) -> Self {
-        let registers = (base..).zip(data.iter().copied()).collect();
+        let registers = (base..=u16::MAX).zip(data.iter().copied()).collect();
         Self {
             registers: Arc::new(registers),
             requests: Default::default(),
+            response_len: Default::default(),
         }
+    }
+    fn set_response_len(&self, response_len: ResponseLen) {
+        *self.response_len.lock().unwrap() = Some(response_len);
     }
     fn take_requests(&self) -> Vec<Request> {
         std::mem::take(&mut self.requests.lock().unwrap())
@@ -53,14 +63,20 @@ impl AsyncModbusClient for RecordingClient {
         len: u16,
     ) -> impl Future<Output = Result<Vec<u16>, ModbusError>> + Send {
         self.requests.lock().unwrap().push(Request::Read(addr, len));
-        let result = (addr..addr + len)
+        let result = (u32::from(addr)..u32::from(addr) + u32::from(len))
             .map(|addr| {
-                self.registers
-                    .get(&addr)
-                    .copied()
+                u16::try_from(addr)
+                    .ok()
+                    .and_then(|addr| self.registers.get(&addr).copied())
                     .ok_or(ModbusError::IllegalDataAddress)
             })
-            .collect();
+            .collect::<Result<Vec<_>, _>>()
+            .map(|mut data| {
+                if let Some(response_len) = *self.response_len.lock().unwrap() {
+                    data.resize(response_len(len), 0);
+                }
+                data
+            });
         async move { result }
     }
     async fn write_registers(
@@ -320,4 +336,80 @@ fn test_write_string_point() {
         Err(WritePointError::ValueTooLarge)
     ));
     assert_eq!(client.take_requests(), []);
+}
+
+#[test]
+fn test_invalid_response_length_during_discovery() {
+    let client = RecordingClient::new(40000, &[0x5375, 0x6e53, 0xFFFF, 0]);
+    client.set_response_len(|len| usize::from(len) - 1);
+    assert!(matches!(
+        block_on(AsyncClient::new(client, config()).device(1)),
+        Err(DiscoveryError::ModbusError(
+            ModbusError::InvalidResponseLength {
+                expected: 2,
+                actual: 1
+            }
+        ))
+    ));
+}
+
+#[test]
+fn test_invalid_response_length() {
+    let (device, client) = device_with_model1(66);
+    let model = device.model::<Model1>().unwrap();
+    client.set_response_len(|len| usize::from(len) - 1);
+    assert!(matches!(
+        block_on(model.read()),
+        Err(ReadModelError::Modbus(ModbusError::InvalidResponseLength {
+            expected: 66,
+            actual: 65
+        }))
+    ));
+    assert!(matches!(
+        block_on(model.read_point(Model1::DA)),
+        Err(ReadPointError::Modbus(ModbusError::InvalidResponseLength {
+            expected: 1,
+            actual: 0
+        }))
+    ));
+    client.set_response_len(|len| usize::from(len) + 1);
+    assert!(matches!(
+        block_on(model.read()),
+        Err(ReadModelError::Modbus(ModbusError::InvalidResponseLength {
+            expected: 66,
+            actual: 67
+        }))
+    ));
+}
+
+#[test]
+fn test_max_read_length() {
+    let (mut device, client) = device_with_model1(66);
+    device.config.max_read_length = 30;
+    assert!(block_on(device.model::<Model1>().unwrap().read()).is_ok());
+    assert_eq!(
+        client.take_requests(),
+        [
+            Request::Read(40004, 30),
+            Request::Read(40034, 30),
+            Request::Read(40064, 6)
+        ]
+    );
+    // A maximum read length of 0 is treated as 1.
+    device.config.max_read_length = 0;
+    assert!(block_on(device.model::<Model1>().unwrap().read()).is_ok());
+    assert_eq!(client.take_requests().len(), 66);
+}
+
+#[test]
+fn test_suns_identifier_at_end_of_address_space() {
+    let client = RecordingClient::new(65534, &[0x5375, 0x6e53]);
+    let config = Config {
+        discovery_addresses: vec![65534],
+        ..config()
+    };
+    assert!(matches!(
+        block_on(AsyncClient::new(client, config).device(1)),
+        Err(DiscoveryError::AddressOverflow)
+    ));
 }

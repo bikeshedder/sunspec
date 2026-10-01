@@ -28,7 +28,8 @@ pub struct Config {
     pub discovery_addresses: Vec<u16>,
     /// Timeout when reading registers
     pub read_timeout: Option<Duration>,
-    /// Maximum chunk size when reading registers
+    /// Maximum chunk size when reading registers. A value of 0 is treated
+    /// as 1.
     pub max_read_length: u16,
     /// Timeout when writing registers
     pub write_timeout: Option<Duration>,

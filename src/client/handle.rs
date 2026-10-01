@@ -6,7 +6,7 @@ use crate::{
 };
 
 use super::{
-    r#async::{apply_timeout, read_registers_chunked},
+    r#async::{apply_timeout, read_registers, read_registers_chunked},
     AsyncDevice, AsyncModbusClient, ReadModelError, ReadPointError, WritePointError,
 };
 
@@ -61,8 +61,7 @@ impl<C: AsyncModbusClient, M: ModelKind> ModelHandle<'_, C, M> {
         let data = read_registers_chunked(
             &device.client,
             device.slave_id,
-            self.model.addr(),
-            self.model.len(),
+            &self.model,
             device.config.max_read_length,
             device.config.read_timeout,
         )
@@ -86,12 +85,11 @@ impl<'a, C: AsyncModbusClient, M: Model> ModelHandle<'a, C, M> {
             return Err(ReadPointError::PointOutOfBounds);
         }
         let device = self.device;
-        let data = apply_timeout(
-            device.client.read_registers(
-                device.slave_id,
-                self.model.addr() + point.offset,
-                point.length,
-            ),
+        let data = read_registers(
+            &device.client,
+            device.slave_id,
+            self.point_addr(&point),
+            point.length,
             device.config.read_timeout,
         )
         .await?;
@@ -117,7 +115,7 @@ impl<'a, C: AsyncModbusClient, M: Model> ModelHandle<'a, C, M> {
         apply_timeout(
             device
                 .client
-                .write_registers(device.slave_id, self.model.addr() + point.offset, &data),
+                .write_registers(device.slave_id, self.point_addr(&point), &data),
             device.config.write_timeout,
         )
         .await?;
@@ -131,6 +129,13 @@ impl<'a, C: AsyncModbusClient, M: Model> ModelHandle<'a, C, M> {
     /// Check whether the point lies within the discovered model length.
     fn contains<T: Value>(&self, point: &Point<M, T>) -> bool {
         u32::from(point.offset) + u32::from(point.length) <= u32::from(self.model.len())
+    }
+    /// The address of the given point. The point must lie within the
+    /// model, see [`contains`](Self::contains).
+    fn point_addr<T: Value>(&self, point: &Point<M, T>) -> u16 {
+        // A discovered model always ends within the address space and
+        // the point lies within the model, so this can't overflow.
+        self.model.addr() + point.offset
     }
 }
 

@@ -159,16 +159,14 @@ async fn read_holding_registers_array<const CNT: usize>(
     client: &impl AsyncModbusClient,
     slave_id: u8,
     addr: u16,
+    read_timeout: Option<Duration>,
 ) -> Result<[u16; CNT], ModbusError> {
-    // Unwrap is fine here as read_holding_registers is guaranteed to
-    // return the right amount of words.
-    client
-        .read_registers(slave_id, addr, CNT as u16)
-        .await
-        .map(|words| {
-            words
-                .try_into()
-                .expect("read_holding_registers returned the wrong amount of words")
+    let len = CNT as u16;
+    let data = read_registers(client, slave_id, addr, len, read_timeout).await?;
+    data.try_into()
+        .map_err(|data: Vec<u16>| ModbusError::InvalidResponseLength {
+            expected: len,
+            actual: data.len(),
         })
 }
 
@@ -183,12 +181,7 @@ async fn discover_models(
     // Read addresses 0, 40000 and 50000 looking for the SunS identifier
     let mut info_model_addr: Option<u16> = None;
     for &addr in discovery_addresses.iter() {
-        match apply_timeout(
-            read_holding_registers_array::<2>(client, slave_id, addr),
-            read_timeout,
-        )
-        .await
-        {
+        match read_holding_registers_array::<2>(client, slave_id, addr, read_timeout).await {
             Ok(identifier) if identifier == SUNS_IDENTIFIER => {
                 info_model_addr = Some(addr);
                 break;
@@ -199,22 +192,18 @@ async fn discover_models(
             Err(e) => return Err(e.into()),
         }
     }
-    let Some(mut addr) = info_model_addr else {
+    let Some(addr) = info_model_addr else {
         return Err(DiscoveryError::SunsIdentifierNotFound);
     };
 
-    addr += 2;
+    let mut addr = addr.checked_add(2).ok_or(DiscoveryError::AddressOverflow)?;
 
     let mut models = Models::default();
     let mut unknown_models: Vec<UnknownModel> = vec![];
     let mut model_count = 0;
 
     loop {
-        let res = apply_timeout(
-            read_holding_registers_array::<2>(client, slave_id, addr),
-            read_timeout,
-        )
-        .await;
+        let res = read_holding_registers_array::<2>(client, slave_id, addr, read_timeout).await;
 
         let [model_id, len] = match res {
             // End model found. Exit the loop.
@@ -254,39 +243,47 @@ async fn discover_models(
     })
 }
 
-/// Read registers from modbus. If `len` exceeds `max_read_length`
-/// multiple read_holding_registers calls will be issued.
-pub(super) async fn read_registers_chunked(
+/// Read registers from modbus and check that the expected number of
+/// registers was returned.
+pub(super) async fn read_registers(
     client: &impl AsyncModbusClient,
     slave_id: u8,
     addr: u16,
     len: u16,
+    read_timeout: Option<Duration>,
+) -> Result<Vec<u16>, ModbusError> {
+    let data = apply_timeout(client.read_registers(slave_id, addr, len), read_timeout).await?;
+    if data.len() != usize::from(len) {
+        return Err(ModbusError::InvalidResponseLength {
+            expected: len,
+            actual: data.len(),
+        });
+    }
+    Ok(data)
+}
+
+/// Read the registers of a discovered model. If `len` exceeds
+/// `max_read_length` multiple read_holding_registers calls will be issued.
+pub(super) async fn read_registers_chunked(
+    client: &impl AsyncModbusClient,
+    slave_id: u8,
+    model: &DiscoveredModel,
     max_read_length: u16,
     read_timeout: Option<Duration>,
 ) -> Result<Vec<u16>, ModbusError> {
-    if len <= max_read_length {
-        return apply_timeout(client.read_registers(slave_id, addr, len), read_timeout).await;
-    }
+    // A chunk size of 0 would never make any progress.
+    let max_read_length = max_read_length.max(1);
+    let len = model.len();
     let mut data: Vec<u16> = Vec::with_capacity(len.into());
-    let begin = addr;
-    let start = addr + len;
-    let ranges = (begin..start)
-        .step_by(max_read_length as usize)
-        .map(|x| x..((x + max_read_length).min(start)));
-    for range in ranges {
-        let chunk = apply_timeout(
-            client.read_registers(
-                slave_id,
-                range.start,
-                range
-                    .len()
-                    .try_into()
-                    .expect("read_holding_registers returned the wrong amount of words"),
-            ),
-            read_timeout,
-        )
-        .await?;
+    let mut offset = 0;
+    while offset < len {
+        let chunk_len = (len - offset).min(max_read_length);
+        // A discovered model always ends within the address space, so
+        // this can't overflow.
+        let addr = model.addr() + offset;
+        let chunk = read_registers(client, slave_id, addr, chunk_len, read_timeout).await?;
         data.extend(chunk);
+        offset += chunk_len;
     }
     Ok(data)
 }

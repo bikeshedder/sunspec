@@ -87,6 +87,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Writing a string which is shorter than its point pads the remaining
   registers with zeros. Previously the characters of the previous value
   remained in place.
+- **Breaking:** A transport returning a different number of registers than
+  requested no longer causes a panic or shifts the values of the following
+  points. The new `ModbusError::InvalidResponseLength` error is returned
+  instead.
+- A `max_read_length` of 0 no longer causes a panic and is treated as 1.
+- The model discovery no longer panics if the SunS identifier is located at
+  the end of the address space.
 
 ## [0.9.1] - 2026-08-25
 

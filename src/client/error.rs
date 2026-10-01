@@ -18,6 +18,14 @@ pub enum ModbusError {
     /// I/O error
     #[error("I/O error")]
     IO(#[from] std::io::Error),
+    /// The device returned a different number of registers than requested.
+    #[error("Invalid response length: expected {expected} registers, got {actual}")]
+    InvalidResponseLength {
+        /// Number of requested registers
+        expected: u16,
+        /// Number of returned registers
+        actual: usize,
+    },
     /// The function code received in the query is not an allowable action for
     /// the server (or slave). This may be because the function code is only
     /// applicable to newer devices, and was not implemented in the unit
