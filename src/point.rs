@@ -1,9 +1,6 @@
 use std::marker::PhantomData;
 
-use crate::{
-    value::{FixedSize, Value},
-    Group, ParseError,
-};
+use crate::{value::Value, Group, ParseError};
 
 /// Definition of a point
 #[derive(Debug)]
@@ -36,12 +33,5 @@ impl<G: Group, T: Value> Point<G, T> {
             .ok_or(ParseError::TooShort)?;
         let value = T::decode(slice)?;
         Ok(value)
-    }
-}
-
-impl<G: Group, T: FixedSize> Point<G, T> {
-    /// Check whether a decoded point value is invalid.
-    pub fn is_invalid(&self, value: &T) -> bool {
-        value.is_invalid()
     }
 }

@@ -379,9 +379,6 @@ pub enum DecodeError {
     /// The given data was not valid UTF-8
     #[error("Invalid UTF-8 data")]
     Utf8(#[from] FromUtf8Error),
-    /// The given data was invalid for the enum point
-    #[error("Invalid enum value")]
-    InvalidEnumValue,
 }
 
 #[test]

@@ -152,9 +152,6 @@ pub enum ReadPointError {
     /// The decoding of the point data failed.
     #[error("Decode error: {0}")]
     DecodeError(#[from] DecodeError),
-    /// The point is mandatory but value is missing.
-    #[error("Missing mandatory value")]
-    MissingMandatoryValue,
 }
 
 /// This error is returned if there was an error while
