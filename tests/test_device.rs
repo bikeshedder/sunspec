@@ -344,12 +344,10 @@ fn test_invalid_response_length_during_discovery() {
     client.set_response_len(|len| usize::from(len) - 1);
     assert!(matches!(
         block_on(AsyncClient::new(client, config()).device(1)),
-        Err(DiscoveryError::ModbusError(
-            ModbusError::InvalidResponseLength {
-                expected: 2,
-                actual: 1
-            }
-        ))
+        Err(DiscoveryError::Modbus(ModbusError::InvalidResponseLength {
+            expected: 2,
+            actual: 1
+        }))
     ));
 }
 

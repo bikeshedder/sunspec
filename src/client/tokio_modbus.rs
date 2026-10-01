@@ -45,7 +45,7 @@ impl From<tokio_modbus::Error> for ModbusError {
     fn from(value: tokio_modbus::Error) -> Self {
         match value {
             tokio_modbus::Error::Protocol(e) => Self::Protocol(Box::new(e)),
-            tokio_modbus::Error::Transport(e) => Self::IO(e),
+            tokio_modbus::Error::Transport(e) => Self::Io(e),
         }
     }
 }

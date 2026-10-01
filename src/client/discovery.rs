@@ -36,7 +36,7 @@ pub struct DiscoveryResult {
 pub enum DiscoveryError {
     /// Communication error.
     #[error("Modbus error: {0}")]
-    ModbusError(#[from] ModbusError),
+    Modbus(#[from] ModbusError),
     /// The Modbus slave did not provide the "SunS" header at the well known
     /// addresses 0, 40000 or 50000.
     #[error("SunS identifier not found")]

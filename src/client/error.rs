@@ -11,13 +11,14 @@ pub enum ModbusError {
     /// A timeout occured
     #[error("Timeout")]
     Timeout,
-    /// The requested device does not implement modbus correctly and the
-    /// underlying modbus implementation reported an error.
+    /// The underlying Modbus implementation reported a protocol error, e.g.
+    /// because the device does not implement Modbus correctly. The type of
+    /// the contained error depends on the Modbus implementation.
     #[error(transparent)]
     Protocol(Box<dyn Error + Send + Sync>),
     /// I/O error
-    #[error("I/O error")]
-    IO(#[from] std::io::Error),
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
     /// The device returned a different number of registers than requested.
     #[error("Invalid response length: expected {expected} registers, got {actual}")]
     InvalidResponseLength {
@@ -151,7 +152,7 @@ pub enum ReadPointError {
     Modbus(#[from] ModbusError),
     /// The decoding of the point data failed.
     #[error("Decode error: {0}")]
-    DecodeError(#[from] DecodeError),
+    Decode(#[from] DecodeError),
 }
 
 /// This error is returned if there was an error while

@@ -65,6 +65,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Breaking:** Rename `DecodeError::OutOfBounds` to
   `DecodeError::InvalidLength`. It is returned if the data does not have the
   length required by the value type.
+- **Breaking:** Rename error variants for consistency:
+  `ModbusError::IO` → `ModbusError::Io`, `DiscoveryError::ModbusError` →
+  `DiscoveryError::Modbus` and `ReadPointError::DecodeError` →
+  `ReadPointError::Decode`. `ModbusError::Io` displays the message of the
+  underlying I/O error.
 
 ### Removed
 
