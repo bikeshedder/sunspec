@@ -272,9 +272,6 @@ impl crate::Model for Model7 {
     const ID: u16 = 7;
     const NAME: &'static str = "model_7";
     const LABEL: &'static str = "Secure Write Response Model (DRAFT 1)";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m7
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

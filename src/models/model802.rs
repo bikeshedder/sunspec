@@ -924,9 +924,6 @@ impl crate::Model for Battery {
     const ID: u16 = 802;
     const NAME: &'static str = "battery";
     const LABEL: &'static str = "Battery Base Model";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m802
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

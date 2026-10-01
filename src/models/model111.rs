@@ -473,9 +473,6 @@ impl crate::Model for InverterSinglePhaseFloat {
     const ID: u16 = 111;
     const NAME: &'static str = "inverter_single_phase_float";
     const LABEL: &'static str = "Inverter (Single Phase) FLOAT";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m111
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

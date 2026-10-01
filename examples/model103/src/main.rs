@@ -7,6 +7,7 @@ use sunspec::DEFAULT_DISCOVERY_ADDRESSES;
 use sunspec::{
     client::{AsyncClient, Config},
     models::model1::Model1,
+    AnyModel,
 };
 use tokio::time::sleep;
 use tokio_modbus::client::tcp::connect;
@@ -48,7 +49,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     );
 
     let device = client.device(args.device_id).await?;
-    let m1: Model1 = device.read_model().await?;
+    let m1 = device.model::<Model1>()?.read().await?;
 
     println!("Manufacturer: {}", m1.mn);
     println!("Model: {}", m1.md);
@@ -58,14 +59,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
     println!(
         "Supported models: {}",
         device
-            .models
-            .iter()
-            .map(|info| info.id.to_string())
+            .models::<AnyModel>()
+            .map(|model| model.info().id.to_string())
             .join(", ")
     );
 
+    let inverter = device.model::<Model103>()?;
     loop {
-        let m103: Model103 = device.read_model().await?;
+        let m103 = inverter.read().await?;
         let w = m103.w as f32 * 10f32.powf(m103.w_sf.into());
         let wh = m103.wh as f32 * 10f32.powf(m103.wh_sf.into());
         println!("{:12.3} kWh {:9.3} kW", wh / 1000.0, w / 1000.0,);

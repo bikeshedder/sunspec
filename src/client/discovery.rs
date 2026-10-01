@@ -1,12 +1,13 @@
 use thiserror::Error;
 
-use crate::models::Models;
+use crate::Models;
 
 use super::ModbusError;
 
 /// For every discovered but unknown model to this library
 /// this structure is returned.
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct UnknownModel {
     /// ID of the discovered model
     pub id: u16,
@@ -17,7 +18,12 @@ pub struct UnknownModel {
 }
 
 /// The result of a SunSpec model discovery.
-#[derive(Debug)]
+///
+/// It can be passed to
+/// [`AsyncClient::device_from_discovery`](super::AsyncClient::device_from_discovery)
+/// to create a device without performing the discovery again.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct DiscoveryResult {
     /// The addresses of the discovered models.
     pub models: Models,

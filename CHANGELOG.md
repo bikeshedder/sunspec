@@ -19,16 +19,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     is serialized with an internal `"model"` tag containing the model name.
   - `DynModel` trait providing access to model information via
     `AnyModel::as_dyn`
-  - `AsyncDevice::read_any_model`
-  - `Models::iter` returning the `ModelInfo` of all discovered models
+  - `AsyncDevice::models::<AnyModel>()` selecting all discovered models. They
+    are read as `AnyModel` and can be converted into typed models via
+    `ModelHandle::downcast`.
   - `Model::NAME`, `Model::LABEL` and `Model::INFO` constants
+- Add support for devices containing the same model multiple times.
+  `AsyncDevice::models::<M>()` selects all instances of a model in the order
+  they appear in the Modbus map.
+- Add `AsyncDevice::discovery` and `AsyncClient::device_from_discovery` for
+  connecting to a device again without running the model discovery. With the
+  `serde` feature enabled `DiscoveryResult` can be serialized.
 
 ### Changed
 
 - **Breaking:** Seal the `Model`, `DynModel`, `Group`, `Value`, `FixedSize`
   and `EnumValue` traits. They were never meant to be implemented outside of
   this crate, which allows extending them without further breaking changes.
-- `ModelAddr` no longer requires `M: Model`
 - Update sunspec models (2026-08-20)
   - Add `subscribed_resource` and `subscription_ena` points to model 64415
   - Fix size of `DeptRef` point in model 64410
@@ -40,10 +46,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Constants: `V_AR_RTG_Q1` → `VAR_RTG_Q1`, `APH_A` → `A_PH_A`
   - Types: `VArAct` → `VarAct`, `PfwAbs` → `PfWAbs`
   - Enum variants and bitflags: `VArMax` → `VarMax`, `VoltVAr` → `VoltVar`
-- **Breaking:** Models which were not discovered are now `None` instead of
-  an address of `0`. The fields of `Models` are now `Option<ModelAddr<_>>`.
-- **Breaking:** The fields of `ModelAddr` are private. Use the `addr()` and
-  `len()` methods instead.
+- **Breaking:** `Models` is now a list of `DiscoveredModel`s in the order
+  they appear in the Modbus map. The fields for each model (e.g.
+  `models.m103`) and `ModelAddr` were removed.
+- **Breaking:** Models are accessed via a `ModelHandle` returned by
+  `AsyncDevice::model::<M>()` and `AsyncDevice::models::<M>()`. The methods
+  `read_model`, `read_point` and `write_point` moved from `AsyncDevice` to
+  `ModelHandle` as `read`, `read_point` and `write_point`, e.g.
+  `device.model::<Model103>()?.read().await?`. `AsyncDevice::model` returns a
+  `LookupError` if the model was not discovered or discovered more than once.
+- **Breaking:** The `client`, `slave_id`, `models` and `unknown_models`
+  fields of `AsyncDevice` are private. Use the `client()`, `slave_id()` and
+  `discovery()` methods instead.
 - **Breaking:** Parsing incomplete model data returns
   `ParseError::TooShort` or `ParseError::InvalidGroupLength` instead of
   `DecodeError::OutOfBounds`. `ReadModelError::DecodeError` was replaced by
@@ -54,7 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- **Breaking:** `Models::supported_model_ids` in favor of `Models::iter`
+- **Breaking:** `Models::supported_model_ids` in favor of
+  `AsyncDevice::models::<AnyModel>()`
 - **Breaking:** `InvalidPointData`, which was no longer used since point
   validation was removed. `ParseError` and `ReadModelError` no longer have a
   type parameter.
@@ -62,12 +77,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Reading or writing a point of a model which was not discovered no longer
-  accesses an arbitrary register at the start of the device's address space
-  and returns a `ModelNotDiscovered` error instead. Points outside of the
-  discovered model length return a `PointOutOfBounds` error.
-- Reading a model which was not discovered returns a `ModelNotDiscovered`
-  error. Reading a model which is too short to contain all points returns a
+  accesses an arbitrary register at the start of the device's address space.
+  Such a model can no longer be selected. Points outside of the discovered
+  model length return a `PointOutOfBounds` error.
+- Reading a model which is too short to contain all points returns a
   `ModelTooShort` error.
+- All instances of a model contained multiple times are discovered. Previously
+  only the last instance was accessible.
 
 ## [0.9.1] - 2026-08-25
 

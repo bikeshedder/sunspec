@@ -323,9 +323,6 @@ impl crate::Model for DerFreqDroop {
     const ID: u16 = 711;
     const NAME: &'static str = "DERFreqDroop";
     const LABEL: &'static str = "DER Frequency Droop";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m711
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

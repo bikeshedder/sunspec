@@ -464,9 +464,6 @@ impl crate::Model for Hfrtc {
     const ID: u16 = 142;
     const NAME: &'static str = "hfrtc";
     const LABEL: &'static str = "HFRTC";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m142
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

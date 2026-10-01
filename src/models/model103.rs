@@ -527,9 +527,6 @@ impl crate::Model for InverterThreePhase {
     const ID: u16 = 103;
     const NAME: &'static str = "inverter_three_phase";
     const LABEL: &'static str = "Inverter (Three Phase)";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m103
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

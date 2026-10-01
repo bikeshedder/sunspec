@@ -482,9 +482,6 @@ impl crate::Model for WattPf {
     const ID: u16 = 131;
     const NAME: &'static str = "watt_pf";
     const LABEL: &'static str = "Watt-PF";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m131
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

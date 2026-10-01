@@ -235,9 +235,6 @@ impl crate::Model for Nameplate {
     const ID: u16 = 120;
     const NAME: &'static str = "nameplate";
     const LABEL: &'static str = "Nameplate";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m120
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

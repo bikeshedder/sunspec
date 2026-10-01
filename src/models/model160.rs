@@ -352,9 +352,6 @@ impl crate::Model for Mppt {
     const ID: u16 = 160;
     const NAME: &'static str = "mppt";
     const LABEL: &'static str = "Multiple MPPT Inverter Extension Model";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m160
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

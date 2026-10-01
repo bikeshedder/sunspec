@@ -688,9 +688,6 @@ impl crate::Model for AcSimInterface {
     const ID: u16 = 64411;
     const NAME: &'static str = "ACSimInterface";
     const LABEL: &'static str = "AC Simulator Control Interface";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m64411
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

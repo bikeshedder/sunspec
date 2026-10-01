@@ -104,9 +104,6 @@ impl crate::Model for Model15 {
     const ID: u16 = 15;
     const NAME: &'static str = "model_15";
     const LABEL: &'static str = "Interface Counters Model";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m15
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

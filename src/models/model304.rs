@@ -89,9 +89,6 @@ impl crate::Model for Inclinometer {
     const ID: u16 = 304;
     const NAME: &'static str = "inclinometer";
     const LABEL: &'static str = "Inclinometer Model";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m304
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

@@ -43,38 +43,6 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
             pub mod #module_identifier;
         }
     });
-    let models_fields = models.iter().map(|model| {
-        let field_name = format_ident!("m{}", model.id);
-        let model_module = format_ident!("model{}", model.id);
-        let model_struct = format_ident!("Model{}", model.id);
-        let model_doc = doc_to_ts(model.group.doc.label.as_deref().unwrap_or_default());
-        let model_feature = Literal::string(&model_feature_name(model.id));
-        quote! {
-            #[cfg(feature = #model_feature)]
-            #model_doc
-            pub #field_name: Option<crate::ModelAddr<#model_module::#model_struct>>,
-        }
-    });
-    let models_struct = quote! {
-        /// This struct contains the addresses of all discovered models enabled via Cargo features.
-        #[derive(Clone, Debug, Default, Eq, PartialEq)]
-        #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-        pub struct Models {
-            #(#models_fields)*
-        }
-    };
-    let set_addr_code = models.iter().map(|model| {
-        let field_name = format_ident!("m{}", model.id);
-        let model_id = Literal::u16_unsuffixed(model.id);
-        let model_feature = Literal::string(&model_feature_name(model.id));
-        quote! {
-            #[cfg(feature = #model_feature)]
-            #model_id => {
-                self.#field_name = Some(crate::ModelAddr::new(_addr, _len));
-                true
-            },
-        }
-    });
     let model_infos = models.iter().map(|model| {
         let model_module = format_ident!("model{}", model.id);
         let model_struct = format_ident!("Model{}", model.id);
@@ -137,19 +105,6 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
             }
         }
     };
-    let models_impl = quote! {
-        impl Models {
-            /// Set address and length of the given model.
-            ///
-            /// This method is used by the model discovery.
-            pub fn set_addr(&mut self, model_id: u16, _addr: std::num::NonZeroU16, _len: u16) -> bool {
-                match model_id {
-                    #(#set_addr_code)*
-                    _ => false,
-                }
-            }
-        }
-    };
     let model_trait_assertions = models.iter().map(|model| {
         let model_module = format_ident!("model{}", model.id);
         let model_struct = format_ident!("Model{}", model.id);
@@ -179,15 +134,14 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
 
             fn assert_impl_clone<T: Clone>() {}
             fn assert_impl_partial_eq<T: PartialEq>() {}
+            // Unused if no models without floating point values are enabled.
+            #[allow(dead_code)]
             fn assert_impl_eq<T: Eq>() {}
 
             /// Every model must implement `Clone` and `PartialEq`. Models
             /// without floating point values must implement `Eq`, too.
             #[test]
             fn models_implement_clone_and_eq() {
-                assert_impl_clone::<Models>();
-                assert_impl_partial_eq::<Models>();
-                assert_impl_eq::<Models>();
                 assert_impl_clone::<AnyModel>();
                 assert_impl_partial_eq::<AnyModel>();
                 #(#model_trait_assertions)*
@@ -197,8 +151,6 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
 
     Ok(quote! {
         #(#modules)*
-        #models_struct
-        #models_impl
         #models_list
         #any_model
         #tests
@@ -208,7 +160,6 @@ pub fn gen_models_struct(models: &[Model]) -> Result<TokenStream, GenModelError>
 pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
     let module_doc = format!(" {}", model.group.doc.label.as_ref().unwrap());
     let model_name = format_ident!("Model{}", model.id);
-    let m_name = format_ident!("m{}", model.id);
     let model_id = Literal::u16_unsuffixed(model.id);
     let name_literal = Literal::string(&model.group.name);
     let label_literal = Literal::string(model.group.doc.label.as_deref().unwrap_or_default());
@@ -243,9 +194,6 @@ pub fn gen_model(model: &Model) -> Result<TokenStream, GenModelError> {
             const ID: u16 = #model_id;
             const NAME: &'static str = #name_literal;
             const LABEL: &'static str = #label_literal;
-            fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-                models.#m_name
-            }
             fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
                 let (_, model) = Self::parse_group(data)?;
                 Ok(model)

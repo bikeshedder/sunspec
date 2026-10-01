@@ -20,11 +20,12 @@
     unused_results
 )]
 
-pub use any_model::{DynModel, ModelInfo, ModelNotFound};
+pub use any_model::{DynModel, ModelInfo, ModelKind, ModelNotFound};
 pub use constants::{DEFAULT_DISCOVERY_ADDRESSES, SUNS_IDENTIFIER};
+pub use discovered::{DiscoveredModel, Models};
 pub use group::Group;
-pub use model::{Model, ModelAddr, ParseError};
-pub use models::{AnyModel, Models, MODELS};
+pub use model::{Model, ParseError};
+pub use models::{AnyModel, MODELS};
 pub use point::Point;
 pub use value::{DecodeError, EnumValue, FixedSize, Value};
 
@@ -32,6 +33,7 @@ mod any_model;
 /// This module contains all client specific code.
 pub mod client;
 mod constants;
+mod discovered;
 mod group;
 mod model;
 /// This module contains all the genererated SunSpec models.

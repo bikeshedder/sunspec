@@ -622,9 +622,6 @@ impl crate::Model for Model9 {
     const ID: u16 = 9;
     const NAME: &'static str = "model_9";
     const LABEL: &'static str = "Set Operator Security Certificate";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m9
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

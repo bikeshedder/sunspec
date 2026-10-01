@@ -35,3 +35,31 @@ fn test_serialize_model2() {
         r#"{"aid":0,"n":1,"un":2,"st":"Full","st_vnd":null,"evt":"MemoryLoss | ArcDetection","evt_vnd":null,"ctl":"Test","ctl_vnd":null,"ctl_vl":null}"#
     );
 }
+
+#[test]
+fn test_serde_models() {
+    let json = r#"[{"id":1,"addr":40004,"len":66},{"id":2,"addr":40072,"len":14}]"#;
+    let models: sunspec::Models = serde_json::from_str(json).unwrap();
+    let ids = models
+        .iter()
+        .map(|model| model.info().id)
+        .collect::<Vec<_>>();
+    assert_eq!(ids, [1, 2]);
+    assert_eq!(serde_json::to_string(&models).unwrap(), json);
+
+    // Unknown model id
+    assert!(
+        serde_json::from_str::<sunspec::Models>(r#"[{"id":0,"addr":40004,"len":66}]"#).is_err()
+    );
+    // Invalid address
+    assert!(serde_json::from_str::<sunspec::Models>(r#"[{"id":1,"addr":0,"len":66}]"#).is_err());
+}
+
+#[test]
+fn test_serde_discovery_result() {
+    let json = r#"{"models":[{"id":1,"addr":40004,"len":66}],"unknown_models":[{"id":64999,"addr":40072,"len":10}]}"#;
+    let discovery: sunspec::client::DiscoveryResult = serde_json::from_str(json).unwrap();
+    assert_eq!(discovery.models.iter().count(), 1);
+    assert_eq!(discovery.unknown_models[0].id, 64999);
+    assert_eq!(serde_json::to_string(&discovery).unwrap(), json);
+}

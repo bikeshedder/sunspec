@@ -1,0 +1,279 @@
+#![cfg(all(feature = "model1", feature = "model103"))]
+
+use std::{
+    collections::HashMap,
+    future::Future,
+    pin::pin,
+    sync::{Arc, Mutex},
+    task::{Context, Poll, Wake, Waker},
+};
+
+use sunspec::{
+    client::{
+        AsyncClient, AsyncDevice, AsyncModbusClient, Config, LookupError, ModbusError,
+        ReadModelError, ReadPointError, WritePointError,
+    },
+    models::{model1::Model1, model103::Model103},
+    AnyModel,
+};
+
+/// Modbus request issued by the client under test.
+#[derive(Clone, Debug, PartialEq)]
+enum Request {
+    Read(u16, u16),
+    Write(u16, Vec<u16>),
+}
+
+/// In-memory Modbus client serving a fixed register map and recording
+/// all requests.
+#[derive(Clone, Debug)]
+struct RecordingClient {
+    registers: Arc<HashMap<u16, u16>>,
+    requests: Arc<Mutex<Vec<Request>>>,
+}
+
+impl RecordingClient {
+    fn new(base: u16, data: &[u16]) -> Self {
+        let registers = (base..).zip(data.iter().copied()).collect();
+        Self {
+            registers: Arc::new(registers),
+            requests: Default::default(),
+        }
+    }
+    fn take_requests(&self) -> Vec<Request> {
+        std::mem::take(&mut self.requests.lock().unwrap())
+    }
+}
+
+impl AsyncModbusClient for RecordingClient {
+    fn read_registers(
+        &self,
+        _slave_id: u8,
+        addr: u16,
+        len: u16,
+    ) -> impl Future<Output = Result<Vec<u16>, ModbusError>> + Send {
+        self.requests.lock().unwrap().push(Request::Read(addr, len));
+        let result = (addr..addr + len)
+            .map(|addr| {
+                self.registers
+                    .get(&addr)
+                    .copied()
+                    .ok_or(ModbusError::IllegalDataAddress)
+            })
+            .collect();
+        async move { result }
+    }
+    async fn write_registers(
+        &self,
+        _slave_id: u8,
+        addr: u16,
+        data: &[u16],
+    ) -> Result<(), ModbusError> {
+        self.requests
+            .lock()
+            .unwrap()
+            .push(Request::Write(addr, data.to_vec()));
+        Ok(())
+    }
+}
+
+struct NoopWaker;
+
+impl Wake for NoopWaker {
+    fn wake(self: Arc<Self>) {}
+}
+
+/// Minimal executor for futures which never actually wait.
+fn block_on<F: Future>(fut: F) -> F::Output {
+    let waker = Waker::from(Arc::new(NoopWaker));
+    let mut cx = Context::from_waker(&waker);
+    let mut fut = pin!(fut);
+    loop {
+        if let Poll::Ready(output) = fut.as_mut().poll(&mut cx) {
+            return output;
+        }
+    }
+}
+
+fn config() -> Config {
+    Config {
+        discovery_addresses: vec![40000],
+        read_timeout: None,
+        write_timeout: None,
+        ..Config::default()
+    }
+}
+
+/// Discover a device which provides the given models. Each model is
+/// given as model id and model data.
+fn device_with_models(
+    models: &[(u16, Vec<u16>)],
+) -> (AsyncDevice<RecordingClient>, RecordingClient) {
+    let mut data = vec![0x5375, 0x6e53];
+    for (id, model) in models {
+        data.extend([*id, model.len() as u16]);
+        data.extend(model);
+    }
+    data.extend([0xFFFF, 0]);
+    let client = RecordingClient::new(40000, &data);
+    let device = block_on(AsyncClient::new(client.clone(), config()).device(1)).unwrap();
+    let _ = client.take_requests();
+    (device, client)
+}
+
+/// Model 1 data with the given length and `DA` point value.
+fn model1(len: u16, da: u16) -> Vec<u16> {
+    let mut data = vec![0; len.into()];
+    if let Some(value) = data.get_mut(64) {
+        *value = da;
+    }
+    data
+}
+
+/// Discover a device which only provides model 1 with the given length.
+fn device_with_model1(len: u16) -> (AsyncDevice<RecordingClient>, RecordingClient) {
+    device_with_models(&[(1, model1(len, 0))])
+}
+
+#[test]
+fn test_undiscovered_model() {
+    let (device, client) = device_with_model1(66);
+    assert_eq!(
+        device.model::<Model103>().unwrap_err(),
+        LookupError::ModelNotDiscovered { model_id: 103 }
+    );
+    assert_eq!(device.models::<Model103>().count(), 0);
+    assert_eq!(client.take_requests(), []);
+}
+
+#[test]
+fn test_point_outside_of_model() {
+    // Model 1 reported with a length of 64 does not contain the `DA`
+    // point at offset 64.
+    let (device, client) = device_with_model1(64);
+    let model = device.model::<Model1>().unwrap();
+    assert!(matches!(
+        block_on(model.read_point(Model1::DA)),
+        Err(ReadPointError::PointOutOfBounds)
+    ));
+    assert!(matches!(
+        block_on(model.write_point(Model1::DA, Some(2))),
+        Err(WritePointError::PointOutOfBounds)
+    ));
+    assert_eq!(client.take_requests(), []);
+}
+
+#[test]
+fn test_point_inside_of_model() {
+    let (device, client) = device_with_model1(66);
+    let model = device.model::<Model1>().unwrap();
+    assert_eq!(block_on(model.read_point(Model1::DA)).unwrap(), Some(0));
+    block_on(model.write_point(Model1::DA, Some(2))).unwrap();
+    assert_eq!(
+        client.take_requests(),
+        [Request::Read(40068, 1), Request::Write(40068, vec![2])]
+    );
+}
+
+#[test]
+fn test_model_too_short() {
+    // Model 1 reported with a length of 64 is missing the `DA` point.
+    let (device, client) = device_with_model1(64);
+    assert!(matches!(
+        block_on(device.model::<Model1>().unwrap().read()),
+        Err(ReadModelError::ModelTooShort {
+            model_id: 1,
+            len: 64
+        })
+    ));
+    assert!(matches!(
+        block_on(device.models::<AnyModel>().next().unwrap().read()),
+        Err(ReadModelError::ModelTooShort {
+            model_id: 1,
+            len: 64
+        })
+    ));
+    assert_eq!(
+        client.take_requests(),
+        [Request::Read(40004, 64), Request::Read(40004, 64)]
+    );
+}
+
+#[test]
+fn test_model_without_trailing_pad() {
+    // Some devices omit the trailing pad register of model 1 and
+    // report a length of 65 instead of 66.
+    let (device, _) = device_with_model1(65);
+    let model = device.model::<Model1>().unwrap();
+    assert_eq!(block_on(model.read()).unwrap().da, Some(0));
+    assert!(block_on(model.untyped().read()).is_ok());
+}
+
+#[test]
+fn test_multiple_models() {
+    let (device, client) = device_with_models(&[(1, model1(66, 1)), (1, model1(66, 2))]);
+    let addrs = device
+        .models::<AnyModel>()
+        .map(|model| model.addr())
+        .collect::<Vec<_>>();
+    assert_eq!(addrs, [40004, 40072]);
+
+    // Selecting a model which is not unique is an error.
+    assert_eq!(
+        device.model::<Model1>().unwrap_err(),
+        LookupError::ModelNotUnique { model_id: 1 }
+    );
+    assert_eq!(client.take_requests(), []);
+
+    let das = device
+        .models::<Model1>()
+        .map(|model| block_on(model.read()).unwrap().da)
+        .collect::<Vec<_>>();
+    assert_eq!(das, [Some(1), Some(2)]);
+    assert_eq!(
+        client.take_requests(),
+        [Request::Read(40004, 66), Request::Read(40072, 66)]
+    );
+
+    let second = device.models::<Model1>().nth(1).unwrap();
+    block_on(second.write_point(Model1::DA, Some(3))).unwrap();
+    assert_eq!(client.take_requests(), [Request::Write(40136, vec![3])]);
+    assert!(device.models::<Model1>().nth(2).is_none());
+}
+
+#[test]
+fn test_untyped_model() {
+    let (device, _) = device_with_models(&[(1, model1(66, 1)), (1, model1(66, 2))]);
+    let second = device.models::<AnyModel>().nth(1).unwrap();
+    assert_eq!(second.info().id, 1);
+    let AnyModel::M1(model) = block_on(second.read()).unwrap() else {
+        panic!("Unexpected model");
+    };
+    assert_eq!(model.da, Some(2));
+
+    assert!(second.downcast::<Model103>().is_none());
+    let typed = second.downcast::<Model1>().unwrap();
+    assert_eq!(typed.addr(), 40072);
+    assert_eq!(typed.untyped().addr(), 40072);
+}
+
+#[test]
+fn test_device_from_discovery() {
+    let (device, client) = device_with_model1(66);
+    let restored = AsyncClient::new(client.clone(), config())
+        .device_from_discovery(1, device.discovery().clone());
+    assert_eq!(restored.slave_id(), 1);
+    assert_eq!(restored.discovery(), device.discovery());
+    // No discovery requests were issued.
+    assert_eq!(client.take_requests(), []);
+    let model = restored.model::<Model1>().unwrap();
+    assert_eq!(block_on(model.read()).unwrap().da, Some(0));
+}
+
+#[cfg(feature = "model704")]
+#[test]
+fn test_len_includes_nested_groups() {
+    use sunspec::{models::model704::Model704, Group};
+    // 57 registers of points plus four nested groups of 2 registers each
+    assert_eq!(Model704::LEN, 65);
+}

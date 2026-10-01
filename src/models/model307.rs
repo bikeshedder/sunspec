@@ -82,9 +82,6 @@ impl crate::Model for BaseMet {
     const ID: u16 = 307;
     const NAME: &'static str = "base_met";
     const LABEL: &'static str = "Base Met";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m307
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

@@ -65,6 +65,7 @@ use itertools::Itertools;
 use sunspec::{
     client::{AsyncClient, Config},
     models::{model1::Model1, model103::Model103},
+    AnyModel,
 };
 use tokio::time::sleep;
 use tokio_modbus::client::tcp::connect;
@@ -82,7 +83,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let client = AsyncClient::new(connect(args.addr).await?, Config::default());
     let device = client.device(args.device_id).await?;
 
-    let m1: Model1 = device.read_model().await?;
+    let m1 = device.model::<Model1>()?.read().await?;
 
     println!("Manufacturer: {}", m1.mn);
     println!("Model: {}", m1.md);
@@ -92,14 +93,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
     println!(
         "Supported models: {}",
         device
-            .models
-            .iter()
-            .map(|info| info.id.to_string())
+            .models::<AnyModel>()
+            .map(|model| model.info().id.to_string())
             .join(", ")
     );
 
+    let inverter = device.model::<Model103>()?;
     loop {
-        let m103: Model103 = device.read_model().await?;
+        let m103 = inverter.read().await?;
         let w = m103.w as f32 * 10f32.powf(m103.w_sf.into());
         let wh = m103.wh as f32 * 10f32.powf(m103.wh_sf.into());
         println!("{:12.3} kWh {:9.3} kW", wh / 1000.0, w / 1000.0,);
@@ -139,8 +140,38 @@ Do I have to use `tokio-modbus`?
 What happens if a device exposes models this crate does not know?
 
 - Discovery still succeeds.
-- Known models are stored in `device.models`.
-- Unknown model ids, addresses, and lengths are returned in `device.unknown_models`.
+- Known models can be selected via `device.models::<AnyModel>()`.
+- Unknown model ids, addresses, and lengths are returned in
+  `device.discovery().unknown_models`.
+
+What happens if a device contains the same model multiple times?
+
+- `device.model::<M>()` returns a `ModelNotUnique` error.
+- `device.models::<M>()` returns all instances in the order they appear in the
+  Modbus map, e.g. `device.models::<Model804>().nth(2)` selects the third one.
+
+How do I access all models of a device without handling each model type?
+
+- This is useful for tools inspecting devices and for gateways forwarding the
+  data of all models, e.g. as JSON.
+- `device.models::<AnyModel>()` selects all discovered models in the order they
+  appear in the Modbus map. Each one is read as `AnyModel`, which is serialized
+  with a `"model"` tag containing the model name when the `serde` feature is
+  enabled.
+- `downcast::<M>()` converts a selected model into a typed one, e.g. for
+  writing points.
+- `ModelInfo` contains the id, name and label of a model and can be looked up
+  via `ModelInfo::by_id` or parsed from a string like `"103"` or
+  `"inverter_three_phase"`.
+
+Do I need to run the discovery every time I connect to a device?
+
+- The SunSpec specification does not guarantee that the register map of a
+  device stays the same, so running the discovery after connecting is the safe
+  choice.
+- If you know that the register map of a device does not change,
+  `device.discovery()` returns the discovery result, which can be stored (with
+  the `serde` feature) and passed to `AsyncClient::device_from_discovery`.
 
 Can I scan for all slave IDs on a bus?
 

@@ -91,16 +91,28 @@ pub enum ModbusError {
     Custom(u8),
 }
 
-/// This error is returned if there was an error loading the
-/// requested model.
-#[derive(Debug, Error)]
-pub enum ReadModelError {
+/// This error is returned if a model could not be selected via
+/// [`AsyncDevice::model`](super::AsyncDevice::model).
+#[derive(Clone, Copy, Debug, Eq, Error, PartialEq)]
+pub enum LookupError {
     /// The model was not found during model discovery.
     #[error("Model {model_id} not discovered")]
     ModelNotDiscovered {
         /// ID of the requested model
         model_id: u16,
     },
+    /// The model was discovered more than once.
+    #[error("Model {model_id} discovered more than once")]
+    ModelNotUnique {
+        /// ID of the requested model
+        model_id: u16,
+    },
+}
+
+/// This error is returned if there was an error loading the
+/// requested model.
+#[derive(Debug, Error)]
+pub enum ReadModelError {
     /// The discovered model is too short to contain all points of the
     /// model definition.
     #[error("Model {model_id} too short: discovered length {len}")]
@@ -123,12 +135,6 @@ pub enum ReadModelError {
 /// reading data from a point.
 #[derive(Debug, Error)]
 pub enum ReadPointError {
-    /// The model was not found during model discovery.
-    #[error("Model {model_id} not discovered")]
-    ModelNotDiscovered {
-        /// ID of the requested model
-        model_id: u16,
-    },
     /// The point lies outside of the discovered model length.
     #[error("Point outside of the discovered model")]
     PointOutOfBounds,
@@ -147,12 +153,6 @@ pub enum ReadPointError {
 /// writing data to a point.
 #[derive(Debug, Error)]
 pub enum WritePointError {
-    /// The model was not found during model discovery.
-    #[error("Model {model_id} not discovered")]
-    ModelNotDiscovered {
-        /// ID of the requested model
-        model_id: u16,
-    },
     /// The point lies outside of the discovered model length.
     #[error("Point outside of the discovered model")]
     PointOutOfBounds,

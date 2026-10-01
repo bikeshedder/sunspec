@@ -146,9 +146,6 @@ impl crate::Model for FreqWattParam {
     const ID: u16 = 127;
     const NAME: &'static str = "freq_watt_param";
     const LABEL: &'static str = "Freq-Watt Param";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m127
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

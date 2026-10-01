@@ -5,7 +5,7 @@ use itertools::Itertools;
 use sunspec::{
     client::{AsyncClient, Config},
     models::{model1::Model1, model712::Model712},
-    DEFAULT_DISCOVERY_ADDRESSES,
+    AnyModel, DEFAULT_DISCOVERY_ADDRESSES,
 };
 use tokio_modbus::{client::tcp::connect_slave, Slave};
 
@@ -47,7 +47,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let device = client.device(args.device_id).await?;
 
-    let m1: Model1 = device.read_model().await?;
+    let m1 = device.model::<Model1>()?.read().await?;
 
     println!("Manufacturer: {}", m1.mn);
     println!("Model: {}", m1.md);
@@ -57,13 +57,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     println!(
         "Supported models: {}",
         device
-            .models
-            .iter()
-            .map(|info| info.id.to_string())
+            .models::<AnyModel>()
+            .map(|model| model.info().id.to_string())
             .join(", ")
     );
 
-    let m712: Model712 = device.read_model().await?;
+    let m712 = device.model::<Model712>()?.read().await?;
     println!("{:?}", m712);
 
     Ok(())

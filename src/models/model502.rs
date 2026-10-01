@@ -319,9 +319,6 @@ impl crate::Model for SolarModule {
     const ID: u16 = 502;
     const NAME: &'static str = "solar_module";
     const LABEL: &'static str = "Solar Module";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m502
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

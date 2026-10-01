@@ -5,6 +5,7 @@ use itertools::Itertools;
 use sunspec::{
     client::{AsyncClient, Config},
     models::model1::Model1,
+    AnyModel,
 };
 use tokio::net::TcpStream;
 use tokio_modbus::client::tcp::attach;
@@ -47,7 +48,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let client = AsyncClient::new(attach(stream), Config::default());
     let device = client.device(args.device_id).await?;
 
-    let m1: Model1 = device.read_model().await?;
+    let m1 = device.model::<Model1>()?.read().await?;
 
     println!("Manufacturer: {}", m1.mn);
     println!("Model: {}", m1.md);
@@ -57,9 +58,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     println!(
         "Supported models: {}",
         device
-            .models
-            .iter()
-            .map(|info| info.id.to_string())
+            .models::<AnyModel>()
+            .map(|model| model.info().id.to_string())
             .join(", ")
     );
 

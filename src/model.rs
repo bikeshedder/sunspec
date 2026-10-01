@@ -1,13 +1,8 @@
-use std::{
-    fmt::Debug,
-    hash::{Hash, Hasher},
-    marker::PhantomData,
-    num::NonZeroU16,
-};
+use std::fmt::Debug;
 
 use thiserror::Error;
 
-use crate::{sealed::Sealed, AnyModel, DecodeError, Group, ModelInfo, Models};
+use crate::{sealed::Sealed, AnyModel, DecodeError, Group, ModelInfo};
 
 /// Error returned while parsing a model from registers.
 #[derive(Debug, Error, Eq, PartialEq)]
@@ -25,8 +20,8 @@ pub enum ParseError {
     Decode(#[from] DecodeError),
 }
 
-/// Every model implements this trait which contains methods
-/// for accessing the address and parsing the model.
+/// Every model implements this trait which contains information about
+/// the model and a method for parsing it.
 ///
 /// This trait is sealed and cannot be implemented outside of this crate.
 pub trait Model: Sealed + Sized + Group + Debug + Into<AnyModel> {
@@ -38,87 +33,6 @@ pub trait Model: Sealed + Sized + Group + Debug + Into<AnyModel> {
     const LABEL: &'static str;
     /// Information about this model which is also available at runtime
     const INFO: ModelInfo = ModelInfo::of::<Self>();
-    /// Get model address from discovered models struct. Returns `None`
-    /// if the model was not discovered.
-    fn addr(models: &Models) -> Option<ModelAddr<Self>>;
     /// Parse model data from a given u16 slice
     fn parse(data: &[u16]) -> Result<Self, ParseError>;
-}
-
-/// This structure is used to store the address of
-/// models after a successful model discovery.
-///
-/// The type parameter `M` is the model this address belongs to.
-/// [`ModelInfo::addr`](crate::ModelInfo::addr) returns a
-/// `ModelAddr<AnyModel>` for models which are only known at runtime.
-#[derive(Debug)]
-#[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct ModelAddr<M> {
-    // A model can never start at address 0 as it is always preceded by
-    // the SunS identifier. Using `NonZeroU16` makes
-    // `Option<ModelAddr<M>>` the same size as `ModelAddr<M>`.
-    addr: NonZeroU16,
-    len: u16,
-    model: PhantomData<M>,
-}
-
-impl<M> ModelAddr<M> {
-    /// Create the address of a discovered model
-    // Only used by the generated `Models::set_addr`, which is empty when
-    // no models are enabled via Cargo features.
-    #[allow(dead_code)]
-    pub(crate) const fn new(addr: NonZeroU16, len: u16) -> Self {
-        Self {
-            addr,
-            len,
-            model: PhantomData,
-        }
-    }
-    /// The discovered address of the first register following the
-    /// model id and length registers.
-    pub const fn addr(&self) -> u16 {
-        self.addr.get()
-    }
-    /// The discovered length of the model. This is the number of
-    /// registers following the model id and length registers.
-    // This is not a collection, so `is_empty` would make no sense.
-    #[allow(clippy::len_without_is_empty)]
-    pub const fn len(&self) -> u16 {
-        self.len
-    }
-    /// Change the model type of this address.
-    pub(crate) fn cast<N>(self) -> ModelAddr<N> {
-        ModelAddr {
-            addr: self.addr,
-            len: self.len,
-            model: PhantomData,
-        }
-    }
-}
-
-// The following impls are written manually as `#[derive(...)]` would
-// add a `M: Clone`/`M: PartialEq`/... bound which is not needed as the
-// model type is only used as a `PhantomData` marker.
-
-impl<M> Clone for ModelAddr<M> {
-    fn clone(&self) -> Self {
-        *self
-    }
-}
-
-impl<M> Copy for ModelAddr<M> {}
-
-impl<M> PartialEq for ModelAddr<M> {
-    fn eq(&self, other: &Self) -> bool {
-        self.addr == other.addr && self.len == other.len
-    }
-}
-
-impl<M> Eq for ModelAddr<M> {}
-
-impl<M> Hash for ModelAddr<M> {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.addr.hash(state);
-        self.len.hash(state);
-    }
 }

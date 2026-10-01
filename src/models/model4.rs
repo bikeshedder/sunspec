@@ -478,9 +478,6 @@ impl crate::Model for Model4 {
     const ID: u16 = 4;
     const NAME: &'static str = "model_4";
     const LABEL: &'static str = "Secure Dataset Read Response";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m4
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

@@ -59,9 +59,6 @@ impl crate::Model for Model64101 {
     const ID: u16 = 64101;
     const NAME: &'static str = "model_64101";
     const LABEL: &'static str = "Eltek Inverter Extension";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m64101
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

@@ -386,9 +386,6 @@ impl crate::Model for Controls {
     const ID: u16 = 123;
     const NAME: &'static str = "controls";
     const LABEL: &'static str = "Immediate Controls";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m123
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

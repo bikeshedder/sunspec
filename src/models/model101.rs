@@ -521,9 +521,6 @@ impl crate::Model for InverterSinglePhase {
     const ID: u16 = 101;
     const NAME: &'static str = "inverter_single_phase";
     const LABEL: &'static str = "Inverter (Single Phase)";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m101
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

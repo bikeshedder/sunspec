@@ -416,9 +416,6 @@ impl crate::Model for TrackerController {
     const ID: u16 = 601;
     const NAME: &'static str = "tracker_controller";
     const LABEL: &'static str = "Tracker Controller DRAFT 2";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m601
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

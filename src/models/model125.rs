@@ -157,9 +157,6 @@ impl crate::Model for Pricing {
     const ID: u16 = 125;
     const NAME: &'static str = "pricing";
     const LABEL: &'static str = "Pricing";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m125
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

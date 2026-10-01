@@ -1341,9 +1341,6 @@ impl crate::Model for DerCtlAc {
     const ID: u16 = 704;
     const NAME: &'static str = "DERCtlAC";
     const LABEL: &'static str = "DER AC Controls";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m704
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

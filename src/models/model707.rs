@@ -468,9 +468,6 @@ impl crate::Model for DerTripLv {
     const ID: u16 = 707;
     const NAME: &'static str = "DERTripLV";
     const LABEL: &'static str = "DER Trip LV";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m707
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

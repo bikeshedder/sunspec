@@ -527,9 +527,6 @@ impl crate::Model for VoltWatt {
     const ID: u16 = 132;
     const NAME: &'static str = "volt_watt";
     const LABEL: &'static str = "Volt-Watt";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m132
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

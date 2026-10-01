@@ -464,9 +464,6 @@ impl crate::Model for Lvrt {
     const ID: u16 = 129;
     const NAME: &'static str = "lvrt";
     const LABEL: &'static str = "LVRTD";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m129
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

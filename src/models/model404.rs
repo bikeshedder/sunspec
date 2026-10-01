@@ -426,9 +426,6 @@ impl crate::Model for StringCombinerAdvancedInputs {
     const ID: u16 = 404;
     const NAME: &'static str = "string_combiner_advanced_inputs";
     const LABEL: &'static str = "String Combiner (Advanced)";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m404
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

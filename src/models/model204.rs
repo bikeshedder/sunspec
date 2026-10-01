@@ -468,9 +468,6 @@ impl crate::Model for AcMeterAbc {
     const ID: u16 = 204;
     const NAME: &'static str = "ac_meter_abc";
     const LABEL: &'static str = "delta-connect three phase (abc) meter";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m204
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

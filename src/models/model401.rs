@@ -350,9 +350,6 @@ impl crate::Model for StringCombinerCurrent {
     const ID: u16 = 401;
     const NAME: &'static str = "string_combiner_current";
     const LABEL: &'static str = "String Combiner (Current)";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m401
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

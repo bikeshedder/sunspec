@@ -1,12 +1,10 @@
-use std::{fmt::Debug, future::Future, num::NonZeroU16, time::Duration};
+use std::{future::Future, num::NonZeroU16, time::Duration};
 
-use crate::{
-    AnyModel, Model, ModelAddr, ModelInfo, Models, ParseError, Point, Value, SUNS_IDENTIFIER,
-};
+use crate::{DiscoveredModel, Model, ModelInfo, ModelKind, Models, SUNS_IDENTIFIER};
 
 use super::{
-    error::ModbusError, Config, DiscoveryError, DiscoveryResult, ReadModelError, ReadPointError,
-    UnknownModel, WritePointError,
+    error::ModbusError, Config, DiscoveryError, DiscoveryResult, LookupError, ModelHandle,
+    UnknownModel,
 };
 
 /// Async client
@@ -43,123 +41,89 @@ impl<C: AsyncModbusClient> AsyncClient<C> {
     /// [SunSpec Device Information Specification V1.1](https://sunspec.org/wp-content/uploads/2022/05/SunSpec-Device-Information-Model-Specificiation-V1-1-final.pdf)
     /// for a single slave ID and return the discovered device.
     pub async fn device(&self, slave_id: u8) -> Result<AsyncDevice<C>, DiscoveryError> {
-        let discovery_result = discover_models(
+        let discovery = discover_models(
             &self.client,
             slave_id,
             &self.config.discovery_addresses,
             self.config.read_timeout,
         )
         .await?;
-        Ok(AsyncDevice {
+        Ok(self.device_from_discovery(slave_id, discovery))
+    }
+    /// Create a device from the result of a previous model discovery
+    /// without performing the discovery again.
+    ///
+    /// The discovery result must have been returned by
+    /// [`AsyncDevice::discovery`] for the same device and the register
+    /// map of the device must not have changed since. Otherwise models
+    /// are read from and written to the wrong registers. The SunSpec
+    /// specification does not guarantee that the register map of a
+    /// device stays the same.
+    pub fn device_from_discovery(
+        &self,
+        slave_id: u8,
+        discovery: DiscoveryResult,
+    ) -> AsyncDevice<C> {
+        AsyncDevice {
             client: self.client.clone(),
             config: self.config.clone(),
             slave_id,
-            models: discovery_result.models,
-            unknown_models: discovery_result.unknown_models,
-        })
+            discovery,
+        }
     }
 }
 
 /// Client structure for a discovered device
+///
+/// The client, slave id and discovery result are only readable as the
+/// selected models rely on them describing the same device.
 #[derive(Debug)]
 pub struct AsyncDevice<C: AsyncModbusClient> {
-    /// This is the actual modbus client which implements the `AsyncModbusClient` trait.
-    pub client: C,
-    /// Client configuration
+    pub(super) client: C,
+    /// Client configuration. It can be changed at any time, e.g. to adjust
+    /// the timeouts for this device.
     pub config: Config,
-    /// The Slave ID
-    pub slave_id: u8,
-    /// Discovered models
-    pub models: Models,
-    /// Unknown models
-    pub unknown_models: Vec<UnknownModel>,
+    pub(super) slave_id: u8,
+    discovery: DiscoveryResult,
 }
 
 impl<C: AsyncModbusClient> AsyncDevice<C> {
-    /// Read model data from modbus
+    /// The Modbus client used to communicate with this device
+    pub fn client(&self) -> &C {
+        &self.client
+    }
+    /// The slave id of this device
+    pub fn slave_id(&self) -> u8 {
+        self.slave_id
+    }
+    /// The result of the model discovery of this device
+    pub fn discovery(&self) -> &DiscoveryResult {
+        &self.discovery
+    }
+    /// Select the model of the given type.
     ///
-    /// Note: Some models are too big to be fetched in a single request
-    ///       and multiple read_holding_registers calls will be issued.
-    pub async fn read_model<M: Model>(&self) -> Result<M, ReadModelError> {
-        self.read_and_parse_model(&M::INFO, M::parse).await
-    }
-    /// Read the registers of the given model using the configured chunk
-    /// size and timeout and parse them using the given function.
-    async fn read_and_parse_model<M>(
-        &self,
-        model: &ModelInfo,
-        parse: impl FnOnce(&[u16]) -> Result<M, ParseError>,
-    ) -> Result<M, ReadModelError> {
-        let addr = model
-            .addr(&self.models)
-            .ok_or(ReadModelError::ModelNotDiscovered { model_id: model.id })?;
-        let data = read_registers_chunked(
-            &self.client,
-            self.slave_id,
-            addr.addr(),
-            addr.len(),
-            self.config.max_read_length,
-            self.config.read_timeout,
-        )
-        .await?;
-        parse(&data).map_err(|error| match error {
-            ParseError::TooShort => ReadModelError::ModelTooShort {
-                model_id: model.id,
-                len: addr.len(),
-            },
-            error => error.into(),
-        })
-    }
-    /// Read model data from modbus for a model that is only known
-    /// at runtime.
-    ///
-    /// Note: Some models are too big to be fetched in a single request
-    ///       and multiple read_holding_registers calls will be issued.
-    pub async fn read_any_model(&self, model: &ModelInfo) -> Result<AnyModel, ReadModelError> {
-        self.read_and_parse_model(model, |data| model.parse(data))
-            .await
-    }
-    /// Read data for a single point. Please note that
-    /// `read_model` is more efficient when loading multiple
-    /// points from a single model.
-    pub async fn read_point<M: Model, T: Value>(
-        &self,
-        point: Point<M, T>,
-    ) -> Result<T, ReadPointError> {
-        let model_addr =
-            M::addr(&self.models).ok_or(ReadPointError::ModelNotDiscovered { model_id: M::ID })?;
-        if !point_in_model(&point, model_addr) {
-            return Err(ReadPointError::PointOutOfBounds);
+    /// Returns an error if the model was not discovered or discovered
+    /// more than once. Use [`models`](Self::models) for models which can
+    /// be contained multiple times.
+    pub fn model<M: Model>(&self) -> Result<ModelHandle<'_, C, M>, LookupError> {
+        let mut models = self.models::<M>();
+        let model = models
+            .next()
+            .ok_or(LookupError::ModelNotDiscovered { model_id: M::ID })?;
+        if models.next().is_some() {
+            return Err(LookupError::ModelNotUnique { model_id: M::ID });
         }
-        read_point(
-            &self.client,
-            self.slave_id,
-            model_addr,
-            point,
-            self.config.read_timeout,
-        )
-        .await
+        Ok(model)
     }
-    /// Write data for a single point
-    pub async fn write_point<M: Model, T: Value>(
-        &self,
-        point: Point<M, T>,
-        value: T,
-    ) -> Result<(), WritePointError> {
-        let model_addr =
-            M::addr(&self.models).ok_or(WritePointError::ModelNotDiscovered { model_id: M::ID })?;
-        if !point_in_model(&point, model_addr) {
-            return Err(WritePointError::PointOutOfBounds);
-        }
-        write_point(
-            &self.client,
-            self.slave_id,
-            model_addr,
-            point,
-            value,
-            self.config.write_timeout,
-        )
-        .await
+    /// Select all models of the given type in the order they appear in
+    /// the Modbus map of the device. Use [`AnyModel`](crate::AnyModel) to select all
+    /// models.
+    pub fn models<M: ModelKind>(&self) -> impl Iterator<Item = ModelHandle<'_, C, M>> + '_ {
+        self.discovery
+            .models
+            .iter()
+            .filter(|model| M::matches(model.info()))
+            .map(move |model| ModelHandle::new(self, *model))
     }
 }
 
@@ -271,12 +235,13 @@ async fn discover_models(
             .and_then(NonZeroU16::new)
             .ok_or(DiscoveryError::AddressOverflow)?;
         addr = model_addr.get();
-        if !models.set_addr(model_id, model_addr, len) {
-            unknown_models.push(UnknownModel {
+        match ModelInfo::by_id(model_id) {
+            Some(info) => models.push(DiscoveredModel::new(info, model_addr, len)),
+            None => unknown_models.push(UnknownModel {
                 id: model_id,
                 addr,
                 len,
-            });
+            }),
         }
         addr = addr
             .checked_add(len)
@@ -291,7 +256,7 @@ async fn discover_models(
 
 /// Read registers from modbus. If `len` exceeds `max_read_length`
 /// multiple read_holding_registers calls will be issued.
-async fn read_registers_chunked(
+pub(super) async fn read_registers_chunked(
     client: &impl AsyncModbusClient,
     slave_id: u8,
     addr: u16,
@@ -326,51 +291,7 @@ async fn read_registers_chunked(
     Ok(data)
 }
 
-/// Read data for a single point. Please note that
-/// `read_model` is more efficient when loading multiple
-/// points from a single model.
-async fn read_point<M: Model, T: Value>(
-    client: &impl AsyncModbusClient,
-    slave_id: u8,
-    model_addr: ModelAddr<M>,
-    point: Point<M, T>,
-    read_timeout: Option<Duration>,
-) -> Result<T, ReadPointError> {
-    let data = apply_timeout(
-        client.read_registers(slave_id, model_addr.addr() + point.offset, point.length),
-        read_timeout,
-    )
-    .await?;
-    Ok(Value::decode(&data)?)
-}
-
-/// Write data for a single point
-async fn write_point<M: Model, T: Value>(
-    client: &impl AsyncModbusClient,
-    slave_id: u8,
-    model_addr: ModelAddr<M>,
-    point: Point<M, T>,
-    value: T,
-    write_timeout: Option<Duration>,
-) -> Result<(), WritePointError> {
-    let data = value.encode();
-    if data.len() > point.length as usize {
-        return Err(WritePointError::ValueTooLarge);
-    }
-    apply_timeout(
-        client.write_registers(slave_id, model_addr.addr() + point.offset, &data),
-        write_timeout,
-    )
-    .await?;
-    Ok(())
-}
-
-/// Check whether the point lies within the discovered model length.
-fn point_in_model<M: Model, T: Value>(point: &Point<M, T>, model_addr: ModelAddr<M>) -> bool {
-    u32::from(point.offset) + u32::from(point.length) <= u32::from(model_addr.len())
-}
-
-async fn apply_timeout<T>(
+pub(super) async fn apply_timeout<T>(
     fut: impl Future<Output = Result<T, ModbusError>>,
     timeout: Option<Duration>,
 ) -> Result<T, ModbusError> {

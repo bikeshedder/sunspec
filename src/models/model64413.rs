@@ -114,9 +114,6 @@ impl crate::Model for PvSimCurves {
     const ID: u16 = 64413;
     const NAME: &'static str = "PVSimCurves";
     const LABEL: &'static str = "PV Curves";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m64413
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

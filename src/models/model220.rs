@@ -366,9 +366,6 @@ impl crate::Model for AcMeterSecure {
     const ID: u16 = 220;
     const NAME: &'static str = "ac_meter_secure";
     const LABEL: &'static str = "Secure AC Meter Selected Readings";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m220
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

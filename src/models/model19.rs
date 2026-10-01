@@ -254,9 +254,6 @@ impl crate::Model for Model19 {
     const ID: u16 = 19;
     const NAME: &'static str = "model_19";
     const LABEL: &'static str = "PPP Link";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m19
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

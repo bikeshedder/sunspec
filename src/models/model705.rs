@@ -548,9 +548,6 @@ impl crate::Model for DerVoltVar {
     const ID: u16 = 705;
     const NAME: &'static str = "DERVoltVar";
     const LABEL: &'static str = "DER Volt-Var";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m705
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

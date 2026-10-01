@@ -83,9 +83,6 @@ impl crate::Model for Model63002 {
     const ID: u16 = 63002;
     const NAME: &'static str = "model_63002";
     const LABEL: &'static str = "SunSpec Test Model 2";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m63002
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

@@ -508,9 +508,6 @@ impl crate::Model for Model6 {
     const ID: u16 = 6;
     const NAME: &'static str = "model_6";
     const LABEL: &'static str = "Secure Write Sequential Request";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m6
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

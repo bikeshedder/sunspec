@@ -287,9 +287,6 @@ impl crate::Model for LithiumIonModule {
     const ID: u16 = 805;
     const NAME: &'static str = "lithium-ion-module";
     const LABEL: &'static str = "Lithium-Ion Module Model";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m805
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

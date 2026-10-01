@@ -156,9 +156,6 @@ impl crate::Model for DerCtl {
     const ID: u16 = 715;
     const NAME: &'static str = "DERCtl";
     const LABEL: &'static str = "DERCtl";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m715
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

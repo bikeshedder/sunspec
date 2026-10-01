@@ -402,9 +402,6 @@ impl crate::Model for DerMeasureDc {
     const ID: u16 = 714;
     const NAME: &'static str = "DERMeasureDC";
     const LABEL: &'static str = "DER DC Measurement";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m714
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

@@ -275,9 +275,6 @@ impl crate::Model for CsipControl {
     const ID: u16 = 64415;
     const NAME: &'static str = "CSIPControl";
     const LABEL: &'static str = "CSIP Client Control";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m64415
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

@@ -6,7 +6,11 @@ use std::{
 
 use thiserror::Error;
 
-use crate::{models::MODELS, sealed::Sealed, AnyModel, Model, ModelAddr, Models, ParseError};
+use crate::{
+    models::MODELS,
+    sealed::{ModelKindImpl, Sealed},
+    AnyModel, Model, ParseError,
+};
 
 /// Information about a model which is known at runtime.
 ///
@@ -24,7 +28,6 @@ pub struct ModelInfo {
     /// Label of the model as defined by the SunSpec specification,
     /// e.g. `"Inverter (Three Phase)"`.
     pub label: &'static str,
-    addr: fn(&Models) -> Option<ModelAddr<AnyModel>>,
     parse: fn(&[u16]) -> Result<AnyModel, ParseError>,
 }
 
@@ -35,7 +38,6 @@ impl ModelInfo {
             id: M::ID,
             name: M::NAME,
             label: M::LABEL,
-            addr: addr_of::<M>,
             parse: parse_any::<M>,
         }
     }
@@ -47,19 +49,10 @@ impl ModelInfo {
             .ok()
             .map(|index| MODELS[index])
     }
-    /// Returns the address of this model in the given discovered
-    /// models or `None` if the model was not discovered.
-    pub fn addr(&self, models: &Models) -> Option<ModelAddr<AnyModel>> {
-        (self.addr)(models)
-    }
     /// Parse model data.
     pub fn parse(&self, data: &[u16]) -> Result<AnyModel, ParseError> {
         (self.parse)(data)
     }
-}
-
-fn addr_of<M: Model>(models: &Models) -> Option<ModelAddr<AnyModel>> {
-    M::addr(models).map(ModelAddr::cast)
 }
 
 fn parse_any<M: Model>(data: &[u16]) -> Result<AnyModel, ParseError> {
@@ -137,17 +130,31 @@ impl<M: Model> DynModel for M {
     }
 }
 
-impl Models {
-    /// Returns an iterator over all discovered models which are enabled
-    /// via Cargo features, sorted by id.
-    ///
-    /// The model information can be passed to
-    /// [`AsyncDevice::read_any_model`](crate::client::AsyncDevice::read_any_model).
-    pub fn iter(&self) -> impl Iterator<Item = &'static ModelInfo> + '_ {
-        MODELS
-            .iter()
-            .copied()
-            .filter(|info| info.addr(self).is_some())
+/// The kind of model selected by
+/// [`AsyncDevice::models`](crate::client::AsyncDevice::models). This is
+/// either a specific model type, which selects all models of that type,
+/// or [`AnyModel`], which selects all models.
+///
+/// This trait is sealed and cannot be implemented outside of this crate.
+pub trait ModelKind: ModelKindImpl {}
+
+impl<T: ModelKindImpl> ModelKind for T {}
+
+impl<M: Model> ModelKindImpl for M {
+    fn matches(info: &ModelInfo) -> bool {
+        info.id == M::ID
+    }
+    fn parse(_info: &ModelInfo, data: &[u16]) -> Result<Self, ParseError> {
+        M::parse(data)
+    }
+}
+
+impl ModelKindImpl for AnyModel {
+    fn matches(_info: &ModelInfo) -> bool {
+        true
+    }
+    fn parse(info: &ModelInfo, data: &[u16]) -> Result<Self, ParseError> {
+        info.parse(data)
     }
 }
 

@@ -2174,9 +2174,6 @@ impl crate::Model for DerExploitation {
     const ID: u16 = 64412;
     const NAME: &'static str = "DERExploitation";
     const LABEL: &'static str = "DER Cyber Exploitation";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m64412
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

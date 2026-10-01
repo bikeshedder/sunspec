@@ -102,16 +102,14 @@ fn test_read_any_model() {
     let device = block_on(client.device(1)).unwrap();
 
     let info: &ModelInfo = "common".parse().unwrap();
-    let addr = info.addr(&device.models).unwrap();
-    assert_eq!((addr.addr(), addr.len()), (40004, 66));
-    assert_eq!(Model103::INFO.addr(&device.models), None);
-
-    let discovered = device.models.iter().collect::<Vec<_>>();
+    let discovered = device.models::<AnyModel>().collect::<Vec<_>>();
     assert_eq!(discovered.len(), 1);
-    assert_eq!(discovered[0], info);
+    assert_eq!(discovered[0].info(), info);
+    assert_eq!((discovered[0].addr(), discovered[0].len()), (40004, 66));
+    assert_eq!(device.models::<Model103>().count(), 0);
 
-    let any_model = block_on(device.read_any_model(info)).unwrap();
-    let model = block_on(device.read_model::<Model1>()).unwrap();
+    let any_model = block_on(discovered[0].read()).unwrap();
+    let model = block_on(device.model::<Model1>().unwrap().read()).unwrap();
     assert_eq!(any_model.info(), &Model1::INFO);
     assert_eq!(any_model.as_dyn().info(), &Model1::INFO);
     assert_eq!(any_model, AnyModel::from(model.clone()));

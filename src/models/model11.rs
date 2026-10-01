@@ -191,9 +191,6 @@ impl crate::Model for Model11 {
     const ID: u16 = 11;
     const NAME: &'static str = "model_11";
     const LABEL: &'static str = "Ethernet Link Layer";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m11
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

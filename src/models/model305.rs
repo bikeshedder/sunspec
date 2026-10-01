@@ -70,9 +70,6 @@ impl crate::Model for Location {
     const ID: u16 = 305;
     const NAME: &'static str = "location";
     const LABEL: &'static str = "GPS";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m305
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

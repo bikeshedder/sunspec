@@ -430,9 +430,6 @@ impl crate::Model for AcMeterAnOrAbFloat {
     const ID: u16 = 211;
     const NAME: &'static str = "ac_meter_an_or_ab_float";
     const LABEL: &'static str = "single phase (AN or AB) meter";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m211
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

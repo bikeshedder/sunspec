@@ -345,9 +345,6 @@ impl crate::Model for Settings {
     const ID: u16 = 121;
     const NAME: &'static str = "settings";
     const LABEL: &'static str = "Basic Settings";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m121
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)

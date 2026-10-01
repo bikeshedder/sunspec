@@ -83,9 +83,6 @@ impl crate::Model for FlowBatteryModule {
     const ID: u16 = 808;
     const NAME: &'static str = "flow_battery_module";
     const LABEL: &'static str = "Flow Battery Module Model";
-    fn addr(models: &crate::Models) -> Option<crate::ModelAddr<Self>> {
-        models.m808
-    }
     fn parse(data: &[u16]) -> Result<Self, crate::ParseError> {
         let (_, model) = Self::parse_group(data)?;
         Ok(model)
