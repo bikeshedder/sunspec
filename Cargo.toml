@@ -249,7 +249,6 @@ model64415 = []
 [dependencies]
 bitflags = "2.6.0"
 serde = { version = "1.0", features = ["derive"], optional = true }
-strum = { version = "0.28", features = ["derive"] }
 thiserror = "2.0.6"
 tokio = { version = "1.40.0", default-features = false, optional = true }
 tokio-modbus = { version = "0.17", optional = true }

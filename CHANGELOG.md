@@ -78,6 +78,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Breaking:** `InvalidPointData`, which was no longer used since point
   validation was removed. `ParseError` and `ReadModelError` no longer have a
   type parameter.
+- Unused `strum` dependency
 - **Breaking:** Unused API: `ReadPointError::MissingMandatoryValue`,
   `DecodeError::InvalidEnumValue` and `Point::is_invalid`. Use
   `FixedSize::is_invalid` instead of the latter.
