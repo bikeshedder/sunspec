@@ -37,8 +37,9 @@ pub const DEFAULT_MAX_WRITE_LENGTH: u16 = 123;
 pub struct Config {
     /// Addresses to check for the SunS identifier (default: [40000, 0, 50000])
     ///
-    /// Some devices don't work according to the specification and don't respond
-    /// anything on address 0.
+    /// The addresses are checked in order. 40000 comes first because some
+    /// devices don't work according to the specification and misbehave when
+    /// address 0 is queried.
     pub discovery_addresses: Vec<u16>,
     /// Timeout when reading registers
     pub read_timeout: Option<Duration>,

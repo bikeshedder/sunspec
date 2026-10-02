@@ -182,7 +182,7 @@ async fn discover_models(
     discovery_addresses: &[u16],
     read_timeout: Option<Duration>,
 ) -> Result<DiscoveryResult, DiscoveryError> {
-    // Read addresses 0, 40000 and 50000 looking for the SunS identifier
+    // Check the configured discovery addresses in order for the SunS identifier
     let mut info_model_addr: Option<u16> = None;
     for &addr in discovery_addresses.iter() {
         match read_holding_registers_array::<2>(client, slave_id, addr, read_timeout).await {

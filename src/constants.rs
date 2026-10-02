@@ -3,4 +3,7 @@
 pub const SUNS_IDENTIFIER: [u16; 2] = [0x5375, 0x6e53]; // SunS
 
 /// Default addresses for "SunS" discovery.
+///
+/// 40000 is checked before 0 because some devices misbehave when address 0
+/// is queried. This is the same order the Python SunSpec library uses.
 pub const DEFAULT_DISCOVERY_ADDRESSES: [u16; 3] = [40000, 0, 50000];
