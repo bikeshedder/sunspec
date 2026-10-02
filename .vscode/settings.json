@@ -3,4 +3,14 @@
     "rust-analyzer.cargo.features": "all",
     "editor.trimAutoWhitespace": true,
     "files.insertFinalNewline": true,
+    "workbench.colorCustomizations": {
+        "commandCenter.border": "#e7e7e799",
+        "commandCenter.foreground": "#e7e7e7",
+        "sash.hoverBorder": "#ab9912",
+        "titleBar.activeBackground": "#7d700d",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#7d700d99",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#7d700d",
 }
