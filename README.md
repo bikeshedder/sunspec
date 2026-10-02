@@ -26,6 +26,7 @@ in a safe and convenient way.
 - [x] Fully documented. Even the generated models.
 - [x] Reading of complete models in a single request.
 - [x] Supports nested and repeating groups.
+- [x] Supports devices containing the same model multiple times.
 - [x] Unknown or unsupported models are reported during discovery.
 
 ## Features
@@ -124,6 +125,10 @@ How does this crate differ from crates like `tokio-sunspec`, `sunspec-models`, `
 - All public types are documented. Even the generated models.
 
 - Full support for nested and repeating groups.
+
+- Devices containing the same model multiple times (e.g. several inverters
+  or batteries behind one Modbus address) are fully supported. All instances
+  are discovered and accessible.
 
 How do I reduce compile times or binary size?
 
