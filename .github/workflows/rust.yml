@@ -33,3 +33,12 @@ jobs:
       run: cargo build --verbose --all-features --workspace
     - name: Run tests
       run: cargo test --verbose --all-features
+
+  codegen:
+    name: Check generated models
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    - run: cargo models check
