@@ -15,7 +15,7 @@ jobs:
     name: Check MSRV
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: rustup update nightly
       - run: rustup update 1.76 && rustup default 1.76
       # Only the library is subject to the MSRV. Drop the workspace so
@@ -28,7 +28,7 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Build
       run: cargo build --verbose --all-features --workspace
     - name: Run tests
@@ -38,7 +38,33 @@ jobs:
     name: Check generated models
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         submodules: true
     - run: cargo models check
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - run: cargo fmt --all --check
+    - run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+    - run: cargo doc --no-deps --all-features
+      env:
+        RUSTDOCFLAGS: -D warnings
+
+  features:
+    name: Check feature combinations
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        features:
+          - ""
+          - "tokio"
+          - "tokio-modbus,model1"
+          - "serde,model1"
+    steps:
+    - uses: actions/checkout@v5
+    - run: cargo clippy -p sunspec --all-targets --no-default-features --features "${{ matrix.features }}" -- -D warnings
+    - run: cargo test -p sunspec --no-default-features --features "${{ matrix.features }}"
