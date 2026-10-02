@@ -1,4 +1,4 @@
-use std::{fmt::Write as _, fs, path::Path};
+use std::fmt::Write as _;
 
 use thiserror::Error;
 
@@ -11,28 +11,13 @@ pub enum ManifestError {
     MissingMarker { marker: &'static str },
     #[error("Invalid generated model feature marker order in Cargo.toml")]
     InvalidMarkerOrder,
-    #[error(transparent)]
-    Io(#[from] std::io::Error),
 }
 
 pub fn model_feature_name(model_id: u16) -> String {
     format!("model{model_id}")
 }
 
-pub fn write_model_features(
-    manifest_path: impl AsRef<Path>,
-    model_ids: &[u16],
-) -> Result<(), ManifestError> {
-    let manifest_path = manifest_path.as_ref();
-    let manifest = fs::read_to_string(manifest_path)?;
-    let updated = update_model_features(&manifest, model_ids)?;
-    if manifest != updated {
-        fs::write(manifest_path, updated)?;
-    }
-    Ok(())
-}
-
-fn update_model_features(manifest: &str, model_ids: &[u16]) -> Result<String, ManifestError> {
+pub fn update_model_features(manifest: &str, model_ids: &[u16]) -> Result<String, ManifestError> {
     let Some(begin) = manifest.find(BEGIN_MARKER) else {
         return Err(ManifestError::MissingMarker {
             marker: BEGIN_MARKER,

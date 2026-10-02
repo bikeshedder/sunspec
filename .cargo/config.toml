@@ -1,0 +1,2 @@
+[alias]
+models = "run --quiet --package sunspec-gen --"
