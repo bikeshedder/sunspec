@@ -57,6 +57,30 @@ change together with the regenerated code.
    listing the changes users will notice (added models, added or renamed
    points, …).
 
+## Design notes
+
+### Model length mismatches
+
+The generated models assume that published SunSpec models never change
+layout. Upstream effectively treats published models as frozen. Points were
+only added to or inserted into the 7xx DER models while they were still work
+in progress (2020–21) and to vendor models. The core models haven't changed
+length since 2014.
+
+Consequences:
+
+- Every point is parsed individually and bounds-checked (`Point::from_data`).
+  Trailing registers without a generated field (e.g. `Pad` in model 1) may be
+  missing, so a model 1 with length 65 instead of 66 still parses.
+- If a model is shorter than any generated field, reading it fails with
+  `ModelTooShort`, even when that point is optional.
+- Devices implementing early drafts of the DER models are not supported.
+
+If this ever turns out to matter in practice, optional points beyond the
+reported model length could decode as `None` instead, while mandatory points
+keep failing with `TooShort`. That is a behavioural change only and can land
+in a minor release.
+
 ## Minimum supported Rust version
 
 The library has an MSRV of 1.76 (`rust-version` in `Cargo.toml`), checked in
